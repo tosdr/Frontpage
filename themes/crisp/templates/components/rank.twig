@@ -1,0 +1,75 @@
+{# 
+ # Copyright 2020 Pixelcat Productions <support@pixelcatproductions.net>
+ # @author 2020 Justin René Back <jback@pixelcatproductions.net>
+ #
+ # Licensed under the Apache License, Version 2.0 (the "License");
+ # you may not use this file except in compliance with the License.
+ # You may obtain a copy of the License at
+ #
+ #      http://www.apache.org/licenses/LICENSE-2.0
+ #
+ # Unless required by applicable law or agreed to in writing, software
+ # distributed under the License is distributed on an "AS IS" BASIS,
+ # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ # See the License for the specific language governing permissions and
+ # limitations under the License.
+#}
+
+{% if rank is not defined %}
+    {% set rank = -1 %}
+{% endif %}
+
+{% if showsup is not defined %}
+    {% set showsup = true %}
+{% endif %}
+
+{% if rank == -1 %}
+    {% if showsup %}
+        <sup>
+        {% endif %}
+        <span data-toggle="tooltip" data-title="{{ 'component_rank_special_tooltip'|translate }}"  class="badge badge-primary">
+            <i class="fas fa-wrench"></i> 
+            {{ 'component_rank_special'|translate }}
+        </span>
+        {% if showsup %}
+        </sup>
+    {% endif %}
+{% endif %}
+
+{% if rank == 2 %}
+    {% if showsup %}
+        <sup>
+        {% endif %}
+        <span data-toggle="tooltip" data-title="{{ 'component_rank_artist_tooltip'|translate }}"  class="badge badge-light">
+            <i class="fas fa-camera-retro"></i> 
+            {{ 'component_rank_artist'|translate }}
+        </span>
+        {% if showsup %}
+        </sup>
+    {% endif %}
+{% endif %}
+
+{% if rank == 3 %}
+    {% if showsup %}
+        <sup>
+        {% endif %}
+        <span data-toggle="tooltip" data-title="{{ 'component_rank_admin_tooltip'|translate }}" class="badge badge-danger">
+            <i class="fas fa-shield-alt"></i> 
+            {{ 'component_rank_admin'|translate }}
+        </span>
+        {% if showsup %}
+        </sup>
+    {% endif %}
+{% endif %}
+{% if rank == 4 %}
+    {% if showsup %}
+        <sup>
+        {% endif %}
+        <span data-toggle="tooltip" data-title="{{ 'component_rank_dev_tooltip'|translate }}" class="badge badge-warning">
+            <i class="fas fa-code"></i> 
+            {{ 'component_rank_dev'|translate }}
+        </span>
+        {% if showsup %}
+        </sup>
+    {% endif %}
+{% endif %}

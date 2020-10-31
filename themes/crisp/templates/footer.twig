@@ -1,0 +1,63 @@
+{# 
+ # Copyright 2020 Pixelcat Productions <support@pixelcatproductions.net>
+ # @author 2020 Justin René Back <jback@pixelcatproductions.net>
+ #
+ # Licensed under the Apache License, Version 2.0 (the "License");
+ # you may not use this file except in compliance with the License.
+ # You may obtain a copy of the License at
+ #
+ #      http://www.apache.org/licenses/LICENSE-2.0
+ #
+ # Unless required by applicable law or agreed to in writing, software
+ # distributed under the License is distributed on an "AS IS" BASIS,
+ # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ # See the License for the specific language governing permissions and
+ # limitations under the License.
+#}
+
+      <!-- Site footer -->
+    <footer class="site-footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12 col-md-6">
+            <h6>About</h6>
+            <p class="text-justify">{{ 'about_us_intro'|translate|raw }}</p>
+          </div>
+
+          <div class="col-xs-6 col-md-3">
+            <h6>{{ 'navbar_categories'|translate }}</h6>
+            <ul class="footer-links">
+                Nothing
+            </ul>
+          </div>
+
+          <div class="col-xs-6 col-md-3">
+            <h6>{{ 'links'|translate }}</h6>
+            <ul class="footer-links">
+              <li><a href="/static/about">{{ 'navbar_item_about'|translate }}</a></li>
+              <li><a href="mailto:{{ config.contact_email }}">{{ 'contact_us'|translate }}</a></li>
+              <li><a href="/cooperation">{{ 'join_as_artist'|translate }}</a></li>
+              <li><a href="/static/privacy">{{ 'privacypolicy'|translate }}</a></li>
+              <li><a href="/static/toc">{{ 'toc'|translate }}</a></li>
+              <li><a href="/static/imprint">{{ 'imprint'|translate }}</a></li>
+            </ul>
+          </div>
+        </div>
+        <hr>
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-8 col-sm-6 col-xs-12">
+            <p class="copyright-text">&copy; Copyright {{ 'Y'|date }} <a href="/">ToS;DR</a>. CrispCMS is running on GIT revision {{ getGitRevision()|truncateText(7, false) }}.
+            </p>
+          </div>
+
+          <div class="col-md-4 col-sm-6 col-xs-12">
+            <ul class="social-icons">
+              <li><a class="facebook" href="#"><i class="fab fa-facebook"></i></a></li>
+              <li><a class="twitter" href="#"><i class="fab fa-instagram"></i></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+</footer>

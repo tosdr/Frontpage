@@ -1,0 +1,78 @@
+{# 
+ # Copyright 2020 Pixelcat Productions <support@pixelcatproductions.net>
+ # @author 2020 Justin René Back <jback@pixelcatproductions.net>
+ #
+ # Licensed under the Apache License, Version 2.0 (the "License");
+ # you may not use this file except in compliance with the License.
+ # You may obtain a copy of the License at
+ #
+ #      http://www.apache.org/licenses/LICENSE-2.0
+ #
+ # Unless required by applicable law or agreed to in writing, software
+ # distributed under the License is distributed on an "AS IS" BASIS,
+ # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ # See the License for the specific language governing permissions and
+ # limitations under the License.
+#}
+
+
+{#
+Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
+    - JB
+#}
+{% set currentPage = 'frontpage' %}
+{% set pageTitle = 'frontpage' %}
+{% set error = false %}
+
+
+
+{% extends "base.twig" %}
+
+{% block content %}
+    {{ include("components/navbar.twig") }}
+
+    <div class="jumbotron jumbotron-fluid mt-5">
+        <div class="container text-center">
+            <h1 class="display-4"><img width="1024" src="/{{ config.theme_dir }}/{{ config.theme }}/img/tosdr-logo-128.svg"alt="Logo"/></h1>
+            &nbsp;
+            &nbsp;
+            &nbsp;
+            &nbsp;
+            &nbsp;
+            <h2 class="mt-2">{{ 'frontpage_jumbotron_text'|translate }}</h2>
+        </div>
+    </div>
+
+    <div class="container mt-5">
+        <section id="intro">
+            <p>{{ 'frontpage_intro_top_text'|translate|raw }}</p>
+            <p>{{ 'frontpage_intro_bottom_text'|translate|raw }}</p>
+        </section>
+        &nbsp;
+        &nbsp;
+        <div class="btn-group d-flex" role="group" aria-label="Basic example">
+            <a role="button" class="btn btn-success btn-lg w-100 mb-2" href="/download">{{ 'frontpage_intro_button_download'|translate }}</a>
+            <a role="button" target="_blank" class="btn btn-primary btn-lg w-100 mb-2" href="{{ config.phoenix_url }}">{{ 'frontpage_intro_button_contribute'|translate }}</a>
+        </div>
+
+        <section>
+            <div id="news-section mt-5" class="text-center">
+                <a class="mx-3" href="https://moneyland.time.com/2012/08/10/new-site-grades-those-pesky-terms-of-service-agreements-you-never-read/"><img src="/{{ config.theme_dir }}/{{ config.theme }}/img/time.png" alt="Time"></a>
+                <a class="mx-3" href="https://gigaom.com/2012/08/14/i-agree-why-terms-of-service-report-cards-are-a-good-idea/"><img src="/{{ config.theme_dir }}/{{ config.theme }}/img/gigaom.gif" alt="GigaOM"></a>
+                <a class="mx-3" href="https://www.theverge.com/2012/8/14/3241572/tos-dr-terms-of-service"><img src="/{{ config.theme_dir }}/{{ config.theme }}/img/verge.png" alt="The Verge"></a>
+                <a class="mx-3" href="https://www.lemonde.fr/technologies/article/2012/08/14/un-site-veut-mettre-fin-au-mensonge-des-conditions-d-utilisation-sur-internet_1745942_651865.html"><img src="/{{ config.theme_dir }}/{{ config.theme }}/img/lemondefr.png" alt="Le Monde"></a>
+                <a class="mx-3" href="https://www.zeit.de/digital/internet/2012-08/terms-of-service-did-not-read"><img src="/{{ config.theme_dir }}/{{ config.theme }}/img/zeit.png" alt="Die Zeit"></a>
+                <a class="mx-3" href="https://www.wired.com/story/terms-of-service-didnt-read/"><img src="/{{ config.theme_dir }}/{{ config.theme }}/img/wired.gif" alt="Wired"></a>
+                <a class="mx-3" href="https://www.strategy-business.com/blog/Artificial-Intelligence-Ratings-and-the-Small-Print" style="color:grey;padding:8px">S+B</a>
+                <a class="mx-3" href="https://www.datingnews.com/daters-pulse/crisp-brings-transparency-to-dating-industry-by-assessing-terms-of-service/" style="color:grey;padding:8px">DN</a>
+            </div>
+            <hr>
+            <div id="forum-link">
+                <a role="button" target="_blank" class="btn btn-primary btn-lg btn-block" href="{{ config.forum_url }}">{{ 'frontpage_forum_button_forum'|translate }}</a>
+            </div>
+        </section>
+            
+            
+    </div>
+
+{% endblock %}

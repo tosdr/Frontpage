@@ -1,9 +1,6 @@
 {
     "require": {
         "twig/twig": "^3.0",
-        "paypal/paypal-checkout-sdk": "^1.0",
-        "stripe/stripe-php": "^7.46",
-        "contributte/invoice": "dev-master",
         "nette/utils": "3.0"
     }
 }

@@ -101,6 +101,7 @@ try {
     $TwigTheme->addExtension(new \Twig\Extension\StringLoaderExtension());
 
     $TwigTheme->addFunction(new \Twig\TwigFunction('getGitRevision', [new \crisp\api\Helper(), 'getGitRevision']));
+    $TwigTheme->addFunction(new \Twig\TwigFunction('getGitBranch', [new \crisp\api\Helper(), 'getGitBranch']));
 
 
     $Translation = new \crisp\api\Translation($Locale);
@@ -148,6 +149,7 @@ try {
     $TwigTheme->addGlobal("POST", $_POST);
     $TwigTheme->addGlobal("SERVER", $_SERVER);
     $TwigTheme->addFunction(new \Twig\TwigFunction('getGitRevision', [new \crisp\api\Helper(), 'getGitRevision']));
+    $TwigTheme->addFunction(new \Twig\TwigFunction('getGitBranch', [new \crisp\api\Helper(), 'getGitBranch']));
 
 
     echo $TwigTheme->render("errors/exception.twig", array(

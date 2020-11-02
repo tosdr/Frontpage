@@ -44,7 +44,15 @@ class Helper {
      * @return string Current Git Revision
      */
     public static function getGitRevision() {
-        return file_get_contents(__DIR__ . '/../../../../.git/refs/heads/master');
+        return file_get_contents(__DIR__ . '/../../../../.git/refs/heads/'. self::getGitBranch());
+    }
+
+    /**
+     * Get the current branch the CMS runs on
+     * @return string Current Git Revision
+     */
+    public static function getGitBranch() {
+        return trim(substr(file_get_contents(__DIR__ . '/../../../../.git/HEAD'), 16));
     }
 
     public static function getGitRevisionLink() {

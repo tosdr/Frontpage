@@ -1,3 +1,3 @@
-# Crisp - A Lophoten Theme
+# Crisp - A Crisp Theme
 
-Willkommen zu Crisp, der Standard Theme für das LophotenCMS
+Willkommen zu Crisp, der Standard Theme für das CrispCMS

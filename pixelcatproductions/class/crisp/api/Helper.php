@@ -48,11 +48,12 @@ class Helper {
     }
 
     public static function getGitRevisionLink() {
-        return "https://github.com/PixelcatProductions/CrispCMS-ToS-DR/tree/" . self::getGitRevision();
+        return "https://github.com/JustinBack/CrispCMS-ToS-DR/tree/" . self::getGitRevision();
     }
 
     public static function getLatestGitRevision($Force = false) {
 
+        $EnvFile = parse_ini_file(__DIR__ . "/../../../../.env");
         if (!$Force) {
 
             $Timestamp = Config::getTimestamp("github_current_revision");
@@ -68,7 +69,7 @@ class Helper {
 
         $curl = \curl_init();
         \curl_setopt_array($curl, array(
-            CURLOPT_URL => "https://api.github.com/repos/PixelcatProductions/CrispCMS-ToS-DR/git/ref/heads/master",
+            CURLOPT_URL => "https://api.github.com/repos/JustinBack/CrispCMS-ToS-DR/git/ref/heads/master",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
             CURLOPT_MAXREDIRS => 10,
@@ -78,7 +79,7 @@ class Helper {
             CURLOPT_CUSTOMREQUEST => "GET",
             CURLOPT_USERAGENT => "LophotenCMS Git Checker",
             CURLOPT_HTTPHEADER => array(
-                "Authorization: Bearer " . Config::get("github_token"),
+                "Authorization: Bearer " . $EnvFile["GITHUB_TOKEN"],
             ),
         ));
         $response = json_decode(\curl_exec($curl));

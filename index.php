@@ -19,4 +19,4 @@
 
 require_once __DIR__ . "/pixelcatproductions/crisp.php";
 
-echo $TwigTheme->render("views/frontpage.twig", []);
+echo $TwigTheme->render("views/frontpage.twig", array("ServiceTest" => array_slice(crisp\api\Phoenix::getServices(), 0, 10)));

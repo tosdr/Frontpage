@@ -16,7 +16,12 @@
 #}
 <div class="col-{{ col }}">
     <div class="card d-flex h-100">
-        <a target="_blank" href="{{ config.phoenix_url }}/services/{{ service.id }}"><div class="card-header"><img src="/{{ config.theme_dir }}/{{ config.theme }}/img/logo/{{ service.name|lower }}.png" width="64"/> {{ service.name }} {% include "components/rating.twig" with {'rating': service.rating} %}</div></a>
+        <a target="_blank" href="{{ config.phoenix_url }}/services/{{ service.id }}">
+            <div class="card-header">
+                <img src="/{{ config.theme_dir }}/{{ config.theme }}/img/logo/{{ service.name|lower|replace({'[^a-zA-Z0-9 \-]' : "-"})|replace({' ' : "-"}) }}.png" width="64"/> 
+                {{ service.name }} {% include "components/rating.twig" with {'rating': service.rating} %}
+            </div>
+        </a>
         <div class="card-body">
             {% set serviceDetails = getService(service.id) %}
 

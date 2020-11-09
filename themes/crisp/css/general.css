@@ -87,18 +87,6 @@ html,body {
     transform:translate(-50%,-50%);
 }
 
-.nav-link {
-    color: rgba(0,0,0,0.7) !important;
-}
-.nav-link:hover {
-    color: rgba(0,0,0,0.9) !important;
-}
-
-.nav-link .active {
-    color: rgba(0,0,0,1) !important;
-}
-
-
 .separator {
     display: flex;
     align-items: center;

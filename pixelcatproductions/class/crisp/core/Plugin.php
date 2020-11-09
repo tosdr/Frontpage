@@ -32,14 +32,28 @@ class Plugin {
     private $PluginMetadata;
     private $PluginPath;
     private $TwigTheme;
+    public $CurrentFile;
+    public $CurrentPage;
 
-    public function __construct($PluginFolder, $PluginName, $PluginMetadata, $TwigTheme) {
+    public function __construct($PluginFolder, $PluginName, $PluginMetadata, $TwigTheme, $CurrentFile, $CurrentPage) {
         $this->PluginFolder = $PluginFolder;
         $this->PluginName = $PluginName;
         $this->PluginMetadata = $PluginMetadata;
         $this->PluginPath = realpath(__DIR__ . "/../../../../$PluginFolder/$PluginName/") . "/";
         $this->TwigTheme = $TwigTheme;
-        require $this->PluginPath . $PluginMetadata->hookFile;
+        $this->CurrentFile = $CurrentFile;
+        $this->CurrentPage = $CurrentPage;
+        if (file_exists($this->PluginPath . $PluginMetadata->hookFile)) {
+            require $this->PluginPath . $PluginMetadata->hookFile;
+
+
+            if (file_exists($this->PluginPath . "/templates/views/" . $CurrentPage . ".twig")) {
+                echo $TwigTheme->render($this->PluginName . "/templates/views/$CurrentPage.twig");
+                exit;
+            }
+        } else {
+            throw new Exception("Failed to load plugin " . $this->PluginName . ": Missing hook file");
+        }
     }
 
     public function getConfig($Key) {

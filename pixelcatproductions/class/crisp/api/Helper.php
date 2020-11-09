@@ -44,7 +44,7 @@ class Helper {
      * @return string Current Git Revision
      */
     public static function getGitRevision() {
-        return file_get_contents(__DIR__ . '/../../../../.git/refs/heads/'. self::getGitBranch());
+        return file_get_contents(__DIR__ . '/../../../../.git/refs/heads/' . self::getGitBranch());
     }
 
     /**
@@ -77,7 +77,7 @@ class Helper {
 
         $curl = \curl_init();
         \curl_setopt_array($curl, array(
-            CURLOPT_URL => "https://api.github.com/repos/JustinBack/CrispCMS-ToS-DR/git/ref/heads/master",
+            CURLOPT_URL => "https://api.github.com/repos/JustinBack/CrispCMS-ToS-DR/git/ref/heads/" . self::getGitRevision(),
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
             CURLOPT_MAXREDIRS => 10,

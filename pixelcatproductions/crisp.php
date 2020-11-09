@@ -62,12 +62,14 @@ core::bootstrap();
 session_start();
 
 $CurrentTheme = \crisp\api\Config::get("theme");
+$CurrentFile = substr(substr($_SERVER['PHP_SELF'], 1), 0, -4);
+$CurrentPage = substr($_SERVER["REQUEST_URI"], 1);
 
 
 try {
 
 
-    $ThemeLoader = new \Twig\Loader\FilesystemLoader(__DIR__ . "/../themes/$CurrentTheme/templates/");
+    $ThemeLoader = new \Twig\Loader\FilesystemLoader(array(__DIR__ . "/../themes/$CurrentTheme/templates/", __DIR__ . "/../plugins/"));
     $TwigTheme = new \Twig\Environment($ThemeLoader, [
             /* 'cache' => __DIR__ . '/cache/' */
     ]);
@@ -101,6 +103,7 @@ try {
     $TwigTheme->addExtension(new \Twig\Extension\StringLoaderExtension());
 
     $TwigTheme->addFunction(new \Twig\TwigFunction('getGitRevision', [new \crisp\api\Helper(), 'getGitRevision']));
+    $TwigTheme->addFunction(new \Twig\TwigFunction('getGitBranch', [new \crisp\api\Helper(), 'getGitBranch']));
 
 
     $Translation = new \crisp\api\Translation($Locale);
@@ -115,7 +118,7 @@ try {
     $TwigTheme->addFilter(new \Twig\TwigFilter('truncateText', [new \crisp\api\Helper(), 'truncateText']));
 } catch (\Exception $ex) {
 
-    $ThemeLoader = new \Twig\Loader\FilesystemLoader(__DIR__ . "/../themes/$CurrentTheme/templates/");
+    $ThemeLoader = new \Twig\Loader\FilesystemLoader(array(__DIR__ . "/../themes/$CurrentTheme/templates/", __DIR__ . "/../plugins/"));
     $TwigTheme = new \Twig\Environment($ThemeLoader, [
             /* 'cache' => __DIR__ . '/cache/' */
     ]);
@@ -148,6 +151,7 @@ try {
     $TwigTheme->addGlobal("POST", $_POST);
     $TwigTheme->addGlobal("SERVER", $_SERVER);
     $TwigTheme->addFunction(new \Twig\TwigFunction('getGitRevision', [new \crisp\api\Helper(), 'getGitRevision']));
+    $TwigTheme->addFunction(new \Twig\TwigFunction('getGitBranch', [new \crisp\api\Helper(), 'getGitBranch']));
 
 
     echo $TwigTheme->render("errors/exception.twig", array(
@@ -158,6 +162,6 @@ try {
     var_dump($ex);
     exit;
 }
+$EnvFile = parse_ini_file(__DIR__ . "/../.env");
 
-
-\crisp\core\Plugins::load($TwigTheme);
+\crisp\core\Plugins::load($TwigTheme, $CurrentFile, $CurrentPage);

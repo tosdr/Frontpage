@@ -1,0 +1,6 @@
+{
+    "name": "Example Plugin",
+    "description": "Example plugin for CrispCMS",
+    "hookFile": "hook.php",
+    "author": "Justin René Back <jback@pixelcatproductions.net>"
+}

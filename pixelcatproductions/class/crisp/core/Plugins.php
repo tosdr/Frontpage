@@ -27,7 +27,7 @@ class Plugins {
 
     use \crisp\core\Hook;
 
-    public static function load($TwigTheme) {
+    public static function load($TwigTheme, $CurrentFile, $CurrentPage) {
         $DB = new \crisp\core\MySQL();
         $DBConnection = $DB->getDBConnector();
 
@@ -44,7 +44,7 @@ class Plugins {
             if (\file_exists(__DIR__ . "/../../../../$PluginFolder/$PluginName/plugin.json")) {
                 $PluginMetadata = json_decode(\file_get_contents(__DIR__ . "/../../../../$PluginFolder/$PluginName/plugin.json"));
                 if (\is_object($PluginMetadata) && isset($PluginMetadata->hookFile)) {
-                    new \crisp\core\Plugin($PluginFolder, $PluginName, $PluginMetadata, $TwigTheme);
+                    new \crisp\core\Plugin($PluginFolder, $PluginName, $PluginMetadata, $TwigTheme, $CurrentFile, $CurrentPage);
                 }
             }
         }

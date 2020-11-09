@@ -1,0 +1,48 @@
+{# 
+ # Copyright 2020 Pixelcat Productions <support@pixelcatproductions.net>
+ # @author 2020 Justin René Back <jback@pixelcatproductions.net>
+ #
+ # Licensed under the Apache License, Version 2.0 (the "License");
+ # you may not use this file except in compliance with the License.
+ # You may obtain a copy of the License at
+ #
+ #      http://www.apache.org/licenses/LICENSE-2.0
+ #
+ # Unless required by applicable law or agreed to in writing, software
+ # distributed under the License is distributed on an "AS IS" BASIS,
+ # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ # See the License for the specific language governing permissions and
+ # limitations under the License.
+#}
+
+{% if rating is not defined %}
+    {% set rating = "N/A" %}
+{% endif %}
+
+{% if rating == "N/A" %}
+    <span class="badge badge-dark">N/A</span>
+{% endif %}
+
+{% if rating == "A" %}
+    <span class="badge badge-success">A Class</span>
+{% endif %}
+
+{% if rating == "B" %}
+    <span class="badge badge-ranking-B">B Class</span>
+{% endif %}
+
+{% if rating == "C" %}
+    <span class="badge badge-warning">B Class</span>
+{% endif %}
+
+{% if rating == "D" %}
+    <span class="badge badge-ranking-D">D Class</span>
+{% endif %}
+
+
+{% if rating == "E" %}
+    <span class="badge badge-danger">E Class</span>
+{% endif %}
+
+
+

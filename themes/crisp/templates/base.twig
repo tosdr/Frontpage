@@ -29,17 +29,13 @@
             <meta charset="utf-8">
             <meta name="viewport" content="width=device-width, initial-scale=1">
             <link rel="stylesheet" href="/themes/{{ config.theme }}/css/bootstrap/bootstrap.min.css">
-            <link href="/themes/{{ config.theme }}/css/quill/quill.min.css" rel="stylesheet">
-            <link rel="stylesheet" href="/themes/{{ config.theme }}/css/jquery/jquery-ui.min.css">
-            <link rel="stylesheet" href="/themes/{{ config.theme }}/css/leaflet/leaflet.min.css" />
+            {# <link rel="stylesheet" href="/themes/{{ config.theme }}/css/jquery/jquery-ui.min.css"> #}
             <link rel="stylesheet" href="/themes/{{ config.theme }}/css/sweetalert/sweetalert.min.css">
             <!-- START Default Crisp CSS -->
             <link rel="stylesheet" href="/themes/{{ config.theme }}/css/general.min.css">
-            <link rel="stylesheet" href="/themes/{{ config.theme }}/css/profile.min.css">
             <link rel="stylesheet" href="/themes/{{ config.theme }}/css/general.min.css">
-            <link rel="stylesheet" href="/themes/{{ config.theme }}/css/map.min.css">
-            <link rel="stylesheet" href="/themes/{{ config.theme }}/css/carousel.css">
-            
+            <link rel="stylesheet" href="/themes/{{ config.theme }}/css/ranking-badges.min.css">
+
             <!-- END Default Crisp CSS -->
             <title>{{ pageTitle|translate }} {{ config.page_delimiter }} {{ config.site_name }}</title>
         {% endblock %}
@@ -53,18 +49,14 @@
     <script src="/themes/{{ config.theme }}/js/jquery/jquery.min.js"></script>
     <script src="/themes/{{ config.theme }}/js/jquery/popper.min.js"></script>
     <script src="/themes/{{ config.theme }}/js/bootstrap/bootstrap.min.js"></script>
-    <script src="/themes/{{ config.theme }}/js/quill/quill.min.js"></script>
-    <script src="/themes/{{ config.theme }}/js/jquery/jquery-ui.min.js"></script>
-    <script src="/themes/{{ config.theme }}/js/leaflet/leaflet.min.js"></script>
+    {# <script src="/themes/{{ config.theme }}/js/jquery/jquery-ui.min.js"></script> #}
     <script src="/themes/{{ config.theme }}/js/sweetalert/sweetalert.min.js"></script>
     <script src="/themes/{{ config.theme }}/js/fontawesome/all.min.js"></script>
 
     {% block scripts %}{% endblock %}
     <!-- START Default Crisp JS -->
     {% block default_scripts %}
-        <script src="/themes/{{ config.theme }}/js/shop.js"></script>
-        <script src="/themes/{{ config.theme }}/js/carousel.js"></script>
-        <script src="/themes/{{ config.theme }}/js/login.min.js"></script>
+        <script src="/themes/{{ config.theme }}/js/crisp.min.js"></script>
     {% endblock %}
     <!-- END Default Crisp JS -->
 </html>

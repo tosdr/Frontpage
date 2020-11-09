@@ -180,7 +180,7 @@ class Config {
             $Array = array();
 
             foreach ($statement->fetchAll(\PDO::FETCH_ASSOC) as $Item) {
-                $Array[$Item["key"]] = $Item["value"];
+                $Array[$Item["key"]] = self::get($Item["key"]);
             }
 
             return $Array;

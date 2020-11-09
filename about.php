@@ -18,7 +18,4 @@
  */
 
 require_once __DIR__ . "/pixelcatproductions/crisp.php";
-
-header("Content-Type: application/json");
-
-echo json_encode(crisp\api\Phoenix::getService(183));
+echo $TwigTheme->render("views/about.twig", []);

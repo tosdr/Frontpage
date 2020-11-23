@@ -40,8 +40,8 @@ class Phoenix {
             self::initDB();
         }
 
-        if (self::$Redis_Database_Connection->exists(Config::get("phoenix_api_endpoint") . "/points/$ID") && !$Force) {
-            return json_decode(self::$Redis_Database_Connection->get(Config::get("phoenix_api_endpoint") . "/points/$ID"));
+        if (self::$Redis_Database_Connection->exists(Config::get("phoenix_api_endpoint") . "/points/id/$ID") && !$Force) {
+            return json_decode(self::$Redis_Database_Connection->get(Config::get("phoenix_api_endpoint") . "/points/id/$ID"));
         }
 
         $curl = \curl_init();
@@ -56,13 +56,56 @@ class Phoenix {
             CURLOPT_CUSTOMREQUEST => "GET",
             CURLOPT_USERAGENT => "CrispCMS ToS;DR",
         ));
-        $response = json_decode(\curl_exec($curl));
+        $raw = \curl_exec($curl);
+        $response = json_decode($raw);
+
+        if ($response === null) {
+            throw new \Exception("Failed to crawl! " . $raw);
+        }
         if ($response->error) {
             throw new \Exception($response->error);
         }
 
 
-        if (self::$Redis_Database_Connection->set(Config::get("phoenix_api_endpoint") . "/points/$ID", json_encode($response), 2592000)) {
+        if (self::$Redis_Database_Connection->set(Config::get("phoenix_api_endpoint") . "/points/id/$ID", json_encode($response), 2592000)) {
+            return $response;
+        }
+        throw new \Exception("Failed to contact REDIS");
+    }
+    
+    public static function getCase($ID, $Force = false) {
+        if (self::$Redis_Database_Connection === null) {
+            self::initDB();
+        }
+
+        if (self::$Redis_Database_Connection->exists(Config::get("phoenix_api_endpoint") . "/cases/id/$ID") && !$Force) {
+            return json_decode(self::$Redis_Database_Connection->get(Config::get("phoenix_api_endpoint") . "/cases/id/$ID"));
+        }
+
+        $curl = \curl_init();
+        \curl_setopt_array($curl, array(
+            CURLOPT_URL => Config::get("phoenix_url") . Config::get("phoenix_api_endpoint") . "/cases/$ID",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "GET",
+            CURLOPT_USERAGENT => "CrispCMS ToS;DR",
+        ));
+        $raw = \curl_exec($curl);
+        $response = json_decode($raw);
+
+        if ($response === null) {
+            throw new \Exception("Failed to crawl! " . $raw);
+        }
+        if ($response->error) {
+            throw new \Exception($response->error);
+        }
+
+
+        if (self::$Redis_Database_Connection->set(Config::get("phoenix_api_endpoint") . "/cases/id/$ID", json_encode($response), 2592000)) {
             return $response;
         }
         throw new \Exception("Failed to contact REDIS");
@@ -73,8 +116,8 @@ class Phoenix {
             self::initDB();
         }
 
-        if (self::$Redis_Database_Connection->exists(Config::get("phoenix_api_endpoint") . "/topics/$ID") && !$Force) {
-            return json_decode(self::$Redis_Database_Connection->get(Config::get("phoenix_api_endpoint") . "/topics/$ID"));
+        if (self::$Redis_Database_Connection->exists(Config::get("phoenix_api_endpoint") . "/topics/id/$ID") && !$Force) {
+            return json_decode(self::$Redis_Database_Connection->get(Config::get("phoenix_api_endpoint") . "/topics/id/$ID"));
         }
 
         $curl = \curl_init();
@@ -89,16 +132,59 @@ class Phoenix {
             CURLOPT_CUSTOMREQUEST => "GET",
             CURLOPT_USERAGENT => "CrispCMS ToS;DR",
         ));
-        $response = json_decode(\curl_exec($curl));
+        $raw = \curl_exec($curl);
+        $response = json_decode($raw);
+
+        if ($response === null) {
+            throw new \Exception("Failed to crawl! " . $raw);
+        }
         if ($response->error) {
             throw new \Exception($response->error);
         }
 
 
-        if (self::$Redis_Database_Connection->set(Config::get("phoenix_api_endpoint") . "/topics/$ID", json_encode($response), 2592000)) {
+        if (self::$Redis_Database_Connection->set(Config::get("phoenix_api_endpoint") . "/topics/id/$ID", json_encode($response), 2592000)) {
             return $response;
         }
         throw new \Exception("Failed to contact REDIS");
+    }
+
+    public static function getServiceByName($Name, $Force = false) {
+        $Name = strtolower($Name);
+        if (self::$Redis_Database_Connection === null) {
+            self::initDB();
+        }
+
+        if (self::$Redis_Database_Connection->exists(Config::get("phoenix_api_endpoint") . "/services/name/$Name") && !$Force) {
+            return json_decode(self::$Redis_Database_Connection->get(Config::get("phoenix_api_endpoint") . "/services/name/$Name"));
+        }
+        throw new Exception("Service is not initialized!");
+    }
+
+    public static function serviceExistsByName($Name) {
+        $Name = strtolower($Name);
+
+        if (self::$Redis_Database_Connection === null) {
+            self::initDB();
+        }
+
+        return self::$Redis_Database_Connection->exists(Config::get("phoenix_api_endpoint") . "/services/name/$Name");
+    }
+
+    public static function pointExists($ID) {
+        if (self::$Redis_Database_Connection === null) {
+            self::initDB();
+        }
+
+        return self::$Redis_Database_Connection->exists(Config::get("phoenix_api_endpoint") . "/points/id/$ID");
+    }
+
+    public static function serviceExists($ID) {
+        if (self::$Redis_Database_Connection === null) {
+            self::initDB();
+        }
+
+        return self::$Redis_Database_Connection->exists(Config::get("phoenix_api_endpoint") . "/services/id/$ID");
     }
 
     public static function getService($ID, $Force = false) {
@@ -106,8 +192,8 @@ class Phoenix {
             self::initDB();
         }
 
-        if (self::$Redis_Database_Connection->exists(Config::get("phoenix_api_endpoint") . "/services/$ID") && !$Force) {
-            return json_decode(self::$Redis_Database_Connection->get(Config::get("phoenix_api_endpoint") . "/services/$ID"));
+        if (self::$Redis_Database_Connection->exists(Config::get("phoenix_api_endpoint") . "/services/id/$ID") && !$Force) {
+            return json_decode(self::$Redis_Database_Connection->get(Config::get("phoenix_api_endpoint") . "/services/id/$ID"));
         }
 
         $curl = \curl_init();
@@ -122,13 +208,19 @@ class Phoenix {
             CURLOPT_CUSTOMREQUEST => "GET",
             CURLOPT_USERAGENT => "CrispCMS ToS;DR",
         ));
-        $response = json_decode(\curl_exec($curl));
+        $raw = \curl_exec($curl);
+        $response = json_decode($raw);
+
+        if ($response === null) {
+            throw new \Exception("Failed to crawl! " . $raw);
+        }
+
         if ($response->error) {
             throw new \Exception($response->error);
         }
 
 
-        if (self::$Redis_Database_Connection->set(Config::get("phoenix_api_endpoint") . "/services/$ID", json_encode($response), 3600)) {
+        if (self::$Redis_Database_Connection->set(Config::get("phoenix_api_endpoint") . "/services/id/$ID", json_encode($response), 3600) && self::$Redis_Database_Connection->set(Config::get("phoenix_api_endpoint") . "/services/name/" . strtolower($response->name), json_encode($response), 15778476)) {
             return $response;
         }
         throw new \Exception("Failed to contact REDIS");
@@ -155,7 +247,12 @@ class Phoenix {
             CURLOPT_CUSTOMREQUEST => "GET",
             CURLOPT_USERAGENT => "CrispCMS ToS;DR",
         ));
-        $response = json_decode(\curl_exec($curl));
+        $raw = \curl_exec($curl);
+        $response = json_decode($raw);
+
+        if ($response === null) {
+            throw new \Exception("Failed to crawl! " . $raw);
+        }
         if ($response->error) {
             throw new \Exception($response->error);
         }
@@ -166,6 +263,46 @@ class Phoenix {
         }
         throw new \Exception("Failed to contact REDIS");
     }
+
+    public static function getCases($Force = false) {
+        if (self::$Redis_Database_Connection === null) {
+            self::initDB();
+        }
+
+        if (self::$Redis_Database_Connection->exists(Config::get("phoenix_api_endpoint") . "/cases") && !$Force) {
+            return json_decode(self::$Redis_Database_Connection->get(Config::get("phoenix_api_endpoint") . "/cases"));
+        }
+
+        $curl = \curl_init();
+        \curl_setopt_array($curl, array(
+            CURLOPT_URL => Config::get("phoenix_url") . Config::get("phoenix_api_endpoint") . "/cases",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "GET",
+            CURLOPT_USERAGENT => "CrispCMS ToS;DR",
+        ));
+        $raw = \curl_exec($curl);
+        $response = json_decode($raw);
+
+        if ($response === null) {
+            throw new \Exception("Failed to crawl! " . $raw);
+        }
+
+        if ($response->error) {
+            throw new \Exception($response->error);
+        }
+
+
+        if (self::$Redis_Database_Connection->set(Config::get("phoenix_api_endpoint") . "/cases", json_encode($response), 3600)) {
+            return $response;
+        }
+        throw new \Exception("Failed to contact REDIS");
+    }
+
 
     public static function getServices($Force = false) {
         if (self::$Redis_Database_Connection === null) {
@@ -188,7 +325,13 @@ class Phoenix {
             CURLOPT_CUSTOMREQUEST => "GET",
             CURLOPT_USERAGENT => "CrispCMS ToS;DR",
         ));
-        $response = json_decode(\curl_exec($curl));
+        $raw = \curl_exec($curl);
+        $response = json_decode($raw);
+
+        if ($response === null) {
+            throw new \Exception("Failed to crawl! " . $raw);
+        }
+
         if ($response->error) {
             throw new \Exception($response->error);
         }

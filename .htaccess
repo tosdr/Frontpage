@@ -2,9 +2,4 @@ RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{SCRIPT_FILENAME} !-d
 RewriteRule ^([^\.]+)$ $1.php [NC,L,QSA]
-
-
-AuthName "This is a testing stage area, only those with access can see this page"
-AuthType Basic
-AuthUserFile /var/customers/webs/jback/crisp/.htpasswd
-Require valid-user
+RewriteRule ^api/(.*)/(.*)$ ./api/api.php?apiversion=$1&q=$2 [NC,L,QSA]

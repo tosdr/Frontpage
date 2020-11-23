@@ -18,7 +18,9 @@
     <div class="card d-flex h-100">
         <a target="_blank" href="{{ config.phoenix_url }}/services/{{ service.id }}">
             <div class="card-header">
-                <img src="/{{ config.theme_dir }}/{{ config.theme }}/img/logo/{{ service.name|lower|replace({'[^a-zA-Z0-9 \-]' : "-"})|replace({' ' : "-"}) }}.png" width="64"/> 
+                
+                {% set lowerCaseService = service.name|lower|replace({'[^a-zA-Z0-9 \-]' : "-"})|replace({' ' : "-"}) %}
+                <img onerror="if (this.src != '/{{ config.theme_dir }}/{{ config.theme }}/img/logo/{{ lowerCaseService }}.png') this.src = '/{{ config.theme_dir }}/{{ config.theme }}/img/logo/{{ lowerCaseService }}.png';" src="/{{ config.theme_dir }}/{{ config.theme }}/img/logo/{{ lowerCaseService }}.svg" width="64"/> 
                 {{ service.name }} {% include "components/rating.twig" with {'rating': service.rating} %}
             </div>
         </a>
@@ -31,26 +33,26 @@
                     {% if point.status == "approved" and count < 5 %}
 
 
-                        {% set pointDetails = getPoint(point.id) %}
+                        {% set caseDetails = getCase(point.case_id) %}
 
-                        {% if pointDetails.case.classification == "bad" %}
+                        {% if caseDetails.classification == "bad" %}
                             {% set color = "warning" %}
                         {% endif %}
 
-                        {% if pointDetails.case.classification == "good" %}
+                        {% if caseDetails.classification == "good" %}
                             {% set color = "success" %}
                         {% endif %}
 
-                        {% if pointDetails.case.classification == "neutral" %}
-                            {% set color = "info" %}
+                        {% if caseDetails.classification == "neutral" %}
+                            {% set color = "secondary" %}
                         {% endif %}
 
-                        {% if pointDetails.case.classification == "blocker" %}
+                        {% if caseDetails.classification == "blocker" %}
                             {% set color = "danger" %}
                         {% endif %}
 
 
-                        <li data-toggle="tooltip" title="{{ point.quoteText }}" class="list-group-item list-group-item-{{ color }}"><a  target="_blank" class="link-unstyled" href="{{ config.phoenix_url }}/points/{{ point.id }}">{{ point.title }}</a> <a data-toggle="tooltip" target="_blank" title="{{ 'visit_case'|translate }}" href="{{ config.phoenix_url }}/cases/{{ pointDetails.case.id }}"><span class="badge badge-primary badge-pill"><i class="fas fa-briefcase"></i></span></a></li>
+                        <li data-toggle="tooltip" title="{{ point.quoteText }}" class="list-group-item list-group-item-{{ color }}"><a  target="_blank" class="link-unstyled" href="{{ config.phoenix_url }}/points/{{ point.id }}">{{ point.title }}</a> <a data-toggle="tooltip" target="_blank" title="{{ 'visit_case'|translate }}" href="{{ config.phoenix_url }}/cases/{{ caseDetails.id }}"><span class="badge badge-primary badge-pill"><i class="fas fa-briefcase"></i></span></a></li>
 
                         {% set count = count + 1 %}
                     {% endif %}

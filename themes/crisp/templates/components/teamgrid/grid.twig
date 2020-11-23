@@ -14,13 +14,10 @@
  # See the License for the specific language governing permissions and
  # limitations under the License.
 #}
-
 {% for Member in Team %}
     {% if loop.first or loop.index0 is divisible by(columns) %}
         <div class="row mb-5">
         {% endif %}
-
-
 
         {% include "components/teamgrid/member.twig" with {'member': Member, 'col': (12 /columns)} %}
 

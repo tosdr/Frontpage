@@ -16,10 +16,6 @@ return array(
     'Symfony\\Contracts\\Service\\' => array($vendorDir . '/symfony/service-contracts'),
     'Symfony\\Component\\String\\' => array($vendorDir . '/symfony/string'),
     'Symfony\\Component\\Console\\' => array($vendorDir . '/symfony/console'),
-    'Stripe\\' => array($vendorDir . '/stripe/stripe-php/lib'),
-    'Sample\\' => array($vendorDir . '/paypal/paypal-checkout-sdk/samples'),
     'Psr\\Container\\' => array($vendorDir . '/psr/container/src'),
-    'PayPalHttp\\' => array($vendorDir . '/paypal/paypalhttp/lib/PayPalHttp'),
-    'PayPalCheckoutSdk\\' => array($vendorDir . '/paypal/paypal-checkout-sdk/lib/PayPalCheckoutSdk'),
     'PUGX\\Poser\\' => array($vendorDir . '/badges/poser/src'),
 );

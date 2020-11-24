@@ -32,14 +32,10 @@ class ComposerStaticInitfa0cd31f7686d14914e3ccab368aa80b
             'Symfony\\Contracts\\Service\\' => 26,
             'Symfony\\Component\\String\\' => 25,
             'Symfony\\Component\\Console\\' => 26,
-            'Stripe\\' => 7,
-            'Sample\\' => 7,
         ),
         'P' => 
         array (
             'Psr\\Container\\' => 14,
-            'PayPalHttp\\' => 11,
-            'PayPalCheckoutSdk\\' => 18,
             'PUGX\\Poser\\' => 11,
         ),
     );
@@ -85,25 +81,9 @@ class ComposerStaticInitfa0cd31f7686d14914e3ccab368aa80b
         array (
             0 => __DIR__ . '/..' . '/symfony/console',
         ),
-        'Stripe\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/stripe/stripe-php/lib',
-        ),
-        'Sample\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/paypal/paypal-checkout-sdk/samples',
-        ),
         'Psr\\Container\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/container/src',
-        ),
-        'PayPalHttp\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/paypal/paypalhttp/lib/PayPalHttp',
-        ),
-        'PayPalCheckoutSdk\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/paypal/paypal-checkout-sdk/lib/PayPalCheckoutSdk',
         ),
         'PUGX\\Poser\\' => 
         array (
@@ -113,7 +93,6 @@ class ComposerStaticInitfa0cd31f7686d14914e3ccab368aa80b
 
     public static $classMap = array (
         'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
-        'FPDF' => __DIR__ . '/..' . '/setasign/fpdf/fpdf.php',
         'JsonException' => __DIR__ . '/..' . '/symfony/polyfill-php73/Resources/stubs/JsonException.php',
         'Nette\\ArgumentOutOfRangeException' => __DIR__ . '/..' . '/nette/utils/src/Utils/exceptions.php',
         'Nette\\DeprecatedException' => __DIR__ . '/..' . '/nette/utils/src/Utils/exceptions.php',

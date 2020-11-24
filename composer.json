@@ -1,6 +1,6 @@
 {
     "require": {
-        "twig/twig": "^3.0",
+        "twig/twig": "3.0.5",
         "nette/utils": "3.0",
         "badges/poser": "^2.0"
     }

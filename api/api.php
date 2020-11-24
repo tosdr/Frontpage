@@ -2,7 +2,8 @@
 
 require_once __DIR__ . "/../pixelcatproductions/crisp.php";
 
-header("Content-Type: application/json");
+use PUGX\Poser\Render\SvgPlasticRender;
+use PUGX\Poser\Poser;
 
 $Redis = new \crisp\core\Redis();
 
@@ -10,19 +11,87 @@ $Redis = $Redis->getDBConnector();
 
 $ServiceID = substr($_GET["q"], 0, -5);
 
-switch ($_GET["apiversion"]) {
-    case "1":
-    default:
+if (!strpos($_GET["q"], ".json")) {
+    $ServiceID = substr($_GET["q"], 0, -4);
+}
 
+
+
+switch ($_GET["apiversion"]) {
+    case "badge":
+        header("Content-Type: image/svg+xml");
+        $render = new SvgPlasticRender();
+        $poser = new Poser($render);
 
         if (count($Redis->keys(\crisp\api\Config::get("phoenix_api_endpoint") . "/services/name/" . strtolower($ServiceID))) === 0) {
             echo json_encode(array("error" => true, "message" => "This service does not exist!"));
             return;
         }
-
-
         $RedisData = json_decode($Redis->get(\crisp\api\Config::get("phoenix_api_endpoint") . "/services/name/" . strtolower($ServiceID)));
 
+        $Color;
+
+        switch ($RedisData->rating) {
+            case "A":
+                $Color = "46A546";
+                $Rating = "Class A";
+                break;
+            case "B":
+                $Color = "79B752";
+                $Rating = "Class B";
+                break;
+            case "C":
+                $Color = "F89406";
+                $Rating = "Class C";
+                break;
+            case "D":
+                $Color = "D66F2C";
+                $Rating = "Class D";
+                break;
+            case "E":
+                $Color = "C43C35";
+                $Rating = "Class E";
+                break;
+            default:
+                $Color = "999";
+                $Rating = "No Class Yet";
+        }
+
+        echo $poser->generate(\crisp\api\Config::get("badge_prefix"), $Rating, $Color, 'plastic');
+        break;
+    case "1":
+    default:
+        header("Content-Type: application/json");
+
+        if ($ServiceID == "all") {
+            $Services = crisp\api\Phoenix::getServices();
+            $Response = array(
+                "tosdr/api/version" => 1,
+                "tosdr/data/version" => time(),
+            );
+            foreach ($Services->services as $Service) {
+                $URLS = explode(",", $Service->url);
+                foreach ($URLS as $URL) {
+                    $URL = trim($URL);
+                    $Response["tosdr/review/$URL"] = array(
+                        "documents" => [],
+                        "logo" => "https://$_SERVER[HTTP_HOST]/" . \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") . "/img/logo/". \crisp\api\Helper::filterAlphaNum($Service->name). ".png",
+                        "name" => $Service->name,
+                        "slug" => $Service->name,
+                        "rated" => ($Service->rating == "N/A" ? false : $Service->rating),
+                        "points" => []
+                    );
+                }
+            }
+            echo json_encode($Response);
+            return;
+        }
+
+        if (count($Redis->keys(\crisp\api\Config::get("phoenix_api_endpoint") . "/services/name/" . strtolower($ServiceID))) === 0) {
+            echo json_encode(array("error" => true, "message" => "This service does not exist!"));
+            return;
+        }
+        $RedisData = json_decode($Redis->get(\crisp\api\Config::get("phoenix_api_endpoint") . "/services/name/" . strtolower($ServiceID)));
 
         $AlexaRank;
         $ServiceLinks = array();

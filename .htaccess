@@ -2,4 +2,5 @@ RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{SCRIPT_FILENAME} !-d
 RewriteRule ^([^\.]+)$ $1.php [NC,L,QSA]
+RewriteRule ^api/(.*)/service/(.*)$ ./api/api.php?apiversion=$1&q=$2 [NC,L,QSA]
 RewriteRule ^api/(.*)/(.*)$ ./api/api.php?apiversion=$1&q=$2 [NC,L,QSA]

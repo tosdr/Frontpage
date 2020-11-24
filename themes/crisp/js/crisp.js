@@ -10,8 +10,10 @@ $(function () {
 
 
     $("#ratingsearch").on('keyup', delay(function (e) {
+        $("#searchLoading").show();
         $.get("/api/search.php?q=" + this.value, function (data, status) {
             $("#services").html(data.grid);
+            $("#searchLoading").hide();
         });
     }, 500));
 });

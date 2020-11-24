@@ -1,1 +1,16 @@
-Hello!
+{% set pageTitle = 'plugin_test' %}
+{% set error = false %}
+
+
+
+{% extends "base.twig" %}
+
+{% block content %}
+    {{ include("components/navbar.twig") }}
+
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container text-center">
+            <h1 class="display-4">{{ variable1 }}</h1>
+        </div>
+    </div>
+{% endblock %}

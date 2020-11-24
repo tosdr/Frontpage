@@ -20,11 +20,3 @@
 require_once __DIR__ . "/pixelcatproductions/crisp.php";
 
 
-$Services = array();
-
-foreach (explode(",", $EnvFile["FRONTPAGE_SERVICES"]) as $ID) {
-    $Service = crisp\api\Phoenix::getService($ID);
-    array_push($Services, $Service);
-}
-
-echo $TwigTheme->render("views/frontpage.twig", array("PopularServices" => $Services));

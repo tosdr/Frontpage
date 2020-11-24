@@ -296,6 +296,14 @@ class Plugins {
         return false;
     }
 
+    public static function registerAfterRenderHook($PluginName, $Function) {
+        if (\is_callable($Function) || \function_exists($PluginName)($Function)) {
+            self::on("pluginAfterRender_$PluginName", $Function);
+            return true;
+        }
+        return false;
+    }
+
     /**
      * Registers an install hook for your plugin.
      * @param string $PluginName

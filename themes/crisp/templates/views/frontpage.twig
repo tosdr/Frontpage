@@ -73,6 +73,7 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
         &nbsp;
         <section id="ratings">
             <input type="text" placeholder="{{ 'frontpage_ratings_ratingssearch_placeholder'|translate }}" class="form-control form-control-lg" id="ratingsearch"/>
+            {% include "components/loadingSpinner.twig" with {'elementID': 'searchLoading'} %}
         </section>
         &nbsp;
         &nbsp;

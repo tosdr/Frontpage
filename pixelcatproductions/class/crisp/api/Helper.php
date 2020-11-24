@@ -47,6 +47,10 @@ class Helper {
         return file_get_contents(__DIR__ . '/../../../../.git/refs/heads/' . self::getGitBranch());
     }
 
+    public static function filterAlphaNum($String) {
+        return str_replace(" ", "-", strtolower(preg_replace("/[^0-9a-zA-Z\- ]/", "-", $String)));
+    }
+
     /**
      * Get the current branch the CMS runs on
      * @return string Current Git Revision

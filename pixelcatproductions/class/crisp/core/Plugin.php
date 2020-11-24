@@ -47,8 +47,14 @@ class Plugin {
             require $this->PluginPath . $PluginMetadata->hookFile;
 
 
-            if (file_exists($this->PluginPath . "/templates/views/" . $CurrentPage . ".twig")) {
-                echo $TwigTheme->render($this->PluginName . "/templates/views/$CurrentPage.twig");
+
+            if (file_exists($this->PluginPath . "/templates/views/$CurrentPage.twig") && file_exists($this->PluginPath . "/includes/views/$CurrentPage.php")) {
+                require $this->PluginPath . "/includes/views/$CurrentPage.php";
+
+                echo $TwigTheme->render($this->PluginName . "/templates/views/$CurrentPage.twig", TEMPLATE_VARIABLES);
+
+                $this->broadcastHook("pluginAfterRender_".$this->PluginName);
+
                 exit;
             }
         } else {
@@ -96,6 +102,10 @@ class Plugin {
      */
     public function registerInstallHook($Function) {
         return \crisp\core\Plugins::registerUninstallHook($this->PluginName, $Function);
+    }
+
+    public function registerAfterRenderHook($Function) {
+        return \crisp\core\Plugins::registerAfterRenderHook($this->PluginName, $Function);
     }
 
 }

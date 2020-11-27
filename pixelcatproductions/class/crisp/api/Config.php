@@ -73,7 +73,7 @@ class Config {
             $Result = $statement->fetch(\PDO::FETCH_ASSOC);
 
             switch ($Result["type"]) {
-                case 'serialized':
+                case 'serialized'   :
                     return \unserialize($Result["value"]);
                 case 'boolean':
                     return (bool) $Result["value"];
@@ -152,6 +152,9 @@ class Config {
 
         $Type = gettype($Value);
 
+        if(Helper::isSerialized($Value)){
+            $Type = "serialized";
+        }
 
         if (is_array($Value)) {
             $Type = "serialized";

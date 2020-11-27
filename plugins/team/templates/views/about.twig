@@ -42,7 +42,7 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
     </div>
     <div class="container">
         <section id="team">
-            {% include "components/teamgrid/grid.twig" with {'Team': config.team, 'columns': 4} %}
+            {% include "components/teamgrid/grid.twig" with {'Team': plugin.getConfig("members"), 'columns': 4} %}
         </section>
     </div>
 {% endblock %}

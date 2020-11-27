@@ -63,7 +63,7 @@ session_start();
 
 $CurrentTheme = \crisp\api\Config::get("theme");
 $CurrentFile = substr(substr($_SERVER['PHP_SELF'], 1), 0, -4);
-$CurrentPage = substr($_SERVER["REQUEST_URI"], 1);
+$CurrentPage = (isset($_GET["page"]) ? $_GET["page"] : substr($_SERVER["REQUEST_URI"], 1));
 
 
 try {
@@ -147,5 +147,10 @@ try {
     exit;
 }
 $EnvFile = parse_ini_file(__DIR__ . "/../.env");
+
+if(!isset($_GET["l"]) && !defined("CRISP_API")){
+    header("Location: /$Locale/$CurrentPage");
+    exit;
+}
 
 \crisp\core\Plugins::load($TwigTheme, $CurrentFile, $CurrentPage);

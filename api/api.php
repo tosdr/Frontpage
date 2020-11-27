@@ -1,5 +1,6 @@
 <?php
 
+define('CRISP_API', true);
 require_once __DIR__ . "/../pixelcatproductions/crisp.php";
 
 use PUGX\Poser\Render\SvgPlasticRender;

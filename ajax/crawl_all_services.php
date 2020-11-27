@@ -16,6 +16,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+define('CRISP_API', true);
 header("Content-Type: application/json");
 require_once __DIR__ . "/../pixelcatproductions/crisp.php";
 \crisp\api\lists\Cron::create("cron_missing_services", "");

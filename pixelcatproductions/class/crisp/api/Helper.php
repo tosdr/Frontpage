@@ -41,12 +41,16 @@ class Helper {
 
     public static function getLocale() {
         $Locale = locale_accept_from_http($_SERVER['HTTP_ACCEPT_LANGUAGE']);
+        if (isset($_GET["l"])) {
+            $Locale = $_GET["l"];
+        }else{
+            $Locale = "en";
+        }
 
 
         if (!in_array($Locale, array("en", "de"))) {
             $Locale = "en";
         }
-        $Locale = "en";
 
         if (isset($_COOKIE[\crisp\core\Config::$Cookie_Prefix . "language"])) {
             $Locale = $_COOKIE[\crisp\core\Config::$Cookie_Prefix . "language"];

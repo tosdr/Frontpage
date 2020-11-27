@@ -96,8 +96,11 @@ class Translation {
 
             $Array = array();
 
-            foreach ($Translations as $Item) {
-                $Array[$Item["key"]] = $Item[self::$Language];
+            foreach (lists\Languages::fetchLanguages() as $Language) {
+                $Array[$Language->getCode()] = array();
+                foreach ($Translations as $Item) {
+                    $Array[$Language->getCode()][$Item["key"]] = $Item[$Language->getCode()];
+                }
             }
 
             return $Array;
@@ -160,13 +163,16 @@ class Translation {
         ));
         if ($statement->rowCount() > 0) {
 
-            $Translation = $statement->fetch(\PDO::FETCH_ASSOC)[self::$Language];
+            $Translation = $statement->fetch(\PDO::FETCH_ASSOC);
 
-            if ($Translation === null) {
-                return $Key;
+            if ($Translation[self::$Language] === null) {
+                if (self::$Language == "en") {
+                    return $Key;
+                }
+                return $Translation["en"];
             }
 
-            return strtr($Translation, $Options);
+            return strtr($Translation[self::$Language], $Options);
         }
         return $Key;
     }
@@ -201,14 +207,16 @@ class Translation {
                 //":Language" => $this->Language
         ));
         if ($statement->rowCount() > 0) {
+            $Translation = $statement->fetch(\PDO::FETCH_ASSOC);
 
-            $Translation = $statement->fetch(\PDO::FETCH_ASSOC)[self::$Language];
-
-            if ($Translation === null) {
-                return $Key . "_plural";
+            if ($Translation[self::$Language] === null) {
+                if (self::$Language == "en") {
+                    return $Key . "_plural";
+                }
+                return strtr($Translation["en"], $Options);
             }
 
-            return strtr($Translation, $Options);
+            return strtr($Translation[self::$Language], $Options);
         }
         return $Key . "_plural";
     }

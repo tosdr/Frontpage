@@ -18,6 +18,7 @@
  */
 
 define('NO_KMS', true);
+define('CRISP_API', true);
 ob_start();
 
 if (php_sapi_name() !== 'cli') {

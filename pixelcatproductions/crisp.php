@@ -76,18 +76,7 @@ try {
 
 
 
-    $Locale = locale_accept_from_http($_SERVER['HTTP_ACCEPT_LANGUAGE']);
-
-
-    if (!in_array($Locale, array("en", "de"))) {
-        $Locale = "en";
-    }
-    $Locale = "en";
-
-    if (isset($_COOKIE[\crisp\core\Config::$Cookie_Prefix . "language"])) {
-        $Locale = $_COOKIE[\crisp\core\Config::$Cookie_Prefix . "language"];
-        setcookie(\crisp\core\Config::$Cookie_Prefix . "language", $Locale, time() + (86400 * 30), "/");
-    }
+    $Locale = \crisp\api\Helper::getLocale();
 
 
     $TwigTheme->addGlobal("URL", "https://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]");
@@ -126,17 +115,9 @@ try {
             /* 'cache' => __DIR__ . '/cache/' */
     ]);
 
+    $Locale = \crisp\api\Helper::getLocale();
 
-    $Locale = locale_accept_from_http($_SERVER['HTTP_ACCEPT_LANGUAGE']);
 
-    if (!in_array($Locale, array("en", "de"))) {
-        $Locale = "en";
-    }
-
-    if (isset($_COOKIE[\crisp\core\Config::$Cookie_Prefix . "language"])) {
-        $Locale = $_COOKIE[\crisp\core\Config::$Cookie_Prefix . "language"];
-        setcookie(\crisp\core\Config::$Cookie_Prefix . "language", $Locale, time() + (86400 * 30), "/");
-    }
     $Translation = new \crisp\api\Translation($Locale);
 
     $TwigTheme->addFilter(new \Twig\TwigFilter('date', 'date'));

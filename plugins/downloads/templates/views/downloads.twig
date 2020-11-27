@@ -20,8 +20,8 @@
 Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
     - JB
 #}
-{% set currentPage = 'about' %}
-{% set pageTitle = 'about' %}
+{% set currentPage = 'downloads' %}
+{% set pageTitle = 'downloads' %}
 {% set error = false %}
 
 
@@ -33,16 +33,13 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
 
     <div class="jumbotron jumbotron-fluid">
         <div class="container text-center">
-            <h1 class="display-4">{{ 'about'|translate }}</h1>
-            <p class="mt-2">{{ 'about_jumbotron_paragraph_1'|translate|raw }}</p>
-            <p class="mt-2">{{ 'about_jumbotron_paragraph_2'|translate|raw }}</p>
-            <p class="mt-2">{{ 'about_jumbotron_paragraph_3'|translate|raw }}</p>
-            <p class="mt-2">{{ 'about_jumbotron_paragraph_4'|translate|raw }}</p>
+            <h1 class="display-4">{{ 'downloads'|translate }}</h1>
+            <p class="mt-2">{{ 'downloads_jumbotron_paragraph_1'|translate|raw }}</p>
         </div>
     </div>
-    <div class="container">
+    <div class="container-fluid">
         <section id="team">
-            {% include plugin.PluginName ~ "/templates/teamgrid/grid.twig" with {'Team': plugin.getConfig("members"), 'columns': 4} %}
+            {% include plugin.PluginName ~ "/templates/extensiongrid/grid.twig" with {'Extensions': plugin.getConfig("extensions"), 'columns': 2} %}
         </section>
     </div>
 {% endblock %}

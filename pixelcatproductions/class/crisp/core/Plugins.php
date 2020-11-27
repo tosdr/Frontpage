@@ -67,6 +67,25 @@ class Plugins {
             }
         }
 
+        if (isset($PluginMetadata->onInstall->createTranslationKeys) && \is_object($PluginMetadata->onInstall->createTranslationKeys)) {
+            foreach ($PluginMetadata->onInstall->createTranslationKeys as $Key => $Value) {
+
+                try {
+                    $Language = \crisp\api\lists\Languages::getLanguageByCode($Key);
+
+                    if (!$Language) {
+                        continue;
+                    }
+
+                    foreach ($Value as $KeyTranslation => $ValueTranslation) {
+                        $Language->newTranslation("plugin_" . $PluginName . "_$KeyTranslation", $ValueTranslation);
+                    }
+                } catch (\PDOException $ex) {
+                    continue;
+                }
+            }
+        }
+
         if (isset($PluginMetadata->onInstall->activateDependencies) && \is_array($PluginMetadata->onInstall->activateDependencies)) {
             foreach ($PluginMetadata->onInstall->activateDependencies as $Plugin) {
                 self::install($Plugin);
@@ -122,6 +141,24 @@ class Plugins {
         if (isset($PluginMetadata->onInstall->createKVStorageItems) && \is_object($PluginMetadata->onInstall->createKVStorageItems)) {
             foreach ($PluginMetadata->onInstall->createKVStorageItems as $Key => $Value) {
                 \crisp\api\Config::delete("plugin_" . $PluginName . "_$Key");
+            }
+        }
+
+        if (isset($PluginMetadata->onInstall->createTranslationKeys) && \is_object($PluginMetadata->onInstall->createTranslationKeys)) {
+            foreach ($PluginMetadata->onInstall->createTranslationKeys as $Key => $Value) {
+                try {
+                    $Language = \crisp\api\lists\Languages::getLanguageByCode($Key);
+
+                    if (!$Language) {
+                        continue;
+                    }
+
+                    foreach ($Value as $KeyTranslation => $ValueTranslation) {
+                        $Language->deleteTranslation("plugin_" . $PluginName . "_$KeyTranslation");
+                    }
+                } catch (\PDOException $ex) {
+                    continue;
+                }
             }
         }
     }

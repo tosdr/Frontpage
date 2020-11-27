@@ -101,6 +101,17 @@ class Language extends \crisp\api\lists\Languages {
         return $statement->fetch(\PDO::FETCH_ASSOC)["Enabled"];
     }
 
+    public function exists() {
+        if ($this->LanguageID === null) {
+            return null;
+        }
+
+        $statement = $this->Database_Connection->prepare("SELECT ID FROM Languages WHERE ID = :ID");
+        $statement->execute(array(":ID" => $this->LanguageID));
+
+        return ($statement->rowCount() != 0);
+    }
+
     /**
      * Sets a new name for the language
      * @param string $Name The new name of the language
@@ -158,7 +169,6 @@ class Language extends \crisp\api\lists\Languages {
 
         return $statement->fetch(\PDO::FETCH_ASSOC)["Code"];
     }
-    
 
     /**
      * Sets the new native name of the language
@@ -187,6 +197,38 @@ class Language extends \crisp\api\lists\Languages {
         $statement->execute(array(":ID" => $this->LanguageID));
 
         return $statement->fetch(\PDO::FETCH_ASSOC)["NativeName"];
+    }
+
+    public function deleteTranslation($Key) {
+        if ($this->LanguageID === null) {
+            return null;
+        }
+
+        $statement = $this->Database_Connection->prepare("DELETE FROM Translations WHERE `key` = :key");
+        return $statement->execute(array(":key" => $Key));
+    }
+
+    public function editTranslation($Key, $Value) {
+        if ($this->LanguageID === null) {
+            return null;
+        }
+
+        $Code = $this->getCode();
+        $statement = $this->Database_Connection->prepare("UPDATE Translations SET $Code = :value WHERE `key` = :key");
+        return $statement->execute(array(":key" => $Key, ":value" => $Value));
+    }
+
+    public function newTranslation($Key, $Value) {
+        if ($this->LanguageID === null) {
+            return null;
+        }
+        if (Translation::exists($Key)) {
+            return $this->editTranslation($Key, $Value);
+        }
+
+        $Code = $this->getCode();
+        $statement = $this->Database_Connection->prepare("INSERT INTO Translations (`key`, $Code) VALUES (:key, :value)");
+        return $statement->execute(array(":key" => $Key, ":value" => $Value));
     }
 
     /**

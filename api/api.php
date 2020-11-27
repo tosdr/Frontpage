@@ -52,7 +52,7 @@ switch ($_GET["apiversion"]) {
                 $Rating = "Class E";
                 break;
             default:
-                $Color = "999";
+                $Color = "999999";
                 $Rating = "No Class Yet";
         }
 

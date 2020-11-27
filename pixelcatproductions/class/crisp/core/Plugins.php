@@ -89,6 +89,11 @@ class Plugins {
         return ($statement->rowCount() > 0 ? true : false);
     }
 
+    public static function isValid($PluginName) {
+        $PluginFolder = \crisp\api\Config::get("plugin_dir");
+        return file_exists(__DIR__ . "/../../../../$PluginFolder/$PluginName/plugin.json");
+    }
+
     /**
      * Deletes all KVStorage Items from the Plugin
      * 
@@ -116,7 +121,7 @@ class Plugins {
 
         if (isset($PluginMetadata->onInstall->createKVStorageItems) && \is_object($PluginMetadata->onInstall->createKVStorageItems)) {
             foreach ($PluginMetadata->onInstall->createKVStorageItems as $Key => $Value) {
-                self::deleteConfig($Key);
+                \crisp\api\Config::delete("plugin_" . $PluginName . "_$Key");
             }
         }
     }
@@ -168,6 +173,7 @@ class Plugins {
 
         self::broadcastHook("pluginUninstall_$PluginName", null);
         self::broadcastHook("pluginUninstall", $PluginName);
+        return true;
     }
 
     public static function integrityCheck($PluginName, $PluginMetadata, $PluginFolder) {

@@ -31,6 +31,13 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
 {% block content %}
     {{ include("components/navbar.twig") }}
 
+    {% if SERVER.HTTP_REFERER == "https://tosdr.org/" or GET.from_tosdr == "1" %}
+        <div class="container mt-3">
+            <div class="alert alert-primary">
+                {{ 'redirect_notice'|translate|raw }}
+            </div>
+        </div>
+    {% endif %}
     <div class="jumbotron jumbotron-fluid">
         <div class="container text-center">
             <h1 class="display-4"><img width="1024" src="/{{ config.theme_dir }}/{{ config.theme }}/img/tosdr-logo-128.svg"alt="Logo"/></h1>

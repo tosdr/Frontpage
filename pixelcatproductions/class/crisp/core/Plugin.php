@@ -51,10 +51,16 @@ class Plugin {
             if (file_exists($this->PluginPath . "/templates/views/$CurrentPage.twig") && file_exists($this->PluginPath . "/includes/views/$CurrentPage.php")) {
                 require $this->PluginPath . "/includes/views/$CurrentPage.php";
 
-                echo $TwigTheme->render($this->PluginName . "/templates/views/$CurrentPage.twig", TEMPLATE_VARIABLES);
 
-                $this->broadcastHook("pluginAfterRender_".$this->PluginName);
+                $_vars = (defined(TEMPLATE_VARIABLES) ? TEMPLATE_VARIABLES : [] );
+                $_vars["plugin"] = $this;
 
+                echo $TwigTheme->render($this->PluginName . "/templates/views/$CurrentPage.twig", $_vars);
+
+                $this->broadcastHook("pluginAfterRender_" . $this->PluginName);
+
+                unset($_vars);
+                
                 exit;
             }
         } else {

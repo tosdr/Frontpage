@@ -9,12 +9,11 @@ $Redis = new \crisp\core\Redis();
 
 $Redis = $Redis->getDBConnector();
 
-$ServiceID = substr($_GET["q"], 0, -5);
+$ServiceID = $_GET["q"];
 
-if (!strpos($_GET["q"], ".json")) {
-    $ServiceID = substr($_GET["q"], 0, -4);
+if (strpos($_GET["q"], ".json")) {
+    $ServiceID = substr($_GET["q"], 0, -5);
 }
-
 
 
 switch ($_GET["apiversion"]) {

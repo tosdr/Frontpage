@@ -33,6 +33,7 @@ class Plugins {
 
         $statement = $DBConnection->prepare("SELECT * FROM loadedPlugins");
         $statement->execute();
+        
 
 
         $loadedPlugins = $statement->fetchAll(\PDO::FETCH_ASSOC);

@@ -14,7 +14,8 @@
                 "add-on": "add-on",
                 "extension": "extension",
                 "view_source": "View source code on GitHub",
-                "add_to": "Add to {{ browser }}"
+                "add_to": "Add to {{ browser }}",
+                "title": "Downloads"
             }
         },
         "createKVStorageItems": {

@@ -4,6 +4,15 @@
     "hookFile": "hook.php",
     "author": "Justin René Back <jback@pixelcatproductions.net>",
     "onInstall": {
+        "createTranslationKeys": {
+            "en": {
+                "about": "About",
+                "about_jumbotron_paragraph_1": "“Terms of Service; Didn't Read” (short: ToS;DR) is a young project started in June 2012 to help fix the “biggest lie on the web”: almost no one really reads the terms of service we agree to all the time.",
+                "about_jumbotron_paragraph_2": "<strong>Background.<\/strong> The rough idea behind ToS;DR emerged during the <a href=\"http:\/\/events.ccc.de\/camp\/2011\/wiki\/ToS;DR\">2011 Chaos Communication Camp<\/a> near Berlin, with people from <a href=\"http:\/\/unhosted.org\">Unhosted<\/a> a movement to create web apps that give users control over their valuable user data and privacy. In the summer of 2012, <a href=\"http:\/\/hugoroy.eu\/index.en.html\">Hugo Roy<\/a> (<a href=\"http:\/\/twitter.com\/hugoroyd\">@hugoroyd<\/a>) started the legal analysis and brought the project to life. Since then, more people have joined the team and have contributed through the reviewer community. Ultimately, all the work is transparent and the discussions happen in public. Our work is <a href=\"thanks\">funded<\/a> by non-profits organisations and individual donations and gets released as <a href=\"http:\/\/fsfe.org\/about\/basics\/freesoftware.html\">free software<\/a> and open data.",
+                "about_jumbotron_paragraph_3": "Please bear in mind that the project is still in the early phase and that most data is subject to important changes. More information about <a href=\"classification\">our classification<\/a>.",
+                "about_jumbotron_paragraph_4": "<strong>What does \u201CToS;DR\u201D mean?<\/strong> the name is inspired by internet acronym TL;DR which stands for \"Too Long; Didn't Read\" and is often used on blogs and emails when a block of text is just really long and that people are too lazy to read the whole stuff. It was intended more as a code name than as a real name. But it seems that people like it (do you?)"
+            }
+        },
         "createKVStorageItems": {
             "members": [{
                     "name": "Michiel de Jong",

@@ -63,6 +63,38 @@ class Languages {
         return $statement->fetchAll(\PDO::FETCH_ASSOC);
     }
 
+    public static function createLanguage($Name, $Code, $NativeName, $Flag, $Enabled = true) {
+        if (self::$Database_Connection === null) {
+            self::initDB();
+        }
+        self::$Database_Connection->beginTransaction();
+        $statement = self::$Database_Connection->prepare("INSERT INTO Languages (Name, Code, NativeName, Flag, Enabled) VALUES (:Name, :Code, :NativeName, :Flag, :Enabled)");
+        $success = $statement->execute(array(":Name" => $Name, ":Code" => $Code, ":NativeName" => $NativeName, ":Flag" => $Flag, ":Enabled" => $Enabled));
+
+
+        if (!$success) {
+            return !self::$Database_Connection->rollBack();
+        }
+
+
+        $statement2 = self::$Database_Connection->prepare("SHOW COLUMNS FROM `Translations` LIKE '$Code'");
+        $statement2->execute();
+        if ($statement2->rowCount() > 0) {
+            return self::$Database_Connection->commit();
+        }
+
+
+        $statement3 = self::$Database_Connection->prepare("ALTER TABLE Translations ADD COLUMN `$Code` TEXT NULL");
+
+        $success3 = $statement3->execute();
+
+
+        if ($success3) {
+            return self::$Database_Connection->commit();
+        }
+        return !self::$Database_Connection->rollBack();
+    }
+
     /**
      * Fetches a language by country code
      * @param type $Code The language's country code
@@ -81,6 +113,11 @@ class Languages {
             }
             return $statement->fetch(\PDO::FETCH_ASSOC);
         }
+
+        if (\crisp\api\lists\Languages::createLanguage($Code, $Code, $Code, $Code)) {
+            return self::getLanguageByCode($Code, $FetchIntoClass);
+        }
+
         return false;
     }
 

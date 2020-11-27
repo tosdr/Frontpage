@@ -14,12 +14,12 @@
  # See the License for the specific language governing permissions and
  # limitations under the License.
 #}
-{% for Member in Team %}
+{% for Extension in Extensions %}
     {% if loop.first or loop.index0 is divisible by(columns) %}
         <div class="row mb-5">
         {% endif %}
 
-        {% include "components/teamgrid/member.twig" with {'member': Member, 'col': (12 /columns)} %}
+        {% include plugin.PluginName ~ "/templates/extensiongrid/addon.twig" with {'extension': Extension, 'col': (12 /columns)} %}
 
         {% if loop.last and loop.index is not divisible by(columns) %}
             {% for n in range(low=columns - (loop.index % columns), high=1, step=-1) %}

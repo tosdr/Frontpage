@@ -105,6 +105,15 @@ class Translation {
         return array();
     }
 
+    public static function exists($Key) {
+        if (self::$Database_Connection === null) {
+            self::initDB();
+        }
+        $statement = self::$Database_Connection->prepare("SELECT * FROM Translations WHERE `key` = :key");
+        $statement->execute(array(":key" => $Key));
+        return ($statement->rowCount() > 0);
+    }
+
     /**
      * Fetches translations for the specified key
      * @param string $Key The translation key

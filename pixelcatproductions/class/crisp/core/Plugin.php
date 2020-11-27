@@ -27,10 +27,10 @@ class Plugin {
 
     use \crisp\core\Hook;
 
-    private $PluginFolder;
-    private $PluginName;
-    private $PluginMetadata;
-    private $PluginPath;
+    public $PluginFolder;
+    public $PluginName;
+    public $PluginMetadata;
+    public $PluginPath;
     private $TwigTheme;
     public $CurrentFile;
     public $CurrentPage;
@@ -60,12 +60,23 @@ class Plugin {
                 $this->broadcastHook("pluginAfterRender_" . $this->PluginName);
 
                 unset($_vars);
-                
+
                 exit;
             }
         } else {
             throw new Exception("Failed to load plugin " . $this->PluginName . ": Missing hook file");
         }
+    }
+
+    public function getTranslation($Key, $Count = 1, $UserOptions = array()) {
+
+        $Locale = \crisp\api\Helper::getLocale();
+
+
+        $Translation = new \crisp\api\Translation($Locale);
+
+
+        return $Translation->fetch("plugin_" . $this->PluginName . "_$Key", $Count, $UserOptions);
     }
 
     public function getConfig($Key) {

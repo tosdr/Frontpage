@@ -39,6 +39,22 @@ class Helper {
         return $ip;
     }
 
+    public static function getLocale() {
+        $Locale = locale_accept_from_http($_SERVER['HTTP_ACCEPT_LANGUAGE']);
+
+
+        if (!in_array($Locale, array("en", "de"))) {
+            $Locale = "en";
+        }
+        $Locale = "en";
+
+        if (isset($_COOKIE[\crisp\core\Config::$Cookie_Prefix . "language"])) {
+            $Locale = $_COOKIE[\crisp\core\Config::$Cookie_Prefix . "language"];
+            setcookie(\crisp\core\Config::$Cookie_Prefix . "language", $Locale, time() + (86400 * 30), "/");
+        }
+        return $Locale;
+    }
+
     /**
      * Get the current revision the CMS runs on
      * @return string Current Git Revision

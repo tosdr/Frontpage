@@ -87,6 +87,7 @@ try {
     $TwigTheme->addGlobal("POST", $_POST);
     $TwigTheme->addGlobal("SERVER", $_SERVER);
     $TwigTheme->addGlobal("COOKIE", $_COOKIE);
+    $TwigTheme->addGlobal("isMobile", \crisp\api\Helper::isMobile());
 
 
     $TwigTheme->addExtension(new \Twig\Extension\StringLoaderExtension());
@@ -134,6 +135,7 @@ try {
     $TwigTheme->addGlobal("GET", $_GET);
     $TwigTheme->addGlobal("POST", $_POST);
     $TwigTheme->addGlobal("SERVER", $_SERVER);
+    $TwigTheme->addGlobal("isMobile", \crisp\api\Helper::isMobile());
     $TwigTheme->addFunction(new \Twig\TwigFunction('getGitRevision', [new \crisp\api\Helper(), 'getGitRevision']));
     $TwigTheme->addFunction(new \Twig\TwigFunction('getGitBranch', [new \crisp\api\Helper(), 'getGitBranch']));
 
@@ -148,7 +150,7 @@ try {
 }
 $EnvFile = parse_ini_file(__DIR__ . "/../.env");
 
-if(!isset($_GET["l"]) && !defined("CRISP_API")){
+if (!isset($_GET["l"]) && !defined("CRISP_API")) {
     header("Location: /$Locale/$CurrentPage");
     exit;
 }

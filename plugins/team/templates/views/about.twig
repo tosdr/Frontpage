@@ -42,7 +42,12 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
     </div>
     <div class="container">
         <section id="team">
-            {% include plugin.PluginName ~ "/templates/teamgrid/grid.twig" with {'Team': plugin.getConfig("members"), 'columns': 4} %}
+            {% if isMobile == true %}
+                {% set colSize = 1 %}
+            {% else %}
+                {% set colSize = 4 %}
+            {% endif %}
+            {% include plugin.PluginName ~ "/templates/teamgrid/grid.twig" with {'Team': plugin.getConfig("members"), 'columns': colSize} %}
         </section>
     </div>
 {% endblock %}

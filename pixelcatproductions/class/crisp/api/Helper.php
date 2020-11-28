@@ -24,6 +24,10 @@ namespace crisp\api;
  */
 class Helper {
 
+    public static function isMobile() {
+        return preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i", $_SERVER["HTTP_USER_AGENT"]);
+    }
+
     /**
      * Gets the real ip address even behind a proxy
      * @return String containing the IP of the user
@@ -43,19 +47,20 @@ class Helper {
         $Locale = locale_accept_from_http($_SERVER['HTTP_ACCEPT_LANGUAGE']);
         if (isset($_GET["l"])) {
             $Locale = $_GET["l"];
-        }else{
+        } else {
             $Locale = "en";
         }
 
 
-        if (!in_array($Locale, array("en", "de"))) {
+        if (!in_array($Locale, array_keys(array_column(\crisp\api\lists\Languages::fetchLanguages(false), null, "Code")))) {
             $Locale = "en";
         }
 
-        if (isset($_COOKIE[\crisp\core\Config::$Cookie_Prefix . "language"])) {
+        if (isset($_COOKIE[\crisp\core\Config::$Cookie_Prefix . "language"]) && !isset($_GET["l"])) {
             $Locale = $_COOKIE[\crisp\core\Config::$Cookie_Prefix . "language"];
-            setcookie(\crisp\core\Config::$Cookie_Prefix . "language", $Locale, time() + (86400 * 30), "/");
         }
+
+        setcookie(\crisp\core\Config::$Cookie_Prefix . "language", $Locale, time() + (86400 * 30), "/");
         return $Locale;
     }
 

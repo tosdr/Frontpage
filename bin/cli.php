@@ -21,7 +21,12 @@ switch ($argv[1]) {
         }
         switch ($argv[2]) {
             case "translations":
-                echo json_encode(\crisp\api\Translation::fetchAll(), JSON_PRETTY_PRINT);
+                if ($argc < 3) {
+                    echo json_encode(\crisp\api\Translation::fetchAll(), JSON_PRETTY_PRINT);
+                    exit;
+                }
+                
+                echo json_encode(\crisp\api\Translation::fetchAllByKey($argv[3]), JSON_PRETTY_PRINT);
                 break;
         }
         break;

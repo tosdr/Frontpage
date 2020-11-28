@@ -99,8 +99,28 @@ class Translation {
             foreach (lists\Languages::fetchLanguages() as $Language) {
                 $Array[$Language->getCode()] = array();
                 foreach ($Translations as $Item) {
-                    $Array[$Language->getCode()][$Item["key"]] = $Item[$Language->getCode()];
+                    $Array[$Language->getCode()][$Item["key"]] = ($Item[$Language->getCode()] == null ? $Item["en"] : $Item[$Language->getCode()]);
                 }
+            }
+
+            return $Array;
+        }
+        return array();
+    }
+
+    public static function fetchAllByKey($Key) {
+        if (self::$Database_Connection === null) {
+            self::initDB();
+        }
+        $statement = self::$Database_Connection->prepare("SELECT * FROM Translations");
+        $statement->execute();
+        if ($statement->rowCount() > 0) {
+
+            $Translations = $statement->fetchAll(\PDO::FETCH_ASSOC);
+
+            $Array = array();
+            foreach ($Translations as $Item) {
+                $Array[$Key][$Item["key"]] = ($Item[$Key] == null ? $Item["en"] : $Item[$Key]);
             }
 
             return $Array;

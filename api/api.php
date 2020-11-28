@@ -1,5 +1,6 @@
 <?php
 
+define('CRISP_API', true);
 require_once __DIR__ . "/../pixelcatproductions/crisp.php";
 
 use PUGX\Poser\Render\SvgPlasticRender;
@@ -17,6 +18,12 @@ if (strpos($_GET["q"], ".json")) {
 
 
 switch ($_GET["apiversion"]) {
+    case "export":
+        header("Content-Type: application/json");
+        if ($ServiceID == "translations") {
+            echo json_encode(\crisp\api\Translation::fetchAll(), JSON_PRETTY_PRINT);
+        }
+        break;
     case "badge":
         header("Content-Type: image/svg+xml");
         $render = new SvgPlasticRender();
@@ -74,7 +81,7 @@ switch ($_GET["apiversion"]) {
                     $URL = trim($URL);
                     $Response["tosdr/review/$URL"] = array(
                         "documents" => [],
-                        "logo" => "https://$_SERVER[HTTP_HOST]/" . \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") . "/img/logo/". \crisp\api\Helper::filterAlphaNum($Service->name). ".png",
+                        "logo" => "https://$_SERVER[HTTP_HOST]/" . \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") . "/img/logo/" . \crisp\api\Helper::filterAlphaNum($Service->name) . ".png",
                         "name" => $Service->name,
                         "slug" => $Service->name,
                         "rated" => ($Service->rating == "N/A" ? false : $Service->rating),

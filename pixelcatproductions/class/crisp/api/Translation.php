@@ -96,8 +96,31 @@ class Translation {
 
             $Array = array();
 
+            foreach (lists\Languages::fetchLanguages() as $Language) {
+                $Array[$Language->getCode()] = array();
+                foreach ($Translations as $Item) {
+                    $Array[$Language->getCode()][$Item["key"]] = ($Item[$Language->getCode()] == null ? $Item["en"] : $Item[$Language->getCode()]);
+                }
+            }
+
+            return $Array;
+        }
+        return array();
+    }
+
+    public static function fetchAllByKey($Key) {
+        if (self::$Database_Connection === null) {
+            self::initDB();
+        }
+        $statement = self::$Database_Connection->prepare("SELECT * FROM Translations");
+        $statement->execute();
+        if ($statement->rowCount() > 0) {
+
+            $Translations = $statement->fetchAll(\PDO::FETCH_ASSOC);
+
+            $Array = array();
             foreach ($Translations as $Item) {
-                $Array[$Item["key"]] = $Item[self::$Language];
+                $Array[$Key][$Item["key"]] = ($Item[$Key] == null ? $Item["en"] : $Item[$Key]);
             }
 
             return $Array;
@@ -160,13 +183,16 @@ class Translation {
         ));
         if ($statement->rowCount() > 0) {
 
-            $Translation = $statement->fetch(\PDO::FETCH_ASSOC)[self::$Language];
+            $Translation = $statement->fetch(\PDO::FETCH_ASSOC);
 
-            if ($Translation === null) {
-                return $Key;
+            if ($Translation[self::$Language] === null) {
+                if (self::$Language == "en") {
+                    return $Key;
+                }
+                return $Translation["en"];
             }
 
-            return strtr($Translation, $Options);
+            return strtr($Translation[self::$Language], $Options);
         }
         return $Key;
     }
@@ -201,14 +227,16 @@ class Translation {
                 //":Language" => $this->Language
         ));
         if ($statement->rowCount() > 0) {
+            $Translation = $statement->fetch(\PDO::FETCH_ASSOC);
 
-            $Translation = $statement->fetch(\PDO::FETCH_ASSOC)[self::$Language];
-
-            if ($Translation === null) {
-                return $Key . "_plural";
+            if ($Translation[self::$Language] === null) {
+                if (self::$Language == "en") {
+                    return $Key . "_plural";
+                }
+                return strtr($Translation["en"], $Options);
             }
 
-            return strtr($Translation, $Options);
+            return strtr($Translation[self::$Language], $Options);
         }
         return $Key . "_plural";
     }

@@ -27,16 +27,16 @@
     <div class="collapse navbar-collapse" id="collapsibleNavbar">
         <ul class="navbar-nav">
             <li class="nav-item {% if currentPage == "frontpage" %} active{% endif %}">
-                <a class="nav-link {% if currentPage == "frontpage" %} active{% endif %}" href="/">{{ 'navbar_item_home'|translate }}</a>
+                <a class="nav-link {% if currentPage == "frontpage" %} active{% endif %}" href="/{{ locale }}/">{{ 'navbar_item_home'|translate }}</a>
             </li>
             <li class="nav-item {% if currentPage == "ratings" %} active{% endif %}">
-                <a class="nav-link {% if currentPage == "ratings" %} active{% endif %}" href="/#ratings">{{ 'navbar_item_ratings'|translate }}</a>
+                <a class="nav-link {% if currentPage == "ratings" %} active{% endif %}" href="/{{ locale }}/#ratings">{{ 'navbar_item_ratings'|translate }}</a>
             </li>
             <li class="nav-item {% if currentPage == "about" %} active{% endif %}">
-                <a class="nav-link {% if currentPage == "about" %} active{% endif %}" href="/about">{{ 'navbar_item_about'|translate }}</a>
+                <a class="nav-link {% if currentPage == "about" %} active{% endif %}" href="/{{ locale }}/about">{{ 'navbar_item_about'|translate }}</a>
             </li>
             <li class="nav-item {% if currentPage == "downloads" %} active{% endif %}">
-                <a class="nav-link {% if currentPage == "downloads" %} active{% endif %}" href="/downloads">{{ 'navbar_item_download'|translate }}</a>
+                <a class="nav-link {% if currentPage == "downloads" %} active{% endif %}" href="/{{ locale }}/downloads">{{ 'navbar_item_download'|translate }}</a>
             </li>
             <li class="nav-item {% if currentPage == "forum" %} active{% endif %}">
                 <a class="nav-link {% if currentPage == "forum" %} active{% endif %}" href="{{ config.forum_url }}">{{ 'navbar_item_forum'|translate }}</a>

@@ -1,5 +1,6 @@
 <?php
 
+define('CRISP_API', true);
 define('NO_KMS', true);
 
 if (php_sapi_name() !== 'cli') {
@@ -13,6 +14,57 @@ require_once __DIR__ . "/../pixelcatproductions/crisp.php";
 
 
 switch ($argv[1]) {
+    case "export":
+        if ($argc < 3) {
+            echo "Missing argument: translations" . PHP_EOL;
+            exit;
+        }
+        switch ($argv[2]) {
+            case "translations":
+                if ($argc < 3) {
+                    echo json_encode(\crisp\api\Translation::fetchAll(), JSON_PRETTY_PRINT);
+                    exit;
+                }
+                
+                echo json_encode(\crisp\api\Translation::fetchAllByKey($argv[3]), JSON_PRETTY_PRINT);
+                break;
+        }
+        break;
+    case "import":
+        if ($argc < 3) {
+            echo "Missing argument: translations" . PHP_EOL;
+            exit;
+        }
+        switch ($argv[2]) {
+            case "translations":
+
+                if ($argc < 4) {
+                    echo "Missing file to import" . PHP_EOL;
+                    exit;
+                }
+                $Json = json_decode(file_get_contents($argv[3]));
+
+                foreach ($Json as $Key => $Value) {
+
+                    try {
+                        $Language = \crisp\api\lists\Languages::getLanguageByCode($Key);
+
+                        if (!$Language) {
+                            continue;
+                        }
+
+                        foreach ($Value as $KeyTranslation => $ValueTranslation) {
+                            $Language->newTranslation($KeyTranslation, $ValueTranslation);
+                        }
+                    } catch (\PDOException $ex) {
+                        continue;
+                    }
+                }
+                break;
+        }
+        break;
+
+
     case "plugin":
         if ($argc < 3) {
             echo "Missing argument: enable/disable/reinstall" . PHP_EOL;

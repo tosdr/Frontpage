@@ -16,6 +16,18 @@
                 "view_source": "View source code on GitHub",
                 "add_to": "Add to {{ browser }}",
                 "title": "Downloads"
+            },
+            "de": {
+                "firefox_description": "This add-on will add a small icon in the right side of your address bar. If you are browsing a website that is not in our database, nothing will appear. Click on the icon to get the summary of the terms, provided by ToS;DR.",
+                "chrome_description": "This extension will add a small icon in the right side of your address bar. If you are browsing a website that is not in our database, nothing will appear. Click on the icon to get the summary of the terms, provided by ToS;DR. When you land on a website with very bad terms, a small notification will pop up in the bottom right hand corner to warn you.",
+                "safari_description": "This extension will add a small icon just next to the address bar, on the left. If you are browsing a website that is not in our database, nothing will appear. Click on the icon to get the summary of the terms, provided by ToS;DR.",
+                "edge_description": "This extension will add a small icon just next to the address bar, on the left. If you are browsing a website that is not in our database, nothing will appear. Click on the icon to get the summary of the terms, provided by ToS;DR.",
+                "opera_description": "This extension will add a small icon on the top right-hand corner. If you are browsing a website that is not in our database, nothing will appear. Click on the icon to get the summary of the terms, provided by ToS;DR.",
+                "add-on": "Addon",
+                "extension": "Erweiterung",
+                "view_source": "Quellcode auf GitHub anschauen",
+                "add_to": "Zu {{ browser }} hinzufügen",
+                "title": "Erweiterungen"
             }
         },
         "createKVStorageItems": {

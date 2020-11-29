@@ -12,3 +12,9 @@ RewriteRule ^(.*)/(.*)$ index.php?l=$1&page=$2 [NC,L,QSA]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{SCRIPT_FILENAME}\.php !-d
 RewriteRule ^(.*)$ index.php?page=$1 [NC,L,QSA]
+
+
+<Files ~ "\.(env|json|config.js|md|gitignore|gitattributes|lock)$">
+    Order allow,deny
+    Deny from all
+</Files>

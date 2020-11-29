@@ -14,7 +14,7 @@ RewriteCond %{SCRIPT_FILENAME}\.php !-d
 RewriteRule ^(.*)$ index.php?page=$1 [NC,L,QSA]
 
 
-<Files ~ "\.(env|json|config.js|md|gitignore|gitattributes|lock)$">
+<Files ~ "\.(env)$">
     Order allow,deny
     Deny from all
 </Files>

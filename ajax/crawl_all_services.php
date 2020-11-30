@@ -18,6 +18,12 @@
  */
 
 define('CRISP_API', true);
+
+if (php_sapi_name() !== 'cli') {
+    echo "Not from CLI";
+    exit;
+}
+
 header("Content-Type: application/json");
 require_once __DIR__ . "/../pixelcatproductions/crisp.php";
 \crisp\api\lists\Cron::create("cron_missing_services", "");

@@ -183,6 +183,23 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$PluginFolder</td><td>The path to your plugin </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$PluginName</td><td>The name of your plugin </td></tr>
+    <tr><td class="paramtype">object</td><td class="paramname">$PluginMetadata</td><td>Plugin.json file contents </td></tr>
+    <tr><td class="paramtype">\Twig\Environment</td><td class="paramname">$TwigTheme</td><td>The current twig theme </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$CurrentFile</td><td>The current file </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$CurrentPage</td><td>The current $_GET["page"] parameter </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">Exception</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -212,6 +229,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<dl class="section see"><dt>See also</dt><dd>\crisp\api\Config::create </dd></dl>
 
 </div>
 </div>
@@ -246,6 +264,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<dl class="section see"><dt>See also</dt><dd>\crisp\api\lists\Cron::create </dd></dl>
 
 </div>
 </div>
@@ -264,6 +283,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<dl class="section see"><dt>See also</dt><dd>\crisp\api\Config::delete </dd></dl>
 
 </div>
 </div>
@@ -282,6 +302,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<dl class="section see"><dt>See also</dt><dd>\crisp\api\Config::get </dd></dl>
 
 </div>
 </div>
@@ -316,6 +337,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<dl class="section see"><dt>See also</dt><dd>\crisp\api\Translation::fetch </dd></dl>
 
 </div>
 </div>
@@ -333,6 +355,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Check the integrity of a plugin </p><dl class="section return"><dt>Returns</dt><dd>array </dd></dl>
 
 </div>
 </div>
@@ -351,6 +374,13 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Registers a hook thats called after a template has rendered in your plugin. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string&#160;|&#160;function</td><td class="paramname">$Function</td><td>Callback function, either anonymous or a string to a function </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>boolean TRUE if hook could be registered, otherwise false </dd></dl>
 
 </div>
 </div>
@@ -429,6 +459,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<dl class="section see"><dt>See also</dt><dd>\crisp\api\Config::set </dd></dl>
 
 </div>
 </div>
@@ -446,6 +477,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Uninstall a plugin </p><dl class="section return"><dt>Returns</dt><dd>bool </dd></dl>
 
 </div>
 </div>

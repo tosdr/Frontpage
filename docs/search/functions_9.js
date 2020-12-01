@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['newtranslation_238',['newTranslation',['../classcrisp_1_1api_1_1_language.html#a1e53bbf3b11ba298384363289f533576',1,'crisp::api::Language']]]
+  ['newtranslation_240',['newTranslation',['../classcrisp_1_1api_1_1_language.html#a1e53bbf3b11ba298384363289f533576',1,'crisp::api::Language']]]
 ];

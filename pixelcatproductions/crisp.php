@@ -150,10 +150,13 @@ try {
 }
 $EnvFile = parse_ini_file(__DIR__ . "/../.env");
 
-if (!isset($_GET["l"]) && !defined("CRISP_API")) {
-    header("Location: /$Locale/$CurrentPage");
-    exit;
-}
+if (!defined('CRISP_API')) {
 
-\crisp\core\Plugins::load($TwigTheme, $CurrentFile, $CurrentPage);
-\crisp\core\Templates::load($TwigTheme, $CurrentFile, $CurrentPage);
+    if (!isset($_GET["l"]) && !defined("CRISP_API")) {
+        header("Location: /$Locale/$CurrentPage");
+        exit;
+    }
+
+    \crisp\core\Plugins::load($TwigTheme, $CurrentFile, $CurrentPage);
+    \crisp\core\Templates::load($TwigTheme, $CurrentFile, $CurrentPage);
+}

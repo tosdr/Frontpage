@@ -1,0 +1,193 @@
+\hypertarget{classcrisp_1_1api_1_1_helper}{}\doxysection{Helper Class Reference}
+\label{classcrisp_1_1api_1_1_helper}\index{Helper@{Helper}}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{classcrisp_1_1api_1_1_helper_af18fc91684720f67c66e9c92a38f8bb8}{is\+Mobile}} ()
+\item 
+static \mbox{\hyperlink{classcrisp_1_1api_1_1_helper_a00ef592f6ce6b745b63930b8e979aab9}{get\+Real\+Ip\+Addr}} ()
+\item 
+static \mbox{\hyperlink{classcrisp_1_1api_1_1_helper_a7166a1dbef39ee5a6bcabf6bca93a654}{get\+Locale}} ()
+\item 
+static \mbox{\hyperlink{classcrisp_1_1api_1_1_helper_abbda27f7d9e553bd881b5dd5e98bb1ae}{get\+Git\+Revision}} ()
+\item 
+static \mbox{\hyperlink{classcrisp_1_1api_1_1_helper_a1003c6b3b59a848fe367dd5543130318}{filter\+Alpha\+Num}} (\$String)
+\item 
+static \mbox{\hyperlink{classcrisp_1_1api_1_1_helper_a007ceae8b446fcd12ebcf321b3b35696}{get\+Git\+Branch}} ()
+\item 
+static \mbox{\hyperlink{classcrisp_1_1api_1_1_helper_ac529e02361290ca584e1132b45bad572}{get\+Git\+Revision\+Link}} ()
+\item 
+static \mbox{\hyperlink{classcrisp_1_1api_1_1_helper_a5050b9615da6142bb9ef78a5ebbaeb9f}{get\+Latest\+Git\+Revision}} (\$Force=false)
+\item 
+static \mbox{\hyperlink{classcrisp_1_1api_1_1_helper_ae68a2ebfff5bb00e895fd85b642f303e}{starts\+With}} (\$haystack, \$needle)
+\item 
+static \mbox{\hyperlink{classcrisp_1_1api_1_1_helper_a2bc27a4dec777bc546b497092b5b1a70}{unique\+\_\+multidim\+\_\+array}} (\$array, \$key)
+\item 
+static \mbox{\hyperlink{classcrisp_1_1api_1_1_helper_a93a7eee8cb14ed9864e7195da83b4a32}{pretty\+Dump}} (\$var)
+\item 
+static \mbox{\hyperlink{classcrisp_1_1api_1_1_helper_a825ca28ab94885acb559b0954ae2419b}{template\+Exists}} (\$Theme, \$Template)
+\item 
+static \mbox{\hyperlink{classcrisp_1_1api_1_1_helper_aa220a1fab892798bcacc8e8a47449448}{ends\+With}} (\$haystack, \$needle)
+\item 
+static \mbox{\hyperlink{classcrisp_1_1api_1_1_helper_aba795107b79873119b776f0b0385fe26}{truncate\+Text}} (\$String, \$Length, \$Append\+Dots=true)
+\item 
+static \mbox{\hyperlink{classcrisp_1_1api_1_1_helper_a0dde52b6a2dcbaea2d84f2bc6d4587cf}{is\+Serialized}} (\$data, \$strict=true)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Some useful helper functions 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classcrisp_1_1api_1_1_helper_aa220a1fab892798bcacc8e8a47449448}\label{classcrisp_1_1api_1_1_helper_aa220a1fab892798bcacc8e8a47449448}} 
+\index{Helper@{Helper}!endsWith@{endsWith}}
+\index{endsWith@{endsWith}!Helper@{Helper}}
+\doxysubsubsection{\texorpdfstring{endsWith()}{endsWith()}}
+{\footnotesize\ttfamily static ends\+With (\begin{DoxyParamCaption}\item[{}]{\$haystack,  }\item[{}]{\$needle }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Similiar to JS ends\+With, check if a text ends with a specific string 
+\begin{DoxyParams}[1]{Parameters}
+type & {\em \$haystack} & The string to perform the check on \\
+\hline
+type & {\em \$needle} & A search needle to search for \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Boolean 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classcrisp_1_1api_1_1_helper_a1003c6b3b59a848fe367dd5543130318}\label{classcrisp_1_1api_1_1_helper_a1003c6b3b59a848fe367dd5543130318}} 
+\index{Helper@{Helper}!filterAlphaNum@{filterAlphaNum}}
+\index{filterAlphaNum@{filterAlphaNum}!Helper@{Helper}}
+\doxysubsubsection{\texorpdfstring{filterAlphaNum()}{filterAlphaNum()}}
+{\footnotesize\ttfamily static filter\+Alpha\+Num (\begin{DoxyParamCaption}\item[{}]{\$\+String }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classcrisp_1_1api_1_1_helper_a007ceae8b446fcd12ebcf321b3b35696}\label{classcrisp_1_1api_1_1_helper_a007ceae8b446fcd12ebcf321b3b35696}} 
+\index{Helper@{Helper}!getGitBranch@{getGitBranch}}
+\index{getGitBranch@{getGitBranch}!Helper@{Helper}}
+\doxysubsubsection{\texorpdfstring{getGitBranch()}{getGitBranch()}}
+{\footnotesize\ttfamily static get\+Git\+Branch (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Get the current branch the C\+MS runs on \begin{DoxyReturn}{Returns}
+string Current Git Revision 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classcrisp_1_1api_1_1_helper_abbda27f7d9e553bd881b5dd5e98bb1ae}\label{classcrisp_1_1api_1_1_helper_abbda27f7d9e553bd881b5dd5e98bb1ae}} 
+\index{Helper@{Helper}!getGitRevision@{getGitRevision}}
+\index{getGitRevision@{getGitRevision}!Helper@{Helper}}
+\doxysubsubsection{\texorpdfstring{getGitRevision()}{getGitRevision()}}
+{\footnotesize\ttfamily static get\+Git\+Revision (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Get the current revision the C\+MS runs on \begin{DoxyReturn}{Returns}
+string Current Git Revision 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classcrisp_1_1api_1_1_helper_ac529e02361290ca584e1132b45bad572}\label{classcrisp_1_1api_1_1_helper_ac529e02361290ca584e1132b45bad572}} 
+\index{Helper@{Helper}!getGitRevisionLink@{getGitRevisionLink}}
+\index{getGitRevisionLink@{getGitRevisionLink}!Helper@{Helper}}
+\doxysubsubsection{\texorpdfstring{getGitRevisionLink()}{getGitRevisionLink()}}
+{\footnotesize\ttfamily static get\+Git\+Revision\+Link (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classcrisp_1_1api_1_1_helper_a5050b9615da6142bb9ef78a5ebbaeb9f}\label{classcrisp_1_1api_1_1_helper_a5050b9615da6142bb9ef78a5ebbaeb9f}} 
+\index{Helper@{Helper}!getLatestGitRevision@{getLatestGitRevision}}
+\index{getLatestGitRevision@{getLatestGitRevision}!Helper@{Helper}}
+\doxysubsubsection{\texorpdfstring{getLatestGitRevision()}{getLatestGitRevision()}}
+{\footnotesize\ttfamily static get\+Latest\+Git\+Revision (\begin{DoxyParamCaption}\item[{}]{\$\+Force = {\ttfamily false} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classcrisp_1_1api_1_1_helper_a7166a1dbef39ee5a6bcabf6bca93a654}\label{classcrisp_1_1api_1_1_helper_a7166a1dbef39ee5a6bcabf6bca93a654}} 
+\index{Helper@{Helper}!getLocale@{getLocale}}
+\index{getLocale@{getLocale}!Helper@{Helper}}
+\doxysubsubsection{\texorpdfstring{getLocale()}{getLocale()}}
+{\footnotesize\ttfamily static get\+Locale (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classcrisp_1_1api_1_1_helper_a00ef592f6ce6b745b63930b8e979aab9}\label{classcrisp_1_1api_1_1_helper_a00ef592f6ce6b745b63930b8e979aab9}} 
+\index{Helper@{Helper}!getRealIpAddr@{getRealIpAddr}}
+\index{getRealIpAddr@{getRealIpAddr}!Helper@{Helper}}
+\doxysubsubsection{\texorpdfstring{getRealIpAddr()}{getRealIpAddr()}}
+{\footnotesize\ttfamily static get\+Real\+Ip\+Addr (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Gets the real ip address even behind a proxy \begin{DoxyReturn}{Returns}
+String containing the IP of the user 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classcrisp_1_1api_1_1_helper_af18fc91684720f67c66e9c92a38f8bb8}\label{classcrisp_1_1api_1_1_helper_af18fc91684720f67c66e9c92a38f8bb8}} 
+\index{Helper@{Helper}!isMobile@{isMobile}}
+\index{isMobile@{isMobile}!Helper@{Helper}}
+\doxysubsubsection{\texorpdfstring{isMobile()}{isMobile()}}
+{\footnotesize\ttfamily static is\+Mobile (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classcrisp_1_1api_1_1_helper_a0dde52b6a2dcbaea2d84f2bc6d4587cf}\label{classcrisp_1_1api_1_1_helper_a0dde52b6a2dcbaea2d84f2bc6d4587cf}} 
+\index{Helper@{Helper}!isSerialized@{isSerialized}}
+\index{isSerialized@{isSerialized}!Helper@{Helper}}
+\doxysubsubsection{\texorpdfstring{isSerialized()}{isSerialized()}}
+{\footnotesize\ttfamily static is\+Serialized (\begin{DoxyParamCaption}\item[{}]{\$data,  }\item[{}]{\$strict = {\ttfamily true} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Check if a string is serialized \begin{DoxySeeAlso}{See also}
+\href{https://core.trac.wordpress.org/browser/tags/5.4/src/wp-includes/functions.php\#L611}{\texttt{ https\+://core.\+trac.\+wordpress.\+org/browser/tags/5.\+4/src/wp-\/includes/functions.\+php\#\+L611}} 
+\end{DoxySeeAlso}
+
+\begin{DoxyParams}[1]{Parameters}
+type & {\em \$data} & The Data to check \\
+\hline
+type & {\em \$strict} & Strict Checking \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+boolean 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classcrisp_1_1api_1_1_helper_a93a7eee8cb14ed9864e7195da83b4a32}\label{classcrisp_1_1api_1_1_helper_a93a7eee8cb14ed9864e7195da83b4a32}} 
+\index{Helper@{Helper}!prettyDump@{prettyDump}}
+\index{prettyDump@{prettyDump}!Helper@{Helper}}
+\doxysubsubsection{\texorpdfstring{prettyDump()}{prettyDump()}}
+{\footnotesize\ttfamily static pretty\+Dump (\begin{DoxyParamCaption}\item[{}]{\$var }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classcrisp_1_1api_1_1_helper_ae68a2ebfff5bb00e895fd85b642f303e}\label{classcrisp_1_1api_1_1_helper_ae68a2ebfff5bb00e895fd85b642f303e}} 
+\index{Helper@{Helper}!startsWith@{startsWith}}
+\index{startsWith@{startsWith}!Helper@{Helper}}
+\doxysubsubsection{\texorpdfstring{startsWith()}{startsWith()}}
+{\footnotesize\ttfamily static starts\+With (\begin{DoxyParamCaption}\item[{}]{\$haystack,  }\item[{}]{\$needle }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Similiar to JS starts\+With, check if a text starts with a specific string 
+\begin{DoxyParams}[1]{Parameters}
+type & {\em \$haystack} & The string to perform the check on \\
+\hline
+type & {\em \$needle} & A search needle to search for \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Boolean 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classcrisp_1_1api_1_1_helper_a825ca28ab94885acb559b0954ae2419b}\label{classcrisp_1_1api_1_1_helper_a825ca28ab94885acb559b0954ae2419b}} 
+\index{Helper@{Helper}!templateExists@{templateExists}}
+\index{templateExists@{templateExists}!Helper@{Helper}}
+\doxysubsubsection{\texorpdfstring{templateExists()}{templateExists()}}
+{\footnotesize\ttfamily static template\+Exists (\begin{DoxyParamCaption}\item[{}]{\$\+Theme,  }\item[{}]{\$\+Template }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Check if a Template exists within a specific theme 
+\begin{DoxyParams}[1]{Parameters}
+type & {\em \$\+Theme} & The theme to search with \\
+\hline
+type & {\em \$\+Template} & The Template name \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Boolean 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classcrisp_1_1api_1_1_helper_aba795107b79873119b776f0b0385fe26}\label{classcrisp_1_1api_1_1_helper_aba795107b79873119b776f0b0385fe26}} 
+\index{Helper@{Helper}!truncateText@{truncateText}}
+\index{truncateText@{truncateText}!Helper@{Helper}}
+\doxysubsubsection{\texorpdfstring{truncateText()}{truncateText()}}
+{\footnotesize\ttfamily static truncate\+Text (\begin{DoxyParamCaption}\item[{}]{\$\+String,  }\item[{}]{\$\+Length,  }\item[{}]{\$\+Append\+Dots = {\ttfamily true} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Truncates a text and appends \char`\"{}...\char`\"{} to the end 
+\begin{DoxyParams}[1]{Parameters}
+type & {\em \$\+String} & The text to truncate \\
+\hline
+type & {\em \$\+Length} & After how many chars should we truncate the text? \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+String 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classcrisp_1_1api_1_1_helper_a2bc27a4dec777bc546b497092b5b1a70}\label{classcrisp_1_1api_1_1_helper_a2bc27a4dec777bc546b497092b5b1a70}} 
+\index{Helper@{Helper}!unique\_multidim\_array@{unique\_multidim\_array}}
+\index{unique\_multidim\_array@{unique\_multidim\_array}!Helper@{Helper}}
+\doxysubsubsection{\texorpdfstring{unique\_multidim\_array()}{unique\_multidim\_array()}}
+{\footnotesize\ttfamily static unique\+\_\+multidim\+\_\+array (\begin{DoxyParamCaption}\item[{}]{\$array,  }\item[{}]{\$key }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+

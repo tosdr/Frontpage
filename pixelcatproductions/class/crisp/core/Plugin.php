@@ -52,8 +52,9 @@ class Plugin {
                 require $this->PluginPath . "/includes/views/$CurrentPage.php";
 
 
-                $_vars = (defined(TEMPLATE_VARIABLES) ? TEMPLATE_VARIABLES : [] );
+                $_vars = (isset($_vars) ? $_vars : [] );
                 $_vars["plugin"] = $this;
+
 
                 echo $TwigTheme->render($this->PluginName . "/templates/views/$CurrentPage.twig", $_vars);
 

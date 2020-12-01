@@ -1,0 +1,113 @@
+\hypertarget{classcrisp_1_1api_1_1lists_1_1_cron}{}\doxysection{Cron Class Reference}
+\label{classcrisp_1_1api_1_1lists_1_1_cron}\index{Cron@{Cron}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcrisp_1_1api_1_1lists_1_1_cron_a095c5d389db211932136b53f25f39685}{\+\_\+\+\_\+construct}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{classcrisp_1_1api_1_1lists_1_1_cron_aea8e7edb8a7eccf11279bcd57ccd8286}{fetch\+All}} (int \$Limit=2)
+\item 
+static \mbox{\hyperlink{classcrisp_1_1api_1_1lists_1_1_cron_afedb5ffaa711da00b57c4ff0f99f1e2b}{fetch\+Unprocessed\+Schedule}} (int \$Limit=2)
+\item 
+static \mbox{\hyperlink{classcrisp_1_1api_1_1lists_1_1_cron_a17e71d5f542253cdb7a52110601309b2}{fetch\+Unprocessed}} (int \$Limit=2)
+\item 
+static \mbox{\hyperlink{classcrisp_1_1api_1_1lists_1_1_cron_adfa7dd3ab32ebe9d6ee568f2e8312b0a}{fetch}} (int \$ID)
+\item 
+static \mbox{\hyperlink{classcrisp_1_1api_1_1lists_1_1_cron_aaa61a9dcc03e0b7e8aac8b350c08bae9}{delete\+Old}} ()
+\item 
+static \mbox{\hyperlink{classcrisp_1_1api_1_1lists_1_1_cron_a0cb69341483c36e991e7108762b2787d}{create}} (string \$Type, string \$Data, string \$Interval=\char`\"{}2 M\+I\+N\+U\+TE\char`\"{})
+\item 
+static \mbox{\hyperlink{classcrisp_1_1api_1_1lists_1_1_cron_a3745a82c32e9f6af4e1035c03bee6eb3}{mark\+As\+Started}} (int \$ID)
+\item 
+static \mbox{\hyperlink{classcrisp_1_1api_1_1lists_1_1_cron_a79f6cc9049fd2d344eccecebd480838f}{mark\+As\+Canceled}} (int \$ID)
+\item 
+static \mbox{\hyperlink{classcrisp_1_1api_1_1lists_1_1_cron_a4deb9bf19524ad984c361d25ae2a3686}{mark\+As\+Finished}} (int \$ID)
+\item 
+static \mbox{\hyperlink{classcrisp_1_1api_1_1lists_1_1_cron_a0074a018e8ee051d3424cb7266a11e7d}{mark\+As\+Failed}} (int \$ID)
+\item 
+static \mbox{\hyperlink{classcrisp_1_1api_1_1lists_1_1_cron_afdc8722707a95bffd4979134a510a1e9}{set\+Log}} (int \$ID, string \$Log)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Interact with all cron jobs stored on the server 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classcrisp_1_1api_1_1lists_1_1_cron_a095c5d389db211932136b53f25f39685}\label{classcrisp_1_1api_1_1lists_1_1_cron_a095c5d389db211932136b53f25f39685}} 
+\index{Cron@{Cron}!\_\_construct@{\_\_construct}}
+\index{\_\_construct@{\_\_construct}!Cron@{Cron}}
+\doxysubsubsection{\texorpdfstring{\_\_construct()}{\_\_construct()}}
+{\footnotesize\ttfamily \+\_\+\+\_\+construct (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classcrisp_1_1api_1_1lists_1_1_cron_a0cb69341483c36e991e7108762b2787d}\label{classcrisp_1_1api_1_1lists_1_1_cron_a0cb69341483c36e991e7108762b2787d}} 
+\index{Cron@{Cron}!create@{create}}
+\index{create@{create}!Cron@{Cron}}
+\doxysubsubsection{\texorpdfstring{create()}{create()}}
+{\footnotesize\ttfamily static create (\begin{DoxyParamCaption}\item[{string}]{\$\+Type,  }\item[{string}]{\$\+Data,  }\item[{string}]{\$\+Interval = {\ttfamily \char`\"{}2~MINUTE\char`\"{}} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classcrisp_1_1api_1_1lists_1_1_cron_aaa61a9dcc03e0b7e8aac8b350c08bae9}\label{classcrisp_1_1api_1_1lists_1_1_cron_aaa61a9dcc03e0b7e8aac8b350c08bae9}} 
+\index{Cron@{Cron}!deleteOld@{deleteOld}}
+\index{deleteOld@{deleteOld}!Cron@{Cron}}
+\doxysubsubsection{\texorpdfstring{deleteOld()}{deleteOld()}}
+{\footnotesize\ttfamily static delete\+Old (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classcrisp_1_1api_1_1lists_1_1_cron_adfa7dd3ab32ebe9d6ee568f2e8312b0a}\label{classcrisp_1_1api_1_1lists_1_1_cron_adfa7dd3ab32ebe9d6ee568f2e8312b0a}} 
+\index{Cron@{Cron}!fetch@{fetch}}
+\index{fetch@{fetch}!Cron@{Cron}}
+\doxysubsubsection{\texorpdfstring{fetch()}{fetch()}}
+{\footnotesize\ttfamily static fetch (\begin{DoxyParamCaption}\item[{int}]{\$\+ID }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classcrisp_1_1api_1_1lists_1_1_cron_aea8e7edb8a7eccf11279bcd57ccd8286}\label{classcrisp_1_1api_1_1lists_1_1_cron_aea8e7edb8a7eccf11279bcd57ccd8286}} 
+\index{Cron@{Cron}!fetchAll@{fetchAll}}
+\index{fetchAll@{fetchAll}!Cron@{Cron}}
+\doxysubsubsection{\texorpdfstring{fetchAll()}{fetchAll()}}
+{\footnotesize\ttfamily static fetch\+All (\begin{DoxyParamCaption}\item[{int}]{\$\+Limit = {\ttfamily 2} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classcrisp_1_1api_1_1lists_1_1_cron_a17e71d5f542253cdb7a52110601309b2}\label{classcrisp_1_1api_1_1lists_1_1_cron_a17e71d5f542253cdb7a52110601309b2}} 
+\index{Cron@{Cron}!fetchUnprocessed@{fetchUnprocessed}}
+\index{fetchUnprocessed@{fetchUnprocessed}!Cron@{Cron}}
+\doxysubsubsection{\texorpdfstring{fetchUnprocessed()}{fetchUnprocessed()}}
+{\footnotesize\ttfamily static fetch\+Unprocessed (\begin{DoxyParamCaption}\item[{int}]{\$\+Limit = {\ttfamily 2} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classcrisp_1_1api_1_1lists_1_1_cron_afedb5ffaa711da00b57c4ff0f99f1e2b}\label{classcrisp_1_1api_1_1lists_1_1_cron_afedb5ffaa711da00b57c4ff0f99f1e2b}} 
+\index{Cron@{Cron}!fetchUnprocessedSchedule@{fetchUnprocessedSchedule}}
+\index{fetchUnprocessedSchedule@{fetchUnprocessedSchedule}!Cron@{Cron}}
+\doxysubsubsection{\texorpdfstring{fetchUnprocessedSchedule()}{fetchUnprocessedSchedule()}}
+{\footnotesize\ttfamily static fetch\+Unprocessed\+Schedule (\begin{DoxyParamCaption}\item[{int}]{\$\+Limit = {\ttfamily 2} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classcrisp_1_1api_1_1lists_1_1_cron_a79f6cc9049fd2d344eccecebd480838f}\label{classcrisp_1_1api_1_1lists_1_1_cron_a79f6cc9049fd2d344eccecebd480838f}} 
+\index{Cron@{Cron}!markAsCanceled@{markAsCanceled}}
+\index{markAsCanceled@{markAsCanceled}!Cron@{Cron}}
+\doxysubsubsection{\texorpdfstring{markAsCanceled()}{markAsCanceled()}}
+{\footnotesize\ttfamily static mark\+As\+Canceled (\begin{DoxyParamCaption}\item[{int}]{\$\+ID }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classcrisp_1_1api_1_1lists_1_1_cron_a0074a018e8ee051d3424cb7266a11e7d}\label{classcrisp_1_1api_1_1lists_1_1_cron_a0074a018e8ee051d3424cb7266a11e7d}} 
+\index{Cron@{Cron}!markAsFailed@{markAsFailed}}
+\index{markAsFailed@{markAsFailed}!Cron@{Cron}}
+\doxysubsubsection{\texorpdfstring{markAsFailed()}{markAsFailed()}}
+{\footnotesize\ttfamily static mark\+As\+Failed (\begin{DoxyParamCaption}\item[{int}]{\$\+ID }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classcrisp_1_1api_1_1lists_1_1_cron_a4deb9bf19524ad984c361d25ae2a3686}\label{classcrisp_1_1api_1_1lists_1_1_cron_a4deb9bf19524ad984c361d25ae2a3686}} 
+\index{Cron@{Cron}!markAsFinished@{markAsFinished}}
+\index{markAsFinished@{markAsFinished}!Cron@{Cron}}
+\doxysubsubsection{\texorpdfstring{markAsFinished()}{markAsFinished()}}
+{\footnotesize\ttfamily static mark\+As\+Finished (\begin{DoxyParamCaption}\item[{int}]{\$\+ID }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classcrisp_1_1api_1_1lists_1_1_cron_a3745a82c32e9f6af4e1035c03bee6eb3}\label{classcrisp_1_1api_1_1lists_1_1_cron_a3745a82c32e9f6af4e1035c03bee6eb3}} 
+\index{Cron@{Cron}!markAsStarted@{markAsStarted}}
+\index{markAsStarted@{markAsStarted}!Cron@{Cron}}
+\doxysubsubsection{\texorpdfstring{markAsStarted()}{markAsStarted()}}
+{\footnotesize\ttfamily static mark\+As\+Started (\begin{DoxyParamCaption}\item[{int}]{\$\+ID }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classcrisp_1_1api_1_1lists_1_1_cron_afdc8722707a95bffd4979134a510a1e9}\label{classcrisp_1_1api_1_1lists_1_1_cron_afdc8722707a95bffd4979134a510a1e9}} 
+\index{Cron@{Cron}!setLog@{setLog}}
+\index{setLog@{setLog}!Cron@{Cron}}
+\doxysubsubsection{\texorpdfstring{setLog()}{setLog()}}
+{\footnotesize\ttfamily static set\+Log (\begin{DoxyParamCaption}\item[{int}]{\$\+ID,  }\item[{string}]{\$\+Log }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+

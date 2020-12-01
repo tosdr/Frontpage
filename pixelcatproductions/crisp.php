@@ -64,7 +64,7 @@ session_start();
 $CurrentTheme = \crisp\api\Config::get("theme");
 $CurrentFile = substr(substr($_SERVER['PHP_SELF'], 1), 0, -4);
 $CurrentPage = (isset($_GET["page"]) ? $_GET["page"] : substr($_SERVER["REQUEST_URI"], 1));
-
+$CurrentPage = ($CurrentPage == "" ? "frontpage" : $CurrentPage);
 
 try {
 
@@ -156,3 +156,4 @@ if (!isset($_GET["l"]) && !defined("CRISP_API")) {
 }
 
 \crisp\core\Plugins::load($TwigTheme, $CurrentFile, $CurrentPage);
+\crisp\core\Templates::load($TwigTheme, $CurrentFile, $CurrentPage);

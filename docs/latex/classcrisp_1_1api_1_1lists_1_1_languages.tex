@@ -1,0 +1,91 @@
+\hypertarget{classcrisp_1_1api_1_1lists_1_1_languages}{}\doxysection{Languages Class Reference}
+\label{classcrisp_1_1api_1_1lists_1_1_languages}\index{Languages@{Languages}}
+Inheritance diagram for Languages\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classcrisp_1_1api_1_1lists_1_1_languages}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcrisp_1_1api_1_1lists_1_1_languages_a095c5d389db211932136b53f25f39685}{\+\_\+\+\_\+construct}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{classcrisp_1_1api_1_1lists_1_1_languages_a42058cdda12f0f8ffe5773e981dc78af}{fetch\+Languages}} (\$Fetch\+Into\+Class=true)
+\item 
+static \mbox{\hyperlink{classcrisp_1_1api_1_1lists_1_1_languages_a900d93b4a684a483b5b18e7016f7d9e1}{create\+Language}} (\$Name, \$Code, \$Native\+Name, \$Flag, \$Enabled=true)
+\item 
+static \mbox{\hyperlink{classcrisp_1_1api_1_1lists_1_1_languages_aff95299f239623b016ba91b491562416}{get\+Language\+By\+Code}} (\$Code, \$Fetch\+Into\+Class=true)
+\item 
+static \mbox{\hyperlink{classcrisp_1_1api_1_1lists_1_1_languages_a49ca481d49201e48422674385d93aee7}{get\+Language\+By\+ID}} (\$ID, \$Fetch\+Into\+Class=true)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Interact with all languages stored on the server 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classcrisp_1_1api_1_1lists_1_1_languages_a095c5d389db211932136b53f25f39685}\label{classcrisp_1_1api_1_1lists_1_1_languages_a095c5d389db211932136b53f25f39685}} 
+\index{Languages@{Languages}!\_\_construct@{\_\_construct}}
+\index{\_\_construct@{\_\_construct}!Languages@{Languages}}
+\doxysubsubsection{\texorpdfstring{\_\_construct()}{\_\_construct()}}
+{\footnotesize\ttfamily \+\_\+\+\_\+construct (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classcrisp_1_1api_1_1lists_1_1_languages_a900d93b4a684a483b5b18e7016f7d9e1}\label{classcrisp_1_1api_1_1lists_1_1_languages_a900d93b4a684a483b5b18e7016f7d9e1}} 
+\index{Languages@{Languages}!createLanguage@{createLanguage}}
+\index{createLanguage@{createLanguage}!Languages@{Languages}}
+\doxysubsubsection{\texorpdfstring{createLanguage()}{createLanguage()}}
+{\footnotesize\ttfamily static create\+Language (\begin{DoxyParamCaption}\item[{}]{\$\+Name,  }\item[{}]{\$\+Code,  }\item[{}]{\$\+Native\+Name,  }\item[{}]{\$\+Flag,  }\item[{}]{\$\+Enabled = {\ttfamily true} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classcrisp_1_1api_1_1lists_1_1_languages_a42058cdda12f0f8ffe5773e981dc78af}\label{classcrisp_1_1api_1_1lists_1_1_languages_a42058cdda12f0f8ffe5773e981dc78af}} 
+\index{Languages@{Languages}!fetchLanguages@{fetchLanguages}}
+\index{fetchLanguages@{fetchLanguages}!Languages@{Languages}}
+\doxysubsubsection{\texorpdfstring{fetchLanguages()}{fetchLanguages()}}
+{\footnotesize\ttfamily static fetch\+Languages (\begin{DoxyParamCaption}\item[{}]{\$\+Fetch\+Into\+Class = {\ttfamily true} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Fetches all languages 
+\begin{DoxyParams}[1]{Parameters}
+boolean & {\em \$\+Fetch\+Into\+Class} & Should we fetch the result into new \textbackslash{}crisp\textbackslash{}api\textbackslash{}\+Language()? \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+boolean$\vert$array$\vert$\textbackslash{}crisp\textbackslash{}api\textbackslash{}\+Language with all languages 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classcrisp_1_1api_1_1lists_1_1_languages_aff95299f239623b016ba91b491562416}\label{classcrisp_1_1api_1_1lists_1_1_languages_aff95299f239623b016ba91b491562416}} 
+\index{Languages@{Languages}!getLanguageByCode@{getLanguageByCode}}
+\index{getLanguageByCode@{getLanguageByCode}!Languages@{Languages}}
+\doxysubsubsection{\texorpdfstring{getLanguageByCode()}{getLanguageByCode()}}
+{\footnotesize\ttfamily static get\+Language\+By\+Code (\begin{DoxyParamCaption}\item[{}]{\$\+Code,  }\item[{}]{\$\+Fetch\+Into\+Class = {\ttfamily true} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Fetches a language by country code 
+\begin{DoxyParams}[1]{Parameters}
+type & {\em \$\+Code} & The language\textquotesingle{}s country code \\
+\hline
+type & {\em \$\+Fetch\+Into\+Class} & Should we fetch the result into new \textbackslash{}crisp\textbackslash{}api\textbackslash{}\+Language()? \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+boolean$\vert$\textbackslash{}crisp\textbackslash{}api\textbackslash{}\+Language$\vert$array with the language 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classcrisp_1_1api_1_1lists_1_1_languages_a49ca481d49201e48422674385d93aee7}\label{classcrisp_1_1api_1_1lists_1_1_languages_a49ca481d49201e48422674385d93aee7}} 
+\index{Languages@{Languages}!getLanguageByID@{getLanguageByID}}
+\index{getLanguageByID@{getLanguageByID}!Languages@{Languages}}
+\doxysubsubsection{\texorpdfstring{getLanguageByID()}{getLanguageByID()}}
+{\footnotesize\ttfamily static get\+Language\+By\+ID (\begin{DoxyParamCaption}\item[{}]{\$\+ID,  }\item[{}]{\$\+Fetch\+Into\+Class = {\ttfamily true} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Fetches a language by ID 
+\begin{DoxyParams}[1]{Parameters}
+type & {\em \$\+ID} & The database ID of the language \\
+\hline
+ & {\em type} & Should we fetch the result into new \textbackslash{}crisp\textbackslash{}api\textbackslash{}\+Language()? \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+boolean$\vert$\textbackslash{}crisp\textbackslash{}api\textbackslash{}\+Language$\vert$array with the language 
+\end{DoxyReturn}

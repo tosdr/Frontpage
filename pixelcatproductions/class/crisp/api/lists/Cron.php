@@ -120,14 +120,16 @@ class Cron {
      * @param string $Type The name of the cronjon, all lowercase, no spaces
      * @param string $Data The data which should be sent to the cron
      * @param string $Interval In which interval should the cron be executed?
-     * @return Boolean TRUE if action successful
+     * @return int The ID of the Cron
      */
     public static function create(string $Type, string $Data, string $Interval = "2 MINUTE") {
         if (self::$Database_Connection === null) {
             self::initDB();
         }
         $statement = self::$Database_Connection->prepare("INSERT INTO Cron (Type, Data, ScheduledAt, `Interval`) VALUES (:Type, :Data, (NOW() + INTERVAL $Interval), :Interval)");
-        return $statement->execute(array(":Type" => $Type, ":Data" => $Data, ":Interval" => $Interval));
+        $statement->execute(array(":Type" => $Type, ":Data" => $Data, ":Interval" => $Interval));
+        
+        return self::$Database_Connection->lastInsertId();
     }
 
     /**

@@ -1,0 +1,25 @@
+{
+    "name": "Hello World Plugin",
+    "description": "Tutorial plugin plugin for CrispCMS",
+    "hookFile": "hook.php",
+    "author": "Justin René Back <jback@pixelcatproductions.net>",
+    "onInstall": {
+        "createTranslationKeys": {
+            "en": {
+                "hello_world": "Hello World"
+            },
+            "de": {
+                "hello_world": "Hallo Welt"
+            }
+        },
+        "createKVStorageItems": {
+            "display_hello_world": true
+        },
+        "activateDependencies": []
+    },
+    "onUninstall": {
+        "deleteData": true,
+        "deactivateDependencies": [],
+        "purgeDependencies": []
+    }
+}

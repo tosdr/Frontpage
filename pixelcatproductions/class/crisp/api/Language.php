@@ -61,7 +61,7 @@ class Language extends \crisp\api\lists\Languages {
     /**
      * Enables a language
      * @see disable
-     * @return Boolean
+     * @return boolean
      */
     public function enable() {
         if ($this->LanguageID === null) {
@@ -75,7 +75,7 @@ class Language extends \crisp\api\lists\Languages {
     /**
      * Disables a language
      * @see enable
-     * @return Boolean
+     * @return boolean
      */
     public function disable() {
         if ($this->LanguageID === null) {
@@ -88,7 +88,7 @@ class Language extends \crisp\api\lists\Languages {
 
     /**
      * Checks wether a language is enabled or not
-     * @return Boolean
+     * @return boolean
      */
     public function isEnabled() {
         if ($this->LanguageID === null) {
@@ -101,6 +101,10 @@ class Language extends \crisp\api\lists\Languages {
         return $statement->fetch(\PDO::FETCH_ASSOC)["Enabled"];
     }
 
+    /**
+     * Check if the language exists in the database
+     * @return boolean
+     */
     public function exists() {
         if ($this->LanguageID === null) {
             return null;
@@ -115,7 +119,7 @@ class Language extends \crisp\api\lists\Languages {
     /**
      * Sets a new name for the language
      * @param string $Name The new name of the language
-     * @return Boolean TRUE if successfully set, otherwise false
+     * @return boolean TRUE if successfully set, otherwise false
      */
     public function setName(string $Name) {
         if ($this->LanguageID === null) {
@@ -128,7 +132,7 @@ class Language extends \crisp\api\lists\Languages {
 
     /**
      * Gets the name of the language
-     * @return String
+     * @return string
      */
     public function getName() {
         if ($this->LanguageID === null) {
@@ -144,7 +148,7 @@ class Language extends \crisp\api\lists\Languages {
     /**
      * Sets the code of the language
      * @param string $Code The new language code
-     * @return Boolean TRUE if successfully set, otherwise false
+     * @return boolean TRUE if successfully set, otherwise false
      */
     public function setCode(string $Code) {
         if ($this->LanguageID === null) {
@@ -157,7 +161,7 @@ class Language extends \crisp\api\lists\Languages {
 
     /**
      * Gets the code of a language
-     * @return Boolean
+     * @return boolean
      */
     public function getCode() {
         if ($this->LanguageID === null) {
@@ -173,7 +177,7 @@ class Language extends \crisp\api\lists\Languages {
     /**
      * Sets the new native name of the language
      * @param string $NativeName The new native name
-     * @return Boolean TRUE if successfully set, otherwise false
+     * @return boolean TRUE if successfully set, otherwise false
      */
     public function setNativeName(string $NativeName) {
         if ($this->LanguageID === null) {
@@ -186,7 +190,7 @@ class Language extends \crisp\api\lists\Languages {
 
     /**
      * Gets the native name of a language
-     * @return String
+     * @return string
      */
     public function getNativeName() {
         if ($this->LanguageID === null) {
@@ -234,7 +238,7 @@ class Language extends \crisp\api\lists\Languages {
     /**
      * Sets the flag icon of a language
      * @param string $Flag The flag icon name, see Themes
-     * @return Boolean TRUE if successfully set, otherwise false
+     * @return boolean TRUE if successfully set, otherwise false
      */
     public function setFlag(string $Flag) {
         if ($this->LanguageID === null) {
@@ -247,7 +251,7 @@ class Language extends \crisp\api\lists\Languages {
 
     /**
      * Gets the flag icon of a language
-     * @return String
+     * @return string The current path of the flag
      */
     public function getFlag() {
         if ($this->LanguageID === null) {

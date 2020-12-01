@@ -35,11 +35,19 @@ class Cron {
         self::initDB();
     }
 
+    /**
+     * Initializes the DB
+     */
     private static function initDB() {
         $DB = new \crisp\core\MySQL();
         self::$Database_Connection = $DB->getDBConnector();
     }
 
+    /**
+     * Retrieve a list of cron jobs
+     * @param int $Limit How many do you like to retrieve
+     * @return array Contains cron jobs
+     */
     public static function fetchAll(int $Limit = 2) {
         if (self::$Database_Connection === null) {
             self::initDB();
@@ -50,6 +58,11 @@ class Cron {
         return $statement->fetchAll(\PDO::FETCH_ASSOC);
     }
 
+    /**
+     * Retrieve a list of unprocessed cron jobs which should start by now
+     * @param int $Limit How many do you like to retrieve
+     * @return array Contains cron jobs
+     */
     public static function fetchUnprocessedSchedule(int $Limit = 2) {
         if (self::$Database_Connection === null) {
             self::initDB();
@@ -60,6 +73,11 @@ class Cron {
         return $statement->fetchAll(\PDO::FETCH_ASSOC);
     }
 
+    /**
+     * Retrieve a list of all unprocessed cron jobs
+     * @param int $Limit How many do you like to retrieve
+     * @return array Contains cron jobs
+     */
     public static function fetchUnprocessed(int $Limit = 2) {
         if (self::$Database_Connection === null) {
             self::initDB();
@@ -70,6 +88,11 @@ class Cron {
         return $statement->fetchAll(\PDO::FETCH_ASSOC);
     }
 
+    /**
+     * Fetch details of a specific cron job
+     * @param int $ID The ID of a cron job
+     * @return array Contains cron details
+     */
     public static function fetch(int $ID) {
         if (self::$Database_Connection === null) {
             self::initDB();
@@ -80,6 +103,10 @@ class Cron {
         return $statement->fetch(\PDO::FETCH_ASSOC);
     }
 
+    /**
+     * Delete processed, finished or failed cronjobs
+     * @return Boolean TRUE if action successful
+     */
     public static function deleteOld() {
         if (self::$Database_Connection === null) {
             self::initDB();
@@ -88,6 +115,13 @@ class Cron {
         return $statement->execute();
     }
 
+    /**
+     * Create a new cron job
+     * @param string $Type The name of the cronjon, all lowercase, no spaces
+     * @param string $Data The data which should be sent to the cron
+     * @param string $Interval In which interval should the cron be executed?
+     * @return Boolean TRUE if action successful
+     */
     public static function create(string $Type, string $Data, string $Interval = "2 MINUTE") {
         if (self::$Database_Connection === null) {
             self::initDB();
@@ -96,6 +130,11 @@ class Cron {
         return $statement->execute(array(":Type" => $Type, ":Data" => $Data, ":Interval" => $Interval));
     }
 
+    /**
+     * Mark a specific cronjob as started
+     * @param int $ID The ID of a cron job
+     * @return Boolean TRUE if action successful
+     */
     public static function markAsStarted(int $ID) {
         if (self::$Database_Connection === null) {
             self::initDB();
@@ -104,6 +143,11 @@ class Cron {
         return $statement->execute(array(":ID" => $ID));
     }
 
+    /**
+     * Mark a specific cronjob as canceled
+     * @param int $ID The ID of a cron job
+     * @return Boolean TRUE if action successful
+     */
     public static function markAsCanceled(int $ID) {
         if (self::$Database_Connection === null) {
             self::initDB();
@@ -112,6 +156,11 @@ class Cron {
         return $statement->execute(array(":ID" => $ID));
     }
 
+    /**
+     * Mark a specific cronjob as finished
+     * @param int $ID The ID of a cron job
+     * @return Boolean TRUE if action successful
+     */
     public static function markAsFinished(int $ID) {
         if (self::$Database_Connection === null) {
             self::initDB();
@@ -120,6 +169,11 @@ class Cron {
         return $statement->execute(array(":ID" => $ID));
     }
 
+    /**
+     * Mark a specific cronjob as failed
+     * @param int $ID The ID of a cron job
+     * @return Boolean TRUE if action successful
+     */
     public static function markAsFailed(int $ID) {
         if (self::$Database_Connection === null) {
             self::initDB();
@@ -128,6 +182,12 @@ class Cron {
         return $statement->execute(array(":ID" => $ID));
     }
 
+    /**
+     * Edit the log of a cronjob
+     * @param int $ID The ID of a cron job
+     * @param string $Log The Text to set
+     * @return Boolean TRUE if action successful
+     */
     public static function setLog(int $ID, string $Log) {
         if (self::$Database_Connection === null) {
             self::initDB();

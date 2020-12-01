@@ -63,6 +63,15 @@ class Languages {
         return $statement->fetchAll(\PDO::FETCH_ASSOC);
     }
 
+    /**
+     * Create a new language
+     * @param type $Name The name of the language
+     * @param type $Code The letter code of the language e.g. en-US, de, es, ru
+     * @param type $NativeName How is the language called in the native tongue?
+     * @param type $Flag Path to the flag image on the server
+     * @param type $Enabled Enable/disable the language
+     * @return boolean TRUE if action was successful
+     */
     public static function createLanguage($Name, $Code, $NativeName, $Flag, $Enabled = true) {
         if (self::$Database_Connection === null) {
             self::initDB();

@@ -17,6 +17,20 @@
  * limitations under the License.
  */
 
-require_once __DIR__ . "/pixelcatproductions/crisp.php";
+namespace crisp\core;
 
+/**
+ * Used internally, plugin loader
+ *
+ */
+class Templates {
 
+    use \crisp\core\Hook;
+
+    public static function load($TwigTheme, $CurrentFile, $CurrentPage) {
+        if (\crisp\api\Helper::templateExists(\crisp\api\Config::get("theme"), "/views/$CurrentPage.twig")) {
+            new \crisp\core\Template($TwigTheme, $CurrentFile, $CurrentPage);
+        }
+    }
+
+}

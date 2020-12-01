@@ -1,0 +1,141 @@
+\hypertarget{classcrisp_1_1api_1_1_config}{}\doxysection{Config Class Reference}
+\label{classcrisp_1_1api_1_1_config}\index{Config@{Config}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcrisp_1_1api_1_1_config_a095c5d389db211932136b53f25f39685}{\+\_\+\+\_\+construct}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{classcrisp_1_1api_1_1_config_a89c8217b558fda742458fa481af0a883}{exists}} (\$Key)
+\item 
+static \mbox{\hyperlink{classcrisp_1_1api_1_1_config_ac25f6d0b3db3854589ff1929302dbfdb}{get}} (\$Key)
+\item 
+static \mbox{\hyperlink{classcrisp_1_1api_1_1_config_a08c080a39848c73bf9fd57e436cafb68}{get\+Timestamp}} (string \$Key)
+\item 
+static \mbox{\hyperlink{classcrisp_1_1api_1_1_config_acf2f4907926724154155cf58ff7100c0}{create}} (\$Key, \$Value)
+\item 
+static \mbox{\hyperlink{classcrisp_1_1api_1_1_config_a42f9afb8c19c0069b6ae47c8b5e25f3b}{delete}} (\$Key)
+\item 
+static \mbox{\hyperlink{classcrisp_1_1api_1_1_config_a3b45b8d8f3ecd8311cb318410d74b4bd}{set}} (\$Key, \$Value)
+\item 
+static \mbox{\hyperlink{classcrisp_1_1api_1_1_config_a60f9ff17d15bf996c3d374518777d2d6}{list}} (\$KV=false)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Interact with the key/value storage of the server 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classcrisp_1_1api_1_1_config_a095c5d389db211932136b53f25f39685}\label{classcrisp_1_1api_1_1_config_a095c5d389db211932136b53f25f39685}} 
+\index{Config@{Config}!\_\_construct@{\_\_construct}}
+\index{\_\_construct@{\_\_construct}!Config@{Config}}
+\doxysubsubsection{\texorpdfstring{\_\_construct()}{\_\_construct()}}
+{\footnotesize\ttfamily \+\_\+\+\_\+construct (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classcrisp_1_1api_1_1_config_acf2f4907926724154155cf58ff7100c0}\label{classcrisp_1_1api_1_1_config_acf2f4907926724154155cf58ff7100c0}} 
+\index{Config@{Config}!create@{create}}
+\index{create@{create}!Config@{Config}}
+\doxysubsubsection{\texorpdfstring{create()}{create()}}
+{\footnotesize\ttfamily static create (\begin{DoxyParamCaption}\item[{}]{\$\+Key,  }\item[{}]{\$\+Value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Create a new KV Storage entry using the specified key and value 
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$\+Key} & the key to insert \\
+\hline
+string & {\em \$\+Value} & the value to insert \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+boolean T\+R\+UE on success, on failure F\+A\+L\+SE 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classcrisp_1_1api_1_1_config_a42f9afb8c19c0069b6ae47c8b5e25f3b}\label{classcrisp_1_1api_1_1_config_a42f9afb8c19c0069b6ae47c8b5e25f3b}} 
+\index{Config@{Config}!delete@{delete}}
+\index{delete@{delete}!Config@{Config}}
+\doxysubsubsection{\texorpdfstring{delete()}{delete()}}
+{\footnotesize\ttfamily static delete (\begin{DoxyParamCaption}\item[{}]{\$\+Key }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Delete a KV Storage entry using the specified key 
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$\+Key} & the key to insert \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+boolean T\+R\+UE on success, on failure F\+A\+L\+SE 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classcrisp_1_1api_1_1_config_a89c8217b558fda742458fa481af0a883}\label{classcrisp_1_1api_1_1_config_a89c8217b558fda742458fa481af0a883}} 
+\index{Config@{Config}!exists@{exists}}
+\index{exists@{exists}!Config@{Config}}
+\doxysubsubsection{\texorpdfstring{exists()}{exists()}}
+{\footnotesize\ttfamily static exists (\begin{DoxyParamCaption}\item[{}]{\$\+Key }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Checks if a Storage items exists using the specified key 
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$\+Key} & the key to retrieve from the KV \mbox{\hyperlink{classcrisp_1_1api_1_1_config}{Config}} from \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+boolean T\+R\+UE if it exists, otherwise F\+A\+L\+SE 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classcrisp_1_1api_1_1_config_ac25f6d0b3db3854589ff1929302dbfdb}\label{classcrisp_1_1api_1_1_config_ac25f6d0b3db3854589ff1929302dbfdb}} 
+\index{Config@{Config}!get@{get}}
+\index{get@{get}!Config@{Config}}
+\doxysubsubsection{\texorpdfstring{get()}{get()}}
+{\footnotesize\ttfamily static get (\begin{DoxyParamCaption}\item[{}]{\$\+Key }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Retrieves a value from the KV Storage using the specified key 
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$\+Key} & the key to retrieve from the KV \mbox{\hyperlink{classcrisp_1_1api_1_1_config}{Config}} from \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+string$\vert$boolean The value as string, on failure F\+A\+L\+SE 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classcrisp_1_1api_1_1_config_a08c080a39848c73bf9fd57e436cafb68}\label{classcrisp_1_1api_1_1_config_a08c080a39848c73bf9fd57e436cafb68}} 
+\index{Config@{Config}!getTimestamp@{getTimestamp}}
+\index{getTimestamp@{getTimestamp}!Config@{Config}}
+\doxysubsubsection{\texorpdfstring{getTimestamp()}{getTimestamp()}}
+{\footnotesize\ttfamily static get\+Timestamp (\begin{DoxyParamCaption}\item[{string}]{\$\+Key }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Get the timestamps of a key 
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$\+Key} & The K\+V\+Storage key \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+array Containing last\+\_\+changed, created\+\_\+at 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classcrisp_1_1api_1_1_config_a60f9ff17d15bf996c3d374518777d2d6}\label{classcrisp_1_1api_1_1_config_a60f9ff17d15bf996c3d374518777d2d6}} 
+\index{Config@{Config}!list@{list}}
+\index{list@{list}!Config@{Config}}
+\doxysubsubsection{\texorpdfstring{list()}{list()}}
+{\footnotesize\ttfamily static list (\begin{DoxyParamCaption}\item[{}]{\$\+KV = {\ttfamily false} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Returns all keys and values from the KV Storage 
+\begin{DoxyParams}[1]{Parameters}
+type & {\em \$\+KV} & List keys as associative array? \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+array 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classcrisp_1_1api_1_1_config_a3b45b8d8f3ecd8311cb318410d74b4bd}\label{classcrisp_1_1api_1_1_config_a3b45b8d8f3ecd8311cb318410d74b4bd}} 
+\index{Config@{Config}!set@{set}}
+\index{set@{set}!Config@{Config}}
+\doxysubsubsection{\texorpdfstring{set()}{set()}}
+{\footnotesize\ttfamily static set (\begin{DoxyParamCaption}\item[{}]{\$\+Key,  }\item[{}]{\$\+Value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Updates a value for a key in the KV Storage 
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$\+Key} & Existing key to change the value from \\
+\hline
+string & {\em \$\+Value} & The value to set \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+boolean T\+R\+UE on success, otherwise F\+A\+L\+SE 
+\end{DoxyReturn}

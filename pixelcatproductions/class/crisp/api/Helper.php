@@ -24,6 +24,10 @@ namespace crisp\api;
  */
 class Helper {
 
+    /**
+     * Check if the user is on a mobile device
+     * @return boolean TRUE if the user is on mobile
+     */
     public static function isMobile() {
         return preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i", $_SERVER["HTTP_USER_AGENT"]);
     }
@@ -43,6 +47,10 @@ class Helper {
         return $ip;
     }
 
+    /**
+     * Get the current locale a user has set
+     * @return string current letter code 
+     */
     public static function getLocale() {
         $Locale = locale_accept_from_http($_SERVER['HTTP_ACCEPT_LANGUAGE']);
         if (isset($_GET["l"])) {
@@ -72,6 +80,11 @@ class Helper {
         return file_get_contents(__DIR__ . '/../../../../.git/refs/heads/' . self::getGitBranch());
     }
 
+    /**
+     * Filter a string and remove non-alphanumeric and spaces
+     * @param string $String The string to filter
+     * @return string Filtered string
+     */
     public static function filterAlphaNum($String) {
         return str_replace(" ", "-", strtolower(preg_replace("/[^0-9a-zA-Z\- ]/", "-", $String)));
     }
@@ -84,11 +97,21 @@ class Helper {
         return trim(substr(file_get_contents(__DIR__ . '/../../../../.git/HEAD'), 16));
     }
 
+    /**
+     * Gets a current revision link to github
+     * @return string The link to github
+     */
     public static function getGitRevisionLink() {
         return "https://github.com/JustinBack/CrispCMS-ToS-DR/tree/" . self::getGitRevision();
     }
 
-    public static function getLatestGitRevision($Force = false) {
+    /**
+     * Retrieve the latest hash on github
+     * @param \boolean $Force Force update rather than from cache
+     * @return string Hash of latest git revision
+     * @throws \Exception If request failed
+     */
+    public static function getLatestGitRevision(bool $Force = false) {
 
         $EnvFile = parse_ini_file(__DIR__ . "/../../../../.env");
         if (!$Force) {
@@ -134,41 +157,30 @@ class Helper {
 
     /**
      * Similiar to JS startsWith, check if a text starts with a specific string
-     * @param type $haystack The string to perform the check on
-     * @param type $needle A search needle to search for
-     * @return Boolean
+     * @param string $haystack The string to perform the check on
+     * @param string $needle A search needle to search for
+     * @return boolean TRUE $haystack contains $needle
      */
-    public static function startsWith($haystack, $needle) {
+    public static function startsWith(string $haystack, string $needle) {
         $length = strlen($needle);
         return (substr($haystack, 0, $length) === $needle);
     }
 
-    public static function unique_multidim_array($array, $key) {
-        $temp_array = array();
-        $i = 0;
-        $key_array = array();
-
-        foreach ($array as $val) {
-            if (!in_array($val[$key], $key_array)) {
-                $key_array[$i] = $val[$key];
-                $temp_array[$i] = $val;
-            }
-            $i++;
-        }
-        return $temp_array;
-    }
-
+    /**
+     * Just a pretty print for var_dump
+     * @param string pretty var_dump
+     */
     public static function prettyDump($var) {
         echo "<pre>" . var_export($var, true) . "</pre>";
     }
 
     /**
      * Check if a Template exists within a specific theme
-     * @param type $Theme The theme to search with
-     * @param type $Template The Template name
-     * @return Boolean
+     * @param string $Theme The theme to search with
+     * @param string $Template The Template name
+     * @return boolean
      */
-    public static function templateExists($Theme, $Template) {
+    public static function templateExists(string $Theme, string $Template) {
         return file_exists(__DIR__ . "/../../../../themes/$Theme/templates/$Template");
     }
 
@@ -176,9 +188,9 @@ class Helper {
      * Similiar to JS endsWith, check if a text ends with a specific string
      * @param type $haystack The string to perform the check on
      * @param type $needle A search needle to search for
-     * @return Boolean
+     * @return boolean
      */
-    public static function endsWith($haystack, $needle) {
+    public static function endsWith(string $haystack, string $needle) {
         $length = strlen($needle);
         if ($length == 0) {
             return true;
@@ -189,11 +201,12 @@ class Helper {
 
     /**
      * Truncates a text and appends "..." to the end
-     * @param type $String The text to truncate
-     * @param type $Length After how many chars should we truncate the text?
-     * @return String
+     * @param string $String The text to truncate
+     * @param int $Length After how many chars should we truncate the text?
+     * @param bool $AppendDots Should we append dots to the end of the string?
+     * @return string
      */
-    public static function truncateText($String, $Length, $AppendDots = true) {
+    public static function truncateText(string $String, int $Length, bool $AppendDots = true) {
         return strlen($String) > $Length ? substr($String, 0, $Length) . ($AppendDots ? "..." : "") : $String;
     }
 

@@ -49,6 +49,8 @@ from the root of Crisp execute `composer install`
 
 Copy `.env.example` to `.env` and edit it according to your settings.
 
+The GITHUB_TOKEN property is required for private repos to access metadata
+
 ### Update core plugins
 
 To update plugins you need shell access and execute the following commands in the bin folder:

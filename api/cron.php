@@ -119,14 +119,17 @@ foreach ($_CRONs as $_CRON) {
 
         consoleLog("Executing cron job for plugin " . $_CRON["Data"]->plugin);
 
-        if (file_exists(__DIR__ . "/../plugins/" . $_CRON["Data"]->plugin . "/includes/cron.php")){
+        if (file_exists(__DIR__ . "/../plugins/" . $_CRON["Data"]->plugin . "/includes/cron.php")) {
             require __DIR__ . "/../plugins/" . $_CRON["Data"]->plugin . "/includes/cron.php";
             continue;
-        }else{
+        } else {
             \terminateJob("Plugin has no cron file!");
         }
     } elseif ($_CRON["Type"] === "cron_missing_services") {
-        foreach (crisp\api\Phoenix::getServices() as $Service) {
+        \crisp\api\lists\Cron::deleteOld();
+        \crisp\api\lists\Cron::create("cron_missing_services", "", "1 HOUR");
+        foreach (crisp\api\Phoenix::getServices(true)->services as $Service) {
+            
             consoleLog("Found " . $Service->name . " service, checking if dupe.");
             if (!crisp\api\Phoenix::serviceExists($Service->id)) {
                 consoleLog("Service not yet in REDIS, adding...");

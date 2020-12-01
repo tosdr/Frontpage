@@ -35,6 +35,16 @@ class Plugin {
     public $CurrentFile;
     public $CurrentPage;
 
+    /**
+     * 
+     * @param string $PluginFolder The path to your plugin
+     * @param string $PluginName The name of your plugin
+     * @param object $PluginMetadata Plugin.json file contents
+     * @param \Twig\Environment $TwigTheme The current twig theme
+     * @param string $CurrentFile The current file
+     * @param string $CurrentPage The current $_GET["page"] parameter
+     * @throws Exception
+     */
     public function __construct($PluginFolder, $PluginName, $PluginMetadata, $TwigTheme, $CurrentFile, $CurrentPage) {
         $this->PluginFolder = $PluginFolder;
         $this->PluginName = $PluginName;
@@ -69,6 +79,9 @@ class Plugin {
         }
     }
 
+    /**
+     * @see \crisp\api\Translation::fetch
+     */
     public function getTranslation($Key, $Count = 1, $UserOptions = array()) {
 
         $Locale = \crisp\api\Helper::getLocale();
@@ -80,30 +93,53 @@ class Plugin {
         return $Translation->fetch("plugin_" . $this->PluginName . "_$Key", $Count, $UserOptions);
     }
 
+    /**
+     * @see \crisp\api\Config::get
+     */
     public function getConfig($Key) {
         return \crisp\api\Config::get("plugin_" . $this->PluginName . "_$Key");
     }
 
+    /**
+     * @see \crisp\api\lists\Cron::create
+     */
     public function createCron(string $Type, $Data, string $Interval = "2 MINUTE") {
-        return \crisp\api\lists\Cron::create("execute_plugin_cron", json_encode(array("plugin" => $this->PluginName, "data" => $Data)), $Interval);
+        return \crisp\api\lists\Cron::create("execute_plugin_cron", json_encode(array("plugin" => $this->PluginName, "data" => $Data, "name" => $Type)), $Interval);
     }
 
+    /**
+     * @see \crisp\api\Config::delete
+     */
     public function deleteConfig($Key) {
         return \crisp\api\Config::delete("plugin_" . $this->PluginName . "_$Key");
     }
 
+    /**
+     * @see \crisp\api\Config::set
+     */
     public function setConfig($Key, $Value) {
         return \crisp\api\Config::set("plugin_" . $this->PluginName . "_$Key", $Value);
     }
 
+    /**
+     * @see \crisp\api\Config::create
+     */
     public function createConfig($Key, $Value) {
         return \crisp\api\Config::create("plugin_" . $this->PluginName . "_$Key", $Value);
     }
 
+    /**
+     * Uninstall a plugin
+     * @return bool
+     */
     public function uninstall() {
         return \crisp\core\Plugins::uninstall($this->PluginName);
     }
 
+    /**
+     * Check the integrity of a plugin
+     * @return array
+     */
     public function integrity() {
         return \crisp\core\Plugins::integrityCheck($this->PluginName, $this->PluginMetadata, $this->PluginFolder);
     }
@@ -126,6 +162,11 @@ class Plugin {
         return \crisp\core\Plugins::registerUninstallHook($this->PluginName, $Function);
     }
 
+    /**
+     * Registers a hook thats called after a template has rendered in your plugin.
+     * @param string|function $Function Callback function, either anonymous or a string to a function
+     * @returns boolean TRUE if hook could be registered, otherwise false
+     */
     public function registerAfterRenderHook($Function) {
         return \crisp\core\Plugins::registerAfterRenderHook($this->PluginName, $Function);
     }

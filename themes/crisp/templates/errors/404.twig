@@ -17,7 +17,7 @@
 {% extends "base.twig" %}
 
 {% set currentPage = '404' %}
-{% set pageTitle = 'Nicht gefunden!' %}
+{% set pageTitle = 'error_page_not_found'|translate %}
 {% set error = false %}
 {% block content %}
     {{ include("components/navbar.twig") }}   
@@ -26,7 +26,7 @@
         <div class="row justify-content-center align-self-crow align-items-center h-100enter">
             <div class="col-6 mx-auto">
                 <div class="card fat">
-                    <div class="card-body">
+                    <div class="card-body alert-danger">
                         <h4 class="card-title text-center">{{ 'error_page_not_found'|translate }}</h4>
                         {{ 'error_page_not_found_description'|translate }}
                     </div>

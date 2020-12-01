@@ -84,6 +84,10 @@ class Plugin {
         return \crisp\api\Config::get("plugin_" . $this->PluginName . "_$Key");
     }
 
+    public function createCron(string $Type, $Data, string $Interval = "2 MINUTE") {
+        return \crisp\api\lists\Cron::create("execute_plugin_cron", json_encode(array("plugin" => $this->PluginName, "data" => $Data)), $Interval);
+    }
+
     public function deleteConfig($Key) {
         return \crisp\api\Config::delete("plugin_" . $this->PluginName . "_$Key");
     }

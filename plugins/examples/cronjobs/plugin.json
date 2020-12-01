@@ -1,0 +1,18 @@
+{
+    "name": "Cron Job Example Plugin",
+    "description": "Visit /en/createcron",
+    "hookFile": "hook.php",
+    "author": "Justin René Back <jback@pixelcatproductions.net>",
+    "onInstall": {
+        "createTranslationKeys": {},
+        "createKVStorageItems": {
+            "last_executed": null
+        },
+        "activateDependencies": []
+    },
+    "onUninstall": {
+        "deleteData": true,
+        "deactivateDependencies": [],
+        "purgeDependencies": []
+    }
+}

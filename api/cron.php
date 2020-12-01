@@ -74,23 +74,23 @@ pcntl_signal(SIGINT, 'handleSignal');
 pcntl_signal(SIGTERM, 'handleSignal');
 
 
-$Jobs = \crisp\api\lists\Cron::fetchUnprocessedSchedule(15);
+$_CRONs = \crisp\api\lists\Cron::fetchUnprocessedSchedule(15);
 
-foreach ($Jobs as $Job) {
+foreach ($_CRONs as $_CRON) {
 
     $Log = "";
 
-    $runningJob = $Job["ID"];
+    $runningJob = $_CRON["ID"];
     consoleLog("===== JOB #$runningJob PROCESSING =====");
 
-    \crisp\api\lists\Cron::markAsStarted($Job["ID"]);
-    if ($Job["Type"] === "crawl_service") {
+    \crisp\api\lists\Cron::markAsStarted($_CRON["ID"]);
+    if ($_CRON["Type"] === "crawl_service") {
 
-        consoleLog("Crawling Service " . $Job["Data"]);
+        consoleLog("Crawling Service " . $_CRON["Data"]);
 
-        $Service = crisp\api\Phoenix::getService($Job["Data"], true);
+        $Service = crisp\api\Phoenix::getService($_CRON["Data"], true);
 
-        consoleLog("Crawled Service #" . $Job["Data"] . ": " . $Service->name);
+        consoleLog("Crawled Service #" . $_CRON["Data"] . ": " . $Service->name);
 
         consoleLog("Service saved under " . \crisp\api\Config::get("phoenix_api_endpoint") . "/service/name/" . strtolower($Service->name));
 
@@ -104,16 +104,28 @@ foreach ($Jobs as $Job) {
                 consoleLog("Point has been added to the crawling queue! Cron ID #" . $AddedServices[$Point->id]->cron);
             }
         }
-    } elseif ($Job["Type"] === "crawl_point") {
+    } elseif ($_CRON["Type"] === "crawl_point") {
 
-        consoleLog("Crawling Point " . $Job["Data"]);
+        consoleLog("Crawling Point " . $_CRON["Data"]);
 
-        $Service = crisp\api\Phoenix::getPoint($Job["Data"], true);
+        $Service = crisp\api\Phoenix::getPoint($_CRON["Data"], true);
 
-        consoleLog("Crawled Point #" . $Job["Data"] . ": " . $Service->id);
+        consoleLog("Crawled Point #" . $_CRON["Data"] . ": " . $Service->id);
 
         consoleLog("Point saved under " . \crisp\api\Config::get("phoenix_api_endpoint") . "/points/id/" . strtolower($Service->id));
-    } elseif ($Job["Type"] === "cron_missing_services") {
+    } elseif ($_CRON["Type"] === "execute_plugin_cron") {
+
+        $_CRON["Data"] = json_decode($_CRON["Data"]);
+
+        consoleLog("Executing cron job for plugin " . $_CRON["Data"]->plugin);
+
+        if (file_exists(__DIR__ . "/../plugins/" . $_CRON["Data"]->plugin . "/includes/cron.php")){
+            require __DIR__ . "/../plugins/" . $_CRON["Data"]->plugin . "/includes/cron.php";
+            continue;
+        }else{
+            \terminateJob("Plugin has no cron file!");
+        }
+    } elseif ($_CRON["Type"] === "cron_missing_services") {
         foreach (crisp\api\Phoenix::getServices() as $Service) {
             consoleLog("Found " . $Service->name . " service, checking if dupe.");
             if (!crisp\api\Phoenix::serviceExists($Service->id)) {
@@ -136,12 +148,12 @@ foreach ($Jobs as $Job) {
 
         consoleLog("===== JOB #$runningJob PROCESSED =====");
 
-        \crisp\api\lists\Cron::markAsFinished($Job["ID"]);
-        \crisp\api\lists\Cron::setLog($Job["ID"], $Log);
+        \crisp\api\lists\Cron::markAsFinished($_CRON["ID"]);
+        \crisp\api\lists\Cron::setLog($_CRON["ID"], $Log);
     }
 }
 
-if (count($Jobs) == 0) {
+if (count($_CRONs) == 0) {
     consoleLog("No cron jobs executed, everything already processed!");
 }
 pcntl_signal(SIGHUP, SIG_DFL);

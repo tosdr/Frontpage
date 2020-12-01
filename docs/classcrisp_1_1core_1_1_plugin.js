@@ -2,6 +2,7 @@ var classcrisp_1_1core_1_1_plugin =
 [
     [ "__construct", "classcrisp_1_1core_1_1_plugin.html#a297c3bdf0db1041607bd93555af8c1aa", null ],
     [ "createConfig", "classcrisp_1_1core_1_1_plugin.html#a86b4170f77900795764abb63a94efa62", null ],
+    [ "createCron", "classcrisp_1_1core_1_1_plugin.html#aa0bd7b87b2efb856ec51954f8524ea39", null ],
     [ "deleteConfig", "classcrisp_1_1core_1_1_plugin.html#a634c5a35aa0260a186ed21b57f91a8cd", null ],
     [ "getConfig", "classcrisp_1_1core_1_1_plugin.html#a8282f5153adc3ed0d4c94e959530a4d3", null ],
     [ "getTranslation", "classcrisp_1_1core_1_1_plugin.html#ae1df982546ea19c3dc1eeef1e4f7b510", null ],

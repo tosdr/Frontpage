@@ -180,7 +180,7 @@ class Phoenix {
      * @return object
      * @throws \Exception
      */
-    public static function getServiceByName(string $Name,  bool$Force = false) {
+    public static function getServiceByName(string $Name, bool$Force = false) {
         $Name = strtolower($Name);
         if (self::$Redis_Database_Connection === null) {
             self::initDB();
@@ -280,7 +280,7 @@ class Phoenix {
         }
 
 
-        if (self::$Redis_Database_Connection->set(Config::get("phoenix_api_endpoint") . "/services/id/$ID", json_encode($response), 3600) && self::$Redis_Database_Connection->set(Config::get("phoenix_api_endpoint") . "/services/name/" . strtolower($response->name), json_encode($response), 15778476)) {
+        if (self::$Redis_Database_Connection->set(Config::get("phoenix_api_endpoint") . "/services/id/$ID", json_encode($response), 43200) && self::$Redis_Database_Connection->set(Config::get("phoenix_api_endpoint") . "/services/name/" . strtolower($response->name), json_encode($response), 15778476)) {
             $response = json_decode(self::$Redis_Database_Connection->get(Config::get("phoenix_api_endpoint") . "/services/id/$ID"));
 
 

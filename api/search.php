@@ -22,5 +22,8 @@ if (empty($_GET["q"])) {
     }
 }
 $Array = array_slice($Array, 0, 10);
-
-echo json_encode(array("service" => $Array, "grid" => $TwigTheme->render("components/servicegrid/grid.twig", array("Services" => $Array, "columns" => 2))));
+if (count($Array) > 0) {
+    echo json_encode(array("service" => $Array, "grid" => $TwigTheme->render("components/servicegrid/grid.twig", array("Services" => $Array, "columns" => 2))));
+    exit;
+}
+echo json_encode(array("service" => $Array, "grid" => $TwigTheme->render("components/servicegrid/no_service.twig", [])));

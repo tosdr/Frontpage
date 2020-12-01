@@ -43,6 +43,22 @@ Interact with all languages stored on the server
 \doxysubsubsection{\texorpdfstring{createLanguage()}{createLanguage()}}
 {\footnotesize\ttfamily static create\+Language (\begin{DoxyParamCaption}\item[{}]{\$\+Name,  }\item[{}]{\$\+Code,  }\item[{}]{\$\+Native\+Name,  }\item[{}]{\$\+Flag,  }\item[{}]{\$\+Enabled = {\ttfamily true} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
+Create a new language 
+\begin{DoxyParams}[1]{Parameters}
+type & {\em \$\+Name} & The name of the language \\
+\hline
+type & {\em \$\+Code} & The letter code of the language e.\+g. en-\/\+US, de, es, ru \\
+\hline
+type & {\em \$\+Native\+Name} & How is the language called in the native tongue? \\
+\hline
+type & {\em \$\+Flag} & Path to the flag image on the server \\
+\hline
+type & {\em \$\+Enabled} & Enable/disable the language \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+boolean T\+R\+UE if action was successful 
+\end{DoxyReturn}
 \mbox{\Hypertarget{classcrisp_1_1api_1_1lists_1_1_languages_a42058cdda12f0f8ffe5773e981dc78af}\label{classcrisp_1_1api_1_1lists_1_1_languages_a42058cdda12f0f8ffe5773e981dc78af}} 
 \index{Languages@{Languages}!fetchLanguages@{fetchLanguages}}
 \index{fetchLanguages@{fetchLanguages}!Languages@{Languages}}

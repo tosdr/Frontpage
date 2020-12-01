@@ -26,6 +26,7 @@ use \PDOStatement;
 
 /**
  * The error reporting system, currently unused.
+ * @deprecated It's unused
  */
 class ErrorReporter {
 

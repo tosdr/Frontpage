@@ -6,6 +6,5 @@ var namespacecrisp_1_1api =
     [ "Helper", "classcrisp_1_1api_1_1_helper.html", null ],
     [ "Language", "classcrisp_1_1api_1_1_language.html", "classcrisp_1_1api_1_1_language" ],
     [ "Phoenix", "classcrisp_1_1api_1_1_phoenix.html", "classcrisp_1_1api_1_1_phoenix" ],
-    [ "Response", "classcrisp_1_1api_1_1_response.html", "classcrisp_1_1api_1_1_response" ],
     [ "Translation", "classcrisp_1_1api_1_1_translation.html", "classcrisp_1_1api_1_1_translation" ]
 ];

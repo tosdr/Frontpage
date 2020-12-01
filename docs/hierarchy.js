@@ -17,7 +17,6 @@ var hierarchy =
     [ "Plugin", "classcrisp_1_1core_1_1_plugin.html", null ],
     [ "Plugins", "classcrisp_1_1core_1_1_plugins.html", null ],
     [ "Redis", "classcrisp_1_1core_1_1_redis.html", null ],
-    [ "Response", "classcrisp_1_1api_1_1_response.html", null ],
     [ "Template", "classcrisp_1_1core_1_1_template.html", null ],
     [ "Templates", "classcrisp_1_1core_1_1_templates.html", null ],
     [ "Translation", "classcrisp_1_1api_1_1_translation.html", null ]

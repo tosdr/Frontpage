@@ -16,9 +16,6 @@ var dir_3236ec5562dee268949f3828d12e1420 =
     [ "Phoenix.php", "_phoenix_8php.html", [
       [ "Phoenix", "classcrisp_1_1api_1_1_phoenix.html", "classcrisp_1_1api_1_1_phoenix" ]
     ] ],
-    [ "Response.php", "_response_8php.html", [
-      [ "Response", "classcrisp_1_1api_1_1_response.html", "classcrisp_1_1api_1_1_response" ]
-    ] ],
     [ "Translation.php", "_translation_8php.html", [
       [ "Translation", "classcrisp_1_1api_1_1_translation.html", "classcrisp_1_1api_1_1_translation" ]
     ] ]

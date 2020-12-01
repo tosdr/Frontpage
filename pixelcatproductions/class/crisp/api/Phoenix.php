@@ -20,12 +20,15 @@
 namespace crisp\api;
 
 /**
- * Some useful helper functions
+ * Some useful phoenix functions
  */
 class Phoenix {
 
     private static ?\Redis $Redis_Database_Connection = null;
 
+    /**
+     * Initialize the Class
+     */
     public function __construct() {
         self::initDB();
     }
@@ -35,7 +38,14 @@ class Phoenix {
         self::$Redis_Database_Connection = $DB->getDBConnector();
     }
 
-    public static function getPoint($ID, $Force = false) {
+    /**
+     * Get details of a point from phoenix
+     * @param string $ID The ID of the point
+     * @param bool $Force Force update from phoenix
+     * @return object
+     * @throws \Exception
+     */
+    public static function getPoint(string $ID, bool $Force = false) {
         if (self::$Redis_Database_Connection === null) {
             self::initDB();
         }
@@ -73,7 +83,14 @@ class Phoenix {
         throw new \Exception("Failed to contact REDIS");
     }
 
-    public static function getCase($ID, $Force = false) {
+    /**
+     * Get details of a case
+     * @param string $ID The ID of a case
+     * @param bool $Force Force update from Phoenix
+     * @return object
+     * @throws \Exception
+     */
+    public static function getCase(string $ID, bool $Force = false) {
         if (self::$Redis_Database_Connection === null) {
             self::initDB();
         }
@@ -111,7 +128,14 @@ class Phoenix {
         throw new \Exception("Failed to contact REDIS");
     }
 
-    public static function getTopic($ID, $Force = false) {
+    /**
+     * Get details of a topic
+     * @param string $ID The topic id
+     * @param bool $Force Force update from phoenix
+     * @return object
+     * @throws \Exception
+     */
+    public static function getTopic(string $ID, bool $Force = false) {
         if (self::$Redis_Database_Connection === null) {
             self::initDB();
         }
@@ -149,7 +173,14 @@ class Phoenix {
         throw new \Exception("Failed to contact REDIS");
     }
 
-    public static function getServiceByName($Name, $Force = false) {
+    /**
+     * Get details of a service by name
+     * @param string $Name The name of the service
+     * @param bool $Force Force update from phoenix
+     * @return object
+     * @throws \Exception
+     */
+    public static function getServiceByName(string $Name,  bool$Force = false) {
         $Name = strtolower($Name);
         if (self::$Redis_Database_Connection === null) {
             self::initDB();
@@ -158,10 +189,15 @@ class Phoenix {
         if (self::$Redis_Database_Connection->exists(Config::get("phoenix_api_endpoint") . "/services/name/$Name") && !$Force) {
             return json_decode(self::$Redis_Database_Connection->get(Config::get("phoenix_api_endpoint") . "/services/name/$Name"));
         }
-        throw new Exception("Service is not initialized!");
+        throw new \Exception("Service is not initialized!");
     }
 
-    public static function serviceExistsByName($Name) {
+    /**
+     * Check if a service exists by name
+     * @param string $Name The name of the service
+     * @return bool
+     */
+    public static function serviceExistsByName(string $Name) {
         $Name = strtolower($Name);
 
         if (self::$Redis_Database_Connection === null) {
@@ -171,7 +207,12 @@ class Phoenix {
         return self::$Redis_Database_Connection->exists(Config::get("phoenix_api_endpoint") . "/services/name/$Name");
     }
 
-    public static function pointExists($ID) {
+    /**
+     * Check if the point exists by name
+     * @param string $ID The ID of the point
+     * @return bool
+     */
+    public static function pointExists(string $ID) {
         if (self::$Redis_Database_Connection === null) {
             self::initDB();
         }
@@ -179,7 +220,12 @@ class Phoenix {
         return self::$Redis_Database_Connection->exists(Config::get("phoenix_api_endpoint") . "/points/id/$ID");
     }
 
-    public static function serviceExists($ID) {
+    /**
+     * Check if a service exists by name
+     * @param string $ID The ID of the service
+     * @return bool
+     */
+    public static function serviceExists(string $ID) {
         if (self::$Redis_Database_Connection === null) {
             self::initDB();
         }
@@ -187,7 +233,14 @@ class Phoenix {
         return self::$Redis_Database_Connection->exists(Config::get("phoenix_api_endpoint") . "/services/id/$ID");
     }
 
-    public static function getService($ID, $Force = false) {
+    /**
+     * Get details of a service by name
+     * @param string $ID The ID of a service
+     * @param bool $Force Force update from phoenix
+     * @return object
+     * @throws \Exception
+     */
+    public static function getService(string $ID, bool $Force = false) {
         if (self::$Redis_Database_Connection === null) {
             self::initDB();
         }
@@ -239,7 +292,13 @@ class Phoenix {
         throw new \Exception("Failed to contact REDIS");
     }
 
-    public static function getTopics($Force = false) {
+    /**
+     * Get a list of topics
+     * @param bool $Force Force update from phoenix
+     * @return object
+     * @throws \Exception
+     */
+    public static function getTopics(bool $Force = false) {
         if (self::$Redis_Database_Connection === null) {
             self::initDB();
         }
@@ -277,7 +336,13 @@ class Phoenix {
         throw new \Exception("Failed to contact REDIS");
     }
 
-    public static function getCases($Force = false) {
+    /**
+     * Get a list of cases
+     * @param bool $Force Force update from phoenix
+     * @return object
+     * @throws \Exception
+     */
+    public static function getCases(bool $Force = false) {
         if (self::$Redis_Database_Connection === null) {
             self::initDB();
         }
@@ -316,7 +381,13 @@ class Phoenix {
         throw new \Exception("Failed to contact REDIS");
     }
 
-    public static function getServices($Force = false) {
+    /**
+     * Get a list of services
+     * @param bool $Force Force update from phoenix
+     * @return object
+     * @throws \Exception
+     */
+    public static function getServices(bool $Force = false) {
         if (self::$Redis_Database_Connection === null) {
             self::initDB();
         }

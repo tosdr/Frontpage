@@ -100,8 +100,8 @@ Static Public Member Functions</h2></td></tr>
 <tr class="separator:a89c8217b558fda742458fa481af0a883"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac25f6d0b3db3854589ff1929302dbfdb"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcrisp_1_1api_1_1_config.html#ac25f6d0b3db3854589ff1929302dbfdb">get</a> ($Key)</td></tr>
 <tr class="separator:ac25f6d0b3db3854589ff1929302dbfdb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a29b002349e13ba6becbc006da9377f47"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcrisp_1_1api_1_1_config.html#a29b002349e13ba6becbc006da9377f47">getTimestamp</a> ($Key)</td></tr>
-<tr class="separator:a29b002349e13ba6becbc006da9377f47"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a08c080a39848c73bf9fd57e436cafb68"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcrisp_1_1api_1_1_config.html#a08c080a39848c73bf9fd57e436cafb68">getTimestamp</a> (string $Key)</td></tr>
+<tr class="separator:a08c080a39848c73bf9fd57e436cafb68"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acf2f4907926724154155cf58ff7100c0"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcrisp_1_1api_1_1_config.html#acf2f4907926724154155cf58ff7100c0">create</a> ($Key, $Value)</td></tr>
 <tr class="separator:acf2f4907926724154155cf58ff7100c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a42f9afb8c19c0069b6ae47c8b5e25f3b"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcrisp_1_1api_1_1_config.html#a42f9afb8c19c0069b6ae47c8b5e25f3b">delete</a> ($Key)</td></tr>
@@ -275,8 +275,8 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a29b002349e13ba6becbc006da9377f47"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a29b002349e13ba6becbc006da9377f47">&#9670;&nbsp;</a></span>getTimestamp()</h2>
+<a id="a08c080a39848c73bf9fd57e436cafb68"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a08c080a39848c73bf9fd57e436cafb68">&#9670;&nbsp;</a></span>getTimestamp()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -287,7 +287,7 @@ Static Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">static getTimestamp </td>
           <td>(</td>
-          <td class="paramtype">&#160;</td>
+          <td class="paramtype">string&#160;</td>
           <td class="paramname"><em>$Key</em></td><td>)</td>
           <td></td>
         </tr>
@@ -298,6 +298,13 @@ Static Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Get the timestamps of a key </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$Key</td><td>The KVStorage key </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>array Containing last_changed, created_at </dd></dl>
 
 </div>
 </div>

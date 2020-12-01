@@ -12,7 +12,7 @@ static \mbox{\hyperlink{classcrisp_1_1api_1_1_config_a89c8217b558fda742458fa481a
 \item 
 static \mbox{\hyperlink{classcrisp_1_1api_1_1_config_ac25f6d0b3db3854589ff1929302dbfdb}{get}} (\$Key)
 \item 
-static \mbox{\hyperlink{classcrisp_1_1api_1_1_config_a29b002349e13ba6becbc006da9377f47}{get\+Timestamp}} (\$Key)
+static \mbox{\hyperlink{classcrisp_1_1api_1_1_config_a08c080a39848c73bf9fd57e436cafb68}{get\+Timestamp}} (string \$Key)
 \item 
 static \mbox{\hyperlink{classcrisp_1_1api_1_1_config_acf2f4907926724154155cf58ff7100c0}{create}} (\$Key, \$Value)
 \item 
@@ -95,12 +95,20 @@ string & {\em \$\+Key} & the key to retrieve from the KV \mbox{\hyperlink{classc
 \begin{DoxyReturn}{Returns}
 string$\vert$boolean The value as string, on failure F\+A\+L\+SE 
 \end{DoxyReturn}
-\mbox{\Hypertarget{classcrisp_1_1api_1_1_config_a29b002349e13ba6becbc006da9377f47}\label{classcrisp_1_1api_1_1_config_a29b002349e13ba6becbc006da9377f47}} 
+\mbox{\Hypertarget{classcrisp_1_1api_1_1_config_a08c080a39848c73bf9fd57e436cafb68}\label{classcrisp_1_1api_1_1_config_a08c080a39848c73bf9fd57e436cafb68}} 
 \index{Config@{Config}!getTimestamp@{getTimestamp}}
 \index{getTimestamp@{getTimestamp}!Config@{Config}}
 \doxysubsubsection{\texorpdfstring{getTimestamp()}{getTimestamp()}}
-{\footnotesize\ttfamily static get\+Timestamp (\begin{DoxyParamCaption}\item[{}]{\$\+Key }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+{\footnotesize\ttfamily static get\+Timestamp (\begin{DoxyParamCaption}\item[{string}]{\$\+Key }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
+Get the timestamps of a key 
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$\+Key} & The K\+V\+Storage key \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+array Containing last\+\_\+changed, created\+\_\+at 
+\end{DoxyReturn}
 \mbox{\Hypertarget{classcrisp_1_1api_1_1_config_a60f9ff17d15bf996c3d374518777d2d6}\label{classcrisp_1_1api_1_1_config_a60f9ff17d15bf996c3d374518777d2d6}} 
 \index{Config@{Config}!list@{list}}
 \index{list@{list}!Config@{Config}}

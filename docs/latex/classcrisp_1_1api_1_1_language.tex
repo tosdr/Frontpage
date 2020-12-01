@@ -82,7 +82,7 @@ Disables a language \begin{DoxySeeAlso}{See also}
 \mbox{\hyperlink{classcrisp_1_1api_1_1_language_a91e658a6e3fccc3028f2d71122bc4b8f}{enable}} 
 \end{DoxySeeAlso}
 \begin{DoxyReturn}{Returns}
-Boolean 
+boolean 
 \end{DoxyReturn}
 \mbox{\Hypertarget{classcrisp_1_1api_1_1_language_ae160b823dc298cd7d331531f9c4e1b49}\label{classcrisp_1_1api_1_1_language_ae160b823dc298cd7d331531f9c4e1b49}} 
 \index{Language@{Language}!editTranslation@{editTranslation}}
@@ -100,7 +100,7 @@ Enables a language \begin{DoxySeeAlso}{See also}
 \mbox{\hyperlink{classcrisp_1_1api_1_1_language_a545341e59cc9a0dafc4e265d60d4b5d6}{disable}} 
 \end{DoxySeeAlso}
 \begin{DoxyReturn}{Returns}
-Boolean 
+boolean 
 \end{DoxyReturn}
 \mbox{\Hypertarget{classcrisp_1_1api_1_1_language_ac2f864b72dc2f778e68ad96364c48c5e}\label{classcrisp_1_1api_1_1_language_ac2f864b72dc2f778e68ad96364c48c5e}} 
 \index{Language@{Language}!exists@{exists}}
@@ -108,6 +108,9 @@ Boolean
 \doxysubsubsection{\texorpdfstring{exists()}{exists()}}
 {\footnotesize\ttfamily exists (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
+Check if the language exists in the database \begin{DoxyReturn}{Returns}
+boolean 
+\end{DoxyReturn}
 \mbox{\Hypertarget{classcrisp_1_1api_1_1_language_ae48cc10bd727774bb36203986ce3b176}\label{classcrisp_1_1api_1_1_language_ae48cc10bd727774bb36203986ce3b176}} 
 \index{Language@{Language}!fetch@{fetch}}
 \index{fetch@{fetch}!Language@{Language}}
@@ -124,7 +127,7 @@ array
 {\footnotesize\ttfamily get\+Code (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
 Gets the code of a language \begin{DoxyReturn}{Returns}
-Boolean 
+boolean 
 \end{DoxyReturn}
 \mbox{\Hypertarget{classcrisp_1_1api_1_1_language_a381de5803b7657f165a06185c38deec1}\label{classcrisp_1_1api_1_1_language_a381de5803b7657f165a06185c38deec1}} 
 \index{Language@{Language}!getFlag@{getFlag}}
@@ -133,7 +136,7 @@ Boolean
 {\footnotesize\ttfamily get\+Flag (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
 Gets the flag icon of a language \begin{DoxyReturn}{Returns}
-String 
+string The current path of the flag 
 \end{DoxyReturn}
 \mbox{\Hypertarget{classcrisp_1_1api_1_1_language_a3d0963e68bb313b163a73f2803c64600}\label{classcrisp_1_1api_1_1_language_a3d0963e68bb313b163a73f2803c64600}} 
 \index{Language@{Language}!getName@{getName}}
@@ -142,7 +145,7 @@ String
 {\footnotesize\ttfamily get\+Name (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
 Gets the name of the language \begin{DoxyReturn}{Returns}
-String 
+string 
 \end{DoxyReturn}
 \mbox{\Hypertarget{classcrisp_1_1api_1_1_language_a288c91ba56af1e2a57e48043d799d529}\label{classcrisp_1_1api_1_1_language_a288c91ba56af1e2a57e48043d799d529}} 
 \index{Language@{Language}!getNativeName@{getNativeName}}
@@ -151,7 +154,7 @@ String
 {\footnotesize\ttfamily get\+Native\+Name (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
 Gets the native name of a language \begin{DoxyReturn}{Returns}
-String 
+string 
 \end{DoxyReturn}
 \mbox{\Hypertarget{classcrisp_1_1api_1_1_language_ad734dc60b64a242fe183e0c23b192790}\label{classcrisp_1_1api_1_1_language_ad734dc60b64a242fe183e0c23b192790}} 
 \index{Language@{Language}!isEnabled@{isEnabled}}
@@ -160,7 +163,7 @@ String
 {\footnotesize\ttfamily is\+Enabled (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
 Checks wether a language is enabled or not \begin{DoxyReturn}{Returns}
-Boolean 
+boolean 
 \end{DoxyReturn}
 \mbox{\Hypertarget{classcrisp_1_1api_1_1_language_a1e53bbf3b11ba298384363289f533576}\label{classcrisp_1_1api_1_1_language_a1e53bbf3b11ba298384363289f533576}} 
 \index{Language@{Language}!newTranslation@{newTranslation}}
@@ -180,7 +183,7 @@ string & {\em \$\+Code} & The new language code \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-Boolean T\+R\+UE if successfully set, otherwise false 
+boolean T\+R\+UE if successfully set, otherwise false 
 \end{DoxyReturn}
 \mbox{\Hypertarget{classcrisp_1_1api_1_1_language_af5b5bcbcf3f41b30df5f84c68994c9fc}\label{classcrisp_1_1api_1_1_language_af5b5bcbcf3f41b30df5f84c68994c9fc}} 
 \index{Language@{Language}!setFlag@{setFlag}}
@@ -194,7 +197,7 @@ string & {\em \$\+Flag} & The flag icon name, see Themes \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-Boolean T\+R\+UE if successfully set, otherwise false 
+boolean T\+R\+UE if successfully set, otherwise false 
 \end{DoxyReturn}
 \mbox{\Hypertarget{classcrisp_1_1api_1_1_language_a46b5aa9e8b383ec6b6a667cead4c9010}\label{classcrisp_1_1api_1_1_language_a46b5aa9e8b383ec6b6a667cead4c9010}} 
 \index{Language@{Language}!setName@{setName}}
@@ -208,7 +211,7 @@ string & {\em \$\+Name} & The new name of the language \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-Boolean T\+R\+UE if successfully set, otherwise false 
+boolean T\+R\+UE if successfully set, otherwise false 
 \end{DoxyReturn}
 \mbox{\Hypertarget{classcrisp_1_1api_1_1_language_a044c5d155f5d06187e1985383b764632}\label{classcrisp_1_1api_1_1_language_a044c5d155f5d06187e1985383b764632}} 
 \index{Language@{Language}!setNativeName@{setNativeName}}
@@ -222,7 +225,7 @@ string & {\em \$\+Native\+Name} & The new native name \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-Boolean T\+R\+UE if successfully set, otherwise false 
+boolean T\+R\+UE if successfully set, otherwise false 
 \end{DoxyReturn}
 
 

@@ -108,6 +108,11 @@ class Translation {
         return array();
     }
 
+    /**
+     * Fetch all translations by key
+     * @param string $Key The letter code
+     * @return array
+     */
     public static function fetchAllByKey($Key) {
         if (self::$Database_Connection === null) {
             self::initDB();
@@ -128,6 +133,11 @@ class Translation {
         return array();
     }
 
+    /**
+     * Check if a translation exists by key
+     * @param string $Key The translation key
+     * @return bool
+     */
     public static function exists($Key) {
         if (self::$Database_Connection === null) {
             self::initDB();

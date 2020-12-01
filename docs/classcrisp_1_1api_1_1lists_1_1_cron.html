@@ -179,6 +179,15 @@ Static Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Create a new cron job </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$Type</td><td>The name of the cronjon, all lowercase, no spaces </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$Data</td><td>The data which should be sent to the cron </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$Interval</td><td>In which interval should the cron be executed? </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Boolean TRUE if action successful </dd></dl>
 
 </div>
 </div>
@@ -204,6 +213,7 @@ Static Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Delete processed, finished or failed cronjobs </p><dl class="section return"><dt>Returns</dt><dd>Boolean TRUE if action successful </dd></dl>
 
 </div>
 </div>
@@ -230,6 +240,13 @@ Static Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Fetch details of a specific cron job </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">int</td><td class="paramname">$ID</td><td>The ID of a cron job </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>array Contains cron details </dd></dl>
 
 </div>
 </div>
@@ -256,6 +273,13 @@ Static Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Retrieve a list of cron jobs </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">int</td><td class="paramname">$Limit</td><td>How many do you like to retrieve </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>array Contains cron jobs </dd></dl>
 
 </div>
 </div>
@@ -282,6 +306,13 @@ Static Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Retrieve a list of all unprocessed cron jobs </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">int</td><td class="paramname">$Limit</td><td>How many do you like to retrieve </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>array Contains cron jobs </dd></dl>
 
 </div>
 </div>
@@ -308,6 +339,13 @@ Static Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Retrieve a list of unprocessed cron jobs which should start by now </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">int</td><td class="paramname">$Limit</td><td>How many do you like to retrieve </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>array Contains cron jobs </dd></dl>
 
 </div>
 </div>
@@ -334,6 +372,13 @@ Static Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Mark a specific cronjob as canceled </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">int</td><td class="paramname">$ID</td><td>The ID of a cron job </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Boolean TRUE if action successful </dd></dl>
 
 </div>
 </div>
@@ -360,6 +405,13 @@ Static Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Mark a specific cronjob as failed </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">int</td><td class="paramname">$ID</td><td>The ID of a cron job </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Boolean TRUE if action successful </dd></dl>
 
 </div>
 </div>
@@ -386,6 +438,13 @@ Static Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Mark a specific cronjob as finished </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">int</td><td class="paramname">$ID</td><td>The ID of a cron job </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Boolean TRUE if action successful </dd></dl>
 
 </div>
 </div>
@@ -412,6 +471,13 @@ Static Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Mark a specific cronjob as started </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">int</td><td class="paramname">$ID</td><td>The ID of a cron job </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Boolean TRUE if action successful </dd></dl>
 
 </div>
 </div>
@@ -448,6 +514,14 @@ Static Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Edit the log of a cronjob </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">int</td><td class="paramname">$ID</td><td>The ID of a cron job </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$Log</td><td>The Text to set </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Boolean TRUE if action successful </dd></dl>
 
 </div>
 </div>

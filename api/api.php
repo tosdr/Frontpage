@@ -1,5 +1,5 @@
 <?php
-
+header("Access-Control-Allow-Origin: *");
 define('CRISP_API', true);
 require_once __DIR__ . "/../pixelcatproductions/crisp.php";
 

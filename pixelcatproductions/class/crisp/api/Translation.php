@@ -156,7 +156,12 @@ class Translation {
      */
     public static function fetch($Key, $Count = 1, $UserOptions = array()) {
 
+        if($_GET["debug"] == "translations"){
+            return $Key;
+        }
+        
         $UserOptions["{{ count }}"] = $Count;
+        
 
         return nl2br(ngettext(self::get($Key, $UserOptions), self::getPlural($Key, $UserOptions), $Count));
     }

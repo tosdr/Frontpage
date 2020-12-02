@@ -18,54 +18,6 @@ if (strpos($_GET["q"], ".json")) {
 
 
 switch ($_GET["apiversion"]) {
-    case "webhook":
-
-        header("Content-Type: application/json");
-        if ($ServiceID == "discourse") {
-            if (array_key_exists('HTTP_X_DISCOURSE_EVENT_SIGNATURE', $_SERVER) && $_SERVER["HTTP_X_DISCOURSE_EVENT"] == "post_created") {
-                $PayLoadRaw = file_get_contents('php://input');
-                $PayLoadHash = substr($_SERVER['HTTP_X_DISCOURSE_EVENT_SIGNATURE'], 7);
-                $PayLoad = json_decode($PayLoadRaw);
-
-                $Regex = "/^(?=.*has been added)|(?=.*i have added)|(?=.*added to)|(?=.*is up)|(?=.*for review)/i";
-
-                if (hash_hmac('sha256', $PayLoadRaw, $EnvFile["DISCOURSE_WEBHOOK_SECRET"]) == $PayLoadHash) {
-                    if (preg_match_all($Regex, $PayLoad->post->raw) > 0 && ($PayLoad->post->primary_group_name == "Team" || $PayLoad->post->primary_group_name == "curators")) {
-
-                        $responses = [];
-
-                        $Discourse = new \pnoeric\DiscourseAPI($EnvFile["DISCOURSE_HOSTNAME"], $EnvFile["DISCOURSE_API_KEY"]);
-
-                        $Discourse->setDebugPutPostRequest(true);
-
-                        $responses[] = $Discourse->closeTopic($PayLoad->post->topic_id);
-                        $responses[] = $Discourse->addTagsToTopic(["service-added"], "-/" . $PayLoad->post->topic_id);
-
-
-
-
-                        echo json_encode(array("error" => false, "message" => "Match!", "responses" => $responses));
-                    } else {
-
-                        if ($PayLoad->post->post_number == 1) {
-                            $responses = [];
-
-                            $Discourse = new \pnoeric\DiscourseAPI($EnvFile["DISCOURSE_HOSTNAME"], $EnvFile["DISCOURSE_API_KEY"]);
-
-                            $responses[] = $Discourse->createPost("Hello!\nThanks for contributing to ToS;DR!\n\nA curator will soon add your service to our database.", $PayLoad->post->topic_id, "system", new DateTime());
-                            echo json_encode(array("error" => false, "message" => "Success!", "post" => $PayLoad->post->raw, "responses" => $responses));
-                        }
-
-                        echo json_encode(array("error" => true, "message" => "No match!", "post" => $PayLoad->post->raw, "regex" => preg_match_all($Regex, $PayLoad->post->raw)));
-                    }
-                } else {
-                    echo json_encode(array("error" => true, "message" => "Failed to authenticate webhook request!"));
-                }
-            } else {
-                echo json_encode(array("error" => true, "message" => "Not a valid webhook request!"));
-            }
-        }
-        break;
     case "export":
         header("Content-Type: application/json");
         if ($ServiceID == "translations") {

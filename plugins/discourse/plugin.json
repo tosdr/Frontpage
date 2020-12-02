@@ -1,0 +1,16 @@
+{
+    "name": "Discourse Webhook Plugin",
+    "description": "Crisp Integration for Discourse",
+    "hookFile": "hook.php",
+    "author": "Justin René Back <jback@pixelcatproductions.net>",
+    "onInstall": {
+        "createTranslationKeys": {},
+        "createKVStorageItems": {},
+        "activateDependencies": []
+    },
+    "onUninstall": {
+        "deleteData": true,
+        "deactivateDependencies": [],
+        "purgeDependencies": []
+    }
+}

@@ -46,27 +46,27 @@ class Plugin {
      * @throws Exception
      */
     public function __construct($PluginFolder, $PluginName, $PluginMetadata, $TwigTheme, $CurrentFile, $CurrentPage) {
-        $this->PluginFolder = $PluginFolder;
-        $this->PluginName = $PluginName;
+        $this->PluginFolder = \crisp\api\Helper::filterAlphaNum($PluginFolder);
+        $this->PluginName = \crisp\api\Helper::filterAlphaNum($PluginName);
         $this->PluginMetadata = $PluginMetadata;
-        $this->PluginPath = realpath(__DIR__ . "/../../../../$PluginFolder/$PluginName/") . "/";
+        $this->PluginPath = realpath(__DIR__ . "/../../../../" . $PluginFolder . "/" . $PluginName . "/") . "/";
         $this->TwigTheme = $TwigTheme;
-        $this->CurrentFile = $CurrentFile;
-        $this->CurrentPage = $CurrentPage;
+        $this->CurrentFile = \crisp\api\Helper::filterAlphaNum($CurrentFile);
+        $this->CurrentPage = \crisp\api\Helper::filterAlphaNum($CurrentPage);
         if (file_exists($this->PluginPath . $PluginMetadata->hookFile)) {
             require $this->PluginPath . $PluginMetadata->hookFile;
 
 
 
-            if (file_exists($this->PluginPath . "/templates/views/$CurrentPage.twig") && file_exists($this->PluginPath . "/includes/views/$CurrentPage.php")) {
-                require $this->PluginPath . "/includes/views/$CurrentPage.php";
+            if (file_exists($this->PluginPath . "/templates/views/" . $this->CurrentPage . ".twig") && file_exists($this->PluginPath . "/includes/views/" . $this->CurrentPage . ".php")) {
+                require $this->PluginPath . "/includes/views/" . $this->CurrentPage . ".php";
 
 
                 $_vars = (isset($_vars) ? $_vars : [] );
                 $_vars["plugin"] = $this;
 
 
-                echo $TwigTheme->render($this->PluginName . "/templates/views/$CurrentPage.twig", $_vars);
+                echo $TwigTheme->render($this->PluginName . "/templates/views/" . $this->CurrentPage . ".twig", $_vars);
 
                 $this->broadcastHook("pluginAfterRender_" . $this->PluginName);
 

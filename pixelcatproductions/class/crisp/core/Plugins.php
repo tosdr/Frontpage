@@ -27,13 +27,33 @@ class Plugins {
 
     use \crisp\core\Hook;
 
+    public static function loadAPI($Interface, $_QUERY) {
+        $DB = new \crisp\core\MySQL();
+        $DBConnection = $DB->getDBConnector();
+
+        $statement = $DBConnection->prepare("SELECT * FROM loadedPlugins");
+        $statement->execute();
+
+
+
+        $loadedPlugins = $statement->fetchAll(\PDO::FETCH_ASSOC);
+
+        foreach ($loadedPlugins as $Plugin) {
+            $PluginFolder = \crisp\api\Config::get("plugin_dir");
+            $PluginName = $Plugin["Name"];
+
+            new \crisp\core\PluginAPI($PluginFolder, $PluginName, $Interface, $_QUERY);
+        }
+        \crisp\core\PluginAPI::response(array("INTERFACE_NOT_FOUND"), "Error");
+    }
+
     public static function load($TwigTheme, $CurrentFile, $CurrentPage) {
         $DB = new \crisp\core\MySQL();
         $DBConnection = $DB->getDBConnector();
 
         $statement = $DBConnection->prepare("SELECT * FROM loadedPlugins");
         $statement->execute();
-        
+
 
 
         $loadedPlugins = $statement->fetchAll(\PDO::FETCH_ASSOC);

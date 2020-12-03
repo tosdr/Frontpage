@@ -1,4 +1,5 @@
 <?php
+
 header("Access-Control-Allow-Origin: *");
 define('CRISP_API', true);
 require_once __DIR__ . "/../pixelcatproductions/crisp.php";
@@ -10,30 +11,28 @@ $Redis = new \crisp\core\Redis();
 
 $Redis = $Redis->getDBConnector();
 
-$ServiceID = $_GET["q"];
+$Query = $_GET["q"];
 
 if (strpos($_GET["q"], ".json")) {
-    $ServiceID = substr($_GET["q"], 0, -5);
+    $Query = substr($_GET["q"], 0, -5);
 }
 
 
 switch ($_GET["apiversion"]) {
     case "export":
-        header("Content-Type: application/json");
-        if ($ServiceID == "translations") {
-            echo json_encode(\crisp\api\Translation::fetchAll(), JSON_PRETTY_PRINT);
+        if ($Query == "translations") {
+            echo \crisp\core\PluginAPI::response(false, "Exported", \crisp\api\Translation::fetchAll(), JSON_PRETTY_PRINT);
         }
         break;
     case "badge":
-        header("Content-Type: image/svg+xml");
         $render = new SvgPlasticRender();
         $poser = new Poser($render);
 
-        if (count($Redis->keys(\crisp\api\Config::get("phoenix_api_endpoint") . "/services/name/" . strtolower($ServiceID))) === 0) {
-            echo json_encode(array("error" => true, "message" => "This service does not exist!"));
+        if (count($Redis->keys(\crisp\api\Config::get("phoenix_api_endpoint") . "/services/name/" . strtolower($Query))) === 0) {
+            echo \crisp\core\PluginAPI::response(array("Service does not exist!"), "Exported", "Failed!");
             return;
         }
-        $RedisData = json_decode($Redis->get(\crisp\api\Config::get("phoenix_api_endpoint") . "/services/name/" . strtolower($ServiceID)));
+        $RedisData = json_decode($Redis->get(\crisp\api\Config::get("phoenix_api_endpoint") . "/services/name/" . strtolower($Query)));
 
         $Color;
 
@@ -62,14 +61,14 @@ switch ($_GET["apiversion"]) {
                 $Color = "999999";
                 $Rating = "No Class Yet";
         }
+        header("Content-Type: image/svg+xml");
 
         echo $poser->generate(\crisp\api\Config::get("badge_prefix"), $Rating, $Color, 'plastic');
         break;
     case "1":
-    default:
         header("Content-Type: application/json");
 
-        if ($ServiceID == "all") {
+        if ($Query == "all") {
             $Services = crisp\api\Phoenix::getServices();
             $Response = array(
                 "tosdr/api/version" => 1,
@@ -93,11 +92,11 @@ switch ($_GET["apiversion"]) {
             return;
         }
 
-        if (count($Redis->keys(\crisp\api\Config::get("phoenix_api_endpoint") . "/services/name/" . strtolower($ServiceID))) === 0) {
+        if (count($Redis->keys(\crisp\api\Config::get("phoenix_api_endpoint") . "/services/name/" . strtolower($Query))) === 0) {
             echo json_encode(array("error" => true, "message" => "This service does not exist!"));
             return;
         }
-        $RedisData = json_decode($Redis->get(\crisp\api\Config::get("phoenix_api_endpoint") . "/services/name/" . strtolower($ServiceID)));
+        $RedisData = json_decode($Redis->get(\crisp\api\Config::get("phoenix_api_endpoint") . "/services/name/" . strtolower($Query)));
 
         $AlexaRank;
         $ServiceLinks = array();
@@ -130,7 +129,7 @@ switch ($_GET["apiversion"]) {
                     "quoteText" => $Point->quoteText,
                     "quoteStart" => $Point->quoteStart,
                     "quoteEnd" => $Point->quoteEnd,
-                    "services" => array($ServiceID),
+                    "services" => array($Query),
                     "set" => "set+service+and+topic",
                     "slug" => $Point->id,
                     "title" => $Point->title,
@@ -158,5 +157,8 @@ switch ($_GET["apiversion"]) {
         echo json_encode($SkeletonData);
 
 
+        break;
+    default:
+        \crisp\core\Plugins::loadAPI($_GET["apiversion"], $Query);
         break;
 }

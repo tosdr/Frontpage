@@ -86,7 +86,58 @@ class Helper {
      * @return string Filtered string
      */
     public static function filterAlphaNum($String) {
-        return str_replace(" ", "-", strtolower(preg_replace("/[^0-9a-zA-Z\- ]/", "-", $String)));
+        return str_replace(" ", "-", strtolower(preg_replace("/[^0-9a-zA-Z\-_]/", "-", $String)));
+    }
+
+    public static function PlaceHolder($String, $Size = "150x150") {
+
+        $fontSize = 5;
+        $dimensions = explode('x', $Size);
+
+        $w = isset($dimensions[0]) ? $dimensions[0] : 100;
+        $h = isset($dimensions[1]) ? $dimensions[1] : 100;
+        $text = isset($String) ? $String : $w . 'x' . $h;
+
+        if ($w < 50) {
+            $fontSize = 1;
+        }
+
+        $im = imagecreatetruecolor($w, $h);
+        $bg = imagecolorallocate($im, 204, 204, 204);
+
+        imagefilledrectangle($im, 0, 0, $w, $h, $bg);
+
+        $fontWidth = imagefontwidth($fontSize);
+        $textWidth = $fontWidth * strlen($text);
+        $textLeft = ceil(($w - $textWidth) / 2);
+
+        $fontHeight = imagefontheight($fontSize);
+        $textHeight = $fontHeight;
+        $textTop = ceil(($h - $textHeight) / 2);
+
+        imagestring($im, $fontSize, $textLeft, $textTop, $text, 0x969696);
+
+        header('Content-Type: image/jpg');
+
+        imagegif($im);
+        imagedestroy($im);
+    }
+
+    public static function isValidPluginName($String) {
+
+        $Matches = [];
+
+        if (preg_match_all("/[^0-9a-zA-Z\-_]/", $String) > 0) {
+            $Matches[] = "STRING_CONTAINS_NON_ALPHA_NUM";
+        }
+        if (strpos($String, ' ') !== false) {
+            $Matches[] = "STRING_CONTAINS_SPACES";
+        }
+        if (preg_match('/[A-Z]/', $String)) {
+            $Matches[] = "STRING_CONTAINS_UPPERCASE";
+        }
+
+        return (count($Matches) > 0 ? $Matches : false);
     }
 
     /**

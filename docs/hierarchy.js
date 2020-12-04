@@ -15,6 +15,7 @@ var hierarchy =
     [ "MySQL", "classcrisp_1_1core_1_1_my_s_q_l.html", null ],
     [ "Phoenix", "classcrisp_1_1api_1_1_phoenix.html", null ],
     [ "Plugin", "classcrisp_1_1core_1_1_plugin.html", null ],
+    [ "PluginAPI", "classcrisp_1_1core_1_1_plugin_a_p_i.html", null ],
     [ "Plugins", "classcrisp_1_1core_1_1_plugins.html", null ],
     [ "Redis", "classcrisp_1_1core_1_1_redis.html", null ],
     [ "Template", "classcrisp_1_1core_1_1_template.html", null ],

@@ -13,6 +13,9 @@ var dir_b90053ece3e3aae2db004f989e8a8c69 =
     [ "Plugin.php", "_plugin_8php.html", [
       [ "Plugin", "classcrisp_1_1core_1_1_plugin.html", "classcrisp_1_1core_1_1_plugin" ]
     ] ],
+    [ "PluginAPI.php", "_plugin_a_p_i_8php.html", [
+      [ "PluginAPI", "classcrisp_1_1core_1_1_plugin_a_p_i.html", "classcrisp_1_1core_1_1_plugin_a_p_i" ]
+    ] ],
     [ "Plugins.php", "_plugins_8php.html", [
       [ "Plugins", "classcrisp_1_1core_1_1_plugins.html", null ]
     ] ],

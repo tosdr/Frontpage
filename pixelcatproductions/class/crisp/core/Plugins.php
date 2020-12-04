@@ -27,13 +27,37 @@ class Plugins {
 
     use \crisp\core\Hook;
 
+    public static function loadAPI($Interface, $_QUERY) {
+        $DB = new \crisp\core\MySQL();
+        $DBConnection = $DB->getDBConnector();
+
+        $statement = $DBConnection->prepare("SELECT * FROM loadedPlugins");
+        $statement->execute();
+
+
+
+        $loadedPlugins = $statement->fetchAll(\PDO::FETCH_ASSOC);
+
+        foreach ($loadedPlugins as $Plugin) {
+            $PluginFolder = \crisp\api\Config::get("plugin_dir");
+            $PluginName = $Plugin["Name"];
+            if (\crisp\api\Helper::isValidPluginName($PluginName) === false) {
+                new \crisp\core\PluginAPI($PluginFolder, $PluginName, $Interface, $_QUERY);
+            } else {
+                PluginAPI::response(\crisp\api\Helper::isValidPluginName($PluginName), $PluginName);
+                exit;
+            }
+        }
+        \crisp\core\PluginAPI::response(array("INTERFACE_NOT_FOUND"), "Error");
+    }
+
     public static function load($TwigTheme, $CurrentFile, $CurrentPage) {
         $DB = new \crisp\core\MySQL();
         $DBConnection = $DB->getDBConnector();
 
         $statement = $DBConnection->prepare("SELECT * FROM loadedPlugins");
         $statement->execute();
-        
+
 
 
         $loadedPlugins = $statement->fetchAll(\PDO::FETCH_ASSOC);
@@ -45,7 +69,12 @@ class Plugins {
             if (\file_exists(__DIR__ . "/../../../../$PluginFolder/$PluginName/plugin.json")) {
                 $PluginMetadata = json_decode(\file_get_contents(__DIR__ . "/../../../../$PluginFolder/$PluginName/plugin.json"));
                 if (\is_object($PluginMetadata) && isset($PluginMetadata->hookFile)) {
-                    new \crisp\core\Plugin($PluginFolder, $PluginName, $PluginMetadata, $TwigTheme, $CurrentFile, $CurrentPage);
+                    if (\crisp\api\Helper::isValidPluginName($PluginName) === false) {
+                        new \crisp\core\Plugin($PluginFolder, $PluginName, $PluginMetadata, $TwigTheme, $CurrentFile, $CurrentPage);
+                    } else {
+                        throw new \Exception(\crisp\api\Helper::isValidPluginName($PluginName));
+                        exit;
+                    }
                 }
             }
         }

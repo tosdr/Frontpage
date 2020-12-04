@@ -5,7 +5,9 @@
     "author": "Justin René Back <jback@pixelcatproductions.net>",
     "onInstall": {
         "createTranslationKeys": {},
-        "createKVStorageItems": {},
+        "createKVStorageItems": {
+            "service_regex": "/has been added|i have added|for review|added to|is up|have been added/i"
+        },
         "activateDependencies": []
     },
     "onUninstall": {

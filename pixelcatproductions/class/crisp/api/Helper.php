@@ -86,7 +86,24 @@ class Helper {
      * @return string Filtered string
      */
     public static function filterAlphaNum($String) {
-        return str_replace(" ", "-", strtolower(preg_replace("/[^0-9a-zA-Z\- ]/", "-", $String)));
+        return str_replace(" ", "-", strtolower(preg_replace("/[^0-9a-zA-Z\-_]/", "-", $String)));
+    }
+
+    public static function isValidPluginName($String) {
+        
+        $Matches = [];
+        
+        if(preg_match_all("/[^0-9a-zA-Z\-_]/", $String) > 0){
+            $Matches[] = "STRING_CONTAINS_NON_ALPHA_NUM";
+        }
+        if(strpos($String, ' ') !== false){
+            $Matches[] = "STRING_CONTAINS_SPACES";
+        }
+        if(preg_match('/[A-Z]/', $String)){
+            $Matches[] = "STRING_CONTAINS_UPPERCASE";
+        }
+        
+        return (count($Matches) > 0 ? $Matches : false);
     }
 
     /**

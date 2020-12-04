@@ -1,0 +1,110 @@
+\hypertarget{classcrisp_1_1core_1_1_plugin_a_p_i}{}\doxysection{Plugin\+A\+PI Class Reference}
+\label{classcrisp_1_1core_1_1_plugin_a_p_i}\index{PluginAPI@{PluginAPI}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcrisp_1_1core_1_1_plugin_a_p_i_ac83d27cc2a15d3ba7fa3837e9d256e7c}{\+\_\+\+\_\+construct}} (\$Plugin\+Folder, \$Plugin\+Name, \$Interface, \$\+\_\+\+Q\+U\+E\+RY)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{classcrisp_1_1core_1_1_plugin_a_p_i_a48f7e906b7bac3c025f35fca100fd556}{response}} (\$Errors, string \$message, array \$Parameters=\mbox{[}$\,$\mbox{]}, \$Flags=null)
+\end{DoxyCompactItemize}
+\doxysubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcrisp_1_1core_1_1_plugin_a_p_i_a91dd51e8dc736449a6956256770cbd97}{\$\+Plugin\+Folder}}
+\item 
+\mbox{\hyperlink{classcrisp_1_1core_1_1_plugin_a_p_i_a6e99fd697b34d245a17246e3b7a0fddc}{\$\+Plugin\+Name}}
+\item 
+\mbox{\hyperlink{classcrisp_1_1core_1_1_plugin_a_p_i_ac0ee5ad1739a394d9e2643d1590b1806}{\$\+Interface}}
+\item 
+\mbox{\hyperlink{classcrisp_1_1core_1_1_plugin_a_p_i_a4b858f1e2bc16055bb5cb1dbafb74b6f}{\$\+Query}}
+\item 
+\mbox{\hyperlink{classcrisp_1_1core_1_1_plugin_a_p_i_ad3412637c00f576b98c4899c215d0163}{\$\+Plugin\+Path}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Used internally, plugin loader 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classcrisp_1_1core_1_1_plugin_a_p_i_ac83d27cc2a15d3ba7fa3837e9d256e7c}\label{classcrisp_1_1core_1_1_plugin_a_p_i_ac83d27cc2a15d3ba7fa3837e9d256e7c}} 
+\index{PluginAPI@{PluginAPI}!\_\_construct@{\_\_construct}}
+\index{\_\_construct@{\_\_construct}!PluginAPI@{PluginAPI}}
+\doxysubsubsection{\texorpdfstring{\_\_construct()}{\_\_construct()}}
+{\footnotesize\ttfamily \+\_\+\+\_\+construct (\begin{DoxyParamCaption}\item[{}]{\$\+Plugin\+Folder,  }\item[{}]{\$\+Plugin\+Name,  }\item[{}]{\$\+Interface,  }\item[{}]{\$\+\_\+\+Q\+U\+E\+RY }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$\+Plugin\+Folder} & The path to your plugin \\
+\hline
+string & {\em \$\+Plugin\+Name} & The name of your plugin \\
+\hline
+object & {\em \$\+Plugin\+Metadata} & Plugin.\+json file contents \\
+\hline
+\textbackslash{}\+Twig\textbackslash{}\+Environment & {\em \$\+Twig\+Theme} & The current twig theme \\
+\hline
+string & {\em \$\+Current\+File} & The current file \\
+\hline
+string & {\em \$\+Current\+Page} & The current \$\+\_\+\+G\+ET\mbox{[}\char`\"{}page\char`\"{}\mbox{]} parameter \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Exception} & \\
+\hline
+\end{DoxyExceptions}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classcrisp_1_1core_1_1_plugin_a_p_i_a48f7e906b7bac3c025f35fca100fd556}\label{classcrisp_1_1core_1_1_plugin_a_p_i_a48f7e906b7bac3c025f35fca100fd556}} 
+\index{PluginAPI@{PluginAPI}!response@{response}}
+\index{response@{response}!PluginAPI@{PluginAPI}}
+\doxysubsubsection{\texorpdfstring{response()}{response()}}
+{\footnotesize\ttfamily static response (\begin{DoxyParamCaption}\item[{}]{\$\+Errors,  }\item[{string}]{\$message,  }\item[{array}]{\$\+Parameters = {\ttfamily \mbox{[}\mbox{]}},  }\item[{}]{\$\+Flags = {\ttfamily null} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Send a J\+S\+ON response 
+\begin{DoxyParams}[1]{Parameters}
+array | bool & {\em \$\+Errors} & Error array or false \\
+\hline
+string & {\em \$message} & A message to send \\
+\hline
+array & {\em \$\+Parameters} & Some response parameters \\
+\hline
+constant & {\em \$\+Flags} & J\+S\+O\+N\+\_\+\+E\+N\+C\+O\+DE constants \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Field Documentation}
+\mbox{\Hypertarget{classcrisp_1_1core_1_1_plugin_a_p_i_ac0ee5ad1739a394d9e2643d1590b1806}\label{classcrisp_1_1core_1_1_plugin_a_p_i_ac0ee5ad1739a394d9e2643d1590b1806}} 
+\index{PluginAPI@{PluginAPI}!\$Interface@{\$Interface}}
+\index{\$Interface@{\$Interface}!PluginAPI@{PluginAPI}}
+\doxysubsubsection{\texorpdfstring{\$Interface}{$Interface}}
+{\footnotesize\ttfamily \$Interface}
+
+\mbox{\Hypertarget{classcrisp_1_1core_1_1_plugin_a_p_i_a91dd51e8dc736449a6956256770cbd97}\label{classcrisp_1_1core_1_1_plugin_a_p_i_a91dd51e8dc736449a6956256770cbd97}} 
+\index{PluginAPI@{PluginAPI}!\$PluginFolder@{\$PluginFolder}}
+\index{\$PluginFolder@{\$PluginFolder}!PluginAPI@{PluginAPI}}
+\doxysubsubsection{\texorpdfstring{\$PluginFolder}{$PluginFolder}}
+{\footnotesize\ttfamily \$Plugin\+Folder}
+
+\mbox{\Hypertarget{classcrisp_1_1core_1_1_plugin_a_p_i_a6e99fd697b34d245a17246e3b7a0fddc}\label{classcrisp_1_1core_1_1_plugin_a_p_i_a6e99fd697b34d245a17246e3b7a0fddc}} 
+\index{PluginAPI@{PluginAPI}!\$PluginName@{\$PluginName}}
+\index{\$PluginName@{\$PluginName}!PluginAPI@{PluginAPI}}
+\doxysubsubsection{\texorpdfstring{\$PluginName}{$PluginName}}
+{\footnotesize\ttfamily \$Plugin\+Name}
+
+\mbox{\Hypertarget{classcrisp_1_1core_1_1_plugin_a_p_i_ad3412637c00f576b98c4899c215d0163}\label{classcrisp_1_1core_1_1_plugin_a_p_i_ad3412637c00f576b98c4899c215d0163}} 
+\index{PluginAPI@{PluginAPI}!\$PluginPath@{\$PluginPath}}
+\index{\$PluginPath@{\$PluginPath}!PluginAPI@{PluginAPI}}
+\doxysubsubsection{\texorpdfstring{\$PluginPath}{$PluginPath}}
+{\footnotesize\ttfamily \$Plugin\+Path}
+
+\mbox{\Hypertarget{classcrisp_1_1core_1_1_plugin_a_p_i_a4b858f1e2bc16055bb5cb1dbafb74b6f}\label{classcrisp_1_1core_1_1_plugin_a_p_i_a4b858f1e2bc16055bb5cb1dbafb74b6f}} 
+\index{PluginAPI@{PluginAPI}!\$Query@{\$Query}}
+\index{\$Query@{\$Query}!PluginAPI@{PluginAPI}}
+\doxysubsubsection{\texorpdfstring{\$Query}{$Query}}
+{\footnotesize\ttfamily \$Query}
+

@@ -25,7 +25,7 @@ switch ($argv[1]) {
                     echo json_encode(\crisp\api\Translation::fetchAll(), JSON_PRETTY_PRINT);
                     exit;
                 }
-                
+
                 echo json_encode(\crisp\api\Translation::fetchAllByKey($argv[3]), JSON_PRETTY_PRINT);
                 break;
         }
@@ -72,9 +72,15 @@ switch ($argv[1]) {
         }
 
         switch ($argv[2]) {
+            case "add":
+            case "install":
             case "enable":
                 if ($argc < 4) {
                     echo "Missing plugin name" . PHP_EOL;
+                    exit;
+                }
+                if (is_array(\crisp\api\Helper::isValidPluginName($argv[3]))) {
+                    echo "Invalid Plugin Name:\n" . var_export(\crisp\api\Helper::isValidPluginName($argv[3]), true). PHP_EOL;
                     exit;
                 }
                 if (crisp\core\Plugins::isInstalled($argv[3])) {
@@ -91,6 +97,8 @@ switch ($argv[1]) {
                 }
                 echo "Failed to install plugin" . PHP_EOL;
                 break;
+            case "uninstall":
+            case "remove":
             case "disable":
                 if ($argc < 4) {
                     echo "Missing plugin name" . PHP_EOL;

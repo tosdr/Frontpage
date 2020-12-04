@@ -20,8 +20,12 @@ if (strpos($_GET["q"], ".json")) {
 
 switch ($_GET["apiversion"]) {
     case "export":
-        if ($Query == "translations") {
-            echo \crisp\core\PluginAPI::response(false, "Exported", \crisp\api\Translation::fetchAll(), JSON_PRETTY_PRINT);
+        switch ($Query) {
+            case "translations":
+                echo \crisp\core\PluginAPI::response(false, "Exported", \crisp\api\Translation::fetchAll(), JSON_PRETTY_PRINT);
+                break;
+            default:
+                echo \crisp\core\PluginAPI::response(["INVALID_OPTIONS"], $Query, []);
         }
         break;
     case "badge":
@@ -29,7 +33,11 @@ switch ($_GET["apiversion"]) {
         $poser = new Poser($render);
 
         if (count($Redis->keys(\crisp\api\Config::get("phoenix_api_endpoint") . "/services/name/" . strtolower($Query))) === 0) {
-            echo \crisp\core\PluginAPI::response(array("Service does not exist!"), "Exported", "Failed!");
+            header("Content-Type: image/svg+xml");
+            $Color = "999999";
+            $Rating = "Service not found";
+
+            echo $poser->generate(\crisp\api\Config::get("badge_prefix"), $Rating, $Color, 'plastic');
             return;
         }
         $RedisData = json_decode($Redis->get(\crisp\api\Config::get("phoenix_api_endpoint") . "/services/name/" . strtolower($Query)));
@@ -65,6 +73,7 @@ switch ($_GET["apiversion"]) {
 
         echo $poser->generate(\crisp\api\Config::get("badge_prefix"), $Rating, $Color, 'plastic');
         break;
+    case "2":
     case "1":
         header("Content-Type: application/json");
 
@@ -93,7 +102,7 @@ switch ($_GET["apiversion"]) {
         }
 
         if (count($Redis->keys(\crisp\api\Config::get("phoenix_api_endpoint") . "/services/name/" . strtolower($Query))) === 0) {
-            echo json_encode(array("error" => true, "message" => "This service does not exist!"));
+            echo \crisp\core\PluginAPI::response(["INVALID_SERVICE"], $Query, []);
             return;
         }
         $RedisData = json_decode($Redis->get(\crisp\api\Config::get("phoenix_api_endpoint") . "/services/name/" . strtolower($Query)));
@@ -154,7 +163,11 @@ switch ($_GET["apiversion"]) {
             "urls" => explode(",", $RedisData->url)
         );
 
-        echo json_encode($SkeletonData);
+        if ($_GET["apiversion"] === "1") {
+            echo json_encode($SkeletonData);
+        } else {
+            echo \crisp\core\PluginAPI::response(false, $Query, $SkeletonData);
+        }
 
 
         break;

@@ -215,7 +215,7 @@ class Plugins {
      * @see registerUninstallHook
      * @param string $PluginName The Folder name of the Plugin
      */
-    public static function uninstall($PluginName) {
+    public static function uninstall($PluginName, $TwigTheme, $CurrentFile, $CurrentPage) {
         $DB = new \crisp\core\MySQL();
         $DBConn = $DB->getDBConnector();
 
@@ -237,6 +237,9 @@ class Plugins {
             return false;
         }
         self::performOnUninstall($PluginName, $PluginMetadata);
+
+        new \crisp\core\Plugin($PluginFolder, $PluginName, $PluginMetadata, $TwigTheme, $CurrentFile, $CurrentPage);
+
 
         self::broadcastHook("pluginUninstall_$PluginName", null);
         self::broadcastHook("pluginUninstall", $PluginName);
@@ -321,7 +324,7 @@ class Plugins {
      * @param string $PluginName The Folder name of the Plugin
      * @return boolean TRUE if install was successful, otherwise FALSE
      */
-    public static function install($PluginName) {
+    public static function install($PluginName, $TwigTheme, $CurrentFile, $CurrentPage) {
 
         $DB = new \crisp\core\MySQL();
         $DBConn = $DB->getDBConnector();
@@ -346,9 +349,16 @@ class Plugins {
         if (!\is_object($PluginMetadata) && !isset($PluginMetadata->hookFile)) {
             return false;
         }
+
+
+
+
         self::performOnInstall($PluginName, $PluginMetadata);
 
-        self::broadcastHook("pluginInstall_$PluginName", null);
+
+        new \crisp\core\Plugin($PluginFolder, $PluginName, $PluginMetadata, $TwigTheme, $CurrentFile, $CurrentPage);
+
+        self::broadcastHook("pluginInstall_$PluginName", time());
         self::broadcastHook("pluginInstall", $PluginName);
 
         $statement = $DBConn->prepare("INSERT INTO loadedPlugins (Name) VALUES (:Key)");

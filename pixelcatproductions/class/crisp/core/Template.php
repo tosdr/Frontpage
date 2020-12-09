@@ -31,6 +31,14 @@ class Template {
     public $CurrentFile;
     public $CurrentPage;
 
+    public static function addtoNavbar($ID, $Text, $Link, $Target = "_self", $Order = 0) {
+        $GLOBALS["navbar"][$ID] = array("ID" => $ID, "html" => $Text, "href" => $Link, "target" => $Target, "order" => $Order);
+
+        usort($GLOBALS["navbar"], function($a, $b) {
+            return $a['order'] <=> $b['order'];
+        });
+    }
+
     public function __construct($TwigTheme, $CurrentFile, $CurrentPage) {
         $this->TwigTheme = $TwigTheme;
         $this->CurrentFile = $CurrentFile;
@@ -42,7 +50,7 @@ class Template {
                 require __DIR__ . "/../../../../" . \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") . "/includes/$CurrentPage.php";
 
                 $_vars = (isset($_vars) ? $_vars : [] );
-                $_vars["context"] = $this;
+                $_vars["template"] = $this;
 
                 echo $TwigTheme->render("views/$CurrentPage.twig", $_vars);
                 exit;

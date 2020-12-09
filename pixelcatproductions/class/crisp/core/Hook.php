@@ -41,7 +41,7 @@ trait Hook {
         if (!isset($GLOBALS['hook'][$channel])) {
 
             $GLOBALS['hook'][$channel] = array();
-            $GLOBALS['hook'][$channel]["parameters"] = array();
+            //$GLOBALS['hook'][$channel]["parameters"] = null;
         }
 
         array_push($GLOBALS['hook'][$channel], $func);

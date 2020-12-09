@@ -18,3 +18,5 @@
  */
 
 /** @var crisp\core\Plugin $this */
+\crisp\core\Template::addtoNavbar("about", $this->getTranslation("about"), "/about", "_self", -97);
+\crisp\core\Template::addtoNavbar("downloads", $this->getTranslation("title"), "/downloads", "_self", -96);

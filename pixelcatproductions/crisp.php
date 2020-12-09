@@ -74,6 +74,10 @@ try {
             /* 'cache' => __DIR__ . '/cache/' */
     ]);
 
+    if (file_exists(__DIR__ . "/../themes/$CurrentTheme/hook.php")) {
+        include __DIR__ . "/../themes/$CurrentTheme/hook.php";
+    }
+
 
 
     $Locale = \crisp\api\Helper::getLocale();
@@ -86,6 +90,7 @@ try {
     $TwigTheme->addGlobal("GET", $_GET);
     $TwigTheme->addGlobal("POST", $_POST);
     $TwigTheme->addGlobal("SERVER", $_SERVER);
+    $TwigTheme->addGlobal("GLOBALS", $GLOBALS);
     $TwigTheme->addGlobal("COOKIE", $_COOKIE);
     $TwigTheme->addGlobal("isMobile", \crisp\api\Helper::isMobile());
 

@@ -133,7 +133,7 @@ class Plugin {
      * @return bool
      */
     public function uninstall() {
-        return \crisp\core\Plugins::uninstall($this->PluginName);
+        return \crisp\core\Plugins::uninstall($this->PluginName, $this->TwigTheme, $this->CurrentFile, $this->CurrentPage);
     }
 
     /**
@@ -150,7 +150,7 @@ class Plugin {
      * @returns boolean TRUE if hook could be registered, otherwise false
      */
     public function registerUninstallHook($Function) {
-        return \crisp\core\Plugins::registerInstallHook($this->PluginName, $Function);
+        return \crisp\core\Plugins::registerUninstallHook($this->PluginName, $Function);
     }
 
     /**
@@ -159,7 +159,7 @@ class Plugin {
      * @returns boolean TRUE if hook could be registered, otherwise false
      */
     public function registerInstallHook($Function) {
-        return \crisp\core\Plugins::registerUninstallHook($this->PluginName, $Function);
+        return \crisp\core\Plugins::registerInstallHook($this->PluginName, $Function);
     }
 
     /**

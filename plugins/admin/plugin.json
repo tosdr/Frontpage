@@ -1,0 +1,37 @@
+{
+    "name": "Admin Panel Plugin",
+    "description": "An admin panel plugin for crisp",
+    "hookFile": "hook.php",
+    "author": "Justin René Back <jback@pixelcatproductions.net>",
+    "onInstall": {
+        "createTranslationKeys": {
+            "en": {
+                "login": "Admin Login",
+                "email": "Your email:",
+                "enter_email": "Enter your email address",
+                "password": "Your password:",
+                "enter_password": "Enter your password",
+                "submit": "Login",
+                "login_success": "Successfully logged in"
+            },
+            "de": {
+                "login": "Admin Login",
+                "email": "Deine E-Mail:",
+                "enter_email": "Gib deine E-Mail ein",
+                "password": "Dein Passwort:",
+                "enter_password": "Gib dein Passwort ein",
+                "submit": "Einloggen",
+                "login_success": "Erfolgreich angemeldet"
+            }
+        },
+        "createKVStorageItems": {
+
+        },
+        "activateDependencies": []
+    },
+    "onUninstall": {
+        "deleteData": true,
+        "deactivateDependencies": [],
+        "purgeDependencies": []
+    }
+}

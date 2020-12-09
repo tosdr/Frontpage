@@ -38,6 +38,10 @@ class MySQL {
         $this->Database_Connection = new PDO("mysql:host=" . $EnvFile["MYSQL_HOSTNAME"] . ";dbname=" . $EnvFile["MYSQL_DATABASE"] . ";charset=utf8;", $EnvFile["MYSQL_USERNAME"], $EnvFile["MYSQL_PASSWORD"], [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::ATTR_EMULATE_PREPARES => true]);
     }
 
+    /**
+     * 
+     * @return PDO
+     */
     public function getDBConnector() {
         return $this->Database_Connection;
     }

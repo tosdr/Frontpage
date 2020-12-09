@@ -1,5 +1,6 @@
 <?php
 
+define('CRISP_CLI', true);
 define('CRISP_API', true);
 define('NO_KMS', true);
 
@@ -80,7 +81,7 @@ switch ($argv[1]) {
                     exit;
                 }
                 if (is_array(\crisp\api\Helper::isValidPluginName($argv[3]))) {
-                    echo "Invalid Plugin Name:\n" . var_export(\crisp\api\Helper::isValidPluginName($argv[3]), true). PHP_EOL;
+                    echo "Invalid Plugin Name:\n" . var_export(\crisp\api\Helper::isValidPluginName($argv[3]), true) . PHP_EOL;
                     exit;
                 }
                 if (crisp\core\Plugins::isInstalled($argv[3])) {
@@ -91,7 +92,7 @@ switch ($argv[1]) {
                     echo "This plugin does not exist" . PHP_EOL;
                     exit;
                 }
-                if (crisp\core\Plugins::install($argv[3])) {
+                if (crisp\core\Plugins::install($argv[3], \crisp\api\Config::get("theme"), __FILE__, "cli")) {
                     echo "Plugin successfully installed" . PHP_EOL;
                     exit;
                 }
@@ -99,6 +100,7 @@ switch ($argv[1]) {
                 break;
             case "uninstall":
             case "remove":
+            case "delete":
             case "disable":
                 if ($argc < 4) {
                     echo "Missing plugin name" . PHP_EOL;
@@ -112,7 +114,7 @@ switch ($argv[1]) {
                     echo "This plugin does not exist" . PHP_EOL;
                     exit;
                 }
-                if (crisp\core\Plugins::uninstall($argv[3])) {
+                if (crisp\core\Plugins::uninstall($argv[3], \crisp\api\Config::get("theme"), __FILE__, "cli")) {
                     echo "Plugin successfully uninstalled" . PHP_EOL;
                     exit;
                 }
@@ -124,7 +126,7 @@ switch ($argv[1]) {
                     exit;
                 }
                 if (!crisp\core\Plugins::isInstalled($argv[3])) {
-                    if (!crisp\core\Plugins::install($argv[3])) {
+                    if (!crisp\core\Plugins::install($argv[3], \crisp\api\Config::get("theme"), __FILE__, "cli")) {
                         echo "Failed to install plugin" . PHP_EOL;
                         exit;
                     }
@@ -135,11 +137,11 @@ switch ($argv[1]) {
                     echo "This plugin does not exist" . PHP_EOL;
                     exit;
                 }
-                if (!crisp\core\Plugins::uninstall($argv[3])) {
+                if (!crisp\core\Plugins::uninstall($argv[3], \crisp\api\Config::get("theme"), __FILE__, "cli")) {
                     echo "Failed to uninstall Plugin" . PHP_EOL;
                     exit;
                 }
-                if (!crisp\core\Plugins::install($argv[3])) {
+                if (!crisp\core\Plugins::install($argv[3], \crisp\api\Config::get("theme"), __FILE__, "cli")) {
                     echo "Failed to install plugin" . PHP_EOL;
                     exit;
                 }

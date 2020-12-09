@@ -4,7 +4,7 @@
 /** @var \crisp\core\PluginAPI self */
 $EnvFile = parse_ini_file(__DIR__ . "/../../.env");
 $Error = false;
-
+$Message = "";
 
 
 if (empty($EnvFile["DISCOURSE_WEBHOOK_SECRET"])) {
@@ -26,9 +26,10 @@ if (array_key_exists('HTTP_X_DISCOURSE_EVENT_SIGNATURE', $_SERVER) && $_SERVER["
     $PayLoad = json_decode($PayLoadRaw);
 
 
+    
 
     if (hash_hmac('sha256', $PayLoadRaw, $EnvFile["DISCOURSE_WEBHOOK_SECRET"]) == $PayLoadHash) {
-        if (preg_match_all($this->getConfig("service_regex"), $PayLoad->post->raw) > 0 && ($PayLoad->post->primary_group_name == "Team" || $PayLoad->post->primary_group_name == "curators")) {
+        if (preg_match_all(\crisp\api\Config::get("plugin_discourse_service_regex"), $PayLoad->post->raw) > 0 && ($PayLoad->post->primary_group_name == "Team" || $PayLoad->post->primary_group_name == "curators")) {
 
             $responses = [];
 
@@ -40,7 +41,7 @@ if (array_key_exists('HTTP_X_DISCOURSE_EVENT_SIGNATURE', $_SERVER) && $_SERVER["
 
 
 
-            $Message = "message";
+            $Message = "OK";
         } else {
 
             if ($PayLoad->post->post_number == 1) {
@@ -56,8 +57,8 @@ if (array_key_exists('HTTP_X_DISCOURSE_EVENT_SIGNATURE', $_SERVER) && $_SERVER["
                     "message" => "No match!",
                     "post" => $PayLoad->post->raw,
                     "regex" => array(
-                        "regexp" => $this->getConfig("service_regex"),
-                        "matches" => preg_match_all($this->getConfig("service_regex"), $PayLoad->post->raw)
+                        "regexp" => \crisp\api\Config::get("plugin_discourse_service_regex"),
+                        "matches" => preg_match_all(\crisp\api\Config::get("plugin_discourse_service_regex"), $PayLoad->post->raw)
                     )
                 );
             }

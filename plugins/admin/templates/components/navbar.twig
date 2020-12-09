@@ -26,11 +26,10 @@
     <!-- Navbar links -->
     <div class="collapse navbar-collapse" id="collapsibleNavbar">
         <ul class="navbar-nav">
-            {% for item in GLOBALS.navbar %}
-                <li class="nav-item {% if currentPage == item.ID %} active{% endif %}">
-                    <a target="{{ item.target }}" class="nav-link {% if currentPage == item.ID %} active{% endif %}" href="{{ item.href }}">{{ item.html }}</a>
-                </li>
-            {% endfor %}
+            
+            <li class="nav-item {% if currentPage == "admin_dashboard" %} active{% endif %}">
+                <a class="nav-link {% if currentPage == "admin_dashboard" %} active{% endif %}" href="/{{ locale }}/login">{{ plugin.getTranslation('dashboard') }}</a>
+            </li>
         </ul>
     </div>
 </nav> 

@@ -82,8 +82,6 @@ try {
 
     $Locale = \crisp\api\Helper::getLocale();
 
-
-    $TwigTheme->addGlobal("URL", "https://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]");
     $TwigTheme->addGlobal("config", \crisp\api\Config::list());
     $TwigTheme->addGlobal("locale", $Locale);
     $TwigTheme->addGlobal("languages", \crisp\api\Translation::listLanguages(false));
@@ -93,6 +91,7 @@ try {
     $TwigTheme->addGlobal("GLOBALS", $GLOBALS);
     $TwigTheme->addGlobal("COOKIE", $_COOKIE);
     $TwigTheme->addGlobal("isMobile", \crisp\api\Helper::isMobile());
+    $TwigTheme->addGlobal("URL", api\Helper::currentDomain());
 
 
     $TwigTheme->addExtension(new \Twig\Extension\StringLoaderExtension());

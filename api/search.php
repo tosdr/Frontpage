@@ -23,7 +23,11 @@ if (empty($_GET["q"])) {
 }
 $Array = array_slice($Array, 0, 10);
 if (count($Array) > 0) {
-    echo json_encode(array("service" => $Array, "grid" => $TwigTheme->render("components/servicegrid/grid.twig", array("Services" => $Array, "columns" => 2))));
+    $cols = 2;
+    if (crisp\api\Helper::isMobile()) {
+        $cols = 1;
+    }
+    echo json_encode(array("service" => $Array, "grid" => $TwigTheme->render("components/servicegrid/grid.twig", array("Services" => $Array, "columns" => $cols))));
     exit;
 }
 echo json_encode(array("service" => $Array, "grid" => $TwigTheme->render("components/servicegrid/no_service.twig", [])));

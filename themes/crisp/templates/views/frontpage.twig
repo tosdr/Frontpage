@@ -101,3 +101,16 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
     </div>
 
 {% endblock %}
+{% block scripts %}
+    <script>
+
+        // Backwards compability from old.tosdr.org
+        if (window.location.hash && window.location.hash !== "#rating") {
+            // https://stackoverflow.com/a/8896309
+            var url = "http://www.domain.com/path/to/something?query#fragment";
+            var exp = url.split(/^(([^:\/?#]+):)?(\/\/([^\/?#]*))?([^?#]*)(\?([^#]*))?(#(.*))?/);
+            var firstPortion = exp[5].split("/")[1]
+            window.location.href = "/"+firstPortion+"/service/" + window.location.hash.substr(1);
+        }
+    </script>
+{% endblock %}

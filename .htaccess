@@ -6,6 +6,10 @@ RewriteRule ^themes/(.*)/img/logo/(.*)$ api/img.php?theme=$1&logo=$2 [NC,L,QSA]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{SCRIPT_FILENAME}\.php !-d
+RewriteRule ^(.*)/(.*)/(.*)$ index.php?l=$1&page=$2&q=$3 [NC,L,QSA]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{SCRIPT_FILENAME}\.php !-d
 RewriteRule ^(.*)/(.*)$ index.php?l=$1&page=$2 [NC,L,QSA]
 
 

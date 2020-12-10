@@ -16,7 +16,7 @@
 #}
 <div class="col-{{ col }}">
     <div class="card d-flex h-100">
-        <a target="_blank" href="{{ config.phoenix_url }}/services/{{ service.id }}">
+        <a href="/{{ locale }}/service/{{ service.id }}">
             <div class="card-header">
                 {% set serviceDetails = getService(service.id) %}
                 <img src="{{ serviceDetails.image }}" width="64"/> 

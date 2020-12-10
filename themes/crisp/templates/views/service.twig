@@ -1,0 +1,86 @@
+{# 
+ # Copyright 2020 Pixelcat Productions <support@pixelcatproductions.net>
+ # @author 2020 Justin René Back <jback@pixelcatproductions.net>
+ #
+ # Licensed under the Apache License, Version 2.0 (the "License");
+ # you may not use this file except in compliance with the License.
+ # You may obtain a copy of the License at
+ #
+ #      http://www.apache.org/licenses/LICENSE-2.0
+ #
+ # Unless required by applicable law or agreed to in writing, software
+ # distributed under the License is distributed on an "AS IS" BASIS,
+ # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ # See the License for the specific language governing permissions and
+ # limitations under the License.
+#}
+
+
+{#
+Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
+    - JB
+#}
+{% set currentPage = 'service' %}
+{% set pageTitle = 'service'|translate %}
+{% set error = false %}
+
+
+
+{% extends "base.twig" %}
+
+{% block content %}
+    {{ include("components/navbar.twig") }}
+
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container text-center">
+            <h1 class="display-4"><img class="img-fluid" src="{{ service.image }}"alt="Logo"/></h1>
+            <h2 class="mt-2">{{ service.name }}</h2>
+            <h3>{% include "components/rating.twig" with {'rating': service.rating} %}</h3>
+            <div class="btn-group">
+                <a role="button" href="{{ config.phoenix_url }}/services/{{ GET.q }}/annotate" class="btn btn-primary">{{ service.documents|length }} {{ 'documents'|translate }}</a>
+                <a role="button" href="{{ config.phoenix_url }}/services/{{ GET.q }}" class="btn btn-primary">{{ service.points|length }} {{ 'points'|translate }}</a>
+            </div> 
+            <div class="input-group mt-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><img src="{{ URL }}/api/badge/{{ service.nice_service }}"/></span>
+                </div>
+                <input type="text" class="form-control" value="{{ URL }}/api/badge/{{ service.nice_service }}" readonly>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-5">
+
+        <ul class="list-group mb-4">
+            {% for point in service.points %}
+                {% if point.status == "approved" %}
+
+
+                    {% set caseDetails = getCase(point.case_id) %}
+
+                    {% if caseDetails.classification == "bad" %}
+                        {% set color = "warning" %}
+                    {% endif %}
+
+                    {% if caseDetails.classification == "good" %}
+                        {% set color = "success" %}
+                    {% endif %}
+
+                    {% if caseDetails.classification == "neutral" %}
+                        {% set color = "secondary" %}
+                    {% endif %}
+
+                    {% if caseDetails.classification == "blocker" %}
+                        {% set color = "danger" %}
+                    {% endif %}
+
+
+                    <li data-toggle="tooltip" title="{{ point.quoteText }}" class="list-group-item list-group-item-{{ color }}"><a  target="_blank" class="link-unstyled" href="{{ config.phoenix_url }}/points/{{ point.id }}">{{ point.title }}</a> <a data-toggle="tooltip" target="_blank" title="{{ 'visit_case'|translate }}" href="{{ config.phoenix_url }}/cases/{{ caseDetails.id }}"><span class="badge badge-primary badge-pill"><i class="fas fa-briefcase"></i></span></a></li>
+
+                {% endif %}
+            {% endfor %}
+        </ul> 
+
+    </div>
+
+{% endblock %}

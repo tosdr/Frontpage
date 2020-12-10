@@ -13,11 +13,11 @@ static \mbox{\hyperlink{classcrisp_1_1core_1_1_plugins_a71a6bc758b558608ae0e6fe4
 \item 
 static \mbox{\hyperlink{classcrisp_1_1core_1_1_plugins_a29683f4ed4f98a71f97ac46418824404}{delete\+Data}} (\$Plugin\+Name)
 \item 
-static \mbox{\hyperlink{classcrisp_1_1core_1_1_plugins_acfb643ebfeef5797b9e2c7094117fcaa}{uninstall}} (\$Plugin\+Name)
+static \mbox{\hyperlink{classcrisp_1_1core_1_1_plugins_a613477d731542ada2effda2624b22baa}{uninstall}} (\$Plugin\+Name, \$Twig\+Theme, \$Current\+File, \$Current\+Page)
 \item 
 static \mbox{\hyperlink{classcrisp_1_1core_1_1_plugins_a6f266dc54fabde70ec2432a05a49aadd}{integrity\+Check}} (\$Plugin\+Name, \$Plugin\+Metadata, \$Plugin\+Folder)
 \item 
-static \mbox{\hyperlink{classcrisp_1_1core_1_1_plugins_a31bcd227fcc4ec234aefecc7f007d507}{install}} (\$Plugin\+Name)
+static \mbox{\hyperlink{classcrisp_1_1core_1_1_plugins_ab0d93f988b65a197949370f45c0c2f02}{install}} (\$Plugin\+Name, \$Twig\+Theme, \$Current\+File, \$Current\+Page)
 \item 
 static \mbox{\hyperlink{classcrisp_1_1core_1_1_plugins_a807f89718708ff201065c579b3d449b2}{register\+Uninstall\+Hook}} (\$Plugin\+Name, \$Function)
 \item 
@@ -47,11 +47,11 @@ string & {\em \$\+Plugin\+Name} & The folder name of the plugin \\
 \begin{DoxyReturn}{Returns}
 boolean T\+R\+UE if the data has been successfully deleted 
 \end{DoxyReturn}
-\mbox{\Hypertarget{classcrisp_1_1core_1_1_plugins_a31bcd227fcc4ec234aefecc7f007d507}\label{classcrisp_1_1core_1_1_plugins_a31bcd227fcc4ec234aefecc7f007d507}} 
+\mbox{\Hypertarget{classcrisp_1_1core_1_1_plugins_ab0d93f988b65a197949370f45c0c2f02}\label{classcrisp_1_1core_1_1_plugins_ab0d93f988b65a197949370f45c0c2f02}} 
 \index{Plugins@{Plugins}!install@{install}}
 \index{install@{install}!Plugins@{Plugins}}
 \doxysubsubsection{\texorpdfstring{install()}{install()}}
-{\footnotesize\ttfamily static install (\begin{DoxyParamCaption}\item[{}]{\$\+Plugin\+Name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+{\footnotesize\ttfamily static install (\begin{DoxyParamCaption}\item[{}]{\$\+Plugin\+Name,  }\item[{}]{\$\+Twig\+Theme,  }\item[{}]{\$\+Current\+File,  }\item[{}]{\$\+Current\+Page }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
 Install a plugin and load it into the C\+MS @broadcasts plugin\+Install \begin{DoxySeeAlso}{See also}
 \mbox{\hyperlink{classcrisp_1_1core_1_1_plugins_acff78ca85f87a3558ac98e093c1dfb82}{register\+Install\+Hook}} 
@@ -140,11 +140,11 @@ string | function & {\em \$\+Function} & Callback function, either anonymous or 
 \begin{DoxyReturn}{Returns}
 boolean T\+R\+UE if hook could be registered, otherwise false 
 \end{DoxyReturn}
-\mbox{\Hypertarget{classcrisp_1_1core_1_1_plugins_acfb643ebfeef5797b9e2c7094117fcaa}\label{classcrisp_1_1core_1_1_plugins_acfb643ebfeef5797b9e2c7094117fcaa}} 
+\mbox{\Hypertarget{classcrisp_1_1core_1_1_plugins_a613477d731542ada2effda2624b22baa}\label{classcrisp_1_1core_1_1_plugins_a613477d731542ada2effda2624b22baa}} 
 \index{Plugins@{Plugins}!uninstall@{uninstall}}
 \index{uninstall@{uninstall}!Plugins@{Plugins}}
 \doxysubsubsection{\texorpdfstring{uninstall()}{uninstall()}}
-{\footnotesize\ttfamily static uninstall (\begin{DoxyParamCaption}\item[{}]{\$\+Plugin\+Name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+{\footnotesize\ttfamily static uninstall (\begin{DoxyParamCaption}\item[{}]{\$\+Plugin\+Name,  }\item[{}]{\$\+Twig\+Theme,  }\item[{}]{\$\+Current\+File,  }\item[{}]{\$\+Current\+Page }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
 Uninstall a plugin and prevent it from loading @broadcasts plugin\+Uninstall \begin{DoxySeeAlso}{See also}
 \mbox{\hyperlink{classcrisp_1_1core_1_1_plugins_a807f89718708ff201065c579b3d449b2}{register\+Uninstall\+Hook}} 

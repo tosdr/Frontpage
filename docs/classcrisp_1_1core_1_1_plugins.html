@@ -24,6 +24,7 @@
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="tosdr-icon-180.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">CrispCMS Plugin API
    </div>
@@ -100,12 +101,12 @@ Static Public Member Functions</h2></td></tr>
 <tr class="separator:a71a6bc758b558608ae0e6fe42ff7f8d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a29683f4ed4f98a71f97ac46418824404"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcrisp_1_1core_1_1_plugins.html#a29683f4ed4f98a71f97ac46418824404">deleteData</a> ($PluginName)</td></tr>
 <tr class="separator:a29683f4ed4f98a71f97ac46418824404"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acfb643ebfeef5797b9e2c7094117fcaa"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcrisp_1_1core_1_1_plugins.html#acfb643ebfeef5797b9e2c7094117fcaa">uninstall</a> ($PluginName)</td></tr>
-<tr class="separator:acfb643ebfeef5797b9e2c7094117fcaa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a613477d731542ada2effda2624b22baa"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcrisp_1_1core_1_1_plugins.html#a613477d731542ada2effda2624b22baa">uninstall</a> ($PluginName, $TwigTheme, $CurrentFile, $CurrentPage)</td></tr>
+<tr class="separator:a613477d731542ada2effda2624b22baa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6f266dc54fabde70ec2432a05a49aadd"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcrisp_1_1core_1_1_plugins.html#a6f266dc54fabde70ec2432a05a49aadd">integrityCheck</a> ($PluginName, $PluginMetadata, $PluginFolder)</td></tr>
 <tr class="separator:a6f266dc54fabde70ec2432a05a49aadd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a31bcd227fcc4ec234aefecc7f007d507"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcrisp_1_1core_1_1_plugins.html#a31bcd227fcc4ec234aefecc7f007d507">install</a> ($PluginName)</td></tr>
-<tr class="separator:a31bcd227fcc4ec234aefecc7f007d507"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab0d93f988b65a197949370f45c0c2f02"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcrisp_1_1core_1_1_plugins.html#ab0d93f988b65a197949370f45c0c2f02">install</a> ($PluginName, $TwigTheme, $CurrentFile, $CurrentPage)</td></tr>
+<tr class="separator:ab0d93f988b65a197949370f45c0c2f02"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a807f89718708ff201065c579b3d449b2"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcrisp_1_1core_1_1_plugins.html#a807f89718708ff201065c579b3d449b2">registerUninstallHook</a> ($PluginName, $Function)</td></tr>
 <tr class="separator:a807f89718708ff201065c579b3d449b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0a8df1e18409966ed4192ad9d5b66861"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcrisp_1_1core_1_1_plugins.html#a0a8df1e18409966ed4192ad9d5b66861">registerAfterRenderHook</a> ($PluginName, $Function)</td></tr>
@@ -150,8 +151,8 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a31bcd227fcc4ec234aefecc7f007d507"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a31bcd227fcc4ec234aefecc7f007d507">&#9670;&nbsp;</a></span>install()</h2>
+<a id="ab0d93f988b65a197949370f45c0c2f02"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab0d93f988b65a197949370f45c0c2f02">&#9670;&nbsp;</a></span>install()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -163,8 +164,30 @@ Static Public Member Functions</h2></td></tr>
           <td class="memname">static install </td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$PluginName</em></td><td>)</td>
+          <td class="paramname"><em>$PluginName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$TwigTheme</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$CurrentFile</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$CurrentPage</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -487,8 +510,8 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="acfb643ebfeef5797b9e2c7094117fcaa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acfb643ebfeef5797b9e2c7094117fcaa">&#9670;&nbsp;</a></span>uninstall()</h2>
+<a id="a613477d731542ada2effda2624b22baa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a613477d731542ada2effda2624b22baa">&#9670;&nbsp;</a></span>uninstall()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -500,8 +523,30 @@ Static Public Member Functions</h2></td></tr>
           <td class="memname">static uninstall </td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$PluginName</em></td><td>)</td>
+          <td class="paramname"><em>$PluginName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$TwigTheme</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$CurrentFile</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$CurrentPage</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>

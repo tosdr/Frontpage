@@ -1,10 +1,13 @@
 var searchData=
 [
-  ['edittranslation_36',['editTranslation',['../classcrisp_1_1api_1_1_language.html#ae160b823dc298cd7d331531f9c4e1b49',1,'crisp::api::Language']]],
-  ['enable_37',['enable',['../classcrisp_1_1api_1_1_language.html#a91e658a6e3fccc3028f2d71122bc4b8f',1,'crisp::api::Language']]],
-  ['encrypt_38',['encrypt',['../classcrisp_1_1core_1_1_crypto.html#a638285d91f747220bcb45ae382bd9313',1,'crisp::core::Crypto']]],
-  ['endswith_39',['endsWith',['../classcrisp_1_1api_1_1_helper.html#a2549562216f3498de2fb3645a6fb10e0',1,'crisp::api::Helper']]],
-  ['errorreporter_40',['ErrorReporter',['../classcrisp_1_1api_1_1_error_reporter.html',1,'crisp::api']]],
-  ['errorreporter_2ephp_41',['ErrorReporter.php',['../_error_reporter_8php.html',1,'']]],
-  ['exists_42',['exists',['../classcrisp_1_1api_1_1_config.html#a89c8217b558fda742458fa481af0a883',1,'crisp\api\Config\exists()'],['../classcrisp_1_1api_1_1_language.html#ac2f864b72dc2f778e68ad96364c48c5e',1,'crisp\api\Language\exists()'],['../classcrisp_1_1api_1_1_translation.html#a89c8217b558fda742458fa481af0a883',1,'crisp\api\Translation\exists()']]]
+  ['decrypt_29',['decrypt',['../classcrisp_1_1core_1_1_crypto.html#a7c96a9f039748bcdabb4be4eaa0b2aeb',1,'crisp::core::Crypto']]],
+  ['delete_30',['delete',['../classcrisp_1_1api_1_1_config.html#a42f9afb8c19c0069b6ae47c8b5e25f3b',1,'crisp::api::Config']]],
+  ['deleteconfig_31',['deleteConfig',['../classcrisp_1_1core_1_1_plugin.html#a634c5a35aa0260a186ed21b57f91a8cd',1,'crisp::core::Plugin']]],
+  ['deletedata_32',['deleteData',['../classcrisp_1_1core_1_1_plugins.html#a29683f4ed4f98a71f97ac46418824404',1,'crisp::core::Plugins']]],
+  ['deleteold_33',['deleteOld',['../classcrisp_1_1api_1_1lists_1_1_cron.html#aaa61a9dcc03e0b7e8aac8b350c08bae9',1,'crisp::api::lists::Cron']]],
+  ['deletetranslation_34',['deleteTranslation',['../classcrisp_1_1api_1_1_language.html#ada8821ebd1ecaa66dacd691e2a342b88',1,'crisp::api::Language']]],
+  ['deprecated_20list_35',['Deprecated List',['../deprecated.html',1,'']]],
+  ['dev_2edox_36',['dev.dox',['../dev_8dox.html',1,'']]],
+  ['developing_20plugins_37',['Developing Plugins',['../devplugin.html',1,'']]],
+  ['disable_38',['disable',['../classcrisp_1_1api_1_1_language.html#a545341e59cc9a0dafc4e265d60d4b5d6',1,'crisp::api::Language']]]
 ];

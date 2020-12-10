@@ -1,5 +1,11 @@
 var searchData=
 [
-  ['uninstall_139',['uninstall',['../classcrisp_1_1core_1_1_plugin.html#a9db6a246faa6b948911078c4be4445c8',1,'crisp\core\Plugin\uninstall()'],['../classcrisp_1_1core_1_1_plugins.html#acfb643ebfeef5797b9e2c7094117fcaa',1,'crisp\core\Plugins\uninstall()']]],
-  ['uuidv4_140',['UUIDv4',['../classcrisp_1_1core_1_1_crypto.html#a74ce280f078249a84c6c4cbe146ddef9',1,'crisp::core::Crypto']]]
+  ['template_136',['Template',['../classcrisp_1_1core_1_1_template.html',1,'crisp::core']]],
+  ['template_2ephp_137',['Template.php',['../_template_8php.html',1,'']]],
+  ['templateexists_138',['templateExists',['../classcrisp_1_1api_1_1_helper.html#a4d67f0d47d7e28e5f2b344bb06db744a',1,'crisp::api::Helper']]],
+  ['templates_139',['Templates',['../classcrisp_1_1core_1_1_templates.html',1,'crisp::core']]],
+  ['templates_2ephp_140',['Templates.php',['../_templates_8php.html',1,'']]],
+  ['translation_141',['Translation',['../classcrisp_1_1api_1_1_translation.html',1,'crisp::api']]],
+  ['translation_2ephp_142',['Translation.php',['../_translation_8php.html',1,'']]],
+  ['truncatetext_143',['truncateText',['../classcrisp_1_1api_1_1_helper.html#a11e88bd83a076ce47a26c25cb6fc8dcf',1,'crisp::api::Helper']]]
 ];

@@ -1,8 +1,12 @@
 var searchData=
 [
-  ['list_240',['list',['../classcrisp_1_1api_1_1_config.html#a60f9ff17d15bf996c3d374518777d2d6',1,'crisp::api::Config']]],
-  ['listlanguages_241',['listLanguages',['../classcrisp_1_1api_1_1_translation.html#ac83fea9398598f316f651b3b83206acc',1,'crisp::api::Translation']]],
-  ['listtranslations_242',['listTranslations',['../classcrisp_1_1api_1_1_translation.html#add1862ef0ab8870ba795ef9631cc4ff2',1,'crisp::api::Translation']]],
-  ['load_243',['load',['../classcrisp_1_1core_1_1_plugins.html#ad5661c97c530ef2b71cc696f025887f9',1,'crisp\core\Plugins\load()'],['../classcrisp_1_1core_1_1_templates.html#ad5661c97c530ef2b71cc696f025887f9',1,'crisp\core\Templates\load()']]],
-  ['loadapi_244',['loadAPI',['../classcrisp_1_1core_1_1_plugins.html#a9a18b97439a9178a5bdccfbd422bf10b',1,'crisp::core::Plugins']]]
+  ['install_239',['install',['../classcrisp_1_1core_1_1_plugins.html#ab0d93f988b65a197949370f45c0c2f02',1,'crisp::core::Plugins']]],
+  ['integrity_240',['integrity',['../classcrisp_1_1core_1_1_plugin.html#af50504b641965128314e7ef746003788',1,'crisp::core::Plugin']]],
+  ['integritycheck_241',['integrityCheck',['../classcrisp_1_1core_1_1_plugins.html#a6f266dc54fabde70ec2432a05a49aadd',1,'crisp::core::Plugins']]],
+  ['isenabled_242',['isEnabled',['../classcrisp_1_1api_1_1_language.html#ad734dc60b64a242fe183e0c23b192790',1,'crisp::api::Language']]],
+  ['isinstalled_243',['isInstalled',['../classcrisp_1_1core_1_1_plugins.html#a9922f40b72212730c4cf639f50e3e364',1,'crisp::core::Plugins']]],
+  ['ismobile_244',['isMobile',['../classcrisp_1_1api_1_1_helper.html#af18fc91684720f67c66e9c92a38f8bb8',1,'crisp::api::Helper']]],
+  ['isserialized_245',['isSerialized',['../classcrisp_1_1api_1_1_helper.html#a0dde52b6a2dcbaea2d84f2bc6d4587cf',1,'crisp::api::Helper']]],
+  ['isvalid_246',['isValid',['../classcrisp_1_1core_1_1_plugins.html#a71a6bc758b558608ae0e6fe42ff7f8d0',1,'crisp::core::Plugins']]],
+  ['isvalidpluginname_247',['isValidPluginName',['../classcrisp_1_1api_1_1_helper.html#a6a13a3a1748c8d42bc21164fdce67fe5',1,'crisp::api::Helper']]]
 ];

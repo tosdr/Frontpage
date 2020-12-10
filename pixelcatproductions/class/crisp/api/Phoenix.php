@@ -25,17 +25,74 @@ namespace crisp\api;
 class Phoenix {
 
     private static ?\Redis $Redis_Database_Connection = null;
+    private static ?\PDO $Postgres_Database_Connection = null;
 
     /**
      * Initialize the Class
      */
     public function __construct() {
         self::initDB();
+        self::initPGDB();
+    }
+
+    private static function initPGDB() {
+        $PostgresDB = new \crisp\core\Postgres();
+        self::$Postgres_Database_Connection = $PostgresDB->getDBConnector();
     }
 
     private static function initDB() {
-        $DB = new \crisp\core\Redis();
-        self::$Redis_Database_Connection = $DB->getDBConnector();
+        $RedisDB = new \crisp\core\Redis();
+        self::$Redis_Database_Connection = $RedisDB->getDBConnector();
+    }
+
+    public static function getPointsByServicePG(string $ID) {
+        if (self::$Redis_Database_Connection === NULL) {
+            self::initDB();
+        }
+
+        if (self::$Redis_Database_Connection->keys("pg_pointsbyservice_$ID")) {
+            return unserialize(self::$Redis_Database_Connection->get("pg_pointsbyservice_$ID"));
+        }
+
+        if (self::$Postgres_Database_Connection === NULL) {
+            self::initPGDB();
+        }
+
+
+
+        $statement = self::$Postgres_Database_Connection->prepare("SELECT * FROM points WHERE service_id = :ID");
+
+        $statement->execute(array(":ID" => $ID));
+
+        $Result = $statement->fetchAll(\PDO::FETCH_ASSOC);
+
+        self::$Redis_Database_Connection->set("pg_pointsbyservice_$ID", serialize($Result), 300);
+
+        return $Result;
+    }
+
+    public static function getPointPG(string $ID) {
+        if (self::$Redis_Database_Connection === NULL) {
+            self::initDB();
+        }
+
+        if (self::$Redis_Database_Connection->keys("pg_point_$ID")) {
+            return unserialize(self::$Redis_Database_Connection->get("pg_point_$ID"));
+        }
+
+        if (self::$Postgres_Database_Connection === NULL) {
+            self::initPGDB();
+        }
+
+        $statement = self::$Postgres_Database_Connection->prepare("SELECT * FROM points WHERE id = :ID");
+
+        $statement->execute(array(":ID" => $ID));
+
+        $Result = $statement->fetch(\PDO::FETCH_ASSOC);
+
+        self::$Redis_Database_Connection->set("pg_point_$ID", serialize($Result), 300);
+
+        return $Result;
     }
 
     /**
@@ -43,6 +100,7 @@ class Phoenix {
      * @param string $ID The ID of the point
      * @param bool $Force Force update from phoenix
      * @return object
+     * @deprecated Use Phoenix::getPointPG
      * @throws \Exception
      */
     public static function getPoint(string $ID, bool $Force = false) {
@@ -83,11 +141,37 @@ class Phoenix {
         throw new \Exception("Failed to contact REDIS");
     }
 
+    public static function getCasePG(string $ID) {
+        if (self::$Redis_Database_Connection === NULL) {
+            self::initDB();
+        }
+
+        if (self::$Redis_Database_Connection->keys("pg_case_$ID")) {
+            return unserialize(self::$Redis_Database_Connection->get("pg_case_$ID"));
+        }
+
+
+        if (self::$Postgres_Database_Connection === NULL) {
+            self::initPGDB();
+        }
+
+        $statement = self::$Postgres_Database_Connection->prepare("SELECT * FROM cases WHERE id = :ID");
+
+        $statement->execute(array(":ID" => $ID));
+
+        $Result = $statement->fetch(\PDO::FETCH_ASSOC);
+
+        self::$Redis_Database_Connection->set("pg_case_$ID", serialize($Result), 300);
+
+        return $Result;
+    }
+
     /**
      * Get details of a case
      * @param string $ID The ID of a case
      * @param bool $Force Force update from Phoenix
      * @return object
+     * @deprecated Use Phoenix::getCasePG
      * @throws \Exception
      */
     public static function getCase(string $ID, bool $Force = false) {
@@ -128,11 +212,36 @@ class Phoenix {
         throw new \Exception("Failed to contact REDIS");
     }
 
+    public static function getTopicPG(string $ID) {
+        if (self::$Postgres_Database_Connection === NULL) {
+            self::initDB();
+        }
+
+        if (self::$Redis_Database_Connection->keys("pg_topic_$ID")) {
+            return unserialize(self::$Redis_Database_Connection->get("pg_topic_$ID"));
+        }
+
+        if (self::$Postgres_Database_Connection === NULL) {
+            self::initPGDB();
+        }
+
+        $statement = self::$Postgres_Database_Connection->prepare("SELECT * FROM topics WHERE id = :ID");
+
+        $statement->execute(array(":ID" => $ID));
+
+        $Result = $statement->fetch(\PDO::FETCH_ASSOC);
+
+        self::$Redis_Database_Connection->set("pg_topic_$ID", serialize($Result), 300);
+
+        return $Result;
+    }
+
     /**
      * Get details of a topic
      * @param string $ID The topic id
      * @param bool $Force Force update from phoenix
      * @return object
+     * @deprecated Use Phoenix::getTopicPG
      * @throws \Exception
      */
     public static function getTopic(string $ID, bool $Force = false) {
@@ -178,6 +287,7 @@ class Phoenix {
      * @param string $Name The name of the service
      * @param bool $Force Force update from phoenix
      * @return object
+     * @deprecated Use Phoenix::getServiceByNamePG
      * @throws \Exception
      */
     public static function getServiceByName(string $Name, bool$Force = false) {
@@ -194,16 +304,65 @@ class Phoenix {
             $response->nice_service = Helper::filterAlphaNum($response->name);
             $response->has_image = (file_exists(__DIR__ . "/../../../../" . \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") . "/img/logo/" . $response->nice_service . ".svg") ? true : file_exists(__DIR__ . "/../../../../" . \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") . "/img/logo/" . $response->nice_service . ".png") );
             $response->image = "/" . \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") . "/img/logo/" . $response->nice_service . (file_exists(__DIR__ . "/../../../../" . \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") . "/img/logo/" . $response->nice_service . ".svg") ? ".svg" : ".png");
-            
+
             return $response;
         }
         throw new \Exception("Service is not initialized!");
+    }
+
+    public static function getServiceByNamePG(string $Name) {
+        if (self::$Postgres_Database_Connection === NULL) {
+            self::initDB();
+        }
+
+        if (self::$Redis_Database_Connection->keys("pg_getservicebyname_$ID")) {
+            return unserialize(self::$Redis_Database_Connection->get("pg_getservicebyname_$ID"));
+        }
+
+        if (self::$Postgres_Database_Connection === NULL) {
+            self::initPGDB();
+        }
+
+        $statement = self::$Postgres_Database_Connection->prepare("SELECT * FROM services WHERE name = :ID");
+
+        $statement->execute(array(":ID" => $Name));
+
+        $Result = $statement->fetch(\PDO::FETCH_ASSOC);
+
+        self::$Redis_Database_Connection->set("pg_getservicebyname_$ID", serialize($Result), 300);
+
+        return $Result;
+    }
+
+    public static function serviceExistsByNamePG(string $Name) {
+        if (self::$Postgres_Database_Connection === NULL) {
+            self::initDB();
+        }
+
+        if (self::$Redis_Database_Connection->keys("pg_serviceexistsbyname_$ID")) {
+            return unserialize(self::$Redis_Database_Connection->get("pg_serviceexistsbyname_$ID"));
+        }
+
+        if (self::$Postgres_Database_Connection === NULL) {
+            self::initPGDB();
+        }
+
+        $statement = self::$Postgres_Database_Connection->prepare("SELECT * FROM services WHERE name = :ID");
+
+        $statement->execute(array(":ID" => $Name));
+
+        $Result = ($statement->rowCount() > 0 ? true : false);
+
+        self::$Redis_Database_Connection->set("pg_serviceexistsbyname_$ID", serialize($Result), 300);
+
+        return $Result;
     }
 
     /**
      * Check if a service exists by name
      * @param string $Name The name of the service
      * @return bool
+     * @deprecated Use Phoenix::serviceExistsByNamePG
      */
     public static function serviceExistsByName(string $Name) {
         $Name = strtolower($Name);
@@ -218,6 +377,7 @@ class Phoenix {
     /**
      * Check if the point exists by name
      * @param string $ID The ID of the point
+     * @deprecated Use Phoenix::pointExistsPG
      * @return bool
      */
     public static function pointExists(string $ID) {
@@ -228,10 +388,59 @@ class Phoenix {
         return self::$Redis_Database_Connection->exists(Config::get("phoenix_api_endpoint") . "/points/id/$ID");
     }
 
+    public static function pointExistsPG(string $ID) {
+        if (self::$Postgres_Database_Connection === NULL) {
+            self::initDB();
+        }
+
+        if (self::$Redis_Database_Connection->keys("pg_pointexists_$ID")) {
+            return unserialize(self::$Redis_Database_Connection->get("pg_pointexists_$ID"));
+        }
+
+        if (self::$Postgres_Database_Connection === NULL) {
+            self::initPGDB();
+        }
+
+        $statement = self::$Postgres_Database_Connection->prepare("SELECT * FROM points WHERE id = :ID");
+
+        $statement->execute(array(":ID" => $ID));
+
+        $Result = ($statement->rowCount() > 0 ? true : false);
+
+        self::$Redis_Database_Connection->set("pg_pointexists_$ID", serialize($Result), 300);
+
+        return $Result;
+    }
+
+    public static function serviceExistsPG(string $ID) {
+        if (self::$Postgres_Database_Connection === NULL) {
+            self::initDB();
+        }
+
+        if (self::$Redis_Database_Connection->keys("pg_serviceexists_$ID")) {
+            return unserialize(self::$Redis_Database_Connection->get("pg_serviceexists_$ID"));
+        }
+
+        if (self::$Postgres_Database_Connection === NULL) {
+            self::initPGDB();
+        }
+
+        $statement = self::$Postgres_Database_Connection->prepare("SELECT * FROM services WHERE id = :ID");
+
+        $statement->execute(array(":ID" => $ID));
+
+        $Result = ($statement->rowCount() > 0 ? true : false);
+
+        self::$Redis_Database_Connection->set("pg_serviceexists_$ID", serialize($Result), 300);
+
+        return $Result;
+    }
+
     /**
      * Check if a service exists by name
      * @param string $ID The ID of the service
      * @return bool
+     * @deprecated Use Phoenix::serviceExistsPG
      */
     public static function serviceExists(string $ID) {
         if (self::$Redis_Database_Connection === null) {
@@ -241,11 +450,44 @@ class Phoenix {
         return self::$Redis_Database_Connection->exists(Config::get("phoenix_api_endpoint") . "/services/id/$ID");
     }
 
+    public static function getServicePG(string $ID) {
+        if (self::$Postgres_Database_Connection === NULL) {
+            self::initDB();
+        }
+
+        if (self::$Redis_Database_Connection->keys("pg_service_$ID")) {
+            $response = unserialize(self::$Redis_Database_Connection->get("pg_service_$ID"));
+            $response["nice_service"] = Helper::filterAlphaNum($response["name"]);
+            $response["has_image"] = (file_exists(__DIR__ . "/../../../../" . \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") . "/img/logo/" . $response["nice_service"] . ".svg") ? true : file_exists(__DIR__ . "/../../../../" . \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") . "/img/logo/" . $response["nice_service"] . ".png") );
+            $response["image"] = "/" . \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") . "/img/logo/" . $response["nice_service"] . (file_exists(__DIR__ . "/../../../../" . \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") . "/img/logo/" . $response["nice_service"] . ".svg") ? ".svg" : ".png");
+            return $response;
+        }
+
+        if (self::$Postgres_Database_Connection === NULL) {
+            self::initPGDB();
+        }
+
+        $statement = self::$Postgres_Database_Connection->prepare("SELECT * FROM services WHERE id = :ID");
+
+        $statement->execute(array(":ID" => $ID));
+
+        $response = $statement->fetch(\PDO::FETCH_ASSOC);
+
+        self::$Redis_Database_Connection->set("pg_service_$ID", serialize($response), 300);
+
+
+        $response["nice_service"] = Helper::filterAlphaNum($response["name"]);
+        $response["has_image"] = (file_exists(__DIR__ . "/../../../../" . \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") . "/img/logo/" . $response["nice_service"] . ".svg") ? true : file_exists(__DIR__ . "/../../../../" . \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") . "/img/logo/" . $response["nice_service"] . ".png") );
+        $response["image"] = "/" . \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") . "/img/logo/" . $response["nice_service"] . (file_exists(__DIR__ . "/../../../../" . \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") . "/img/logo/" . $response["nice_service"] . ".svg") ? ".svg" : ".png");
+        return $response;
+    }
+
     /**
      * Get details of a service by name
      * @param string $ID The ID of a service
      * @param bool $Force Force update from phoenix
      * @return object
+     * @deprecated Use Phoenix::getServicePG
      * @throws \Exception
      */
     public static function getService(string $ID, bool $Force = false) {
@@ -300,10 +542,31 @@ class Phoenix {
         throw new \Exception("Failed to contact REDIS");
     }
 
+    public static function getTopicsPG() {
+        if (self::$Postgres_Database_Connection === NULL) {
+            self::initDB();
+        }
+
+        if (self::$Redis_Database_Connection->keys("pg_topics")) {
+            return unserialize(self::$Redis_Database_Connection->get("pg_topics"));
+        }
+
+        if (self::$Postgres_Database_Connection === NULL) {
+            self::initPGDB();
+        }
+
+        $Result = self::$Postgres_Database_Connection->query("SELECT * FROM topics")->fetchAll(\PDO::FETCH_ASSOC);
+
+        self::$Redis_Database_Connection->set("pg_topics", serialize($Result), 300);
+
+        return $Result;
+    }
+
     /**
      * Get a list of topics
      * @param bool $Force Force update from phoenix
      * @return object
+     * @deprecated Use Phoenix::getServicesPG
      * @throws \Exception
      */
     public static function getTopics(bool $Force = false) {
@@ -344,10 +607,31 @@ class Phoenix {
         throw new \Exception("Failed to contact REDIS");
     }
 
+    public static function getCasesPG() {
+        if (self::$Redis_Database_Connection === NULL) {
+            self::initDB();
+        }
+
+        if (self::$Redis_Database_Connection->keys("pg_cases")) {
+            return unserialize(self::$Redis_Database_Connection->get("pg_cases"));
+        }
+
+        if (self::$Postgres_Database_Connection === NULL) {
+            self::initPGDB();
+        }
+
+        $Result = self::$Postgres_Database_Connection->query("SELECT * FROM cases")->fetchAll(\PDO::FETCH_ASSOC);
+
+        self::$Redis_Database_Connection->set("pg_cases", serialize($Result), 300);
+
+        return $Result;
+    }
+
     /**
      * Get a list of cases
      * @param bool $Force Force update from phoenix
      * @return object
+     * @deprecated Use Phoenix::getCasesPG
      * @throws \Exception
      */
     public static function getCases(bool $Force = false) {
@@ -389,10 +673,31 @@ class Phoenix {
         throw new \Exception("Failed to contact REDIS");
     }
 
+    public static function getServicesPG() {
+        if (self::$Postgres_Database_Connection === NULL) {
+            self::initDB();
+        }
+
+        if (self::$Redis_Database_Connection->keys("pg_services")) {
+            return unserialize(self::$Redis_Database_Connection->get("pg_services"));
+        }
+
+        if (self::$Postgres_Database_Connection === NULL) {
+            self::initPGDB();
+        }
+
+        $Result = self::$Postgres_Database_Connection->query("SELECT * FROM services")->fetchAll(\PDO::FETCH_ASSOC);
+
+        self::$Redis_Database_Connection->set("pg_services", serialize($Result), 300);
+
+        return $Result;
+    }
+
     /**
      * Get a list of services
      * @param bool $Force Force update from phoenix
      * @return object
+     * @deprecated Please use Phoenix::getServicesPG
      * @throws \Exception
      */
     public static function getServices(bool $Force = false) {

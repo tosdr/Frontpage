@@ -28,7 +28,7 @@
 
             <ul class="list-group">
                 {% set count = 0 %}
-                {% for point in serviceDetails.points %}
+                {% for point in getPointsByService(service.id) %}
                     {% if point.status == "approved" and count < 5 %}
 
 

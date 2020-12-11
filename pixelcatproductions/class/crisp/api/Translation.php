@@ -156,12 +156,12 @@ class Translation {
      */
     public static function fetch($Key, $Count = 1, $UserOptions = array()) {
 
-        if($_GET["debug"] == "translations"){
+        if (isset($_GET["debug"])) {
             return $Key;
         }
-        
+
         $UserOptions["{{ count }}"] = $Count;
-        
+
 
         return nl2br(ngettext(self::get($Key, $UserOptions), self::getPlural($Key, $UserOptions), $Count));
     }
@@ -200,7 +200,7 @@ class Translation {
 
             $Translation = $statement->fetch(\PDO::FETCH_ASSOC);
 
-            if ($Translation[self::$Language] === null) {
+            if (!isset($Translation[self::$Language])) {
                 if (self::$Language == "en") {
                     return $Key;
                 }

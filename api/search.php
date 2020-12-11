@@ -6,10 +6,6 @@ require_once __DIR__ . "/../pixelcatproductions/crisp.php";
 
 header("Content-Type: application/json");
 
-$Redis = new \crisp\core\Redis();
-
-$Redis = $Redis->getDBConnector();
-
 $Array;
 
 if (empty($_GET["q"])) {
@@ -17,8 +13,8 @@ if (empty($_GET["q"])) {
         $Array[] = crisp\api\Phoenix::getService($ID);
     }
 } else {
-    foreach ($Redis->keys(\crisp\api\Config::get("phoenix_api_endpoint") . "/services/name/*" . strtolower($_GET["q"]) . "*") as $Key) {
-        $Array[] = json_decode($Redis->get($Key));
+    foreach (crisp\api\Phoenix::searchServiceByNamePG(strtolower($_GET["q"])) as $Service) {
+        $Array[] = $Service;
     }
 }
 $Array = array_slice($Array, 0, 10);

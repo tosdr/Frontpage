@@ -84,36 +84,7 @@ foreach ($_CRONs as $_CRON) {
     consoleLog("===== JOB #$runningJob PROCESSING =====");
 
     \crisp\api\lists\Cron::markAsStarted($_CRON["ID"]);
-    if ($_CRON["Type"] === "crawl_service") {
-
-        consoleLog("Crawling Service " . $_CRON["Data"]);
-
-        $Service = crisp\api\Phoenix::getService($_CRON["Data"], true);
-
-        consoleLog("Crawled Service #" . $_CRON["Data"] . ": " . $Service->name);
-
-        consoleLog("Service saved under " . \crisp\api\Config::get("phoenix_api_endpoint") . "/service/name/" . strtolower($Service->name));
-
-        consoleLog("Crawling all points...");
-
-        foreach ($Service->points as $Point) {
-            if (!crisp\api\Phoenix::pointExists($Point->id)) {
-                consoleLog("Point not yet in REDIS, adding...");
-                $AddedServices[$Point->id] = $Point;
-                $AddedServices[$Point->id]->cron = \crisp\api\lists\Cron::create("crawl_point", $Point->id);
-                consoleLog("Point has been added to the crawling queue! Cron ID #" . $AddedServices[$Point->id]->cron);
-            }
-        }
-    } elseif ($_CRON["Type"] === "crawl_point") {
-
-        consoleLog("Crawling Point " . $_CRON["Data"]);
-
-        $Service = crisp\api\Phoenix::getPoint($_CRON["Data"], true);
-
-        consoleLog("Crawled Point #" . $_CRON["Data"] . ": " . $Service->id);
-
-        consoleLog("Point saved under " . \crisp\api\Config::get("phoenix_api_endpoint") . "/points/id/" . strtolower($Service->id));
-    } elseif ($_CRON["Type"] === "execute_plugin_cron") {
+    if ($_CRON["Type"] === "execute_plugin_cron") {
 
         $_CRON["Data"] = json_decode($_CRON["Data"]);
 
@@ -124,21 +95,6 @@ foreach ($_CRONs as $_CRON) {
             continue;
         } else {
             \terminateJob("Plugin has no cron file!");
-        }
-    } elseif ($_CRON["Type"] === "cron_missing_services") {
-        \crisp\api\lists\Cron::deleteOld();
-        \crisp\api\lists\Cron::create("cron_missing_services", "", "1 HOUR");
-        foreach (crisp\api\Phoenix::getServices(true)->services as $Service) {
-            
-            consoleLog("Found " . $Service->name . " service, checking if dupe.");
-            if (!crisp\api\Phoenix::serviceExists($Service->id)) {
-                consoleLog("Service not yet in REDIS, adding...");
-                $AddedServices[$Service->id] = $Service;
-                $AddedServices[$Service->id]->cron = \crisp\api\lists\Cron::create("crawl_service", $Service->id);
-                consoleLog("Service has been added to the crawling queue! Cron ID #" . $AddedServices[$Service->id]->cron);
-            } else {
-                consoleLog("Service is a dupe!");
-            }
         }
     } else {
         \terminateJob("Invalid type!");

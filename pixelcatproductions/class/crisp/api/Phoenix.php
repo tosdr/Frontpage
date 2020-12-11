@@ -59,7 +59,7 @@ class Phoenix {
 
         $Result = $statement->fetchAll(\PDO::FETCH_ASSOC);
 
-        self::$Redis_Database_Connection->set("pg_pointsbyservice_$ID", serialize($Result), 300);
+        self::$Redis_Database_Connection->set("pg_pointsbyservice_$ID", serialize($Result), 900);
 
         return $Result;
     }
@@ -83,7 +83,7 @@ class Phoenix {
 
         $Result = $statement->fetch(\PDO::FETCH_ASSOC);
 
-        self::$Redis_Database_Connection->set("pg_point_$ID", serialize($Result), 300);
+        self::$Redis_Database_Connection->set("pg_point_$ID", serialize($Result), 900);
 
         return $Result;
     }
@@ -154,7 +154,7 @@ class Phoenix {
 
         $Result = $statement->fetch(\PDO::FETCH_ASSOC);
 
-        self::$Redis_Database_Connection->set("pg_case_$ID", serialize($Result), 300);
+        self::$Redis_Database_Connection->set("pg_case_$ID", serialize($Result), 900);
 
         return $Result;
     }
@@ -224,7 +224,7 @@ class Phoenix {
 
         $Result = $statement->fetch(\PDO::FETCH_ASSOC);
 
-        self::$Redis_Database_Connection->set("pg_topic_$ID", serialize($Result), 300);
+        self::$Redis_Database_Connection->set("pg_topic_$ID", serialize($Result), 900);
 
         return $Result;
     }
@@ -324,7 +324,7 @@ class Phoenix {
 
         $Result = $statement->fetchAll(\PDO::FETCH_ASSOC);
 
-        self::$Redis_Database_Connection->set("pg_searchservicebyname_$Name", serialize($Result), 300);
+        self::$Redis_Database_Connection->set("pg_searchservicebyname_$Name", serialize($Result), 900);
 
         return $Result;
     }
@@ -349,7 +349,7 @@ class Phoenix {
 
         $Result = $statement->fetch(\PDO::FETCH_ASSOC);
 
-        self::$Redis_Database_Connection->set("pg_getservicebyname_$Name", serialize($Result), 300);
+        self::$Redis_Database_Connection->set("pg_getservicebyname_$Name", serialize($Result), 900);
 
         return $Result;
     }
@@ -373,7 +373,7 @@ class Phoenix {
 
         $Result = ($statement->rowCount() > 0 ? true : false);
 
-        self::$Redis_Database_Connection->set("pg_serviceexistsbyname_$Name", serialize($Result), 300);
+        self::$Redis_Database_Connection->set("pg_serviceexistsbyname_$Name", serialize($Result), 900);
 
         return $Result;
     }
@@ -427,7 +427,7 @@ class Phoenix {
 
         $Result = ($statement->rowCount() > 0 ? true : false);
 
-        self::$Redis_Database_Connection->set("pg_pointexists_$ID", serialize($Result), 300);
+        self::$Redis_Database_Connection->set("pg_pointexists_$ID", serialize($Result), 900);
 
         return $Result;
     }
@@ -451,7 +451,7 @@ class Phoenix {
 
         $Result = ($statement->rowCount() > 0 ? true : false);
 
-        self::$Redis_Database_Connection->set("pg_serviceexists_$ID", serialize($Result), 300);
+        self::$Redis_Database_Connection->set("pg_serviceexists_$ID", serialize($Result), 900);
 
         return $Result;
     }
@@ -493,7 +493,7 @@ class Phoenix {
 
         $response = $statement->fetch(\PDO::FETCH_ASSOC);
 
-        self::$Redis_Database_Connection->set("pg_service_$ID", serialize($response), 300);
+        self::$Redis_Database_Connection->set("pg_service_$ID", serialize($response), 900);
 
 
         $response["nice_service"] = Helper::filterAlphaNum($response["name"]);
@@ -577,7 +577,7 @@ class Phoenix {
 
         $Result = self::$Postgres_Database_Connection->query("SELECT * FROM topics")->fetchAll(\PDO::FETCH_ASSOC);
 
-        self::$Redis_Database_Connection->set("pg_topics", serialize($Result), 300);
+        self::$Redis_Database_Connection->set("pg_topics", serialize($Result), 900);
 
         return $Result;
     }
@@ -642,7 +642,7 @@ class Phoenix {
 
         $Result = self::$Postgres_Database_Connection->query("SELECT * FROM cases")->fetchAll(\PDO::FETCH_ASSOC);
 
-        self::$Redis_Database_Connection->set("pg_cases", serialize($Result), 300);
+        self::$Redis_Database_Connection->set("pg_cases", serialize($Result), 900);
 
         return $Result;
     }
@@ -708,7 +708,7 @@ class Phoenix {
 
         $Result = self::$Postgres_Database_Connection->query("SELECT * FROM services")->fetchAll(\PDO::FETCH_ASSOC);
 
-        self::$Redis_Database_Connection->set("pg_services", serialize($Result), 300);
+        self::$Redis_Database_Connection->set("pg_services", serialize($Result), 900);
 
         return $Result;
     }

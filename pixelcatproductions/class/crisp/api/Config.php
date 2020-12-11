@@ -31,9 +31,6 @@ class Config {
 
     private static ?PDO $Database_Connection = null;
 
-    public function __construct() {
-        self::initDB();
-    }
 
     private static function initDB() {
         $DB = new \crisp\core\MySQL();

@@ -42,7 +42,6 @@ class Translation {
      */
     public function __construct($Language = null) {
         self::$Language = $Language;
-        self::initDB();
     }
 
     /**

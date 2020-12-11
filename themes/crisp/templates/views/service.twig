@@ -36,10 +36,12 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
             <h1 class="display-4"><img class="img-fluid" src="{{ service.image }}"alt="Logo"/></h1>
             <h2 class="mt-2">{{ service.name }}</h2>
             <h3>{% include "components/rating.twig" with {'rating': service.rating} %}</h3>
+            <!--
             <div class="btn-group">
                 <a role="button" href="{{ config.phoenix_url }}/services/{{ GET.q }}/annotate" class="btn btn-primary">{{ service.documents|length }} {{ 'documents'|translate }}</a>
                 <a role="button" href="{{ config.phoenix_url }}/services/{{ GET.q }}" class="btn btn-primary">{{ service.points|length }} {{ 'points'|translate }}</a>
-            </div> 
+            </div>
+            -->
             <div class="input-group mt-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text"><img src="{{ URL }}/api/badge/{{ service.nice_service }}"/></span>
@@ -52,7 +54,7 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
     <div class="container mt-5">
 
         <ul class="list-group mb-4">
-            {% for point in service.points %}
+            {% for point in getPointsByService(service.id) %}
                 {% if point.status == "approved" %}
 
 

@@ -56,22 +56,23 @@ class Phoenix {
         $ServicePoints = array();
         $ServicePointsData = array();
 
+        $points = self::getPointsByServicePG($ID);
         $service = self::getServicePG($ID);
-        $documents = self::getDocumentByServicePG($ID);
+        $documents = self::getDocumentsByServicePG($ID);
         foreach ($documents as $Links) {
             $ServiceLinks[$Links["name"]] = array(
                 "name" => $Links["name"],
                 "url" => $Links["url"]
             );
         }
-        foreach (self::getPointsByServicePG($ID) as $Point) {
+        foreach ($points as $Point) {
             if ($Point["status"] == "approved") {
                 array_push($ServicePoints, $Point["id"]);
             }
         }
-        foreach (self::getPointsByServicePG($ID) as $Point) {
+        foreach ($points as $Point) {
             $Document = array_column($documents, null, 'id')[$Point["document_id"]];
-            $Case = crisp\api\Phoenix::getCaseByPG($Point["case_id"]);
+            $Case = self::getCasePG($Point["case_id"]);
             if ($Point["status"] == "approved") {
                 $ServicePointsData[$Point["id"]] = array(
                     "discussion" => "https://edit.tosdr.org/points/" . $Point["id"],
@@ -81,7 +82,7 @@ class Phoenix {
                     "quoteText" => $Point["quoteText"],
                     "quoteStart" => $Point["quoteStart"],
                     "quoteEnd" => $Point["quoteEnd"],
-                    "services" => array($Query),
+                    "services" => array($ID),
                     "set" => "set+service+and+topic",
                     "slug" => $Point["slug"],
                     "title" => $Point["title"],
@@ -137,7 +138,7 @@ class Phoenix {
         return $Result;
     }
 
-    public static function getDocumentByServicePG(string $ID) {
+    public static function getDocumentsByServicePG(string $ID) {
         if (self::$Redis_Database_Connection === NULL) {
             self::initDB();
         }
@@ -154,7 +155,7 @@ class Phoenix {
 
         $statement->execute(array(":ID" => $ID));
 
-        $Result = $statement->fetch(\PDO::FETCH_ASSOC);
+        $Result = $statement->fetchAll(\PDO::FETCH_ASSOC);
 
         self::$Redis_Database_Connection->set("pg_getdocumentbyservice_$ID", serialize($Result), 900);
 

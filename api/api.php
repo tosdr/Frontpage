@@ -33,7 +33,7 @@ switch ($_GET["apiversion"]) {
         $poser = new Poser($render);
 
         if (!is_numeric($Query)) {
-            if (count(crisp\api\Phoenix::serviceExistsBySlugPG($Query)) === 0) {
+            if (!\crisp\api\Phoenix::serviceExistsBySlugPG($Query)) {
                 header("Content-Type: image/svg+xml");
                 $Color = "999999";
                 $Rating = "Service not found";
@@ -41,7 +41,7 @@ switch ($_GET["apiversion"]) {
                 echo $poser->generate(\crisp\api\Config::get("badge_prefix"), $Rating, $Color, 'plastic');
                 return;
             }
-            $RedisData = crisp\api\Phoenix::getServiceBySlugPG($Query);
+            $RedisData = \crisp\api\Phoenix::getServiceBySlugPG($Query);
 
             $Color;
 
@@ -121,30 +121,24 @@ switch ($_GET["apiversion"]) {
         break;
     case "2":
     case "1":
-    case "new":
         header("Content-Type: application/json");
 
-        if ($_GET["apiversion"] == "new") {
-            echo json_encode(crisp\api\Phoenix::generateApiFiles($Query));
-            exit;
-        }
-
         if ($Query == "all") {
-            $Services = crisp\api\Phoenix::getServices();
+            $Services = \crisp\api\Phoenix::getServicesPG();
             $Response = array(
                 "tosdr/api/version" => 1,
                 "tosdr/data/version" => time(),
             );
-            foreach ($Services->services as $Service) {
-                $URLS = explode(",", $Service->url);
+            foreach ($Services["services"] as $Service) {
+                $URLS = explode(",", $Service["url"]);
                 foreach ($URLS as $URL) {
                     $URL = trim($URL);
                     $Response["tosdr/review/$URL"] = array(
                         "documents" => [],
-                        "logo" => "https://$_SERVER[HTTP_HOST]/" . \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") . "/img/logo/" . \crisp\api\Helper::filterAlphaNum($Service->name) . ".png",
-                        "name" => $Service->name,
-                        "slug" => $Service->name,
-                        "rated" => ($Service->rating == "N/A" ? false : $Service->rating),
+                        "logo" => "https://$_SERVER[HTTP_HOST]/" . \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") . "/img/logo/" . \crisp\api\Helper::filterAlphaNum($Service["name"]) . ".png",
+                        "name" => $Service["name"],
+                        "slug" => $Service["name"],
+                        "rated" => ($Service["rating"] == "N/A" ? false : $Service["rating"]),
                         "points" => []
                     );
                 }
@@ -153,67 +147,30 @@ switch ($_GET["apiversion"]) {
             return;
         }
 
-        if (count($Redis->keys(\crisp\api\Config::get("phoenix_api_endpoint") . "/services/name/" . strtolower($Query))) === 0) {
+        if (!is_numeric($Query)) {
+            if (!crisp\api\Phoenix::serviceExistsBySlugPG($Query)) {
+                echo \crisp\core\PluginAPI::response(["INVALID_SERVICE"], $Query, []);
+                return;
+            }
+            $Query = crisp\api\Phoenix::getServiceBySlugPG($Query)["id"];
+            $SkeletonData = \crisp\api\Phoenix::generateApiFiles($Query);
+            if ($_GET["apiversion"] === "1") {
+                echo json_encode($SkeletonData);
+            } else {
+                echo \crisp\core\PluginAPI::response(false, $Query, $SkeletonData);
+            }
+
+            exit;
+        }
+
+        
+        
+        if (!crisp\api\Phoenix::serviceExistsPG($Query)) {
             echo \crisp\core\PluginAPI::response(["INVALID_SERVICE"], $Query, []);
             return;
         }
-        $RedisData = json_decode($Redis->get(\crisp\api\Config::get("phoenix_api_endpoint") . "/services/name/" . strtolower($Query)));
 
-        $AlexaRank;
-        $ServiceLinks = array();
-        $ServicePoints = array();
-        $ServicePointsData = array();
-
-        /*
-         * //root/links
-         */
-        foreach ($RedisData->documents as $Links) {
-            $ServiceLinks[$Links->name] = array(
-                "name" => $Links->name,
-                "url" => $Links->url
-            );
-        }
-        foreach ($RedisData->points as $Point) {
-            if ($Point->status == "approved") {
-                array_push($ServicePoints, $Point->id);
-            }
-        }
-        foreach ($RedisData->points as $Point) {
-            $Document = array_column($RedisData->documents, null, 'id')[$Point->document_id];
-            $Case = crisp\api\Phoenix::getCase($Point->case_id);
-            if ($Point->status == "approved") {
-                $ServicePointsData[$Point->id] = array(
-                    "discussion" => "https://edit.tosdr.org/points/" . $Point->id,
-                    "id" => $Point->id,
-                    "needsModeration" => ($Point->status != "approved"),
-                    "quoteDoc" => $Document->name,
-                    "quoteText" => $Point->quoteText,
-                    "quoteStart" => $Point->quoteStart,
-                    "quoteEnd" => $Point->quoteEnd,
-                    "services" => array($Query),
-                    "set" => "set+service+and+topic",
-                    "slug" => $Point->id,
-                    "title" => $Point->title,
-                    "topics" => array(),
-                    "tosdr" => array(
-                        "binding" => true,
-                        "case" => $Case->title,
-                        "point" => $Case->classification,
-                        "score" => -1,
-                        "tldr" => $Point->analysis
-                    ),
-                );
-            }
-        }
-
-        $SkeletonData = array(
-            "alexa" => $AlexaRank,
-            "class" => $RedisData->rating,
-            "links" => $ServiceLinks,
-            "points" => $ServicePoints,
-            "pointsData" => $ServicePointsData,
-            "urls" => explode(",", $RedisData->url)
-        );
+        $SkeletonData = \crisp\api\Phoenix::generateApiFiles($Query);
 
         if ($_GET["apiversion"] === "1") {
             echo json_encode($SkeletonData);

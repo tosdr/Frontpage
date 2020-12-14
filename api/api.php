@@ -32,6 +32,51 @@ switch ($_GET["apiversion"]) {
         $render = new SvgPlasticRender();
         $poser = new Poser($render);
 
+        if (!is_numeric($Query)) {
+            if (count(crisp\api\Phoenix::serviceExistsBySlugPG($Query)) === 0) {
+                header("Content-Type: image/svg+xml");
+                $Color = "999999";
+                $Rating = "Service not found";
+
+                echo $poser->generate(\crisp\api\Config::get("badge_prefix"), $Rating, $Color, 'plastic');
+                return;
+            }
+            $RedisData = crisp\api\Phoenix::getServiceBySlugPG($Query);
+
+            $Color;
+
+            switch ($RedisData["is_comprehensively_reviewed"] ? ($RedisData["rating"]) : false) {
+                case "A":
+                    $Color = "46A546";
+                    $Rating = "Class A";
+                    break;
+                case "B":
+                    $Color = "79B752";
+                    $Rating = "Class B";
+                    break;
+                case "C":
+                    $Color = "F89406";
+                    $Rating = "Class C";
+                    break;
+                case "D":
+                    $Color = "D66F2C";
+                    $Rating = "Class D";
+                    break;
+                case "E":
+                    $Color = "C43C35";
+                    $Rating = "Class E";
+                    break;
+                default:
+                    $Color = "999999";
+                    $Rating = "No Class Yet";
+            }
+            header("Content-Type: image/svg+xml");
+
+
+            echo $poser->generate(\crisp\api\Config::get("badge_prefix") . "/#" . $RedisData["slug"], $Rating, $Color, 'plastic');
+            return;
+        }
+
         if (count(crisp\api\Phoenix::serviceExistsPG($Query)) === 0) {
             header("Content-Type: image/svg+xml");
             $Color = "999999";
@@ -70,9 +115,9 @@ switch ($_GET["apiversion"]) {
                 $Rating = "No Class Yet";
         }
         header("Content-Type: image/svg+xml");
-        
 
-        echo $poser->generate(\crisp\api\Config::get("badge_prefix"). "/#". $RedisData["nice_service"], $Rating, $Color, 'plastic');
+
+        echo $poser->generate(\crisp\api\Config::get("badge_prefix") . "/#" . $RedisData["slug"], $Rating, $Color, 'plastic');
         break;
     case "2":
     case "1":

@@ -2,3 +2,5 @@
 /pixelcatproductions/cache/
 /secure_storage/tmp/
 .env
+/vendor/
+composer.lock

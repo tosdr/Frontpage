@@ -27,7 +27,6 @@ class Phoenix {
     private static ?\Redis $Redis_Database_Connection = null;
     private static ?\PDO $Postgres_Database_Connection = null;
 
-
     private static function initPGDB() {
         $PostgresDB = new \crisp\core\Postgres();
         self::$Postgres_Database_Connection = $PostgresDB->getDBConnector();
@@ -302,8 +301,6 @@ class Phoenix {
         }
         throw new \Exception("Service is not initialized!");
     }
-    
-    
 
     public static function searchServiceByNamePG(string $Name) {
         if (self::$Postgres_Database_Connection === NULL) {
@@ -329,8 +326,31 @@ class Phoenix {
         return $Result;
     }
 
+    public static function getServiceBySlugPG(string $Name) {
+        if (self::$Postgres_Database_Connection === NULL) {
+            self::initDB();
+        }
+
+        if (self::$Redis_Database_Connection->keys("pg_getservicebyslug_$Name")) {
+            return unserialize(self::$Redis_Database_Connection->get("pg_getservicebyslug_$Name"));
+        }
+
+        if (self::$Postgres_Database_Connection === NULL) {
+            self::initPGDB();
+        }
+
+        $statement = self::$Postgres_Database_Connection->prepare("SELECT * FROM services WHERE LOWER(slug) = LOWER(:ID)");
+
+        $statement->execute(array(":ID" => $Name));
+
+        $Result = $statement->fetch(\PDO::FETCH_ASSOC);
+
+        self::$Redis_Database_Connection->set("pg_getservicebyslug_$Name", serialize($Result), 900);
+
+        return $Result;
+    }
+
     public static function getServiceByNamePG(string $Name) {
-        $Name = strtolower($Name);
         if (self::$Postgres_Database_Connection === NULL) {
             self::initDB();
         }
@@ -343,13 +363,37 @@ class Phoenix {
             self::initPGDB();
         }
 
-        $statement = self::$Postgres_Database_Connection->prepare("SELECT * FROM services WHERE LOWER(name) = :ID");
+        $statement = self::$Postgres_Database_Connection->prepare("SELECT * FROM services WHERE LOWER(name) = LOWER(:ID)");
 
         $statement->execute(array(":ID" => $Name));
 
         $Result = $statement->fetch(\PDO::FETCH_ASSOC);
 
         self::$Redis_Database_Connection->set("pg_getservicebyname_$Name", serialize($Result), 900);
+
+        return $Result;
+    }
+
+    public static function serviceExistsBySlugPG(string $Name) {
+        if (self::$Postgres_Database_Connection === NULL) {
+            self::initDB();
+        }
+
+        if (self::$Redis_Database_Connection->keys("pg_serviceexistsbyslug_$Name")) {
+            return unserialize(self::$Redis_Database_Connection->get("pg_serviceexistsbyslug_$Name"));
+        }
+
+        if (self::$Postgres_Database_Connection === NULL) {
+            self::initPGDB();
+        }
+
+        $statement = self::$Postgres_Database_Connection->prepare("SELECT * FROM services WHERE LOWER(slug) = LOWER(:ID)");
+
+        $statement->execute(array(":ID" => $Name));
+
+        $Result = ($statement->rowCount() > 0 ? true : false);
+
+        self::$Redis_Database_Connection->set("pg_serviceexistsbyslug_$Name", serialize($Result), 900);
 
         return $Result;
     }
@@ -367,7 +411,7 @@ class Phoenix {
             self::initPGDB();
         }
 
-        $statement = self::$Postgres_Database_Connection->prepare("SELECT * FROM services WHERE name = :ID");
+        $statement = self::$Postgres_Database_Connection->prepare("SELECT * FROM services WHERE LOWER(name) = LOWER(:ID)");
 
         $statement->execute(array(":ID" => $Name));
 

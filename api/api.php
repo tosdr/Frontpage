@@ -121,7 +121,13 @@ switch ($_GET["apiversion"]) {
         break;
     case "2":
     case "1":
+    case "new":
         header("Content-Type: application/json");
+
+        if ($_GET["apiversion"] == "new") {
+            echo json_encode(crisp\api\Phoenix::generateApiFiles($Query));
+            exit;
+        }
 
         if ($Query == "all") {
             $Services = crisp\api\Phoenix::getServices();

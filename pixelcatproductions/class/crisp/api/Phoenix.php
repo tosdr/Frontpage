@@ -56,43 +56,42 @@ class Phoenix {
         $ServicePoints = array();
         $ServicePointsData = array();
 
-        /*
-         * //root/links
-         */
-        foreach ($RedisData->documents as $Links) {
-            $ServiceLinks[$Links->name] = array(
-                "name" => $Links->name,
-                "url" => $Links->url
+        $service = self::getServicePG($ID);
+        $documents = self::getDocumentByServicePG($ID);
+        foreach ($documents as $Links) {
+            $ServiceLinks[$Links["name"]] = array(
+                "name" => $Links["name"],
+                "url" => $Links["url"]
             );
         }
-        foreach ($RedisData->points as $Point) {
-            if ($Point->status == "approved") {
-                array_push($ServicePoints, $Point->id);
+        foreach (self::getPointsByServicePG($ID) as $Point) {
+            if ($Point["status"] == "approved") {
+                array_push($ServicePoints, $Point["id"]);
             }
         }
-        foreach ($RedisData->points as $Point) {
-            $Document = array_column($RedisData->documents, null, 'id')[$Point->document_id];
-            $Case = crisp\api\Phoenix::getCase($Point->case_id);
-            if ($Point->status == "approved") {
-                $ServicePointsData[$Point->id] = array(
-                    "discussion" => "https://edit.tosdr.org/points/" . $Point->id,
-                    "id" => $Point->id,
-                    "needsModeration" => ($Point->status != "approved"),
-                    "quoteDoc" => $Document->name,
-                    "quoteText" => $Point->quoteText,
-                    "quoteStart" => $Point->quoteStart,
-                    "quoteEnd" => $Point->quoteEnd,
+        foreach (self::getPointsByServicePG($ID) as $Point) {
+            $Document = array_column($documents, null, 'id')[$Point["document_id"]];
+            $Case = crisp\api\Phoenix::getCaseByPG($Point["case_id"]);
+            if ($Point["status"] == "approved") {
+                $ServicePointsData[$Point["id"]] = array(
+                    "discussion" => "https://edit.tosdr.org/points/" . $Point["id"],
+                    "id" => $Point["id"],
+                    "needsModeration" => ($Point["status"] != "approved"),
+                    "quoteDoc" => $Document["name"],
+                    "quoteText" => $Point["quoteText"],
+                    "quoteStart" => $Point["quoteStart"],
+                    "quoteEnd" => $Point["quoteEnd"],
                     "services" => array($Query),
                     "set" => "set+service+and+topic",
-                    "slug" => $Point->id,
-                    "title" => $Point->title,
+                    "slug" => $Point["slug"],
+                    "title" => $Point["title"],
                     "topics" => array(),
                     "tosdr" => array(
                         "binding" => true,
-                        "case" => $Case->title,
-                        "point" => $Case->classification,
+                        "case" => $Case["title"],
+                        "point" => $Case["classification"],
                         "score" => -1,
-                        "tldr" => $Point->analysis
+                        "tldr" => $Point["analysis"]
                     ),
                 );
             }
@@ -100,11 +99,11 @@ class Phoenix {
 
         $SkeletonData = array(
             "alexa" => $AlexaRank,
-            "class" => $RedisData->rating,
+            "class" => $service["rating"],
             "links" => $ServiceLinks,
             "points" => $ServicePoints,
             "pointsData" => $ServicePointsData,
-            "urls" => explode(",", $RedisData->url)
+            "urls" => explode(",", $service["url"])
         );
 
         return $SkeletonData;
@@ -130,6 +129,8 @@ class Phoenix {
         $statement->execute(array(":ID" => $ID));
 
         $Result = $statement->fetchAll(\PDO::FETCH_ASSOC);
+        
+        
 
         self::$Redis_Database_Connection->set("pg_pointsbyservice_$ID", serialize($Result), 900);
 

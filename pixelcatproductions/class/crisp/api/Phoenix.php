@@ -37,6 +37,79 @@ class Phoenix {
         self::$Redis_Database_Connection = $RedisDB->getDBConnector();
     }
 
+    public static function generateApiFiles(string $ID) {
+        if (self::$Redis_Database_Connection === NULL) {
+            self::initDB();
+        }
+
+        if (self::$Redis_Database_Connection->keys("pg_generateapifiles_$ID")) {
+            return unserialize(self::$Redis_Database_Connection->get("pg_generateapifiles_$ID"));
+        }
+
+        if (self::$Postgres_Database_Connection === NULL) {
+            self::initPGDB();
+        }
+
+
+        $AlexaRank = null;
+        $ServiceLinks = array();
+        $ServicePoints = array();
+        $ServicePointsData = array();
+
+        /*
+         * //root/links
+         */
+        foreach ($RedisData->documents as $Links) {
+            $ServiceLinks[$Links->name] = array(
+                "name" => $Links->name,
+                "url" => $Links->url
+            );
+        }
+        foreach ($RedisData->points as $Point) {
+            if ($Point->status == "approved") {
+                array_push($ServicePoints, $Point->id);
+            }
+        }
+        foreach ($RedisData->points as $Point) {
+            $Document = array_column($RedisData->documents, null, 'id')[$Point->document_id];
+            $Case = crisp\api\Phoenix::getCase($Point->case_id);
+            if ($Point->status == "approved") {
+                $ServicePointsData[$Point->id] = array(
+                    "discussion" => "https://edit.tosdr.org/points/" . $Point->id,
+                    "id" => $Point->id,
+                    "needsModeration" => ($Point->status != "approved"),
+                    "quoteDoc" => $Document->name,
+                    "quoteText" => $Point->quoteText,
+                    "quoteStart" => $Point->quoteStart,
+                    "quoteEnd" => $Point->quoteEnd,
+                    "services" => array($Query),
+                    "set" => "set+service+and+topic",
+                    "slug" => $Point->id,
+                    "title" => $Point->title,
+                    "topics" => array(),
+                    "tosdr" => array(
+                        "binding" => true,
+                        "case" => $Case->title,
+                        "point" => $Case->classification,
+                        "score" => -1,
+                        "tldr" => $Point->analysis
+                    ),
+                );
+            }
+        }
+
+        $SkeletonData = array(
+            "alexa" => $AlexaRank,
+            "class" => $RedisData->rating,
+            "links" => $ServiceLinks,
+            "points" => $ServicePoints,
+            "pointsData" => $ServicePointsData,
+            "urls" => explode(",", $RedisData->url)
+        );
+
+        return $SkeletonData;
+    }
+
     public static function getPointsByServicePG(string $ID) {
         if (self::$Redis_Database_Connection === NULL) {
             self::initDB();
@@ -59,6 +132,30 @@ class Phoenix {
         $Result = $statement->fetchAll(\PDO::FETCH_ASSOC);
 
         self::$Redis_Database_Connection->set("pg_pointsbyservice_$ID", serialize($Result), 900);
+
+        return $Result;
+    }
+
+    public static function getDocumentByServicePG(string $ID) {
+        if (self::$Redis_Database_Connection === NULL) {
+            self::initDB();
+        }
+
+        if (self::$Redis_Database_Connection->keys("pg_getdocumentbyservice_$ID")) {
+            return unserialize(self::$Redis_Database_Connection->get("pg_getdocumentbyservice_$ID"));
+        }
+
+        if (self::$Postgres_Database_Connection === NULL) {
+            self::initPGDB();
+        }
+
+        $statement = self::$Postgres_Database_Connection->prepare("SELECT * FROM documents WHERE service_id = :ID");
+
+        $statement->execute(array(":ID" => $ID));
+
+        $Result = $statement->fetch(\PDO::FETCH_ASSOC);
+
+        self::$Redis_Database_Connection->set("pg_getdocumentbyservice_$ID", serialize($Result), 900);
 
         return $Result;
     }

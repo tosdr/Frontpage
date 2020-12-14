@@ -1,0 +1,15 @@
+[submodule "plugins/core"]
+	path = plugins/core
+	url = https://github.com/PixelcatProductions/CrispCMS-Plugin-Core
+[submodule "plugins/discourse"]
+	path = plugins/discourse
+	url = https://github.com/PixelcatProductions/CrispCMS-Plugin-Discourse
+[submodule "plugins/admin"]
+	path = plugins/admin
+	url = https://github.com/PixelcatProductions/CrispCMS-Plugin-Admin
+[submodule "plugins/heroku"]
+	path = plugins/heroku
+	url = https://github.com/PixelcatProductions/CrispCMS-Plugin-Heroku
+[submodule "plugins/examples"]
+	path = plugins/examples
+	url = https://github.com/PixelcatProductions/CrispCMS-Plugin-Examples

@@ -35,7 +35,15 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
         <div class="container text-center">
             <h1 class="display-4"><img class="img-fluid" src="{{ service.image }}"alt="Logo"/></h1>
             <h2 class="mt-2">{{ service.name }}</h2>
-            <h3>{% include "components/rating.twig" with {'rating': service.rating} %}</h3>
+            {% if service.is_comprehensively_reviewed or GET.unreviewed is defined %}
+                {% set rating = service.rating %}
+            {% else %}
+                {% set rating = "N/A" %}
+            {% endif %}
+            <h3>{% include "components/rating.twig" with {'rating': rating} %}</h3>
+            {% if GET.unreviewed is defined %}
+                <h4 class="alert alert-danger">Warning! Viewing unreviewed Data!</h4>
+            {% endif %}
             <!--
             <div class="btn-group">
                 <a role="button" href="{{ config.phoenix_url }}/services/{{ GET.q }}/annotate" class="btn btn-primary">{{ service.documents|length }} {{ 'documents'|translate }}</a>
@@ -44,9 +52,9 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
             -->
             <div class="input-group mt-3">
                 <div class="input-group-prepend">
-                    <span class="input-group-text"><img src="{{ URL }}/api/badge/{{ service.nice_service }}"/></span>
+                    <span class="input-group-text"><img src="{{ URL }}/api/badge/{{ service.id }}"/></span>
                 </div>
-                <input type="text" class="form-control" value="{{ URL }}/api/badge/{{ service.nice_service }}" readonly>
+                <input type="text" class="form-control" value="{{ URL }}/api/badge/{{ service.id }}" readonly>
             </div>
         </div>
     </div>
@@ -76,8 +84,7 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
                         {% set color = "danger" %}
                     {% endif %}
 
-
-                    <li data-toggle="tooltip" title="{{ point.quoteText }}" class="list-group-item list-group-item-{{ color }}"><a  target="_blank" class="link-unstyled" href="{{ config.phoenix_url }}/points/{{ point.id }}">{{ point.title }}</a> <a data-toggle="tooltip" target="_blank" title="{{ 'visit_case'|translate }}" href="{{ config.phoenix_url }}/cases/{{ caseDetails.id }}"><span class="badge badge-primary badge-pill"><i class="fas fa-briefcase"></i></span></a></li>
+                    <li data-toggle="tooltip" title="{{ point.quoteText }}" class="list-group-item list-group-item-{{ color }}"><a  target="_blank" class="link-unstyled" href="{{ config.phoenix_url }}/points/{{ point.id }}">{{ point.title }}</a> <a data-toggle="tooltip" target="_blank" title="{{ 'visit_case'|translate }}" href="{{ config.phoenix_url }}/cases/{{ caseDetails.id }}"><span class="badge badge-primary badge-pill"><i class="fas fa-briefcase"></i></span></a> <span class="badge badge-primary badge-pill" data-toggle="tooltip" title="{{ point.created_at }}"><i class="fas fa-clock"></i></span></li>
 
                 {% endif %}
             {% endfor %}

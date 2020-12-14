@@ -57,6 +57,38 @@
     <!-- START Default Crisp JS -->
     {% block default_scripts %}
         <script src="/themes/{{ config.theme }}/js/crisp.min.js"></script>
+        <script src="/themes/{{ config.theme }}/js/darkmode-js.min.js"></script>
+        {#
+        <script>
+            function addDarkmodeWidget() {
+                const options = {
+                    bottom: '64px', // default: '32px'
+                    right: 'unset', // default: '32px'
+                    left: '32px', // default: 'unset'
+                    time: '0.5s', // default: '0.3s'
+                    mixColor: '#fff', // default: '#fff'
+                    backgroundColor: '#fff', // default: '#fff'
+                    buttonColorDark: '#100f2c', // default: '#100f2c'
+                    buttonColorLight: '#fff', // default: '#fff'
+                    saveInCookies: false, // default: true,
+                    label: '🌓', // default: ''
+                    autoMatchOsTheme: false // default: true
+                }
+
+                const darkmode = new Darkmode(options);
+                darkmode.showWidget();
+
+            }
+
+            $(document).ready(function () {
+                $("body").on('classChange', function () {
+                    console.log("Darkmode");
+                });
+            });
+
+            window.addEventListener('load', addDarkmodeWidget);
+        </script>
+        #}
     {% endblock %}
     <!-- END Default Crisp JS -->
 </html>

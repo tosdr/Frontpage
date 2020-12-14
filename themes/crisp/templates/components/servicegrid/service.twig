@@ -18,9 +18,13 @@
     <div class="card d-flex h-100">
         <a href="/{{ locale }}/service/{{ service.id }}">
             <div class="card-header">
-                {% set serviceDetails = getService(service.id) %}
-                <img src="{{ serviceDetails.image }}" width="64"/> 
-                {{ service.name }} {% include "components/rating.twig" with {'rating': service.rating} %}
+                <img src="{{ service.image }}" width="64"/> 
+                {% if service.is_comprehensively_reviewed %}
+                    {% set rating = service.rating %}
+                {% else %}
+                    {% set rating = "N/A" %}
+                {% endif %}
+                {{ service.name }} {% include "components/rating.twig" with {'rating': rating} %}
             </div>
         </a>
         <div class="card-body">
@@ -75,7 +79,7 @@
             {# Service URL #}
             <a target="_blank" href="//{{ service.url|split(',')[0] }}"><span class="badge badge-info"><i class="fas fa-link"></i> {{ 'visit_service'|translate }}</span></a>
 
-            <a target="_blank" href="/api/badge/service/{{ serviceDetails.name }}"><img src="/api/badge/service/{{ serviceDetails.name }}"></a>
+            <a target="_blank" href="/api/badge/service/{{ service.id }}"><img src="/api/badge/service/{{ service.id }}"></a>
 
         </div>
     </div>

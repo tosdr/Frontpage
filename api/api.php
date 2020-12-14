@@ -32,7 +32,7 @@ switch ($_GET["apiversion"]) {
         $render = new SvgPlasticRender();
         $poser = new Poser($render);
 
-        if (count($Redis->keys(\crisp\api\Config::get("phoenix_api_endpoint") . "/services/name/" . strtolower($Query))) === 0) {
+        if (count(crisp\api\Phoenix::serviceExistsPG($Query)) === 0) {
             header("Content-Type: image/svg+xml");
             $Color = "999999";
             $Rating = "Service not found";
@@ -40,11 +40,11 @@ switch ($_GET["apiversion"]) {
             echo $poser->generate(\crisp\api\Config::get("badge_prefix"), $Rating, $Color, 'plastic');
             return;
         }
-        $RedisData = json_decode($Redis->get(\crisp\api\Config::get("phoenix_api_endpoint") . "/services/name/" . strtolower($Query)));
+        $RedisData = crisp\api\Phoenix::getServicePG($Query);
 
         $Color;
 
-        switch ($RedisData->rating) {
+        switch ($RedisData["is_comprehensively_reviewed"] ? ($RedisData["rating"]) : false) {
             case "A":
                 $Color = "46A546";
                 $Rating = "Class A";
@@ -70,8 +70,9 @@ switch ($_GET["apiversion"]) {
                 $Rating = "No Class Yet";
         }
         header("Content-Type: image/svg+xml");
+        
 
-        echo $poser->generate(\crisp\api\Config::get("badge_prefix"), $Rating, $Color, 'plastic');
+        echo $poser->generate(\crisp\api\Config::get("badge_prefix"). "/#". $RedisData["nice_service"], $Rating, $Color, 'plastic');
         break;
     case "2":
     case "1":

@@ -129,7 +129,7 @@ switch ($_GET["apiversion"]) {
                 "tosdr/api/version" => 1,
                 "tosdr/data/version" => time(),
             );
-            foreach ($Services["services"] as $Service) {
+            foreach ($Services as $Service) {
                 $URLS = explode(",", $Service["url"]);
                 foreach ($URLS as $URL) {
                     $URL = trim($URL);

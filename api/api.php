@@ -86,7 +86,7 @@ switch ($_GET["apiversion"]) {
                     exit;
                 }
 
-                if (time() - filemtime(__DIR__ . "/badges/" . $RedisData["id"] . ".svg") > 900) {
+                if (time() - filemtime(__DIR__ . "/badges/" . $RedisData["id"] . ".png") > 900) {
 
                     exec("/usr/bin/inkscape -e \"" . __DIR__ . "/badges/" . $RedisData["id"] . ".png\" \"" . __DIR__ . "/badges/" . $RedisData["id"] . ".svg\"");
 
@@ -158,7 +158,7 @@ switch ($_GET["apiversion"]) {
                 exit;
             }
 
-            if (time() - filemtime(__DIR__ . "/badges/" . $RedisData["id"] . ".svg") > 900) {
+            if (time() - filemtime(__DIR__ . "/badges/" . $RedisData["id"] . ".png") > 900) {
 
                 exec("/usr/bin/inkscape -e \"" . __DIR__ . "/badges/" . $RedisData["id"] . ".png\" \"" . __DIR__ . "/badges/" . $RedisData["id"] . ".svg\"");
 

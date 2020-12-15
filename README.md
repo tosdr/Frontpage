@@ -1,5 +1,8 @@
 # CrispCMS - The new ToS;DR Frontpage
 
+![](https://beta.tosdr.org/api/badgepng/service/tos;dr)
+
+
 This readme is still WIP but should cover basic requirements to install.
 
 

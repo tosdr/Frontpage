@@ -144,8 +144,36 @@ switch ($_GET["apiversion"]) {
         }
         header("Content-Type: image/svg+xml");
 
+        $SVG = $poser->generate(\crisp\api\Config::get("badge_prefix") . "/#" . $RedisData["slug"], $Rating, $Color, 'plastic');
 
-        echo file_get_contents(__DIR__ . "/badges/" . $RedisData["id"] . ".png");
+        if (time() - filemtime(__DIR__ . "/badges/" . $RedisData["id"] . ".svg") > 900) {
+            file_put_contents(__DIR__ . "/badges/" . $RedisData["id"] . ".svg", $SVG);
+        }
+
+        if ($_GET["apiversion"] === "badgepng") {
+            header("Content-Type: image/png");
+            // inkscape -e facebook.png facebook.svg
+
+            if (!file_exists(__DIR__ . "/badges/" . $RedisData["id"] . ".svg")) {
+                exit;
+            }
+
+            if (time() - filemtime(__DIR__ . "/badges/" . $RedisData["id"] . ".svg") > 900) {
+
+                exec("/usr/bin/inkscape -e \"" . __DIR__ . "/badges/" . $RedisData["id"] . ".png\" \"" . __DIR__ . "/badges/" . $RedisData["id"] . ".svg\"");
+
+                if (!file_exists(__DIR__ . "/badges/" . $RedisData["id"] . ".png")) {
+                    exit;
+                }
+            }
+            echo file_get_contents(__DIR__ . "/badges/" . $RedisData["id"] . ".png");
+            exit;
+        }
+
+        header("Content-Type: image/svg+xml");
+
+
+        echo $SVG;
         break;
     case "2":
     case "1":

@@ -91,7 +91,7 @@ class Phoenix {
                         "binding" => true,
                         "case" => $Case["title"],
                         "point" => $Case["classification"],
-                        "score" => -1,
+                        "score" => $Case["score"],
                         "tldr" => $Point["analysis"]
                     ),
                 );

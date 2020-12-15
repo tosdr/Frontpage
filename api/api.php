@@ -28,6 +28,7 @@ switch ($_GET["apiversion"]) {
                 echo \crisp\core\PluginAPI::response(["INVALID_OPTIONS"], $Query, []);
         }
         break;
+    case "badgepng":
     case "badge":
         $render = new SvgPlasticRender();
         $poser = new Poser($render);
@@ -70,10 +71,37 @@ switch ($_GET["apiversion"]) {
                     $Color = "999999";
                     $Rating = "No Class Yet";
             }
+
+            $SVG = $poser->generate(\crisp\api\Config::get("badge_prefix") . "/#" . $RedisData["slug"], $Rating, $Color, 'plastic');
+
+            if (time() - filemtime(__DIR__ . "/badges/" . $RedisData["id"] . ".svg") > 900) {
+                file_put_contents(__DIR__ . "/badges/" . $RedisData["id"] . ".svg", $SVG);
+            }
+
+            if ($_GET["apiversion"] === "badgepng") {
+                header("Content-Type: image/png");
+                // inkscape -e facebook.png facebook.svg
+
+                if (!file_exists(__DIR__ . "/badges/" . $RedisData["id"] . ".svg")) {
+                    exit;
+                }
+
+                if (time() - filemtime(__DIR__ . "/badges/" . $RedisData["id"] . ".svg") > 900) {
+
+                    exec("/usr/bin/inkscape -e \"" . __DIR__ . "/badges/" . $RedisData["id"] . ".png\" \"" . __DIR__ . "/badges/" . $RedisData["id"] . ".svg\"");
+
+                    if (!file_exists(__DIR__ . "/badges/" . $RedisData["id"] . ".png")) {
+                        exit;
+                    }
+                }
+                echo file_get_contents(__DIR__ . "/badges/" . $RedisData["id"] . ".png");
+                exit;
+            }
+
             header("Content-Type: image/svg+xml");
 
 
-            echo $poser->generate(\crisp\api\Config::get("badge_prefix") . "/#" . $RedisData["slug"], $Rating, $Color, 'plastic');
+            echo $SVG;
             return;
         }
 
@@ -117,7 +145,7 @@ switch ($_GET["apiversion"]) {
         header("Content-Type: image/svg+xml");
 
 
-        echo $poser->generate(\crisp\api\Config::get("badge_prefix") . "/#" . $RedisData["slug"], $Rating, $Color, 'plastic');
+        echo file_get_contents(__DIR__ . "/badges/" . $RedisData["id"] . ".png");
         break;
     case "2":
     case "1":
@@ -163,8 +191,8 @@ switch ($_GET["apiversion"]) {
             exit;
         }
 
-        
-        
+
+
         if (!crisp\api\Phoenix::serviceExistsPG($Query)) {
             echo \crisp\core\PluginAPI::response(["INVALID_SERVICE"], $Query, []);
             return;

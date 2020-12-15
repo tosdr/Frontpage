@@ -2,6 +2,10 @@ RewriteEngine On
 
 RewriteRule ^api/(.*)/service/(.*)$ api/api.php?apiversion=$1&q=$2 [NC,L,QSA]
 RewriteRule ^api/(.*)/(.*)$ api/api.php?apiversion=$1&q=$2 [NC,L,QSA]
+
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{SCRIPT_FILENAME}\.php !-d
 RewriteRule ^themes/(.*)/img/logo/(.*)$ api/img.php?theme=$1&logo=$2 [NC,L,QSA]
 
 RewriteCond %{REQUEST_FILENAME} !-f

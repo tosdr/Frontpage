@@ -131,13 +131,8 @@ html,body {
 
 .site-footer
 {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
     background-color:#26272b;
-    padding:45px 0 20px;
     font-size:15px;
-    line-height:24px;
     color:#737373;
 }
 .site-footer hr
@@ -152,10 +147,7 @@ html,body {
 .site-footer h6
 {
     color:#fff;
-    font-size:16px;
     text-transform:uppercase;
-    margin-top:5px;
-    letter-spacing:2px
 }
 .site-footer a
 {
@@ -194,11 +186,6 @@ html,body {
 }
 .site-footer .social-icons a
 {
-    width:40px;
-    height:40px;
-    line-height:40px;
-    margin-left:6px;
-    margin-right:0;
     border-radius:100%;
     background-color:#33353d
 }

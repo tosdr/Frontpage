@@ -75,7 +75,9 @@ class Plugin {
                 exit;
             }
         } else {
-            throw new \Exception("Plugin <b>" . $this->PluginName . "</b> failed to load due to a missing hook file");
+
+
+            throw new \Exception("Plugin <b>" . $this->PluginName . "</b> failed to load due to a missing includes file");
         }
     }
 

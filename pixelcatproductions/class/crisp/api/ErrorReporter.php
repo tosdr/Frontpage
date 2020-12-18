@@ -30,18 +30,26 @@ use \PDOStatement;
  */
 class ErrorReporter {
 
-    private PDO $Database_Connection;
+    private static ?PDO $Database_Connection = null;
 
     public function __construct() {
-        $DB = new \crisp\core\MySQL();
-        $this->Database_Connection = $DB->getDBConnector();
+        self::initDB();
     }
 
-    function create($ReferenceID, $HttpStatusCode, $Traceback, $Summary, $IP) {
-        $statement = $this->Database_Connection->prepare("INSERT INTO Crashes (`ReferenceID`, `HttpStatusCode`, `Traceback`, `Summary`, `IP`) VALUES (:ReferenceID, :HttpStatusCode, :Traceback, :Summary, :IP)");
-        $statement->execute(array(":ReferenceID" => $ReferenceID, ":HttpStatusCode" => $HttpStatusCode, ":Traceback" => $Traceback, ":Summary" => $Summary, ":IP" => $IP));
+    public static function initDB() {
+        $DB = new \crisp\core\MySQL();
+        self::$Database_Connection = $DB->getDBConnector();
+    }
+
+    public static function create($HttpStatusCode, $Traceback, $Summary) {
+        if (self::$Database_Connection === null) {
+            self::initDB();
+        }
+        $ReferenceID = \crisp\core\Crypto::UUIDv4("ise_");
+        $statement = self::$Database_Connection->prepare("INSERT INTO Crashes (`ReferenceID`, `HttpStatusCode`, `Traceback`, `Summary`) VALUES (:ReferenceID, :HttpStatusCode, :Traceback, :Summary)");
+        $statement->execute(array(":ReferenceID" => $ReferenceID, ":HttpStatusCode" => $HttpStatusCode, ":Traceback" => $Traceback, ":Summary" => $Summary));
         if ($statement->rowCount() > 0) {
-            return true;
+            return $ReferenceID;
         }
         return false;
     }

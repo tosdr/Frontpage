@@ -136,12 +136,13 @@ try {
         /* 'cache' => __DIR__ . '/cache/' */
     ]);
 
+    
 
     echo $TwigTheme->render("errors/exception.twig", array(
-        "error" => $ex->getMessage()
+        "ReferenceID" => api\ErrorReporter::create(500, $ex->getTraceAsString(), $ex->getMessage())
     ));
     exit;
 } catch (\Twig\Error\LoaderError $ex) {
-    var_dump($ex);
+    echo "Thats a twig error, cant even show a proper error page!";
     exit;
 }

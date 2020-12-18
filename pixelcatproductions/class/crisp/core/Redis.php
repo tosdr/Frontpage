@@ -19,7 +19,6 @@
 
 namespace crisp\core;
 
-
 /**
  * Interact with the database yourself. Please use this interface only when you REALLY need it for custom tables.
  * We offer a variety of functions to interact with users or the system itself in a safe way :-)
@@ -33,10 +32,14 @@ class Redis {
      * @see getDBConnector
      */
     public function __construct() {
-        $EnvFile = parse_ini_file(__DIR__ . "/../../../../.env");
-        $redis = new \Redis();
-        $redis->connect($EnvFile["REDIS_HOST"], $EnvFile["REDIS_PORT"]);
-        $this->Database_Connection = $redis;
+        try {
+            $EnvFile = parse_ini_file(__DIR__ . "/../../../../.env");
+            $redis = new \Redis();
+            $redis->connect($EnvFile["REDIS_HOST"], $EnvFile["REDIS_PORT"]);
+            $this->Database_Connection = $redis;
+        } catch (\Exception $ex) {
+            throw new \Exception("Failed to contact redis server");
+        }
     }
 
     public function getDBConnector() {

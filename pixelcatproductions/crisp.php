@@ -71,7 +71,7 @@ try {
 
     $ThemeLoader = new \Twig\Loader\FilesystemLoader(array(__DIR__ . "/../themes/$CurrentTheme/templates/", __DIR__ . "/../plugins/"));
     $TwigTheme = new \Twig\Environment($ThemeLoader, [
-            'cache' => __DIR__ . '/cache/'
+        'cache' => __DIR__ . '/cache/'
     ]);
 
     if (file_exists(__DIR__ . "/../themes/$CurrentTheme/hook.php")) {
@@ -115,35 +115,26 @@ try {
     $TwigTheme->addFilter(new \Twig\TwigFilter('translate', [$Translation, 'fetch']));
     $TwigTheme->addFilter(new \Twig\TwigFilter('getlang', [new \crisp\api\lists\Languages(), 'getLanguageByCode']));
     $TwigTheme->addFilter(new \Twig\TwigFilter('truncateText', [new \crisp\api\Helper(), 'truncateText']));
+
+
+    $EnvFile = parse_ini_file(__DIR__ . "/../.env");
+
+    if (!defined('CRISP_API')) {
+
+        if (!isset($_GET["l"]) && !defined("CRISP_API")) {
+            header("Location: /$Locale/$CurrentPage");
+            exit;
+        }
+
+        \crisp\core\Plugins::load($TwigTheme, $CurrentFile, $CurrentPage);
+        \crisp\core\Templates::load($TwigTheme, $CurrentFile, $CurrentPage);
+    }
 } catch (\Exception $ex) {
 
-    $ThemeLoader = new \Twig\Loader\FilesystemLoader(array(__DIR__ . "/../themes/$CurrentTheme/templates/", __DIR__ . "/../plugins/"));
+
     $TwigTheme = new \Twig\Environment($ThemeLoader, [
-            'cache' => __DIR__ . '/cache/'
+        /* 'cache' => __DIR__ . '/cache/' */
     ]);
-
-    $Locale = \crisp\api\Helper::getLocale();
-
-
-    $Translation = new \crisp\api\Translation($Locale);
-
-    $TwigTheme->addFilter(new \Twig\TwigFilter('date', 'date'));
-    $TwigTheme->addFilter(new \Twig\TwigFilter('getlang', [new \crisp\api\lists\Languages(), 'getLanguageByCode']));
-    $TwigTheme->addFilter(new \Twig\TwigFilter('truncateText', [new \crisp\api\Helper(), 'truncateText']));
-
-    $TwigTheme->addFilter(new \Twig\TwigFilter('translate', [$Translation, 'fetch']));
-    $TwigTheme->addExtension(new \Twig\Extension\StringLoaderExtension());
-
-    $TwigTheme->addGlobal("URL", "https://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]");
-    $TwigTheme->addGlobal("config", \crisp\api\Config::list());
-    $TwigTheme->addGlobal("locale", $Locale);
-    $TwigTheme->addGlobal("languages", \crisp\api\Translation::listLanguages(false));
-    $TwigTheme->addGlobal("GET", $_GET);
-    $TwigTheme->addGlobal("POST", $_POST);
-    $TwigTheme->addGlobal("SERVER", $_SERVER);
-    $TwigTheme->addGlobal("isMobile", \crisp\api\Helper::isMobile());
-    $TwigTheme->addFunction(new \Twig\TwigFunction('getGitRevision', [new \crisp\api\Helper(), 'getGitRevision']));
-    $TwigTheme->addFunction(new \Twig\TwigFunction('getGitBranch', [new \crisp\api\Helper(), 'getGitBranch']));
 
 
     echo $TwigTheme->render("errors/exception.twig", array(
@@ -153,16 +144,4 @@ try {
 } catch (\Twig\Error\LoaderError $ex) {
     var_dump($ex);
     exit;
-}
-$EnvFile = parse_ini_file(__DIR__ . "/../.env");
-
-if (!defined('CRISP_API')) {
-
-    if (!isset($_GET["l"]) && !defined("CRISP_API")) {
-        header("Location: /$Locale/$CurrentPage");
-        exit;
-    }
-
-    \crisp\core\Plugins::load($TwigTheme, $CurrentFile, $CurrentPage);
-    \crisp\core\Templates::load($TwigTheme, $CurrentFile, $CurrentPage);
 }

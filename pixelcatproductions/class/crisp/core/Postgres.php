@@ -32,17 +32,23 @@ class Postgres {
      * @see getDBConnector
      */
     public function __construct() {
+        if(isset($_GET["simulate_heroku_kill"])){
+            throw new \Exception("Failed to contact edit.tosdr.org");
+        }
         $db = parse_url(\crisp\api\Config::get("plugin_heroku_database_uri"));
-        
-        $pdo = new \PDO("pgsql:" . sprintf(
-                        "host=%s;port=%s;user=%s;password=%s;dbname=%s",
-                        $db["host"],
-                        $db["port"],
-                        $db["user"],
-                        $db["pass"],
-                        ltrim($db["path"], "/")
-        ));
-        $this->Database_Connection = $pdo;
+        try {
+            $pdo = new \PDO("pgsql:" . sprintf(
+                            "host=%s;port=%s;user=%s;password=%s;dbname=%s",
+                            $db["host"],
+                            $db["port"],
+                            $db["user"],
+                            $db["pass"],
+                            ltrim($db["path"], "/")
+            ));
+            $this->Database_Connection = $pdo;
+        } catch (\Exception $ex) {
+            throw new \Exception("Failed to contact edit.tosdr.org");
+        }
     }
 
     /**

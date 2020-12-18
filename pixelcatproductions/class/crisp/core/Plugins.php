@@ -52,6 +52,12 @@ class Plugins {
     }
 
     public static function load($TwigTheme, $CurrentFile, $CurrentPage) {
+
+        if (isset($_GET["simulate_invalid_plugin_name"])) {
+            throw new \Exception("Plugin <b>debug</b> failed to load due to an invalid plugin name!");
+        }
+
+
         $DB = new \crisp\core\MySQL();
         $DBConnection = $DB->getDBConnector();
 
@@ -72,8 +78,14 @@ class Plugins {
                     if (\crisp\api\Helper::isValidPluginName($PluginName) === false) {
                         new \crisp\core\Plugin($PluginFolder, $PluginName, $PluginMetadata, $TwigTheme, $CurrentFile, $CurrentPage);
                     } else {
-                        throw new \Exception(\crisp\api\Helper::isValidPluginName($PluginName));
-                        exit;
+                        throw new \Exception("Plugin <b>" . \crisp\api\Helper::isValidPluginName($PluginName) . "</b> failed to load due to an invalid plugin name!");
+                    }
+                } else {
+                    if (!\is_object($PluginMetadata)) {
+                        throw new \Exception("Plugin <b>" . \crisp\api\Helper::isValidPluginName($PluginName) . "</b> failed to load due to an invalid plugin.json!");
+                    }
+                    if (!isset($PluginMetadata->hookFile)) {
+                        throw new \Exception("Plugin <b>" . \crisp\api\Helper::isValidPluginName($PluginName) . "</b> failed to load due to a missing hook file!");
                     }
                 }
             }

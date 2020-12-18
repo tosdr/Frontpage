@@ -71,7 +71,7 @@ try {
 
     $ThemeLoader = new \Twig\Loader\FilesystemLoader(array(__DIR__ . "/../themes/$CurrentTheme/templates/", __DIR__ . "/../plugins/"));
     $TwigTheme = new \Twig\Environment($ThemeLoader, [
-            /* 'cache' => __DIR__ . '/cache/' */
+            'cache' => __DIR__ . '/cache/'
     ]);
 
     if (file_exists(__DIR__ . "/../themes/$CurrentTheme/hook.php")) {
@@ -119,7 +119,7 @@ try {
 
     $ThemeLoader = new \Twig\Loader\FilesystemLoader(array(__DIR__ . "/../themes/$CurrentTheme/templates/", __DIR__ . "/../plugins/"));
     $TwigTheme = new \Twig\Environment($ThemeLoader, [
-            /* 'cache' => __DIR__ . '/cache/' */
+            'cache' => __DIR__ . '/cache/'
     ]);
 
     $Locale = \crisp\api\Helper::getLocale();

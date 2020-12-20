@@ -84,27 +84,27 @@ switch ($_GET["apiversion"]) {
             }
             $SVG = $poser->generate($Prefix, $Rating, $Color, 'plastic');
 
-            if (time() - filemtime(__DIR__ . "/badges/" . sha1($Prefix) . ".svg") > 900) {
-                file_put_contents(__DIR__ . "/badges/" . sha1($Prefix) . ".svg", $SVG);
+            if (time() - filemtime(__DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"]) . ".svg") > 900) {
+                file_put_contents(__DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"]) . ".svg", $SVG);
             }
 
             if ($_GET["apiversion"] === "badgepng") {
                 header("Content-Type: image/png");
                 // inkscape -e facebook.png facebook.svg
 
-                if (!file_exists(__DIR__ . "/badges/" . sha1($Prefix) . ".svg")) {
+                if (!file_exists(__DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"]) . ".svg")) {
                     exit;
                 }
 
-                if (time() - filemtime(__DIR__ . "/badges/" . sha1($Prefix) . ".png") > 900) {
+                if (time() - filemtime(__DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"]) . ".png") > 900) {
 
-                    exec("/usr/bin/inkscape -e \"" . __DIR__ . "/badges/" . sha1($Prefix) . ".png\" \"" . __DIR__ . "/badges/" . sha1($Prefix) . ".svg\"");
+                    exec("/usr/bin/inkscape -e \"" . __DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"]) . ".png\" \"" . __DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"]) . ".svg\"");
 
-                    if (!file_exists(__DIR__ . "/badges/" . sha1($Prefix) . ".png")) {
+                    if (!file_exists(__DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"]) . ".png")) {
                         exit;
                     }
                 }
-                echo file_get_contents(__DIR__ . "/badges/" . sha1($Prefix) . ".png");
+                echo file_get_contents(__DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"]) . ".png");
                 exit;
             }
 
@@ -161,27 +161,27 @@ switch ($_GET["apiversion"]) {
 
         $SVG = $poser->generate($Prefix, $Rating, $Color, 'plastic');
 
-        if (time() - filemtime(__DIR__ . "/badges/" . sha1($Prefix) . ".svg") > 900) {
-            file_put_contents(__DIR__ . "/badges/" . sha1($Prefix) . ".svg", $SVG);
+        if (time() - filemtime(__DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"]) . ".svg") > 900) {
+            file_put_contents(__DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"]) . ".svg", $SVG);
         }
 
         if ($_GET["apiversion"] === "badgepng") {
             header("Content-Type: image/png");
             // inkscape -e facebook.png facebook.svg
 
-            if (!file_exists(__DIR__ . "/badges/" . sha1($Prefix) . ".svg")) {
+            if (!file_exists(__DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"]) . ".svg")) {
                 exit;
             }
 
-            if (time() - filemtime(__DIR__ . "/badges/" . sha1($Prefix) . ".png") > 900) {
+            if (time() - filemtime(__DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"]) . ".png") > 900) {
 
-                exec("/usr/bin/inkscape -e \"" . __DIR__ . "/badges/" . sha1($Prefix) . ".png\" \"" . __DIR__ . "/badges/" . sha1($Prefix) . ".svg\"");
+                exec("/usr/bin/inkscape -e \"" . __DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"]) . ".png\" \"" . __DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"]) . ".svg\"");
 
-                if (!file_exists(__DIR__ . "/badges/" . sha1($Prefix) . ".png")) {
+                if (!file_exists(__DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"]) . ".png")) {
                     exit;
                 }
             }
-            echo file_get_contents(__DIR__ . "/badges/" . sha1($Prefix) . ".png");
+            echo file_get_contents(__DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"]) . ".png");
             exit;
         }
 

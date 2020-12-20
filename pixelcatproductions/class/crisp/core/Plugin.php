@@ -31,7 +31,7 @@ class Plugin {
     public $PluginName;
     public $PluginMetadata;
     public $PluginPath;
-    private $TwigTheme;
+    public $TwigTheme;
     public $CurrentFile;
     public $CurrentPage;
 

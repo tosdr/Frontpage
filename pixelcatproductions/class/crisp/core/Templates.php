@@ -27,10 +27,24 @@ class Templates {
 
     use \crisp\core\Hook;
 
+    public static function clearCache() {
+        $it = new \RecursiveDirectoryIterator(realpath(__DIR__ . "/../../../cache/"), \RecursiveDirectoryIterator::SKIP_DOTS);
+        $files = new \RecursiveIteratorIterator($it,
+                \RecursiveIteratorIterator::CHILD_FIRST);
+        foreach ($files as $file) {
+            if ($file->isDir()) {
+                rmdir($file->getRealPath());
+            } else {
+                unlink($file->getRealPath());
+            }
+        }
+        return true;
+    }
+
     public static function load($TwigTheme, $CurrentFile, $CurrentPage) {
         if (\crisp\api\Helper::templateExists(\crisp\api\Config::get("theme"), "/views/$CurrentPage.twig")) {
             new \crisp\core\Template($TwigTheme, $CurrentFile, $CurrentPage);
-        }else{
+        } else {
             echo $TwigTheme->render("errors/404.twig");
         }
     }

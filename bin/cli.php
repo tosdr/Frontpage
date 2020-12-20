@@ -15,6 +15,21 @@ require_once __DIR__ . "/../pixelcatproductions/crisp.php";
 
 
 switch ($argv[1]) {
+    case "cache":
+
+        if ($argc < 3) {
+            echo "Missing argument: action" . PHP_EOL;
+            exit;
+        }
+
+        switch ($argv[2]) {
+            case "clear":
+                \crisp\core\Templates::clearCache();
+                echo "Cleared Cache!" . PHP_EOL;
+                break;
+        }
+        break;
+
     case "export":
         if ($argc < 3) {
             echo "Missing argument: translations" . PHP_EOL;
@@ -126,29 +141,59 @@ switch ($argv[1]) {
                     exit;
                 }
                 if (!crisp\core\Plugins::isInstalled($argv[3])) {
-                    if (!crisp\core\Plugins::install($argv[3], \crisp\api\Config::get("theme"), __FILE__, "cli")) {
-                        echo "Failed to install plugin" . PHP_EOL;
-                        exit;
-                    }
-                    echo "Plugin has been reinstalled" . PHP_EOL;
+                    echo "This plugin is not installed" . PHP_EOL;
                     exit;
                 }
                 if (!crisp\core\Plugins::isValid($argv[3])) {
                     echo "This plugin does not exist" . PHP_EOL;
                     exit;
                 }
-                if (!crisp\core\Plugins::uninstall($argv[3], \crisp\api\Config::get("theme"), __FILE__, "cli")) {
-                    echo "Failed to uninstall Plugin" . PHP_EOL;
+                if (crisp\core\Plugins::reinstall($argv[3], \crisp\api\Config::get("theme"), __FILE__, "cli")) {
+                    echo "Plugin successfully reinstalled" . PHP_EOL;
                     exit;
                 }
-                if (!crisp\core\Plugins::install($argv[3], \crisp\api\Config::get("theme"), __FILE__, "cli")) {
-                    echo "Failed to install plugin" . PHP_EOL;
-                    exit;
-                }
-                echo "Plugin has been reinstalled" . PHP_EOL;
+                echo "Failed to reinstall plugin" . PHP_EOL;
                 break;
         }
+        break;
+    case "maintenance":
 
+        if (!\crisp\core\Plugins::isInstalled("core")) {
+            echo "Core plugin is not installed!";
+            exit;
+        }
+
+        if ($argc < 3) {
+            echo "Missing argument: enable/disable" . PHP_EOL;
+        }
+
+        switch ($argv[2]) {
+            case "enable":
+            case "on":
+            case "true":
+                if (\crisp\api\Config::set("plugin_core_maintenance_enabled", true)) {
+                    echo "Maintenance Mode successfully enabled." . PHP_EOL;
+                    exit;
+                }
+                echo "Failed to enable maintenance mode" . PHP_EOL;
+                break;
+            case "false":
+            case "disable":
+            case "off":
+                if (\crisp\api\Config::set("plugin_core_maintenance_enabled", false)) {
+                    echo "Maintenance Mode successfully disabled." . PHP_EOL;
+                    exit;
+                }
+                echo "Failed to disable maintenance mode" . PHP_EOL;
+                break;
+            default:
+                if (\crisp\api\Config::get("plugin_core_maintenance_enabled")) {
+                    echo "Maintenance Mode is currently enabled!" . PHP_EOL;
+                } else {
+                    echo "Maintenance Mode is currently disabled." . PHP_EOL;
+                }
+                break;
+        }
         break;
     default:
         echo "Invalid command" . PHP_EOL;

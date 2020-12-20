@@ -221,6 +221,13 @@ class Plugins {
         }
     }
 
+    public static function reinstall($PluginName, $TwigTheme, $CurrentFile, $CurrentPage) {
+        if(!self::uninstall($PluginName, $TwigTheme, $CurrentFile, $CurrentPage)){
+            return false;
+        }
+        return self::install($PluginName, $TwigTheme, $CurrentFile, $CurrentPage);
+    }
+
     /**
      * Uninstall a plugin and prevent it from loading
      * @broadcasts pluginUninstall

@@ -52,8 +52,14 @@ class Template {
                 $_vars = (isset($_vars) ? $_vars : [] );
                 $_vars["template"] = $this;
 
+
+                $GLOBALS["microtime"]["logic"]["end"] = microtime();
+                $GLOBALS["microtime"]["template"]["start"] = microtime();
+                $TwigTheme->addGlobal("LogicMicroTime", ($GLOBALS["microtime"]["logic"]["end"] - $GLOBALS["microtime"]["logic"]["start"]));
+
                 echo $TwigTheme->render("views/$CurrentPage.twig", $_vars);
             } else {
+                http_response_code(404);
                 echo $TwigTheme->render("errors/404.twig", []);
             }
         } else {

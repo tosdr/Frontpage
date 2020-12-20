@@ -56,6 +56,14 @@ class core {
 
 }
 
+
+
+$GLOBALS["microtime"] = array();
+$GLOBALS["microtime"]["logic"] = array();
+$GLOBALS["microtime"]["template"] = array();
+
+$GLOBALS["microtime"]["logic"]["start"] = microtime();
+
 $GLOBALS["plugins"] = array();
 $GLOBALS['hook'] = array();
 $GLOBALS['navbar'] = array();
@@ -85,9 +93,15 @@ try {
 
 
     $ThemeLoader = new \Twig\Loader\FilesystemLoader(array(__DIR__ . "/../themes/$CurrentTheme/templates/", __DIR__ . "/../plugins/"));
-    $TwigTheme = new \Twig\Environment($ThemeLoader, [
-        'cache' => __DIR__ . '/cache/'
-    ]);
+    $TwigTheme;
+
+    if (CURRENT_UNIVERSE === Universe::UNIVERSE_PUBLIC) {
+        $TwigTheme = new \Twig\Environment($ThemeLoader, [
+            'cache' => __DIR__ . '/cache/'
+        ]);
+    } else {
+        $TwigTheme = new \Twig\Environment($ThemeLoader, []);
+    }
 
     if (file_exists(__DIR__ . "/../themes/$CurrentTheme/hook.php")) {
         include __DIR__ . "/../themes/$CurrentTheme/hook.php";
@@ -120,6 +134,7 @@ try {
     $TwigTheme->addFunction(new \Twig\TwigFunction('getPointsByService', [new \crisp\api\Phoenix(), 'getPointsByServicePG']));
     $TwigTheme->addFunction(new \Twig\TwigFunction('getCase', [new \crisp\api\Phoenix(), 'getCasePG']));
     $TwigTheme->addFunction(new \Twig\TwigFunction('getGitBranch', [new \crisp\api\Helper(), 'getGitBranch']));
+    $TwigTheme->addFunction(new \Twig\TwigFunction('microtime', 'microtime'));
 
 
     $Translation = new \crisp\api\Translation($Locale);
@@ -152,11 +167,11 @@ try {
 
 
     $TwigTheme = new \Twig\Environment($ThemeLoader, [
-            /* 'cache' => __DIR__ . '/cache/' */
+        'cache' => __DIR__ . '/cache/'
     ]);
 
 
-
+    http_response_code(500);
     echo $TwigTheme->render("errors/exception.twig", array(
         "ReferenceID" => api\ErrorReporter::create(500, $ex->getTraceAsString(), $ex->getMessage())
     ));

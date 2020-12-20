@@ -90,9 +90,16 @@ class Plugins {
                 }
             }
         }
+
+        if (count($GLOBALS["render"]) > 0) {
+            $GLOBALS["microtime"]["logic"]["end"] = microtime();
+            $TwigTheme->addGlobal("LogicMicroTime", ($GLOBALS["microtime"]["logic"]["end"] - $GLOBALS["microtime"]["logic"]["start"]));
+        }
+
         foreach ($GLOBALS["render"] as $Template => $_vars) {
+            $GLOBALS["microtime"]["template"]["start"] = microtime();
             echo $TwigTheme->render($Template, $_vars);
-            $this->broadcastHook("pluginAfterRender_" . $_vars["plugin"]->PluginName);
+            //$this->broadcastHook("pluginAfterRender", $Template);
         }
     }
 

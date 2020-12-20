@@ -34,6 +34,19 @@
                     <li><a href="/imprint">{{ 'imprint'|translate }}</a></li>
                 </ul>
             </div>
+
+            {% if UNIVERSE == 3 %}
+                <div class="col-xs-6 col-md-3">
+                    <h6>DEBUG</h6>
+                    <ul class="footer-links">
+                        <li>Cache: Disabled</li>
+                        <li>Universe: {{ UNIVERSE_NAME }}</li>
+                        <li>Logic Time: {{ LogicMicroTime }}ms</li>
+                        <li>Template Time: {{ microtime() - GLOBALS.microtime.template.start }}ms</li>
+                        <li>Total Render Time: {{ microtime() - GLOBALS.microtime.template.start + LogicMicroTime }}ms</li>
+                    </ul>
+                </div>
+            {% endif %}
         </div>
         <hr>
     </div>

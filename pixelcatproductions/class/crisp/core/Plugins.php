@@ -92,12 +92,12 @@ class Plugins {
         }
 
         if (count($GLOBALS["render"]) > 0) {
-            $GLOBALS["microtime"]["logic"]["end"] = microtime();
+            $GLOBALS["microtime"]["logic"]["end"] = microtime(true);
             $TwigTheme->addGlobal("LogicMicroTime", ($GLOBALS["microtime"]["logic"]["end"] - $GLOBALS["microtime"]["logic"]["start"]));
         }
 
         foreach ($GLOBALS["render"] as $Template => $_vars) {
-            $GLOBALS["microtime"]["template"]["start"] = microtime();
+            $GLOBALS["microtime"]["template"]["start"] = microtime(true);
             echo $TwigTheme->render($Template, $_vars);
             //$this->broadcastHook("pluginAfterRender", $Template);
         }

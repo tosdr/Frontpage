@@ -62,7 +62,7 @@ $GLOBALS["microtime"] = array();
 $GLOBALS["microtime"]["logic"] = array();
 $GLOBALS["microtime"]["template"] = array();
 
-$GLOBALS["microtime"]["logic"]["start"] = microtime();
+$GLOBALS["microtime"]["logic"]["start"] = microtime(true);
 
 $GLOBALS["plugins"] = array();
 $GLOBALS['hook'] = array();

@@ -63,8 +63,8 @@ class Template {
                 $_vars["template"] = $this;
 
 
-                $GLOBALS["microtime"]["logic"]["end"] = microtime();
-                $GLOBALS["microtime"]["template"]["start"] = microtime();
+                $GLOBALS["microtime"]["logic"]["end"] = microtime(true);
+                $GLOBALS["microtime"]["template"]["start"] = microtime(true);
                 $TwigTheme->addGlobal("LogicMicroTime", ($GLOBALS["microtime"]["logic"]["end"] - $GLOBALS["microtime"]["logic"]["start"]));
 
                 echo $TwigTheme->render("views/$CurrentPage.twig", $_vars);

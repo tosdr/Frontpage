@@ -41,9 +41,9 @@
                     <ul class="footer-links">
                         <li>Cache: Disabled</li>
                         <li>Universe: {{ UNIVERSE_NAME }}</li>
-                        <li>Logic Time: {{ LogicMicroTime }}ms</li>
-                        <li>Template Time: {{ microtime() - GLOBALS.microtime.template.start }}ms</li>
-                        <li>Total Render Time: {{ microtime() - GLOBALS.microtime.template.start + LogicMicroTime }}ms</li>
+                        <li>Logic Time: {{ LogicMicroTime|truncateText(5, false) }}ms</li>
+                        <li>Template Time: {{ (microtime(true) - GLOBALS.microtime.template.start)|truncateText(5, false) }}ms</li>
+                        <li>Total Render Time: {{ (microtime(true) - GLOBALS.microtime.template.start + LogicMicroTime)|truncateText(5, false) }}ms</li>
                     </ul>
                 </div>
             {% endif %}

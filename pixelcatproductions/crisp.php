@@ -25,6 +25,7 @@ namespace crisp;
  * @author Justin Back <jback@pixelcatproductions.net>
  */
 class core {
+    /* Some important constants */
 
     /**
      * This is my autoloader. 
@@ -58,6 +59,7 @@ class core {
 $GLOBALS['hook'] = array();
 require_once __DIR__ . '/../vendor/autoload.php';
 
+
 core::bootstrap();
 session_start();
 
@@ -65,6 +67,16 @@ $CurrentTheme = \crisp\api\Config::get("theme");
 $CurrentFile = substr(substr($_SERVER['PHP_SELF'], 1), 0, -4);
 $CurrentPage = (isset($_GET["page"]) ? $_GET["page"] : substr($_SERVER["REQUEST_URI"], 1));
 $CurrentPage = ($CurrentPage == "" ? "frontpage" : $CurrentPage);
+
+if (isset($_GET["universe"])) {
+    Universe::changeUniverse($_GET["universe"]);
+} elseif (!isset($_SESSION[core\Config::$Cookie_Prefix . "universe"])) {
+    Universe::changeUniverse(Universe::UNIVERSE_PUBLIC);
+}
+
+define("CURRENT_UNIVERSE", Universe::getUniverse($_SESSION[core\Config::$Cookie_Prefix . "universe"]));
+define("CURRENT_UNIVERSE_NAME", Universe::getUniverseName(CURRENT_UNIVERSE));
+
 
 try {
 
@@ -86,6 +98,8 @@ try {
     $TwigTheme->addGlobal("locale", $Locale);
     $TwigTheme->addGlobal("languages", \crisp\api\Translation::listLanguages(false));
     $TwigTheme->addGlobal("GET", $_GET);
+    $TwigTheme->addGlobal("UNIVERSE", CURRENT_UNIVERSE);
+    $TwigTheme->addGlobal("UNIVERSE_NAME", CURRENT_UNIVERSE_NAME);
     $TwigTheme->addGlobal("POST", $_POST);
     $TwigTheme->addGlobal("SERVER", $_SERVER);
     $TwigTheme->addGlobal("GLOBALS", $GLOBALS);
@@ -133,10 +147,10 @@ try {
 
 
     $TwigTheme = new \Twig\Environment($ThemeLoader, [
-        /* 'cache' => __DIR__ . '/cache/' */
+            /* 'cache' => __DIR__ . '/cache/' */
     ]);
 
-    
+
 
     echo $TwigTheme->render("errors/exception.twig", array(
         "ReferenceID" => api\ErrorReporter::create(500, $ex->getTraceAsString(), $ex->getMessage())

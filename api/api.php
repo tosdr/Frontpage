@@ -32,6 +32,11 @@ switch ($_GET["apiversion"]) {
     case "badge":
         $render = new SvgPlasticRender();
         $poser = new Poser($render);
+        $Prefix = \crisp\api\Config::get("badge_prefix");
+
+        if (CURRENT_UNIVERSE >= crisp\Universe::UNIVERSE_DEV && isset($_GET["prefix"])) {
+            $Prefix = $_GET["prefix"];
+        }
 
         if (!is_numeric($Query)) {
             if (!\crisp\api\Phoenix::serviceExistsBySlugPG($Query)) {
@@ -39,7 +44,7 @@ switch ($_GET["apiversion"]) {
                 $Color = "999999";
                 $Rating = "Service not found";
 
-                echo $poser->generate(\crisp\api\Config::get("badge_prefix"), $Rating, $Color, 'plastic');
+                echo $poser->generate($Prefix, $Rating, $Color, 'plastic');
                 return;
             }
             $RedisData = \crisp\api\Phoenix::getServiceBySlugPG($Query);
@@ -72,29 +77,34 @@ switch ($_GET["apiversion"]) {
                     $Rating = "No Class Yet";
             }
 
-            $SVG = $poser->generate(\crisp\api\Config::get("badge_prefix") . "/#" . $RedisData["slug"], $Rating, $Color, 'plastic');
+            $Prefix = \crisp\api\Config::get("badge_prefix") . "/#" . $RedisData["slug"];
 
-            if (time() - filemtime(__DIR__ . "/badges/" . $RedisData["id"] . ".svg") > 900) {
-                file_put_contents(__DIR__ . "/badges/" . $RedisData["id"] . ".svg", $SVG);
+            if (CURRENT_UNIVERSE >= crisp\Universe::UNIVERSE_DEV && isset($_GET["prefix"])) {
+                $Prefix = $_GET["prefix"];
+            }
+            $SVG = $poser->generate($Prefix, $Rating, $Color, 'plastic');
+
+            if (time() - filemtime(__DIR__ . "/badges/" . sha1($Prefix) . ".svg") > 900) {
+                file_put_contents(__DIR__ . "/badges/" . sha1($Prefix) . ".svg", $SVG);
             }
 
             if ($_GET["apiversion"] === "badgepng") {
                 header("Content-Type: image/png");
                 // inkscape -e facebook.png facebook.svg
 
-                if (!file_exists(__DIR__ . "/badges/" . $RedisData["id"] . ".svg")) {
+                if (!file_exists(__DIR__ . "/badges/" . sha1($Prefix) . ".svg")) {
                     exit;
                 }
 
-                if (time() - filemtime(__DIR__ . "/badges/" . $RedisData["id"] . ".png") > 900) {
+                if (time() - filemtime(__DIR__ . "/badges/" . sha1($Prefix) . ".png") > 900) {
 
-                    exec("/usr/bin/inkscape -e \"" . __DIR__ . "/badges/" . $RedisData["id"] . ".png\" \"" . __DIR__ . "/badges/" . $RedisData["id"] . ".svg\"");
+                    exec("/usr/bin/inkscape -e \"" . __DIR__ . "/badges/" . sha1($Prefix) . ".png\" \"" . __DIR__ . "/badges/" . sha1($Prefix) . ".svg\"");
 
-                    if (!file_exists(__DIR__ . "/badges/" . $RedisData["id"] . ".png")) {
+                    if (!file_exists(__DIR__ . "/badges/" . sha1($Prefix) . ".png")) {
                         exit;
                     }
                 }
-                echo file_get_contents(__DIR__ . "/badges/" . $RedisData["id"] . ".png");
+                echo file_get_contents(__DIR__ . "/badges/" . sha1($Prefix) . ".png");
                 exit;
             }
 
@@ -110,11 +120,16 @@ switch ($_GET["apiversion"]) {
             $Color = "999999";
             $Rating = "Service not found";
 
-            echo $poser->generate(\crisp\api\Config::get("badge_prefix"), $Rating, $Color, 'plastic');
+            echo $poser->generate($Prefix, $Rating, $Color, 'plastic');
             return;
         }
         $RedisData = crisp\api\Phoenix::getServicePG($Query);
 
+        $Prefix = \crisp\api\Config::get("badge_prefix") . "/#" . $RedisData["slug"];
+
+        if (CURRENT_UNIVERSE >= crisp\Universe::UNIVERSE_DEV && isset($_GET["prefix"])) {
+            $Prefix = $_GET["prefix"];
+        }
         $Color;
 
         switch ($RedisData["is_comprehensively_reviewed"] ? ($RedisData["rating"]) : false) {
@@ -144,29 +159,29 @@ switch ($_GET["apiversion"]) {
         }
         header("Content-Type: image/svg+xml");
 
-        $SVG = $poser->generate(\crisp\api\Config::get("badge_prefix") . "/#" . $RedisData["slug"], $Rating, $Color, 'plastic');
+        $SVG = $poser->generate($Prefix, $Rating, $Color, 'plastic');
 
-        if (time() - filemtime(__DIR__ . "/badges/" . $RedisData["id"] . ".svg") > 900) {
-            file_put_contents(__DIR__ . "/badges/" . $RedisData["id"] . ".svg", $SVG);
+        if (time() - filemtime(__DIR__ . "/badges/" . sha1($Prefix) . ".svg") > 900) {
+            file_put_contents(__DIR__ . "/badges/" . sha1($Prefix) . ".svg", $SVG);
         }
 
         if ($_GET["apiversion"] === "badgepng") {
             header("Content-Type: image/png");
             // inkscape -e facebook.png facebook.svg
 
-            if (!file_exists(__DIR__ . "/badges/" . $RedisData["id"] . ".svg")) {
+            if (!file_exists(__DIR__ . "/badges/" . sha1($Prefix) . ".svg")) {
                 exit;
             }
 
-            if (time() - filemtime(__DIR__ . "/badges/" . $RedisData["id"] . ".png") > 900) {
+            if (time() - filemtime(__DIR__ . "/badges/" . sha1($Prefix) . ".png") > 900) {
 
-                exec("/usr/bin/inkscape -e \"" . __DIR__ . "/badges/" . $RedisData["id"] . ".png\" \"" . __DIR__ . "/badges/" . $RedisData["id"] . ".svg\"");
+                exec("/usr/bin/inkscape -e \"" . __DIR__ . "/badges/" . sha1($Prefix) . ".png\" \"" . __DIR__ . "/badges/" . sha1($Prefix) . ".svg\"");
 
-                if (!file_exists(__DIR__ . "/badges/" . $RedisData["id"] . ".png")) {
+                if (!file_exists(__DIR__ . "/badges/" . sha1($Prefix) . ".png")) {
                     exit;
                 }
             }
-            echo file_get_contents(__DIR__ . "/badges/" . $RedisData["id"] . ".png");
+            echo file_get_contents(__DIR__ . "/badges/" . sha1($Prefix) . ".png");
             exit;
         }
 

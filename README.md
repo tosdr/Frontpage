@@ -5,8 +5,13 @@
 
 This readme is still WIP but should cover basic requirements to install.
 
+## Update submodules
 
-
+```
+git submodule update --init --recursive
+git submodule foreach --recursive git fetch
+git submodule foreach git merge origin master
+```
 
 ## Requirements
 

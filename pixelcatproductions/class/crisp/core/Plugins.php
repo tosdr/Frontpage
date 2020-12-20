@@ -268,6 +268,8 @@ class Plugins {
         }
         self::performOnUninstall($PluginName, $PluginMetadata);
 
+        \crisp\api\lists\Cron::deleteByPlugin($PluginName);
+        
         new \crisp\core\Plugin($PluginFolder, $PluginName, $PluginMetadata, $TwigTheme, $CurrentFile, $CurrentPage);
 
 
@@ -386,7 +388,7 @@ class Plugins {
         self::performOnInstall($PluginName, $PluginMetadata);
 
 
-        new \crisp\core\Plugin($PluginFolder, $PluginName, $PluginMetadata, $TwigTheme, $CurrentFile, $CurrentPage);
+        //new \crisp\core\Plugin($PluginFolder, $PluginName, $PluginMetadata, $TwigTheme, $CurrentFile, $CurrentPage);
 
         self::broadcastHook("pluginInstall_$PluginName", time());
         self::broadcastHook("pluginInstall", $PluginName);

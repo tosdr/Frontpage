@@ -95,7 +95,7 @@ try {
     $ThemeLoader = new \Twig\Loader\FilesystemLoader(array(__DIR__ . "/../themes/$CurrentTheme/templates/", __DIR__ . "/../plugins/"));
     $TwigTheme;
 
-    if (CURRENT_UNIVERSE === Universe::UNIVERSE_PUBLIC) {
+    if (CURRENT_UNIVERSE <= Universe::UNIVERSE_BETA) {
         $TwigTheme = new \Twig\Environment($ThemeLoader, [
             'cache' => __DIR__ . '/cache/'
         ]);

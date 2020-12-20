@@ -28,9 +28,17 @@
         <ul class="navbar-nav">
             {% for item in GLOBALS.navbar %}
                 <li class="nav-item {% if currentPage == item.ID %} active{% endif %}">
-                    <a target="{{ item.target }}" class="nav-link {% if currentPage == item.ID %} active{% endif %}" href="{{ item.href }}">{{ item.html }}</a>
+                    <a target="{{ item.target }}" class="nav-link {% if currentPage == item.ID %} active{% endif %}" href="{{ item.href }}">{{ item.html|raw }}</a>
                 </li>
             {% endfor %}
         </ul>
+        {% if UNIVERSE > 1 %}
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <span class="badge badge-warning"><i class="fas fa-flask"></i> BETA</span>
+                </li>
+            </ul>
+        {% endif %}
+
     </div>
 </nav> 

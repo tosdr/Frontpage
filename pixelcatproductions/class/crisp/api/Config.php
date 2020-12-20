@@ -157,7 +157,7 @@ class Config {
             $Type = "serialized";
         }
 
-        if (is_array($Value)) {
+        if (is_array($Value) || is_object($Value)) {
             $Type = "serialized";
             $Value = \serialize($Value);
         }

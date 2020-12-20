@@ -122,3 +122,5 @@ pcntl_signal(SIGINT, SIG_DFL);
 pcntl_signal(SIGTERM, SIG_DFL);
 
 ob_end_clean();
+
+crisp\api\lists\Cron::deleteOld();

@@ -75,41 +75,43 @@ pcntl_signal(SIGTERM, 'handleSignal');
 
 
 $_CRONs = \crisp\api\lists\Cron::fetchUnprocessedSchedule(15);
+try {
+    foreach ($_CRONs as $_CRON) {
 
-foreach ($_CRONs as $_CRON) {
+        $Log = "";
 
-    $Log = "";
+        $runningJob = $_CRON["ID"];
+        consoleLog("===== JOB #$runningJob PROCESSING =====");
 
-    $runningJob = $_CRON["ID"];
-    consoleLog("===== JOB #$runningJob PROCESSING =====");
+        \crisp\api\lists\Cron::markAsStarted($_CRON["ID"]);
+        if ($_CRON["Type"] === "execute_plugin_cron") {
 
-    \crisp\api\lists\Cron::markAsStarted($_CRON["ID"]);
-    if ($_CRON["Type"] === "execute_plugin_cron") {
+            $_CRON["Data"] = json_decode($_CRON["Data"]);
 
-        $_CRON["Data"] = json_decode($_CRON["Data"]);
+            consoleLog("Executing cron job for plugin " . $_CRON["Data"]->plugin);
 
-        consoleLog("Executing cron job for plugin " . $_CRON["Data"]->plugin);
-
-        if (file_exists(__DIR__ . "/../plugins/" . $_CRON["Data"]->plugin . "/includes/cron.php")) {
-            require __DIR__ . "/../plugins/" . $_CRON["Data"]->plugin . "/includes/cron.php";
-            continue;
+            if (file_exists(__DIR__ . "/../plugins/" . $_CRON["Data"]->plugin . "/includes/cron.php")) {
+                require __DIR__ . "/../plugins/" . $_CRON["Data"]->plugin . "/includes/cron.php";
+            } else {
+                \terminateJob("Plugin has no cron file!");
+            }
         } else {
-            \terminateJob("Plugin has no cron file!");
+            \terminateJob("Invalid type!");
+            continue;
         }
-    } else {
-        \terminateJob("Invalid type!");
-        continue;
+
+
+
+        if (!$Error) {
+
+            consoleLog("===== JOB #$runningJob PROCESSED =====");
+
+            \crisp\api\lists\Cron::markAsFinished($_CRON["ID"]);
+            \crisp\api\lists\Cron::setLog($_CRON["ID"], $Log);
+        }
     }
-
-
-
-    if (!$Error) {
-
-        consoleLog("===== JOB #$runningJob PROCESSED =====");
-
-        \crisp\api\lists\Cron::markAsFinished($_CRON["ID"]);
-        \crisp\api\lists\Cron::setLog($_CRON["ID"], $Log);
-    }
+} catch (\Exception $ex) {
+    \terminateJob("Exception!\n$ex");
 }
 
 if (count($_CRONs) == 0) {

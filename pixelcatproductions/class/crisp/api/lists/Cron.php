@@ -128,7 +128,7 @@ class Cron {
         }
         $statement = self::$Database_Connection->prepare("INSERT INTO Cron (Type, Data, ScheduledAt, `Interval`) VALUES (:Type, :Data, (NOW() + INTERVAL $Interval), :Interval)");
         $statement->execute(array(":Type" => $Type, ":Data" => $Data, ":Interval" => $Interval));
-        
+
         return self::$Database_Connection->lastInsertId();
     }
 
@@ -155,6 +155,10 @@ class Cron {
             self::initDB();
         }
         $statement = self::$Database_Connection->prepare("UPDATE Cron SET Canceled = 1, Started = 0, Finished = 0 WHERE ID = :ID");
+        $Job = \crisp\api\lists\Cron::fetch($ID);
+        $PluginData = json_decode($Job["Data"]);
+        \crisp\api\lists\Cron::create("execute_plugin_cron", json_encode(array("plugin" => $PluginData->plugin, "data" => $PluginData->data, "name" => $PluginData->name)), $Job["Interval"]);
+
         return $statement->execute(array(":ID" => $ID));
     }
 
@@ -168,6 +172,11 @@ class Cron {
             self::initDB();
         }
         $statement = self::$Database_Connection->prepare("UPDATE Cron SET Finished = 1, Started = 0, Canceled = 0, FinishedAt = NOW() WHERE ID = :ID");
+
+        $Job = \crisp\api\lists\Cron::fetch($ID);
+        $PluginData = json_decode($Job["Data"]);
+        \crisp\api\lists\Cron::create("execute_plugin_cron", json_encode(array("plugin" => $PluginData->plugin, "data" => $PluginData->data, "name" => $PluginData->name)), $Job["Interval"]);
+
         return $statement->execute(array(":ID" => $ID));
     }
 
@@ -181,6 +190,11 @@ class Cron {
             self::initDB();
         }
         $statement = self::$Database_Connection->prepare("UPDATE Cron SET Failed = 1, Started = 0, Canceled = 0, Finished = 0 WHERE ID = :ID");
+
+        $Job = \crisp\api\lists\Cron::fetch($ID);
+        $PluginData = json_decode($Job["Data"]);
+        \crisp\api\lists\Cron::create("execute_plugin_cron", json_encode(array("plugin" => $PluginData->plugin, "data" => $PluginData->data, "name" => $PluginData->name)), $Job["Interval"]);
+
         return $statement->execute(array(":ID" => $ID));
     }
 

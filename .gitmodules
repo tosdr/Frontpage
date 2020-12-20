@@ -13,3 +13,6 @@
 [submodule "plugins/examples"]
 	path = plugins/examples
 	url = https://github.com/PixelcatProductions/CrispCMS-Plugin-Examples.git
+[submodule "plugins/statuspage"]
+	path = plugins/statuspage
+	url = https://github.com/PixelcatProductions/CrispCMS-Plugin-StatusPage

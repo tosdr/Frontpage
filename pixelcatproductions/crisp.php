@@ -121,7 +121,7 @@ try {
     $TwigTheme->addGlobal("POST", $_POST);
     $TwigTheme->addGlobal("SERVER", $_SERVER);
     $TwigTheme->addGlobal("GLOBALS", $GLOBALS);
-    $TwigTheme->addGlobal("COOKIE", $_COOKIE);
+    $TwigTheme->addGlobal("COOKIE", $_COOKIE);    
     $TwigTheme->addGlobal("isMobile", \crisp\api\Helper::isMobile());
     $TwigTheme->addGlobal("URL", api\Helper::currentDomain());
 

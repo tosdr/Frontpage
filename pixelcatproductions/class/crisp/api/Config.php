@@ -31,7 +31,6 @@ class Config {
 
     private static ?PDO $Database_Connection = null;
 
-
     private static function initDB() {
         $DB = new \crisp\core\MySQL();
         self::$Database_Connection = $DB->getDBConnector();
@@ -70,7 +69,7 @@ class Config {
             $Result = $statement->fetch(\PDO::FETCH_ASSOC);
 
             switch ($Result["type"]) {
-                case 'serialized'   :
+                case 'serialized' :
                     return \unserialize($Result["value"]);
                 case 'boolean':
                     return (bool) $Result["value"];
@@ -154,13 +153,16 @@ class Config {
 
         $Type = gettype($Value);
 
-        if(Helper::isSerialized($Value)){
+        if (Helper::isSerialized($Value)) {
             $Type = "serialized";
         }
 
         if (is_array($Value)) {
             $Type = "serialized";
             $Value = \serialize($Value);
+        }
+        if ($Type == "boolean") {
+            $Value = ($Value ? 1 : 0);
         }
 
 

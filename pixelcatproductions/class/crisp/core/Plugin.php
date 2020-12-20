@@ -59,24 +59,18 @@ class Plugin {
 
 
             if (file_exists($this->PluginPath . "/templates/views/" . $this->CurrentPage . ".twig") && file_exists($this->PluginPath . "/includes/views/" . $this->CurrentPage . ".php")) {
+                $GLOBALS["plugins"][] = $this;
                 require $this->PluginPath . "/includes/views/" . $this->CurrentPage . ".php";
 
 
                 $_vars = (isset($_vars) ? $_vars : [] );
                 $_vars["plugin"] = $this;
 
-
-                echo $TwigTheme->render($this->PluginName . "/templates/views/" . $this->CurrentPage . ".twig", $_vars);
-
-                $this->broadcastHook("pluginAfterRender_" . $this->PluginName);
+                $GLOBALS["render"][$this->PluginName . "/templates/views/" . $this->CurrentPage . ".twig"] = $_vars;
 
                 unset($_vars);
-
-                exit;
             }
         } else {
-
-
             throw new \Exception("Plugin <b>" . $this->PluginName . "</b> failed to load due to a missing includes file");
         }
     }

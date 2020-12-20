@@ -56,7 +56,10 @@ class core {
 
 }
 
+$GLOBALS["plugins"] = array();
 $GLOBALS['hook'] = array();
+$GLOBALS['navbar'] = array();
+$GLOBALS["render"] = array();
 require_once __DIR__ . '/../vendor/autoload.php';
 
 
@@ -92,6 +95,7 @@ try {
 
 
 
+    api\Helper::setLocale();
     $Locale = \crisp\api\Helper::getLocale();
 
     $TwigTheme->addGlobal("config", \crisp\api\Config::list());
@@ -129,6 +133,7 @@ try {
     $TwigTheme->addFilter(new \Twig\TwigFilter('translate', [$Translation, 'fetch']));
     $TwigTheme->addFilter(new \Twig\TwigFilter('getlang', [new \crisp\api\lists\Languages(), 'getLanguageByCode']));
     $TwigTheme->addFilter(new \Twig\TwigFilter('truncateText', [new \crisp\api\Helper(), 'truncateText']));
+    $TwigTheme->addFilter(new \Twig\TwigFilter('prettyDump', [new \crisp\api\Helper(), 'prettyDump']));
 
 
     $EnvFile = parse_ini_file(__DIR__ . "/../.env");

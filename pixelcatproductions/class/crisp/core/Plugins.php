@@ -61,7 +61,7 @@ class Plugins {
         $DB = new \crisp\core\MySQL();
         $DBConnection = $DB->getDBConnector();
 
-        $statement = $DBConnection->prepare("SELECT * FROM loadedPlugins");
+        $statement = $DBConnection->prepare("SELECT * FROM loadedPlugins ORDER BY `order` DESC");
         $statement->execute();
 
 
@@ -89,6 +89,10 @@ class Plugins {
                     }
                 }
             }
+        }
+        foreach ($GLOBALS["render"] as $Template => $_vars) {
+            echo $TwigTheme->render($Template, $_vars);
+            $this->broadcastHook("pluginAfterRender_" . $_vars["plugin"]->PluginName);
         }
     }
 
@@ -222,7 +226,7 @@ class Plugins {
     }
 
     public static function reinstall($PluginName, $TwigTheme, $CurrentFile, $CurrentPage) {
-        if(!self::uninstall($PluginName, $TwigTheme, $CurrentFile, $CurrentPage)){
+        if (!self::uninstall($PluginName, $TwigTheme, $CurrentFile, $CurrentPage)) {
             return false;
         }
         return self::install($PluginName, $TwigTheme, $CurrentFile, $CurrentPage);

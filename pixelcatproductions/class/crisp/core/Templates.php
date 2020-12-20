@@ -42,10 +42,12 @@ class Templates {
     }
 
     public static function load($TwigTheme, $CurrentFile, $CurrentPage) {
-        if (\crisp\api\Helper::templateExists(\crisp\api\Config::get("theme"), "/views/$CurrentPage.twig")) {
-            new \crisp\core\Template($TwigTheme, $CurrentFile, $CurrentPage);
-        } else {
-            echo $TwigTheme->render("errors/404.twig");
+        if (count($GLOBALS["plugins"]) === 0) {
+            if (\crisp\api\Helper::templateExists(\crisp\api\Config::get("theme"), "/views/$CurrentPage.twig")) {
+                new \crisp\core\Template($TwigTheme, $CurrentFile, $CurrentPage);
+            } else {
+                echo $TwigTheme->render("errors/404.twig");
+            }
         }
     }
 

@@ -67,9 +67,11 @@ class Helper {
         if (isset($_COOKIE[\crisp\core\Config::$Cookie_Prefix . "language"]) && !isset($_GET["l"])) {
             $Locale = $_COOKIE[\crisp\core\Config::$Cookie_Prefix . "language"];
         }
-
-        setcookie(\crisp\core\Config::$Cookie_Prefix . "language", $Locale, time() + (86400 * 30), "/");
         return $Locale;
+    }
+    
+    public static function setLocale(){
+        return setcookie(\crisp\core\Config::$Cookie_Prefix . "language", self::getLocale(), time() + (86400 * 30), "/");
     }
 
     /**

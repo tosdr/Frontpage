@@ -53,10 +53,8 @@ class Template {
                 $_vars["template"] = $this;
 
                 echo $TwigTheme->render("views/$CurrentPage.twig", $_vars);
-                exit;
             } else {
                 echo $TwigTheme->render("errors/404.twig", []);
-                exit;
             }
         } else {
             throw new Exception("Failed to load template " . $this->CurrentPage . ": Missing includes file");

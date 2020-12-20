@@ -29,7 +29,3 @@ require_once __DIR__ . "/pixelcatproductions/crisp.php";
  * /plugins/pluginname/includes
  * /plugins/pluginname/templates/views
  */
-
-if(isset($_GET["profile"])){
-    
-}

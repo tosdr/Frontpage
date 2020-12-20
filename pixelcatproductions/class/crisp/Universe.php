@@ -27,8 +27,12 @@ class Universe {
     const UNIVERSE_PUBLIC = 1;
     const UNIVERSE_BETA = 2;
     const UNIVERSE_DEV = 3;
+    const UNIVERSE_TOSDR = 99;
 
-    public static function changeUniverse($Universe) {
+    public static function changeUniverse($Universe, $Authorize = false) {
+        if(!$Authorize && $Universe == self::UNIVERSE_TOSDR){
+            return false;
+        }
         return $_SESSION[core\Config::$Cookie_Prefix . "universe"] = self::getUniverse($Universe);
     }
 
@@ -40,6 +44,8 @@ class Universe {
                 return self::UNIVERSE_BETA;
             case self::UNIVERSE_DEV:
                 return self::UNIVERSE_DEV;
+            case self::UNIVERSE_TOSDR:
+                return self::UNIVERSE_TOSDR;
             default:
                 return self::UNIVERSE_PUBLIC;
         }

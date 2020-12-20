@@ -67,6 +67,7 @@ $GLOBALS["microtime"]["logic"]["start"] = microtime();
 $GLOBALS["plugins"] = array();
 $GLOBALS['hook'] = array();
 $GLOBALS['navbar'] = array();
+$GLOBALS['navbar_right'] = array();
 $GLOBALS["render"] = array();
 require_once __DIR__ . '/../vendor/autoload.php';
 

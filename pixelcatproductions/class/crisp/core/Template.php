@@ -31,12 +31,22 @@ class Template {
     public $CurrentFile;
     public $CurrentPage;
 
-    public static function addtoNavbar($ID, $Text, $Link, $Target = "_self", $Order = 0) {
+    public static function addtoNavbar($ID, $Text, $Link, $Target = "_self", $Order = 0, $Placement = "left") {
+        if ($Placement == "right") {
+
+            $GLOBALS["navbar_right"][$ID] = array("ID" => $ID, "html" => $Text, "href" => $Link, "target" => $Target, "order" => $Order);
+
+            usort($GLOBALS["navbar_right"], function($a, $b) {
+                return $a['order'] <=> $b['order'];
+            });
+            return true;
+        }
         $GLOBALS["navbar"][$ID] = array("ID" => $ID, "html" => $Text, "href" => $Link, "target" => $Target, "order" => $Order);
 
         usort($GLOBALS["navbar"], function($a, $b) {
             return $a['order'] <=> $b['order'];
         });
+        return true;
     }
 
     public function __construct($TwigTheme, $CurrentFile, $CurrentPage) {

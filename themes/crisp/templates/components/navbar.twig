@@ -33,6 +33,11 @@
             {% endfor %}
         </ul>
         <ul class="navbar-nav ml-auto">
+            {% for item in GLOBALS.navbar_right %}
+                <li class="nav-item {% if currentPage == item.ID %} active{% endif %}">
+                    <a target="{{ item.target }}" class="nav-link {% if currentPage == item.ID %} active{% endif %}" href="{{ item.href }}">{{ item.html|raw }}</a>
+                </li>
+            {% endfor %}
             <li class="nav-item">
                 {% if UNIVERSE == 1 %}
                     <a href="/?universe=2"><span class="badge badge-warning"><i class="fas fa-flask"></i> JOIN BETA</span></a>

@@ -37,7 +37,7 @@ trait Hook {
      * @param string $channel The hook to listen on
      * @param function|string $func The function to send the response to
      */
-    public function on($channel, $func) {
+    public static function on($channel, $func) {
         if (!isset($GLOBALS['hook'][$channel])) {
 
             $GLOBALS['hook'][$channel] = array();

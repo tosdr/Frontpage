@@ -110,6 +110,7 @@ class Plugins {
 
         self::installKVStorage($PluginName, $PluginMetadata);
         self::installTranslations($PluginName, $PluginMetadata);
+        self::installCrons($PluginName, $PluginMetadata);
 
         if (isset($PluginMetadata->onInstall->activateDependencies) && \is_array($PluginMetadata->onInstall->activateDependencies)) {
             foreach ($PluginMetadata->onInstall->activateDependencies as $Plugin) {
@@ -228,6 +229,28 @@ class Plugins {
         return json_decode(\file_get_contents(__DIR__ . "/../../../../$PluginFolder/$PluginName/plugin.json"));
     }
 
+    public static function uninstallCrons($PluginName, $PluginMetadata) {
+        if (!\is_object($PluginMetadata) && !isset($PluginMetadata->hookFile)) {
+            return false;
+        }
+
+        if (isset($PluginMetadata->onInstall->createCron) && \is_array($PluginMetadata->onInstall->createCron)) {
+            \crisp\api\lists\Cron::deleteByPlugin($PluginName);
+        }
+    }
+
+    public static function installCrons($PluginName, $PluginMetadata) {
+        if (!\is_object($PluginMetadata) && !isset($PluginMetadata->hookFile)) {
+            return false;
+        }
+        if (isset($PluginMetadata->onInstall->createCron) && \is_array($PluginMetadata->onInstall->createCron)) {
+
+            foreach ($PluginMetadata->onInstall->createCron as $Cron) {
+                \crisp\api\lists\Cron::create("execute_plugin_cron", json_encode(array("data" => $Cron->data, "name" => $Cron->type)), $Cron->interval, $PluginName);
+            }
+        }
+    }
+
     public static function uninstallKVStorage($PluginName, $PluginMetadata) {
         if (!\is_object($PluginMetadata) && !isset($PluginMetadata->hookFile)) {
             return false;
@@ -315,7 +338,7 @@ class Plugins {
         }
         self::performOnUninstall($PluginName, $PluginMetadata);
 
-        \crisp\api\lists\Cron::deleteByPlugin($PluginName);
+        self::uninstallCrons($PluginName, $PluginMetadata);
 
         new \crisp\core\Plugin($PluginFolder, $PluginName, $PluginMetadata, $TwigTheme, $CurrentFile, $CurrentPage);
 

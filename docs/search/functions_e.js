@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['templateexists_275',['templateExists',['../classcrisp_1_1api_1_1_helper.html#a4d67f0d47d7e28e5f2b344bb06db744a',1,'crisp::api::Helper']]],
-  ['truncatetext_276',['truncateText',['../classcrisp_1_1api_1_1_helper.html#a11e88bd83a076ce47a26c25cb6fc8dcf',1,'crisp::api::Helper']]]
+  ['templateexists_352',['templateExists',['../classcrisp_1_1api_1_1_helper.html#a4d67f0d47d7e28e5f2b344bb06db744a',1,'crisp::api::Helper']]],
+  ['truncatetext_353',['truncateText',['../classcrisp_1_1api_1_1_helper.html#a11e88bd83a076ce47a26c25cb6fc8dcf',1,'crisp::api::Helper']]]
 ];

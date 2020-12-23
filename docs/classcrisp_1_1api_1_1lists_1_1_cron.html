@@ -107,8 +107,10 @@ Static Public Member Functions</h2></td></tr>
 <tr class="separator:adfa7dd3ab32ebe9d6ee568f2e8312b0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaa61a9dcc03e0b7e8aac8b350c08bae9"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcrisp_1_1api_1_1lists_1_1_cron.html#aaa61a9dcc03e0b7e8aac8b350c08bae9">deleteOld</a> ()</td></tr>
 <tr class="separator:aaa61a9dcc03e0b7e8aac8b350c08bae9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0cb69341483c36e991e7108762b2787d"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcrisp_1_1api_1_1lists_1_1_cron.html#a0cb69341483c36e991e7108762b2787d">create</a> (string $Type, string $Data, string $Interval=&quot;2 MINUTE&quot;)</td></tr>
-<tr class="separator:a0cb69341483c36e991e7108762b2787d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aabeadf89283a0a240b053a62069680fe"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcrisp_1_1api_1_1lists_1_1_cron.html#aabeadf89283a0a240b053a62069680fe">deleteByPlugin</a> ($Plugin)</td></tr>
+<tr class="separator:aabeadf89283a0a240b053a62069680fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa0ee02d788220f00acb4f7ffd9f185e0"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcrisp_1_1api_1_1lists_1_1_cron.html#aa0ee02d788220f00acb4f7ffd9f185e0">create</a> (string $Type, string $Data, string $Interval=&quot;2 MINUTE&quot;, string $Plugin=null)</td></tr>
+<tr class="separator:aa0ee02d788220f00acb4f7ffd9f185e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3745a82c32e9f6af4e1035c03bee6eb3"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcrisp_1_1api_1_1lists_1_1_cron.html#a3745a82c32e9f6af4e1035c03bee6eb3">markAsStarted</a> (int $ID)</td></tr>
 <tr class="separator:a3745a82c32e9f6af4e1035c03bee6eb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a79f6cc9049fd2d344eccecebd480838f"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcrisp_1_1api_1_1lists_1_1_cron.html#a79f6cc9049fd2d344eccecebd480838f">markAsCanceled</a> (int $ID)</td></tr>
@@ -141,8 +143,8 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a0cb69341483c36e991e7108762b2787d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0cb69341483c36e991e7108762b2787d">&#9670;&nbsp;</a></span>create()</h2>
+<a id="aa0ee02d788220f00acb4f7ffd9f185e0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa0ee02d788220f00acb4f7ffd9f185e0">&#9670;&nbsp;</a></span>create()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -166,7 +168,13 @@ Static Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">string&#160;</td>
-          <td class="paramname"><em>$Interval</em> = <code>&quot;2&#160;MINUTE&quot;</code>&#160;</td>
+          <td class="paramname"><em>$Interval</em> = <code>&quot;2&#160;MINUTE&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>$Plugin</em> = <code>null</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -189,6 +197,32 @@ Static Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>int The ID of the <a class="el" href="classcrisp_1_1api_1_1lists_1_1_cron.html">Cron</a> </dd></dl>
+
+</div>
+</div>
+<a id="aabeadf89283a0a240b053a62069680fe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aabeadf89283a0a240b053a62069680fe">&#9670;&nbsp;</a></span>deleteByPlugin()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static deleteByPlugin </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$Plugin</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>

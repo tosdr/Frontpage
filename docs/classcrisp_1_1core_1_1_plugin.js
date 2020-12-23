@@ -17,5 +17,6 @@ var classcrisp_1_1core_1_1_plugin =
     [ "$PluginFolder", "classcrisp_1_1core_1_1_plugin.html#a91dd51e8dc736449a6956256770cbd97", null ],
     [ "$PluginMetadata", "classcrisp_1_1core_1_1_plugin.html#af00feb40462f41027749b0b9cb603d89", null ],
     [ "$PluginName", "classcrisp_1_1core_1_1_plugin.html#a6e99fd697b34d245a17246e3b7a0fddc", null ],
-    [ "$PluginPath", "classcrisp_1_1core_1_1_plugin.html#ad3412637c00f576b98c4899c215d0163", null ]
+    [ "$PluginPath", "classcrisp_1_1core_1_1_plugin.html#ad3412637c00f576b98c4899c215d0163", null ],
+    [ "$TwigTheme", "classcrisp_1_1core_1_1_plugin.html#abd1f2ee5000ecfc1bfc02daf299a7e38", null ]
 ];

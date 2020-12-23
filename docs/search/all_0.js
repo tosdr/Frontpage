@@ -10,5 +10,6 @@ var searchData=
   ['_24pluginmetadata_7',['$PluginMetadata',['../classcrisp_1_1core_1_1_plugin.html#af00feb40462f41027749b0b9cb603d89',1,'crisp::core::Plugin']]],
   ['_24pluginname_8',['$PluginName',['../classcrisp_1_1core_1_1_plugin.html#a6e99fd697b34d245a17246e3b7a0fddc',1,'crisp\core\Plugin\$PluginName()'],['../classcrisp_1_1core_1_1_plugin_a_p_i.html#a6e99fd697b34d245a17246e3b7a0fddc',1,'crisp\core\PluginAPI\$PluginName()']]],
   ['_24pluginpath_9',['$PluginPath',['../classcrisp_1_1core_1_1_plugin.html#ad3412637c00f576b98c4899c215d0163',1,'crisp\core\Plugin\$PluginPath()'],['../classcrisp_1_1core_1_1_plugin_a_p_i.html#ad3412637c00f576b98c4899c215d0163',1,'crisp\core\PluginAPI\$PluginPath()']]],
-  ['_24query_10',['$Query',['../classcrisp_1_1core_1_1_plugin_a_p_i.html#a4b858f1e2bc16055bb5cb1dbafb74b6f',1,'crisp::core::PluginAPI']]]
+  ['_24query_10',['$Query',['../classcrisp_1_1core_1_1_plugin_a_p_i.html#a4b858f1e2bc16055bb5cb1dbafb74b6f',1,'crisp::core::PluginAPI']]],
+  ['_24twigtheme_11',['$TwigTheme',['../classcrisp_1_1core_1_1_plugin.html#abd1f2ee5000ecfc1bfc02daf299a7e38',1,'crisp::core::Plugin']]]
 ];

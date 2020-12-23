@@ -19,6 +19,9 @@ var dir_b90053ece3e3aae2db004f989e8a8c69 =
     [ "Plugins.php", "_plugins_8php.html", [
       [ "Plugins", "classcrisp_1_1core_1_1_plugins.html", null ]
     ] ],
+    [ "Postgres.php", "_postgres_8php.html", [
+      [ "Postgres", "classcrisp_1_1core_1_1_postgres.html", "classcrisp_1_1core_1_1_postgres" ]
+    ] ],
     [ "Redis.php", "_redis_8php.html", [
       [ "Redis", "classcrisp_1_1core_1_1_redis.html", "classcrisp_1_1core_1_1_redis" ]
     ] ],

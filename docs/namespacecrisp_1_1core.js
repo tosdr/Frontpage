@@ -6,6 +6,7 @@ var namespacecrisp_1_1core =
     [ "Plugin", "classcrisp_1_1core_1_1_plugin.html", "classcrisp_1_1core_1_1_plugin" ],
     [ "PluginAPI", "classcrisp_1_1core_1_1_plugin_a_p_i.html", "classcrisp_1_1core_1_1_plugin_a_p_i" ],
     [ "Plugins", "classcrisp_1_1core_1_1_plugins.html", null ],
+    [ "Postgres", "classcrisp_1_1core_1_1_postgres.html", "classcrisp_1_1core_1_1_postgres" ],
     [ "Redis", "classcrisp_1_1core_1_1_redis.html", "classcrisp_1_1core_1_1_redis" ],
     [ "Template", "classcrisp_1_1core_1_1_template.html", "classcrisp_1_1core_1_1_template" ],
     [ "Templates", "classcrisp_1_1core_1_1_templates.html", null ]

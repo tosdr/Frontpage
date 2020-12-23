@@ -25,31 +25,7 @@
 var NAVTREE =
 [
   [ "CrispCMS Plugin API", "index.html", [
-    [ "Developing Plugins", "devplugin.html", [
-      [ "Directory Structure", "devplugin.html#intro", null ],
-      [ "plugin.json - In detail", "devplugin.html#metadata", [
-        [ "name - The name of your plugin", "devplugin.html#pluginname", null ],
-        [ "description - The description of your plugin", "devplugin.html#plugindesc", null ],
-        [ "hookFile - The name of your hook file", "devplugin.html#pluginhook", null ],
-        [ "author - Your name, for credits", "devplugin.html#pluginauthor", null ],
-        [ "onInstall - Configure your plugin on installation", "devplugin.html#plugininstall", [
-          [ "createTranslationKeys - Creates translations when installing the plugin", "devplugin.html#plugininstalltranslation", null ],
-          [ "createKVStorageItems - Creates config keys when installing the plugin", "devplugin.html#plugininstallstorage", null ],
-          [ "activateDependencies - Activate other plugins when installing the plugin", "devplugin.html#plugininstalldep", null ]
-        ] ],
-        [ "onUninstall - Configuration for plugin removal", "devplugin.html#pluginuninstall", [
-          [ "deleteData - Boolean to delete data on removal", "devplugin.html#pluginuninstalldata", null ],
-          [ "deactivateDependencies - Deactivate other plugins when uninstalling the plugin", "devplugin.html#pluginuninstalldep", null ],
-          [ "purgeDependencies - Deactivate other plugins when uninstalling the plugin", "devplugin.html#pluginuninstallpurge", null ]
-        ] ]
-      ] ],
-      [ "The hook File", "devplugin.html#hookFileinfo", null ],
-      [ "Creating API interface", "devplugin.html#createAPI", null ],
-      [ "Creating and using crons", "devplugin.html#crons", [
-        [ "Creating Crons", "devplugin.html#createcron", null ]
-      ] ],
-      [ "Adding Items to Navigation Bar", "devplugin.html#navbar", null ]
-    ] ],
+    [ "Developing Plugins", "devplugin.html", null ],
     [ "Deprecated List", "deprecated.html", null ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ]

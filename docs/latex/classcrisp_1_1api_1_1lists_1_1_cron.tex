@@ -18,7 +18,9 @@ static \mbox{\hyperlink{classcrisp_1_1api_1_1lists_1_1_cron_adfa7dd3ab32ebe9d6ee
 \item 
 static \mbox{\hyperlink{classcrisp_1_1api_1_1lists_1_1_cron_aaa61a9dcc03e0b7e8aac8b350c08bae9}{delete\+Old}} ()
 \item 
-static \mbox{\hyperlink{classcrisp_1_1api_1_1lists_1_1_cron_a0cb69341483c36e991e7108762b2787d}{create}} (string \$Type, string \$Data, string \$Interval=\char`\"{}2 M\+I\+N\+U\+TE\char`\"{})
+static \mbox{\hyperlink{classcrisp_1_1api_1_1lists_1_1_cron_aabeadf89283a0a240b053a62069680fe}{delete\+By\+Plugin}} (\$Plugin)
+\item 
+static \mbox{\hyperlink{classcrisp_1_1api_1_1lists_1_1_cron_aa0ee02d788220f00acb4f7ffd9f185e0}{create}} (string \$Type, string \$Data, string \$Interval=\char`\"{}2 M\+I\+N\+U\+TE\char`\"{}, string \$Plugin=null)
 \item 
 static \mbox{\hyperlink{classcrisp_1_1api_1_1lists_1_1_cron_a3745a82c32e9f6af4e1035c03bee6eb3}{mark\+As\+Started}} (int \$ID)
 \item 
@@ -45,11 +47,11 @@ Interact with all cron jobs stored on the server
 
 
 \doxysubsection{Member Function Documentation}
-\mbox{\Hypertarget{classcrisp_1_1api_1_1lists_1_1_cron_a0cb69341483c36e991e7108762b2787d}\label{classcrisp_1_1api_1_1lists_1_1_cron_a0cb69341483c36e991e7108762b2787d}} 
+\mbox{\Hypertarget{classcrisp_1_1api_1_1lists_1_1_cron_aa0ee02d788220f00acb4f7ffd9f185e0}\label{classcrisp_1_1api_1_1lists_1_1_cron_aa0ee02d788220f00acb4f7ffd9f185e0}} 
 \index{Cron@{Cron}!create@{create}}
 \index{create@{create}!Cron@{Cron}}
 \doxysubsubsection{\texorpdfstring{create()}{create()}}
-{\footnotesize\ttfamily static create (\begin{DoxyParamCaption}\item[{string}]{\$\+Type,  }\item[{string}]{\$\+Data,  }\item[{string}]{\$\+Interval = {\ttfamily \char`\"{}2~MINUTE\char`\"{}} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+{\footnotesize\ttfamily static create (\begin{DoxyParamCaption}\item[{string}]{\$\+Type,  }\item[{string}]{\$\+Data,  }\item[{string}]{\$\+Interval = {\ttfamily \char`\"{}2~MINUTE\char`\"{}},  }\item[{string}]{\$\+Plugin = {\ttfamily null} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
 Create a new cron job 
 \begin{DoxyParams}[1]{Parameters}
@@ -63,6 +65,12 @@ string & {\em \$\+Interval} & In which interval should the cron be executed? \\
 \begin{DoxyReturn}{Returns}
 int The ID of the \mbox{\hyperlink{classcrisp_1_1api_1_1lists_1_1_cron}{Cron}} 
 \end{DoxyReturn}
+\mbox{\Hypertarget{classcrisp_1_1api_1_1lists_1_1_cron_aabeadf89283a0a240b053a62069680fe}\label{classcrisp_1_1api_1_1lists_1_1_cron_aabeadf89283a0a240b053a62069680fe}} 
+\index{Cron@{Cron}!deleteByPlugin@{deleteByPlugin}}
+\index{deleteByPlugin@{deleteByPlugin}!Cron@{Cron}}
+\doxysubsubsection{\texorpdfstring{deleteByPlugin()}{deleteByPlugin()}}
+{\footnotesize\ttfamily static delete\+By\+Plugin (\begin{DoxyParamCaption}\item[{}]{\$\+Plugin }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
 \mbox{\Hypertarget{classcrisp_1_1api_1_1lists_1_1_cron_aaa61a9dcc03e0b7e8aac8b350c08bae9}\label{classcrisp_1_1api_1_1lists_1_1_cron_aaa61a9dcc03e0b7e8aac8b350c08bae9}} 
 \index{Cron@{Cron}!deleteOld@{deleteOld}}
 \index{deleteOld@{deleteOld}!Cron@{Cron}}

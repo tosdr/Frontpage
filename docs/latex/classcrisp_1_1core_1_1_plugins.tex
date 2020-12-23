@@ -7,11 +7,27 @@ static \mbox{\hyperlink{classcrisp_1_1core_1_1_plugins_a9a18b97439a9178a5bdccfbd
 \item 
 static \mbox{\hyperlink{classcrisp_1_1core_1_1_plugins_ad5661c97c530ef2b71cc696f025887f9}{load}} (\$Twig\+Theme, \$Current\+File, \$Current\+Page)
 \item 
+static \mbox{\hyperlink{classcrisp_1_1core_1_1_plugins_a77ae6319b043cfc9f5aabfa546bf2fd6}{refresh\+Translations}} (\$Plugin\+Name, \$Plugin\+Metadata)
+\item 
+static \mbox{\hyperlink{classcrisp_1_1core_1_1_plugins_ae4f5da23b4391d33835ff6cb80e99c35}{refresh\+K\+V\+Storage}} (\$Plugin\+Name, \$Plugin\+Metadata)
+\item 
+static \mbox{\hyperlink{classcrisp_1_1core_1_1_plugins_ae7c5f630440464d4ab8988d3e3adf677}{install\+K\+V\+Storage}} (\$Plugin\+Name, \$Plugin\+Metadata)
+\item 
+static \mbox{\hyperlink{classcrisp_1_1core_1_1_plugins_a75d4b26c12211dd6f0dc42a2c8f89b3b}{install\+Translations}} (\$Plugin\+Name, \$Plugin\+Metadata)
+\item 
 static \mbox{\hyperlink{classcrisp_1_1core_1_1_plugins_a9922f40b72212730c4cf639f50e3e364}{is\+Installed}} (\$Plugin\+Name)
 \item 
 static \mbox{\hyperlink{classcrisp_1_1core_1_1_plugins_a71a6bc758b558608ae0e6fe42ff7f8d0}{is\+Valid}} (\$Plugin\+Name)
 \item 
 static \mbox{\hyperlink{classcrisp_1_1core_1_1_plugins_a29683f4ed4f98a71f97ac46418824404}{delete\+Data}} (\$Plugin\+Name)
+\item 
+static \mbox{\hyperlink{classcrisp_1_1core_1_1_plugins_ada6a43ee2838264612e62ae839d85ded}{get\+Plugin\+Metadata}} (\$Plugin\+Name)
+\item 
+static \mbox{\hyperlink{classcrisp_1_1core_1_1_plugins_ae818c2a7a030c57d7c128b9513174236}{uninstall\+K\+V\+Storage}} (\$Plugin\+Name, \$Plugin\+Metadata)
+\item 
+static \mbox{\hyperlink{classcrisp_1_1core_1_1_plugins_a5acab9a66f2cdb695f4c73de97c3687e}{uninstall\+Translations}} (\$Plugin\+Name, \$Plugin\+Metadata)
+\item 
+static \mbox{\hyperlink{classcrisp_1_1core_1_1_plugins_af3192aa28b8081c2d51612f6d22d6182}{reinstall}} (\$Plugin\+Name, \$Twig\+Theme, \$Current\+File, \$Current\+Page)
 \item 
 static \mbox{\hyperlink{classcrisp_1_1core_1_1_plugins_a613477d731542ada2effda2624b22baa}{uninstall}} (\$Plugin\+Name, \$Twig\+Theme, \$Current\+File, \$Current\+Page)
 \item 
@@ -47,6 +63,12 @@ string & {\em \$\+Plugin\+Name} & The folder name of the plugin \\
 \begin{DoxyReturn}{Returns}
 boolean T\+R\+UE if the data has been successfully deleted 
 \end{DoxyReturn}
+\mbox{\Hypertarget{classcrisp_1_1core_1_1_plugins_ada6a43ee2838264612e62ae839d85ded}\label{classcrisp_1_1core_1_1_plugins_ada6a43ee2838264612e62ae839d85ded}} 
+\index{Plugins@{Plugins}!getPluginMetadata@{getPluginMetadata}}
+\index{getPluginMetadata@{getPluginMetadata}!Plugins@{Plugins}}
+\doxysubsubsection{\texorpdfstring{getPluginMetadata()}{getPluginMetadata()}}
+{\footnotesize\ttfamily static get\+Plugin\+Metadata (\begin{DoxyParamCaption}\item[{}]{\$\+Plugin\+Name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
 \mbox{\Hypertarget{classcrisp_1_1core_1_1_plugins_ab0d93f988b65a197949370f45c0c2f02}\label{classcrisp_1_1core_1_1_plugins_ab0d93f988b65a197949370f45c0c2f02}} 
 \index{Plugins@{Plugins}!install@{install}}
 \index{install@{install}!Plugins@{Plugins}}
@@ -64,6 +86,18 @@ string & {\em \$\+Plugin\+Name} & The Folder name of the \mbox{\hyperlink{classc
 \begin{DoxyReturn}{Returns}
 boolean T\+R\+UE if install was successful, otherwise F\+A\+L\+SE 
 \end{DoxyReturn}
+\mbox{\Hypertarget{classcrisp_1_1core_1_1_plugins_ae7c5f630440464d4ab8988d3e3adf677}\label{classcrisp_1_1core_1_1_plugins_ae7c5f630440464d4ab8988d3e3adf677}} 
+\index{Plugins@{Plugins}!installKVStorage@{installKVStorage}}
+\index{installKVStorage@{installKVStorage}!Plugins@{Plugins}}
+\doxysubsubsection{\texorpdfstring{installKVStorage()}{installKVStorage()}}
+{\footnotesize\ttfamily static install\+K\+V\+Storage (\begin{DoxyParamCaption}\item[{}]{\$\+Plugin\+Name,  }\item[{}]{\$\+Plugin\+Metadata }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classcrisp_1_1core_1_1_plugins_a75d4b26c12211dd6f0dc42a2c8f89b3b}\label{classcrisp_1_1core_1_1_plugins_a75d4b26c12211dd6f0dc42a2c8f89b3b}} 
+\index{Plugins@{Plugins}!installTranslations@{installTranslations}}
+\index{installTranslations@{installTranslations}!Plugins@{Plugins}}
+\doxysubsubsection{\texorpdfstring{installTranslations()}{installTranslations()}}
+{\footnotesize\ttfamily static install\+Translations (\begin{DoxyParamCaption}\item[{}]{\$\+Plugin\+Name,  }\item[{}]{\$\+Plugin\+Metadata }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
 \mbox{\Hypertarget{classcrisp_1_1core_1_1_plugins_a6f266dc54fabde70ec2432a05a49aadd}\label{classcrisp_1_1core_1_1_plugins_a6f266dc54fabde70ec2432a05a49aadd}} 
 \index{Plugins@{Plugins}!integrityCheck@{integrityCheck}}
 \index{integrityCheck@{integrityCheck}!Plugins@{Plugins}}
@@ -101,6 +135,18 @@ boolean T\+R\+UE if plugin is installed, otherwise F\+A\+L\+SE
 \index{loadAPI@{loadAPI}!Plugins@{Plugins}}
 \doxysubsubsection{\texorpdfstring{loadAPI()}{loadAPI()}}
 {\footnotesize\ttfamily static load\+A\+PI (\begin{DoxyParamCaption}\item[{}]{\$\+Interface,  }\item[{}]{\$\+\_\+\+Q\+U\+E\+RY }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classcrisp_1_1core_1_1_plugins_ae4f5da23b4391d33835ff6cb80e99c35}\label{classcrisp_1_1core_1_1_plugins_ae4f5da23b4391d33835ff6cb80e99c35}} 
+\index{Plugins@{Plugins}!refreshKVStorage@{refreshKVStorage}}
+\index{refreshKVStorage@{refreshKVStorage}!Plugins@{Plugins}}
+\doxysubsubsection{\texorpdfstring{refreshKVStorage()}{refreshKVStorage()}}
+{\footnotesize\ttfamily static refresh\+K\+V\+Storage (\begin{DoxyParamCaption}\item[{}]{\$\+Plugin\+Name,  }\item[{}]{\$\+Plugin\+Metadata }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classcrisp_1_1core_1_1_plugins_a77ae6319b043cfc9f5aabfa546bf2fd6}\label{classcrisp_1_1core_1_1_plugins_a77ae6319b043cfc9f5aabfa546bf2fd6}} 
+\index{Plugins@{Plugins}!refreshTranslations@{refreshTranslations}}
+\index{refreshTranslations@{refreshTranslations}!Plugins@{Plugins}}
+\doxysubsubsection{\texorpdfstring{refreshTranslations()}{refreshTranslations()}}
+{\footnotesize\ttfamily static refresh\+Translations (\begin{DoxyParamCaption}\item[{}]{\$\+Plugin\+Name,  }\item[{}]{\$\+Plugin\+Metadata }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
 \mbox{\Hypertarget{classcrisp_1_1core_1_1_plugins_a0a8df1e18409966ed4192ad9d5b66861}\label{classcrisp_1_1core_1_1_plugins_a0a8df1e18409966ed4192ad9d5b66861}} 
 \index{Plugins@{Plugins}!registerAfterRenderHook@{registerAfterRenderHook}}
@@ -140,6 +186,12 @@ string | function & {\em \$\+Function} & Callback function, either anonymous or 
 \begin{DoxyReturn}{Returns}
 boolean T\+R\+UE if hook could be registered, otherwise false 
 \end{DoxyReturn}
+\mbox{\Hypertarget{classcrisp_1_1core_1_1_plugins_af3192aa28b8081c2d51612f6d22d6182}\label{classcrisp_1_1core_1_1_plugins_af3192aa28b8081c2d51612f6d22d6182}} 
+\index{Plugins@{Plugins}!reinstall@{reinstall}}
+\index{reinstall@{reinstall}!Plugins@{Plugins}}
+\doxysubsubsection{\texorpdfstring{reinstall()}{reinstall()}}
+{\footnotesize\ttfamily static reinstall (\begin{DoxyParamCaption}\item[{}]{\$\+Plugin\+Name,  }\item[{}]{\$\+Twig\+Theme,  }\item[{}]{\$\+Current\+File,  }\item[{}]{\$\+Current\+Page }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
 \mbox{\Hypertarget{classcrisp_1_1core_1_1_plugins_a613477d731542ada2effda2624b22baa}\label{classcrisp_1_1core_1_1_plugins_a613477d731542ada2effda2624b22baa}} 
 \index{Plugins@{Plugins}!uninstall@{uninstall}}
 \index{uninstall@{uninstall}!Plugins@{Plugins}}
@@ -154,3 +206,15 @@ Uninstall a plugin and prevent it from loading @broadcasts plugin\+Uninstall \be
 string & {\em \$\+Plugin\+Name} & The Folder name of the \mbox{\hyperlink{classcrisp_1_1core_1_1_plugin}{Plugin}} \\
 \hline
 \end{DoxyParams}
+\mbox{\Hypertarget{classcrisp_1_1core_1_1_plugins_ae818c2a7a030c57d7c128b9513174236}\label{classcrisp_1_1core_1_1_plugins_ae818c2a7a030c57d7c128b9513174236}} 
+\index{Plugins@{Plugins}!uninstallKVStorage@{uninstallKVStorage}}
+\index{uninstallKVStorage@{uninstallKVStorage}!Plugins@{Plugins}}
+\doxysubsubsection{\texorpdfstring{uninstallKVStorage()}{uninstallKVStorage()}}
+{\footnotesize\ttfamily static uninstall\+K\+V\+Storage (\begin{DoxyParamCaption}\item[{}]{\$\+Plugin\+Name,  }\item[{}]{\$\+Plugin\+Metadata }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classcrisp_1_1core_1_1_plugins_a5acab9a66f2cdb695f4c73de97c3687e}\label{classcrisp_1_1core_1_1_plugins_a5acab9a66f2cdb695f4c73de97c3687e}} 
+\index{Plugins@{Plugins}!uninstallTranslations@{uninstallTranslations}}
+\index{uninstallTranslations@{uninstallTranslations}!Plugins@{Plugins}}
+\doxysubsubsection{\texorpdfstring{uninstallTranslations()}{uninstallTranslations()}}
+{\footnotesize\ttfamily static uninstall\+Translations (\begin{DoxyParamCaption}\item[{}]{\$\+Plugin\+Name,  }\item[{}]{\$\+Plugin\+Metadata }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+

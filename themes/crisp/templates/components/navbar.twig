@@ -53,3 +53,19 @@
 
     </div>
 </nav> 
+                
+{% if Notice is defined %}
+    {% if Notice.Type is not defined %}
+        {% set Notice = Notice|merge({'Type': 'info'})%}
+    {% endif %}
+    <div class="container mt-4">
+        <div class="alert alert-{{ Notice.Type }}">
+            <span id="notice_text">
+                {% if Notice.Icon is defined %}
+                    <i class="{{ Notice.Icon }}"></i>
+                {% endif %}
+                {{ Notice.Text|raw }}
+            </span>
+        </div>
+    </div>
+{% endif %}

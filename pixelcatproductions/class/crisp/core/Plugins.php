@@ -107,6 +107,31 @@ class Plugins {
         if (!isset($PluginMetadata->onInstall)) {
             return false;
         }
+
+        self::installKVStorage($PluginName, $PluginMetadata);
+        self::installTranslations($PluginName, $PluginMetadata);
+
+        if (isset($PluginMetadata->onInstall->activateDependencies) && \is_array($PluginMetadata->onInstall->activateDependencies)) {
+            foreach ($PluginMetadata->onInstall->activateDependencies as $Plugin) {
+                self::install($Plugin);
+            }
+        }
+    }
+
+    public static function refreshTranslations($PluginName, $PluginMetadata) {
+        self::uninstallTranslations($PluginName, $PluginMetadata);
+        return self::installTranslations($PluginName, $PluginMetadata);
+    }
+
+    public static function refreshKVStorage($PluginName, $PluginMetadata) {
+        self::uninstallKVStorage($PluginName, $PluginMetadata);
+        return self::installKVStorage($PluginName, $PluginMetadata);
+    }
+
+    public static function installKVStorage($PluginName, $PluginMetadata) {
+        if (!\is_object($PluginMetadata) && !isset($PluginMetadata->hookFile)) {
+            return false;
+        }
         if (isset($PluginMetadata->onInstall->createKVStorageItems) && \is_object($PluginMetadata->onInstall->createKVStorageItems)) {
             foreach ($PluginMetadata->onInstall->createKVStorageItems as $Key => $Value) {
                 if (is_array($Value) || \is_object($Value)) {
@@ -119,7 +144,12 @@ class Plugins {
                 }
             }
         }
+    }
 
+    public static function installTranslations($PluginName, $PluginMetadata) {
+        if (!\is_object($PluginMetadata) && !isset($PluginMetadata->hookFile)) {
+            return false;
+        }
         if (isset($PluginMetadata->onInstall->createTranslationKeys) && \is_object($PluginMetadata->onInstall->createTranslationKeys)) {
             foreach ($PluginMetadata->onInstall->createTranslationKeys as $Key => $Value) {
 
@@ -137,13 +167,9 @@ class Plugins {
                     continue;
                 }
             }
+            return true;
         }
-
-        if (isset($PluginMetadata->onInstall->activateDependencies) && \is_array($PluginMetadata->onInstall->activateDependencies)) {
-            foreach ($PluginMetadata->onInstall->activateDependencies as $Plugin) {
-                self::install($Plugin);
-            }
-        }
+        return false;
     }
 
     /**
@@ -187,6 +213,22 @@ class Plugins {
 
         $PluginMetadata = json_decode(\file_get_contents(__DIR__ . "/../../../../$PluginFolder/$PluginName/plugin.json"));
 
+        self::uninstallKVStorage($PluginName, $PluginMetadata);
+
+        self::uninstallTranslations($PluginName, $PluginMetadata);
+    }
+
+    public static function getPluginMetadata($PluginName) {
+        $PluginFolder = \crisp\api\Config::get("plugin_dir");
+
+        if (!\file_exists(__DIR__ . "/../../../../$PluginFolder/$PluginName/plugin.json")) {
+            return false;
+        }
+
+        return json_decode(\file_get_contents(__DIR__ . "/../../../../$PluginFolder/$PluginName/plugin.json"));
+    }
+
+    public static function uninstallKVStorage($PluginName, $PluginMetadata) {
         if (!\is_object($PluginMetadata) && !isset($PluginMetadata->hookFile)) {
             return false;
         }
@@ -196,7 +238,12 @@ class Plugins {
                 \crisp\api\Config::delete("plugin_" . $PluginName . "_$Key");
             }
         }
+    }
 
+    public static function uninstallTranslations($PluginName, $PluginMetadata) {
+        if (!\is_object($PluginMetadata) && !isset($PluginMetadata->hookFile)) {
+            return false;
+        }
         if (isset($PluginMetadata->onInstall->createTranslationKeys) && \is_object($PluginMetadata->onInstall->createTranslationKeys)) {
             foreach ($PluginMetadata->onInstall->createTranslationKeys as $Key => $Value) {
                 try {
@@ -269,7 +316,7 @@ class Plugins {
         self::performOnUninstall($PluginName, $PluginMetadata);
 
         \crisp\api\lists\Cron::deleteByPlugin($PluginName);
-        
+
         new \crisp\core\Plugin($PluginFolder, $PluginName, $PluginMetadata, $TwigTheme, $CurrentFile, $CurrentPage);
 
 
@@ -388,7 +435,7 @@ class Plugins {
         self::performOnInstall($PluginName, $PluginMetadata);
 
 
-        //new \crisp\core\Plugin($PluginFolder, $PluginName, $PluginMetadata, $TwigTheme, $CurrentFile, $CurrentPage);
+        new \crisp\core\Plugin($PluginFolder, $PluginName, $PluginMetadata, $TwigTheme, $CurrentFile, $CurrentPage);
 
         self::broadcastHook("pluginInstall_$PluginName", time());
         self::broadcastHook("pluginInstall", $PluginName);

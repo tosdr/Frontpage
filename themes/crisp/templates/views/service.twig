@@ -35,14 +35,14 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
         <div class="container text-center">
             <h1 class="display-4"><img class="img-fluid" src="{{ service.image }}"alt="Logo"/></h1>
             <h2 class="mt-2">{{ service.name }}</h2>
-            {% if service.is_comprehensively_reviewed or GET.unreviewed is defined %}
+            {% if service.is_comprehensively_reviewed or (GET.unreviewed is defined and UNIVERSE == 99)  %}
                 {% set rating = service.rating %}
             {% else %}
                 {% set rating = "N/A" %}
             {% endif %}
             <h3>{% include "components/rating.twig" with {'rating': rating} %}</h3>
-            {% if GET.unreviewed is defined %}
-                <h4 class="alert alert-danger">Warning! Viewing unreviewed Data!</h4>
+            {% if GET.unreviewed is defined and UNIVERSE == 99 %}
+                <h4 class="alert alert-danger">Warning! Viewing unreviewed Data! <span class="badge badge-danger"><i class="fas fa-shield-alt"></i> ADMIN</span></h4>
             {% endif %}
             <!--
             <div class="btn-group">

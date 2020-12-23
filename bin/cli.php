@@ -83,11 +83,48 @@ switch ($argv[1]) {
 
     case "plugin":
         if ($argc < 3) {
-            echo "Missing argument: enable/disable/reinstall" . PHP_EOL;
+            echo "Missing argument: enable/disable/reinstall/translations" . PHP_EOL;
             exit;
         }
 
         switch ($argv[2]) {
+
+            case "translations":
+
+                if ($argc < 4) {
+                    echo "Missing argument: reinstall" . PHP_EOL;
+                    exit;
+                }
+                switch ($argv[3]) {
+                    case "reinstall":
+                    case "refresh":
+                        if ($argc < 5) {
+                            echo "Missing plugin name" . PHP_EOL;
+                            exit;
+                        }
+                        if (is_array(\crisp\api\Helper::isValidPluginName($argv[4]))) {
+                            echo "Invalid Plugin Name:\n" . var_export(\crisp\api\Helper::isValidPluginName($argv[3]), true) . PHP_EOL;
+                            exit;
+                        }
+                        if (!crisp\core\Plugins::isValid($argv[4])) {
+                            echo "This plugin does not exist" . PHP_EOL;
+                            exit;
+                        }
+                        if (!crisp\core\Plugins::isInstalled($argv[4])) {
+                            echo "This plugin is not installed" . PHP_EOL;
+                            exit;
+                        }
+                        
+                        if(\crisp\core\Plugins::refreshTranslations($argv[4], \crisp\core\Plugins::getPluginMetadata($argv[4]))){
+                            echo "Translations refreshed!" . PHP_EOL;
+                            exit;
+                        }else{
+                            echo "Failed to refresh translations" . PHP_EOL;
+                            exit;
+                        }
+                        break;
+                }
+                break;
             case "add":
             case "install":
             case "enable":

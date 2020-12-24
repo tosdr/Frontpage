@@ -54,27 +54,27 @@ switch ($_GET["apiversion"]) {
             switch ($RedisData["is_comprehensively_reviewed"] ? ($RedisData["rating"]) : false) {
                 case "A":
                     $Color = "46A546";
-                    $Rating = "Class A";
+                    $Rating = "Privacy Grade A";
                     break;
                 case "B":
                     $Color = "79B752";
-                    $Rating = "Class B";
+                    $Rating = "Privacy Grade B";
                     break;
                 case "C":
                     $Color = "F89406";
-                    $Rating = "Class C";
+                    $Rating = "Privacy Grade C";
                     break;
                 case "D":
                     $Color = "D66F2C";
-                    $Rating = "Class D";
+                    $Rating = "Privacy Grade D";
                     break;
                 case "E":
                     $Color = "C43C35";
-                    $Rating = "Class E";
+                    $Rating = "Privacy Grade E";
                     break;
                 default:
                     $Color = "999999";
-                    $Rating = "No Class Yet";
+                    $Rating = "No Privacy Grade Yet";
             }
 
             $Prefix = \crisp\api\Config::get("badge_prefix") . "/#" . $RedisData["slug"];
@@ -135,27 +135,27 @@ switch ($_GET["apiversion"]) {
         switch ($RedisData["is_comprehensively_reviewed"] ? ($RedisData["rating"]) : false) {
             case "A":
                 $Color = "46A546";
-                $Rating = "Class A";
+                $Rating = "Privacy Grade A";
                 break;
             case "B":
                 $Color = "79B752";
-                $Rating = "Class B";
+                $Rating = "Privacy Grade B";
                 break;
             case "C":
                 $Color = "F89406";
-                $Rating = "Class C";
+                $Rating = "Privacy Grade C";
                 break;
             case "D":
                 $Color = "D66F2C";
-                $Rating = "Class D";
+                $Rating = "Privacy Grade D";
                 break;
             case "E":
                 $Color = "C43C35";
-                $Rating = "Class E";
+                $Rating = "Privacy Grade E";
                 break;
             default:
                 $Color = "999999";
-                $Rating = "No Class Yet";
+                $Rating = "No Privacy Grade Yet";
         }
         header("Content-Type: image/svg+xml");
 

@@ -83,11 +83,49 @@ switch ($argv[1]) {
 
     case "plugin":
         if ($argc < 3) {
-            echo "Missing argument: enable/disable/reinstall/translations" . PHP_EOL;
+            echo "Missing argument: enable/disable/reinstall/translations/storage" . PHP_EOL;
             exit;
         }
 
         switch ($argv[2]) {
+
+
+            case "storage":
+
+                if ($argc < 4) {
+                    echo "Missing argument: reinstall" . PHP_EOL;
+                    exit;
+                }
+                switch ($argv[3]) {
+                    case "reinstall":
+                    case "refresh":
+                        if ($argc < 5) {
+                            echo "Missing plugin name" . PHP_EOL;
+                            exit;
+                        }
+                        if (is_array(\crisp\api\Helper::isValidPluginName($argv[4]))) {
+                            echo "Invalid Plugin Name:\n" . var_export(\crisp\api\Helper::isValidPluginName($argv[3]), true) . PHP_EOL;
+                            exit;
+                        }
+                        if (!crisp\core\Plugins::isValid($argv[4])) {
+                            echo "This plugin does not exist" . PHP_EOL;
+                            exit;
+                        }
+                        if (!crisp\core\Plugins::isInstalled($argv[4])) {
+                            echo "This plugin is not installed" . PHP_EOL;
+                            exit;
+                        }
+
+                        if (\crisp\core\Plugins::refreshKVStorage($argv[4], \crisp\core\Plugins::getPluginMetadata($argv[4]))) {
+                            echo "KV Storage refreshed!" . PHP_EOL;
+                            exit;
+                        } else {
+                            echo "Failed to refresh KV Storage" . PHP_EOL;
+                            exit;
+                        }
+                        break;
+                }
+                break;
 
             case "translations":
 
@@ -202,6 +240,42 @@ switch ($argv[1]) {
 
         switch ($argv[2]) {
 
+            case "storage":
+
+                if ($argc < 4) {
+                    echo "Missing argument: reinstall" . PHP_EOL;
+                    exit;
+                }
+                switch ($argv[3]) {
+                    case "reinstall":
+                    case "refresh":
+                        if ($argc < 5) {
+                            echo "Missing theme name" . PHP_EOL;
+                            exit;
+                        }
+                        if (is_array(\crisp\api\Helper::isValidPluginName($argv[4]))) {
+                            echo "Invalid Theme Name:\n" . var_export(\crisp\api\Helper::isValidPluginName($argv[3]), true) . PHP_EOL;
+                            exit;
+                        }
+                        if (!crisp\core\Themes::isValid($argv[4])) {
+                            echo "This theme does not exist" . PHP_EOL;
+                            exit;
+                        }
+                        if (!crisp\core\Themes::isInstalled($argv[4])) {
+                            echo "This theme is not installed" . PHP_EOL;
+                            exit;
+                        }
+
+                        if (\crisp\core\Themes::refreshKVStorage(\crisp\core\Themes::getThemeMetadata($argv[4]))) {
+                            echo "KV Storage refreshed!" . PHP_EOL;
+                            exit;
+                        } else {
+                            echo "Failed to refresh KV Storage" . PHP_EOL;
+                            exit;
+                        }
+                        break;
+                }
+                break;
             case "translations":
 
                 if ($argc < 4) {
@@ -249,7 +323,7 @@ switch ($argv[1]) {
                     echo "Invalid Theme Name:\n" . var_export(\crisp\api\Helper::isValidPluginName($argv[3]), true) . PHP_EOL;
                     exit;
                 }
-                
+
                 if (crisp\core\Themes::isInstalled($argv[3])) {
                     echo "This theme is already installed" . PHP_EOL;
                     exit;
@@ -347,5 +421,55 @@ switch ($argv[1]) {
         }
         break;
     default:
-        echo "Invalid command" . PHP_EOL;
+        echo "Crisp CLI" . PHP_EOL;
+        echo "---------" . PHP_EOL;
+        echo "cache - Actions regarding the cache" . PHP_EOL;
+        echo "cache clear - Clear twig cache" . PHP_EOL;
+        echo "---------" . PHP_EOL;
+        echo "export - Export various stuff as json to stdout" . PHP_EOL;
+        echo "export translations - Export all translations" . PHP_EOL;
+        echo "export translations {LanguageKey} - Export all translations by specific language" . PHP_EOL;
+        echo "---------" . PHP_EOL;
+        echo "import - Import various stuff from files" . PHP_EOL;
+        echo "import translations {File} - Import all translations from file" . PHP_EOL;
+        echo "---------" . PHP_EOL;
+        echo "plugin - Manage plugins on Crisp" . PHP_EOL;
+        echo "plugin enable {PluginName} - Enable a specific plugin" . PHP_EOL;
+        echo "plugin add {PluginName} - Enable a specific plugin" . PHP_EOL;
+        echo "plugin install {PluginName} - Enable a specific plugin" . PHP_EOL;
+        echo "plugin disable {PluginName} - Disable a specific plugin" . PHP_EOL;
+        echo "plugin delete {PluginName} - Disable a specific plugin" . PHP_EOL;
+        echo "plugin remove {PluginName} - Disable a specific plugin" . PHP_EOL;
+        echo "plugin uninstall {PluginName} - Disable a specific plugin" . PHP_EOL;
+        echo "plugin storage - Interact with the kv storage of a plugin" . PHP_EOL;
+        echo "plugin storage reinstall {PluginName} - Reinstall the KV Storage of a plugin" . PHP_EOL;
+        echo "plugin storage refresh {PluginName} - Reinstall the KV Storage of a plugin" . PHP_EOL;
+        echo "plugin translations - Interact with the translations of a plugin" . PHP_EOL;
+        echo "plugin translations reinstall {PluginName} - Reinstall the translations of a plugin" . PHP_EOL;
+        echo "plugin translations refresh {PluginName} - Reinstall the translations of a plugin" . PHP_EOL;
+        echo "---------" . PHP_EOL;
+        echo "theme - Manage themes on Crisp" . PHP_EOL;
+        echo "theme enable {PluginName} - Enable a specific theme" . PHP_EOL;
+        echo "theme add {PluginName} - Enable a specific theme" . PHP_EOL;
+        echo "theme install {PluginName} - Enable a specific theme" . PHP_EOL;
+        echo "theme disable {PluginName} - Disable a specific theme" . PHP_EOL;
+        echo "theme delete {PluginName} - Disable a specific theme" . PHP_EOL;
+        echo "theme remove {PluginName} - Disable a specific theme" . PHP_EOL;
+        echo "theme uninstall {PluginName} - Disable a specific theme" . PHP_EOL;
+        echo "theme storage - Interact with the kv storage of a theme" . PHP_EOL;
+        echo "theme storage reinstall {PluginName} - Reinstall the KV Storage of a theme" . PHP_EOL;
+        echo "theme storage refresh {PluginName} - Reinstall the KV Storage of a theme" . PHP_EOL;
+        echo "theme translations - Interact with the translations of a theme" . PHP_EOL;
+        echo "theme translations reinstall {PluginName} - Reinstall the translations of a theme" . PHP_EOL;
+        echo "theme translations refresh {PluginName} - Reinstall the translations of a theme" . PHP_EOL;
+        if (\crisp\core\Plugins::isInstalled("core")) {
+
+            echo "---------" . PHP_EOL;
+            echo "maintenance - Manage maintenance mode on crisp" . PHP_EOL;
+            echo "maintenance enable - Enable the maintenance mode" . PHP_EOL;
+            echo "maintenance on - Enable the maintenance mode" . PHP_EOL;
+            echo "maintenance disable - Enable the maintenance mode" . PHP_EOL;
+            echo "maintenance off - Enable the maintenance mode" . PHP_EOL;
+            echo "maintenance status - Get the status of the maintenance mode" . PHP_EOL;
+        }
 }

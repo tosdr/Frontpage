@@ -94,6 +94,7 @@ class Themes {
                 }
             }
         }
+        return true;
     }
 
     public static function installTranslations($ThemeMetadata) {
@@ -144,6 +145,7 @@ class Themes {
             return false;
         }
 
+        self::clearCache();
 
         \crisp\api\Config::set("theme", null);
 

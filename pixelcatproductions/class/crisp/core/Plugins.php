@@ -147,6 +147,7 @@ class Plugins {
                 }
             }
         }
+        return true;
     }
 
     public static function installTranslations($PluginName, $PluginMetadata) {
@@ -258,20 +259,29 @@ class Plugins {
             return false;
         }
 
-        if (isset($PluginMetadata->onInstall->createKVStorageItems) && \is_object($PluginMetadata->onInstall->createKVStorageItems)) {
-            foreach ($PluginMetadata->onInstall->createKVStorageItems as $Key => $Value) {
-                \crisp\api\Config::delete("plugin_" . $PluginName . "_$Key");
-            }
+        foreach (self::listConfig($PluginName) as $Key => $Value) {
+            \crisp\api\Config::delete($Key);
         }
+
+        /*
+          if (isset($PluginMetadata->onInstall->createKVStorageItems) && \is_object($PluginMetadata->onInstall->createKVStorageItems)) {
+          foreach ($PluginMetadata->onInstall->createKVStorageItems as $Key => $Value) {
+          \crisp\api\Config::delete("plugin_" . $PluginName . "_$Key");
+          }
+          }
+         */
+
+        return true;
     }
 
     public static function listConfig($PluginName) {
 
-        $Configs = \crisp\api\Config::list(true);
+        $Configs = \crisp\api\Config::list();
+
 
 
         foreach ($Configs as $Key => $Value) {
-            if (!strpos($Key, "plugin_$PluginName")) {
+            if (strpos($Key, "plugin_$PluginName") === false) {
                 unset($Configs[$Key]);
             }
         }

@@ -56,8 +56,6 @@ class core {
 
 }
 
-
-
 $GLOBALS["microtime"] = array();
 $GLOBALS["microtime"]["logic"] = array();
 $GLOBALS["microtime"]["template"] = array();
@@ -89,95 +87,97 @@ if (isset($_GET["universe"])) {
 define("CURRENT_UNIVERSE", Universe::getUniverse($_SESSION[core\Config::$Cookie_Prefix . "universe"]));
 define("CURRENT_UNIVERSE_NAME", Universe::getUniverseName(CURRENT_UNIVERSE));
 
+if (!defined('CRISP_API')) {
 
-try {
+    try {
 
 
-    $ThemeLoader = new \Twig\Loader\FilesystemLoader(array(__DIR__ . "/../themes/$CurrentTheme/templates/", __DIR__ . "/../plugins/"));
-    $TwigTheme;
+        $ThemeLoader = new \Twig\Loader\FilesystemLoader(array(__DIR__ . "/../themes/$CurrentTheme/templates/", __DIR__ . "/../plugins/"));
+        $TwigTheme;
 
-    if (CURRENT_UNIVERSE <= Universe::UNIVERSE_BETA) {
+        if (CURRENT_UNIVERSE <= Universe::UNIVERSE_BETA) {
+            $TwigTheme = new \Twig\Environment($ThemeLoader, [
+                'cache' => __DIR__ . '/cache/'
+            ]);
+        } else {
+            $TwigTheme = new \Twig\Environment($ThemeLoader, []);
+        }
+
+        if (file_exists(__DIR__ . "/../themes/$CurrentTheme/hook.php")) {
+            include __DIR__ . "/../themes/$CurrentTheme/hook.php";
+        }
+
+
+
+        api\Helper::setLocale();
+        $Locale = \crisp\api\Helper::getLocale();
+
+        $TwigTheme->addGlobal("config", \crisp\api\Config::list());
+        $TwigTheme->addGlobal("locale", $Locale);
+        $TwigTheme->addGlobal("languages", \crisp\api\Translation::listLanguages(false));
+        $TwigTheme->addGlobal("GET", $_GET);
+        $TwigTheme->addGlobal("UNIVERSE", CURRENT_UNIVERSE);
+        $TwigTheme->addGlobal("UNIVERSE_NAME", CURRENT_UNIVERSE_NAME);
+        $TwigTheme->addGlobal("POST", $_POST);
+        $TwigTheme->addGlobal("SERVER", $_SERVER);
+        $TwigTheme->addGlobal("GLOBALS", $GLOBALS);
+        $TwigTheme->addGlobal("COOKIE", $_COOKIE);
+        $TwigTheme->addGlobal("isMobile", \crisp\api\Helper::isMobile());
+        $TwigTheme->addGlobal("URL", api\Helper::currentDomain());
+
+
+        $TwigTheme->addExtension(new \Twig\Extension\StringLoaderExtension());
+
+        $TwigTheme->addFunction(new \Twig\TwigFunction('getGitRevision', [new \crisp\api\Helper(), 'getGitRevision']));
+        $TwigTheme->addFunction(new \Twig\TwigFunction('getService', [new \crisp\api\Phoenix(), 'getServicePG']));
+        $TwigTheme->addFunction(new \Twig\TwigFunction('getPoint', [new \crisp\api\Phoenix(), 'getPointPG']));
+        $TwigTheme->addFunction(new \Twig\TwigFunction('getPointsByService', [new \crisp\api\Phoenix(), 'getPointsByServicePG']));
+        $TwigTheme->addFunction(new \Twig\TwigFunction('getCase', [new \crisp\api\Phoenix(), 'getCasePG']));
+        $TwigTheme->addFunction(new \Twig\TwigFunction('getGitBranch', [new \crisp\api\Helper(), 'getGitBranch']));
+        $TwigTheme->addFunction(new \Twig\TwigFunction('microtime', 'microtime'));
+
+
+        $Translation = new \crisp\api\Translation($Locale);
+
+        $TwigTheme->addFilter(new \Twig\TwigFilter('date', 'date'));
+        $TwigTheme->addFilter(new \Twig\TwigFilter('bcdiv', 'bcdiv'));
+        $TwigTheme->addFilter(new \Twig\TwigFilter('integer', 'intval'));
+        $TwigTheme->addFilter(new \Twig\TwigFilter('double', 'doubleval'));
+        $TwigTheme->addFilter(new \Twig\TwigFilter('json', 'json_decode'));
+        $TwigTheme->addFilter(new \Twig\TwigFilter('json_encode', 'json_encode'));
+        $TwigTheme->addFilter(new \Twig\TwigFilter('translate', [$Translation, 'fetch']));
+        $TwigTheme->addFilter(new \Twig\TwigFilter('getlang', [new \crisp\api\lists\Languages(), 'getLanguageByCode']));
+        $TwigTheme->addFilter(new \Twig\TwigFilter('truncateText', [new \crisp\api\Helper(), 'truncateText']));
+        $TwigTheme->addFilter(new \Twig\TwigFilter('prettyDump', [new \crisp\api\Helper(), 'prettyDump']));
+
+
+        $EnvFile = parse_ini_file(__DIR__ . "/../.env");
+
+        if (!defined('CRISP_API')) {
+
+            if (!isset($_GET["l"]) && !defined("CRISP_API")) {
+                header("Location: /$Locale/$CurrentPage");
+                exit;
+            }
+
+            \crisp\core\Plugins::load($TwigTheme, $CurrentFile, $CurrentPage);
+            \crisp\core\Themes::load($TwigTheme, $CurrentFile, $CurrentPage);
+        }
+    } catch (\Exception $ex) {
+
+
         $TwigTheme = new \Twig\Environment($ThemeLoader, [
             'cache' => __DIR__ . '/cache/'
         ]);
-    } else {
-        $TwigTheme = new \Twig\Environment($ThemeLoader, []);
+
+
+        http_response_code(500);
+        echo $TwigTheme->render("errors/exception.twig", array(
+            "ReferenceID" => api\ErrorReporter::create(500, $ex->getTraceAsString(), $ex->getMessage())
+        ));
+        exit;
+    } catch (\Twig\Error\LoaderError $ex) {
+        echo "Thats a twig error, cant even show a proper error page!";
+        exit;
     }
-
-    if (file_exists(__DIR__ . "/../themes/$CurrentTheme/hook.php")) {
-        include __DIR__ . "/../themes/$CurrentTheme/hook.php";
-    }
-
-
-
-    api\Helper::setLocale();
-    $Locale = \crisp\api\Helper::getLocale();
-
-    $TwigTheme->addGlobal("config", \crisp\api\Config::list());
-    $TwigTheme->addGlobal("locale", $Locale);
-    $TwigTheme->addGlobal("languages", \crisp\api\Translation::listLanguages(false));
-    $TwigTheme->addGlobal("GET", $_GET);
-    $TwigTheme->addGlobal("UNIVERSE", CURRENT_UNIVERSE);
-    $TwigTheme->addGlobal("UNIVERSE_NAME", CURRENT_UNIVERSE_NAME);
-    $TwigTheme->addGlobal("POST", $_POST);
-    $TwigTheme->addGlobal("SERVER", $_SERVER);
-    $TwigTheme->addGlobal("GLOBALS", $GLOBALS);
-    $TwigTheme->addGlobal("COOKIE", $_COOKIE);    
-    $TwigTheme->addGlobal("isMobile", \crisp\api\Helper::isMobile());
-    $TwigTheme->addGlobal("URL", api\Helper::currentDomain());
-
-
-    $TwigTheme->addExtension(new \Twig\Extension\StringLoaderExtension());
-
-    $TwigTheme->addFunction(new \Twig\TwigFunction('getGitRevision', [new \crisp\api\Helper(), 'getGitRevision']));
-    $TwigTheme->addFunction(new \Twig\TwigFunction('getService', [new \crisp\api\Phoenix(), 'getServicePG']));
-    $TwigTheme->addFunction(new \Twig\TwigFunction('getPoint', [new \crisp\api\Phoenix(), 'getPointPG']));
-    $TwigTheme->addFunction(new \Twig\TwigFunction('getPointsByService', [new \crisp\api\Phoenix(), 'getPointsByServicePG']));
-    $TwigTheme->addFunction(new \Twig\TwigFunction('getCase', [new \crisp\api\Phoenix(), 'getCasePG']));
-    $TwigTheme->addFunction(new \Twig\TwigFunction('getGitBranch', [new \crisp\api\Helper(), 'getGitBranch']));
-    $TwigTheme->addFunction(new \Twig\TwigFunction('microtime', 'microtime'));
-
-
-    $Translation = new \crisp\api\Translation($Locale);
-
-    $TwigTheme->addFilter(new \Twig\TwigFilter('date', 'date'));
-    $TwigTheme->addFilter(new \Twig\TwigFilter('bcdiv', 'bcdiv'));
-    $TwigTheme->addFilter(new \Twig\TwigFilter('integer', 'intval'));
-    $TwigTheme->addFilter(new \Twig\TwigFilter('double', 'doubleval'));
-    $TwigTheme->addFilter(new \Twig\TwigFilter('json', 'json_decode'));
-    $TwigTheme->addFilter(new \Twig\TwigFilter('json_encode', 'json_encode'));
-    $TwigTheme->addFilter(new \Twig\TwigFilter('translate', [$Translation, 'fetch']));
-    $TwigTheme->addFilter(new \Twig\TwigFilter('getlang', [new \crisp\api\lists\Languages(), 'getLanguageByCode']));
-    $TwigTheme->addFilter(new \Twig\TwigFilter('truncateText', [new \crisp\api\Helper(), 'truncateText']));
-    $TwigTheme->addFilter(new \Twig\TwigFilter('prettyDump', [new \crisp\api\Helper(), 'prettyDump']));
-
-
-    $EnvFile = parse_ini_file(__DIR__ . "/../.env");
-
-    if (!defined('CRISP_API')) {
-
-        if (!isset($_GET["l"]) && !defined("CRISP_API")) {
-            header("Location: /$Locale/$CurrentPage");
-            exit;
-        }
-
-        \crisp\core\Plugins::load($TwigTheme, $CurrentFile, $CurrentPage);
-        \crisp\core\Templates::load($TwigTheme, $CurrentFile, $CurrentPage);
-    }
-} catch (\Exception $ex) {
-
-
-    $TwigTheme = new \Twig\Environment($ThemeLoader, [
-        'cache' => __DIR__ . '/cache/'
-    ]);
-
-
-    http_response_code(500);
-    echo $TwigTheme->render("errors/exception.twig", array(
-        "ReferenceID" => api\ErrorReporter::create(500, $ex->getTraceAsString(), $ex->getMessage())
-    ));
-    exit;
-} catch (\Twig\Error\LoaderError $ex) {
-    echo "Thats a twig error, cant even show a proper error page!";
-    exit;
 }

@@ -22,7 +22,23 @@ switch ($_GET["apiversion"]) {
     case "export":
         switch ($Query) {
             case "translations":
-                echo \crisp\core\PluginAPI::response(false, "Exported", \crisp\api\Translation::fetchAll(), JSON_PRETTY_PRINT);
+
+                $Export = \crisp\api\Translation::fetchAll();
+
+                foreach ($Export as $Language => $Translations) {
+                    foreach ($Translations as $Key => $Translation) {
+                        if (strpos($Key, "plugin_") !== false) {
+                            unset($Export[$Language][$Key]);
+                        }
+                    }
+                }
+
+                if (!isset($_GET["metadata"])) {
+                    echo \crisp\core\PluginAPI::response(false, "Exported", $Export, JSON_PRETTY_PRINT);
+                }else{
+                    header("Content-Type: application/json");
+                    echo json_encode($Export);
+                }
                 break;
             default:
                 echo \crisp\core\PluginAPI::response(["INVALID_OPTIONS"], $Query, []);

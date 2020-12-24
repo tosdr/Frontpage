@@ -23,7 +23,7 @@ namespace crisp\core;
  * Used internally, plugin loader
  *
  */
-class Template {
+class Theme {
 
     use \crisp\core\Hook;
 

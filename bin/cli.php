@@ -24,7 +24,7 @@ switch ($argv[1]) {
 
         switch ($argv[2]) {
             case "clear":
-                \crisp\core\Templates::clearCache();
+                \crisp\core\Themes::clearCache();
                 echo "Cleared Cache!" . PHP_EOL;
                 break;
         }
@@ -114,11 +114,11 @@ switch ($argv[1]) {
                             echo "This plugin is not installed" . PHP_EOL;
                             exit;
                         }
-                        
-                        if(\crisp\core\Plugins::refreshTranslations($argv[4], \crisp\core\Plugins::getPluginMetadata($argv[4]))){
+
+                        if (\crisp\core\Plugins::refreshTranslations($argv[4], \crisp\core\Plugins::getPluginMetadata($argv[4]))) {
                             echo "Translations refreshed!" . PHP_EOL;
                             exit;
-                        }else{
+                        } else {
                             echo "Failed to refresh translations" . PHP_EOL;
                             exit;
                         }
@@ -190,6 +190,120 @@ switch ($argv[1]) {
                     exit;
                 }
                 echo "Failed to reinstall plugin" . PHP_EOL;
+                break;
+        }
+        break;
+
+    case "theme":
+        if ($argc < 3) {
+            echo "Missing argument: enable/disable/reinstall/translations" . PHP_EOL;
+            exit;
+        }
+
+        switch ($argv[2]) {
+
+            case "translations":
+
+                if ($argc < 4) {
+                    echo "Missing argument: reinstall" . PHP_EOL;
+                    exit;
+                }
+                switch ($argv[3]) {
+                    case "reinstall":
+                    case "refresh":
+                        if ($argc < 5) {
+                            echo "Missing theme name" . PHP_EOL;
+                            exit;
+                        }
+                        if (is_array(\crisp\api\Helper::isValidPluginName($argv[4]))) {
+                            echo "Invalid Theme Name:\n" . var_export(\crisp\api\Helper::isValidPluginName($argv[3]), true) . PHP_EOL;
+                            exit;
+                        }
+                        if (!crisp\core\Themes::isValid($argv[4])) {
+                            echo "This theme does not exist" . PHP_EOL;
+                            exit;
+                        }
+                        if (!crisp\core\Themes::isInstalled($argv[4])) {
+                            echo "This theme is not installed" . PHP_EOL;
+                            exit;
+                        }
+
+                        if (\crisp\core\Themes::refreshTranslations($argv[4], \crisp\core\Themes::getThemeMetadata($argv[4]))) {
+                            echo "Translations refreshed!" . PHP_EOL;
+                            exit;
+                        } else {
+                            echo "Failed to refresh translations" . PHP_EOL;
+                            exit;
+                        }
+                        break;
+                }
+                break;
+            case "add":
+            case "install":
+            case "enable":
+                if ($argc < 4) {
+                    echo "Missing theme name" . PHP_EOL;
+                    exit;
+                }
+                if (is_array(\crisp\api\Helper::isValidPluginName($argv[3]))) {
+                    echo "Invalid Theme Name:\n" . var_export(\crisp\api\Helper::isValidPluginName($argv[3]), true) . PHP_EOL;
+                    exit;
+                }
+                
+                if (crisp\core\Themes::isInstalled($argv[3])) {
+                    echo "This theme is already installed" . PHP_EOL;
+                    exit;
+                }
+                if (!crisp\core\Themes::isValid($argv[3])) {
+                    echo "This theme does not exist" . PHP_EOL;
+                    exit;
+                }
+                if (crisp\core\Themes::install($argv[3], \crisp\api\Config::get("theme"), __FILE__, "cli")) {
+                    echo "Theme successfully installed" . PHP_EOL;
+                    exit;
+                }
+                echo "Failed to install theme" . PHP_EOL;
+                break;
+            case "uninstall":
+            case "remove":
+            case "delete":
+            case "disable":
+                if ($argc < 4) {
+                    echo "Missing theme name" . PHP_EOL;
+                    exit;
+                }
+                if (!crisp\core\Themes::isInstalled($argv[3])) {
+                    echo "This theme is not installed" . PHP_EOL;
+                    exit;
+                }
+                if (!crisp\core\Themes::isValid($argv[3])) {
+                    echo "This theme does not exist" . PHP_EOL;
+                    exit;
+                }
+                if (crisp\core\Themes::uninstall($argv[3])) {
+                    echo "Theme successfully uninstalled" . PHP_EOL;
+                    exit;
+                }
+                echo "Failed to uninstall theme" . PHP_EOL;
+                break;
+            case "reinstall":
+                if ($argc < 4) {
+                    echo "Missing theme name" . PHP_EOL;
+                    exit;
+                }
+                if (!crisp\core\Themes::isInstalled($argv[3])) {
+                    echo "This theme is not installed" . PHP_EOL;
+                    exit;
+                }
+                if (!crisp\core\Themes::isValid($argv[3])) {
+                    echo "This theme does not exist" . PHP_EOL;
+                    exit;
+                }
+                if (crisp\core\Themes::reinstall($argv[3], \crisp\api\Config::get("theme"), __FILE__, "cli")) {
+                    echo "Theme successfully reinstalled" . PHP_EOL;
+                    exit;
+                }
+                echo "Failed to reinstall theme" . PHP_EOL;
                 break;
         }
         break;

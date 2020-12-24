@@ -88,10 +88,10 @@ try {
 
             $_CRON["Data"] = json_decode($_CRON["Data"]);
 
-            consoleLog("Executing cron job for plugin " . $_CRON->Plugin);
+            consoleLog("Executing cron job for plugin " . $_CRON["Plugin"]);
 
-            if (file_exists(__DIR__ . "/../plugins/" . $_CRON->Plugin . "/includes/cron.php")) {
-                require __DIR__ . "/../plugins/" . $_CRON->Plugin . "/includes/cron.php";
+            if (file_exists(__DIR__ . "/../plugins/" . $_CRON["Plugin"] . "/includes/cron.php")) {
+                require __DIR__ . "/../plugins/" . $_CRON["Plugin"] . "/includes/cron.php";
             } else {
                 \terminateJob("Plugin has no cron file!");
             }

@@ -164,7 +164,7 @@ class Cron {
         $statement = self::$Database_Connection->prepare("UPDATE Cron SET Canceled = 1, Started = 0, Finished = 0 WHERE ID = :ID");
         $Job = \crisp\api\lists\Cron::fetch($ID);
         $PluginData = json_decode($Job["Data"]);
-        \crisp\api\lists\Cron::create("execute_plugin_cron", json_encode(array("plugin" => $PluginData->plugin, "data" => $PluginData->data, "name" => $PluginData->name)), $Job["Interval"], $PluginData->plugin);
+        \crisp\api\lists\Cron::create("execute_plugin_cron", json_encode(array("data" => $PluginData->data, "name" => $PluginData->name)), $Job["Interval"], $Job["Plugin"]);
 
         return $statement->execute(array(":ID" => $ID));
     }
@@ -182,7 +182,7 @@ class Cron {
 
         $Job = \crisp\api\lists\Cron::fetch($ID);
         $PluginData = json_decode($Job["Data"]);
-        \crisp\api\lists\Cron::create("execute_plugin_cron", json_encode(array("plugin" => $PluginData->plugin, "data" => $PluginData->data, "name" => $PluginData->name)), $Job["Interval"], $PluginData->plugin);
+        \crisp\api\lists\Cron::create("execute_plugin_cron", json_encode(array("data" => $PluginData->data, "name" => $PluginData->name)), $Job["Interval"], $Job["Plugin"]);
 
         return $statement->execute(array(":ID" => $ID));
     }
@@ -200,7 +200,7 @@ class Cron {
 
         $Job = \crisp\api\lists\Cron::fetch($ID);
         $PluginData = json_decode($Job["Data"]);
-        \crisp\api\lists\Cron::create("execute_plugin_cron", json_encode(array("plugin" => $PluginData->plugin, "data" => $PluginData->data, "name" => $PluginData->name)), $Job["Interval"], $PluginData->plugin);
+        \crisp\api\lists\Cron::create("execute_plugin_cron", json_encode(array("data" => $PluginData->data, "name" => $PluginData->name)), $Job["Interval"], $Job["Plugin"]);
 
         return $statement->execute(array(":ID" => $ID));
     }

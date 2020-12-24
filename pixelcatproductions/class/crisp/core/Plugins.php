@@ -103,7 +103,7 @@ class Plugins {
         }
     }
 
-    private static function performOnInstall($PluginName, $PluginMetadata) {
+    private static function performOnInstall($PluginName, $PluginMetadata, $TwigTheme, $CurrentFile, $CurrentPage) {
         if (!isset($PluginMetadata->onInstall)) {
             return false;
         }
@@ -114,7 +114,9 @@ class Plugins {
 
         if (isset($PluginMetadata->onInstall->activateDependencies) && \is_array($PluginMetadata->onInstall->activateDependencies)) {
             foreach ($PluginMetadata->onInstall->activateDependencies as $Plugin) {
-                self::install($Plugin);
+                if (!self::isInstalled($PluginName)) {
+                    self::install($Plugin, $TwigTheme, $CurrentFile, $CurrentPage);
+                }
             }
         }
     }
@@ -455,7 +457,7 @@ class Plugins {
 
 
 
-        self::performOnInstall($PluginName, $PluginMetadata);
+        self::performOnInstall($PluginName, $PluginMetadata, $TwigTheme, $CurrentFile, $CurrentPage);
 
 
         new \crisp\core\Plugin($PluginFolder, $PluginName, $PluginMetadata, $TwigTheme, $CurrentFile, $CurrentPage);

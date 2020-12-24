@@ -265,6 +265,19 @@ class Plugins {
         }
     }
 
+    public static function listConfig($PluginName) {
+
+        $Configs = \crisp\api\Config::list(true);
+
+
+        foreach ($Configs as $Key => $Value) {
+            if (!strpos($Key, "plugin_$PluginName")) {
+                unset($Configs[$Key]);
+            }
+        }
+        return $Configs;
+    }
+
     public static function uninstallTranslations($PluginName, $PluginMetadata) {
         if (!\is_object($PluginMetadata) && !isset($PluginMetadata->hookFile)) {
             return false;

@@ -124,6 +124,10 @@ class Plugin {
         return \crisp\api\Config::create("plugin_" . $this->PluginName . "_$Key", $Value);
     }
 
+    public function listConfig() {
+        return Plugins::listConfig($this->PluginName);
+    }
+
     /**
      * Uninstall a plugin
      * @return bool

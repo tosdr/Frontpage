@@ -44,11 +44,6 @@ https://forum.tosdr.org/t/374
 
 To install Crisp please make sure you have installed all requirements.
 
-
-### Import Dumps
-
-Import the SQL dumps into the database locaed in SQLDumps/
-
 ### Install Composer dependencies
 
 from the root of Crisp execute `composer install`
@@ -59,15 +54,30 @@ Copy `.env.example` to `.env` and edit it according to your settings.
 
 The GITHUB_TOKEN property is required for private repos to access metadata
 
-### Update core plugins
+### Run Database Migrations
 
-To update plugins you need shell access and execute the following commands in the bin folder:
+The database needs to be setup on initial clone, to do this run this command:
 
 ```bash
-php bin/cli.php plugin reinstall team
-php bin/cli.php plugin reinstall downloads
+php bin/cli.php migrate
 ```
 
-this ensures that all KVs are up to date regardless of SQL dump
+This will create all necessary tables
+
+### Install crisp theme
+
+To install the default theme and create necessary data run
+
+```bash
+php bin/cli.php theme install crisp
+```
+
+### Install core plugin
+
+To install the core plugin you need shell access and execute the following commands in the bin folder:
+
+```bash
+php bin/cli.php plugin install core
+```
 
 Your instance is ready now!

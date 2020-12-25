@@ -26,13 +26,14 @@ namespace crisp\core;
 class Migrations {
     /* Data types */
 
-    private \PDO $Database;
+    public \PDO $Database;
 
     const DB_VARCHAR = "varchar(255)";
     const DB_TEXT = "text";
     const DB_INTEGER = "integer";
     const DB_TIMESTAMP = "datetime";
     const DB_BOOL = "tinyint(1)";
+    const DB_LONGTEXT = "LONGTEXT";
 
     /* Keys */
     const DB_PRIMARYKEY = "PRIMARY";
@@ -174,13 +175,20 @@ class Migrations {
     public function createTable(string $Table, ...$Columns) {
         echo "Creating Table $Table..." . PHP_EOL;
         $SQL = "CREATE TABLE `$Table` (";
+        $AutoIncrement = false;
         foreach ($Columns as $Key => $Column) {
             $Name = $Column[0];
             $Type = $Column[1];
             $Additional = $Column[2];
+            if (strpos($Additional, "AUTO_INCREMENT") !== false) {
+                $AutoIncrement = $Name;
+            }
             $SQL .= "`$Name` $Type $Additional,";
             if ($Key == count($Columns) - 1) {
                 $SQL = substr($SQL, 0, -1);
+                if ($AutoIncrement !== false) {
+                    $SQL .= ", KEY `$AutoIncrement` (`$AutoIncrement`)";
+                }
             }
         }
         $SQL .= ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4";

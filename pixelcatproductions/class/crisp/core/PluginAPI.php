@@ -63,8 +63,9 @@ class PluginAPI {
      * @param array $Parameters Some response parameters
      * @param constant $Flags JSON_ENCODE constants
      */
-    public static function response($Errors, string $message, array $Parameters = [], $Flags = null) {
+    public static function response($Errors, string $message, array $Parameters = [], $Flags = null, $HTTP = 200) {
         header("Content-Type: application/json");
+        http_response_code($HTTP);
         echo json_encode(array("error" => $Errors, "message" => $message, "parameters" => $Parameters), $Flags);
     }
 

@@ -9,7 +9,7 @@ header("Content-Type: application/json");
 $Array;
 
 if (empty($_GET["q"])) {
-    foreach (explode(",", $EnvFile["FRONTPAGE_SERVICES"]) as $ID) {
+    foreach (\crisp\api\Config::get("frontpage_services") as $ID) {
         $Array[] = crisp\api\Phoenix::getService($ID);
     }
 } else {

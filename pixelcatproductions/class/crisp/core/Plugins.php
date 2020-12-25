@@ -48,7 +48,34 @@ class Plugins {
                 exit;
             }
         }
-        \crisp\core\PluginAPI::response(array("INTERFACE_NOT_FOUND"), "Error");
+        \crisp\core\PluginAPI::response(array("INTERFACE_NOT_FOUND"), "API Interface not found", [], null, 404);
+    }
+
+    public static function listPlugins() {
+
+        $PluginFolder = \crisp\api\Config::get("plugin_dir");
+
+        $Array = [];
+
+        foreach (glob(__DIR__ . "/../../../../$PluginFolder/*", GLOB_ONLYDIR) as $Plugin) {
+            if (!Plugins::isInstalled(basename($Plugin)) && Plugins::isValid(basename($Plugin))) {
+                $Array[] = array("Name" => basename($Plugin));
+            }
+        }
+
+        return $Array;
+    }
+
+    public static function loadedPlugins() {
+        $DB = new \crisp\core\MySQL();
+        $DBConnection = $DB->getDBConnector();
+
+        $statement = $DBConnection->prepare("SELECT * FROM loadedPlugins");
+        $statement->execute();
+
+
+
+        return $statement->fetchAll(\PDO::FETCH_ASSOC);
     }
 
     public static function load($TwigTheme, $CurrentFile, $CurrentPage) {
@@ -222,6 +249,25 @@ class Plugins {
         self::uninstallTranslations($PluginName, $PluginMetadata);
     }
 
+    public static function testVersion($VersionString) {
+
+        if (strpos($VersionString, ">=") !== false) {
+            return version_compare(\crisp\core::CRISP_VERSION, substr($VersionString, 2), ">=");
+        } elseif (strpos($VersionString, "<=") !== false) {
+            return version_compare(\crisp\core::CRISP_VERSION, substr($VersionString, 2), "<=");
+        } elseif (strpos($VersionString, "<") !== false) {
+            return version_compare(\crisp\core::CRISP_VERSION, substr($VersionString, 1), "<");
+        } elseif (strpos($VersionString, "=") !== false) {
+            return version_compare(\crisp\core::CRISP_VERSION, substr($VersionString, 1), "=");
+        } elseif (strpos($VersionString, "!=") !== false) {
+            return version_compare(\crisp\core::CRISP_VERSION, substr($VersionString, 2), "!=");
+        } elseif (strpos($VersionString, ">") !== false) {
+            return version_compare(\crisp\core::CRISP_VERSION, substr($VersionString, 1), ">");
+        } else {
+            return version_compare(\crisp\core::CRISP_VERSION, $VersionString);
+        }
+    }
+
     public static function getPluginMetadata($PluginName) {
         $PluginFolder = \crisp\api\Config::get("plugin_dir");
 
@@ -274,6 +320,19 @@ class Plugins {
         return true;
     }
 
+    public static function listTranslations($PluginName) {
+
+        $Configs = \crisp\api\Translation::listTranslations();
+
+
+        foreach ($Configs as $Key => $Translation) {
+            if (strpos($Translation["key"], "plugin_$PluginName") === false) {
+                unset($Configs[$Key]);
+            }
+        }
+        return $Configs;
+    }
+
     public static function listConfig($PluginName) {
 
         $Configs = \crisp\api\Config::list();
@@ -292,22 +351,9 @@ class Plugins {
         if (!\is_object($PluginMetadata) && !isset($PluginMetadata->hookFile)) {
             return false;
         }
-        if (isset($PluginMetadata->onInstall->createTranslationKeys) && \is_object($PluginMetadata->onInstall->createTranslationKeys)) {
-            foreach ($PluginMetadata->onInstall->createTranslationKeys as $Key => $Value) {
-                try {
-                    $Language = \crisp\api\lists\Languages::getLanguageByCode($Key);
-
-                    if (!$Language) {
-                        continue;
-                    }
-
-                    foreach ($Value as $KeyTranslation => $ValueTranslation) {
-                        $Language->deleteTranslation("plugin_" . $PluginName . "_$KeyTranslation");
-                    }
-                } catch (\PDOException $ex) {
-                    continue;
-                }
-            }
+        $Language = \crisp\api\lists\Languages::getLanguageByCode("en");
+        foreach (self::listTranslations($PluginName) as $Translation) {
+            $Language->deleteTranslation($Translation["key"]);
         }
     }
 
@@ -373,7 +419,8 @@ class Plugins {
         return true;
     }
 
-    public static function integrityCheck($PluginName, $PluginMetadata, $PluginFolder) {
+    public static function integrityCheck($PluginName, $PluginMetadata) {
+        $PluginFolder = \crisp\api\Config::get("plugin_dir");
         $parsedConfigs = array();
         $failedConfigs = array();
         $failedChecks = array();

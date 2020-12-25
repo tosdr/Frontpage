@@ -27,6 +27,8 @@ namespace crisp;
 class core {
     /* Some important constants */
 
+    const CRISP_VERSION = "0.0.8-beta";
+
     /**
      * This is my autoloader. 
      * There are many like it, but this one is mine. 
@@ -87,7 +89,7 @@ if (isset($_GET["universe"])) {
 define("CURRENT_UNIVERSE", Universe::getUniverse($_SESSION[core\Config::$Cookie_Prefix . "universe"]));
 define("CURRENT_UNIVERSE_NAME", Universe::getUniverseName(CURRENT_UNIVERSE));
 
-if (!defined('CRISP_API')) {
+if (!defined('CRISP_CLI')) {
 
     try {
 
@@ -134,6 +136,7 @@ if (!defined('CRISP_API')) {
         $TwigTheme->addFunction(new \Twig\TwigFunction('getPointsByService', [new \crisp\api\Phoenix(), 'getPointsByServicePG']));
         $TwigTheme->addFunction(new \Twig\TwigFunction('getCase', [new \crisp\api\Phoenix(), 'getCasePG']));
         $TwigTheme->addFunction(new \Twig\TwigFunction('getGitBranch', [new \crisp\api\Helper(), 'getGitBranch']));
+        $TwigTheme->addFunction(new \Twig\TwigFunction('prettyDump', [new \crisp\api\Helper(), 'prettyDump']));
         $TwigTheme->addFunction(new \Twig\TwigFunction('microtime', 'microtime'));
 
 
@@ -148,7 +151,6 @@ if (!defined('CRISP_API')) {
         $TwigTheme->addFilter(new \Twig\TwigFilter('translate', [$Translation, 'fetch']));
         $TwigTheme->addFilter(new \Twig\TwigFilter('getlang', [new \crisp\api\lists\Languages(), 'getLanguageByCode']));
         $TwigTheme->addFilter(new \Twig\TwigFilter('truncateText', [new \crisp\api\Helper(), 'truncateText']));
-        $TwigTheme->addFilter(new \Twig\TwigFilter('prettyDump', [new \crisp\api\Helper(), 'prettyDump']));
 
 
         $EnvFile = parse_ini_file(__DIR__ . "/../.env");

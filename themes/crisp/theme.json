@@ -182,6 +182,7 @@
             }
         },
         "createKVStorageItems": {
+            "frontpage_services": [182, 190, 194, 265, 222, 274, 1815, 314, 539, 324],
             "site_logo": "/themes/logo.png",
             "twitter_link": "https://twitter.com/tosdr",
             "site_name": "ToS;DR - Terms of Service; Didn't Read",

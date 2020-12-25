@@ -420,8 +420,23 @@ switch ($argv[1]) {
                 break;
         }
         break;
+    case "create_migration":
+
+
+        if ($argc < 3) {
+            echo "Missing argument: migration name" . PHP_EOL;
+        }
+        \crisp\core\Migrations::create($argv[2]);
+        break;
+    case "migrate":
+        $Migrations = new crisp\core\Migrations();
+        $Migrations->migrate();
+        break;
     default:
         echo "Crisp CLI" . PHP_EOL;
+        echo "---------" . PHP_EOL;
+        echo "create_migration - Create a new migration file" . PHP_EOL;
+        echo "migrate - Migrate MySQL Tables" . PHP_EOL;
         echo "---------" . PHP_EOL;
         echo "cache - Actions regarding the cache" . PHP_EOL;
         echo "cache clear - Clear twig cache" . PHP_EOL;

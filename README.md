@@ -62,7 +62,10 @@ The database needs to be setup on initial clone, to do this run this command:
 php bin/cli.php migrate
 ```
 
-This will create all necessary tables
+This will create all necessary tables, install plugins and themes.
+
+<!--
+No longer required ,managed by migrations
 
 ### Install crisp theme
 
@@ -79,5 +82,6 @@ To install the core plugin you need shell access and execute the following comma
 ```bash
 php bin/cli.php plugin install core
 ```
+-->
 
 Your instance is ready now!

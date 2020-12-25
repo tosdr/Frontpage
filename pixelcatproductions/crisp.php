@@ -27,7 +27,7 @@ namespace crisp;
 class core {
     /* Some important constants */
 
-    const CRISP_VERSION = "0.0.8-beta.RC2";
+    const CRISP_VERSION = "0.0.8-beta.RC3";
 
     /**
      * This is my autoloader. 

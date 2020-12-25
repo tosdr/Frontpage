@@ -14,7 +14,7 @@ class createplugins extends \crisp\core\Migrations {
                     array("order", $this::DB_INTEGER, "NOT NULL DEFAULT 0"),
             );
 
-            $this->Database->query("INSERT INTO loadedPlugins (Name) VALUES('core')");
+            \crisp\core\Plugins::install("core", null, __FILE__, "migration");
 
 
             return $this->end();

@@ -60,9 +60,11 @@
     "language_native_fr": "Français",
     "language_native_es_MX": "Español mexicano",
     "language_native_es": "Español",
+    "language_native_nl": "Nederlands",
     "language_en": "English",
     "language_de": "German",
     "language_fr": "French",
     "language_es_MX": "Mexican Spanish",
-    "language_es": "Spanish"
+    "language_es": "Spanish",
+    "language_nl": "Dutch"
 }

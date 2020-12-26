@@ -12,5 +12,9 @@
     "api_container_p_1": "Le format des données peut être <a href=\"https://github.com/JustinBack/CrispCMS-ToS-DR/blob/master/api/api.php\">rétro-ingénierie </a> dans notre Github. Veuillez vérifier la version de la spécification avec la version API.",
     "classification_jumbotron_p_1": "ToS;DR cherche à créer un processus transparent et évalué par des pairs pour classer et analyser les Conditions d'Utilisation et les Politiques de Confidentialité afin de créer un classement compris entre Classe A et Classe E. ",
     "contact_us": "Contactez-nous",
-    "downloads": "Télécharger"
+    "downloads": "Télécharger",
+    "downloads_jumbotron_paragraph_1": "Installez nos extensions de navigateur pour rester informé sur les conditions et politiques de confidentialité des sites que vous visitez ! ",
+    "error_page_not_found": "Page non trouvée",
+    "error_page_not_found_description": "Cette page n'existe pas sur ToS;DR, êtes-vous sûr de l'avoir correctement saisi ?",
+    "error_service_not_found": "Aucun service correspondant"
 }

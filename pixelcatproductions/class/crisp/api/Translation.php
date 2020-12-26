@@ -161,8 +161,12 @@ class Translation {
      */
     public static function fetch($Key, $Count = 1, $UserOptions = array()) {
 
+        if (!isset(self::$Language)) {
+            self::$Language = Helper::getLocale();
+        }
+
         if (isset($_GET["debug"])) {
-            return $Key;
+            return "$Key:" . self::$Language;
         }
 
         $UserOptions["{{ count }}"] = $Count;

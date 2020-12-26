@@ -121,6 +121,9 @@ class Migrations {
     public function migrate() {
         echo "Starting Migration..." . PHP_EOL;
         $files = glob(__DIR__ . '/../migrations/*.{php}', GLOB_BRACE);
+        
+        natsort($files);
+        
         foreach ($files as $file) {
             if (basename($file) == "template.php") {
                 continue;

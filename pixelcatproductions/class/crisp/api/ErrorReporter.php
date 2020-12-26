@@ -25,8 +25,7 @@ use \PDORow;
 use \PDOStatement;
 
 /**
- * The error reporting system, currently unused.
- * @deprecated It's unused
+ * The error reporting system
  */
 class ErrorReporter {
 
@@ -41,7 +40,14 @@ class ErrorReporter {
         self::$Database_Connection = $DB->getDBConnector();
     }
 
-    public static function create($HttpStatusCode, $Traceback, $Summary) {
+    /**
+     * Create a new Crash report
+     * @param int $HttpStatusCode HTTP code
+     * @param string $Traceback A traceback e.g Exceptions
+     * @param string $Summary A summary of what happened
+     * @return boolean|string Returns ReferenceID if successful otherwise false
+     */
+    public static function create(int $HttpStatusCode, string $Traceback, string $Summary) {
         if (self::$Database_Connection === null) {
             self::initDB();
         }

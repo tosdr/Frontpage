@@ -26,7 +26,7 @@ namespace crisp\core;
 class Migrations {
     /* Data types */
 
-    public \PDO $Database;
+    protected \PDO $Database;
 
     const DB_VARCHAR = "varchar(255)";
     const DB_TEXT = "text";
@@ -44,7 +44,7 @@ class Migrations {
         $this->Database = $DB->getDBConnector();
     }
 
-    public function begin() {
+    protected function begin() {
         echo "Enabling Transactions..." . PHP_EOL;
         if ($this->Database->beginTransaction()) {
             echo "Enabled Transactions!" . PHP_EOL;
@@ -54,7 +54,7 @@ class Migrations {
         return false;
     }
 
-    public function rollback() {
+    protected function rollback() {
         echo "Rolling back..." . PHP_EOL;
         if ($this->Database->rollBack()) {
             echo "Rolled back!" . PHP_EOL;
@@ -64,7 +64,7 @@ class Migrations {
         return false;
     }
 
-    public function end() {
+    protected function end() {
         echo "committing changes..." . PHP_EOL;
         if ($this->Database->commit()) {
             echo "Changes committed!" . PHP_EOL;
@@ -127,7 +127,7 @@ class Migrations {
 
         $Skeleton = strtr($Template, array(
             "MigrationName" => $MigrationNameFiltered,
-            "RUNCODE;" => '\crisp\core\Migrations::createTable("MyTable", array("col1", \crisp\core\Migrations::DB_VARCHAR));'
+            "RUNCODE;" => '$this->createTable("MyTable", array("col1", \crisp\core\Migrations::DB_VARCHAR));'
         ));
 
         $written = file_put_contents(__DIR__ . "/../migrations/" . time() . "_$MigrationNameFiltered.php", $Skeleton);
@@ -139,7 +139,7 @@ class Migrations {
         }
     }
 
-    public function addIndex(string $Table, $Column, $Type = self::DB_PRIMARYKEY, $IndexName = null) {
+    protected function addIndex(string $Table, $Column, $Type = self::DB_PRIMARYKEY, $IndexName = null) {
         $SQL = "";
         echo "Adding index to table $Table..." . PHP_EOL;
         if ($Type == self::DB_PRIMARYKEY) {
@@ -158,7 +158,7 @@ class Migrations {
         throw new \Exception($statement->errorInfo());
     }
 
-    public function addColumn(string $Table, array $Column) {
+    protected function addColumn(string $Table, array $Column) {
         echo "Adding column to Table $Table..." . PHP_EOL;
         $SQL = "ALTER TABLE `$Table` ADD COLUMN `$Column[0]` $Column[1] $Column[2];";
 
@@ -172,7 +172,7 @@ class Migrations {
         throw new \Exception($statement->errorInfo());
     }
 
-    public function createTable(string $Table, ...$Columns) {
+    protected function createTable(string $Table, ...$Columns) {
         echo "Creating Table $Table..." . PHP_EOL;
         $SQL = "CREATE TABLE `$Table` (";
         $AutoIncrement = false;
@@ -202,15 +202,6 @@ class Migrations {
         }
         echo "Failed to create Table $Table!" . PHP_EOL;
         throw new \Exception($statement->errorInfo());
-    }
-
-    private function showTable(string $Table) {
-
-        $statement = $this->Database->prepare("SHOW CREATE TABLE $Table;");
-
-        $statement->execute();
-
-        return $statement->fetch()["Create Table"];
     }
 
 }

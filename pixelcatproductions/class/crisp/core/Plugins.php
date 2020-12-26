@@ -41,10 +41,10 @@ class Plugins {
         foreach ($loadedPlugins as $Plugin) {
             $PluginFolder = \crisp\api\Config::get("plugin_dir");
             $PluginName = $Plugin["Name"];
-            if (\crisp\api\Helper::isValidPluginName($PluginName) === false) {
+            if (\crisp\api\Helper::isValidPluginName($PluginName)) {
                 new \crisp\core\PluginAPI($PluginFolder, $PluginName, $Interface, $_QUERY);
             } else {
-                PluginAPI::response(\crisp\api\Helper::isValidPluginName($PluginName), $PluginName);
+                PluginAPI::response(array("INVALID_PLUGIN_NAME"),\crisp\api\Helper::isValidPluginName($PluginName), $PluginName);
                 exit;
             }
         }
@@ -102,17 +102,17 @@ class Plugins {
             if (\file_exists(__DIR__ . "/../../../../$PluginFolder/$PluginName/plugin.json")) {
                 $PluginMetadata = json_decode(\file_get_contents(__DIR__ . "/../../../../$PluginFolder/$PluginName/plugin.json"));
                 if (\is_object($PluginMetadata) && isset($PluginMetadata->hookFile)) {
-                    if (\crisp\api\Helper::isValidPluginName($PluginName) === false) {
+                    if (\crisp\api\Helper::isValidPluginName($PluginName)) {
                         new \crisp\core\Plugin($PluginFolder, $PluginName, $PluginMetadata, $TwigTheme, $CurrentFile, $CurrentPage);
                     } else {
-                        throw new \Exception("Plugin <b>" . \crisp\api\Helper::isValidPluginName($PluginName) . "</b> failed to load due to an invalid plugin name!");
+                        throw new \Exception("Plugin <b>" . ($PluginName) . "</b> failed to load due to an invalid plugin name!");
                     }
                 } else {
                     if (!\is_object($PluginMetadata)) {
-                        throw new \Exception("Plugin <b>" . \crisp\api\Helper::isValidPluginName($PluginName) . "</b> failed to load due to an invalid plugin.json!");
+                        throw new \Exception("Plugin <b>" . ($PluginName) . "</b> failed to load due to an invalid plugin.json!");
                     }
                     if (!isset($PluginMetadata->hookFile)) {
-                        throw new \Exception("Plugin <b>" . \crisp\api\Helper::isValidPluginName($PluginName) . "</b> failed to load due to a missing hook file!");
+                        throw new \Exception("Plugin <b>" . ($PluginName) . "</b> failed to load due to a missing hook file!");
                     }
                 }
             }

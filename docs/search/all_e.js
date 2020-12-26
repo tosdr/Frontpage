@@ -2,7 +2,7 @@ var searchData=
 [
   ['phoenix_155',['Phoenix',['../classcrisp_1_1api_1_1_phoenix.html',1,'crisp::api']]],
   ['phoenix_2ephp_156',['Phoenix.php',['../_phoenix_8php.html',1,'']]],
-  ['placeholder_157',['PlaceHolder',['../classcrisp_1_1api_1_1_helper.html#ab4b6a2352f318b67a038a887ee91c4be',1,'crisp::api::Helper']]],
+  ['placeholder_157',['PlaceHolder',['../classcrisp_1_1api_1_1_helper.html#a8326b9c817011a863b8f6c2baafef37b',1,'crisp::api::Helper']]],
   ['plugin_158',['Plugin',['../classcrisp_1_1core_1_1_plugin.html',1,'crisp::core']]],
   ['plugin_2ephp_159',['Plugin.php',['../_plugin_8php.html',1,'']]],
   ['pluginapi_160',['PluginAPI',['../classcrisp_1_1core_1_1_plugin_a_p_i.html',1,'crisp::core']]],

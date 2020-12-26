@@ -42,8 +42,8 @@ class Languages {
 
     /**
      * Fetches all languages
-     * @param boolean $FetchIntoClass Should we fetch the result into new \crisp\api\Language()?
-     * @return boolean|array|\crisp\api\Language with all languages
+     * @param bool $FetchIntoClass Should we fetch the result into new \crisp\api\Language()?
+     * @return bool|array|\crisp\api\Language with all languages
      */
     public static function fetchLanguages($FetchIntoClass = true) {
         if (self::$Database_Connection === null) {
@@ -65,14 +65,14 @@ class Languages {
 
     /**
      * Create a new language
-     * @param type $Name The name of the language
-     * @param type $Code The letter code of the language e.g. en-US, de, es, ru
-     * @param type $NativeName How is the language called in the native tongue?
-     * @param type $Flag Path to the flag image on the server
-     * @param type $Enabled Enable/disable the language
-     * @return boolean TRUE if action was successful
+     * @param string $Name The name of the language
+     * @param string $Code The letter code of the language e.g. en-US, de, es, ru
+     * @param string $NativeName How is the language called in the native tongue?
+     * @param string $Flag Path to the flag image on the server
+     * @param bool $Enabled Enable/disable the language
+     * @return bool TRUE if action was successful
      */
-    public static function createLanguage($Name, $Code, $NativeName, $Flag, $Enabled = true) {
+    public static function createLanguage(string $Name, string $Code, string $NativeName, string $Flag, bool $Enabled = true) {
         if (self::$Database_Connection === null) {
             self::initDB();
         }
@@ -108,7 +108,7 @@ class Languages {
      * Fetches a language by country code
      * @param type $Code The language's country code
      * @param type $FetchIntoClass Should we fetch the result into new \crisp\api\Language()?
-     * @return boolean|\crisp\api\Language|array with the language
+     * @return bool|\crisp\api\Language|array with the language
      */
     public static function getLanguageByCode($Code, $FetchIntoClass = true) {
         if (self::$Database_Connection === null) {
@@ -134,7 +134,7 @@ class Languages {
      * Fetches a language by ID
      * @param type $ID The database ID of the language
      * @param type Should we fetch the result into new \crisp\api\Language()?
-     * @return boolean|\crisp\api\Language|array with the language
+     * @return bool|\crisp\api\Language|array with the language
      */
     public static function getLanguageByID($ID, $FetchIntoClass = true) {
         if (self::$Database_Connection === null) {

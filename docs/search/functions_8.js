@@ -13,5 +13,5 @@ var searchData=
   ['ismobile_348',['isMobile',['../classcrisp_1_1api_1_1_helper.html#af18fc91684720f67c66e9c92a38f8bb8',1,'crisp::api::Helper']]],
   ['isserialized_349',['isSerialized',['../classcrisp_1_1api_1_1_helper.html#a0dde52b6a2dcbaea2d84f2bc6d4587cf',1,'crisp::api::Helper']]],
   ['isvalid_350',['isValid',['../classcrisp_1_1core_1_1_plugins.html#a71a6bc758b558608ae0e6fe42ff7f8d0',1,'crisp\core\Plugins\isValid()'],['../classcrisp_1_1core_1_1_themes.html#abe1261c8e4b87a0974b7b065ff59c4a6',1,'crisp\core\Themes\isValid()']]],
-  ['isvalidpluginname_351',['isValidPluginName',['../classcrisp_1_1api_1_1_helper.html#a6a13a3a1748c8d42bc21164fdce67fe5',1,'crisp::api::Helper']]]
+  ['isvalidpluginname_351',['isValidPluginName',['../classcrisp_1_1api_1_1_helper.html#a1eb52876ddcb2571c5cd891ed1d46695',1,'crisp::api::Helper']]]
 ];

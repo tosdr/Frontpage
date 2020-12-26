@@ -20,37 +20,46 @@ ErrorReporter
 .RI "static \fBinitDB\fP ()"
 .br
 .ti -1c
-.RI "static \fBcreate\fP ($HttpStatusCode, $Traceback, $Summary)"
+.RI "static \fBcreate\fP (int $HttpStatusCode, string $Traceback, string $Summary)"
 .br
 .in -1c
 .SH "Detailed Description"
 .PP 
-The error reporting system, currently unused\&. 
+The error reporting system 
 .PP
-\fBDeprecated\fP
-.RS 4
-It's unused 
-.RE
-.PP
-
-.PP
-Definition at line 31 of file ErrorReporter\&.php\&.
+Definition at line 30 of file ErrorReporter\&.php\&.
 .SH "Constructor & Destructor Documentation"
 .PP 
 .SS "__construct ()"
 
 .PP
-Definition at line 35 of file ErrorReporter\&.php\&.
+Definition at line 34 of file ErrorReporter\&.php\&.
 .SH "Member Function Documentation"
 .PP 
-.SS "static create ( $HttpStatusCode,  $Traceback,  $Summary)\fC [static]\fP"
+.SS "static create (int $HttpStatusCode, string $Traceback, string $Summary)\fC [static]\fP"
+Create a new Crash report 
+.PP
+\fBParameters\fP
+.RS 4
+\fI$HttpStatusCode\fP HTTP code 
+.br
+\fI$Traceback\fP A traceback e\&.g Exceptions 
+.br
+\fI$Summary\fP A summary of what happened 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+boolean|string Returns ReferenceID if successful otherwise false 
+.RE
+.PP
 
 .PP
-Definition at line 44 of file ErrorReporter\&.php\&.
+Definition at line 50 of file ErrorReporter\&.php\&.
 .SS "static initDB ()\fC [static]\fP"
 
 .PP
-Definition at line 39 of file ErrorReporter\&.php\&.
+Definition at line 38 of file ErrorReporter\&.php\&.
 
 .SH "Author"
 .PP 

@@ -28,10 +28,10 @@ Helper
 .RI "static \fBfilterAlphaNum\fP ($String)"
 .br
 .ti -1c
-.RI "static \fBPlaceHolder\fP ($String, $Size='150x150')"
+.RI "static \fBPlaceHolder\fP (string $Text, string $Size='150x150')"
 .br
 .ti -1c
-.RI "static \fBisValidPluginName\fP ($String)"
+.RI "static \fBisValidPluginName\fP (string $Name)"
 .br
 .ti -1c
 .RI "static \fBgetGitBranch\fP ()"
@@ -72,9 +72,16 @@ Definition at line 25 of file Helper\&.php\&.
 .SH "Member Function Documentation"
 .PP 
 .SS "static currentDomain ()\fC [static]\fP"
+Gets the current domain 
+.PP
+\fBReturns\fP
+.RS 4
+string the current domain 
+.RE
+.PP
 
 .PP
-Definition at line 328 of file Helper\&.php\&.
+Definition at line 347 of file Helper\&.php\&.
 .SS "static endsWith (string $haystack, string $needle)\fC [static]\fP"
 Similiar to JS endsWith, check if a text ends with a specific string 
 .PP
@@ -92,7 +99,7 @@ boolean
 .PP
 
 .PP
-Definition at line 246 of file Helper\&.php\&.
+Definition at line 261 of file Helper\&.php\&.
 .SS "static filterAlphaNum ( $String)\fC [static]\fP"
 Filter a string and remove non-alphanumeric and spaces 
 .PP
@@ -108,7 +115,7 @@ string Filtered string
 .PP
 
 .PP
-Definition at line 90 of file Helper\&.php\&.
+Definition at line 95 of file Helper\&.php\&.
 .SS "static getGitBranch ()\fC [static]\fP"
 Get the current branch the CMS runs on 
 .PP
@@ -119,7 +126,7 @@ string Current Git Revision
 .PP
 
 .PP
-Definition at line 149 of file Helper\&.php\&.
+Definition at line 164 of file Helper\&.php\&.
 .SS "static getGitRevision ()\fC [static]\fP"
 Get the current revision the CMS runs on 
 .PP
@@ -130,7 +137,7 @@ string Current Git Revision
 .PP
 
 .PP
-Definition at line 81 of file Helper\&.php\&.
+Definition at line 86 of file Helper\&.php\&.
 .SS "static getGitRevisionLink ()\fC [static]\fP"
 Gets a current revision link to github 
 .PP
@@ -141,7 +148,7 @@ string The link to github
 .PP
 
 .PP
-Definition at line 157 of file Helper\&.php\&.
+Definition at line 172 of file Helper\&.php\&.
 .SS "static getLatestGitRevision (bool $Force = \fCfalse\fP)\fC [static]\fP"
 Retrieve the latest hash on github 
 .PP
@@ -161,7 +168,7 @@ string Hash of latest git revision
 .PP
 
 .PP
-Definition at line 167 of file Helper\&.php\&.
+Definition at line 182 of file Helper\&.php\&.
 .SS "static getLocale ()\fC [static]\fP"
 Get the current locale a user has set 
 .PP
@@ -217,15 +224,36 @@ boolean
 .PP
 
 .PP
-Definition at line 273 of file Helper\&.php\&.
-.SS "static isValidPluginName ( $String)\fC [static]\fP"
+Definition at line 288 of file Helper\&.php\&.
+.SS "static isValidPluginName (string $Name)\fC [static]\fP"
+Validates if the plugin name 
+.PP
+\fBParameters\fP
+.RS 4
+\fI$Name\fP The name of the plugin 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+array|boolean Array of errors if found, otherwise true 
+.RE
+.PP
 
 .PP
-Definition at line 128 of file Helper\&.php\&.
-.SS "static PlaceHolder ( $String,  $Size = \fC'150x150'\fP)\fC [static]\fP"
+Definition at line 143 of file Helper\&.php\&.
+.SS "static PlaceHolder (string $Text, string $Size = \fC'150x150'\fP)\fC [static]\fP"
+Generate a placeholder image 
+.PP
+\fBParameters\fP
+.RS 4
+\fI$Text\fP The text to display 
+.br
+\fI$Size\fP The in pixels to create the image with 
+.RE
+.PP
 
 .PP
-Definition at line 94 of file Helper\&.php\&.
+Definition at line 104 of file Helper\&.php\&.
 .SS "static prettyDump ( $var)\fC [static]\fP"
 Just a pretty print for var_dump 
 .PP
@@ -236,11 +264,18 @@ Just a pretty print for var_dump
 .PP
 
 .PP
-Definition at line 226 of file Helper\&.php\&.
+Definition at line 241 of file Helper\&.php\&.
 .SS "static setLocale ()\fC [static]\fP"
+Sets the locale and saves in a cookie
+.PP
+\fBReturns\fP
+.RS 4
+bool 
+.RE
+.PP
 
 .PP
-Definition at line 73 of file Helper\&.php\&.
+Definition at line 78 of file Helper\&.php\&.
 .SS "static startsWith (string $haystack, string $needle)\fC [static]\fP"
 Similiar to JS startsWith, check if a text starts with a specific string 
 .PP
@@ -258,7 +293,7 @@ boolean TRUE $haystack contains $needle
 .PP
 
 .PP
-Definition at line 217 of file Helper\&.php\&.
+Definition at line 232 of file Helper\&.php\&.
 .SS "static templateExists (string $Theme, string $Template)\fC [static]\fP"
 Check if a Template exists within a specific theme 
 .PP
@@ -276,7 +311,7 @@ boolean
 .PP
 
 .PP
-Definition at line 236 of file Helper\&.php\&.
+Definition at line 251 of file Helper\&.php\&.
 .SS "static truncateText (string $String, int $Length, bool $AppendDots = \fCtrue\fP)\fC [static]\fP"
 Truncates a text and appends '\&.\&.\&.' to the end 
 .PP
@@ -296,7 +331,7 @@ string
 .PP
 
 .PP
-Definition at line 262 of file Helper\&.php\&.
+Definition at line 277 of file Helper\&.php\&.
 
 .SH "Author"
 .PP 

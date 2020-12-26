@@ -15,9 +15,9 @@ static \mbox{\hyperlink{classcrisp_1_1api_1_1_helper_abbda27f7d9e553bd881b5dd5e9
 \item 
 static \mbox{\hyperlink{classcrisp_1_1api_1_1_helper_a1003c6b3b59a848fe367dd5543130318}{filter\+Alpha\+Num}} (\$String)
 \item 
-static \mbox{\hyperlink{classcrisp_1_1api_1_1_helper_ab4b6a2352f318b67a038a887ee91c4be}{Place\+Holder}} (\$String, \$Size=\char`\"{}150x150\char`\"{})
+static \mbox{\hyperlink{classcrisp_1_1api_1_1_helper_a8326b9c817011a863b8f6c2baafef37b}{Place\+Holder}} (string \$Text, string \$Size=\char`\"{}150x150\char`\"{})
 \item 
-static \mbox{\hyperlink{classcrisp_1_1api_1_1_helper_a6a13a3a1748c8d42bc21164fdce67fe5}{is\+Valid\+Plugin\+Name}} (\$String)
+static \mbox{\hyperlink{classcrisp_1_1api_1_1_helper_a1eb52876ddcb2571c5cd891ed1d46695}{is\+Valid\+Plugin\+Name}} (string \$Name)
 \item 
 static \mbox{\hyperlink{classcrisp_1_1api_1_1_helper_a007ceae8b446fcd12ebcf321b3b35696}{get\+Git\+Branch}} ()
 \item 
@@ -55,9 +55,12 @@ Definition at line 25 of file Helper.\+php.
 \doxysubsubsection{\texorpdfstring{currentDomain()}{currentDomain()}}
 {\footnotesize\ttfamily static current\+Domain (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
+Gets the current domain \begin{DoxyReturn}{Returns}
+string the current domain 
+\end{DoxyReturn}
 
 
-Definition at line 328 of file Helper.\+php.
+Definition at line 347 of file Helper.\+php.
 
 \mbox{\Hypertarget{classcrisp_1_1api_1_1_helper_a2549562216f3498de2fb3645a6fb10e0}\label{classcrisp_1_1api_1_1_helper_a2549562216f3498de2fb3645a6fb10e0}} 
 \index{Helper@{Helper}!endsWith@{endsWith}}
@@ -77,7 +80,7 @@ boolean
 \end{DoxyReturn}
 
 
-Definition at line 246 of file Helper.\+php.
+Definition at line 261 of file Helper.\+php.
 
 \mbox{\Hypertarget{classcrisp_1_1api_1_1_helper_a1003c6b3b59a848fe367dd5543130318}\label{classcrisp_1_1api_1_1_helper_a1003c6b3b59a848fe367dd5543130318}} 
 \index{Helper@{Helper}!filterAlphaNum@{filterAlphaNum}}
@@ -95,7 +98,7 @@ string Filtered string
 \end{DoxyReturn}
 
 
-Definition at line 90 of file Helper.\+php.
+Definition at line 95 of file Helper.\+php.
 
 \mbox{\Hypertarget{classcrisp_1_1api_1_1_helper_a007ceae8b446fcd12ebcf321b3b35696}\label{classcrisp_1_1api_1_1_helper_a007ceae8b446fcd12ebcf321b3b35696}} 
 \index{Helper@{Helper}!getGitBranch@{getGitBranch}}
@@ -108,7 +111,7 @@ string Current Git Revision
 \end{DoxyReturn}
 
 
-Definition at line 149 of file Helper.\+php.
+Definition at line 164 of file Helper.\+php.
 
 \mbox{\Hypertarget{classcrisp_1_1api_1_1_helper_abbda27f7d9e553bd881b5dd5e98bb1ae}\label{classcrisp_1_1api_1_1_helper_abbda27f7d9e553bd881b5dd5e98bb1ae}} 
 \index{Helper@{Helper}!getGitRevision@{getGitRevision}}
@@ -121,7 +124,7 @@ string Current Git Revision
 \end{DoxyReturn}
 
 
-Definition at line 81 of file Helper.\+php.
+Definition at line 86 of file Helper.\+php.
 
 \mbox{\Hypertarget{classcrisp_1_1api_1_1_helper_ac529e02361290ca584e1132b45bad572}\label{classcrisp_1_1api_1_1_helper_ac529e02361290ca584e1132b45bad572}} 
 \index{Helper@{Helper}!getGitRevisionLink@{getGitRevisionLink}}
@@ -134,7 +137,7 @@ string The link to github
 \end{DoxyReturn}
 
 
-Definition at line 157 of file Helper.\+php.
+Definition at line 172 of file Helper.\+php.
 
 \mbox{\Hypertarget{classcrisp_1_1api_1_1_helper_afc19cc5a7636ad6cfc2025ea9e39ba42}\label{classcrisp_1_1api_1_1_helper_afc19cc5a7636ad6cfc2025ea9e39ba42}} 
 \index{Helper@{Helper}!getLatestGitRevision@{getLatestGitRevision}}
@@ -157,7 +160,7 @@ string Hash of latest git revision
 \end{DoxyExceptions}
 
 
-Definition at line 167 of file Helper.\+php.
+Definition at line 182 of file Helper.\+php.
 
 \mbox{\Hypertarget{classcrisp_1_1api_1_1_helper_a7166a1dbef39ee5a6bcabf6bca93a654}\label{classcrisp_1_1api_1_1_helper_a7166a1dbef39ee5a6bcabf6bca93a654}} 
 \index{Helper@{Helper}!getLocale@{getLocale}}
@@ -219,27 +222,42 @@ boolean
 \end{DoxyReturn}
 
 
-Definition at line 273 of file Helper.\+php.
+Definition at line 288 of file Helper.\+php.
 
-\mbox{\Hypertarget{classcrisp_1_1api_1_1_helper_a6a13a3a1748c8d42bc21164fdce67fe5}\label{classcrisp_1_1api_1_1_helper_a6a13a3a1748c8d42bc21164fdce67fe5}} 
+\mbox{\Hypertarget{classcrisp_1_1api_1_1_helper_a1eb52876ddcb2571c5cd891ed1d46695}\label{classcrisp_1_1api_1_1_helper_a1eb52876ddcb2571c5cd891ed1d46695}} 
 \index{Helper@{Helper}!isValidPluginName@{isValidPluginName}}
 \index{isValidPluginName@{isValidPluginName}!Helper@{Helper}}
 \doxysubsubsection{\texorpdfstring{isValidPluginName()}{isValidPluginName()}}
-{\footnotesize\ttfamily static is\+Valid\+Plugin\+Name (\begin{DoxyParamCaption}\item[{}]{\$\+String }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+{\footnotesize\ttfamily static is\+Valid\+Plugin\+Name (\begin{DoxyParamCaption}\item[{string}]{\$\+Name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Validates if the plugin name 
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$\+Name} & The name of the plugin \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+array$\vert$boolean Array of errors if found, otherwise true 
+\end{DoxyReturn}
 
 
+Definition at line 143 of file Helper.\+php.
 
-Definition at line 128 of file Helper.\+php.
-
-\mbox{\Hypertarget{classcrisp_1_1api_1_1_helper_ab4b6a2352f318b67a038a887ee91c4be}\label{classcrisp_1_1api_1_1_helper_ab4b6a2352f318b67a038a887ee91c4be}} 
+\mbox{\Hypertarget{classcrisp_1_1api_1_1_helper_a8326b9c817011a863b8f6c2baafef37b}\label{classcrisp_1_1api_1_1_helper_a8326b9c817011a863b8f6c2baafef37b}} 
 \index{Helper@{Helper}!PlaceHolder@{PlaceHolder}}
 \index{PlaceHolder@{PlaceHolder}!Helper@{Helper}}
 \doxysubsubsection{\texorpdfstring{PlaceHolder()}{PlaceHolder()}}
-{\footnotesize\ttfamily static Place\+Holder (\begin{DoxyParamCaption}\item[{}]{\$\+String,  }\item[{}]{\$\+Size = {\ttfamily \char`\"{}150x150\char`\"{}} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+{\footnotesize\ttfamily static Place\+Holder (\begin{DoxyParamCaption}\item[{string}]{\$\+Text,  }\item[{string}]{\$\+Size = {\ttfamily \char`\"{}150x150\char`\"{}} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Generate a placeholder image 
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$\+Text} & The text to display \\
+\hline
+string & {\em \$\+Size} & The in pixels to create the image with \\
+\hline
+\end{DoxyParams}
 
 
-
-Definition at line 94 of file Helper.\+php.
+Definition at line 104 of file Helper.\+php.
 
 \mbox{\Hypertarget{classcrisp_1_1api_1_1_helper_a93a7eee8cb14ed9864e7195da83b4a32}\label{classcrisp_1_1api_1_1_helper_a93a7eee8cb14ed9864e7195da83b4a32}} 
 \index{Helper@{Helper}!prettyDump@{prettyDump}}
@@ -254,7 +272,7 @@ Just a pretty print for var\+\_\+dump
 \end{DoxyParams}
 
 
-Definition at line 226 of file Helper.\+php.
+Definition at line 241 of file Helper.\+php.
 
 \mbox{\Hypertarget{classcrisp_1_1api_1_1_helper_a828aaa44c7f3e7b764c9a774d13939b9}\label{classcrisp_1_1api_1_1_helper_a828aaa44c7f3e7b764c9a774d13939b9}} 
 \index{Helper@{Helper}!setLocale@{setLocale}}
@@ -262,9 +280,14 @@ Definition at line 226 of file Helper.\+php.
 \doxysubsubsection{\texorpdfstring{setLocale()}{setLocale()}}
 {\footnotesize\ttfamily static set\+Locale (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
+Sets the locale and saves in a cookie
+
+\begin{DoxyReturn}{Returns}
+bool 
+\end{DoxyReturn}
 
 
-Definition at line 73 of file Helper.\+php.
+Definition at line 78 of file Helper.\+php.
 
 \mbox{\Hypertarget{classcrisp_1_1api_1_1_helper_a155e158a30306cdc59190c6cff1ccfb8}\label{classcrisp_1_1api_1_1_helper_a155e158a30306cdc59190c6cff1ccfb8}} 
 \index{Helper@{Helper}!startsWith@{startsWith}}
@@ -284,7 +307,7 @@ boolean T\+R\+UE \$haystack contains \$needle
 \end{DoxyReturn}
 
 
-Definition at line 217 of file Helper.\+php.
+Definition at line 232 of file Helper.\+php.
 
 \mbox{\Hypertarget{classcrisp_1_1api_1_1_helper_a4d67f0d47d7e28e5f2b344bb06db744a}\label{classcrisp_1_1api_1_1_helper_a4d67f0d47d7e28e5f2b344bb06db744a}} 
 \index{Helper@{Helper}!templateExists@{templateExists}}
@@ -304,7 +327,7 @@ boolean
 \end{DoxyReturn}
 
 
-Definition at line 236 of file Helper.\+php.
+Definition at line 251 of file Helper.\+php.
 
 \mbox{\Hypertarget{classcrisp_1_1api_1_1_helper_a11e88bd83a076ce47a26c25cb6fc8dcf}\label{classcrisp_1_1api_1_1_helper_a11e88bd83a076ce47a26c25cb6fc8dcf}} 
 \index{Helper@{Helper}!truncateText@{truncateText}}
@@ -326,7 +349,7 @@ string
 \end{DoxyReturn}
 
 
-Definition at line 262 of file Helper.\+php.
+Definition at line 277 of file Helper.\+php.
 
 
 

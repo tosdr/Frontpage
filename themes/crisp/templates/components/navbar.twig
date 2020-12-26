@@ -55,8 +55,17 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="languageDropdownMenuLink">
                     {% for Language in languages %}
-                        <a class="dropdown-item {% if locale|getlang(false).Code == Language.Code %}active{% endif %}" href="/{{ Language.Code }}/{{ CurrentPage }}"><img src="/themes/{{ config.theme }}/img/flags/{{ Language.Flag }}.svg" width="32"> {{ Language.NativeName|translate }} {% if Language.Name|translate != Language.NativeName|translate %}<span class="{% if locale|getlang(false).Code == Language.Code %}text-white{% else %}text-muted{% endif %}">({{ Language.Name|translate }})</span>{% endif %}</a>
-                        {% endfor %}
+                        <a class="dropdown-item {% if locale|getlang(false).Code == Language.Code %}active{% endif %}" href="/{{ Language.Code }}/{{ CurrentPage }}">
+                            <img src="/themes/{{ config.theme }}/img/flags/{{ Language.Flag }}.svg" width="32"/>
+                            {{ Language.NativeName|translate }} 
+                            {% if Language.Name|translate != Language.NativeName|translate %}
+                                <span class="{% if locale|getlang(false).Code == Language.Code %}text-white{% else %}text-muted{% endif %}">
+                                    ({{ Language.Name|translate }})
+                                </span>
+                            {% endif %}
+                            <img src="https://translate.jback.dev/widgets/crispcms/{{ Language.Code }}/crispcms-theme/svg-badge.svg" alt="Translation status" />
+                        </a>
+                    {% endfor %}
                 </div>
             </li>
         </ul>

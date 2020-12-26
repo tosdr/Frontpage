@@ -42,6 +42,10 @@ class Redis {
         }
     }
 
+    /**
+     * Get the database connector
+     * @return \Redis
+     */
     public function getDBConnector() {
         return $this->Database_Connection;
     }

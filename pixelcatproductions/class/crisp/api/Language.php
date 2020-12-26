@@ -203,7 +203,12 @@ class Language extends \crisp\api\lists\Languages {
         return $statement->fetch(\PDO::FETCH_ASSOC)["NativeName"];
     }
 
-    public function deleteTranslation($Key) {
+    /**
+     * Delete a translation key
+     * @param string $Key The translation key
+     * @return bool
+     */
+    public function deleteTranslation(string $Key) {
         if ($this->LanguageID === null) {
             return null;
         }
@@ -212,7 +217,13 @@ class Language extends \crisp\api\lists\Languages {
         return $statement->execute(array(":key" => $Key));
     }
 
-    public function editTranslation($Key, $Value) {
+    /**
+     * Edit a translation key
+     * @param string $Key The translation key
+     * @param string $Value The new value to set
+     * @return bool
+     */
+    public function editTranslation(string $Key, string $Value) {
         if ($this->LanguageID === null) {
             return null;
         }
@@ -222,7 +233,13 @@ class Language extends \crisp\api\lists\Languages {
         return $statement->execute(array(":key" => $Key, ":value" => $Value));
     }
 
-    public function newTranslation($Key, $Value) {
+    /**
+     * Create a new translation key
+     * @param string $Key The translation key to create
+     * @param string $Value The translation text
+     * @return bool
+     */
+    public function newTranslation(string $Key, string $Value) {
         if ($this->LanguageID === null) {
             return null;
         }

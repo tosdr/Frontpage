@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['edittranslation_283',['editTranslation',['../classcrisp_1_1api_1_1_language.html#ae160b823dc298cd7d331531f9c4e1b49',1,'crisp::api::Language']]],
+  ['edittranslation_283',['editTranslation',['../classcrisp_1_1api_1_1_language.html#adfee32e203d4024721d158c5a2dba786',1,'crisp::api::Language']]],
   ['enable_284',['enable',['../classcrisp_1_1api_1_1_language.html#a91e658a6e3fccc3028f2d71122bc4b8f',1,'crisp::api::Language']]],
   ['encrypt_285',['encrypt',['../classcrisp_1_1core_1_1_crypto.html#a638285d91f747220bcb45ae382bd9313',1,'crisp::core::Crypto']]],
   ['end_286',['end',['../classcrisp_1_1core_1_1_migrations.html#a817082ace0e2589d27b22890290aa4a9',1,'crisp::core::Migrations']]],

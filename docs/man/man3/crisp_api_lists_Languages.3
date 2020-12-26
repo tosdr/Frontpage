@@ -22,7 +22,7 @@ Inherited by \fBLanguage\fP\&.
 .RI "static \fBfetchLanguages\fP ($FetchIntoClass=true)"
 .br
 .ti -1c
-.RI "static \fBcreateLanguage\fP ($Name, $Code, $NativeName, $Flag, $Enabled=true)"
+.RI "static \fBcreateLanguage\fP (string $Name, string $Code, string $NativeName, string $Flag, bool $Enabled=true)"
 .br
 .ti -1c
 .RI "static \fBgetLanguageByCode\fP ($Code, $FetchIntoClass=true)"
@@ -44,7 +44,7 @@ Definition at line 30 of file Languages\&.php\&.
 Definition at line 34 of file Languages\&.php\&.
 .SH "Member Function Documentation"
 .PP 
-.SS "static createLanguage ( $Name,  $Code,  $NativeName,  $Flag,  $Enabled = \fCtrue\fP)\fC [static]\fP"
+.SS "static createLanguage (string $Name, string $Code, string $NativeName, string $Flag, bool $Enabled = \fCtrue\fP)\fC [static]\fP"
 Create a new language 
 .PP
 \fBParameters\fP
@@ -62,7 +62,7 @@ Create a new language
 .PP
 \fBReturns\fP
 .RS 4
-boolean TRUE if action was successful 
+bool TRUE if action was successful 
 .RE
 .PP
 
@@ -78,7 +78,7 @@ Fetches all languages
 .PP
 \fBReturns\fP
 .RS 4
-boolean|array|\\crisp\\api\\Language with all languages 
+bool|array|\\crisp\\api\\Language with all languages 
 .RE
 .PP
 
@@ -96,7 +96,7 @@ Fetches a language by country code
 .PP
 \fBReturns\fP
 .RS 4
-boolean|\\crisp\\api\\Language|array with the language 
+bool|\\crisp\\api\\Language|array with the language 
 .RE
 .PP
 
@@ -114,7 +114,7 @@ Fetches a language by ID
 .PP
 \fBReturns\fP
 .RS 4
-boolean|\\crisp\\api\\Language|array with the language 
+bool|\\crisp\\api\\Language|array with the language 
 .RE
 .PP
 

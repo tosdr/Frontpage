@@ -108,8 +108,8 @@ Public Member Functions</h2></td></tr>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a42058cdda12f0f8ffe5773e981dc78af"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcrisp_1_1api_1_1lists_1_1_languages.html#a42058cdda12f0f8ffe5773e981dc78af">fetchLanguages</a> ($FetchIntoClass=true)</td></tr>
 <tr class="separator:a42058cdda12f0f8ffe5773e981dc78af"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a900d93b4a684a483b5b18e7016f7d9e1"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcrisp_1_1api_1_1lists_1_1_languages.html#a900d93b4a684a483b5b18e7016f7d9e1">createLanguage</a> ($Name, $Code, $NativeName, $Flag, $Enabled=true)</td></tr>
-<tr class="separator:a900d93b4a684a483b5b18e7016f7d9e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aead24ecd9aa5e0d43b3c655fe8c4394c"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcrisp_1_1api_1_1lists_1_1_languages.html#aead24ecd9aa5e0d43b3c655fe8c4394c">createLanguage</a> (string $Name, string $Code, string $NativeName, string $Flag, bool $Enabled=true)</td></tr>
+<tr class="separator:aead24ecd9aa5e0d43b3c655fe8c4394c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aff95299f239623b016ba91b491562416"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcrisp_1_1api_1_1lists_1_1_languages.html#aff95299f239623b016ba91b491562416">getLanguageByCode</a> ($Code, $FetchIntoClass=true)</td></tr>
 <tr class="separator:aff95299f239623b016ba91b491562416"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a49ca481d49201e48422674385d93aee7"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcrisp_1_1api_1_1lists_1_1_languages.html#a49ca481d49201e48422674385d93aee7">getLanguageByID</a> ($ID, $FetchIntoClass=true)</td></tr>
@@ -140,8 +140,8 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a900d93b4a684a483b5b18e7016f7d9e1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a900d93b4a684a483b5b18e7016f7d9e1">&#9670;&nbsp;</a></span>createLanguage()</h2>
+<a id="aead24ecd9aa5e0d43b3c655fe8c4394c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aead24ecd9aa5e0d43b3c655fe8c4394c">&#9670;&nbsp;</a></span>createLanguage()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -152,31 +152,31 @@ Static Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">static createLanguage </td>
           <td>(</td>
-          <td class="paramtype">&#160;</td>
+          <td class="paramtype">string&#160;</td>
           <td class="paramname"><em>$Name</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">&#160;</td>
+          <td class="paramtype">string&#160;</td>
           <td class="paramname"><em>$Code</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">&#160;</td>
+          <td class="paramtype">string&#160;</td>
           <td class="paramname"><em>$NativeName</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">&#160;</td>
+          <td class="paramtype">string&#160;</td>
           <td class="paramname"><em>$Flag</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">&#160;</td>
+          <td class="paramtype">bool&#160;</td>
           <td class="paramname"><em>$Enabled</em> = <code>true</code>&#160;</td>
         </tr>
         <tr>
@@ -193,15 +193,15 @@ Static Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Create a new language </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramtype">type</td><td class="paramname">$Name</td><td>The name of the language </td></tr>
-    <tr><td class="paramtype">type</td><td class="paramname">$Code</td><td>The letter code of the language e.g. en-US, de, es, ru </td></tr>
-    <tr><td class="paramtype">type</td><td class="paramname">$NativeName</td><td>How is the language called in the native tongue? </td></tr>
-    <tr><td class="paramtype">type</td><td class="paramname">$Flag</td><td>Path to the flag image on the server </td></tr>
-    <tr><td class="paramtype">type</td><td class="paramname">$Enabled</td><td>Enable/disable the language </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$Name</td><td>The name of the language </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$Code</td><td>The letter code of the language e.g. en-US, de, es, ru </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$NativeName</td><td>How is the language called in the native tongue? </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$Flag</td><td>Path to the flag image on the server </td></tr>
+    <tr><td class="paramtype">bool</td><td class="paramname">$Enabled</td><td>Enable/disable the language </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>boolean TRUE if action was successful </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>bool TRUE if action was successful </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="_languages_8php_source.html#l00075">75</a> of file <a class="el" href="_languages_8php_source.html">Languages.php</a>.</p>
 
@@ -232,11 +232,11 @@ Static Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Fetches all languages </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramtype">boolean</td><td class="paramname">$FetchIntoClass</td><td>Should we fetch the result into new \crisp\api\Language()? </td></tr>
+    <tr><td class="paramtype">bool</td><td class="paramname">$FetchIntoClass</td><td>Should we fetch the result into new \crisp\api\Language()? </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>boolean|array|\crisp\api\Language with all languages </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>bool|array|\crisp\api\Language with all languages </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="_languages_8php_source.html#l00048">48</a> of file <a class="el" href="_languages_8php_source.html">Languages.php</a>.</p>
 
@@ -282,7 +282,7 @@ Static Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>boolean|\crisp\api\Language|array with the language </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>bool|\crisp\api\Language|array with the language </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="_languages_8php_source.html#l00113">113</a> of file <a class="el" href="_languages_8php_source.html">Languages.php</a>.</p>
 
@@ -328,7 +328,7 @@ Static Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>boolean|\crisp\api\Language|array with the language </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>bool|\crisp\api\Language|array with the language </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="_languages_8php_source.html#l00139">139</a> of file <a class="el" href="_languages_8php_source.html">Languages.php</a>.</p>
 
@@ -343,7 +343,7 @@ Static Public Member Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespacecrisp.html">crisp</a></li><li class="navelem"><a class="el" href="namespacecrisp_1_1api.html">api</a></li><li class="navelem"><a class="el" href="namespacecrisp_1_1api_1_1lists.html">lists</a></li><li class="navelem"><a class="el" href="classcrisp_1_1api_1_1lists_1_1_languages.html">Languages</a></li>
-    <li class="footer">Generated on Sat Dec 26 2020 02:01:25 for CrispCMS Plugin API by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
+    <li class="footer">Generated on Sat Dec 26 2020 02:05:15 for CrispCMS Plugin API by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>
 </body>

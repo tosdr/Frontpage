@@ -16,7 +16,7 @@ Inheritance diagram for Languages\+:\begin{figure}[H]
 \item 
 static \mbox{\hyperlink{classcrisp_1_1api_1_1lists_1_1_languages_a42058cdda12f0f8ffe5773e981dc78af}{fetch\+Languages}} (\$Fetch\+Into\+Class=true)
 \item 
-static \mbox{\hyperlink{classcrisp_1_1api_1_1lists_1_1_languages_a900d93b4a684a483b5b18e7016f7d9e1}{create\+Language}} (\$Name, \$Code, \$Native\+Name, \$Flag, \$Enabled=true)
+static \mbox{\hyperlink{classcrisp_1_1api_1_1lists_1_1_languages_aead24ecd9aa5e0d43b3c655fe8c4394c}{create\+Language}} (string \$Name, string \$Code, string \$Native\+Name, string \$Flag, bool \$Enabled=true)
 \item 
 static \mbox{\hyperlink{classcrisp_1_1api_1_1lists_1_1_languages_aff95299f239623b016ba91b491562416}{get\+Language\+By\+Code}} (\$Code, \$Fetch\+Into\+Class=true)
 \item 
@@ -45,27 +45,27 @@ Definition at line 34 of file Languages.\+php.
 
 
 \doxysubsection{Member Function Documentation}
-\mbox{\Hypertarget{classcrisp_1_1api_1_1lists_1_1_languages_a900d93b4a684a483b5b18e7016f7d9e1}\label{classcrisp_1_1api_1_1lists_1_1_languages_a900d93b4a684a483b5b18e7016f7d9e1}} 
+\mbox{\Hypertarget{classcrisp_1_1api_1_1lists_1_1_languages_aead24ecd9aa5e0d43b3c655fe8c4394c}\label{classcrisp_1_1api_1_1lists_1_1_languages_aead24ecd9aa5e0d43b3c655fe8c4394c}} 
 \index{Languages@{Languages}!createLanguage@{createLanguage}}
 \index{createLanguage@{createLanguage}!Languages@{Languages}}
 \doxysubsubsection{\texorpdfstring{createLanguage()}{createLanguage()}}
-{\footnotesize\ttfamily static create\+Language (\begin{DoxyParamCaption}\item[{}]{\$\+Name,  }\item[{}]{\$\+Code,  }\item[{}]{\$\+Native\+Name,  }\item[{}]{\$\+Flag,  }\item[{}]{\$\+Enabled = {\ttfamily true} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+{\footnotesize\ttfamily static create\+Language (\begin{DoxyParamCaption}\item[{string}]{\$\+Name,  }\item[{string}]{\$\+Code,  }\item[{string}]{\$\+Native\+Name,  }\item[{string}]{\$\+Flag,  }\item[{bool}]{\$\+Enabled = {\ttfamily true} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
 Create a new language 
 \begin{DoxyParams}[1]{Parameters}
-type & {\em \$\+Name} & The name of the language \\
+string & {\em \$\+Name} & The name of the language \\
 \hline
-type & {\em \$\+Code} & The letter code of the language e.\+g. en-\/\+US, de, es, ru \\
+string & {\em \$\+Code} & The letter code of the language e.\+g. en-\/\+US, de, es, ru \\
 \hline
-type & {\em \$\+Native\+Name} & How is the language called in the native tongue? \\
+string & {\em \$\+Native\+Name} & How is the language called in the native tongue? \\
 \hline
-type & {\em \$\+Flag} & Path to the flag image on the server \\
+string & {\em \$\+Flag} & Path to the flag image on the server \\
 \hline
-type & {\em \$\+Enabled} & Enable/disable the language \\
+bool & {\em \$\+Enabled} & Enable/disable the language \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-boolean T\+R\+UE if action was successful 
+bool T\+R\+UE if action was successful 
 \end{DoxyReturn}
 
 
@@ -79,11 +79,11 @@ Definition at line 75 of file Languages.\+php.
 
 Fetches all languages 
 \begin{DoxyParams}[1]{Parameters}
-boolean & {\em \$\+Fetch\+Into\+Class} & Should we fetch the result into new \textbackslash{}crisp\textbackslash{}api\textbackslash{}\+Language()? \\
+bool & {\em \$\+Fetch\+Into\+Class} & Should we fetch the result into new \textbackslash{}crisp\textbackslash{}api\textbackslash{}\+Language()? \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-boolean$\vert$array$\vert$\textbackslash{}crisp\textbackslash{}api\textbackslash{}\+Language with all languages 
+bool$\vert$array$\vert$\textbackslash{}crisp\textbackslash{}api\textbackslash{}\+Language with all languages 
 \end{DoxyReturn}
 
 
@@ -103,7 +103,7 @@ type & {\em \$\+Fetch\+Into\+Class} & Should we fetch the result into new \textb
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-boolean$\vert$\textbackslash{}crisp\textbackslash{}api\textbackslash{}\+Language$\vert$array with the language 
+bool$\vert$\textbackslash{}crisp\textbackslash{}api\textbackslash{}\+Language$\vert$array with the language 
 \end{DoxyReturn}
 
 
@@ -123,7 +123,7 @@ type & {\em \$\+ID} & The database ID of the language \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-boolean$\vert$\textbackslash{}crisp\textbackslash{}api\textbackslash{}\+Language$\vert$array with the language 
+bool$\vert$\textbackslash{}crisp\textbackslash{}api\textbackslash{}\+Language$\vert$array with the language 
 \end{DoxyReturn}
 
 

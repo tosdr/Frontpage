@@ -33,11 +33,11 @@ Inheritance diagram for Language\+:\begin{figure}[H]
 \item 
 \mbox{\hyperlink{classcrisp_1_1api_1_1_language_a288c91ba56af1e2a57e48043d799d529}{get\+Native\+Name}} ()
 \item 
-\mbox{\hyperlink{classcrisp_1_1api_1_1_language_ada8821ebd1ecaa66dacd691e2a342b88}{delete\+Translation}} (\$Key)
+\mbox{\hyperlink{classcrisp_1_1api_1_1_language_a18d75736fd69bbba84ba5aa75fb702a2}{delete\+Translation}} (string \$Key)
 \item 
-\mbox{\hyperlink{classcrisp_1_1api_1_1_language_ae160b823dc298cd7d331531f9c4e1b49}{edit\+Translation}} (\$Key, \$Value)
+\mbox{\hyperlink{classcrisp_1_1api_1_1_language_adfee32e203d4024721d158c5a2dba786}{edit\+Translation}} (string \$Key, string \$Value)
 \item 
-\mbox{\hyperlink{classcrisp_1_1api_1_1_language_a1e53bbf3b11ba298384363289f533576}{new\+Translation}} (\$Key, \$Value)
+\mbox{\hyperlink{classcrisp_1_1api_1_1_language_a2b0ce04b6f797dba362439e3d0175749}{new\+Translation}} (string \$Key, string \$Value)
 \item 
 \mbox{\hyperlink{classcrisp_1_1api_1_1_language_af5b5bcbcf3f41b30df5f84c68994c9fc}{set\+Flag}} (string \$Flag)
 \item 
@@ -74,15 +74,23 @@ Definition at line 36 of file Language.\+php.
 
 
 \doxysubsection{Member Function Documentation}
-\mbox{\Hypertarget{classcrisp_1_1api_1_1_language_ada8821ebd1ecaa66dacd691e2a342b88}\label{classcrisp_1_1api_1_1_language_ada8821ebd1ecaa66dacd691e2a342b88}} 
+\mbox{\Hypertarget{classcrisp_1_1api_1_1_language_a18d75736fd69bbba84ba5aa75fb702a2}\label{classcrisp_1_1api_1_1_language_a18d75736fd69bbba84ba5aa75fb702a2}} 
 \index{Language@{Language}!deleteTranslation@{deleteTranslation}}
 \index{deleteTranslation@{deleteTranslation}!Language@{Language}}
 \doxysubsubsection{\texorpdfstring{deleteTranslation()}{deleteTranslation()}}
-{\footnotesize\ttfamily delete\+Translation (\begin{DoxyParamCaption}\item[{}]{\$\+Key }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily delete\+Translation (\begin{DoxyParamCaption}\item[{string}]{\$\+Key }\end{DoxyParamCaption})}
+
+Delete a translation key 
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$\+Key} & The translation key \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bool 
+\end{DoxyReturn}
 
 
-
-Definition at line 206 of file Language.\+php.
+Definition at line 211 of file Language.\+php.
 
 \mbox{\Hypertarget{classcrisp_1_1api_1_1_language_a545341e59cc9a0dafc4e265d60d4b5d6}\label{classcrisp_1_1api_1_1_language_a545341e59cc9a0dafc4e265d60d4b5d6}} 
 \index{Language@{Language}!disable@{disable}}
@@ -100,15 +108,25 @@ boolean
 
 Definition at line 80 of file Language.\+php.
 
-\mbox{\Hypertarget{classcrisp_1_1api_1_1_language_ae160b823dc298cd7d331531f9c4e1b49}\label{classcrisp_1_1api_1_1_language_ae160b823dc298cd7d331531f9c4e1b49}} 
+\mbox{\Hypertarget{classcrisp_1_1api_1_1_language_adfee32e203d4024721d158c5a2dba786}\label{classcrisp_1_1api_1_1_language_adfee32e203d4024721d158c5a2dba786}} 
 \index{Language@{Language}!editTranslation@{editTranslation}}
 \index{editTranslation@{editTranslation}!Language@{Language}}
 \doxysubsubsection{\texorpdfstring{editTranslation()}{editTranslation()}}
-{\footnotesize\ttfamily edit\+Translation (\begin{DoxyParamCaption}\item[{}]{\$\+Key,  }\item[{}]{\$\+Value }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily edit\+Translation (\begin{DoxyParamCaption}\item[{string}]{\$\+Key,  }\item[{string}]{\$\+Value }\end{DoxyParamCaption})}
+
+Edit a translation key 
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$\+Key} & The translation key \\
+\hline
+string & {\em \$\+Value} & The new value to set \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bool 
+\end{DoxyReturn}
 
 
-
-Definition at line 215 of file Language.\+php.
+Definition at line 226 of file Language.\+php.
 
 \mbox{\Hypertarget{classcrisp_1_1api_1_1_language_a91e658a6e3fccc3028f2d71122bc4b8f}\label{classcrisp_1_1api_1_1_language_a91e658a6e3fccc3028f2d71122bc4b8f}} 
 \index{Language@{Language}!enable@{enable}}
@@ -176,7 +194,7 @@ string The current path of the flag
 \end{DoxyReturn}
 
 
-Definition at line 256 of file Language.\+php.
+Definition at line 273 of file Language.\+php.
 
 \mbox{\Hypertarget{classcrisp_1_1api_1_1_language_a3d0963e68bb313b163a73f2803c64600}\label{classcrisp_1_1api_1_1_language_a3d0963e68bb313b163a73f2803c64600}} 
 \index{Language@{Language}!getName@{getName}}
@@ -217,15 +235,25 @@ boolean
 
 Definition at line 93 of file Language.\+php.
 
-\mbox{\Hypertarget{classcrisp_1_1api_1_1_language_a1e53bbf3b11ba298384363289f533576}\label{classcrisp_1_1api_1_1_language_a1e53bbf3b11ba298384363289f533576}} 
+\mbox{\Hypertarget{classcrisp_1_1api_1_1_language_a2b0ce04b6f797dba362439e3d0175749}\label{classcrisp_1_1api_1_1_language_a2b0ce04b6f797dba362439e3d0175749}} 
 \index{Language@{Language}!newTranslation@{newTranslation}}
 \index{newTranslation@{newTranslation}!Language@{Language}}
 \doxysubsubsection{\texorpdfstring{newTranslation()}{newTranslation()}}
-{\footnotesize\ttfamily new\+Translation (\begin{DoxyParamCaption}\item[{}]{\$\+Key,  }\item[{}]{\$\+Value }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily new\+Translation (\begin{DoxyParamCaption}\item[{string}]{\$\+Key,  }\item[{string}]{\$\+Value }\end{DoxyParamCaption})}
+
+Create a new translation key 
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$\+Key} & The translation key to create \\
+\hline
+string & {\em \$\+Value} & The translation text \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bool 
+\end{DoxyReturn}
 
 
-
-Definition at line 225 of file Language.\+php.
+Definition at line 242 of file Language.\+php.
 
 \mbox{\Hypertarget{classcrisp_1_1api_1_1_language_a95444594a3c8e26bc5c91d8b1747b2cd}\label{classcrisp_1_1api_1_1_language_a95444594a3c8e26bc5c91d8b1747b2cd}} 
 \index{Language@{Language}!setCode@{setCode}}
@@ -261,7 +289,7 @@ boolean T\+R\+UE if successfully set, otherwise false
 \end{DoxyReturn}
 
 
-Definition at line 243 of file Language.\+php.
+Definition at line 260 of file Language.\+php.
 
 \mbox{\Hypertarget{classcrisp_1_1api_1_1_language_a46b5aa9e8b383ec6b6a667cead4c9010}\label{classcrisp_1_1api_1_1_language_a46b5aa9e8b383ec6b6a667cead4c9010}} 
 \index{Language@{Language}!setName@{setName}}

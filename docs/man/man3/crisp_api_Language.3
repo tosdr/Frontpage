@@ -48,13 +48,13 @@ Inherits \fBLanguages\fP\&.
 .RI "\fBgetNativeName\fP ()"
 .br
 .ti -1c
-.RI "\fBdeleteTranslation\fP ($Key)"
+.RI "\fBdeleteTranslation\fP (string $Key)"
 .br
 .ti -1c
-.RI "\fBeditTranslation\fP ($Key, $Value)"
+.RI "\fBeditTranslation\fP (string $Key, string $Value)"
 .br
 .ti -1c
-.RI "\fBnewTranslation\fP ($Key, $Value)"
+.RI "\fBnewTranslation\fP (string $Key, string $Value)"
 .br
 .ti -1c
 .RI "\fBsetFlag\fP (string $Flag)"
@@ -87,10 +87,22 @@ Definition at line 30 of file Language\&.php\&.
 Definition at line 36 of file Language\&.php\&.
 .SH "Member Function Documentation"
 .PP 
-.SS "deleteTranslation ( $Key)"
+.SS "deleteTranslation (string $Key)"
+Delete a translation key 
+.PP
+\fBParameters\fP
+.RS 4
+\fI$Key\fP The translation key 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+bool 
+.RE
+.PP
 
 .PP
-Definition at line 206 of file Language\&.php\&.
+Definition at line 211 of file Language\&.php\&.
 .SS "disable ()"
 Disables a language 
 .PP
@@ -107,10 +119,24 @@ boolean
 
 .PP
 Definition at line 80 of file Language\&.php\&.
-.SS "editTranslation ( $Key,  $Value)"
+.SS "editTranslation (string $Key, string $Value)"
+Edit a translation key 
+.PP
+\fBParameters\fP
+.RS 4
+\fI$Key\fP The translation key 
+.br
+\fI$Value\fP The new value to set 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+bool 
+.RE
+.PP
 
 .PP
-Definition at line 215 of file Language\&.php\&.
+Definition at line 226 of file Language\&.php\&.
 .SS "enable ()"
 Enables a language 
 .PP
@@ -170,7 +196,7 @@ string The current path of the flag
 .PP
 
 .PP
-Definition at line 256 of file Language\&.php\&.
+Definition at line 273 of file Language\&.php\&.
 .SS "getName ()"
 Gets the name of the language 
 .PP
@@ -204,10 +230,24 @@ boolean
 
 .PP
 Definition at line 93 of file Language\&.php\&.
-.SS "newTranslation ( $Key,  $Value)"
+.SS "newTranslation (string $Key, string $Value)"
+Create a new translation key 
+.PP
+\fBParameters\fP
+.RS 4
+\fI$Key\fP The translation key to create 
+.br
+\fI$Value\fP The translation text 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+bool 
+.RE
+.PP
 
 .PP
-Definition at line 225 of file Language\&.php\&.
+Definition at line 242 of file Language\&.php\&.
 .SS "setCode (string $Code)"
 Sets the code of the language 
 .PP
@@ -239,7 +279,7 @@ boolean TRUE if successfully set, otherwise false
 .PP
 
 .PP
-Definition at line 243 of file Language\&.php\&.
+Definition at line 260 of file Language\&.php\&.
 .SS "setName (string $Name)"
 Sets a new name for the language 
 .PP

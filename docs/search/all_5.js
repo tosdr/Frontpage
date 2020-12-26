@@ -14,7 +14,7 @@ var searchData=
   ['deleteconfig_49',['deleteConfig',['../classcrisp_1_1core_1_1_plugin.html#a634c5a35aa0260a186ed21b57f91a8cd',1,'crisp::core::Plugin']]],
   ['deletedata_50',['deleteData',['../classcrisp_1_1core_1_1_plugins.html#a29683f4ed4f98a71f97ac46418824404',1,'crisp\core\Plugins\deleteData()'],['../classcrisp_1_1core_1_1_themes.html#a9cc2e74aa61359d970837e0b91e5099c',1,'crisp\core\Themes\deleteData()']]],
   ['deleteold_51',['deleteOld',['../classcrisp_1_1api_1_1lists_1_1_cron.html#aaa61a9dcc03e0b7e8aac8b350c08bae9',1,'crisp::api::lists::Cron']]],
-  ['deletetranslation_52',['deleteTranslation',['../classcrisp_1_1api_1_1_language.html#ada8821ebd1ecaa66dacd691e2a342b88',1,'crisp::api::Language']]],
+  ['deletetranslation_52',['deleteTranslation',['../classcrisp_1_1api_1_1_language.html#a18d75736fd69bbba84ba5aa75fb702a2',1,'crisp::api::Language']]],
   ['deprecated_20list_53',['Deprecated List',['../deprecated.html',1,'']]],
   ['dev_2edox_54',['dev.dox',['../dev_8dox.html',1,'']]],
   ['developing_20plugins_55',['Developing Plugins',['../devplugin.html',1,'']]],

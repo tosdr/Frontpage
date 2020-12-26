@@ -30,5 +30,16 @@
     "help_expanding": "Aidez-nous à étendre cette liste en contribuant sur Phoenix !",
     "imprint": "Impression",
     "imprint_container_p_1": "Ce projet est soutenu par l'association ToS;DR <a href=\"http://1901.tosdr.org\"> loi de 1901 en France</a>. Certains des droits et financements liés au projet sont gérés par l'association, mais pas tous.\n<br>Le projet ToS;DR en lui-même n'est pas une personnalité juridique. ",
-    "legal": "Mentions Légales"
+    "legal": "Mentions Légales",
+    "navbar_item_about": "À propos de nous",
+    "navbar_item_api": "API",
+    "navbar_item_download": "Télécharger les extensions",
+    "navbar_item_forum": "Forum",
+    "navbar_item_home": "Accueil",
+    "navbar_item_ratings": "Évaluations",
+    "privacypolicy": "Politique de confidentialité",
+    "toc": "Conditions d'utilisation",
+    "view_documents": "Voir les documents",
+    "view_points": "Voir les points",
+    "view_source": "Voir le code-source"
 }

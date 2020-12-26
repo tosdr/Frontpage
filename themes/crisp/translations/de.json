@@ -54,5 +54,15 @@
     "classification_container_content": "<div class=\"container\" id=\"tosdr-content\" role=\"main\">\n\t\t\t\t\n        \t\t\t<p>\n        \t\t\t\tDie Nutzungsbedingungen werden von den Mitwirkenden überprüft und in kleine Punkte unterteilt, die wir diskutieren, vergleichen und schließlich mit einem Badge bewerten können: <br><span class=\"badge badge-success\"><i class=\"fas fa-thumbs-up\"></i> Gut</span>, <span class=\"badge badge-warning\"><i class=\"fas fa-thumbs-down\"></i> Schlecht</span>, <span class=\"badge-badge-danger\"><i class=\"fas fa-times\"></i> Blocker</span>, oder <span class=\"badge-secondary\"><i class=\"fas fa-arrow-right\"></i> Neutral</span>.\n        \t\t\t</p>\n        \t\t\t\n        \t\t\t<p>\n        \t\t\t\tSobald ein Dienst über genügend Badges verfügt, um die Fairness seiner Bedingungen für die Nutzer zu bewerten, wird automatisch eine Klasse zugewiesen, indem die durchschnittlichen Punktzahlen abgewogen werden.\n        \t\t\t</p>\n\t\t\t\t<p>\n\t\t\t\t\t<span class=\"label A\" style=\"vertical-align:middle\">Klasse A</span> sind die besten Bedingungen der Dienste: Sie behandeln Sie fair, respektieren Ihre Rechte und werden Ihre Daten nicht missbrauchen.\n\t\t\t\t</p>\n\t\t\t\t<p><span class=\"badge-ranking-B\">Klasse B</span>&nbsp; Die Nutzungsbedingungen sind fair gegenüber dem Nutzer, aber sie könnten verbessert werden.</p>\n\t\t\t\t<p><span class=\"badge-warning\">Klasse C</span>&nbsp; Die Nutzungsbedingungen sind in Ordnung, aber einige Punkte müssen berücksichtigt werden.</p>\n\t\t\t\t<p><span class=\"badge-ranking-D\">Klasse D</span>&nbsp; Die Nutzungsbedingungen sind sehr uneinheitlich oder es gibt einige wichtige Punkte, die Ihre Aufmerksamkeit erfordern.</p>\n\t\t\t\t<p><span class=\"badge-danger\">Klasse E</span>&nbsp; Die Nutzungsbedingungen geben Anlass zu sehr ernsten Bedenken.</p>\n\t\t\t\t<p><span class=\"badge-secondary\">Noch keine Klasse</span>&nbsp; Wir haben die Bedingungen noch nicht ausreichend geprüft.\n\t\t\t\n\t\t\t\n\t\t\t</p><section id=\"status\">\n\t\t\t\t<p>\n\t\t\t\t\tIm Moment werden Sie feststellen, dass nicht vielen Diensten eine Klasse zugeordnet ist. Das liegt daran, dass wir mehr Daten und mehr Überprüfungen benötigen, bevor wir mit der Zuweisung beginnen können. Außerdem experimentieren wir noch damit, wie wir die Klassen anwenden können.\n\t\t\t\t</p>\n\t\t\t</section>\n\t\t\n\t\t\n\t\t</div>",
     "classification_jumbotron_p_1": "ToS;DR zielt darauf ab, einen transparenten und von Fachleuten begutachteten Prozess zur Bewertung und Analyse von Nutzungsbedingungen und Datenschutzrichtlinien zu schaffen, um ein Rating von Klasse A bis Klasse E zu erstellen. ",
     "error_service_not_found_description": "Es wurde kein passender Dienst gefunden. Sie können einen Dienst in unserem Forum hinzufügen.<br><a href=\"https://forum.tosdr.org/request\">https://forum.tosdr.org/request</a>",
-    "imprint": "Impressum"
+    "imprint": "Impressum",
+    "language_native_en": "English",
+    "language_native_de": "Deutsch",
+    "language_native_fr": "Français",
+    "language_native_es_MX": "Español mexicano",
+    "language_en": "English",
+    "language_de": "Deutsch",
+    "language_fr": "Französisch",
+    "language_es_MX": "Spanisch Mexiko",
+    "language_es": "Spanisch",
+    "language_native_es": "Español"
 }

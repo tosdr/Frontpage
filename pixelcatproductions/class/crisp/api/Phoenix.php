@@ -149,10 +149,9 @@ class Phoenix {
         return $Result;
     }
 
-    
     /**
      * Get all documents by a service from postgres
-     * @see https://github.com/tosdr/edit.tosdr.org/blob/8b900bf8879b8ed3a4a2a6bbabbeafa7d2ab540c/db/schema.rb#L64-L77
+     * @see https://github.com/tosdr/edit.tosdr.org/blob/8b900bf8879b8ed3a4a2a6bbabbeafa7d2ab540c/db/schema.rb#L64-L77 Database Schema
      * @param string $ID The Service ID
      * @return array
      */
@@ -180,6 +179,12 @@ class Phoenix {
         return $Result;
     }
 
+    /**
+     * Gets details about a point from postgres
+     * @see https://github.com/tosdr/edit.tosdr.org/blob/8b900bf8879b8ed3a4a2a6bbabbeafa7d2ab540c/db/schema.rb#L89-L111 Database Schema
+     * @param string $ID The ID of a point
+     * @return array
+     */
     public static function getPointPG(string $ID) {
         if (self::$Redis_Database_Connection === NULL) {
             self::initDB();
@@ -250,6 +255,12 @@ class Phoenix {
         throw new \Exception("Failed to contact REDIS");
     }
 
+    /**
+     * Gets details about a case from postgres
+     * @see https://github.com/tosdr/edit.tosdr.org/blob/8b900bf8879b8ed3a4a2a6bbabbeafa7d2ab540c/db/schema.rb#L42-L52 Database Schema
+     * @param string $ID The id of a case
+     * @return array
+     */
     public static function getCasePG(string $ID) {
         if (self::$Redis_Database_Connection === NULL) {
             self::initDB();
@@ -321,6 +332,12 @@ class Phoenix {
         throw new \Exception("Failed to contact REDIS");
     }
 
+    /**
+     * Gets details about a topic from postgres
+     * @see https://github.com/tosdr/edit.tosdr.org/blob/8b900bf8879b8ed3a4a2a6bbabbeafa7d2ab540c/db/schema.rb#L170-L177 Database Schema
+     * @param string $ID The topic id
+     * @return array
+     */
     public static function getTopicPG(string $ID) {
         if (self::$Postgres_Database_Connection === NULL) {
             self::initDB();
@@ -419,6 +436,12 @@ class Phoenix {
         throw new \Exception("Service is not initialized!");
     }
 
+    /**
+     * Search for a service via postgres
+     * @see https://github.com/tosdr/edit.tosdr.org/blob/8b900bf8879b8ed3a4a2a6bbabbeafa7d2ab540c/db/schema.rb#L134-L148 Database Schema
+     * @param string $Name The name of a service
+     * @return array
+     */
     public static function searchServiceByNamePG(string $Name) {
         if (self::$Postgres_Database_Connection === NULL) {
             self::initDB();
@@ -456,6 +479,12 @@ class Phoenix {
         return $response;
     }
 
+    /**
+     * Get details of a service from postgres via a slug
+     * @see https://github.com/tosdr/edit.tosdr.org/blob/8b900bf8879b8ed3a4a2a6bbabbeafa7d2ab540c/db/schema.rb#L134-L148 Database Schema
+     * @param string $Name The slug of a service
+     * @return array
+     */
     public static function getServiceBySlugPG(string $Name) {
         if (self::$Postgres_Database_Connection === NULL) {
             self::initDB();
@@ -480,6 +509,12 @@ class Phoenix {
         return $Result;
     }
 
+    /**
+     * Get details of a service via postgres by name
+     * @see https://github.com/tosdr/edit.tosdr.org/blob/8b900bf8879b8ed3a4a2a6bbabbeafa7d2ab540c/db/schema.rb#L134-L148 Database Schema
+     * @param string $Name the exact name of the service
+     * @return array
+     */
     public static function getServiceByNamePG(string $Name) {
         if (self::$Postgres_Database_Connection === NULL) {
             self::initDB();
@@ -510,6 +545,11 @@ class Phoenix {
         return $response;
     }
 
+    /**
+     * Check if a service exists from postgres via slug
+     * @param string $Name The slug of the service
+     * @return bool
+     */
     public static function serviceExistsBySlugPG(string $Name) {
         if (self::$Postgres_Database_Connection === NULL) {
             self::initDB();
@@ -534,6 +574,11 @@ class Phoenix {
         return $Result;
     }
 
+    /**
+     * Check if a service exists from postgres via name
+     * @param string $Name The name of the service
+     * @return bool
+     */
     public static function serviceExistsByNamePG(string $Name) {
         if (self::$Postgres_Database_Connection === NULL) {
             self::initDB();
@@ -588,6 +633,11 @@ class Phoenix {
         return self::$Redis_Database_Connection->exists(Config::get("phoenix_api_endpoint") . "/points/id/$ID");
     }
 
+    /**
+     * Check if a point exists from postgres via slug
+     * @param string $ID The id of the point
+     * @return bool
+     */
     public static function pointExistsPG(string $ID) {
         if (self::$Postgres_Database_Connection === NULL) {
             self::initDB();
@@ -612,6 +662,11 @@ class Phoenix {
         return $Result;
     }
 
+    /**
+     * Check if a service exists from postgres via the ID
+     * @param string $ID The ID of the service
+     * @return bool
+     */
     public static function serviceExistsPG(string $ID) {
         if (self::$Postgres_Database_Connection === NULL) {
             self::initDB();
@@ -742,6 +797,11 @@ class Phoenix {
         throw new \Exception("Failed to contact REDIS");
     }
 
+    /**
+     * List all topics from postgres
+     * @see https://github.com/tosdr/edit.tosdr.org/blob/8b900bf8879b8ed3a4a2a6bbabbeafa7d2ab540c/db/schema.rb#L170-L177 Database Schema
+     * @return array
+     */
     public static function getTopicsPG() {
         if (self::$Postgres_Database_Connection === NULL) {
             self::initDB();
@@ -807,6 +867,11 @@ class Phoenix {
         throw new \Exception("Failed to contact REDIS");
     }
 
+    /**
+     * List all cases from postgres
+     * @see https://github.com/tosdr/edit.tosdr.org/blob/8b900bf8879b8ed3a4a2a6bbabbeafa7d2ab540c/db/schema.rb#L42-L52 Database Schema
+     * @return array
+     */
     public static function getCasesPG() {
         if (self::$Redis_Database_Connection === NULL) {
             self::initDB();
@@ -873,6 +938,11 @@ class Phoenix {
         throw new \Exception("Failed to contact REDIS");
     }
 
+    /**
+     * List all services from postgres
+     * @see https://github.com/tosdr/edit.tosdr.org/blob/8b900bf8879b8ed3a4a2a6bbabbeafa7d2ab540c/db/schema.rb#L134-L148 Database Schema
+     * @return array
+     */
     public static function getServicesPG() {
         if (self::$Postgres_Database_Connection === NULL) {
             self::initDB();

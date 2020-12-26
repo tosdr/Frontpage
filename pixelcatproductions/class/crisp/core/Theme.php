@@ -87,6 +87,10 @@ class Theme {
 
                 echo $TwigTheme->render("views/$CurrentPage.twig", $_vars);
             } else {
+
+                $GLOBALS["microtime"]["logic"]["end"] = microtime(true);
+                $GLOBALS["microtime"]["template"]["start"] = microtime(true);
+                $TwigTheme->addGlobal("LogicMicroTime", ($GLOBALS["microtime"]["logic"]["end"] - $GLOBALS["microtime"]["logic"]["start"]));
                 http_response_code(404);
                 echo $TwigTheme->render("errors/404.twig", []);
             }

@@ -114,6 +114,11 @@ class Themes {
             return false;
         }
 
+        if (defined("CRISP_CLI")) {
+            echo "----------" . PHP_EOL;
+            echo "Installing translations for theme $ThemeName" . PHP_EOL;
+            echo "----------" . PHP_EOL;
+        }
 
         if (isset($ThemeMetadata->onInstall->createTranslationKeys) && is_string($ThemeMetadata->onInstall->createTranslationKeys)) {
 
@@ -122,6 +127,12 @@ class Themes {
 
                 $files = glob(__DIR__ . "/../../../../$ThemeFolder/$ThemeName/" . $ThemeMetadata->onInstall->createTranslationKeys . "*.{json}", GLOB_BRACE);
                 foreach ($files as $File) {
+
+                    if (defined("CRISP_CLI")) {
+                        echo "----------" . PHP_EOL;
+                        echo "Installing language " . substr(basename($File), 0, -5) . PHP_EOL;
+                        echo "----------" . PHP_EOL;
+                    }
                     if (!file_exists($File)) {
                         continue;
                     }
@@ -133,6 +144,9 @@ class Themes {
 
                     foreach (json_decode(file_get_contents($File), true) as $Key => $Value) {
                         try {
+                            if (defined("CRISP_CLI")) {
+                                echo "Installing key $Key" . PHP_EOL;
+                            }
                             $Language->newTranslation($Key, $Value);
                         } catch (\PDOException $ex) {
                             continue 2;
@@ -280,22 +294,35 @@ class Themes {
         if (!\is_object($ThemeMetadata) && !isset($ThemeMetadata->hookFile)) {
             return false;
         }
-        if (isset($ThemeMetadata->onInstall->createTranslationKeys) && \is_object($ThemeMetadata->onInstall->createTranslationKeys)) {
-            foreach ($ThemeMetadata->onInstall->createTranslationKeys as $Key => $Value) {
-                try {
-                    $Language = \crisp\api\lists\Languages::getLanguageByCode($Key);
+        if (defined("CRISP_CLI")) {
+            echo "----------" . PHP_EOL;
+            echo "Uninstalling translations" . PHP_EOL;
+            echo "----------" . PHP_EOL;
+        }
+        try {
+            $Configs = \crisp\api\Translation::listTranslations();
 
-                    if (!$Language) {
-                        continue;
-                    }
 
-                    foreach ($Value as $KeyTranslation => $ValueTranslation) {
-                        $Language->deleteTranslation($KeyTranslation);
-                    }
-                } catch (\PDOException $ex) {
+            $Language = \crisp\api\lists\Languages::getLanguageByCode("en");
+
+            foreach ($Configs as $Key => $Translation) {
+                if (strpos($Translation["key"], "plugin_") !== false) {
                     continue;
                 }
+
+                if (defined("CRISP_CLI")) {
+                    echo "----------" . PHP_EOL;
+                    echo "Deleting key " . $Translation["key"] . PHP_EOL;
+                    echo "----------" . PHP_EOL;
+                }
+                if ($Language->deleteTranslation($Translation["key"])) {
+                    if (defined("CRISP_CLI")) {
+                        echo "Deleted Key " . $Translation["key"] . PHP_EOL;
+                    }
+                }
             }
+        } catch (\PDOException $ex) {
+            
         }
     }
 

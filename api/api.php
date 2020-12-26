@@ -4,7 +4,7 @@ header("Access-Control-Allow-Origin: *");
 define('CRISP_API', true);
 require_once __DIR__ . "/../pixelcatproductions/crisp.php";
 
-use PUGX\Poser\Render\SvgPlasticRender;
+use PUGX\Poser\Render\SvgFlatRender;
 use PUGX\Poser\Poser;
 
 $Query = $_GET["q"];
@@ -46,7 +46,7 @@ switch ($_GET["apiversion"]) {
         break;
     case "badgepng":
     case "badge":
-        $render = new SvgPlasticRender();
+        $render = new SvgFlatRender();
         $poser = new Poser($render);
         $Prefix = \crisp\api\Config::get("badge_prefix");
 
@@ -60,7 +60,7 @@ switch ($_GET["apiversion"]) {
                 $Color = "999999";
                 $Rating = "Service not found";
 
-                echo $poser->generate($Prefix, $Rating, $Color, 'plastic');
+                echo $poser->generate($Prefix, $Rating, $Color, 'flat');
                 return;
             }
             $RedisData = \crisp\api\Phoenix::getServiceBySlugPG($Query);
@@ -98,7 +98,7 @@ switch ($_GET["apiversion"]) {
             if (CURRENT_UNIVERSE >= crisp\Universe::UNIVERSE_DEV && isset($_GET["prefix"])) {
                 $Prefix = $_GET["prefix"];
             }
-            $SVG = $poser->generate($Prefix, $Rating, $Color, 'plastic');
+            $SVG = $poser->generate($Prefix, $Rating, $Color, 'flat');
 
             if (time() - filemtime(__DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"]) . ".svg") > 900) {
                 file_put_contents(__DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"]) . ".svg", $SVG);
@@ -136,7 +136,7 @@ switch ($_GET["apiversion"]) {
             $Color = "999999";
             $Rating = "Service not found";
 
-            echo $poser->generate($Prefix, $Rating, $Color, 'plastic');
+            echo $poser->generate($Prefix, $Rating, $Color, 'flat');
             return;
         }
         $RedisData = crisp\api\Phoenix::getServicePG($Query);
@@ -175,7 +175,7 @@ switch ($_GET["apiversion"]) {
         }
         header("Content-Type: image/svg+xml");
 
-        $SVG = $poser->generate($Prefix, $Rating, $Color, 'plastic');
+        $SVG = $poser->generate($Prefix, $Rating, $Color, 'flat');
 
         if (time() - filemtime(__DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"]) . ".svg") > 900) {
             file_put_contents(__DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"]) . ".svg", $SVG);

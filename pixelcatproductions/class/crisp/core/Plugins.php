@@ -207,11 +207,21 @@ class Plugins {
             return false;
         }
         if (isset($PluginMetadata->onInstall->createKVStorageItems) && \is_object($PluginMetadata->onInstall->createKVStorageItems)) {
+
+            if (defined("CRISP_CLI")) {
+                echo "----------" . PHP_EOL;
+                echo "Installing storage for plugin $PluginName" . PHP_EOL;
+                echo "----------" . PHP_EOL;
+            }
             foreach ($PluginMetadata->onInstall->createKVStorageItems as $Key => $Value) {
                 if (is_array($Value) || \is_object($Value)) {
                     $Value = \serialize($Value);
                 }
                 try {
+
+                    if (defined("CRISP_CLI")) {
+                        echo "Installing key $Key" . PHP_EOL;
+                    }
                     \crisp\api\Config::create("plugin_" . $PluginName . "_$Key", $Value);
                 } catch (\PDOException $ex) {
                     continue;
@@ -231,6 +241,11 @@ class Plugins {
         if (!\is_object($PluginMetadata) && !isset($PluginMetadata->hookFile)) {
             return false;
         }
+        if (defined("CRISP_CLI")) {
+            echo "----------" . PHP_EOL;
+            echo "Installing translations for plugin $PluginName" . PHP_EOL;
+            echo "----------" . PHP_EOL;
+        }
 
 
         if (isset($PluginMetadata->onInstall->createTranslationKeys) && is_string($PluginMetadata->onInstall->createTranslationKeys)) {
@@ -240,6 +255,12 @@ class Plugins {
 
                 $files = glob(__DIR__ . "/../../../../$PluginFolder/$PluginName/" . $PluginMetadata->onInstall->createTranslationKeys . "*.{json}", GLOB_BRACE);
                 foreach ($files as $File) {
+
+                    if (defined("CRISP_CLI")) {
+                        echo "----------" . PHP_EOL;
+                        echo "Installing language " . substr(basename($File), 0, -5) . PHP_EOL;
+                        echo "----------" . PHP_EOL;
+                    }
                     if (!file_exists($File)) {
                         continue;
                     }
@@ -251,6 +272,9 @@ class Plugins {
 
                     foreach (json_decode(file_get_contents($File), true) as $Key => $Value) {
                         try {
+                            if (defined("CRISP_CLI")) {
+                                echo "Installing translation $Key" . PHP_EOL;
+                            }
                             $Language->newTranslation("plugin_" . $PluginName . "_$Key", $Value);
                         } catch (\PDOException $ex) {
                             continue;
@@ -381,6 +405,9 @@ class Plugins {
         }
 
         if (isset($PluginMetadata->onInstall->createCron) && \is_array($PluginMetadata->onInstall->createCron)) {
+            if (defined("CRISP_CLI")) {
+                echo "Removing crons " . $PluginName . PHP_EOL;
+            }
             \crisp\api\lists\Cron::deleteByPlugin($PluginName);
         }
     }
@@ -395,9 +422,19 @@ class Plugins {
         if (!\is_object($PluginMetadata) && !isset($PluginMetadata->hookFile)) {
             return false;
         }
+
+        if (defined("CRISP_CLI")) {
+            echo "----------" . PHP_EOL;
+            echo "Installing crons for plugin $PluginName" . PHP_EOL;
+            echo "----------" . PHP_EOL;
+        }
         if (isset($PluginMetadata->onInstall->createCron) && \is_array($PluginMetadata->onInstall->createCron)) {
 
             foreach ($PluginMetadata->onInstall->createCron as $Cron) {
+
+                if (defined("CRISP_CLI")) {
+                    echo "Installing cron " . $Cron->type . PHP_EOL;
+                }
                 \crisp\api\lists\Cron::create("execute_plugin_cron", json_encode(array("data" => $Cron->data, "name" => $Cron->type)), $Cron->interval, $PluginName);
             }
         }
@@ -415,7 +452,14 @@ class Plugins {
         }
 
         foreach (self::listConfig($PluginName) as $Key => $Value) {
+            if (defined("CRISP_CLI")) {
+                echo "Deleting $Key" . PHP_EOL;
+            }
             \crisp\api\Config::delete($Key);
+
+            if (defined("CRISP_CLI")) {
+                echo "Deleted $Key" . PHP_EOL;
+            }
         }
 
         /*
@@ -477,7 +521,14 @@ class Plugins {
             return false;
         }
         $Language = \crisp\api\lists\Languages::getLanguageByCode("en");
+
+        if (defined("CRISP_CLI")) {
+            echo "Deleting translations for " . $PluginName . PHP_EOL;
+        }
         foreach (self::listTranslations($PluginName) as $Translation) {
+            if (defined("CRISP_CLI")) {
+                echo "Deleting translation " . $Translation["key"] . PHP_EOL;
+            }
             $Language->deleteTranslation($Translation["key"]);
         }
     }

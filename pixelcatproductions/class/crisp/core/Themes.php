@@ -27,6 +27,10 @@ class Themes {
 
     use \crisp\core\Hook;
 
+    /**
+     * Clear the theme cache
+     * @return boolean
+     */
     public static function clearCache() {
         $it = new \RecursiveDirectoryIterator(realpath(__DIR__ . "/../../../cache/"), \RecursiveDirectoryIterator::SKIP_DOTS);
         $files = new \RecursiveIteratorIterator($it,

@@ -52,7 +52,7 @@ class Postgres {
     }
 
     /**
-     * 
+     * Get the database connector
      * @return \PDO
      */
     public function getDBConnector() {

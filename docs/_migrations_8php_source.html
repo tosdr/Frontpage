@@ -174,9 +174,9 @@ $(document).ready(function(){initNavTree('_migrations_8php_source.html',''); ini
 <div class="line"><a name="l00121"></a><span class="lineno"><a class="line" href="classcrisp_1_1core_1_1_migrations.html#a40ee067b290f06bd50cf41affdeb60dd">  121</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="classcrisp_1_1core_1_1_migrations.html#a40ee067b290f06bd50cf41affdeb60dd">migrate</a>() {</div>
 <div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;        echo <span class="stringliteral">&quot;Starting Migration...&quot;</span> . PHP_EOL;</div>
 <div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;        $files = glob(__DIR__ . <span class="stringliteral">&#39;/../migrations/*.{php}&#39;</span>, GLOB_BRACE);</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;        </div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160; </div>
 <div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;        natsort($files);</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;        </div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160; </div>
 <div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;        <span class="keywordflow">foreach</span> ($files as $file) {</div>
 <div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;            <span class="keywordflow">if</span> (basename($file) == <span class="stringliteral">&quot;template.php&quot;</span>) {</div>
 <div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;                <span class="keywordflow">continue</span>;</div>
@@ -246,57 +246,71 @@ $(document).ready(function(){initNavTree('_migrations_8php_source.html',''); ini
 <div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;        <span class="keywordflow">throw</span> new \Exception($statement-&gt;errorInfo());</div>
 <div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;    }</div>
 <div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160; </div>
-<div class="line"><a name="l00220"></a><span class="lineno"><a class="line" href="classcrisp_1_1core_1_1_migrations.html#aaf75444fcad516385bd1c9106fa03385">  220</a></span>&#160;    <span class="keyword">protected</span> <span class="keyword">function</span> <a class="code" href="classcrisp_1_1core_1_1_migrations.html#aaf75444fcad516385bd1c9106fa03385">addColumn</a>(<span class="keywordtype">string</span> $Table, array $Column) {</div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;        echo <span class="stringliteral">&quot;Adding column to Table $Table...&quot;</span> . PHP_EOL;</div>
-<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;        $SQL = <span class="stringliteral">&quot;ALTER TABLE `$Table` ADD COLUMN `$Column[0]` $Column[1] $Column[2];&quot;</span>;</div>
+<div class="line"><a name="l00220"></a><span class="lineno"><a class="line" href="classcrisp_1_1core_1_1_migrations.html#a4d830d14a586e54da90d752e2fda8d0c">  220</a></span>&#160;    <span class="keyword">protected</span> <span class="keyword">function</span> <a class="code" href="classcrisp_1_1core_1_1_migrations.html#a4d830d14a586e54da90d752e2fda8d0c">dropColumn</a>(<span class="keywordtype">string</span> $Table, <span class="keywordtype">string</span> $Column) {</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;        echo <span class="stringliteral">&quot;Removing column from Table $Table...&quot;</span> . PHP_EOL;</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;        $SQL = <span class="stringliteral">&quot;ALTER TABLE `$Table` DROP COLUMN `$Column`&quot;</span>;</div>
 <div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160; </div>
 <div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;        $statement = $this-&gt;Database-&gt;prepare($SQL);</div>
 <div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160; </div>
 <div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;        <span class="keywordflow">if</span> ($statement-&gt;execute()) {</div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;            echo <span class="stringliteral">&quot;Added Column to Table $Table!&quot;</span> . PHP_EOL;</div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;            echo <span class="stringliteral">&quot;Removed Column from Table $Table!&quot;</span> . PHP_EOL;</div>
 <div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
 <div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;        }</div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;        echo <span class="stringliteral">&quot;Failed to add Column to Table $Table!&quot;</span> . PHP_EOL;</div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;        echo <span class="stringliteral">&quot;Failed to remove Column from Table $Table!&quot;</span> . PHP_EOL;</div>
 <div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;        <span class="keywordflow">throw</span> new \Exception($statement-&gt;errorInfo());</div>
 <div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;    }</div>
 <div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160; </div>
-<div class="line"><a name="l00242"></a><span class="lineno"><a class="line" href="classcrisp_1_1core_1_1_migrations.html#a770a5ffc1c2d35286bb2afbb17058724">  242</a></span>&#160;    <span class="keyword">protected</span> <span class="keyword">function</span> <a class="code" href="classcrisp_1_1core_1_1_migrations.html#a770a5ffc1c2d35286bb2afbb17058724">createTable</a>(<span class="keywordtype">string</span> $Table, ...$Columns) {</div>
-<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;        echo <span class="stringliteral">&quot;Creating Table $Table...&quot;</span> . PHP_EOL;</div>
-<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;        $SQL = <span class="stringliteral">&quot;CREATE TABLE `$Table` (&quot;</span>;</div>
-<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;        $AutoIncrement = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;        <span class="keywordflow">foreach</span> ($Columns as $Key =&gt; $Column) {</div>
-<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;            $Name = $Column[0];</div>
-<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;            $Type = $Column[1];</div>
-<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;            $Additional = $Column[2];</div>
-<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;            <span class="keywordflow">if</span> (strpos($Additional, <span class="stringliteral">&quot;AUTO_INCREMENT&quot;</span>) !== <span class="keyword">false</span>) {</div>
-<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;                $AutoIncrement = $Name;</div>
-<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;            }</div>
-<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;            $SQL .= <span class="stringliteral">&quot;`$Name` $Type $Additional,&quot;</span>;</div>
-<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;            <span class="keywordflow">if</span> ($Key == count($Columns) - 1) {</div>
-<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;                $SQL = substr($SQL, 0, -1);</div>
-<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;                <span class="keywordflow">if</span> ($AutoIncrement !== <span class="keyword">false</span>) {</div>
-<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;                    $SQL .= <span class="stringliteral">&quot;, KEY `$AutoIncrement` (`$AutoIncrement`)&quot;</span>;</div>
-<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;                }</div>
-<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;            }</div>
-<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;        }</div>
-<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;        $SQL .= <span class="stringliteral">&quot;) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4&quot;</span>;</div>
-<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160; </div>
-<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160; </div>
-<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;        $statement = $this-&gt;Database-&gt;prepare($SQL);</div>
-<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160; </div>
-<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;        <span class="keywordflow">if</span> ($statement-&gt;execute()) {</div>
-<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;            echo <span class="stringliteral">&quot;Creating Table $Table!&quot;</span> . PHP_EOL;</div>
-<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;        }</div>
-<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;        echo <span class="stringliteral">&quot;Failed to create Table $Table!&quot;</span> . PHP_EOL;</div>
-<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;        <span class="keywordflow">throw</span> new \Exception($statement-&gt;errorInfo());</div>
-<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;    }</div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160; </div>
-<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;}</div>
+<div class="line"><a name="l00242"></a><span class="lineno"><a class="line" href="classcrisp_1_1core_1_1_migrations.html#aaf75444fcad516385bd1c9106fa03385">  242</a></span>&#160;    <span class="keyword">protected</span> <span class="keyword">function</span> <a class="code" href="classcrisp_1_1core_1_1_migrations.html#aaf75444fcad516385bd1c9106fa03385">addColumn</a>(<span class="keywordtype">string</span> $Table, array $Column) {</div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;        echo <span class="stringliteral">&quot;Adding column to Table $Table...&quot;</span> . PHP_EOL;</div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;        $SQL = <span class="stringliteral">&quot;ALTER TABLE `$Table` ADD COLUMN `$Column[0]` $Column[1] $Column[2];&quot;</span>;</div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160; </div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;        $statement = $this-&gt;Database-&gt;prepare($SQL);</div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160; </div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;        <span class="keywordflow">if</span> ($statement-&gt;execute()) {</div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;            echo <span class="stringliteral">&quot;Added Column to Table $Table!&quot;</span> . PHP_EOL;</div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;        }</div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;        echo <span class="stringliteral">&quot;Failed to add Column to Table $Table!&quot;</span> . PHP_EOL;</div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;        <span class="keywordflow">throw</span> new \Exception($statement-&gt;errorInfo());</div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;    }</div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160; </div>
+<div class="line"><a name="l00264"></a><span class="lineno"><a class="line" href="classcrisp_1_1core_1_1_migrations.html#a770a5ffc1c2d35286bb2afbb17058724">  264</a></span>&#160;    <span class="keyword">protected</span> <span class="keyword">function</span> <a class="code" href="classcrisp_1_1core_1_1_migrations.html#a770a5ffc1c2d35286bb2afbb17058724">createTable</a>(<span class="keywordtype">string</span> $Table, ...$Columns) {</div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;        echo <span class="stringliteral">&quot;Creating Table $Table...&quot;</span> . PHP_EOL;</div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;        $SQL = <span class="stringliteral">&quot;CREATE TABLE `$Table` (&quot;</span>;</div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;        $AutoIncrement = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;        <span class="keywordflow">foreach</span> ($Columns as $Key =&gt; $Column) {</div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;            $Name = $Column[0];</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;            $Type = $Column[1];</div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;            $Additional = $Column[2];</div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;            <span class="keywordflow">if</span> (strpos($Additional, <span class="stringliteral">&quot;AUTO_INCREMENT&quot;</span>) !== <span class="keyword">false</span>) {</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;                $AutoIncrement = $Name;</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;            }</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;            $SQL .= <span class="stringliteral">&quot;`$Name` $Type $Additional,&quot;</span>;</div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;            <span class="keywordflow">if</span> ($Key == count($Columns) - 1) {</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;                $SQL = substr($SQL, 0, -1);</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;                <span class="keywordflow">if</span> ($AutoIncrement !== <span class="keyword">false</span>) {</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;                    $SQL .= <span class="stringliteral">&quot;, KEY `$AutoIncrement` (`$AutoIncrement`)&quot;</span>;</div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;                }</div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;            }</div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;        }</div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;        $SQL .= <span class="stringliteral">&quot;) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4&quot;</span>;</div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160; </div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160; </div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;        $statement = $this-&gt;Database-&gt;prepare($SQL);</div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160; </div>
+<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;        <span class="keywordflow">if</span> ($statement-&gt;execute()) {</div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;            echo <span class="stringliteral">&quot;Creating Table $Table!&quot;</span> . PHP_EOL;</div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;        }</div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;        echo <span class="stringliteral">&quot;Failed to create Table $Table!&quot;</span> . PHP_EOL;</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;        <span class="keywordflow">throw</span> new \Exception($statement-&gt;errorInfo());</div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;    }</div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160; </div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <div class="ttc" id="aclasscrisp_1_1core_1_1_migrations_html_a849312ca5cf92a8bb2b01a805b16d8b0"><div class="ttname"><a href="classcrisp_1_1core_1_1_migrations.html#a849312ca5cf92a8bb2b01a805b16d8b0">crisp\core\Migrations\DB_UNIQUEKEY</a></div><div class="ttdeci">const DB_UNIQUEKEY</div><div class="ttdef"><b>Definition:</b> <a href="_migrations_8php_source.html#l00045">Migrations.php:45</a></div></div>
-<div class="ttc" id="aclasscrisp_1_1core_1_1_migrations_html_aaf75444fcad516385bd1c9106fa03385"><div class="ttname"><a href="classcrisp_1_1core_1_1_migrations.html#aaf75444fcad516385bd1c9106fa03385">crisp\core\Migrations\addColumn</a></div><div class="ttdeci">addColumn(string $Table, array $Column)</div><div class="ttdef"><b>Definition:</b> <a href="_migrations_8php_source.html#l00220">Migrations.php:220</a></div></div>
+<div class="ttc" id="aclasscrisp_1_1core_1_1_migrations_html_aaf75444fcad516385bd1c9106fa03385"><div class="ttname"><a href="classcrisp_1_1core_1_1_migrations.html#aaf75444fcad516385bd1c9106fa03385">crisp\core\Migrations\addColumn</a></div><div class="ttdeci">addColumn(string $Table, array $Column)</div><div class="ttdef"><b>Definition:</b> <a href="_migrations_8php_source.html#l00242">Migrations.php:242</a></div></div>
 <div class="ttc" id="aclasscrisp_1_1core_1_1_migrations_html_aa1e26f723dce28fe8d7419a31a7c7cf1"><div class="ttname"><a href="classcrisp_1_1core_1_1_migrations.html#aa1e26f723dce28fe8d7419a31a7c7cf1">crisp\core\Migrations\DB_TIMESTAMP</a></div><div class="ttdeci">const DB_TIMESTAMP</div><div class="ttdef"><b>Definition:</b> <a href="_migrations_8php_source.html#l00039">Migrations.php:39</a></div></div>
 <div class="ttc" id="aclasscrisp_1_1core_1_1_migrations_html_a982f231793e2b157ed3a92a1948f18cf"><div class="ttname"><a href="classcrisp_1_1core_1_1_migrations.html#a982f231793e2b157ed3a92a1948f18cf">crisp\core\Migrations\DB_PRIMARYKEY</a></div><div class="ttdeci">const DB_PRIMARYKEY</div><div class="ttdef"><b>Definition:</b> <a href="_migrations_8php_source.html#l00044">Migrations.php:44</a></div></div>
 <div class="ttc" id="aclasscrisp_1_1core_1_1_migrations_html_acbee2aa4c29a42ddc49f0def501f987f"><div class="ttname"><a href="classcrisp_1_1core_1_1_migrations.html#acbee2aa4c29a42ddc49f0def501f987f">crisp\core\Migrations\DB_VARCHAR</a></div><div class="ttdeci">const DB_VARCHAR</div><div class="ttdef"><b>Definition:</b> <a href="_migrations_8php_source.html#l00036">Migrations.php:36</a></div></div>
@@ -305,13 +319,14 @@ $(document).ready(function(){initNavTree('_migrations_8php_source.html',''); ini
 <div class="ttc" id="aclasscrisp_1_1core_1_1_migrations_html_a095c5d389db211932136b53f25f39685"><div class="ttname"><a href="classcrisp_1_1core_1_1_migrations.html#a095c5d389db211932136b53f25f39685">crisp\core\Migrations\__construct</a></div><div class="ttdeci">__construct()</div><div class="ttdef"><b>Definition:</b> <a href="_migrations_8php_source.html#l00047">Migrations.php:47</a></div></div>
 <div class="ttc" id="aclasscrisp_1_1core_1_1_migrations_html"><div class="ttname"><a href="classcrisp_1_1core_1_1_migrations.html">crisp\core\Migrations</a></div><div class="ttdef"><b>Definition:</b> <a href="_migrations_8php_source.html#l00026">Migrations.php:26</a></div></div>
 <div class="ttc" id="aclasscrisp_1_1core_1_1_migrations_html_a817082ace0e2589d27b22890290aa4a9"><div class="ttname"><a href="classcrisp_1_1core_1_1_migrations.html#a817082ace0e2589d27b22890290aa4a9">crisp\core\Migrations\end</a></div><div class="ttdeci">end()</div><div class="ttdef"><b>Definition:</b> <a href="_migrations_8php_source.html#l00087">Migrations.php:87</a></div></div>
+<div class="ttc" id="aclasscrisp_1_1core_1_1_migrations_html_a4d830d14a586e54da90d752e2fda8d0c"><div class="ttname"><a href="classcrisp_1_1core_1_1_migrations.html#a4d830d14a586e54da90d752e2fda8d0c">crisp\core\Migrations\dropColumn</a></div><div class="ttdeci">dropColumn(string $Table, string $Column)</div><div class="ttdef"><b>Definition:</b> <a href="_migrations_8php_source.html#l00220">Migrations.php:220</a></div></div>
 <div class="ttc" id="aclasscrisp_1_1core_1_1_migrations_html_a3a9793666e688407121d76d3a7e4db5d"><div class="ttname"><a href="classcrisp_1_1core_1_1_migrations.html#a3a9793666e688407121d76d3a7e4db5d">crisp\core\Migrations\begin</a></div><div class="ttdeci">begin()</div><div class="ttdef"><b>Definition:</b> <a href="_migrations_8php_source.html#l00057">Migrations.php:57</a></div></div>
 <div class="ttc" id="aclasscrisp_1_1core_1_1_migrations_html_afb1c31820e997466c52bf2e9c7b4c5e0"><div class="ttname"><a href="classcrisp_1_1core_1_1_migrations.html#afb1c31820e997466c52bf2e9c7b4c5e0">crisp\core\Migrations\DB_LONGTEXT</a></div><div class="ttdeci">const DB_LONGTEXT</div><div class="ttdef"><b>Definition:</b> <a href="_migrations_8php_source.html#l00041">Migrations.php:41</a></div></div>
 <div class="ttc" id="aclasscrisp_1_1core_1_1_migrations_html_a13e00c30f133e532a23d23729ff66dbc"><div class="ttname"><a href="classcrisp_1_1core_1_1_migrations.html#a13e00c30f133e532a23d23729ff66dbc">crisp\core\Migrations\$Database</a></div><div class="ttdeci">PDO $Database</div><div class="ttdef"><b>Definition:</b> <a href="_migrations_8php_source.html#l00032">Migrations.php:32</a></div></div>
 <div class="ttc" id="aclasscrisp_1_1core_1_1_migrations_html_a40ee067b290f06bd50cf41affdeb60dd"><div class="ttname"><a href="classcrisp_1_1core_1_1_migrations.html#a40ee067b290f06bd50cf41affdeb60dd">crisp\core\Migrations\migrate</a></div><div class="ttdeci">migrate()</div><div class="ttdef"><b>Definition:</b> <a href="_migrations_8php_source.html#l00121">Migrations.php:121</a></div></div>
 <div class="ttc" id="aclasscrisp_1_1core_1_1_migrations_html_ac32f99182de182f058565b3d7d3a5b22"><div class="ttname"><a href="classcrisp_1_1core_1_1_migrations.html#ac32f99182de182f058565b3d7d3a5b22">crisp\core\Migrations\DB_TEXT</a></div><div class="ttdeci">const DB_TEXT</div><div class="ttdef"><b>Definition:</b> <a href="_migrations_8php_source.html#l00037">Migrations.php:37</a></div></div>
 <div class="ttc" id="aclasscrisp_1_1core_1_1_migrations_html_a5571c0e434176ccbca829cb8a263a485"><div class="ttname"><a href="classcrisp_1_1core_1_1_migrations.html#a5571c0e434176ccbca829cb8a263a485">crisp\core\Migrations\DB_BOOL</a></div><div class="ttdeci">const DB_BOOL</div><div class="ttdef"><b>Definition:</b> <a href="_migrations_8php_source.html#l00040">Migrations.php:40</a></div></div>
-<div class="ttc" id="aclasscrisp_1_1core_1_1_migrations_html_a770a5ffc1c2d35286bb2afbb17058724"><div class="ttname"><a href="classcrisp_1_1core_1_1_migrations.html#a770a5ffc1c2d35286bb2afbb17058724">crisp\core\Migrations\createTable</a></div><div class="ttdeci">createTable(string $Table,... $Columns)</div><div class="ttdef"><b>Definition:</b> <a href="_migrations_8php_source.html#l00242">Migrations.php:242</a></div></div>
+<div class="ttc" id="aclasscrisp_1_1core_1_1_migrations_html_a770a5ffc1c2d35286bb2afbb17058724"><div class="ttname"><a href="classcrisp_1_1core_1_1_migrations.html#a770a5ffc1c2d35286bb2afbb17058724">crisp\core\Migrations\createTable</a></div><div class="ttdeci">createTable(string $Table,... $Columns)</div><div class="ttdef"><b>Definition:</b> <a href="_migrations_8php_source.html#l00264">Migrations.php:264</a></div></div>
 <div class="ttc" id="aclasscrisp_1_1core_1_1_migrations_html_a7d4938c0383aad97545a1f62a8299b4b"><div class="ttname"><a href="classcrisp_1_1core_1_1_migrations.html#a7d4938c0383aad97545a1f62a8299b4b">crisp\core\Migrations\isMigrated</a></div><div class="ttdeci">isMigrated(string $file)</div><div class="ttdef"><b>Definition:</b> <a href="_migrations_8php_source.html#l00104">Migrations.php:104</a></div></div>
 <div class="ttc" id="aclasscrisp_1_1core_1_1_migrations_html_a31cc7487b8db3a13a2a411a78005c595"><div class="ttname"><a href="classcrisp_1_1core_1_1_migrations.html#a31cc7487b8db3a13a2a411a78005c595">crisp\core\Migrations\DB_INTEGER</a></div><div class="ttdeci">const DB_INTEGER</div><div class="ttdef"><b>Definition:</b> <a href="_migrations_8php_source.html#l00038">Migrations.php:38</a></div></div>
 <div class="ttc" id="aclasscrisp_1_1api_1_1_helper_html_a1003c6b3b59a848fe367dd5543130318"><div class="ttname"><a href="classcrisp_1_1api_1_1_helper.html#a1003c6b3b59a848fe367dd5543130318">crisp\api\Helper\filterAlphaNum</a></div><div class="ttdeci">static filterAlphaNum($String)</div><div class="ttdef"><b>Definition:</b> <a href="_helper_8php_source.html#l00095">Helper.php:95</a></div></div>
@@ -322,7 +337,7 @@ $(document).ready(function(){initNavTree('_migrations_8php_source.html',''); ini
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_6affd3f97ad00b91b798d059ae37bea2.html">pixelcatproductions</a></li><li class="navelem"><a class="el" href="dir_27d08630b666059b52835fa8f5d5ebf1.html">class</a></li><li class="navelem"><a class="el" href="dir_a3d8be135d82969b2ee3458600f4e517.html">crisp</a></li><li class="navelem"><a class="el" href="dir_b90053ece3e3aae2db004f989e8a8c69.html">core</a></li><li class="navelem"><a class="el" href="_migrations_8php.html">Migrations.php</a></li>
-    <li class="footer">Generated on Sat Dec 26 2020 06:04:54 for CrispCMS Plugin API by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
+    <li class="footer">Generated on Sat Dec 26 2020 06:13:24 for CrispCMS Plugin API by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>
 </body>

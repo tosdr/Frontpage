@@ -66,6 +66,9 @@ Migrations
 .RI "\fBaddIndex\fP (string $Table, array $Column, $Type=self::DB_PRIMARYKEY, string $IndexName=null)"
 .br
 .ti -1c
+.RI "\fBdropColumn\fP (string $Table, string $Column)"
+.br
+.ti -1c
 .RI "\fBaddColumn\fP (string $Table, array $Column)"
 .br
 .ti -1c
@@ -120,7 +123,7 @@ boolean
 .PP
 
 .PP
-Definition at line 220 of file Migrations\&.php\&.
+Definition at line 242 of file Migrations\&.php\&.
 .SS "addIndex (string $Table, array $Column,  $Type = \fCself::DB_PRIMARYKEY\fP, string $IndexName = \fCnull\fP)\fC [protected]\fP"
 Create a new index for a table 
 .PP
@@ -215,7 +218,29 @@ boolean
 .PP
 
 .PP
-Definition at line 242 of file Migrations\&.php\&.
+Definition at line 264 of file Migrations\&.php\&.
+.SS "dropColumn (string $Table, string $Column)\fC [protected]\fP"
+Remove a column from a table 
+.PP
+\fBParameters\fP
+.RS 4
+\fI$Table\fP The table name 
+.br
+\fI$Column\fP The name of the column 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+boolean 
+.RE
+.PP
+\fBExceptions\fP
+.RS 4
+\fI\fP .RE
+.PP
+
+.PP
+Definition at line 220 of file Migrations\&.php\&.
 .SS "end ()\fC [protected]\fP"
 End/commit a \fBMySQL\fP Transaction 
 .PP

@@ -41,6 +41,8 @@ const \mbox{\hyperlink{classcrisp_1_1core_1_1_migrations_a849312ca5cf92a8bb2b01a
 \item 
 \mbox{\hyperlink{classcrisp_1_1core_1_1_migrations_a65795769728b3380d3a5979d0edf458b}{add\+Index}} (string \$Table, array \$Column, \$Type=self\+::\+D\+B\+\_\+\+P\+R\+I\+M\+A\+R\+Y\+K\+EY, string \$Index\+Name=null)
 \item 
+\mbox{\hyperlink{classcrisp_1_1core_1_1_migrations_a4d830d14a586e54da90d752e2fda8d0c}{drop\+Column}} (string \$Table, string \$Column)
+\item 
 \mbox{\hyperlink{classcrisp_1_1core_1_1_migrations_aaf75444fcad516385bd1c9106fa03385}{add\+Column}} (string \$Table, array \$Column)
 \item 
 \mbox{\hyperlink{classcrisp_1_1core_1_1_migrations_a770a5ffc1c2d35286bb2afbb17058724}{create\+Table}} (string \$Table,... \$Columns)
@@ -99,7 +101,7 @@ boolean
 \end{DoxyExceptions}
 
 
-Definition at line 220 of file Migrations.\+php.
+Definition at line 242 of file Migrations.\+php.
 
 \mbox{\Hypertarget{classcrisp_1_1core_1_1_migrations_a65795769728b3380d3a5979d0edf458b}\label{classcrisp_1_1core_1_1_migrations_a65795769728b3380d3a5979d0edf458b}} 
 \index{Migrations@{Migrations}!addIndex@{addIndex}}
@@ -196,7 +198,32 @@ boolean
 \end{DoxyExceptions}
 
 
-Definition at line 242 of file Migrations.\+php.
+Definition at line 264 of file Migrations.\+php.
+
+\mbox{\Hypertarget{classcrisp_1_1core_1_1_migrations_a4d830d14a586e54da90d752e2fda8d0c}\label{classcrisp_1_1core_1_1_migrations_a4d830d14a586e54da90d752e2fda8d0c}} 
+\index{Migrations@{Migrations}!dropColumn@{dropColumn}}
+\index{dropColumn@{dropColumn}!Migrations@{Migrations}}
+\doxysubsubsection{\texorpdfstring{dropColumn()}{dropColumn()}}
+{\footnotesize\ttfamily drop\+Column (\begin{DoxyParamCaption}\item[{string}]{\$\+Table,  }\item[{string}]{\$\+Column }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+Remove a column from a table 
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$\+Table} & The table name \\
+\hline
+string & {\em \$\+Column} & The name of the column \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+boolean 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em } & \\
+\hline
+\end{DoxyExceptions}
+
+
+Definition at line 220 of file Migrations.\+php.
 
 \mbox{\Hypertarget{classcrisp_1_1core_1_1_migrations_a817082ace0e2589d27b22890290aa4a9}\label{classcrisp_1_1core_1_1_migrations_a817082ace0e2589d27b22890290aa4a9}} 
 \index{Migrations@{Migrations}!end@{end}}

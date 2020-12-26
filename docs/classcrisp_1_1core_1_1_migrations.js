@@ -6,6 +6,7 @@ var classcrisp_1_1core_1_1_migrations =
     [ "begin", "classcrisp_1_1core_1_1_migrations.html#a3a9793666e688407121d76d3a7e4db5d", null ],
     [ "create", "classcrisp_1_1core_1_1_migrations.html#ad1aa7ace9432930c3be64c05f3a0fa67", null ],
     [ "createTable", "classcrisp_1_1core_1_1_migrations.html#a770a5ffc1c2d35286bb2afbb17058724", null ],
+    [ "dropColumn", "classcrisp_1_1core_1_1_migrations.html#a4d830d14a586e54da90d752e2fda8d0c", null ],
     [ "end", "classcrisp_1_1core_1_1_migrations.html#a817082ace0e2589d27b22890290aa4a9", null ],
     [ "isMigrated", "classcrisp_1_1core_1_1_migrations.html#a7d4938c0383aad97545a1f62a8299b4b", null ],
     [ "migrate", "classcrisp_1_1core_1_1_migrations.html#a40ee067b290f06bd50cf41affdeb60dd", null ],

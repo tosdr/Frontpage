@@ -18,5 +18,6 @@ var searchData=
   ['deprecated_20list_56',['Deprecated List',['../deprecated.html',1,'']]],
   ['dev_2edox_57',['dev.dox',['../dev_8dox.html',1,'']]],
   ['developing_20plugins_58',['Developing Plugins',['../devplugin.html',1,'']]],
-  ['disable_59',['disable',['../classcrisp_1_1api_1_1_language.html#a545341e59cc9a0dafc4e265d60d4b5d6',1,'crisp::api::Language']]]
+  ['disable_59',['disable',['../classcrisp_1_1api_1_1_language.html#a545341e59cc9a0dafc4e265d60d4b5d6',1,'crisp::api::Language']]],
+  ['dropcolumn_60',['dropColumn',['../classcrisp_1_1core_1_1_migrations.html#a4d830d14a586e54da90d752e2fda8d0c',1,'crisp::core::Migrations']]]
 ];

@@ -132,6 +132,8 @@ Protected Member Functions</h2></td></tr>
 <tr class="separator:a817082ace0e2589d27b22890290aa4a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a65795769728b3380d3a5979d0edf458b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcrisp_1_1core_1_1_migrations.html#a65795769728b3380d3a5979d0edf458b">addIndex</a> (string $Table, array $Column, $Type=self::DB_PRIMARYKEY, string $IndexName=null)</td></tr>
 <tr class="separator:a65795769728b3380d3a5979d0edf458b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d830d14a586e54da90d752e2fda8d0c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcrisp_1_1core_1_1_migrations.html#a4d830d14a586e54da90d752e2fda8d0c">dropColumn</a> (string $Table, string $Column)</td></tr>
+<tr class="separator:a4d830d14a586e54da90d752e2fda8d0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaf75444fcad516385bd1c9106fa03385"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcrisp_1_1core_1_1_migrations.html#aaf75444fcad516385bd1c9106fa03385">addColumn</a> (string $Table, array $Column)</td></tr>
 <tr class="separator:aaf75444fcad516385bd1c9106fa03385"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a770a5ffc1c2d35286bb2afbb17058724"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcrisp_1_1core_1_1_migrations.html#a770a5ffc1c2d35286bb2afbb17058724">createTable</a> (string $Table,... $Columns)</td></tr>
@@ -215,7 +217,7 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_migrations_8php_source.html#l00220">220</a> of file <a class="el" href="_migrations_8php_source.html">Migrations.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_migrations_8php_source.html#l00242">242</a> of file <a class="el" href="_migrations_8php_source.html">Migrations.php</a>.</p>
 
 </div>
 </div>
@@ -392,7 +394,59 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_migrations_8php_source.html#l00242">242</a> of file <a class="el" href="_migrations_8php_source.html">Migrations.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_migrations_8php_source.html#l00264">264</a> of file <a class="el" href="_migrations_8php_source.html">Migrations.php</a>.</p>
+
+</div>
+</div>
+<a id="a4d830d14a586e54da90d752e2fda8d0c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4d830d14a586e54da90d752e2fda8d0c">&#9670;&nbsp;</a></span>dropColumn()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">dropColumn </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>$Table</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>$Column</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Remove a column from a table </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$Table</td><td>The table name </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$Column</td><td>The name of the column </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>boolean </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"></td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_migrations_8php_source.html#l00220">220</a> of file <a class="el" href="_migrations_8php_source.html">Migrations.php</a>.</p>
 
 </div>
 </div>
@@ -666,7 +720,7 @@ Protected Attributes</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespacecrisp.html">crisp</a></li><li class="navelem"><a class="el" href="namespacecrisp_1_1core.html">core</a></li><li class="navelem"><a class="el" href="classcrisp_1_1core_1_1_migrations.html">Migrations</a></li>
-    <li class="footer">Generated on Sat Dec 26 2020 06:04:58 for CrispCMS Plugin API by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
+    <li class="footer">Generated on Sat Dec 26 2020 06:13:27 for CrispCMS Plugin API by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>
 </body>

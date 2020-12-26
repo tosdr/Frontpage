@@ -121,9 +121,9 @@ class Migrations {
     public function migrate() {
         echo "Starting Migration..." . PHP_EOL;
         $files = glob(__DIR__ . '/../migrations/*.{php}', GLOB_BRACE);
-        
+
         natsort($files);
-        
+
         foreach ($files as $file) {
             if (basename($file) == "template.php") {
                 continue;
@@ -206,6 +206,28 @@ class Migrations {
             return true;
         }
         echo "Failed to add Index to Table $Table!" . PHP_EOL;
+        throw new \Exception($statement->errorInfo());
+    }
+
+    /**
+     * Remove a column from a table
+     * @param string $Table The table name
+     * @param string $Column The name of the column
+     * @return boolean
+     * @throws \Exception on PDO Error
+     * @since 0.0.8-beta.RC3
+     */
+    protected function dropColumn(string $Table, string $Column) {
+        echo "Removing column from Table $Table..." . PHP_EOL;
+        $SQL = "ALTER TABLE `$Table` DROP COLUMN `$Column`";
+
+        $statement = $this->Database->prepare($SQL);
+
+        if ($statement->execute()) {
+            echo "Removed Column from Table $Table!" . PHP_EOL;
+            return true;
+        }
+        echo "Failed to remove Column from Table $Table!" . PHP_EOL;
         throw new \Exception($statement->errorInfo());
     }
 

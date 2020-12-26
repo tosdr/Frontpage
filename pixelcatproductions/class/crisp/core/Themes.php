@@ -63,13 +63,13 @@ class Themes {
         }
     }
 
-    private static function performOnInstall($ThemeMetadata) {
+    private static function performOnInstall($ThemeName, $ThemeMetadata) {
         if (!isset($ThemeMetadata->onInstall)) {
             return false;
         }
 
         self::installKVStorage($ThemeMetadata);
-        self::installTranslations($ThemeMetadata);
+        self::installTranslations($ThemeName, $ThemeMetadata);
 
         if (isset($ThemeMetadata->onInstall->activateDependencies) && \is_array($ThemeMetadata->onInstall->activateDependencies)) {
             foreach ($ThemeMetadata->onInstall->activateDependencies as $Theme) {
@@ -80,9 +80,9 @@ class Themes {
         }
     }
 
-    public static function refreshTranslations($ThemeMetadata) {
+    public static function refreshTranslations($ThemeName, $ThemeMetadata) {
         self::uninstallTranslations($ThemeMetadata);
-        return self::installTranslations($ThemeMetadata);
+        return self::installTranslations($ThemeName, $ThemeMetadata);
     }
 
     public static function refreshKVStorage($ThemeMetadata) {
@@ -109,9 +109,38 @@ class Themes {
         return true;
     }
 
-    public static function installTranslations($ThemeMetadata) {
+    public static function installTranslations($ThemeName, $ThemeMetadata) {
         if (!\is_object($ThemeMetadata) && !isset($ThemeMetadata->hookFile)) {
             return false;
+        }
+
+
+        if (isset($ThemeMetadata->onInstall->createTranslationKeys) && is_string($ThemeMetadata->onInstall->createTranslationKeys)) {
+
+            $ThemeFolder = \crisp\api\Config::get("theme_dir");
+            if (file_exists(__DIR__ . "/../../../../$ThemeFolder/$ThemeName/" . $ThemeMetadata->onInstall->createTranslationKeys)) {
+
+                $files = glob(__DIR__ . "/../../../../$ThemeFolder/$ThemeName/" . $ThemeMetadata->onInstall->createTranslationKeys . "*.{json}", GLOB_BRACE);
+                foreach ($files as $File) {
+                    if (!file_exists($File)) {
+                        continue;
+                    }
+                    $Language = \crisp\api\lists\Languages::getLanguageByCode(substr(basename($File), 0, -5));
+
+                    if (!$Language) {
+                        continue;
+                    }
+
+                    foreach (json_decode(file_get_contents($File), true) as $Key => $Value) {
+                        try {
+                            $Language->newTranslation($Key, $Value);
+                        } catch (\PDOException $ex) {
+                            continue 2;
+                        }
+                    }
+                }
+            }
+            return true;
         }
         if (isset($ThemeMetadata->onInstall->createTranslationKeys) && \is_object($ThemeMetadata->onInstall->createTranslationKeys)) {
             foreach ($ThemeMetadata->onInstall->createTranslationKeys as $Key => $Value) {
@@ -285,7 +314,7 @@ class Themes {
         $ThemeMetadata = json_decode(\file_get_contents(__DIR__ . "/../../../../$ThemeFolder/$ThemeName/theme.json"));
 
 
-        self::performOnInstall($ThemeMetadata);
+        self::performOnInstall($ThemeName, $ThemeMetadata);
 
         if (!\is_object($ThemeMetadata) && !isset($ThemeMetadata->hookFile)) {
             return false;

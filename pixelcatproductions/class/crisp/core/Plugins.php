@@ -231,6 +231,19 @@ class Plugins {
         if (!\is_object($PluginMetadata) && !isset($PluginMetadata->hookFile)) {
             return false;
         }
+
+
+        if (isset($PluginMetadata->onInstall->createTranslationKeys) && is_string($PluginMetadata->onInstall->createTranslationKeys)) {
+
+            $PluginFolder = \crisp\api\Config::get("plugin_dir");
+            if (file_exists(__DIR__ . "/../../../../$PluginFolder/$PluginName/" . $PluginMetadata->onInstall->createTranslationKeys)) {
+
+                $files = glob(__DIR__ . "/../../../../$PluginFolder/$PluginName/" . $PluginMetadata->onInstall->createTranslationKeys . "/*.{json}", GLOB_BRACE);
+                
+            }
+            return true;
+        }
+
         if (isset($PluginMetadata->onInstall->createTranslationKeys) && \is_object($PluginMetadata->onInstall->createTranslationKeys)) {
             foreach ($PluginMetadata->onInstall->createTranslationKeys as $Key => $Value) {
 

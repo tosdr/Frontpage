@@ -238,8 +238,25 @@ class Plugins {
             $PluginFolder = \crisp\api\Config::get("plugin_dir");
             if (file_exists(__DIR__ . "/../../../../$PluginFolder/$PluginName/" . $PluginMetadata->onInstall->createTranslationKeys)) {
 
-                $files = glob(__DIR__ . "/../../../../$PluginFolder/$PluginName/" . $PluginMetadata->onInstall->createTranslationKeys . "/*.{json}", GLOB_BRACE);
-                
+                $files = glob(__DIR__ . "/../../../../$PluginFolder/$PluginName/" . $PluginMetadata->onInstall->createTranslationKeys . "*.{json}", GLOB_BRACE);
+                foreach ($files as $File) {
+                    if (!file_exists($File)) {
+                        continue;
+                    }
+                    $Language = \crisp\api\lists\Languages::getLanguageByCode(substr(basename($File), 0, -5));
+
+                    if (!$Language) {
+                        continue;
+                    }
+
+                    foreach (json_decode(file_get_contents($File), true) as $Key => $Value) {
+                        try {
+                            $Language->newTranslation("plugin_" . $PluginName . "_$Key", $Value);
+                        } catch (\PDOException $ex) {
+                            continue;
+                        }
+                    }
+                }
             }
             return true;
         }

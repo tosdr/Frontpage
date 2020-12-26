@@ -14,4 +14,4 @@ error_reporting(error_reporting() & ~E_NOTICE);
 require_once __DIR__ . "/../pixelcatproductions/crisp.php";
 
 
-crisp\core\Themes::installTranslations("test", crisp\core\Themes::getThemeMetadata("test"));
+crisp\core\Plugins::installTranslations("admin", crisp\core\Plugins::getPluginMetadata("admin"));

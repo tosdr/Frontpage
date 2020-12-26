@@ -22,5 +22,6 @@
     "frontpage": "Accueil",
     "frontpage_forum_button_forum": "Visitez notre forum !",
     "frontpage_intro_button_contribute": "Contribuez sur Phoenix !",
-    "frontpage_intro_button_download": "Télécharger l'extension"
+    "frontpage_intro_button_download": "Télécharger l'extension",
+    "add_to": "Ajouter à {{ browser }}"
 }

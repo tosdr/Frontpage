@@ -46,12 +46,20 @@ class Themes {
     }
 
     public static function load($TwigTheme, $CurrentFile, $CurrentPage) {
-        if (count($GLOBALS["render"]) === 0) {
-            if (\crisp\api\Helper::templateExists(\crisp\api\Config::get("theme"), "/views/$CurrentPage.twig")) {
-                new \crisp\core\Theme($TwigTheme, $CurrentFile, $CurrentPage);
-            } else {
-                echo $TwigTheme->render("errors/404.twig");
+        try {
+            if (count($GLOBALS["render"]) === 0) {
+                if (file_exists(__DIR__ . "/../../../../" . \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") . "/includes/$CurrentPage.php") && \crisp\api\Helper::templateExists(\crisp\api\Config::get("theme"), "/views/$CurrentPage.twig")) {
+                    new \crisp\core\Theme($TwigTheme, $CurrentFile, $CurrentPage);
+                } else {
+                    $GLOBALS["microtime"]["logic"]["end"] = microtime(true);
+                    $GLOBALS["microtime"]["template"]["start"] = microtime(true);
+                    $TwigTheme->addGlobal("LogicMicroTime", ($GLOBALS["microtime"]["logic"]["end"] - $GLOBALS["microtime"]["logic"]["start"]));
+                    http_response_code(404);
+                    echo $TwigTheme->render("errors/404.twig", []);
+                }
             }
+        } catch (\Exception $ex) {
+            throw new \Exception($ex);
         }
     }
 

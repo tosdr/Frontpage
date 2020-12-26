@@ -7,15 +7,15 @@ require_once __DIR__ . "/../pixelcatproductions/crisp.php";
 use PUGX\Poser\Render\SvgPlasticRender;
 use PUGX\Poser\Poser;
 
-$Redis = new \crisp\core\Redis();
-
-$Redis = $Redis->getDBConnector();
-
 $Query = $_GET["q"];
 
 if (strpos($_GET["q"], ".json")) {
     $Query = substr($_GET["q"], 0, -5);
 }
+
+
+\crisp\api\APIStats::add($_GET["apiversion"], $Query);
+
 
 
 switch ($_GET["apiversion"]) {
@@ -35,7 +35,7 @@ switch ($_GET["apiversion"]) {
 
                 if (!isset($_GET["metadata"])) {
                     echo \crisp\core\PluginAPI::response(false, "Exported", $Export, JSON_PRETTY_PRINT);
-                }else{
+                } else {
                     header("Content-Type: application/json");
                     echo json_encode($Export);
                 }

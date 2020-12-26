@@ -1,4 +1,9 @@
 {
     "api": "API",
-    "about_us_intro": "\"Conditions d'utilisation; non lues\" (en anglais \"Terms of Service; Didn't Read\" soit ToS;DR) est un projet qui a débuté en juin 2012 pour aider à réparer le \"plus grand mensonge du web\": presque personne ne lit vraiment les conditions d'utilisation qu'on accepte tout le temps."
+    "about_us_intro": "\"Conditions d'utilisation; non lues\" (en anglais \"Terms of Service; Didn't Read\" soit ToS;DR) est un projet qui a débuté en juin 2012 pour aider à réparer le \"plus grand mensonge du web\": presque personne ne lit vraiment les conditions d'utilisation qu'on accepte tout le temps.",
+    "api_container_h3": "Utilisation",
+    "api_container_h2": "Toutes les données en JSON lisible par machine",
+    "api_container_h2_2": "Exemples",
+    "api_container_p_5": "Tout retour est bienvenu tout simplement sur cette page API sur Github ou par e-mail. Merci !",
+    "api_container_p_3": "Tous les fichiers JSON sont publiés sous <a href=\"/legal\"> license Creative Commons</a>."
 }

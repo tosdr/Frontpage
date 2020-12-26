@@ -89,6 +89,38 @@ class APIStats {
     }
 
     /**
+     * List all stats
+     * @return array
+     */
+    public static function listAll() {
+        if (self::$Database_Connection === null) {
+            self::initDB();
+        }
+        $statement = self::$Database_Connection->prepare("SELECT * FROM APIStats");
+        $statement->execute();
+        if ($statement->rowCount() > 0) {
+            return $statement->fetchAll(\PDO::FETCH_ASSOC);
+        }
+        return array();
+    }
+    
+    /**
+     * List all stats by count
+     * @return array
+     */
+    public static function listAllByCount() {
+        if (self::$Database_Connection === null) {
+            self::initDB();
+        }
+        $statement = self::$Database_Connection->prepare("SELECT * FROM APIStats ORDER BY `count` DESC");
+        $statement->execute();
+        if ($statement->rowCount() > 0) {
+            return $statement->fetchAll(\PDO::FETCH_ASSOC);
+        }
+        return array();
+    }
+
+    /**
      * Check if an entry exists
      * @param string $Interface
      * @param string $Query

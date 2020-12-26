@@ -311,9 +311,7 @@ class Themes {
                 }
 
                 if (defined("CRISP_CLI")) {
-                    echo "----------" . PHP_EOL;
                     echo "Deleting key " . $Translation["key"] . PHP_EOL;
-                    echo "----------" . PHP_EOL;
                 }
                 if ($Language->deleteTranslation($Translation["key"])) {
                     if (defined("CRISP_CLI")) {

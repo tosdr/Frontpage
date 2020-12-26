@@ -30,7 +30,7 @@ class MySQL {
     private $Database_Connection;
 
     /**
-     * Constructs the Database_Connectio
+     * Constructs the Database_Connection
      * @see getDBConnector
      */
     public function __construct() {
@@ -43,7 +43,7 @@ class MySQL {
     }
 
     /**
-     * 
+     * Get the database connector
      * @return PDO
      */
     public function getDBConnector() {

@@ -150,6 +150,12 @@ class Plugins {
         }
     }
 
+    public static function migrate(string $PluginName) {
+        $Migrations = new Migrations();
+        $PluginFolder = \crisp\api\Config::get("plugin_dir");
+        return $Migrations->migrate(__DIR__ . "/../../../../$PluginFolder/$PluginName/");
+    }
+
     private static function performOnInstall($PluginName, $PluginMetadata, $TwigTheme, $CurrentFile, $CurrentPage) {
         if (!isset($PluginMetadata->onInstall)) {
             return false;

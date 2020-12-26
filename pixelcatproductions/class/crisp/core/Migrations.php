@@ -116,11 +116,21 @@ class Migrations {
     /**
      * Begin the migration of the database
      * @since 0.0.8-beta.RC2
+     * @param string $Dir The directory base to look for migrations. e.g Setting "plugin" will look in "plugin/migrations"
+     * @param string $Plugin If the migration has been done for a plugin, this is the name
      * @return void
      */
-    public function migrate() {
-        echo "Starting Migration..." . PHP_EOL;
-        $files = glob(__DIR__ . '/../migrations/*.{php}', GLOB_BRACE);
+    public function migrate(string $Dir = __DIR__ . "/../", string $Plugin = null) {
+        if (defined("CRISP_CLI")) {
+            echo "Starting Migration..." . PHP_EOL;
+        }
+        if (!file_exists("$Dir/migrations/")) {
+            if (defined("CRISP_CLI")) {
+                echo "No migrations needed!" . PHP_EOL;
+            }
+            return;
+        }
+        $files = glob("$Dir/migrations/*.{php}", GLOB_BRACE);
 
         natsort($files);
 
@@ -132,7 +142,9 @@ class Migrations {
             $MigrationName = substr(basename($file), 0, -4);
 
             if ($this->isMigrated($MigrationName)) {
-                echo "$MigrationName is already migrated, skipping!" . PHP_EOL;
+                if (defined("CRISP_CLI")) {
+                    echo "$MigrationName is already migrated, skipping!" . PHP_EOL;
+                }
                 continue;
             }
 
@@ -144,12 +156,18 @@ class Migrations {
 
             if ($Migration->run()) {
 
-                $statement = $this->Database->prepare("INSERT INTO schema_migration (file) VALUES (:file)");
+                $statement = $this->Database->prepare("INSERT INTO schema_migration (file, plugin) VALUES (:file, :plugin)");
 
-                $statement->execute(array(":file" => $MigrationName));
-                echo "Migrated $MigrationName" . PHP_EOL;
+                $statement->execute(array(":file" => $MigrationName, ":plugin" => $Plugin));
+
+                if (defined("CRISP_CLI")) {
+                    echo "Migrated $MigrationName" . PHP_EOL;
+                }
             } else {
-                echo "Failed to migrate $MigrationName" . PHP_EOL;
+
+                if (defined("CRISP_CLI")) {
+                    echo "Failed to migrate $MigrationName" . PHP_EOL;
+                }
             }
         }
     }
@@ -157,10 +175,11 @@ class Migrations {
     /**
      * Create a new migration file.
      * @param string $MigrationName The name of the migration, only Alpha Letters.
+     * @param string $Dir The base directory to look for migrations. e.g Setting "plugin" will create one in "plugin/migrations"
      * @since 0.0.8-beta.RC2
      * @return void
      */
-    public function create(string $MigrationName) {
+    public function create(string $MigrationName, string $Dir = __DIR__ . "/../") {
 
         $MigrationNameFiltered = \crisp\api\Helper::filterAlphaNum($MigrationName);
 
@@ -171,7 +190,7 @@ class Migrations {
             "RUNCODE;" => '$this->createTable("MyTable", array("col1", \crisp\core\Migrations::DB_VARCHAR));'
         ));
 
-        $written = file_put_contents(__DIR__ . "/../migrations/" . time() . "_$MigrationNameFiltered.php", $Skeleton);
+        $written = file_put_contents("$Dir/migrations/" . time() . "_$MigrationNameFiltered.php", $Skeleton);
 
         if (!$written) {
             echo "Failed to write migration file, check permissions!" . PHP_EOL;
@@ -183,14 +202,14 @@ class Migrations {
     /**
      * Create a new index for a table
      * @param string $Table The name of the table
-     * @param array $Column An array consisting of the column name, column type and additional info, e.g. array("ColName, self::DB_VARCHAR, "NOT NULL")
+     * @param string $Column The name of the column
      * @param const $Type The type of the index
      * @param string $IndexName The name of the index, Unused if PRIMARYKEY
      * @return boolean
      * @since 0.0.8-beta.RC2
      * @throws \Exception on PDO Error
      */
-    protected function addIndex(string $Table, array $Column, $Type = self::DB_PRIMARYKEY, string $IndexName = null) {
+    protected function addIndex(string $Table, string $Column, $Type = self::DB_PRIMARYKEY, string $IndexName = null) {
         $SQL = "";
         echo "Adding index to table $Table..." . PHP_EOL;
         if ($Type == self::DB_PRIMARYKEY) {

@@ -188,6 +188,21 @@ switch ($argv[1]) {
                 }
                 echo "Failed to install plugin" . PHP_EOL;
                 break;
+            case "migrate":
+                if ($argc < 4) {
+                    echo "Missing plugin name" . PHP_EOL;
+                    exit;
+                }
+                if (!crisp\core\Plugins::isInstalled($argv[3])) {
+                    echo "This plugin is not installed" . PHP_EOL;
+                    exit;
+                }
+                if (!crisp\core\Plugins::isValid($argv[3])) {
+                    echo "This plugin does not exist" . PHP_EOL;
+                    exit;
+                }
+                crisp\core\Plugins::migrate($argv[3]);
+                break;
             case "uninstall":
             case "remove":
             case "delete":

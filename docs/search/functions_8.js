@@ -4,7 +4,7 @@ var searchData=
   ['install_349',['install',['../classcrisp_1_1core_1_1_plugins.html#ab0d93f988b65a197949370f45c0c2f02',1,'crisp\core\Plugins\install()'],['../classcrisp_1_1core_1_1_themes.html#aa5bd40c23d346dcb833357d2ed98f091',1,'crisp\core\Themes\install()']]],
   ['installcrons_350',['installCrons',['../classcrisp_1_1core_1_1_plugins.html#a3e59fae12627421061e134a4867d8a94',1,'crisp::core::Plugins']]],
   ['installkvstorage_351',['installKVStorage',['../classcrisp_1_1core_1_1_plugins.html#ae7c5f630440464d4ab8988d3e3adf677',1,'crisp\core\Plugins\installKVStorage()'],['../classcrisp_1_1core_1_1_themes.html#a064611c216c0f5100782b90cb17cb8a9',1,'crisp\core\Themes\installKVStorage()']]],
-  ['installtranslations_352',['installTranslations',['../classcrisp_1_1core_1_1_plugins.html#a75d4b26c12211dd6f0dc42a2c8f89b3b',1,'crisp\core\Plugins\installTranslations()'],['../classcrisp_1_1core_1_1_themes.html#ac422fbc78b75a974f25707791aa36209',1,'crisp\core\Themes\installTranslations()']]],
+  ['installtranslations_352',['installTranslations',['../classcrisp_1_1core_1_1_plugins.html#a75d4b26c12211dd6f0dc42a2c8f89b3b',1,'crisp\core\Plugins\installTranslations()'],['../classcrisp_1_1core_1_1_themes.html#ab2c8b9e2036f231264dc8b8d51fbd1e1',1,'crisp\core\Themes\installTranslations()']]],
   ['integrity_353',['integrity',['../classcrisp_1_1core_1_1_plugin.html#af50504b641965128314e7ef746003788',1,'crisp::core::Plugin']]],
   ['integritycheck_354',['integrityCheck',['../classcrisp_1_1core_1_1_plugins.html#a0d638cee53d7dcb4dd82f1efeb084361',1,'crisp::core::Plugins']]],
   ['isenabled_355',['isEnabled',['../classcrisp_1_1api_1_1_language.html#ad734dc60b64a242fe183e0c23b192790',1,'crisp::api::Language']]],

@@ -16,10 +16,10 @@ Migrations
 .RI "\fBisMigrated\fP (string $file)"
 .br
 .ti -1c
-.RI "\fBmigrate\fP ()"
+.RI "\fBmigrate\fP (string $Dir=__DIR__ \&. '/\&.\&./', string $\fBPlugin\fP=null)"
 .br
 .ti -1c
-.RI "\fBcreate\fP (string $MigrationName)"
+.RI "\fBcreate\fP (string $MigrationName, string $Dir=__DIR__ \&. '/\&.\&./')"
 .br
 .in -1c
 .SS "Data Fields"
@@ -63,7 +63,7 @@ Migrations
 .RI "\fBend\fP ()"
 .br
 .ti -1c
-.RI "\fBaddIndex\fP (string $Table, array $Column, $Type=self::DB_PRIMARYKEY, string $IndexName=null)"
+.RI "\fBaddIndex\fP (string $Table, string $Column, $Type=self::DB_PRIMARYKEY, string $IndexName=null)"
 .br
 .ti -1c
 .RI "\fBdropColumn\fP (string $Table, string $Column)"
@@ -123,15 +123,15 @@ boolean
 .PP
 
 .PP
-Definition at line 242 of file Migrations\&.php\&.
-.SS "addIndex (string $Table, array $Column,  $Type = \fCself::DB_PRIMARYKEY\fP, string $IndexName = \fCnull\fP)\fC [protected]\fP"
+Definition at line 261 of file Migrations\&.php\&.
+.SS "addIndex (string $Table, string $Column,  $Type = \fCself::DB_PRIMARYKEY\fP, string $IndexName = \fCnull\fP)\fC [protected]\fP"
 Create a new index for a table 
 .PP
 \fBParameters\fP
 .RS 4
 \fI$Table\fP The name of the table 
 .br
-\fI$Column\fP An array consisting of the column name, column type and additional info, e\&.g\&. array('ColName, self::DB_VARCHAR, 'NOT NULL") 
+\fI$Column\fP The name of the column 
 .br
 \fI$Type\fP The type of the index 
 .br
@@ -154,7 +154,7 @@ boolean
 .PP
 
 .PP
-Definition at line 193 of file Migrations\&.php\&.
+Definition at line 212 of file Migrations\&.php\&.
 .SS "begin ()\fC [protected]\fP"
 Begin a \fBMySQL\fP Transaction 
 .PP
@@ -171,12 +171,14 @@ boolean
 
 .PP
 Definition at line 57 of file Migrations\&.php\&.
-.SS "create (string $MigrationName)"
+.SS "create (string $MigrationName, string $Dir = \fC__DIR__ \&. '/\&.\&./'\fP)"
 Create a new migration file\&. 
 .PP
 \fBParameters\fP
 .RS 4
 \fI$MigrationName\fP The name of the migration, only Alpha Letters\&. 
+.br
+\fI$Dir\fP The base directory to look for migrations\&. e\&.g Setting 'plugin' will create one in 'plugin/migrations' 
 .RE
 .PP
 \fBSince\fP
@@ -191,7 +193,7 @@ void
 .PP
 
 .PP
-Definition at line 163 of file Migrations\&.php\&.
+Definition at line 182 of file Migrations\&.php\&.
 .SS "createTable (string $Table,  $Columns)\fC [protected]\fP"
 Create a new table\&. This function accepts infinite parameters to add columns 
 .PP
@@ -218,7 +220,7 @@ boolean
 .PP
 
 .PP
-Definition at line 264 of file Migrations\&.php\&.
+Definition at line 283 of file Migrations\&.php\&.
 .SS "dropColumn (string $Table, string $Column)\fC [protected]\fP"
 Remove a column from a table 
 .PP
@@ -240,7 +242,7 @@ boolean
 .PP
 
 .PP
-Definition at line 220 of file Migrations\&.php\&.
+Definition at line 239 of file Migrations\&.php\&.
 .SS "end ()\fC [protected]\fP"
 End/commit a \fBMySQL\fP Transaction 
 .PP
@@ -283,12 +285,19 @@ boolean
 
 .PP
 Definition at line 104 of file Migrations\&.php\&.
-.SS "migrate ()"
+.SS "migrate (string $Dir = \fC__DIR__ \&. '/\&.\&./'\fP, string $Plugin = \fCnull\fP)"
 Begin the migration of the database 
 .PP
 \fBSince\fP
 .RS 4
 0\&.0\&.8-beta\&.RC2 
+.RE
+.PP
+\fBParameters\fP
+.RS 4
+\fI$Dir\fP The directory base to look for migrations\&. e\&.g Setting 'plugin' will look in 'plugin/migrations' 
+.br
+\fI$Plugin\fP If the migration has been done for a plugin, this is the name 
 .RE
 .PP
 \fBReturns\fP
@@ -298,7 +307,7 @@ void
 .PP
 
 .PP
-Definition at line 121 of file Migrations\&.php\&.
+Definition at line 123 of file Migrations\&.php\&.
 .SS "rollback ()\fC [protected]\fP"
 Rollback a \fBMySQL\fP Transaction 
 .PP

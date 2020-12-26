@@ -16,7 +16,7 @@ Themes
 .RI "static \fBload\fP ($TwigTheme, $CurrentFile, $CurrentPage)"
 .br
 .ti -1c
-.RI "static \fBrefreshTranslations\fP ($ThemeMetadata)"
+.RI "static \fBrefreshTranslations\fP ($ThemeName, $ThemeMetadata)"
 .br
 .ti -1c
 .RI "static \fBrefreshKVStorage\fP ($ThemeMetadata)"
@@ -25,7 +25,7 @@ Themes
 .RI "static \fBinstallKVStorage\fP ($ThemeMetadata)"
 .br
 .ti -1c
-.RI "static \fBinstallTranslations\fP ($ThemeMetadata)"
+.RI "static \fBinstallTranslations\fP ($ThemeName, $ThemeMetadata)"
 .br
 .ti -1c
 .RI "static \fBisInstalled\fP ($ThemeName)"
@@ -96,20 +96,20 @@ boolean TRUE if the data has been successfully deleted
 .PP
 
 .PP
-Definition at line 202 of file Themes\&.php\&.
+Definition at line 231 of file Themes\&.php\&.
 .SS "static getThemeMetadata ( $ThemeName)\fC [static]\fP"
 
 .PP
-Definition at line 228 of file Themes\&.php\&.
+Definition at line 257 of file Themes\&.php\&.
 .SS "static install ( $ThemeName)\fC [static]\fP"
 
 .PP
-Definition at line 273 of file Themes\&.php\&.
+Definition at line 302 of file Themes\&.php\&.
 .SS "static installKVStorage ( $ThemeMetadata)\fC [static]\fP"
 
 .PP
 Definition at line 93 of file Themes\&.php\&.
-.SS "static installTranslations ( $ThemeMetadata)\fC [static]\fP"
+.SS "static installTranslations ( $ThemeName,  $ThemeMetadata)\fC [static]\fP"
 
 .PP
 Definition at line 112 of file Themes\&.php\&.
@@ -128,11 +128,11 @@ boolean TRUE if theme is installed, otherwise FALSE
 .PP
 
 .PP
-Definition at line 143 of file Themes\&.php\&.
+Definition at line 172 of file Themes\&.php\&.
 .SS "static isValid ( $ThemeName)\fC [static]\fP"
 
 .PP
-Definition at line 147 of file Themes\&.php\&.
+Definition at line 176 of file Themes\&.php\&.
 .SS "static load ( $TwigTheme,  $CurrentFile,  $CurrentPage)\fC [static]\fP"
 
 .PP
@@ -141,7 +141,7 @@ Definition at line 48 of file Themes\&.php\&.
 
 .PP
 Definition at line 88 of file Themes\&.php\&.
-.SS "static refreshTranslations ( $ThemeMetadata)\fC [static]\fP"
+.SS "static refreshTranslations ( $ThemeName,  $ThemeMetadata)\fC [static]\fP"
 
 .PP
 Definition at line 83 of file Themes\&.php\&.
@@ -162,7 +162,7 @@ boolean TRUE if hook could be registered, otherwise false
 .PP
 
 .PP
-Definition at line 320 of file Themes\&.php\&.
+Definition at line 349 of file Themes\&.php\&.
 .SS "static registerUninstallHook ( $ThemeName,  $Function)\fC [static]\fP"
 Registers an uninstall hook for your theme\&. 
 .PP
@@ -180,23 +180,23 @@ boolean TRUE if hook could be registered, otherwise false
 .PP
 
 .PP
-Definition at line 306 of file Themes\&.php\&.
+Definition at line 335 of file Themes\&.php\&.
 .SS "static reinstall ( $ThemeName)\fC [static]\fP"
 
 .PP
-Definition at line 221 of file Themes\&.php\&.
+Definition at line 250 of file Themes\&.php\&.
 .SS "static uninstall ( $ThemeName)\fC [static]\fP"
 
 .PP
-Definition at line 152 of file Themes\&.php\&.
+Definition at line 181 of file Themes\&.php\&.
 .SS "static uninstallKVStorage ( $ThemeMetadata)\fC [static]\fP"
 
 .PP
-Definition at line 238 of file Themes\&.php\&.
+Definition at line 267 of file Themes\&.php\&.
 .SS "static uninstallTranslations ( $ThemeMetadata)\fC [static]\fP"
 
 .PP
-Definition at line 250 of file Themes\&.php\&.
+Definition at line 279 of file Themes\&.php\&.
 
 .SH "Author"
 .PP 

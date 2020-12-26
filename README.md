@@ -1,6 +1,6 @@
 # CrispCMS - The new ToS;DR Frontpage
 
-![](https://beta.tosdr.org/api/badge/service/tos;dr)
+![](https://beta.tosdr.org/api/badge/service/tos;dr) [![Translation status](http://translate.jback.dev/widgets/crispcms/-/crispcms-theme/svg-badge.svg)](http://translate.jback.dev/engage/crispcms/)
 
 
 This readme is still WIP but should cover basic requirements to install.

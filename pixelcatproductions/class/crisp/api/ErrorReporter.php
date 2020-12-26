@@ -45,13 +45,14 @@ class ErrorReporter {
      * @param int $HttpStatusCode HTTP code
      * @param string $Traceback A traceback e.g Exceptions
      * @param string $Summary A summary of what happened
+     * @param string $Prefix of the reference id
      * @return boolean|string Returns ReferenceID if successful otherwise false
      */
-    public static function create(int $HttpStatusCode, string $Traceback, string $Summary) {
+    public static function create(int $HttpStatusCode, string $Traceback, string $Summary, string $Prefix = "ise_") {
         if (self::$Database_Connection === null) {
             self::initDB();
         }
-        $ReferenceID = \crisp\core\Crypto::UUIDv4("ise_");
+        $ReferenceID = \crisp\core\Crypto::UUIDv4($Prefix);
         $statement = self::$Database_Connection->prepare("INSERT INTO Crashes (`ReferenceID`, `HttpStatusCode`, `Traceback`, `Summary`) VALUES (:ReferenceID, :HttpStatusCode, :Traceback, :Summary)");
         $statement->execute(array(":ReferenceID" => $ReferenceID, ":HttpStatusCode" => $HttpStatusCode, ":Traceback" => $Traceback, ":Summary" => $Summary));
         if ($statement->rowCount() > 0) {

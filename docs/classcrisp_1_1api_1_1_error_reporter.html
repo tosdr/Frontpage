@@ -99,8 +99,8 @@ Public Member Functions</h2></td></tr>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:ae5e7eb4ea0667dc07287aebd28e246c3"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcrisp_1_1api_1_1_error_reporter.html#ae5e7eb4ea0667dc07287aebd28e246c3">initDB</a> ()</td></tr>
 <tr class="separator:ae5e7eb4ea0667dc07287aebd28e246c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3e283448f4a2f3ef7ba2d7b9950efa96"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcrisp_1_1api_1_1_error_reporter.html#a3e283448f4a2f3ef7ba2d7b9950efa96">create</a> (int $HttpStatusCode, string $Traceback, string $Summary)</td></tr>
-<tr class="separator:a3e283448f4a2f3ef7ba2d7b9950efa96"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4cfc9830f259f26a18d3a26fb818281a"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcrisp_1_1api_1_1_error_reporter.html#a4cfc9830f259f26a18d3a26fb818281a">create</a> (int $HttpStatusCode, string $Traceback, string $Summary, string $Prefix=&quot;ise_&quot;)</td></tr>
+<tr class="separator:a4cfc9830f259f26a18d3a26fb818281a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The error reporting system </p>
@@ -127,8 +127,8 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a3e283448f4a2f3ef7ba2d7b9950efa96"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3e283448f4a2f3ef7ba2d7b9950efa96">&#9670;&nbsp;</a></span>create()</h2>
+<a id="a4cfc9830f259f26a18d3a26fb818281a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4cfc9830f259f26a18d3a26fb818281a">&#9670;&nbsp;</a></span>create()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -152,7 +152,13 @@ Static Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">string&#160;</td>
-          <td class="paramname"><em>$Summary</em>&#160;</td>
+          <td class="paramname"><em>$Summary</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>$Prefix</em> = <code>&quot;ise_&quot;</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -171,12 +177,13 @@ Static Public Member Functions</h2></td></tr>
     <tr><td class="paramtype">int</td><td class="paramname">$HttpStatusCode</td><td>HTTP code </td></tr>
     <tr><td class="paramtype">string</td><td class="paramname">$Traceback</td><td>A traceback e.g Exceptions </td></tr>
     <tr><td class="paramtype">string</td><td class="paramname">$Summary</td><td>A summary of what happened </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$Prefix</td><td>of the reference id </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>boolean|string Returns ReferenceID if successful otherwise false </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_error_reporter_8php_source.html#l00050">50</a> of file <a class="el" href="_error_reporter_8php_source.html">ErrorReporter.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_error_reporter_8php_source.html#l00051">51</a> of file <a class="el" href="_error_reporter_8php_source.html">ErrorReporter.php</a>.</p>
 
 </div>
 </div>
@@ -216,7 +223,7 @@ Static Public Member Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespacecrisp.html">crisp</a></li><li class="navelem"><a class="el" href="namespacecrisp_1_1api.html">api</a></li><li class="navelem"><a class="el" href="classcrisp_1_1api_1_1_error_reporter.html">ErrorReporter</a></li>
-    <li class="footer">Generated on Sat Dec 26 2020 06:13:26 for CrispCMS Plugin API by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
+    <li class="footer">Generated on Sat Dec 26 2020 14:00:20 for CrispCMS Plugin API by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>
 </body>

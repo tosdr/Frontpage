@@ -10,7 +10,7 @@
 \item 
 static \mbox{\hyperlink{classcrisp_1_1api_1_1_error_reporter_ae5e7eb4ea0667dc07287aebd28e246c3}{init\+DB}} ()
 \item 
-static \mbox{\hyperlink{classcrisp_1_1api_1_1_error_reporter_a3e283448f4a2f3ef7ba2d7b9950efa96}{create}} (int \$Http\+Status\+Code, string \$Traceback, string \$Summary)
+static \mbox{\hyperlink{classcrisp_1_1api_1_1_error_reporter_a4cfc9830f259f26a18d3a26fb818281a}{create}} (int \$Http\+Status\+Code, string \$Traceback, string \$Summary, string \$Prefix=\char`\"{}ise\+\_\+\char`\"{})
 \end{DoxyCompactItemize}
 
 
@@ -35,11 +35,11 @@ Definition at line 34 of file Error\+Reporter.\+php.
 
 
 \doxysubsection{Member Function Documentation}
-\mbox{\Hypertarget{classcrisp_1_1api_1_1_error_reporter_a3e283448f4a2f3ef7ba2d7b9950efa96}\label{classcrisp_1_1api_1_1_error_reporter_a3e283448f4a2f3ef7ba2d7b9950efa96}} 
+\mbox{\Hypertarget{classcrisp_1_1api_1_1_error_reporter_a4cfc9830f259f26a18d3a26fb818281a}\label{classcrisp_1_1api_1_1_error_reporter_a4cfc9830f259f26a18d3a26fb818281a}} 
 \index{ErrorReporter@{ErrorReporter}!create@{create}}
 \index{create@{create}!ErrorReporter@{ErrorReporter}}
 \doxysubsubsection{\texorpdfstring{create()}{create()}}
-{\footnotesize\ttfamily static create (\begin{DoxyParamCaption}\item[{int}]{\$\+Http\+Status\+Code,  }\item[{string}]{\$\+Traceback,  }\item[{string}]{\$\+Summary }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+{\footnotesize\ttfamily static create (\begin{DoxyParamCaption}\item[{int}]{\$\+Http\+Status\+Code,  }\item[{string}]{\$\+Traceback,  }\item[{string}]{\$\+Summary,  }\item[{string}]{\$\+Prefix = {\ttfamily \char`\"{}ise\+\_\+\char`\"{}} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
 Create a new Crash report 
 \begin{DoxyParams}[1]{Parameters}
@@ -49,13 +49,15 @@ string & {\em \$\+Traceback} & A traceback e.\+g Exceptions \\
 \hline
 string & {\em \$\+Summary} & A summary of what happened \\
 \hline
+string & {\em \$\+Prefix} & of the reference id \\
+\hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 boolean$\vert$string Returns Reference\+ID if successful otherwise false 
 \end{DoxyReturn}
 
 
-Definition at line 50 of file Error\+Reporter.\+php.
+Definition at line 51 of file Error\+Reporter.\+php.
 
 \mbox{\Hypertarget{classcrisp_1_1api_1_1_error_reporter_ae5e7eb4ea0667dc07287aebd28e246c3}\label{classcrisp_1_1api_1_1_error_reporter_ae5e7eb4ea0667dc07287aebd28e246c3}} 
 \index{ErrorReporter@{ErrorReporter}!initDB@{initDB}}

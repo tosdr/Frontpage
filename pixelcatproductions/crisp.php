@@ -175,11 +175,77 @@ if (!defined('CRISP_CLI')) {
 
         http_response_code(500);
         echo $TwigTheme->render("errors/exception.twig", array(
-            "ReferenceID" => api\ErrorReporter::create(500, $ex->getTraceAsString(), $ex->getMessage())
+            "ReferenceID" => api\ErrorReporter::create(500, $ex->getTraceAsString(), $ex->getMessage(), "exception_")
+        ));
+        exit;
+    } catch (\TypeError $ex) {
+
+
+        $TwigTheme = new \Twig\Environment($ThemeLoader, [
+            'cache' => __DIR__ . '/cache/'
+        ]);
+
+
+        http_response_code(500);
+        echo $TwigTheme->render("errors/exception.twig", array(
+            "ReferenceID" => api\ErrorReporter::create(500, $ex->getTraceAsString(), $ex->getMessage(), "typeerror_")
+        ));
+        exit;
+    } catch (\Error $ex) {
+
+
+        $TwigTheme = new \Twig\Environment($ThemeLoader, [
+            'cache' => __DIR__ . '/cache/'
+        ]);
+
+
+        http_response_code(500);
+        echo $TwigTheme->render("errors/exception.twig", array(
+            "ReferenceID" => api\ErrorReporter::create(500, $ex->getTraceAsString(), $ex->getMessage(), "error_")
+        ));
+        exit;
+    } catch (\CompileError $ex) {
+
+
+        $TwigTheme = new \Twig\Environment($ThemeLoader, [
+            'cache' => __DIR__ . '/cache/'
+        ]);
+
+
+        http_response_code(500);
+        echo $TwigTheme->render("errors/exception.twig", array(
+            "ReferenceID" => api\ErrorReporter::create(500, $ex->getTraceAsString(), $ex->getMessage(), "compileerror_")
+        ));
+        exit;
+    } catch (\ParseError $ex) {
+
+
+        $TwigTheme = new \Twig\Environment($ThemeLoader, [
+            'cache' => __DIR__ . '/cache/'
+        ]);
+
+
+        http_response_code(500);
+        echo $TwigTheme->render("errors/exception.twig", array(
+            "ReferenceID" => api\ErrorReporter::create(500, $ex->getTraceAsString(), $ex->getMessage(), "parseerror_")
+        ));
+        exit;
+    } catch (\Throwable $ex) {
+
+
+        $TwigTheme = new \Twig\Environment($ThemeLoader, [
+            'cache' => __DIR__ . '/cache/'
+        ]);
+
+
+        http_response_code(500);
+        echo $TwigTheme->render("errors/exception.twig", array(
+            "ReferenceID" => api\ErrorReporter::create(500, $ex->getTraceAsString(), $ex->getMessage(), "throwable_")
         ));
         exit;
     } catch (\Twig\Error\LoaderError $ex) {
-        echo "Thats a twig error, cant even show a proper error page!";
+        $Error = api\ErrorReporter::create(500, $ex->getTraceAsString(), $ex->getMessage(), "twigerror_");
+        echo "Thats a twig error, cant even show a proper error page! Reference ID: $Error";
         exit;
     }
 }

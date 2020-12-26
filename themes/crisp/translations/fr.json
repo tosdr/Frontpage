@@ -26,7 +26,7 @@
     "add_to": "Ajouter à {{ browser }}",
     "frontpage_intro_top_text": "Nous sommes une <a href=\"/about\" title=\"Learn more about us\">initiative axée sur les droits des utilisateurs</a> pour<a href=\"/classification\" title=\"What's our classification?\">évaluer et classer</a> les conditions et les politiques de confidentialité, allant d'Excellent <span class=\"label A\">Classe A</span> à Très Mauvais <span class=\"label E\">Classe E</span>.",
     "frontpage_jumbotron_text": "\"J’ai lu et j’accepte les conditions d’utilisation\" est le plus grand mensonge du web. Nous voulons l'arranger.",
-    "frontpage_ratings_ratingssearch_placeholder": "Cherchez un service ici...",
+    "frontpage_ratings_ratingssearch_placeholder": "Cherchez un service ici…",
     "help_expanding": "Aidez-nous à étendre cette liste en contribuant sur Phoenix !",
     "imprint": "Impression",
     "imprint_container_p_1": "Ce projet est soutenu par l'association ToS;DR <a href=\"http://1901.tosdr.org\"> loi de 1901 en France</a>. Certains des droits et financements liés au projet sont gérés par l'association, mais pas tous.\n<br>Le projet ToS;DR en lui-même n'est pas une personnalité juridique. ",

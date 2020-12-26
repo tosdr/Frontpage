@@ -120,6 +120,7 @@ if (!defined('CRISP_CLI')) {
         $TwigTheme->addGlobal("GET", $_GET);
         $TwigTheme->addGlobal("UNIVERSE", CURRENT_UNIVERSE);
         $TwigTheme->addGlobal("UNIVERSE_NAME", CURRENT_UNIVERSE_NAME);
+        $TwigTheme->addGlobal("CurrentPage", $CurrentPage);
         $TwigTheme->addGlobal("POST", $_POST);
         $TwigTheme->addGlobal("SERVER", $_SERVER);
         $TwigTheme->addGlobal("GLOBALS", $GLOBALS);

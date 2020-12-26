@@ -123,7 +123,14 @@ class Languages {
             return $statement->fetch(\PDO::FETCH_ASSOC);
         }
 
-        if (\crisp\api\lists\Languages::createLanguage($Code, $Code, $Code, $Code)) {
+        $Flag = strtolower($Code);
+
+        if (strpos($Flag, "_") !== false) {
+            $Flag = substr($Flag, 3);
+        }
+
+
+        if (\crisp\api\lists\Languages::createLanguage("language_$Code", $Code, "language_native_$Code", $Flag)) {
             return self::getLanguageByCode($Code, $FetchIntoClass);
         }
 

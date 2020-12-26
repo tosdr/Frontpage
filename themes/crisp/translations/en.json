@@ -54,5 +54,15 @@
     "view_points": "View Points",
     "view_source": "View source code",
     "visit_case": "Open case page",
-    "visit_service": "Visit Service"
+    "visit_service": "Visit Service",
+    "language_native_en": "English",
+    "language_native_de": "Deutsch",
+    "language_native_fr": "Français",
+    "language_native_es_MX": "Español mexicano",
+    "language_native_es": "Español",
+    "language_en": "English",
+    "language_de": "German",
+    "language_fr": "French",
+    "language_es_MX": "Mexican Spanish",
+    "language_es": "Spanish"
 }

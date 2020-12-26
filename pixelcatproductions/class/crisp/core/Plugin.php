@@ -124,6 +124,9 @@ class Plugin {
         return \crisp\api\Config::create("plugin_" . $this->PluginName . "_$Key", $Value);
     }
 
+    /**
+     * @see \crisp\core\Plugins::listConfig
+     */
     public function listConfig() {
         return Plugins::listConfig($this->PluginName);
     }

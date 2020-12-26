@@ -49,6 +49,13 @@ class Theme {
         return true;
     }
 
+    /**
+     * Load a theme page
+     * @param \TwigEnvironment $TwigTheme The twig theme component
+     * @param string $CurrentFile The current file, __FILE__
+     * @param string $CurrentPage The current page template to render
+     * @throws Exception
+     */
     public function __construct($TwigTheme, $CurrentFile, $CurrentPage) {
         $this->TwigTheme = $TwigTheme;
         $this->CurrentFile = $CurrentFile;

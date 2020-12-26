@@ -37,6 +37,11 @@ class Phoenix {
         self::$Redis_Database_Connection = $RedisDB->getDBConnector();
     }
 
+    /**
+     * Generates tosdr.org api data from a service id
+     * @param string $ID The service ID from Phoenix to generate the API Files from
+     * @return array The API data
+     */
     public static function generateApiFiles(string $ID) {
         if (self::$Redis_Database_Connection === NULL) {
             self::initDB();
@@ -110,6 +115,12 @@ class Phoenix {
         return $SkeletonData;
     }
 
+    /**
+     * Retrieve points by a service from postgres
+     * @see https://github.com/tosdr/edit.tosdr.org/blob/8b900bf8879b8ed3a4a2a6bbabbeafa7d2ab540c/db/schema.rb#L89-L111 Database Schema
+     * @param string $ID The ID of the Service
+     * @return array
+     */
     public static function getPointsByServicePG(string $ID) {
         if (self::$Redis_Database_Connection === NULL) {
             self::initDB();
@@ -138,6 +149,13 @@ class Phoenix {
         return $Result;
     }
 
+    
+    /**
+     * Get all documents by a service from postgres
+     * @see https://github.com/tosdr/edit.tosdr.org/blob/8b900bf8879b8ed3a4a2a6bbabbeafa7d2ab540c/db/schema.rb#L64-L77
+     * @param string $ID The Service ID
+     * @return array
+     */
     public static function getDocumentsByServicePG(string $ID) {
         if (self::$Redis_Database_Connection === NULL) {
             self::initDB();

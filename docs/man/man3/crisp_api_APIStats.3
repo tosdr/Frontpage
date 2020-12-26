@@ -1,0 +1,134 @@
+.TH "APIStats" 3 "Sat Dec 26 2020" "CrispCMS Plugin API" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+APIStats
+.SH SYNOPSIS
+.br
+.PP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fB__construct\fP ()"
+.br
+.in -1c
+.SS "Static Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "static \fBinitDB\fP ()"
+.br
+.ti -1c
+.RI "static \fBadd\fP (string $Interface, string $Query)"
+.br
+.ti -1c
+.RI "static \fBget\fP (string $Interface, string $Query)"
+.br
+.ti -1c
+.RI "static \fBlistAll\fP ()"
+.br
+.ti -1c
+.RI "static \fBlistAllByCount\fP ()"
+.br
+.ti -1c
+.RI "static \fBexists\fP (string $Interface, string $Query)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Statistics for the API 
+.PP
+Definition at line 30 of file APIStats\&.php\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "__construct ()"
+
+.PP
+Definition at line 34 of file APIStats\&.php\&.
+.SH "Member Function Documentation"
+.PP 
+.SS "static add (string $Interface, string $Query)\fC [static]\fP"
+Add a new statistic or increase it 
+.PP
+\fBParameters\fP
+.RS 4
+\fI$Interface\fP 
+.br
+\fI$Query\fP 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+boolean 
+.RE
+.PP
+
+.PP
+Definition at line 49 of file APIStats\&.php\&.
+.SS "static exists (string $Interface, string $Query)\fC [static]\fP"
+Check if an entry exists 
+.PP
+\fBParameters\fP
+.RS 4
+\fI$Interface\fP 
+.br
+\fI$Query\fP 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+boolean 
+.RE
+.PP
+
+.PP
+Definition at line 129 of file APIStats\&.php\&.
+.SS "static get (string $Interface, string $Query)\fC [static]\fP"
+Get an entry 
+.PP
+\fBParameters\fP
+.RS 4
+\fI$Interface\fP 
+.br
+\fI$Query\fP 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+boolean 
+.RE
+.PP
+
+.PP
+Definition at line 79 of file APIStats\&.php\&.
+.SS "static initDB ()\fC [static]\fP"
+
+.PP
+Definition at line 38 of file APIStats\&.php\&.
+.SS "static listAll ()\fC [static]\fP"
+List all stats 
+.PP
+\fBReturns\fP
+.RS 4
+array 
+.RE
+.PP
+
+.PP
+Definition at line 95 of file APIStats\&.php\&.
+.SS "static listAllByCount ()\fC [static]\fP"
+List all stats by count 
+.PP
+\fBReturns\fP
+.RS 4
+array 
+.RE
+.PP
+
+.PP
+Definition at line 111 of file APIStats\&.php\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for CrispCMS Plugin API from the source code\&.

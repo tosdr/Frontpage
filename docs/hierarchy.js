@@ -1,5 +1,6 @@
 var hierarchy =
 [
+    [ "APIStats", "classcrisp_1_1api_1_1_a_p_i_stats.html", null ],
     [ "Config", "classcrisp_1_1api_1_1_config.html", null ],
     [ "Config", "classcrisp_1_1core_1_1_config.html", null ],
     [ "Cron", "classcrisp_1_1api_1_1lists_1_1_cron.html", null ],

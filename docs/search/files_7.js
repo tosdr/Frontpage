@@ -1,8 +1,5 @@
 var searchData=
 [
-  ['phoenix_2ephp_251',['Phoenix.php',['../_phoenix_8php.html',1,'']]],
-  ['plugin_2ephp_252',['Plugin.php',['../_plugin_8php.html',1,'']]],
-  ['pluginapi_2ephp_253',['PluginAPI.php',['../_plugin_a_p_i_8php.html',1,'']]],
-  ['plugins_2ephp_254',['Plugins.php',['../_plugins_8php.html',1,'']]],
-  ['postgres_2ephp_255',['Postgres.php',['../_postgres_8php.html',1,'']]]
+  ['migrations_2ephp_256',['Migrations.php',['../_migrations_8php.html',1,'']]],
+  ['mysql_2ephp_257',['MySQL.php',['../_my_s_q_l_8php.html',1,'']]]
 ];

@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['migrations_222',['Migrations',['../classcrisp_1_1core_1_1_migrations.html',1,'crisp::core']]],
-  ['mysql_223',['MySQL',['../classcrisp_1_1core_1_1_my_s_q_l.html',1,'crisp::core']]]
+  ['language_226',['Language',['../classcrisp_1_1api_1_1_language.html',1,'crisp::api']]],
+  ['languages_227',['Languages',['../classcrisp_1_1api_1_1lists_1_1_languages.html',1,'crisp::api::lists']]]
 ];

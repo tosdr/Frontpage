@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['invalidlanguageexception_219',['InvalidLanguageException',['../classcrisp_1_1exceptions_1_1_invalid_language_exception.html',1,'crisp::exceptions']]]
+  ['helper_224',['Helper',['../classcrisp_1_1api_1_1_helper.html',1,'crisp::api']]]
 ];

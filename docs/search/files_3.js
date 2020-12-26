@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['helper_2ephp_244',['Helper.php',['../_helper_8php.html',1,'']]],
-  ['hook_2ephp_245',['Hook.php',['../_hook_8php.html',1,'']]]
+  ['errorreporter_2ephp_250',['ErrorReporter.php',['../_error_reporter_8php.html',1,'']]]
 ];

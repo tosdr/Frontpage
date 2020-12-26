@@ -56,13 +56,40 @@ Load a theme page
 .PP
 
 .PP
-Definition at line 59 of file Theme\&.php\&.
+Definition at line 70 of file Theme\&.php\&.
 .SH "Member Function Documentation"
 .PP 
 .SS "static addtoNavbar ( $ID,  $Text,  $Link,  $Target = \fC'_self'\fP,  $Order = \fC0\fP,  $Placement = \fC'left'\fP)\fC [static]\fP"
+Add an item to the theme's navigation bar 
+.PP
+\fBParameters\fP
+.RS 4
+\fI$ID\fP Unique string to identify the item 
+.br
+\fI$Text\fP The HTML of the navbar item 
+.br
+\fI$Link\fP The Link of the navbar item 
+.br
+\fI$Target\fP HTML a=target 
+.br
+\fI$Order\fP The order to appear on the navbar 
+.br
+\fI$Placement\fP Placed left or right of the navbar if supported by theme 
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#target Link Target 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+boolean 
+.RE
+.PP
 
 .PP
-Definition at line 34 of file Theme\&.php\&.
+Definition at line 45 of file Theme\&.php\&.
 .SH "Field Documentation"
 .PP 
 .SS "$CurrentFile"

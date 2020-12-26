@@ -31,6 +31,17 @@ class Theme {
     public $CurrentFile;
     public $CurrentPage;
 
+    /**
+     * Add an item to the theme's navigation bar
+     * @param string $ID Unique string to identify the item
+     * @param string $Text The HTML of the navbar item
+     * @param string $Link The Link of the navbar item
+     * @param string $Target HTML a=target
+     * @param int $Order The order to appear on the navbar
+     * @param string $Placement Placed left or right of the navbar if supported by theme
+     * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#target Link Target
+     * @return boolean
+     */
     public static function addtoNavbar($ID, $Text, $Link, $Target = "_self", $Order = 0, $Placement = "left") {
         if ($Placement == "right") {
 

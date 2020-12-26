@@ -49,7 +49,7 @@ string & {\em \$\+Current\+Page} & The current page template to render \\
 \end{DoxyExceptions}
 
 
-Definition at line 59 of file Theme.\+php.
+Definition at line 70 of file Theme.\+php.
 
 
 
@@ -60,9 +60,30 @@ Definition at line 59 of file Theme.\+php.
 \doxysubsubsection{\texorpdfstring{addtoNavbar()}{addtoNavbar()}}
 {\footnotesize\ttfamily static addto\+Navbar (\begin{DoxyParamCaption}\item[{}]{\$\+ID,  }\item[{}]{\$\+Text,  }\item[{}]{\$\+Link,  }\item[{}]{\$\+Target = {\ttfamily \char`\"{}\+\_\+self\char`\"{}},  }\item[{}]{\$\+Order = {\ttfamily 0},  }\item[{}]{\$\+Placement = {\ttfamily \char`\"{}left\char`\"{}} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
+Add an item to the theme\textquotesingle{}s navigation bar 
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$\+ID} & Unique string to identify the item \\
+\hline
+string & {\em \$\+Text} & The H\+T\+ML of the navbar item \\
+\hline
+string & {\em \$\+Link} & The Link of the navbar item \\
+\hline
+string & {\em \$\+Target} & H\+T\+ML a=target \\
+\hline
+int & {\em \$\+Order} & The order to appear on the navbar \\
+\hline
+string & {\em \$\+Placement} & Placed left or right of the navbar if supported by theme \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\href{https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a\#target}{\texttt{ https\+://developer.\+mozilla.\+org/en-\/\+U\+S/docs/\+Web/\+H\+T\+M\+L/\+Element/a\#target}} Link Target 
+\end{DoxySeeAlso}
+\begin{DoxyReturn}{Returns}
+boolean 
+\end{DoxyReturn}
 
 
-Definition at line 34 of file Theme.\+php.
+Definition at line 45 of file Theme.\+php.
 
 
 

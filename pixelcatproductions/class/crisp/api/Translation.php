@@ -98,7 +98,7 @@ class Translation {
             foreach (lists\Languages::fetchLanguages() as $Language) {
                 $Array[$Language->getCode()] = array();
                 foreach ($Translations as $Item) {
-                    $Array[$Language->getCode()][$Item["key"]] = ($Item[$Language->getCode()] == null ? $Item["en"] : $Item[$Language->getCode()]);
+                    $Array[$Language->getCode()][$Item["key"]] = $Item[$Language->getCode()];
                 }
             }
 
@@ -124,10 +124,16 @@ class Translation {
 
             $Array = array();
             foreach ($Translations as $Item) {
-                $Array[$Key][$Item["key"]] = ($Item[$Key] == null ? $Item["en"] : $Item[$Key]);
+                if (strpos($Item["key"], "plugin_") !== false) {
+                    continue;
+                }
+                if ($Item[$Key] === null) {
+                    continue;
+                }
+                $Array[$Key][$Item["key"]] = $Item[$Key];
             }
 
-            return $Array;
+            return $Array[$Key];
         }
         return array();
     }

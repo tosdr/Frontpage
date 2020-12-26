@@ -27,6 +27,11 @@ class Plugins {
 
     use \crisp\core\Hook;
 
+    /**
+     * Load API files and check if plugin matches it.
+     * @param string $Interface The interface we are listening on
+     * @param string $_QUERY The query
+     */
     public static function loadAPI($Interface, $_QUERY) {
         $DB = new \crisp\core\MySQL();
         $DBConnection = $DB->getDBConnector();
@@ -44,13 +49,17 @@ class Plugins {
             if (\crisp\api\Helper::isValidPluginName($PluginName)) {
                 new \crisp\core\PluginAPI($PluginFolder, $PluginName, $Interface, $_QUERY);
             } else {
-                PluginAPI::response(array("INVALID_PLUGIN_NAME"),\crisp\api\Helper::isValidPluginName($PluginName), $PluginName);
+                PluginAPI::response(array("INVALID_PLUGIN_NAME"), \crisp\api\Helper::isValidPluginName($PluginName), $PluginName);
                 exit;
             }
         }
         \crisp\core\PluginAPI::response(array("INTERFACE_NOT_FOUND"), "API Interface not found", [], null, 404);
     }
 
+    /**
+     * List all uninstalled plugins
+     * @return array
+     */
     public static function listPlugins() {
 
         $PluginFolder = \crisp\api\Config::get("plugin_dir");
@@ -66,6 +75,10 @@ class Plugins {
         return $Array;
     }
 
+    /**
+     * List all installed plugins
+     * @return array
+     */
     public static function loadedPlugins() {
         $DB = new \crisp\core\MySQL();
         $DBConnection = $DB->getDBConnector();
@@ -78,6 +91,13 @@ class Plugins {
         return $statement->fetchAll(\PDO::FETCH_ASSOC);
     }
 
+    /**
+     * Load all plugins and check for matching templates
+     * @param \TwigEnvironment $TwigTheme The twig theme component
+     * @param string $CurrentFile The current file, __FILE__
+     * @param string $CurrentPage The current page template to render
+     * @throws \Exception
+     */
     public static function load($TwigTheme, $CurrentFile, $CurrentPage) {
 
         if (isset($_GET["simulate_invalid_plugin_name"])) {
@@ -148,16 +168,34 @@ class Plugins {
         }
     }
 
+    /**
+     * Reinstall all translations
+     * @param string $PluginName The name of the plugin
+     * @param string $PluginMetadata plugin.json contents decoded
+     * @return bool
+     */
     public static function refreshTranslations($PluginName, $PluginMetadata) {
         self::uninstallTranslations($PluginName, $PluginMetadata);
         return self::installTranslations($PluginName, $PluginMetadata);
     }
 
+    /**
+     * Reinstall all storage items
+     * @param string $PluginName The name of the plugin
+     * @param string $PluginMetadata plugin.json contents decoded
+     * @return bool
+     */
     public static function refreshKVStorage($PluginName, $PluginMetadata) {
         self::uninstallKVStorage($PluginName, $PluginMetadata);
         return self::installKVStorage($PluginName, $PluginMetadata);
     }
 
+    /**
+     * Install storage from plugin.json
+     * @param string $PluginName The name of the plugin
+     * @param string $PluginMetadata plugin.json contents decoded
+     * @return bool
+     */
     public static function installKVStorage($PluginName, $PluginMetadata) {
         if (!\is_object($PluginMetadata) && !isset($PluginMetadata->hookFile)) {
             return false;
@@ -177,6 +215,12 @@ class Plugins {
         return true;
     }
 
+    /**
+     * Install all translations from plugin.json
+     * @param string $PluginName The name of the plugin
+     * @param string $PluginMetadata plugin.json contents decoded
+     * @return bool
+     */
     public static function installTranslations($PluginName, $PluginMetadata) {
         if (!\is_object($PluginMetadata) && !isset($PluginMetadata->hookFile)) {
             return false;
@@ -249,6 +293,12 @@ class Plugins {
         self::uninstallTranslations($PluginName, $PluginMetadata);
     }
 
+    /**
+     * Compare the current version of crisp with a custom version string
+     * @param string $VersionString The semantic version string
+     * @see version_compare
+     * @return bool|int
+     */
     public static function testVersion($VersionString) {
 
         if (strpos($VersionString, ">=") !== false) {
@@ -268,6 +318,11 @@ class Plugins {
         }
     }
 
+    /**
+     * Gets the decoded contents of the plugin.json
+     * @param string $PluginName The name of the plugin
+     * @return boolean
+     */
     public static function getPluginMetadata($PluginName) {
         $PluginFolder = \crisp\api\Config::get("plugin_dir");
 
@@ -278,6 +333,12 @@ class Plugins {
         return json_decode(\file_get_contents(__DIR__ . "/../../../../$PluginFolder/$PluginName/plugin.json"));
     }
 
+    /**
+     * Uninstall all crons by plugin
+     * @param string $PluginName The name of the plugin
+     * @param string $PluginMetadata plugin.json contents decoded
+     * @return bool
+     */
     public static function uninstallCrons($PluginName, $PluginMetadata) {
         if (!\is_object($PluginMetadata) && !isset($PluginMetadata->hookFile)) {
             return false;
@@ -288,6 +349,12 @@ class Plugins {
         }
     }
 
+    /**
+     * Install all crons by plugin
+     * @param string $PluginName The name of the plugin
+     * @param string $PluginMetadata plugin.json contents decoded
+     * @return bool
+     */
     public static function installCrons($PluginName, $PluginMetadata) {
         if (!\is_object($PluginMetadata) && !isset($PluginMetadata->hookFile)) {
             return false;
@@ -300,6 +367,12 @@ class Plugins {
         }
     }
 
+    /**
+     * uninstall all storage items by plugin
+     * @param string $PluginName The name of the plugin
+     * @param string $PluginMetadata plugin.json contents decoded
+     * @return bool
+     */
     public static function uninstallKVStorage($PluginName, $PluginMetadata) {
         if (!\is_object($PluginMetadata) && !isset($PluginMetadata->hookFile)) {
             return false;
@@ -320,6 +393,11 @@ class Plugins {
         return true;
     }
 
+    /**
+     * List all translations by plugin
+     * @param string $PluginName The name of the plugin
+     * @return array
+     */
     public static function listTranslations($PluginName) {
 
         $Configs = \crisp\api\Translation::listTranslations();
@@ -333,6 +411,11 @@ class Plugins {
         return $Configs;
     }
 
+    /**
+     * List all storage items by plugins
+     * @param string $PluginName The name of the plugin
+     * @return array
+     */
     public static function listConfig($PluginName) {
 
         $Configs = \crisp\api\Config::list();
@@ -347,6 +430,12 @@ class Plugins {
         return $Configs;
     }
 
+    /**
+     * Uninstall all translations by plugin
+     * @param string $PluginName The name of the plugin
+     * @param string $PluginMetadata plugin.json contents decoded
+     * @return bool
+     */
     public static function uninstallTranslations($PluginName, $PluginMetadata) {
         if (!\is_object($PluginMetadata) && !isset($PluginMetadata->hookFile)) {
             return false;
@@ -373,6 +462,14 @@ class Plugins {
         }
     }
 
+    /**
+     * Reinstall a plugin
+     * @param string $PluginName The name of the plugin
+     * @param \TwigEnvironment $TwigTheme The twig theme component
+     * @param string $CurrentFile The current file, __FILE__
+     * @param string $CurrentPage The current page template to render
+     * @return boolean
+     */
     public static function reinstall($PluginName, $TwigTheme, $CurrentFile, $CurrentPage) {
         if (!self::uninstall($PluginName, $TwigTheme, $CurrentFile, $CurrentPage)) {
             return false;
@@ -385,6 +482,10 @@ class Plugins {
      * @broadcasts pluginUninstall
      * @see registerUninstallHook
      * @param string $PluginName The Folder name of the Plugin
+     * @param \TwigEnvironment $TwigTheme The twig theme component
+     * @param string $CurrentFile The current file, __FILE__
+     * @param string $CurrentPage The current page template to render
+     * @return bool
      */
     public static function uninstall($PluginName, $TwigTheme, $CurrentFile, $CurrentPage) {
         $DB = new \crisp\core\MySQL();
@@ -419,6 +520,12 @@ class Plugins {
         return true;
     }
 
+    /**
+     * Check if the integrity of a plugin is still fine
+     * @param string $PluginName The name of the plugin
+     * @param string $PluginMetadata Decoded plugin.json contents
+     * @return array
+     */
     public static function integrityCheck($PluginName, $PluginMetadata) {
         $PluginFolder = \crisp\api\Config::get("plugin_dir");
         $parsedConfigs = array();
@@ -496,6 +603,9 @@ class Plugins {
      * @broadcasts pluginInstall
      * @see registerInstallHook
      * @param string $PluginName The Folder name of the Plugin
+     * @param \TwigEnvironment $TwigTheme The twig theme component
+     * @param string $CurrentFile The current file, __FILE__
+     * @param string $CurrentPage The current page template to render
      * @return boolean TRUE if install was successful, otherwise FALSE
      */
     public static function install($PluginName, $TwigTheme, $CurrentFile, $CurrentPage) {

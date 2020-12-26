@@ -83,7 +83,7 @@ boolean T\+R\+UE if the data has been successfully deleted
 \end{DoxyReturn}
 
 
-Definition at line 233 of file Plugins.\+php.
+Definition at line 277 of file Plugins.\+php.
 
 \mbox{\Hypertarget{classcrisp_1_1core_1_1_plugins_ada6a43ee2838264612e62ae839d85ded}\label{classcrisp_1_1core_1_1_plugins_ada6a43ee2838264612e62ae839d85ded}} 
 \index{Plugins@{Plugins}!getPluginMetadata@{getPluginMetadata}}
@@ -91,9 +91,17 @@ Definition at line 233 of file Plugins.\+php.
 \doxysubsubsection{\texorpdfstring{getPluginMetadata()}{getPluginMetadata()}}
 {\footnotesize\ttfamily static get\+Plugin\+Metadata (\begin{DoxyParamCaption}\item[{}]{\$\+Plugin\+Name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
+Gets the decoded contents of the plugin.\+json 
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$\+Plugin\+Name} & The name of the plugin \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+boolean 
+\end{DoxyReturn}
 
 
-Definition at line 271 of file Plugins.\+php.
+Definition at line 326 of file Plugins.\+php.
 
 \mbox{\Hypertarget{classcrisp_1_1core_1_1_plugins_ab0d93f988b65a197949370f45c0c2f02}\label{classcrisp_1_1core_1_1_plugins_ab0d93f988b65a197949370f45c0c2f02}} 
 \index{Plugins@{Plugins}!install@{install}}
@@ -108,13 +116,19 @@ Install a plugin and load it into the C\+MS @broadcasts plugin\+Install \begin{D
 \begin{DoxyParams}[1]{Parameters}
 string & {\em \$\+Plugin\+Name} & The Folder name of the \mbox{\hyperlink{classcrisp_1_1core_1_1_plugin}{Plugin}} \\
 \hline
+\textbackslash{}\+Twig\+Environment & {\em \$\+Twig\+Theme} & The twig theme component \\
+\hline
+string & {\em \$\+Current\+File} & The current file, {\bfseries{F\+I\+LE}} \\
+\hline
+string & {\em \$\+Current\+Page} & The current page template to render \\
+\hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 boolean T\+R\+UE if install was successful, otherwise F\+A\+L\+SE 
 \end{DoxyReturn}
 
 
-Definition at line 501 of file Plugins.\+php.
+Definition at line 611 of file Plugins.\+php.
 
 \mbox{\Hypertarget{classcrisp_1_1core_1_1_plugins_a3e59fae12627421061e134a4867d8a94}\label{classcrisp_1_1core_1_1_plugins_a3e59fae12627421061e134a4867d8a94}} 
 \index{Plugins@{Plugins}!installCrons@{installCrons}}
@@ -122,9 +136,19 @@ Definition at line 501 of file Plugins.\+php.
 \doxysubsubsection{\texorpdfstring{installCrons()}{installCrons()}}
 {\footnotesize\ttfamily static install\+Crons (\begin{DoxyParamCaption}\item[{}]{\$\+Plugin\+Name,  }\item[{}]{\$\+Plugin\+Metadata }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
+Install all crons by plugin 
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$\+Plugin\+Name} & The name of the plugin \\
+\hline
+string & {\em \$\+Plugin\+Metadata} & plugin.\+json contents decoded \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bool 
+\end{DoxyReturn}
 
 
-Definition at line 291 of file Plugins.\+php.
+Definition at line 358 of file Plugins.\+php.
 
 \mbox{\Hypertarget{classcrisp_1_1core_1_1_plugins_ae7c5f630440464d4ab8988d3e3adf677}\label{classcrisp_1_1core_1_1_plugins_ae7c5f630440464d4ab8988d3e3adf677}} 
 \index{Plugins@{Plugins}!installKVStorage@{installKVStorage}}
@@ -132,9 +156,19 @@ Definition at line 291 of file Plugins.\+php.
 \doxysubsubsection{\texorpdfstring{installKVStorage()}{installKVStorage()}}
 {\footnotesize\ttfamily static install\+K\+V\+Storage (\begin{DoxyParamCaption}\item[{}]{\$\+Plugin\+Name,  }\item[{}]{\$\+Plugin\+Metadata }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
+Install storage from plugin.\+json 
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$\+Plugin\+Name} & The name of the plugin \\
+\hline
+string & {\em \$\+Plugin\+Metadata} & plugin.\+json contents decoded \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bool 
+\end{DoxyReturn}
 
 
-Definition at line 161 of file Plugins.\+php.
+Definition at line 199 of file Plugins.\+php.
 
 \mbox{\Hypertarget{classcrisp_1_1core_1_1_plugins_a75d4b26c12211dd6f0dc42a2c8f89b3b}\label{classcrisp_1_1core_1_1_plugins_a75d4b26c12211dd6f0dc42a2c8f89b3b}} 
 \index{Plugins@{Plugins}!installTranslations@{installTranslations}}
@@ -142,9 +176,19 @@ Definition at line 161 of file Plugins.\+php.
 \doxysubsubsection{\texorpdfstring{installTranslations()}{installTranslations()}}
 {\footnotesize\ttfamily static install\+Translations (\begin{DoxyParamCaption}\item[{}]{\$\+Plugin\+Name,  }\item[{}]{\$\+Plugin\+Metadata }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
+Install all translations from plugin.\+json 
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$\+Plugin\+Name} & The name of the plugin \\
+\hline
+string & {\em \$\+Plugin\+Metadata} & plugin.\+json contents decoded \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bool 
+\end{DoxyReturn}
 
 
-Definition at line 180 of file Plugins.\+php.
+Definition at line 224 of file Plugins.\+php.
 
 \mbox{\Hypertarget{classcrisp_1_1core_1_1_plugins_a0d638cee53d7dcb4dd82f1efeb084361}\label{classcrisp_1_1core_1_1_plugins_a0d638cee53d7dcb4dd82f1efeb084361}} 
 \index{Plugins@{Plugins}!integrityCheck@{integrityCheck}}
@@ -152,9 +196,19 @@ Definition at line 180 of file Plugins.\+php.
 \doxysubsubsection{\texorpdfstring{integrityCheck()}{integrityCheck()}}
 {\footnotesize\ttfamily static integrity\+Check (\begin{DoxyParamCaption}\item[{}]{\$\+Plugin\+Name,  }\item[{}]{\$\+Plugin\+Metadata }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
+Check if the integrity of a plugin is still fine 
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$\+Plugin\+Name} & The name of the plugin \\
+\hline
+string & {\em \$\+Plugin\+Metadata} & Decoded plugin.\+json contents \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+array 
+\end{DoxyReturn}
 
 
-Definition at line 422 of file Plugins.\+php.
+Definition at line 529 of file Plugins.\+php.
 
 \mbox{\Hypertarget{classcrisp_1_1core_1_1_plugins_a9922f40b72212730c4cf639f50e3e364}\label{classcrisp_1_1core_1_1_plugins_a9922f40b72212730c4cf639f50e3e364}} 
 \index{Plugins@{Plugins}!isInstalled@{isInstalled}}
@@ -172,7 +226,7 @@ boolean T\+R\+UE if plugin is installed, otherwise F\+A\+L\+SE
 \end{DoxyReturn}
 
 
-Definition at line 211 of file Plugins.\+php.
+Definition at line 255 of file Plugins.\+php.
 
 \mbox{\Hypertarget{classcrisp_1_1core_1_1_plugins_a71a6bc758b558608ae0e6fe42ff7f8d0}\label{classcrisp_1_1core_1_1_plugins_a71a6bc758b558608ae0e6fe42ff7f8d0}} 
 \index{Plugins@{Plugins}!isValid@{isValid}}
@@ -182,7 +236,7 @@ Definition at line 211 of file Plugins.\+php.
 
 
 
-Definition at line 221 of file Plugins.\+php.
+Definition at line 265 of file Plugins.\+php.
 
 \mbox{\Hypertarget{classcrisp_1_1core_1_1_plugins_a651c27f610270a6019ece3d3d09bc8cb}\label{classcrisp_1_1core_1_1_plugins_a651c27f610270a6019ece3d3d09bc8cb}} 
 \index{Plugins@{Plugins}!listConfig@{listConfig}}
@@ -190,9 +244,17 @@ Definition at line 221 of file Plugins.\+php.
 \doxysubsubsection{\texorpdfstring{listConfig()}{listConfig()}}
 {\footnotesize\ttfamily static list\+Config (\begin{DoxyParamCaption}\item[{}]{\$\+Plugin\+Name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
+List all storage items by plugins 
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$\+Plugin\+Name} & The name of the plugin \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+array 
+\end{DoxyReturn}
 
 
-Definition at line 336 of file Plugins.\+php.
+Definition at line 419 of file Plugins.\+php.
 
 \mbox{\Hypertarget{classcrisp_1_1core_1_1_plugins_a82d97ddabef7dc7917afb2e8a88818f5}\label{classcrisp_1_1core_1_1_plugins_a82d97ddabef7dc7917afb2e8a88818f5}} 
 \index{Plugins@{Plugins}!listPlugins@{listPlugins}}
@@ -200,9 +262,12 @@ Definition at line 336 of file Plugins.\+php.
 \doxysubsubsection{\texorpdfstring{listPlugins()}{listPlugins()}}
 {\footnotesize\ttfamily static list\+Plugins (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
+List all uninstalled plugins \begin{DoxyReturn}{Returns}
+array 
+\end{DoxyReturn}
 
 
-Definition at line 54 of file Plugins.\+php.
+Definition at line 63 of file Plugins.\+php.
 
 \mbox{\Hypertarget{classcrisp_1_1core_1_1_plugins_af1ab715d9a34a02a3720e7769be1a4b4}\label{classcrisp_1_1core_1_1_plugins_af1ab715d9a34a02a3720e7769be1a4b4}} 
 \index{Plugins@{Plugins}!listTranslations@{listTranslations}}
@@ -210,9 +275,17 @@ Definition at line 54 of file Plugins.\+php.
 \doxysubsubsection{\texorpdfstring{listTranslations()}{listTranslations()}}
 {\footnotesize\ttfamily static list\+Translations (\begin{DoxyParamCaption}\item[{}]{\$\+Plugin\+Name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
+List all translations by plugin 
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$\+Plugin\+Name} & The name of the plugin \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+array 
+\end{DoxyReturn}
 
 
-Definition at line 323 of file Plugins.\+php.
+Definition at line 401 of file Plugins.\+php.
 
 \mbox{\Hypertarget{classcrisp_1_1core_1_1_plugins_ad5661c97c530ef2b71cc696f025887f9}\label{classcrisp_1_1core_1_1_plugins_ad5661c97c530ef2b71cc696f025887f9}} 
 \index{Plugins@{Plugins}!load@{load}}
@@ -220,9 +293,23 @@ Definition at line 323 of file Plugins.\+php.
 \doxysubsubsection{\texorpdfstring{load()}{load()}}
 {\footnotesize\ttfamily static load (\begin{DoxyParamCaption}\item[{}]{\$\+Twig\+Theme,  }\item[{}]{\$\+Current\+File,  }\item[{}]{\$\+Current\+Page }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
+Load all plugins and check for matching templates 
+\begin{DoxyParams}[1]{Parameters}
+\textbackslash{}\+Twig\+Environment & {\em \$\+Twig\+Theme} & The twig theme component \\
+\hline
+string & {\em \$\+Current\+File} & The current file, {\bfseries{F\+I\+LE}} \\
+\hline
+string & {\em \$\+Current\+Page} & The current page template to render \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em } & \\
+\hline
+\end{DoxyExceptions}
 
 
-Definition at line 81 of file Plugins.\+php.
+Definition at line 101 of file Plugins.\+php.
 
 \mbox{\Hypertarget{classcrisp_1_1core_1_1_plugins_a9a18b97439a9178a5bdccfbd422bf10b}\label{classcrisp_1_1core_1_1_plugins_a9a18b97439a9178a5bdccfbd422bf10b}} 
 \index{Plugins@{Plugins}!loadAPI@{loadAPI}}
@@ -230,9 +317,16 @@ Definition at line 81 of file Plugins.\+php.
 \doxysubsubsection{\texorpdfstring{loadAPI()}{loadAPI()}}
 {\footnotesize\ttfamily static load\+A\+PI (\begin{DoxyParamCaption}\item[{}]{\$\+Interface,  }\item[{}]{\$\+\_\+\+Q\+U\+E\+RY }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
+Load A\+PI files and check if plugin matches it. 
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$\+Interface} & The interface we are listening on \\
+\hline
+string & {\em \$\+\_\+\+Q\+U\+E\+RY} & The query \\
+\hline
+\end{DoxyParams}
 
 
-Definition at line 30 of file Plugins.\+php.
+Definition at line 35 of file Plugins.\+php.
 
 \mbox{\Hypertarget{classcrisp_1_1core_1_1_plugins_ad0d4c2f3afaefb1c33c5d91d1933b0ee}\label{classcrisp_1_1core_1_1_plugins_ad0d4c2f3afaefb1c33c5d91d1933b0ee}} 
 \index{Plugins@{Plugins}!loadedPlugins@{loadedPlugins}}
@@ -240,9 +334,12 @@ Definition at line 30 of file Plugins.\+php.
 \doxysubsubsection{\texorpdfstring{loadedPlugins()}{loadedPlugins()}}
 {\footnotesize\ttfamily static loaded\+Plugins (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
+List all installed plugins \begin{DoxyReturn}{Returns}
+array 
+\end{DoxyReturn}
 
 
-Definition at line 69 of file Plugins.\+php.
+Definition at line 82 of file Plugins.\+php.
 
 \mbox{\Hypertarget{classcrisp_1_1core_1_1_plugins_ae4f5da23b4391d33835ff6cb80e99c35}\label{classcrisp_1_1core_1_1_plugins_ae4f5da23b4391d33835ff6cb80e99c35}} 
 \index{Plugins@{Plugins}!refreshKVStorage@{refreshKVStorage}}
@@ -250,9 +347,19 @@ Definition at line 69 of file Plugins.\+php.
 \doxysubsubsection{\texorpdfstring{refreshKVStorage()}{refreshKVStorage()}}
 {\footnotesize\ttfamily static refresh\+K\+V\+Storage (\begin{DoxyParamCaption}\item[{}]{\$\+Plugin\+Name,  }\item[{}]{\$\+Plugin\+Metadata }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
+Reinstall all storage items 
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$\+Plugin\+Name} & The name of the plugin \\
+\hline
+string & {\em \$\+Plugin\+Metadata} & plugin.\+json contents decoded \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bool 
+\end{DoxyReturn}
 
 
-Definition at line 156 of file Plugins.\+php.
+Definition at line 188 of file Plugins.\+php.
 
 \mbox{\Hypertarget{classcrisp_1_1core_1_1_plugins_a77ae6319b043cfc9f5aabfa546bf2fd6}\label{classcrisp_1_1core_1_1_plugins_a77ae6319b043cfc9f5aabfa546bf2fd6}} 
 \index{Plugins@{Plugins}!refreshTranslations@{refreshTranslations}}
@@ -260,9 +367,19 @@ Definition at line 156 of file Plugins.\+php.
 \doxysubsubsection{\texorpdfstring{refreshTranslations()}{refreshTranslations()}}
 {\footnotesize\ttfamily static refresh\+Translations (\begin{DoxyParamCaption}\item[{}]{\$\+Plugin\+Name,  }\item[{}]{\$\+Plugin\+Metadata }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
+Reinstall all translations 
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$\+Plugin\+Name} & The name of the plugin \\
+\hline
+string & {\em \$\+Plugin\+Metadata} & plugin.\+json contents decoded \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bool 
+\end{DoxyReturn}
 
 
-Definition at line 151 of file Plugins.\+php.
+Definition at line 177 of file Plugins.\+php.
 
 \mbox{\Hypertarget{classcrisp_1_1core_1_1_plugins_a0a8df1e18409966ed4192ad9d5b66861}\label{classcrisp_1_1core_1_1_plugins_a0a8df1e18409966ed4192ad9d5b66861}} 
 \index{Plugins@{Plugins}!registerAfterRenderHook@{registerAfterRenderHook}}
@@ -272,7 +389,7 @@ Definition at line 151 of file Plugins.\+php.
 
 
 
-Definition at line 556 of file Plugins.\+php.
+Definition at line 666 of file Plugins.\+php.
 
 \mbox{\Hypertarget{classcrisp_1_1core_1_1_plugins_acff78ca85f87a3558ac98e093c1dfb82}\label{classcrisp_1_1core_1_1_plugins_acff78ca85f87a3558ac98e093c1dfb82}} 
 \index{Plugins@{Plugins}!registerInstallHook@{registerInstallHook}}
@@ -292,7 +409,7 @@ boolean T\+R\+UE if hook could be registered, otherwise false
 \end{DoxyReturn}
 
 
-Definition at line 570 of file Plugins.\+php.
+Definition at line 680 of file Plugins.\+php.
 
 \mbox{\Hypertarget{classcrisp_1_1core_1_1_plugins_a807f89718708ff201065c579b3d449b2}\label{classcrisp_1_1core_1_1_plugins_a807f89718708ff201065c579b3d449b2}} 
 \index{Plugins@{Plugins}!registerUninstallHook@{registerUninstallHook}}
@@ -312,7 +429,7 @@ boolean T\+R\+UE if hook could be registered, otherwise false
 \end{DoxyReturn}
 
 
-Definition at line 548 of file Plugins.\+php.
+Definition at line 658 of file Plugins.\+php.
 
 \mbox{\Hypertarget{classcrisp_1_1core_1_1_plugins_af3192aa28b8081c2d51612f6d22d6182}\label{classcrisp_1_1core_1_1_plugins_af3192aa28b8081c2d51612f6d22d6182}} 
 \index{Plugins@{Plugins}!reinstall@{reinstall}}
@@ -320,9 +437,23 @@ Definition at line 548 of file Plugins.\+php.
 \doxysubsubsection{\texorpdfstring{reinstall()}{reinstall()}}
 {\footnotesize\ttfamily static reinstall (\begin{DoxyParamCaption}\item[{}]{\$\+Plugin\+Name,  }\item[{}]{\$\+Twig\+Theme,  }\item[{}]{\$\+Current\+File,  }\item[{}]{\$\+Current\+Page }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
+Reinstall a plugin 
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$\+Plugin\+Name} & The name of the plugin \\
+\hline
+\textbackslash{}\+Twig\+Environment & {\em \$\+Twig\+Theme} & The twig theme component \\
+\hline
+string & {\em \$\+Current\+File} & The current file, {\bfseries{F\+I\+LE}} \\
+\hline
+string & {\em \$\+Current\+Page} & The current page template to render \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+boolean 
+\end{DoxyReturn}
 
 
-Definition at line 376 of file Plugins.\+php.
+Definition at line 473 of file Plugins.\+php.
 
 \mbox{\Hypertarget{classcrisp_1_1core_1_1_plugins_a36eefd37ba778833fa1dd82b5c9fb4b6}\label{classcrisp_1_1core_1_1_plugins_a36eefd37ba778833fa1dd82b5c9fb4b6}} 
 \index{Plugins@{Plugins}!testVersion@{testVersion}}
@@ -330,9 +461,20 @@ Definition at line 376 of file Plugins.\+php.
 \doxysubsubsection{\texorpdfstring{testVersion()}{testVersion()}}
 {\footnotesize\ttfamily static test\+Version (\begin{DoxyParamCaption}\item[{}]{\$\+Version\+String }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
+Compare the current version of crisp with a custom version string 
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$\+Version\+String} & The semantic version string \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+version\+\_\+compare 
+\end{DoxySeeAlso}
+\begin{DoxyReturn}{Returns}
+bool$\vert$int 
+\end{DoxyReturn}
 
 
-Definition at line 252 of file Plugins.\+php.
+Definition at line 302 of file Plugins.\+php.
 
 \mbox{\Hypertarget{classcrisp_1_1core_1_1_plugins_a613477d731542ada2effda2624b22baa}\label{classcrisp_1_1core_1_1_plugins_a613477d731542ada2effda2624b22baa}} 
 \index{Plugins@{Plugins}!uninstall@{uninstall}}
@@ -347,10 +489,19 @@ Uninstall a plugin and prevent it from loading @broadcasts plugin\+Uninstall \be
 \begin{DoxyParams}[1]{Parameters}
 string & {\em \$\+Plugin\+Name} & The Folder name of the \mbox{\hyperlink{classcrisp_1_1core_1_1_plugin}{Plugin}} \\
 \hline
+\textbackslash{}\+Twig\+Environment & {\em \$\+Twig\+Theme} & The twig theme component \\
+\hline
+string & {\em \$\+Current\+File} & The current file, {\bfseries{F\+I\+LE}} \\
+\hline
+string & {\em \$\+Current\+Page} & The current page template to render \\
+\hline
 \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bool 
+\end{DoxyReturn}
 
 
-Definition at line 389 of file Plugins.\+php.
+Definition at line 490 of file Plugins.\+php.
 
 \mbox{\Hypertarget{classcrisp_1_1core_1_1_plugins_a1aed9c205b0d0335408a6aff9199e524}\label{classcrisp_1_1core_1_1_plugins_a1aed9c205b0d0335408a6aff9199e524}} 
 \index{Plugins@{Plugins}!uninstallCrons@{uninstallCrons}}
@@ -358,9 +509,19 @@ Definition at line 389 of file Plugins.\+php.
 \doxysubsubsection{\texorpdfstring{uninstallCrons()}{uninstallCrons()}}
 {\footnotesize\ttfamily static uninstall\+Crons (\begin{DoxyParamCaption}\item[{}]{\$\+Plugin\+Name,  }\item[{}]{\$\+Plugin\+Metadata }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
+Uninstall all crons by plugin 
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$\+Plugin\+Name} & The name of the plugin \\
+\hline
+string & {\em \$\+Plugin\+Metadata} & plugin.\+json contents decoded \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bool 
+\end{DoxyReturn}
 
 
-Definition at line 281 of file Plugins.\+php.
+Definition at line 342 of file Plugins.\+php.
 
 \mbox{\Hypertarget{classcrisp_1_1core_1_1_plugins_ae818c2a7a030c57d7c128b9513174236}\label{classcrisp_1_1core_1_1_plugins_ae818c2a7a030c57d7c128b9513174236}} 
 \index{Plugins@{Plugins}!uninstallKVStorage@{uninstallKVStorage}}
@@ -368,9 +529,19 @@ Definition at line 281 of file Plugins.\+php.
 \doxysubsubsection{\texorpdfstring{uninstallKVStorage()}{uninstallKVStorage()}}
 {\footnotesize\ttfamily static uninstall\+K\+V\+Storage (\begin{DoxyParamCaption}\item[{}]{\$\+Plugin\+Name,  }\item[{}]{\$\+Plugin\+Metadata }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
+uninstall all storage items by plugin 
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$\+Plugin\+Name} & The name of the plugin \\
+\hline
+string & {\em \$\+Plugin\+Metadata} & plugin.\+json contents decoded \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bool 
+\end{DoxyReturn}
 
 
-Definition at line 303 of file Plugins.\+php.
+Definition at line 376 of file Plugins.\+php.
 
 \mbox{\Hypertarget{classcrisp_1_1core_1_1_plugins_a5acab9a66f2cdb695f4c73de97c3687e}\label{classcrisp_1_1core_1_1_plugins_a5acab9a66f2cdb695f4c73de97c3687e}} 
 \index{Plugins@{Plugins}!uninstallTranslations@{uninstallTranslations}}
@@ -378,9 +549,19 @@ Definition at line 303 of file Plugins.\+php.
 \doxysubsubsection{\texorpdfstring{uninstallTranslations()}{uninstallTranslations()}}
 {\footnotesize\ttfamily static uninstall\+Translations (\begin{DoxyParamCaption}\item[{}]{\$\+Plugin\+Name,  }\item[{}]{\$\+Plugin\+Metadata }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
+Uninstall all translations by plugin 
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$\+Plugin\+Name} & The name of the plugin \\
+\hline
+string & {\em \$\+Plugin\+Metadata} & plugin.\+json contents decoded \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bool 
+\end{DoxyReturn}
 
 
-Definition at line 350 of file Plugins.\+php.
+Definition at line 439 of file Plugins.\+php.
 
 
 

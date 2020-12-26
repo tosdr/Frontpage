@@ -181,7 +181,7 @@ Static Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>boolean TRUE if the data has been successfully deleted </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_plugins_8php_source.html#l00233">233</a> of file <a class="el" href="_plugins_8php_source.html">Plugins.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_plugins_8php_source.html#l00277">277</a> of file <a class="el" href="_plugins_8php_source.html">Plugins.php</a>.</p>
 
 </div>
 </div>
@@ -208,8 +208,15 @@ Static Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Gets the decoded contents of the plugin.json </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$PluginName</td><td>The name of the plugin </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>boolean </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_plugins_8php_source.html#l00271">271</a> of file <a class="el" href="_plugins_8php_source.html">Plugins.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_plugins_8php_source.html#l00326">326</a> of file <a class="el" href="_plugins_8php_source.html">Plugins.php</a>.</p>
 
 </div>
 </div>
@@ -262,12 +269,15 @@ Static Public Member Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramtype">string</td><td class="paramname">$PluginName</td><td>The Folder name of the <a class="el" href="classcrisp_1_1core_1_1_plugin.html">Plugin</a> </td></tr>
+    <tr><td class="paramtype">\TwigEnvironment</td><td class="paramname">$TwigTheme</td><td>The twig theme component </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$CurrentFile</td><td>The current file, <b>FILE</b> </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$CurrentPage</td><td>The current page template to render </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>boolean TRUE if install was successful, otherwise FALSE </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_plugins_8php_source.html#l00501">501</a> of file <a class="el" href="_plugins_8php_source.html">Plugins.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_plugins_8php_source.html#l00611">611</a> of file <a class="el" href="_plugins_8php_source.html">Plugins.php</a>.</p>
 
 </div>
 </div>
@@ -304,8 +314,16 @@ Static Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Install all crons by plugin </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$PluginName</td><td>The name of the plugin </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$PluginMetadata</td><td>plugin.json contents decoded </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>bool </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_plugins_8php_source.html#l00291">291</a> of file <a class="el" href="_plugins_8php_source.html">Plugins.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_plugins_8php_source.html#l00358">358</a> of file <a class="el" href="_plugins_8php_source.html">Plugins.php</a>.</p>
 
 </div>
 </div>
@@ -342,8 +360,16 @@ Static Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Install storage from plugin.json </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$PluginName</td><td>The name of the plugin </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$PluginMetadata</td><td>plugin.json contents decoded </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>bool </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_plugins_8php_source.html#l00161">161</a> of file <a class="el" href="_plugins_8php_source.html">Plugins.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_plugins_8php_source.html#l00199">199</a> of file <a class="el" href="_plugins_8php_source.html">Plugins.php</a>.</p>
 
 </div>
 </div>
@@ -380,8 +406,16 @@ Static Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Install all translations from plugin.json </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$PluginName</td><td>The name of the plugin </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$PluginMetadata</td><td>plugin.json contents decoded </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>bool </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_plugins_8php_source.html#l00180">180</a> of file <a class="el" href="_plugins_8php_source.html">Plugins.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_plugins_8php_source.html#l00224">224</a> of file <a class="el" href="_plugins_8php_source.html">Plugins.php</a>.</p>
 
 </div>
 </div>
@@ -418,8 +452,16 @@ Static Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Check if the integrity of a plugin is still fine </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$PluginName</td><td>The name of the plugin </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$PluginMetadata</td><td>Decoded plugin.json contents </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>array </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_plugins_8php_source.html#l00422">422</a> of file <a class="el" href="_plugins_8php_source.html">Plugins.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_plugins_8php_source.html#l00529">529</a> of file <a class="el" href="_plugins_8php_source.html">Plugins.php</a>.</p>
 
 </div>
 </div>
@@ -454,7 +496,7 @@ Static Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>boolean TRUE if plugin is installed, otherwise FALSE </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_plugins_8php_source.html#l00211">211</a> of file <a class="el" href="_plugins_8php_source.html">Plugins.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_plugins_8php_source.html#l00255">255</a> of file <a class="el" href="_plugins_8php_source.html">Plugins.php</a>.</p>
 
 </div>
 </div>
@@ -482,7 +524,7 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_plugins_8php_source.html#l00221">221</a> of file <a class="el" href="_plugins_8php_source.html">Plugins.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_plugins_8php_source.html#l00265">265</a> of file <a class="el" href="_plugins_8php_source.html">Plugins.php</a>.</p>
 
 </div>
 </div>
@@ -509,8 +551,15 @@ Static Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>List all storage items by plugins </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$PluginName</td><td>The name of the plugin </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>array </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_plugins_8php_source.html#l00336">336</a> of file <a class="el" href="_plugins_8php_source.html">Plugins.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_plugins_8php_source.html#l00419">419</a> of file <a class="el" href="_plugins_8php_source.html">Plugins.php</a>.</p>
 
 </div>
 </div>
@@ -536,8 +585,9 @@ Static Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>List all uninstalled plugins </p><dl class="section return"><dt>Returns</dt><dd>array </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_plugins_8php_source.html#l00054">54</a> of file <a class="el" href="_plugins_8php_source.html">Plugins.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_plugins_8php_source.html#l00063">63</a> of file <a class="el" href="_plugins_8php_source.html">Plugins.php</a>.</p>
 
 </div>
 </div>
@@ -564,8 +614,15 @@ Static Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>List all translations by plugin </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$PluginName</td><td>The name of the plugin </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>array </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_plugins_8php_source.html#l00323">323</a> of file <a class="el" href="_plugins_8php_source.html">Plugins.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_plugins_8php_source.html#l00401">401</a> of file <a class="el" href="_plugins_8php_source.html">Plugins.php</a>.</p>
 
 </div>
 </div>
@@ -608,8 +665,22 @@ Static Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Load all plugins and check for matching templates </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">\TwigEnvironment</td><td class="paramname">$TwigTheme</td><td>The twig theme component </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$CurrentFile</td><td>The current file, <b>FILE</b> </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$CurrentPage</td><td>The current page template to render </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"></td><td></td></tr>
+  </table>
+  </dd>
+</dl>
 
-<p class="definition">Definition at line <a class="el" href="_plugins_8php_source.html#l00081">81</a> of file <a class="el" href="_plugins_8php_source.html">Plugins.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_plugins_8php_source.html#l00101">101</a> of file <a class="el" href="_plugins_8php_source.html">Plugins.php</a>.</p>
 
 </div>
 </div>
@@ -646,8 +717,15 @@ Static Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Load API files and check if plugin matches it. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$Interface</td><td>The interface we are listening on </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$_QUERY</td><td>The query </td></tr>
+  </table>
+  </dd>
+</dl>
 
-<p class="definition">Definition at line <a class="el" href="_plugins_8php_source.html#l00030">30</a> of file <a class="el" href="_plugins_8php_source.html">Plugins.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_plugins_8php_source.html#l00035">35</a> of file <a class="el" href="_plugins_8php_source.html">Plugins.php</a>.</p>
 
 </div>
 </div>
@@ -673,8 +751,9 @@ Static Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>List all installed plugins </p><dl class="section return"><dt>Returns</dt><dd>array </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_plugins_8php_source.html#l00069">69</a> of file <a class="el" href="_plugins_8php_source.html">Plugins.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_plugins_8php_source.html#l00082">82</a> of file <a class="el" href="_plugins_8php_source.html">Plugins.php</a>.</p>
 
 </div>
 </div>
@@ -711,8 +790,16 @@ Static Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Reinstall all storage items </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$PluginName</td><td>The name of the plugin </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$PluginMetadata</td><td>plugin.json contents decoded </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>bool </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_plugins_8php_source.html#l00156">156</a> of file <a class="el" href="_plugins_8php_source.html">Plugins.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_plugins_8php_source.html#l00188">188</a> of file <a class="el" href="_plugins_8php_source.html">Plugins.php</a>.</p>
 
 </div>
 </div>
@@ -749,8 +836,16 @@ Static Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Reinstall all translations </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$PluginName</td><td>The name of the plugin </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$PluginMetadata</td><td>plugin.json contents decoded </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>bool </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_plugins_8php_source.html#l00151">151</a> of file <a class="el" href="_plugins_8php_source.html">Plugins.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_plugins_8php_source.html#l00177">177</a> of file <a class="el" href="_plugins_8php_source.html">Plugins.php</a>.</p>
 
 </div>
 </div>
@@ -788,7 +883,7 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_plugins_8php_source.html#l00556">556</a> of file <a class="el" href="_plugins_8php_source.html">Plugins.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_plugins_8php_source.html#l00666">666</a> of file <a class="el" href="_plugins_8php_source.html">Plugins.php</a>.</p>
 
 </div>
 </div>
@@ -834,7 +929,7 @@ Static Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>boolean TRUE if hook could be registered, otherwise false </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_plugins_8php_source.html#l00570">570</a> of file <a class="el" href="_plugins_8php_source.html">Plugins.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_plugins_8php_source.html#l00680">680</a> of file <a class="el" href="_plugins_8php_source.html">Plugins.php</a>.</p>
 
 </div>
 </div>
@@ -880,7 +975,7 @@ Static Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>boolean TRUE if hook could be registered, otherwise false </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_plugins_8php_source.html#l00548">548</a> of file <a class="el" href="_plugins_8php_source.html">Plugins.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_plugins_8php_source.html#l00658">658</a> of file <a class="el" href="_plugins_8php_source.html">Plugins.php</a>.</p>
 
 </div>
 </div>
@@ -929,8 +1024,18 @@ Static Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Reinstall a plugin </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$PluginName</td><td>The name of the plugin </td></tr>
+    <tr><td class="paramtype">\TwigEnvironment</td><td class="paramname">$TwigTheme</td><td>The twig theme component </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$CurrentFile</td><td>The current file, <b>FILE</b> </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$CurrentPage</td><td>The current page template to render </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>boolean </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_plugins_8php_source.html#l00376">376</a> of file <a class="el" href="_plugins_8php_source.html">Plugins.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_plugins_8php_source.html#l00473">473</a> of file <a class="el" href="_plugins_8php_source.html">Plugins.php</a>.</p>
 
 </div>
 </div>
@@ -957,8 +1062,16 @@ Static Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Compare the current version of crisp with a custom version string </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$VersionString</td><td>The semantic version string </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See also</dt><dd>version_compare </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>bool|int </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_plugins_8php_source.html#l00252">252</a> of file <a class="el" href="_plugins_8php_source.html">Plugins.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_plugins_8php_source.html#l00302">302</a> of file <a class="el" href="_plugins_8php_source.html">Plugins.php</a>.</p>
 
 </div>
 </div>
@@ -1011,11 +1124,15 @@ Static Public Member Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramtype">string</td><td class="paramname">$PluginName</td><td>The Folder name of the <a class="el" href="classcrisp_1_1core_1_1_plugin.html">Plugin</a> </td></tr>
+    <tr><td class="paramtype">\TwigEnvironment</td><td class="paramname">$TwigTheme</td><td>The twig theme component </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$CurrentFile</td><td>The current file, <b>FILE</b> </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$CurrentPage</td><td>The current page template to render </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>bool </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_plugins_8php_source.html#l00389">389</a> of file <a class="el" href="_plugins_8php_source.html">Plugins.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_plugins_8php_source.html#l00490">490</a> of file <a class="el" href="_plugins_8php_source.html">Plugins.php</a>.</p>
 
 </div>
 </div>
@@ -1052,8 +1169,16 @@ Static Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Uninstall all crons by plugin </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$PluginName</td><td>The name of the plugin </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$PluginMetadata</td><td>plugin.json contents decoded </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>bool </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_plugins_8php_source.html#l00281">281</a> of file <a class="el" href="_plugins_8php_source.html">Plugins.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_plugins_8php_source.html#l00342">342</a> of file <a class="el" href="_plugins_8php_source.html">Plugins.php</a>.</p>
 
 </div>
 </div>
@@ -1090,8 +1215,16 @@ Static Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>uninstall all storage items by plugin </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$PluginName</td><td>The name of the plugin </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$PluginMetadata</td><td>plugin.json contents decoded </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>bool </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_plugins_8php_source.html#l00303">303</a> of file <a class="el" href="_plugins_8php_source.html">Plugins.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_plugins_8php_source.html#l00376">376</a> of file <a class="el" href="_plugins_8php_source.html">Plugins.php</a>.</p>
 
 </div>
 </div>
@@ -1128,8 +1261,16 @@ Static Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Uninstall all translations by plugin </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$PluginName</td><td>The name of the plugin </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$PluginMetadata</td><td>plugin.json contents decoded </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>bool </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_plugins_8php_source.html#l00350">350</a> of file <a class="el" href="_plugins_8php_source.html">Plugins.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_plugins_8php_source.html#l00439">439</a> of file <a class="el" href="_plugins_8php_source.html">Plugins.php</a>.</p>
 
 </div>
 </div>
@@ -1142,7 +1283,7 @@ Static Public Member Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespacecrisp.html">crisp</a></li><li class="navelem"><a class="el" href="namespacecrisp_1_1core.html">core</a></li><li class="navelem"><a class="el" href="classcrisp_1_1core_1_1_plugins.html">Plugins</a></li>
-    <li class="footer">Generated on Sat Dec 26 2020 02:34:06 for CrispCMS Plugin API by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
+    <li class="footer">Generated on Sat Dec 26 2020 02:42:43 for CrispCMS Plugin API by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>
 </body>

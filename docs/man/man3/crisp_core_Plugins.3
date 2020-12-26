@@ -112,11 +112,23 @@ boolean TRUE if the data has been successfully deleted
 .PP
 
 .PP
-Definition at line 233 of file Plugins\&.php\&.
+Definition at line 277 of file Plugins\&.php\&.
 .SS "static getPluginMetadata ( $PluginName)\fC [static]\fP"
+Gets the decoded contents of the plugin\&.json 
+.PP
+\fBParameters\fP
+.RS 4
+\fI$PluginName\fP The name of the plugin 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+boolean 
+.RE
+.PP
 
 .PP
-Definition at line 271 of file Plugins\&.php\&.
+Definition at line 326 of file Plugins\&.php\&.
 .SS "static install ( $PluginName,  $TwigTheme,  $CurrentFile,  $CurrentPage)\fC [static]\fP"
 Install a plugin and load it into the CMS @broadcasts pluginInstall 
 .PP
@@ -128,6 +140,12 @@ Install a plugin and load it into the CMS @broadcasts pluginInstall
 \fBParameters\fP
 .RS 4
 \fI$PluginName\fP The Folder name of the \fBPlugin\fP 
+.br
+\fI$TwigTheme\fP The twig theme component 
+.br
+\fI$CurrentFile\fP The current file, \fBFILE\fP 
+.br
+\fI$CurrentPage\fP The current page template to render 
 .RE
 .PP
 \fBReturns\fP
@@ -137,23 +155,79 @@ boolean TRUE if install was successful, otherwise FALSE
 .PP
 
 .PP
-Definition at line 501 of file Plugins\&.php\&.
+Definition at line 611 of file Plugins\&.php\&.
 .SS "static installCrons ( $PluginName,  $PluginMetadata)\fC [static]\fP"
+Install all crons by plugin 
+.PP
+\fBParameters\fP
+.RS 4
+\fI$PluginName\fP The name of the plugin 
+.br
+\fI$PluginMetadata\fP plugin\&.json contents decoded 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+bool 
+.RE
+.PP
 
 .PP
-Definition at line 291 of file Plugins\&.php\&.
+Definition at line 358 of file Plugins\&.php\&.
 .SS "static installKVStorage ( $PluginName,  $PluginMetadata)\fC [static]\fP"
+Install storage from plugin\&.json 
+.PP
+\fBParameters\fP
+.RS 4
+\fI$PluginName\fP The name of the plugin 
+.br
+\fI$PluginMetadata\fP plugin\&.json contents decoded 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+bool 
+.RE
+.PP
 
 .PP
-Definition at line 161 of file Plugins\&.php\&.
+Definition at line 199 of file Plugins\&.php\&.
 .SS "static installTranslations ( $PluginName,  $PluginMetadata)\fC [static]\fP"
+Install all translations from plugin\&.json 
+.PP
+\fBParameters\fP
+.RS 4
+\fI$PluginName\fP The name of the plugin 
+.br
+\fI$PluginMetadata\fP plugin\&.json contents decoded 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+bool 
+.RE
+.PP
 
 .PP
-Definition at line 180 of file Plugins\&.php\&.
+Definition at line 224 of file Plugins\&.php\&.
 .SS "static integrityCheck ( $PluginName,  $PluginMetadata)\fC [static]\fP"
+Check if the integrity of a plugin is still fine 
+.PP
+\fBParameters\fP
+.RS 4
+\fI$PluginName\fP The name of the plugin 
+.br
+\fI$PluginMetadata\fP Decoded plugin\&.json contents 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+array 
+.RE
+.PP
 
 .PP
-Definition at line 422 of file Plugins\&.php\&.
+Definition at line 529 of file Plugins\&.php\&.
 .SS "static isInstalled ( $PluginName)\fC [static]\fP"
 Checks if the specified plugin is installed 
 .PP
@@ -169,47 +243,137 @@ boolean TRUE if plugin is installed, otherwise FALSE
 .PP
 
 .PP
-Definition at line 211 of file Plugins\&.php\&.
+Definition at line 255 of file Plugins\&.php\&.
 .SS "static isValid ( $PluginName)\fC [static]\fP"
 
 .PP
-Definition at line 221 of file Plugins\&.php\&.
+Definition at line 265 of file Plugins\&.php\&.
 .SS "static listConfig ( $PluginName)\fC [static]\fP"
+List all storage items by plugins 
+.PP
+\fBParameters\fP
+.RS 4
+\fI$PluginName\fP The name of the plugin 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+array 
+.RE
+.PP
 
 .PP
-Definition at line 336 of file Plugins\&.php\&.
+Definition at line 419 of file Plugins\&.php\&.
 .SS "static listPlugins ()\fC [static]\fP"
+List all uninstalled plugins 
+.PP
+\fBReturns\fP
+.RS 4
+array 
+.RE
+.PP
 
 .PP
-Definition at line 54 of file Plugins\&.php\&.
+Definition at line 63 of file Plugins\&.php\&.
 .SS "static listTranslations ( $PluginName)\fC [static]\fP"
+List all translations by plugin 
+.PP
+\fBParameters\fP
+.RS 4
+\fI$PluginName\fP The name of the plugin 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+array 
+.RE
+.PP
 
 .PP
-Definition at line 323 of file Plugins\&.php\&.
+Definition at line 401 of file Plugins\&.php\&.
 .SS "static load ( $TwigTheme,  $CurrentFile,  $CurrentPage)\fC [static]\fP"
+Load all plugins and check for matching templates 
+.PP
+\fBParameters\fP
+.RS 4
+\fI$TwigTheme\fP The twig theme component 
+.br
+\fI$CurrentFile\fP The current file, \fBFILE\fP 
+.br
+\fI$CurrentPage\fP The current page template to render 
+.RE
+.PP
+\fBExceptions\fP
+.RS 4
+\fI\fP .RE
+.PP
 
 .PP
-Definition at line 81 of file Plugins\&.php\&.
+Definition at line 101 of file Plugins\&.php\&.
 .SS "static loadAPI ( $Interface,  $_QUERY)\fC [static]\fP"
+Load API files and check if plugin matches it\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI$Interface\fP The interface we are listening on 
+.br
+\fI$_QUERY\fP The query 
+.RE
+.PP
 
 .PP
-Definition at line 30 of file Plugins\&.php\&.
+Definition at line 35 of file Plugins\&.php\&.
 .SS "static loadedPlugins ()\fC [static]\fP"
+List all installed plugins 
+.PP
+\fBReturns\fP
+.RS 4
+array 
+.RE
+.PP
 
 .PP
-Definition at line 69 of file Plugins\&.php\&.
+Definition at line 82 of file Plugins\&.php\&.
 .SS "static refreshKVStorage ( $PluginName,  $PluginMetadata)\fC [static]\fP"
+Reinstall all storage items 
+.PP
+\fBParameters\fP
+.RS 4
+\fI$PluginName\fP The name of the plugin 
+.br
+\fI$PluginMetadata\fP plugin\&.json contents decoded 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+bool 
+.RE
+.PP
 
 .PP
-Definition at line 156 of file Plugins\&.php\&.
+Definition at line 188 of file Plugins\&.php\&.
 .SS "static refreshTranslations ( $PluginName,  $PluginMetadata)\fC [static]\fP"
+Reinstall all translations 
+.PP
+\fBParameters\fP
+.RS 4
+\fI$PluginName\fP The name of the plugin 
+.br
+\fI$PluginMetadata\fP plugin\&.json contents decoded 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+bool 
+.RE
+.PP
 
 .PP
-Definition at line 151 of file Plugins\&.php\&.
+Definition at line 177 of file Plugins\&.php\&.
 .SS "static registerAfterRenderHook ( $PluginName,  $Function)\fC [static]\fP"
 
 .PP
-Definition at line 556 of file Plugins\&.php\&.
+Definition at line 666 of file Plugins\&.php\&.
 .SS "static registerInstallHook ( $PluginName,  $Function)\fC [static]\fP"
 Registers an install hook for your plugin\&. 
 .PP
@@ -227,7 +391,7 @@ boolean TRUE if hook could be registered, otherwise false
 .PP
 
 .PP
-Definition at line 570 of file Plugins\&.php\&.
+Definition at line 680 of file Plugins\&.php\&.
 .SS "static registerUninstallHook ( $PluginName,  $Function)\fC [static]\fP"
 Registers an uninstall hook for your plugin\&. 
 .PP
@@ -245,15 +409,50 @@ boolean TRUE if hook could be registered, otherwise false
 .PP
 
 .PP
-Definition at line 548 of file Plugins\&.php\&.
+Definition at line 658 of file Plugins\&.php\&.
 .SS "static reinstall ( $PluginName,  $TwigTheme,  $CurrentFile,  $CurrentPage)\fC [static]\fP"
+Reinstall a plugin 
+.PP
+\fBParameters\fP
+.RS 4
+\fI$PluginName\fP The name of the plugin 
+.br
+\fI$TwigTheme\fP The twig theme component 
+.br
+\fI$CurrentFile\fP The current file, \fBFILE\fP 
+.br
+\fI$CurrentPage\fP The current page template to render 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+boolean 
+.RE
+.PP
 
 .PP
-Definition at line 376 of file Plugins\&.php\&.
+Definition at line 473 of file Plugins\&.php\&.
 .SS "static testVersion ( $VersionString)\fC [static]\fP"
+Compare the current version of crisp with a custom version string 
+.PP
+\fBParameters\fP
+.RS 4
+\fI$VersionString\fP The semantic version string 
+.RE
+.PP
+\fBSee also\fP
+.RS 4
+version_compare 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+bool|int 
+.RE
+.PP
 
 .PP
-Definition at line 252 of file Plugins\&.php\&.
+Definition at line 302 of file Plugins\&.php\&.
 .SS "static uninstall ( $PluginName,  $TwigTheme,  $CurrentFile,  $CurrentPage)\fC [static]\fP"
 Uninstall a plugin and prevent it from loading @broadcasts pluginUninstall 
 .PP
@@ -265,23 +464,76 @@ Uninstall a plugin and prevent it from loading @broadcasts pluginUninstall
 \fBParameters\fP
 .RS 4
 \fI$PluginName\fP The Folder name of the \fBPlugin\fP 
+.br
+\fI$TwigTheme\fP The twig theme component 
+.br
+\fI$CurrentFile\fP The current file, \fBFILE\fP 
+.br
+\fI$CurrentPage\fP The current page template to render 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+bool 
 .RE
 .PP
 
 .PP
-Definition at line 389 of file Plugins\&.php\&.
+Definition at line 490 of file Plugins\&.php\&.
 .SS "static uninstallCrons ( $PluginName,  $PluginMetadata)\fC [static]\fP"
+Uninstall all crons by plugin 
+.PP
+\fBParameters\fP
+.RS 4
+\fI$PluginName\fP The name of the plugin 
+.br
+\fI$PluginMetadata\fP plugin\&.json contents decoded 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+bool 
+.RE
+.PP
 
 .PP
-Definition at line 281 of file Plugins\&.php\&.
+Definition at line 342 of file Plugins\&.php\&.
 .SS "static uninstallKVStorage ( $PluginName,  $PluginMetadata)\fC [static]\fP"
+uninstall all storage items by plugin 
+.PP
+\fBParameters\fP
+.RS 4
+\fI$PluginName\fP The name of the plugin 
+.br
+\fI$PluginMetadata\fP plugin\&.json contents decoded 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+bool 
+.RE
+.PP
 
 .PP
-Definition at line 303 of file Plugins\&.php\&.
+Definition at line 376 of file Plugins\&.php\&.
 .SS "static uninstallTranslations ( $PluginName,  $PluginMetadata)\fC [static]\fP"
+Uninstall all translations by plugin 
+.PP
+\fBParameters\fP
+.RS 4
+\fI$PluginName\fP The name of the plugin 
+.br
+\fI$PluginMetadata\fP plugin\&.json contents decoded 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+bool 
+.RE
+.PP
 
 .PP
-Definition at line 350 of file Plugins\&.php\&.
+Definition at line 439 of file Plugins\&.php\&.
 
 .SH "Author"
 .PP 

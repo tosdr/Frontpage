@@ -7,6 +7,9 @@ var dir_b90053ece3e3aae2db004f989e8a8c69 =
       [ "Crypto", "classcrisp_1_1core_1_1_crypto.html", null ]
     ] ],
     [ "Hook.php", "_hook_8php.html", null ],
+    [ "Migrations.php", "_migrations_8php.html", [
+      [ "Migrations", "classcrisp_1_1core_1_1_migrations.html", "classcrisp_1_1core_1_1_migrations" ]
+    ] ],
     [ "MySQL.php", "_my_s_q_l_8php.html", [
       [ "MySQL", "classcrisp_1_1core_1_1_my_s_q_l.html", "classcrisp_1_1core_1_1_my_s_q_l" ]
     ] ],
@@ -25,10 +28,10 @@ var dir_b90053ece3e3aae2db004f989e8a8c69 =
     [ "Redis.php", "_redis_8php.html", [
       [ "Redis", "classcrisp_1_1core_1_1_redis.html", "classcrisp_1_1core_1_1_redis" ]
     ] ],
-    [ "Template.php", "_template_8php.html", [
-      [ "Template", "classcrisp_1_1core_1_1_template.html", "classcrisp_1_1core_1_1_template" ]
+    [ "Theme.php", "_theme_8php.html", [
+      [ "Theme", "classcrisp_1_1core_1_1_theme.html", "classcrisp_1_1core_1_1_theme" ]
     ] ],
-    [ "Templates.php", "_templates_8php.html", [
-      [ "Templates", "classcrisp_1_1core_1_1_templates.html", null ]
+    [ "Themes.php", "_themes_8php.html", [
+      [ "Themes", "classcrisp_1_1core_1_1_themes.html", null ]
     ] ]
 ];

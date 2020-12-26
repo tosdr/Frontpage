@@ -5,6 +5,10 @@
 \item 
 static \mbox{\hyperlink{classcrisp_1_1core_1_1_plugins_a9a18b97439a9178a5bdccfbd422bf10b}{load\+A\+PI}} (\$Interface, \$\+\_\+\+Q\+U\+E\+RY)
 \item 
+static \mbox{\hyperlink{classcrisp_1_1core_1_1_plugins_a82d97ddabef7dc7917afb2e8a88818f5}{list\+Plugins}} ()
+\item 
+static \mbox{\hyperlink{classcrisp_1_1core_1_1_plugins_ad0d4c2f3afaefb1c33c5d91d1933b0ee}{loaded\+Plugins}} ()
+\item 
 static \mbox{\hyperlink{classcrisp_1_1core_1_1_plugins_ad5661c97c530ef2b71cc696f025887f9}{load}} (\$Twig\+Theme, \$Current\+File, \$Current\+Page)
 \item 
 static \mbox{\hyperlink{classcrisp_1_1core_1_1_plugins_a77ae6319b043cfc9f5aabfa546bf2fd6}{refresh\+Translations}} (\$Plugin\+Name, \$Plugin\+Metadata)
@@ -21,9 +25,19 @@ static \mbox{\hyperlink{classcrisp_1_1core_1_1_plugins_a71a6bc758b558608ae0e6fe4
 \item 
 static \mbox{\hyperlink{classcrisp_1_1core_1_1_plugins_a29683f4ed4f98a71f97ac46418824404}{delete\+Data}} (\$Plugin\+Name)
 \item 
+static \mbox{\hyperlink{classcrisp_1_1core_1_1_plugins_a36eefd37ba778833fa1dd82b5c9fb4b6}{test\+Version}} (\$Version\+String)
+\item 
 static \mbox{\hyperlink{classcrisp_1_1core_1_1_plugins_ada6a43ee2838264612e62ae839d85ded}{get\+Plugin\+Metadata}} (\$Plugin\+Name)
 \item 
+static \mbox{\hyperlink{classcrisp_1_1core_1_1_plugins_a1aed9c205b0d0335408a6aff9199e524}{uninstall\+Crons}} (\$Plugin\+Name, \$Plugin\+Metadata)
+\item 
+static \mbox{\hyperlink{classcrisp_1_1core_1_1_plugins_a3e59fae12627421061e134a4867d8a94}{install\+Crons}} (\$Plugin\+Name, \$Plugin\+Metadata)
+\item 
 static \mbox{\hyperlink{classcrisp_1_1core_1_1_plugins_ae818c2a7a030c57d7c128b9513174236}{uninstall\+K\+V\+Storage}} (\$Plugin\+Name, \$Plugin\+Metadata)
+\item 
+static \mbox{\hyperlink{classcrisp_1_1core_1_1_plugins_af1ab715d9a34a02a3720e7769be1a4b4}{list\+Translations}} (\$Plugin\+Name)
+\item 
+static \mbox{\hyperlink{classcrisp_1_1core_1_1_plugins_a651c27f610270a6019ece3d3d09bc8cb}{list\+Config}} (\$Plugin\+Name)
 \item 
 static \mbox{\hyperlink{classcrisp_1_1core_1_1_plugins_a5acab9a66f2cdb695f4c73de97c3687e}{uninstall\+Translations}} (\$Plugin\+Name, \$Plugin\+Metadata)
 \item 
@@ -31,7 +45,7 @@ static \mbox{\hyperlink{classcrisp_1_1core_1_1_plugins_af3192aa28b8081c2d51612f6
 \item 
 static \mbox{\hyperlink{classcrisp_1_1core_1_1_plugins_a613477d731542ada2effda2624b22baa}{uninstall}} (\$Plugin\+Name, \$Twig\+Theme, \$Current\+File, \$Current\+Page)
 \item 
-static \mbox{\hyperlink{classcrisp_1_1core_1_1_plugins_a6f266dc54fabde70ec2432a05a49aadd}{integrity\+Check}} (\$Plugin\+Name, \$Plugin\+Metadata, \$Plugin\+Folder)
+static \mbox{\hyperlink{classcrisp_1_1core_1_1_plugins_a0d638cee53d7dcb4dd82f1efeb084361}{integrity\+Check}} (\$Plugin\+Name, \$Plugin\+Metadata)
 \item 
 static \mbox{\hyperlink{classcrisp_1_1core_1_1_plugins_ab0d93f988b65a197949370f45c0c2f02}{install}} (\$Plugin\+Name, \$Twig\+Theme, \$Current\+File, \$Current\+Page)
 \item 
@@ -45,6 +59,10 @@ static \mbox{\hyperlink{classcrisp_1_1core_1_1_plugins_acff78ca85f87a3558ac98e09
 
 \doxysubsection{Detailed Description}
 Used internally, plugin loader 
+
+Definition at line 26 of file Plugins.\+php.
+
+
 
 \doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{classcrisp_1_1core_1_1_plugins_a29683f4ed4f98a71f97ac46418824404}\label{classcrisp_1_1core_1_1_plugins_a29683f4ed4f98a71f97ac46418824404}} 
@@ -63,11 +81,19 @@ string & {\em \$\+Plugin\+Name} & The folder name of the plugin \\
 \begin{DoxyReturn}{Returns}
 boolean T\+R\+UE if the data has been successfully deleted 
 \end{DoxyReturn}
+
+
+Definition at line 233 of file Plugins.\+php.
+
 \mbox{\Hypertarget{classcrisp_1_1core_1_1_plugins_ada6a43ee2838264612e62ae839d85ded}\label{classcrisp_1_1core_1_1_plugins_ada6a43ee2838264612e62ae839d85ded}} 
 \index{Plugins@{Plugins}!getPluginMetadata@{getPluginMetadata}}
 \index{getPluginMetadata@{getPluginMetadata}!Plugins@{Plugins}}
 \doxysubsubsection{\texorpdfstring{getPluginMetadata()}{getPluginMetadata()}}
 {\footnotesize\ttfamily static get\+Plugin\+Metadata (\begin{DoxyParamCaption}\item[{}]{\$\+Plugin\+Name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line 271 of file Plugins.\+php.
 
 \mbox{\Hypertarget{classcrisp_1_1core_1_1_plugins_ab0d93f988b65a197949370f45c0c2f02}\label{classcrisp_1_1core_1_1_plugins_ab0d93f988b65a197949370f45c0c2f02}} 
 \index{Plugins@{Plugins}!install@{install}}
@@ -86,11 +112,29 @@ string & {\em \$\+Plugin\+Name} & The Folder name of the \mbox{\hyperlink{classc
 \begin{DoxyReturn}{Returns}
 boolean T\+R\+UE if install was successful, otherwise F\+A\+L\+SE 
 \end{DoxyReturn}
+
+
+Definition at line 501 of file Plugins.\+php.
+
+\mbox{\Hypertarget{classcrisp_1_1core_1_1_plugins_a3e59fae12627421061e134a4867d8a94}\label{classcrisp_1_1core_1_1_plugins_a3e59fae12627421061e134a4867d8a94}} 
+\index{Plugins@{Plugins}!installCrons@{installCrons}}
+\index{installCrons@{installCrons}!Plugins@{Plugins}}
+\doxysubsubsection{\texorpdfstring{installCrons()}{installCrons()}}
+{\footnotesize\ttfamily static install\+Crons (\begin{DoxyParamCaption}\item[{}]{\$\+Plugin\+Name,  }\item[{}]{\$\+Plugin\+Metadata }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line 291 of file Plugins.\+php.
+
 \mbox{\Hypertarget{classcrisp_1_1core_1_1_plugins_ae7c5f630440464d4ab8988d3e3adf677}\label{classcrisp_1_1core_1_1_plugins_ae7c5f630440464d4ab8988d3e3adf677}} 
 \index{Plugins@{Plugins}!installKVStorage@{installKVStorage}}
 \index{installKVStorage@{installKVStorage}!Plugins@{Plugins}}
 \doxysubsubsection{\texorpdfstring{installKVStorage()}{installKVStorage()}}
 {\footnotesize\ttfamily static install\+K\+V\+Storage (\begin{DoxyParamCaption}\item[{}]{\$\+Plugin\+Name,  }\item[{}]{\$\+Plugin\+Metadata }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line 161 of file Plugins.\+php.
 
 \mbox{\Hypertarget{classcrisp_1_1core_1_1_plugins_a75d4b26c12211dd6f0dc42a2c8f89b3b}\label{classcrisp_1_1core_1_1_plugins_a75d4b26c12211dd6f0dc42a2c8f89b3b}} 
 \index{Plugins@{Plugins}!installTranslations@{installTranslations}}
@@ -98,11 +142,19 @@ boolean T\+R\+UE if install was successful, otherwise F\+A\+L\+SE
 \doxysubsubsection{\texorpdfstring{installTranslations()}{installTranslations()}}
 {\footnotesize\ttfamily static install\+Translations (\begin{DoxyParamCaption}\item[{}]{\$\+Plugin\+Name,  }\item[{}]{\$\+Plugin\+Metadata }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
-\mbox{\Hypertarget{classcrisp_1_1core_1_1_plugins_a6f266dc54fabde70ec2432a05a49aadd}\label{classcrisp_1_1core_1_1_plugins_a6f266dc54fabde70ec2432a05a49aadd}} 
+
+
+Definition at line 180 of file Plugins.\+php.
+
+\mbox{\Hypertarget{classcrisp_1_1core_1_1_plugins_a0d638cee53d7dcb4dd82f1efeb084361}\label{classcrisp_1_1core_1_1_plugins_a0d638cee53d7dcb4dd82f1efeb084361}} 
 \index{Plugins@{Plugins}!integrityCheck@{integrityCheck}}
 \index{integrityCheck@{integrityCheck}!Plugins@{Plugins}}
 \doxysubsubsection{\texorpdfstring{integrityCheck()}{integrityCheck()}}
-{\footnotesize\ttfamily static integrity\+Check (\begin{DoxyParamCaption}\item[{}]{\$\+Plugin\+Name,  }\item[{}]{\$\+Plugin\+Metadata,  }\item[{}]{\$\+Plugin\+Folder }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+{\footnotesize\ttfamily static integrity\+Check (\begin{DoxyParamCaption}\item[{}]{\$\+Plugin\+Name,  }\item[{}]{\$\+Plugin\+Metadata }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line 422 of file Plugins.\+php.
 
 \mbox{\Hypertarget{classcrisp_1_1core_1_1_plugins_a9922f40b72212730c4cf639f50e3e364}\label{classcrisp_1_1core_1_1_plugins_a9922f40b72212730c4cf639f50e3e364}} 
 \index{Plugins@{Plugins}!isInstalled@{isInstalled}}
@@ -118,11 +170,49 @@ string & {\em \$\+Plugin\+Name} & The folder name of the plugin \\
 \begin{DoxyReturn}{Returns}
 boolean T\+R\+UE if plugin is installed, otherwise F\+A\+L\+SE 
 \end{DoxyReturn}
+
+
+Definition at line 211 of file Plugins.\+php.
+
 \mbox{\Hypertarget{classcrisp_1_1core_1_1_plugins_a71a6bc758b558608ae0e6fe42ff7f8d0}\label{classcrisp_1_1core_1_1_plugins_a71a6bc758b558608ae0e6fe42ff7f8d0}} 
 \index{Plugins@{Plugins}!isValid@{isValid}}
 \index{isValid@{isValid}!Plugins@{Plugins}}
 \doxysubsubsection{\texorpdfstring{isValid()}{isValid()}}
 {\footnotesize\ttfamily static is\+Valid (\begin{DoxyParamCaption}\item[{}]{\$\+Plugin\+Name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line 221 of file Plugins.\+php.
+
+\mbox{\Hypertarget{classcrisp_1_1core_1_1_plugins_a651c27f610270a6019ece3d3d09bc8cb}\label{classcrisp_1_1core_1_1_plugins_a651c27f610270a6019ece3d3d09bc8cb}} 
+\index{Plugins@{Plugins}!listConfig@{listConfig}}
+\index{listConfig@{listConfig}!Plugins@{Plugins}}
+\doxysubsubsection{\texorpdfstring{listConfig()}{listConfig()}}
+{\footnotesize\ttfamily static list\+Config (\begin{DoxyParamCaption}\item[{}]{\$\+Plugin\+Name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line 336 of file Plugins.\+php.
+
+\mbox{\Hypertarget{classcrisp_1_1core_1_1_plugins_a82d97ddabef7dc7917afb2e8a88818f5}\label{classcrisp_1_1core_1_1_plugins_a82d97ddabef7dc7917afb2e8a88818f5}} 
+\index{Plugins@{Plugins}!listPlugins@{listPlugins}}
+\index{listPlugins@{listPlugins}!Plugins@{Plugins}}
+\doxysubsubsection{\texorpdfstring{listPlugins()}{listPlugins()}}
+{\footnotesize\ttfamily static list\+Plugins (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line 54 of file Plugins.\+php.
+
+\mbox{\Hypertarget{classcrisp_1_1core_1_1_plugins_af1ab715d9a34a02a3720e7769be1a4b4}\label{classcrisp_1_1core_1_1_plugins_af1ab715d9a34a02a3720e7769be1a4b4}} 
+\index{Plugins@{Plugins}!listTranslations@{listTranslations}}
+\index{listTranslations@{listTranslations}!Plugins@{Plugins}}
+\doxysubsubsection{\texorpdfstring{listTranslations()}{listTranslations()}}
+{\footnotesize\ttfamily static list\+Translations (\begin{DoxyParamCaption}\item[{}]{\$\+Plugin\+Name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line 323 of file Plugins.\+php.
 
 \mbox{\Hypertarget{classcrisp_1_1core_1_1_plugins_ad5661c97c530ef2b71cc696f025887f9}\label{classcrisp_1_1core_1_1_plugins_ad5661c97c530ef2b71cc696f025887f9}} 
 \index{Plugins@{Plugins}!load@{load}}
@@ -130,11 +220,29 @@ boolean T\+R\+UE if plugin is installed, otherwise F\+A\+L\+SE
 \doxysubsubsection{\texorpdfstring{load()}{load()}}
 {\footnotesize\ttfamily static load (\begin{DoxyParamCaption}\item[{}]{\$\+Twig\+Theme,  }\item[{}]{\$\+Current\+File,  }\item[{}]{\$\+Current\+Page }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
+
+
+Definition at line 81 of file Plugins.\+php.
+
 \mbox{\Hypertarget{classcrisp_1_1core_1_1_plugins_a9a18b97439a9178a5bdccfbd422bf10b}\label{classcrisp_1_1core_1_1_plugins_a9a18b97439a9178a5bdccfbd422bf10b}} 
 \index{Plugins@{Plugins}!loadAPI@{loadAPI}}
 \index{loadAPI@{loadAPI}!Plugins@{Plugins}}
 \doxysubsubsection{\texorpdfstring{loadAPI()}{loadAPI()}}
 {\footnotesize\ttfamily static load\+A\+PI (\begin{DoxyParamCaption}\item[{}]{\$\+Interface,  }\item[{}]{\$\+\_\+\+Q\+U\+E\+RY }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line 30 of file Plugins.\+php.
+
+\mbox{\Hypertarget{classcrisp_1_1core_1_1_plugins_ad0d4c2f3afaefb1c33c5d91d1933b0ee}\label{classcrisp_1_1core_1_1_plugins_ad0d4c2f3afaefb1c33c5d91d1933b0ee}} 
+\index{Plugins@{Plugins}!loadedPlugins@{loadedPlugins}}
+\index{loadedPlugins@{loadedPlugins}!Plugins@{Plugins}}
+\doxysubsubsection{\texorpdfstring{loadedPlugins()}{loadedPlugins()}}
+{\footnotesize\ttfamily static loaded\+Plugins (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line 69 of file Plugins.\+php.
 
 \mbox{\Hypertarget{classcrisp_1_1core_1_1_plugins_ae4f5da23b4391d33835ff6cb80e99c35}\label{classcrisp_1_1core_1_1_plugins_ae4f5da23b4391d33835ff6cb80e99c35}} 
 \index{Plugins@{Plugins}!refreshKVStorage@{refreshKVStorage}}
@@ -142,17 +250,29 @@ boolean T\+R\+UE if plugin is installed, otherwise F\+A\+L\+SE
 \doxysubsubsection{\texorpdfstring{refreshKVStorage()}{refreshKVStorage()}}
 {\footnotesize\ttfamily static refresh\+K\+V\+Storage (\begin{DoxyParamCaption}\item[{}]{\$\+Plugin\+Name,  }\item[{}]{\$\+Plugin\+Metadata }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
+
+
+Definition at line 156 of file Plugins.\+php.
+
 \mbox{\Hypertarget{classcrisp_1_1core_1_1_plugins_a77ae6319b043cfc9f5aabfa546bf2fd6}\label{classcrisp_1_1core_1_1_plugins_a77ae6319b043cfc9f5aabfa546bf2fd6}} 
 \index{Plugins@{Plugins}!refreshTranslations@{refreshTranslations}}
 \index{refreshTranslations@{refreshTranslations}!Plugins@{Plugins}}
 \doxysubsubsection{\texorpdfstring{refreshTranslations()}{refreshTranslations()}}
 {\footnotesize\ttfamily static refresh\+Translations (\begin{DoxyParamCaption}\item[{}]{\$\+Plugin\+Name,  }\item[{}]{\$\+Plugin\+Metadata }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
+
+
+Definition at line 151 of file Plugins.\+php.
+
 \mbox{\Hypertarget{classcrisp_1_1core_1_1_plugins_a0a8df1e18409966ed4192ad9d5b66861}\label{classcrisp_1_1core_1_1_plugins_a0a8df1e18409966ed4192ad9d5b66861}} 
 \index{Plugins@{Plugins}!registerAfterRenderHook@{registerAfterRenderHook}}
 \index{registerAfterRenderHook@{registerAfterRenderHook}!Plugins@{Plugins}}
 \doxysubsubsection{\texorpdfstring{registerAfterRenderHook()}{registerAfterRenderHook()}}
 {\footnotesize\ttfamily static register\+After\+Render\+Hook (\begin{DoxyParamCaption}\item[{}]{\$\+Plugin\+Name,  }\item[{}]{\$\+Function }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line 556 of file Plugins.\+php.
 
 \mbox{\Hypertarget{classcrisp_1_1core_1_1_plugins_acff78ca85f87a3558ac98e093c1dfb82}\label{classcrisp_1_1core_1_1_plugins_acff78ca85f87a3558ac98e093c1dfb82}} 
 \index{Plugins@{Plugins}!registerInstallHook@{registerInstallHook}}
@@ -170,6 +290,10 @@ string | function & {\em \$\+Function} & Callback function, either anonymous or 
 \begin{DoxyReturn}{Returns}
 boolean T\+R\+UE if hook could be registered, otherwise false 
 \end{DoxyReturn}
+
+
+Definition at line 570 of file Plugins.\+php.
+
 \mbox{\Hypertarget{classcrisp_1_1core_1_1_plugins_a807f89718708ff201065c579b3d449b2}\label{classcrisp_1_1core_1_1_plugins_a807f89718708ff201065c579b3d449b2}} 
 \index{Plugins@{Plugins}!registerUninstallHook@{registerUninstallHook}}
 \index{registerUninstallHook@{registerUninstallHook}!Plugins@{Plugins}}
@@ -186,11 +310,29 @@ string | function & {\em \$\+Function} & Callback function, either anonymous or 
 \begin{DoxyReturn}{Returns}
 boolean T\+R\+UE if hook could be registered, otherwise false 
 \end{DoxyReturn}
+
+
+Definition at line 548 of file Plugins.\+php.
+
 \mbox{\Hypertarget{classcrisp_1_1core_1_1_plugins_af3192aa28b8081c2d51612f6d22d6182}\label{classcrisp_1_1core_1_1_plugins_af3192aa28b8081c2d51612f6d22d6182}} 
 \index{Plugins@{Plugins}!reinstall@{reinstall}}
 \index{reinstall@{reinstall}!Plugins@{Plugins}}
 \doxysubsubsection{\texorpdfstring{reinstall()}{reinstall()}}
 {\footnotesize\ttfamily static reinstall (\begin{DoxyParamCaption}\item[{}]{\$\+Plugin\+Name,  }\item[{}]{\$\+Twig\+Theme,  }\item[{}]{\$\+Current\+File,  }\item[{}]{\$\+Current\+Page }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line 376 of file Plugins.\+php.
+
+\mbox{\Hypertarget{classcrisp_1_1core_1_1_plugins_a36eefd37ba778833fa1dd82b5c9fb4b6}\label{classcrisp_1_1core_1_1_plugins_a36eefd37ba778833fa1dd82b5c9fb4b6}} 
+\index{Plugins@{Plugins}!testVersion@{testVersion}}
+\index{testVersion@{testVersion}!Plugins@{Plugins}}
+\doxysubsubsection{\texorpdfstring{testVersion()}{testVersion()}}
+{\footnotesize\ttfamily static test\+Version (\begin{DoxyParamCaption}\item[{}]{\$\+Version\+String }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line 252 of file Plugins.\+php.
 
 \mbox{\Hypertarget{classcrisp_1_1core_1_1_plugins_a613477d731542ada2effda2624b22baa}\label{classcrisp_1_1core_1_1_plugins_a613477d731542ada2effda2624b22baa}} 
 \index{Plugins@{Plugins}!uninstall@{uninstall}}
@@ -206,11 +348,29 @@ Uninstall a plugin and prevent it from loading @broadcasts plugin\+Uninstall \be
 string & {\em \$\+Plugin\+Name} & The Folder name of the \mbox{\hyperlink{classcrisp_1_1core_1_1_plugin}{Plugin}} \\
 \hline
 \end{DoxyParams}
+
+
+Definition at line 389 of file Plugins.\+php.
+
+\mbox{\Hypertarget{classcrisp_1_1core_1_1_plugins_a1aed9c205b0d0335408a6aff9199e524}\label{classcrisp_1_1core_1_1_plugins_a1aed9c205b0d0335408a6aff9199e524}} 
+\index{Plugins@{Plugins}!uninstallCrons@{uninstallCrons}}
+\index{uninstallCrons@{uninstallCrons}!Plugins@{Plugins}}
+\doxysubsubsection{\texorpdfstring{uninstallCrons()}{uninstallCrons()}}
+{\footnotesize\ttfamily static uninstall\+Crons (\begin{DoxyParamCaption}\item[{}]{\$\+Plugin\+Name,  }\item[{}]{\$\+Plugin\+Metadata }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line 281 of file Plugins.\+php.
+
 \mbox{\Hypertarget{classcrisp_1_1core_1_1_plugins_ae818c2a7a030c57d7c128b9513174236}\label{classcrisp_1_1core_1_1_plugins_ae818c2a7a030c57d7c128b9513174236}} 
 \index{Plugins@{Plugins}!uninstallKVStorage@{uninstallKVStorage}}
 \index{uninstallKVStorage@{uninstallKVStorage}!Plugins@{Plugins}}
 \doxysubsubsection{\texorpdfstring{uninstallKVStorage()}{uninstallKVStorage()}}
 {\footnotesize\ttfamily static uninstall\+K\+V\+Storage (\begin{DoxyParamCaption}\item[{}]{\$\+Plugin\+Name,  }\item[{}]{\$\+Plugin\+Metadata }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line 303 of file Plugins.\+php.
 
 \mbox{\Hypertarget{classcrisp_1_1core_1_1_plugins_a5acab9a66f2cdb695f4c73de97c3687e}\label{classcrisp_1_1core_1_1_plugins_a5acab9a66f2cdb695f4c73de97c3687e}} 
 \index{Plugins@{Plugins}!uninstallTranslations@{uninstallTranslations}}
@@ -218,3 +378,12 @@ string & {\em \$\+Plugin\+Name} & The Folder name of the \mbox{\hyperlink{classc
 \doxysubsubsection{\texorpdfstring{uninstallTranslations()}{uninstallTranslations()}}
 {\footnotesize\ttfamily static uninstall\+Translations (\begin{DoxyParamCaption}\item[{}]{\$\+Plugin\+Name,  }\item[{}]{\$\+Plugin\+Metadata }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
+
+
+Definition at line 350 of file Plugins.\+php.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+pixelcatproductions/class/crisp/core/\mbox{\hyperlink{_plugins_8php}{Plugins.\+php}}\end{DoxyCompactItemize}

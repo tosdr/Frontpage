@@ -1,7 +1,11 @@
 var searchData=
 [
-  ['markascanceled_321',['markAsCanceled',['../classcrisp_1_1api_1_1lists_1_1_cron.html#a79f6cc9049fd2d344eccecebd480838f',1,'crisp::api::lists::Cron']]],
-  ['markasfailed_322',['markAsFailed',['../classcrisp_1_1api_1_1lists_1_1_cron.html#a0074a018e8ee051d3424cb7266a11e7d',1,'crisp::api::lists::Cron']]],
-  ['markasfinished_323',['markAsFinished',['../classcrisp_1_1api_1_1lists_1_1_cron.html#a4deb9bf19524ad984c361d25ae2a3686',1,'crisp::api::lists::Cron']]],
-  ['markasstarted_324',['markAsStarted',['../classcrisp_1_1api_1_1lists_1_1_cron.html#a3745a82c32e9f6af4e1035c03bee6eb3',1,'crisp::api::lists::Cron']]]
+  ['list_352',['list',['../classcrisp_1_1api_1_1_config.html#a60f9ff17d15bf996c3d374518777d2d6',1,'crisp::api::Config']]],
+  ['listconfig_353',['listConfig',['../classcrisp_1_1core_1_1_plugin.html#a56a11b7f15ba3715a2f6e8a829b42962',1,'crisp\core\Plugin\listConfig()'],['../classcrisp_1_1core_1_1_plugins.html#a651c27f610270a6019ece3d3d09bc8cb',1,'crisp\core\Plugins\listConfig()']]],
+  ['listlanguages_354',['listLanguages',['../classcrisp_1_1api_1_1_translation.html#ac83fea9398598f316f651b3b83206acc',1,'crisp::api::Translation']]],
+  ['listplugins_355',['listPlugins',['../classcrisp_1_1core_1_1_plugins.html#a82d97ddabef7dc7917afb2e8a88818f5',1,'crisp::core::Plugins']]],
+  ['listtranslations_356',['listTranslations',['../classcrisp_1_1api_1_1_translation.html#add1862ef0ab8870ba795ef9631cc4ff2',1,'crisp\api\Translation\listTranslations()'],['../classcrisp_1_1core_1_1_plugins.html#af1ab715d9a34a02a3720e7769be1a4b4',1,'crisp\core\Plugins\listTranslations()']]],
+  ['load_357',['load',['../classcrisp_1_1core_1_1_plugins.html#ad5661c97c530ef2b71cc696f025887f9',1,'crisp\core\Plugins\load()'],['../classcrisp_1_1core_1_1_themes.html#ad5661c97c530ef2b71cc696f025887f9',1,'crisp\core\Themes\load()']]],
+  ['loadapi_358',['loadAPI',['../classcrisp_1_1core_1_1_plugins.html#a9a18b97439a9178a5bdccfbd422bf10b',1,'crisp::core::Plugins']]],
+  ['loadedplugins_359',['loadedPlugins',['../classcrisp_1_1core_1_1_plugins.html#ad0d4c2f3afaefb1c33c5d91d1933b0ee',1,'crisp::core::Plugins']]]
 ];

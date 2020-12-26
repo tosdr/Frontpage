@@ -1,0 +1,285 @@
+.TH "Plugin" 3 "Sat Dec 26 2020" "CrispCMS Plugin API" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Plugin
+.SH SYNOPSIS
+.br
+.PP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fB__construct\fP ($PluginFolder, $PluginName, $PluginMetadata, $TwigTheme, $CurrentFile, $CurrentPage)"
+.br
+.ti -1c
+.RI "\fBgetTranslation\fP ($Key, $Count=1, $UserOptions=array())"
+.br
+.ti -1c
+.RI "\fBgetConfig\fP ($Key)"
+.br
+.ti -1c
+.RI "\fBcreateCron\fP (string $Type, $Data, string $Interval='2 MINUTE')"
+.br
+.ti -1c
+.RI "\fBdeleteConfig\fP ($Key)"
+.br
+.ti -1c
+.RI "\fBsetConfig\fP ($Key, $Value)"
+.br
+.ti -1c
+.RI "\fBcreateConfig\fP ($Key, $Value)"
+.br
+.ti -1c
+.RI "\fBlistConfig\fP ()"
+.br
+.ti -1c
+.RI "\fBuninstall\fP ()"
+.br
+.ti -1c
+.RI "\fBintegrity\fP ()"
+.br
+.ti -1c
+.RI "\fBregisterUninstallHook\fP ($Function)"
+.br
+.ti -1c
+.RI "\fBregisterInstallHook\fP ($Function)"
+.br
+.ti -1c
+.RI "\fBregisterAfterRenderHook\fP ($Function)"
+.br
+.in -1c
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "\fB$PluginFolder\fP"
+.br
+.ti -1c
+.RI "\fB$PluginName\fP"
+.br
+.ti -1c
+.RI "\fB$PluginMetadata\fP"
+.br
+.ti -1c
+.RI "\fB$PluginPath\fP"
+.br
+.ti -1c
+.RI "\fB$TwigTheme\fP"
+.br
+.ti -1c
+.RI "\fB$CurrentFile\fP"
+.br
+.ti -1c
+.RI "\fB$CurrentPage\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Used internally, plugin loader 
+.PP
+Definition at line 26 of file Plugin\&.php\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "__construct ( $PluginFolder,  $PluginName,  $PluginMetadata,  $TwigTheme,  $CurrentFile,  $CurrentPage)"
+
+.PP
+\fBParameters\fP
+.RS 4
+\fI$PluginFolder\fP The path to your plugin 
+.br
+\fI$PluginName\fP The name of your plugin 
+.br
+\fI$PluginMetadata\fP Plugin\&.json file contents 
+.br
+\fI$TwigTheme\fP The current twig theme 
+.br
+\fI$CurrentFile\fP The current file 
+.br
+\fI$CurrentPage\fP The current $_GET['page'] parameter 
+.RE
+.PP
+\fBExceptions\fP
+.RS 4
+\fIException\fP 
+.RE
+.PP
+
+.PP
+Definition at line 48 of file Plugin\&.php\&.
+.SH "Member Function Documentation"
+.PP 
+.SS "createConfig ( $Key,  $Value)"
+
+.PP
+\fBSee also\fP
+.RS 4
+\\crisp\\api\\Config::create 
+.RE
+.PP
+
+.PP
+Definition at line 123 of file Plugin\&.php\&.
+.SS "createCron (string $Type,  $Data, string $Interval = \fC'2 MINUTE'\fP)"
+
+.PP
+\fBSee also\fP
+.RS 4
+\\crisp\\api\\lists\\Cron::create 
+.RE
+.PP
+
+.PP
+Definition at line 102 of file Plugin\&.php\&.
+.SS "deleteConfig ( $Key)"
+
+.PP
+\fBSee also\fP
+.RS 4
+\\crisp\\api\\Config::delete 
+.RE
+.PP
+
+.PP
+Definition at line 109 of file Plugin\&.php\&.
+.SS "getConfig ( $Key)"
+
+.PP
+\fBSee also\fP
+.RS 4
+\\crisp\\api\\Config::get 
+.RE
+.PP
+
+.PP
+Definition at line 95 of file Plugin\&.php\&.
+.SS "getTranslation ( $Key,  $Count = \fC1\fP,  $UserOptions = \fCarray()\fP)"
+
+.PP
+\fBSee also\fP
+.RS 4
+\\crisp\\api\\Translation::fetch 
+.RE
+.PP
+
+.PP
+Definition at line 81 of file Plugin\&.php\&.
+.SS "integrity ()"
+Check the integrity of a plugin 
+.PP
+\fBReturns\fP
+.RS 4
+array 
+.RE
+.PP
+
+.PP
+Definition at line 143 of file Plugin\&.php\&.
+.SS "listConfig ()"
+
+.PP
+Definition at line 127 of file Plugin\&.php\&.
+.SS "registerAfterRenderHook ( $Function)"
+Registers a hook thats called after a template has rendered in your plugin\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI$Function\fP Callback function, either anonymous or a string to a function 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+boolean TRUE if hook could be registered, otherwise false 
+.RE
+.PP
+
+.PP
+Definition at line 170 of file Plugin\&.php\&.
+.SS "registerInstallHook ( $Function)"
+Registers an install hook for your plugin\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI$Function\fP Callback function, either anonymous or a string to a function 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+boolean TRUE if hook could be registered, otherwise false 
+.RE
+.PP
+
+.PP
+Definition at line 161 of file Plugin\&.php\&.
+.SS "registerUninstallHook ( $Function)"
+Registers an uninstall hook for your plugin\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI$Function\fP Callback function, either anonymous or a string to a function 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+boolean TRUE if hook could be registered, otherwise false 
+.RE
+.PP
+
+.PP
+Definition at line 152 of file Plugin\&.php\&.
+.SS "setConfig ( $Key,  $Value)"
+
+.PP
+\fBSee also\fP
+.RS 4
+\\crisp\\api\\Config::set 
+.RE
+.PP
+
+.PP
+Definition at line 116 of file Plugin\&.php\&.
+.SS "uninstall ()"
+Uninstall a plugin 
+.PP
+\fBReturns\fP
+.RS 4
+bool 
+.RE
+.PP
+
+.PP
+Definition at line 135 of file Plugin\&.php\&.
+.SH "Field Documentation"
+.PP 
+.SS "$CurrentFile"
+
+.PP
+Definition at line 35 of file Plugin\&.php\&.
+.SS "$CurrentPage"
+
+.PP
+Definition at line 36 of file Plugin\&.php\&.
+.SS "$PluginFolder"
+
+.PP
+Definition at line 30 of file Plugin\&.php\&.
+.SS "$PluginMetadata"
+
+.PP
+Definition at line 32 of file Plugin\&.php\&.
+.SS "$PluginName"
+
+.PP
+Definition at line 31 of file Plugin\&.php\&.
+.SS "$PluginPath"
+
+.PP
+Definition at line 33 of file Plugin\&.php\&.
+.SS "$TwigTheme"
+
+.PP
+Definition at line 34 of file Plugin\&.php\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for CrispCMS Plugin API from the source code\&.

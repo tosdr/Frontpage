@@ -1,0 +1,253 @@
+.TH "Cron" 3 "Sat Dec 26 2020" "CrispCMS Plugin API" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Cron
+.SH SYNOPSIS
+.br
+.PP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fB__construct\fP ()"
+.br
+.in -1c
+.SS "Static Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "static \fBfetchAll\fP (int $Limit=2)"
+.br
+.ti -1c
+.RI "static \fBfetchUnprocessedSchedule\fP (int $Limit=2)"
+.br
+.ti -1c
+.RI "static \fBfetchUnprocessed\fP (int $Limit=2)"
+.br
+.ti -1c
+.RI "static \fBfetch\fP (int $ID)"
+.br
+.ti -1c
+.RI "static \fBdeleteOld\fP ()"
+.br
+.ti -1c
+.RI "static \fBdeleteByPlugin\fP ($Plugin)"
+.br
+.ti -1c
+.RI "static \fBcreate\fP (string $Type, string $Data, string $Interval='2 MINUTE', string $Plugin=null)"
+.br
+.ti -1c
+.RI "static \fBmarkAsStarted\fP (int $ID)"
+.br
+.ti -1c
+.RI "static \fBmarkAsCanceled\fP (int $ID)"
+.br
+.ti -1c
+.RI "static \fBmarkAsFinished\fP (int $ID)"
+.br
+.ti -1c
+.RI "static \fBmarkAsFailed\fP (int $ID)"
+.br
+.ti -1c
+.RI "static \fBsetLog\fP (int $ID, string $Log)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Interact with all cron jobs stored on the server 
+.PP
+Definition at line 30 of file Cron\&.php\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "__construct ()"
+
+.PP
+Definition at line 34 of file Cron\&.php\&.
+.SH "Member Function Documentation"
+.PP 
+.SS "static create (string $Type, string $Data, string $Interval = \fC'2 MINUTE'\fP, string $Plugin = \fCnull\fP)\fC [static]\fP"
+Create a new cron job 
+.PP
+\fBParameters\fP
+.RS 4
+\fI$Type\fP The name of the cronjon, all lowercase, no spaces 
+.br
+\fI$Data\fP The data which should be sent to the cron 
+.br
+\fI$Interval\fP In which interval should the cron be executed? 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int The ID of the \fBCron\fP 
+.RE
+.PP
+
+.PP
+Definition at line 132 of file Cron\&.php\&.
+.SS "static deleteByPlugin ( $Plugin)\fC [static]\fP"
+
+.PP
+Definition at line 117 of file Cron\&.php\&.
+.SS "static deleteOld ()\fC [static]\fP"
+Delete processed, finished or failed cronjobs 
+.PP
+\fBReturns\fP
+.RS 4
+Boolean TRUE if action successful 
+.RE
+.PP
+
+.PP
+Definition at line 110 of file Cron\&.php\&.
+.SS "static fetch (int $ID)\fC [static]\fP"
+Fetch details of a specific cron job 
+.PP
+\fBParameters\fP
+.RS 4
+\fI$ID\fP The ID of a cron job 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+array Contains cron details 
+.RE
+.PP
+
+.PP
+Definition at line 96 of file Cron\&.php\&.
+.SS "static fetchAll (int $Limit = \fC2\fP)\fC [static]\fP"
+Retrieve a list of cron jobs 
+.PP
+\fBParameters\fP
+.RS 4
+\fI$Limit\fP How many do you like to retrieve 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+array Contains cron jobs 
+.RE
+.PP
+
+.PP
+Definition at line 51 of file Cron\&.php\&.
+.SS "static fetchUnprocessed (int $Limit = \fC2\fP)\fC [static]\fP"
+Retrieve a list of all unprocessed cron jobs 
+.PP
+\fBParameters\fP
+.RS 4
+\fI$Limit\fP How many do you like to retrieve 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+array Contains cron jobs 
+.RE
+.PP
+
+.PP
+Definition at line 81 of file Cron\&.php\&.
+.SS "static fetchUnprocessedSchedule (int $Limit = \fC2\fP)\fC [static]\fP"
+Retrieve a list of unprocessed cron jobs which should start by now 
+.PP
+\fBParameters\fP
+.RS 4
+\fI$Limit\fP How many do you like to retrieve 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+array Contains cron jobs 
+.RE
+.PP
+
+.PP
+Definition at line 66 of file Cron\&.php\&.
+.SS "static markAsCanceled (int $ID)\fC [static]\fP"
+Mark a specific cronjob as canceled 
+.PP
+\fBParameters\fP
+.RS 4
+\fI$ID\fP The ID of a cron job 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Boolean TRUE if action successful 
+.RE
+.PP
+
+.PP
+Definition at line 160 of file Cron\&.php\&.
+.SS "static markAsFailed (int $ID)\fC [static]\fP"
+Mark a specific cronjob as failed 
+.PP
+\fBParameters\fP
+.RS 4
+\fI$ID\fP The ID of a cron job 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Boolean TRUE if action successful 
+.RE
+.PP
+
+.PP
+Definition at line 195 of file Cron\&.php\&.
+.SS "static markAsFinished (int $ID)\fC [static]\fP"
+Mark a specific cronjob as finished 
+.PP
+\fBParameters\fP
+.RS 4
+\fI$ID\fP The ID of a cron job 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Boolean TRUE if action successful 
+.RE
+.PP
+
+.PP
+Definition at line 177 of file Cron\&.php\&.
+.SS "static markAsStarted (int $ID)\fC [static]\fP"
+Mark a specific cronjob as started 
+.PP
+\fBParameters\fP
+.RS 4
+\fI$ID\fP The ID of a cron job 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Boolean TRUE if action successful 
+.RE
+.PP
+
+.PP
+Definition at line 147 of file Cron\&.php\&.
+.SS "static setLog (int $ID, string $Log)\fC [static]\fP"
+Edit the log of a cronjob 
+.PP
+\fBParameters\fP
+.RS 4
+\fI$ID\fP The ID of a cron job 
+.br
+\fI$Log\fP The Text to set 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Boolean TRUE if action successful 
+.RE
+.PP
+
+.PP
+Definition at line 214 of file Cron\&.php\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for CrispCMS Plugin API from the source code\&.

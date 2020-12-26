@@ -1,0 +1,288 @@
+.TH "Plugins" 3 "Sat Dec 26 2020" "CrispCMS Plugin API" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Plugins
+.SH SYNOPSIS
+.br
+.PP
+.SS "Static Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "static \fBloadAPI\fP ($Interface, $_QUERY)"
+.br
+.ti -1c
+.RI "static \fBlistPlugins\fP ()"
+.br
+.ti -1c
+.RI "static \fBloadedPlugins\fP ()"
+.br
+.ti -1c
+.RI "static \fBload\fP ($TwigTheme, $CurrentFile, $CurrentPage)"
+.br
+.ti -1c
+.RI "static \fBrefreshTranslations\fP ($PluginName, $PluginMetadata)"
+.br
+.ti -1c
+.RI "static \fBrefreshKVStorage\fP ($PluginName, $PluginMetadata)"
+.br
+.ti -1c
+.RI "static \fBinstallKVStorage\fP ($PluginName, $PluginMetadata)"
+.br
+.ti -1c
+.RI "static \fBinstallTranslations\fP ($PluginName, $PluginMetadata)"
+.br
+.ti -1c
+.RI "static \fBisInstalled\fP ($PluginName)"
+.br
+.ti -1c
+.RI "static \fBisValid\fP ($PluginName)"
+.br
+.ti -1c
+.RI "static \fBdeleteData\fP ($PluginName)"
+.br
+.ti -1c
+.RI "static \fBtestVersion\fP ($VersionString)"
+.br
+.ti -1c
+.RI "static \fBgetPluginMetadata\fP ($PluginName)"
+.br
+.ti -1c
+.RI "static \fBuninstallCrons\fP ($PluginName, $PluginMetadata)"
+.br
+.ti -1c
+.RI "static \fBinstallCrons\fP ($PluginName, $PluginMetadata)"
+.br
+.ti -1c
+.RI "static \fBuninstallKVStorage\fP ($PluginName, $PluginMetadata)"
+.br
+.ti -1c
+.RI "static \fBlistTranslations\fP ($PluginName)"
+.br
+.ti -1c
+.RI "static \fBlistConfig\fP ($PluginName)"
+.br
+.ti -1c
+.RI "static \fBuninstallTranslations\fP ($PluginName, $PluginMetadata)"
+.br
+.ti -1c
+.RI "static \fBreinstall\fP ($PluginName, $TwigTheme, $CurrentFile, $CurrentPage)"
+.br
+.ti -1c
+.RI "static \fBuninstall\fP ($PluginName, $TwigTheme, $CurrentFile, $CurrentPage)"
+.br
+.ti -1c
+.RI "static \fBintegrityCheck\fP ($PluginName, $PluginMetadata)"
+.br
+.ti -1c
+.RI "static \fBinstall\fP ($PluginName, $TwigTheme, $CurrentFile, $CurrentPage)"
+.br
+.ti -1c
+.RI "static \fBregisterUninstallHook\fP ($PluginName, $Function)"
+.br
+.ti -1c
+.RI "static \fBregisterAfterRenderHook\fP ($PluginName, $Function)"
+.br
+.ti -1c
+.RI "static \fBregisterInstallHook\fP ($PluginName, $Function)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Used internally, plugin loader 
+.PP
+Definition at line 26 of file Plugins\&.php\&.
+.SH "Member Function Documentation"
+.PP 
+.SS "static deleteData ( $PluginName)\fC [static]\fP"
+Deletes all KVStorage Items from the \fBPlugin\fP
+.PP
+If the plugin is installed, it will get uninstalled first 
+.PP
+\fBParameters\fP
+.RS 4
+\fI$PluginName\fP The folder name of the plugin 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+boolean TRUE if the data has been successfully deleted 
+.RE
+.PP
+
+.PP
+Definition at line 233 of file Plugins\&.php\&.
+.SS "static getPluginMetadata ( $PluginName)\fC [static]\fP"
+
+.PP
+Definition at line 271 of file Plugins\&.php\&.
+.SS "static install ( $PluginName,  $TwigTheme,  $CurrentFile,  $CurrentPage)\fC [static]\fP"
+Install a plugin and load it into the CMS @broadcasts pluginInstall 
+.PP
+\fBSee also\fP
+.RS 4
+\fBregisterInstallHook\fP 
+.RE
+.PP
+\fBParameters\fP
+.RS 4
+\fI$PluginName\fP The Folder name of the \fBPlugin\fP 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+boolean TRUE if install was successful, otherwise FALSE 
+.RE
+.PP
+
+.PP
+Definition at line 501 of file Plugins\&.php\&.
+.SS "static installCrons ( $PluginName,  $PluginMetadata)\fC [static]\fP"
+
+.PP
+Definition at line 291 of file Plugins\&.php\&.
+.SS "static installKVStorage ( $PluginName,  $PluginMetadata)\fC [static]\fP"
+
+.PP
+Definition at line 161 of file Plugins\&.php\&.
+.SS "static installTranslations ( $PluginName,  $PluginMetadata)\fC [static]\fP"
+
+.PP
+Definition at line 180 of file Plugins\&.php\&.
+.SS "static integrityCheck ( $PluginName,  $PluginMetadata)\fC [static]\fP"
+
+.PP
+Definition at line 422 of file Plugins\&.php\&.
+.SS "static isInstalled ( $PluginName)\fC [static]\fP"
+Checks if the specified plugin is installed 
+.PP
+\fBParameters\fP
+.RS 4
+\fI$PluginName\fP The folder name of the plugin 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+boolean TRUE if plugin is installed, otherwise FALSE 
+.RE
+.PP
+
+.PP
+Definition at line 211 of file Plugins\&.php\&.
+.SS "static isValid ( $PluginName)\fC [static]\fP"
+
+.PP
+Definition at line 221 of file Plugins\&.php\&.
+.SS "static listConfig ( $PluginName)\fC [static]\fP"
+
+.PP
+Definition at line 336 of file Plugins\&.php\&.
+.SS "static listPlugins ()\fC [static]\fP"
+
+.PP
+Definition at line 54 of file Plugins\&.php\&.
+.SS "static listTranslations ( $PluginName)\fC [static]\fP"
+
+.PP
+Definition at line 323 of file Plugins\&.php\&.
+.SS "static load ( $TwigTheme,  $CurrentFile,  $CurrentPage)\fC [static]\fP"
+
+.PP
+Definition at line 81 of file Plugins\&.php\&.
+.SS "static loadAPI ( $Interface,  $_QUERY)\fC [static]\fP"
+
+.PP
+Definition at line 30 of file Plugins\&.php\&.
+.SS "static loadedPlugins ()\fC [static]\fP"
+
+.PP
+Definition at line 69 of file Plugins\&.php\&.
+.SS "static refreshKVStorage ( $PluginName,  $PluginMetadata)\fC [static]\fP"
+
+.PP
+Definition at line 156 of file Plugins\&.php\&.
+.SS "static refreshTranslations ( $PluginName,  $PluginMetadata)\fC [static]\fP"
+
+.PP
+Definition at line 151 of file Plugins\&.php\&.
+.SS "static registerAfterRenderHook ( $PluginName,  $Function)\fC [static]\fP"
+
+.PP
+Definition at line 556 of file Plugins\&.php\&.
+.SS "static registerInstallHook ( $PluginName,  $Function)\fC [static]\fP"
+Registers an install hook for your plugin\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI$PluginName\fP 
+.br
+\fI$Function\fP Callback function, either anonymous or a string to a function 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+boolean TRUE if hook could be registered, otherwise false 
+.RE
+.PP
+
+.PP
+Definition at line 570 of file Plugins\&.php\&.
+.SS "static registerUninstallHook ( $PluginName,  $Function)\fC [static]\fP"
+Registers an uninstall hook for your plugin\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI$PluginName\fP 
+.br
+\fI$Function\fP Callback function, either anonymous or a string to a function 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+boolean TRUE if hook could be registered, otherwise false 
+.RE
+.PP
+
+.PP
+Definition at line 548 of file Plugins\&.php\&.
+.SS "static reinstall ( $PluginName,  $TwigTheme,  $CurrentFile,  $CurrentPage)\fC [static]\fP"
+
+.PP
+Definition at line 376 of file Plugins\&.php\&.
+.SS "static testVersion ( $VersionString)\fC [static]\fP"
+
+.PP
+Definition at line 252 of file Plugins\&.php\&.
+.SS "static uninstall ( $PluginName,  $TwigTheme,  $CurrentFile,  $CurrentPage)\fC [static]\fP"
+Uninstall a plugin and prevent it from loading @broadcasts pluginUninstall 
+.PP
+\fBSee also\fP
+.RS 4
+\fBregisterUninstallHook\fP 
+.RE
+.PP
+\fBParameters\fP
+.RS 4
+\fI$PluginName\fP The Folder name of the \fBPlugin\fP 
+.RE
+.PP
+
+.PP
+Definition at line 389 of file Plugins\&.php\&.
+.SS "static uninstallCrons ( $PluginName,  $PluginMetadata)\fC [static]\fP"
+
+.PP
+Definition at line 281 of file Plugins\&.php\&.
+.SS "static uninstallKVStorage ( $PluginName,  $PluginMetadata)\fC [static]\fP"
+
+.PP
+Definition at line 303 of file Plugins\&.php\&.
+.SS "static uninstallTranslations ( $PluginName,  $PluginMetadata)\fC [static]\fP"
+
+.PP
+Definition at line 350 of file Plugins\&.php\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for CrispCMS Plugin API from the source code\&.

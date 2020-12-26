@@ -7,6 +7,7 @@ var classcrisp_1_1core_1_1_plugin =
     [ "getConfig", "classcrisp_1_1core_1_1_plugin.html#a8282f5153adc3ed0d4c94e959530a4d3", null ],
     [ "getTranslation", "classcrisp_1_1core_1_1_plugin.html#ae1df982546ea19c3dc1eeef1e4f7b510", null ],
     [ "integrity", "classcrisp_1_1core_1_1_plugin.html#af50504b641965128314e7ef746003788", null ],
+    [ "listConfig", "classcrisp_1_1core_1_1_plugin.html#a56a11b7f15ba3715a2f6e8a829b42962", null ],
     [ "registerAfterRenderHook", "classcrisp_1_1core_1_1_plugin.html#a2a44d4795ce4023cd5173a30c4e9d87e", null ],
     [ "registerInstallHook", "classcrisp_1_1core_1_1_plugin.html#a686fc682ce8af045e7acef7d987eac97", null ],
     [ "registerUninstallHook", "classcrisp_1_1core_1_1_plugin.html#a61ba1de9028c609aa69d675753a0437e", null ],

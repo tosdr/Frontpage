@@ -1,0 +1,303 @@
+.TH "Helper" 3 "Sat Dec 26 2020" "CrispCMS Plugin API" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Helper
+.SH SYNOPSIS
+.br
+.PP
+.SS "Static Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "static \fBisMobile\fP ()"
+.br
+.ti -1c
+.RI "static \fBgetRealIpAddr\fP ()"
+.br
+.ti -1c
+.RI "static \fBgetLocale\fP ()"
+.br
+.ti -1c
+.RI "static \fBsetLocale\fP ()"
+.br
+.ti -1c
+.RI "static \fBgetGitRevision\fP ()"
+.br
+.ti -1c
+.RI "static \fBfilterAlphaNum\fP ($String)"
+.br
+.ti -1c
+.RI "static \fBPlaceHolder\fP ($String, $Size='150x150')"
+.br
+.ti -1c
+.RI "static \fBisValidPluginName\fP ($String)"
+.br
+.ti -1c
+.RI "static \fBgetGitBranch\fP ()"
+.br
+.ti -1c
+.RI "static \fBgetGitRevisionLink\fP ()"
+.br
+.ti -1c
+.RI "static \fBgetLatestGitRevision\fP (bool $Force=false)"
+.br
+.ti -1c
+.RI "static \fBstartsWith\fP (string $haystack, string $needle)"
+.br
+.ti -1c
+.RI "static \fBprettyDump\fP ($var)"
+.br
+.ti -1c
+.RI "static \fBtemplateExists\fP (string $Theme, string $Template)"
+.br
+.ti -1c
+.RI "static \fBendsWith\fP (string $haystack, string $needle)"
+.br
+.ti -1c
+.RI "static \fBtruncateText\fP (string $String, int $Length, bool $AppendDots=true)"
+.br
+.ti -1c
+.RI "static \fBisSerialized\fP ($data, $strict=true)"
+.br
+.ti -1c
+.RI "static \fBcurrentDomain\fP ()"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Some useful helper functions 
+.PP
+Definition at line 25 of file Helper\&.php\&.
+.SH "Member Function Documentation"
+.PP 
+.SS "static currentDomain ()\fC [static]\fP"
+
+.PP
+Definition at line 328 of file Helper\&.php\&.
+.SS "static endsWith (string $haystack, string $needle)\fC [static]\fP"
+Similiar to JS endsWith, check if a text ends with a specific string 
+.PP
+\fBParameters\fP
+.RS 4
+\fI$haystack\fP The string to perform the check on 
+.br
+\fI$needle\fP A search needle to search for 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+boolean 
+.RE
+.PP
+
+.PP
+Definition at line 246 of file Helper\&.php\&.
+.SS "static filterAlphaNum ( $String)\fC [static]\fP"
+Filter a string and remove non-alphanumeric and spaces 
+.PP
+\fBParameters\fP
+.RS 4
+\fI$String\fP The string to filter 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+string Filtered string 
+.RE
+.PP
+
+.PP
+Definition at line 90 of file Helper\&.php\&.
+.SS "static getGitBranch ()\fC [static]\fP"
+Get the current branch the CMS runs on 
+.PP
+\fBReturns\fP
+.RS 4
+string Current Git Revision 
+.RE
+.PP
+
+.PP
+Definition at line 149 of file Helper\&.php\&.
+.SS "static getGitRevision ()\fC [static]\fP"
+Get the current revision the CMS runs on 
+.PP
+\fBReturns\fP
+.RS 4
+string Current Git Revision 
+.RE
+.PP
+
+.PP
+Definition at line 81 of file Helper\&.php\&.
+.SS "static getGitRevisionLink ()\fC [static]\fP"
+Gets a current revision link to github 
+.PP
+\fBReturns\fP
+.RS 4
+string The link to github 
+.RE
+.PP
+
+.PP
+Definition at line 157 of file Helper\&.php\&.
+.SS "static getLatestGitRevision (bool $Force = \fCfalse\fP)\fC [static]\fP"
+Retrieve the latest hash on github 
+.PP
+\fBParameters\fP
+.RS 4
+\fI$Force\fP Force update rather than from cache 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+string Hash of latest git revision 
+.RE
+.PP
+\fBExceptions\fP
+.RS 4
+\fI\fP .RE
+.PP
+
+.PP
+Definition at line 167 of file Helper\&.php\&.
+.SS "static getLocale ()\fC [static]\fP"
+Get the current locale a user has set 
+.PP
+\fBReturns\fP
+.RS 4
+string current letter code 
+.RE
+.PP
+
+.PP
+Definition at line 54 of file Helper\&.php\&.
+.SS "static getRealIpAddr ()\fC [static]\fP"
+Gets the real ip address even behind a proxy 
+.PP
+\fBReturns\fP
+.RS 4
+String containing the IP of the user 
+.RE
+.PP
+
+.PP
+Definition at line 39 of file Helper\&.php\&.
+.SS "static isMobile ()\fC [static]\fP"
+Check if the user is on a mobile device 
+.PP
+\fBReturns\fP
+.RS 4
+boolean TRUE if the user is on mobile 
+.RE
+.PP
+
+.PP
+Definition at line 31 of file Helper\&.php\&.
+.SS "static isSerialized ( $data,  $strict = \fCtrue\fP)\fC [static]\fP"
+Check if a string is serialized 
+.PP
+\fBSee also\fP
+.RS 4
+https://core.trac.wordpress.org/browser/tags/5.4/src/wp-includes/functions.php#L611 
+.RE
+.PP
+\fBParameters\fP
+.RS 4
+\fI$data\fP The Data to check 
+.br
+\fI$strict\fP Strict Checking 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+boolean 
+.RE
+.PP
+
+.PP
+Definition at line 273 of file Helper\&.php\&.
+.SS "static isValidPluginName ( $String)\fC [static]\fP"
+
+.PP
+Definition at line 128 of file Helper\&.php\&.
+.SS "static PlaceHolder ( $String,  $Size = \fC'150x150'\fP)\fC [static]\fP"
+
+.PP
+Definition at line 94 of file Helper\&.php\&.
+.SS "static prettyDump ( $var)\fC [static]\fP"
+Just a pretty print for var_dump 
+.PP
+\fBParameters\fP
+.RS 4
+\fIstring\fP pretty var_dump 
+.RE
+.PP
+
+.PP
+Definition at line 226 of file Helper\&.php\&.
+.SS "static setLocale ()\fC [static]\fP"
+
+.PP
+Definition at line 73 of file Helper\&.php\&.
+.SS "static startsWith (string $haystack, string $needle)\fC [static]\fP"
+Similiar to JS startsWith, check if a text starts with a specific string 
+.PP
+\fBParameters\fP
+.RS 4
+\fI$haystack\fP The string to perform the check on 
+.br
+\fI$needle\fP A search needle to search for 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+boolean TRUE $haystack contains $needle 
+.RE
+.PP
+
+.PP
+Definition at line 217 of file Helper\&.php\&.
+.SS "static templateExists (string $Theme, string $Template)\fC [static]\fP"
+Check if a Template exists within a specific theme 
+.PP
+\fBParameters\fP
+.RS 4
+\fI$Theme\fP The theme to search with 
+.br
+\fI$Template\fP The Template name 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+boolean 
+.RE
+.PP
+
+.PP
+Definition at line 236 of file Helper\&.php\&.
+.SS "static truncateText (string $String, int $Length, bool $AppendDots = \fCtrue\fP)\fC [static]\fP"
+Truncates a text and appends '\&.\&.\&.' to the end 
+.PP
+\fBParameters\fP
+.RS 4
+\fI$String\fP The text to truncate 
+.br
+\fI$Length\fP After how many chars should we truncate the text? 
+.br
+\fI$AppendDots\fP Should we append dots to the end of the string? 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+string 
+.RE
+.PP
+
+.PP
+Definition at line 262 of file Helper\&.php\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for CrispCMS Plugin API from the source code\&.

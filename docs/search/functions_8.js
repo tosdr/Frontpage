@@ -1,8 +1,17 @@
 var searchData=
 [
-  ['list_316',['list',['../classcrisp_1_1api_1_1_config.html#a60f9ff17d15bf996c3d374518777d2d6',1,'crisp::api::Config']]],
-  ['listlanguages_317',['listLanguages',['../classcrisp_1_1api_1_1_translation.html#ac83fea9398598f316f651b3b83206acc',1,'crisp::api::Translation']]],
-  ['listtranslations_318',['listTranslations',['../classcrisp_1_1api_1_1_translation.html#add1862ef0ab8870ba795ef9631cc4ff2',1,'crisp::api::Translation']]],
-  ['load_319',['load',['../classcrisp_1_1core_1_1_plugins.html#ad5661c97c530ef2b71cc696f025887f9',1,'crisp\core\Plugins\load()'],['../classcrisp_1_1core_1_1_templates.html#ad5661c97c530ef2b71cc696f025887f9',1,'crisp\core\Templates\load()']]],
-  ['loadapi_320',['loadAPI',['../classcrisp_1_1core_1_1_plugins.html#a9a18b97439a9178a5bdccfbd422bf10b',1,'crisp::core::Plugins']]]
+  ['initdb_338',['initDB',['../classcrisp_1_1api_1_1_error_reporter.html#ae5e7eb4ea0667dc07287aebd28e246c3',1,'crisp::api::ErrorReporter']]],
+  ['install_339',['install',['../classcrisp_1_1core_1_1_plugins.html#ab0d93f988b65a197949370f45c0c2f02',1,'crisp\core\Plugins\install()'],['../classcrisp_1_1core_1_1_themes.html#aa5bd40c23d346dcb833357d2ed98f091',1,'crisp\core\Themes\install()']]],
+  ['installcrons_340',['installCrons',['../classcrisp_1_1core_1_1_plugins.html#a3e59fae12627421061e134a4867d8a94',1,'crisp::core::Plugins']]],
+  ['installkvstorage_341',['installKVStorage',['../classcrisp_1_1core_1_1_plugins.html#ae7c5f630440464d4ab8988d3e3adf677',1,'crisp\core\Plugins\installKVStorage()'],['../classcrisp_1_1core_1_1_themes.html#a064611c216c0f5100782b90cb17cb8a9',1,'crisp\core\Themes\installKVStorage()']]],
+  ['installtranslations_342',['installTranslations',['../classcrisp_1_1core_1_1_plugins.html#a75d4b26c12211dd6f0dc42a2c8f89b3b',1,'crisp\core\Plugins\installTranslations()'],['../classcrisp_1_1core_1_1_themes.html#ac422fbc78b75a974f25707791aa36209',1,'crisp\core\Themes\installTranslations()']]],
+  ['integrity_343',['integrity',['../classcrisp_1_1core_1_1_plugin.html#af50504b641965128314e7ef746003788',1,'crisp::core::Plugin']]],
+  ['integritycheck_344',['integrityCheck',['../classcrisp_1_1core_1_1_plugins.html#a0d638cee53d7dcb4dd82f1efeb084361',1,'crisp::core::Plugins']]],
+  ['isenabled_345',['isEnabled',['../classcrisp_1_1api_1_1_language.html#ad734dc60b64a242fe183e0c23b192790',1,'crisp::api::Language']]],
+  ['isinstalled_346',['isInstalled',['../classcrisp_1_1core_1_1_plugins.html#a9922f40b72212730c4cf639f50e3e364',1,'crisp\core\Plugins\isInstalled()'],['../classcrisp_1_1core_1_1_themes.html#a1a4228cf190e918d2866ff4dbe140b23',1,'crisp\core\Themes\isInstalled()']]],
+  ['ismigrated_347',['isMigrated',['../classcrisp_1_1core_1_1_migrations.html#a7d4938c0383aad97545a1f62a8299b4b',1,'crisp::core::Migrations']]],
+  ['ismobile_348',['isMobile',['../classcrisp_1_1api_1_1_helper.html#af18fc91684720f67c66e9c92a38f8bb8',1,'crisp::api::Helper']]],
+  ['isserialized_349',['isSerialized',['../classcrisp_1_1api_1_1_helper.html#a0dde52b6a2dcbaea2d84f2bc6d4587cf',1,'crisp::api::Helper']]],
+  ['isvalid_350',['isValid',['../classcrisp_1_1core_1_1_plugins.html#a71a6bc758b558608ae0e6fe42ff7f8d0',1,'crisp\core\Plugins\isValid()'],['../classcrisp_1_1core_1_1_themes.html#abe1261c8e4b87a0974b7b065ff59c4a6',1,'crisp\core\Themes\isValid()']]],
+  ['isvalidpluginname_351',['isValidPluginName',['../classcrisp_1_1api_1_1_helper.html#a6a13a3a1748c8d42bc21164fdce67fe5',1,'crisp::api::Helper']]]
 ];

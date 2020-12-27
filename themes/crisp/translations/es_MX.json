@@ -8,7 +8,7 @@
     "frontpage_intro_bottom_text": "Los Términos y Condiciones que acostumbramos ver suelen ser <strong>demasiado largos</strong>, pero no por ello dejan de ser importantes, ¡pues tus Derechos digitales dependen de ellos! <!--Get informed about your rights: install the browser extension for <a href=\"https://addons.mozilla.org/en-US/firefox/addon/terms-of-service-didnt-read/\">Firefox</a>, <a href=\"https://chrome.google.com/webstore/detail/hjdoplcnndgiblooccencgcggcoihigg\">Chrome</a>, <a href=\"https://addons.opera.com/extensions/details/terms-of-service-didnt-read/\">Opera</a> or <a href=\"https://safariextension.tosdr.org/\">Safari</a>.</p-->Queremos que nuestras reseñas te informen acerca de tus derechos. Te invitamos a checar <a href=\"#services\">alguno de los Servicios debajo</a>, para obtener más información. También puedes ver nuestras reseñas descargando alguna de nuestras extensiones:",
     "frontpage_intro_button_contribute": "¡Contribuye en Phoenix!",
     "frontpage_intro_button_download": "Descargar Extensión",
-    "frontpage_intro_top_text": "Somos una <a href=\"/about\" title=\"Más sobre nosotros.\">iniciativa</a> encaminada a los Derechos del Consumidor, que <a href=\"/classification\" title=\"¿Cómo calificamos?\">califica y clasifica</a> Términos de Servicio y Políticas de Privacidad, entre otros documentos, partiendo de <strong>Excelente</strong> <span class=\"label A\">Clase A</span> a <strong>Muy Malo</strong> <span class=\"label E\">Clase E</span>.",
+    "frontpage_intro_top_text": "",
     "frontpage_jumbotron_text": "“He leído y acepto los Términos” es la mentira más grande de la Red. Nosotros lo arreglamos.",
     "frontpage_ratings_ratingssearch_placeholder": "Busca un Servicio aquí…",
     "help_expanding": "¡Apóyanos contribuyendo en Phoenix!",
@@ -17,11 +17,12 @@
     "navbar_item_forum": "Foro",
     "navbar_item_home": "Inicio",
     "navbar_item_ratings": "Calificaciones",
-    "redirect_notice": "¡Hola! Probablemente te estés preguntando cómo llegaste aquí.\n\nEstamos probando este nuevo sitio con el 25% de nuestros visitantes, de los cuales tú has tenido suerte!\n\nSi tienes algún comentario, sugerencia o queja, favor de reportarlo en <a href=\"https://github.com/JustinBack/CrispCMS-ToS-DR/\">este repositorio en GitHub</a>, a través de un <em>Issue</em>. \"Dr. Jeff\" se encarga de la Atención al Cliente en Español.",
+    "redirect_notice": "¡Hola! Probablemente te estés preguntando cómo llegaste aquí.\n\nEstamos probando este nuevo sitio con el 25% de nuestros visitantes, de los cuales tú has tenido suerte!\n\nSi tienes algún comentario, sugerencia o queja, favor de reportarlo en <a href=\"https://github.com/JustinBack/CrispCMS-ToS-DR/\">este repositorio en GitHub</a>, a través de un Issue!",
     "view_all_points": "¡Ver todos los Puntos en Phoenix!",
     "view_documents": "Ver Documentos",
     "view_points": "Ver Puntos",
     "view_source": "Ver Código Fuente",
     "visit_case": "Ver los Casos",
-    "visit_service": "Visitar Servicio"
+    "visit_service": "Visitar Servicio",
+    "navbar_item_api": "API"
 }

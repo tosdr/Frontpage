@@ -79,7 +79,7 @@
             {# Service URL #}
             <a target="_blank" href="//{{ service.url|split(',')[0] }}"><span class="badge badge-info"><i class="fas fa-link"></i> {{ 'visit_service'|translate }}</span></a>
 
-            <a target="_blank" href="/api/badge/service/{{ service.slug }}"><img src="/api/badge/service/{{ service.slug }}"></a>
+            <a target="_blank" href="/api/badge/service/{{ service.slug }}?l={{ locale }}"><img src="/api/badge/service/{{ service.slug }}?l={{ locale }}"></a>
 
         </div>
     </div>

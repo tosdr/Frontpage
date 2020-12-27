@@ -100,5 +100,6 @@
     "privacy_grade_c": "Privacy Grade C",
     "privacy_grade_d": "Privacy Grade D",
     "privacy_grade_e": "Privacy Grade E",
-    "privacy_grade_none": "No Privacy Grade Yet"
+    "privacy_grade_none": "No Privacy Grade Yet",
+    "service_not_found": "Service not found"
 }

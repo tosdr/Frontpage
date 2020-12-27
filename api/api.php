@@ -59,7 +59,7 @@ switch ($_GET["apiversion"]) {
             if (!\crisp\api\Phoenix::serviceExistsBySlugPG($Query)) {
                 header("Content-Type: image/svg+xml");
                 $Color = "999999";
-                $Rating = "Service not found";
+                $Rating = $Translation->fetch("service_not_found");
 
                 echo $poser->generate($Prefix, $Rating, $Color, 'flat');
                 return;
@@ -137,7 +137,7 @@ switch ($_GET["apiversion"]) {
         if (count(crisp\api\Phoenix::serviceExistsPG($Query)) === 0) {
             header("Content-Type: image/svg+xml");
             $Color = "999999";
-            $Rating = "Service not found";
+            $Rating = $Translation->fetch("service_not_found");
 
             echo $poser->generate($Prefix, $Rating, $Color, 'flat');
             return;

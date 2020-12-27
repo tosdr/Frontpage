@@ -25,7 +25,7 @@
     "frontpage_intro_button_download": "Télécharger l'extension",
     "add_to": "Ajouter à {{ browser }}",
     "frontpage_intro_top_text": "Nous sommes une <a href=\"/about\" title=\"Learn more about us\">initiative axée sur les droits des utilisateurs</a> pour<a href=\"/classification\" title=\"What's our classification?\">évaluer et classer</a> les conditions et les politiques de confidentialité, allant d'Excellent <span class=\"label A\">Classe A</span> à Très Mauvais <span class=\"label E\">Classe E</span>.",
-    "frontpage_jumbotron_text": "\"J’ai lu et j’accepte les conditions d’utilisation\" est le plus grand mensonge du web. Nous voulons l'arranger.",
+    "frontpage_jumbotron_text": "\"J’ai lu et j’accepte les conditions d’utilisation\" est le plus grand mensonge du web. Nous voulons y remédier.",
     "frontpage_ratings_ratingssearch_placeholder": "Cherchez un service ici…",
     "help_expanding": "Aidez-nous à étendre cette liste en contribuant sur Phoenix !",
     "imprint": "Impression",

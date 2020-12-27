@@ -221,11 +221,16 @@ class Plugins {
                 }
                 try {
 
-                    if (defined("CRISP_CLI")) {
-                        echo "Installing key $Key" . PHP_EOL;
+
+                    if (\crisp\api\Config::create("plugin_" . $PluginName . "_$Key", $Value)) {
+                        if (defined("CRISP_CLI")) {
+                            echo "Installing key $Key" . PHP_EOL;
+                        }
                     }
-                    \crisp\api\Config::create("plugin_" . $PluginName . "_$Key", $Value);
                 } catch (\PDOException $ex) {
+                    if (defined("CRISP_CLI")) {
+                        var_dump($ex);
+                    }
                     continue;
                 }
             }
@@ -280,6 +285,9 @@ class Plugins {
                                 }
                             }
                         } catch (\PDOException $ex) {
+                            if (defined("CRISP_CLI")) {
+                                var_dump($ex);
+                            }
                             continue;
                         }
                     }

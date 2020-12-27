@@ -117,13 +117,14 @@ class Config {
         if (self::$Database_Connection === null) {
             self::initDB();
         }
-        $statement = self::$Database_Connection->prepare("INSERT INTO Config (`key`) VALUES (:Key)");
-        $Action = $statement->execute(array(":Key" => $Key));
-
-        if ($Action) {
+        if (Config::exists($Key)) {
             return self::set($Key, $Value);
         }
-        return false;
+
+        $statement = self::$Database_Connection->prepare("INSERT INTO Config (`key`) VALUES (:Key)");
+        $statement->execute(array(":Key" => $Key));
+
+        return ($statement->rowCount() > 0);
     }
 
     /**
@@ -167,7 +168,9 @@ class Config {
 
 
         $statement = self::$Database_Connection->prepare("UPDATE Config SET value = :val, type = :type WHERE `key` = :key");
-        return $statement->execute(array(":val" => $Value, ":key" => $Key, ":type" => $Type));
+        $statement->execute(array(":val" => $Value, ":key" => $Key, ":type" => $Type));
+
+        return ($statement->rowCount() > 0);
     }
 
     /**

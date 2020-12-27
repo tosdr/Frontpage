@@ -38,8 +38,44 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
 
 
     <div class="container">
-        {{ 'classification_container_content'|translate|raw }}
-
-
-    </div> <!-- /container -->
+        <p>
+        <p>
+            {{ 'classification_container_content_p_1'|translate }}
+        </p>
+        <span class="badge badge-success"><i class="fas fa-thumbs-up"></i> {{ 'point_good'|translate }}</span>, 
+        <span class="badge badge-warning"><i class="fas fa-thumbs-down"></i> {{ 'point_bad'|translate }}</span>, 
+        <span class="badge badge-danger"><i class="fas fa-times"></i> {{ 'point_blocker'|translate }}</span> {{ 'or'|translate }}
+        <span class="badge badge-secondary"><i class="fas fa-arrow-right"></i> {{ 'point_neutral'|translate }}</span>
+        
+        <p>
+            {{ 'classification_container_content_p_2'|translate }}
+        </p>
+        <p>
+        {% include "components/rating.twig" with {'rating': "A"} %} {{ 'class_a_desc'|translate }}
+        </p>
+        
+        <p>
+        {% include "components/rating.twig" with {'rating': "B"} %} {{ 'class_b_desc'|translate }}
+        </p>
+        
+        <p>
+        {% include "components/rating.twig" with {'rating': "C"} %} {{ 'class_c_desc'|translate }}
+        </p>
+        
+        <p>
+        {% include "components/rating.twig" with {'rating': "D"} %} {{ 'class_d_desc'|translate }}
+        </p>
+        
+        <p>
+        {% include "components/rating.twig" with {'rating': "E"} %} {{ 'class_e_desc'|translate }}
+        </p>
+        
+        <p>
+        {% include "components/rating.twig" with {'rating': "N/A"} %} {{ 'class_none_desc'|translate }}
+        </p>
+        <p>
+            {{ 'classification_container_content_p_3'|translate }}
+        </p>
+    </p>
+</div> <!-- /container -->
 {% endblock %}

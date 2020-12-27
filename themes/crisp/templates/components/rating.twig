@@ -20,28 +20,28 @@
 {% endif %}
 
 {% if rating == "N/A" %}
-    <span class="badge badge-dark">No Class Yet</span>
+    <span class="badge badge-dark">{{ 'class_none'|translate }}</span>
 {% endif %}
 
 {% if rating == "A" %}
-    <span class="badge badge-success">A Class</span>
+    <span class="badge badge-success">{{ 'class_a'|translate }}</span>
 {% endif %}
 
 {% if rating == "B" %}
-    <span class="badge badge-ranking-B">B Class</span>
+    <span class="badge badge-ranking-B">{{ 'class_b'|translate }}</span>
 {% endif %}
 
 {% if rating == "C" %}
-    <span class="badge badge-warning">C Class</span>
+    <span class="badge badge-warning">{{ 'class_c'|translate }}</span>
 {% endif %}
 
 {% if rating == "D" %}
-    <span class="badge badge-ranking-D">D Class</span>
+    <span class="badge badge-ranking-D">{{ 'class_d'|translate }}</span>
 {% endif %}
 
 
 {% if rating == "E" %}
-    <span class="badge badge-danger">E Class</span>
+    <span class="badge badge-danger">{{ 'class_e'|translate }}</span>
 {% endif %}
 
 

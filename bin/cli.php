@@ -58,6 +58,10 @@ switch ($argv[1]) {
                     echo "Missing file to import" . PHP_EOL;
                     exit;
                 }
+
+                if (\crisp\api\Config::set("plugin_core_maintenance_enabled", true)) {
+                    echo "Maintenance Mode successfully enabled." . PHP_EOL;
+                }
                 $Json = json_decode(file_get_contents($argv[3]));
 
                 foreach ($Json as $Key => $Value) {
@@ -75,6 +79,10 @@ switch ($argv[1]) {
                     } catch (\PDOException $ex) {
                         continue;
                     }
+                }
+
+                if (\crisp\api\Config::set("plugin_core_maintenance_enabled", false)) {
+                    echo "Maintenance Mode successfully disabled." . PHP_EOL;
                 }
                 break;
         }
@@ -116,12 +124,16 @@ switch ($argv[1]) {
                             exit;
                         }
 
+                        if (\crisp\api\Config::set("plugin_core_maintenance_enabled", true)) {
+                            echo "Maintenance Mode successfully enabled." . PHP_EOL;
+                        }
                         if (\crisp\core\Plugins::refreshKVStorage($argv[4], \crisp\core\Plugins::getPluginMetadata($argv[4]))) {
                             echo "KV Storage refreshed!" . PHP_EOL;
-                            exit;
                         } else {
                             echo "Failed to refresh KV Storage" . PHP_EOL;
-                            exit;
+                        }
+                        if (\crisp\api\Config::set("plugin_core_maintenance_enabled", false)) {
+                            echo "Maintenance Mode successfully disabled." . PHP_EOL;
                         }
                         break;
                 }
@@ -153,12 +165,16 @@ switch ($argv[1]) {
                             exit;
                         }
 
+                        if (\crisp\api\Config::set("plugin_core_maintenance_enabled", true)) {
+                            echo "Maintenance Mode successfully enabled." . PHP_EOL;
+                        }
                         if (\crisp\core\Plugins::refreshTranslations($argv[4], \crisp\core\Plugins::getPluginMetadata($argv[4]))) {
                             echo "Translations refreshed!" . PHP_EOL;
-                            exit;
                         } else {
                             echo "Failed to refresh translations" . PHP_EOL;
-                            exit;
+                        }
+                        if (\crisp\api\Config::set("plugin_core_maintenance_enabled", false)) {
+                            echo "Maintenance Mode successfully disabled." . PHP_EOL;
                         }
                         break;
                 }
@@ -182,11 +198,19 @@ switch ($argv[1]) {
                     echo "This plugin does not exist" . PHP_EOL;
                     exit;
                 }
+
+                if (\crisp\api\Config::set("plugin_core_maintenance_enabled", true)) {
+                    echo "Maintenance Mode successfully enabled." . PHP_EOL;
+                }
                 if (crisp\core\Plugins::install($argv[3], \crisp\api\Config::get("theme"), __FILE__, "cli")) {
                     echo "Plugin successfully installed" . PHP_EOL;
-                    exit;
+                } else {
+                    echo "Failed to install plugin" . PHP_EOL;
                 }
-                echo "Failed to install plugin" . PHP_EOL;
+
+                if (\crisp\api\Config::set("plugin_core_maintenance_enabled", false)) {
+                    echo "Maintenance Mode successfully disabled." . PHP_EOL;
+                }
                 break;
             case "migrate":
                 if ($argc < 4) {
@@ -201,7 +225,15 @@ switch ($argv[1]) {
                     echo "This plugin does not exist" . PHP_EOL;
                     exit;
                 }
+
+                if (\crisp\api\Config::set("plugin_core_maintenance_enabled", true)) {
+                    echo "Maintenance Mode successfully enabled." . PHP_EOL;
+                }
                 crisp\core\Plugins::migrate($argv[3]);
+
+                if (\crisp\api\Config::set("plugin_core_maintenance_enabled", false)) {
+                    echo "Maintenance Mode successfully disabled." . PHP_EOL;
+                }
                 break;
             case "uninstall":
             case "remove":
@@ -219,12 +251,18 @@ switch ($argv[1]) {
                     echo "This plugin does not exist" . PHP_EOL;
                     exit;
                 }
+                if (\crisp\api\Config::set("plugin_core_maintenance_enabled", true)) {
+                    echo "Maintenance Mode successfully enabled." . PHP_EOL;
+                }
                 if (crisp\core\Plugins::uninstall($argv[3], \crisp\api\Config::get("theme"), __FILE__, "cli")) {
                     echo "Plugin successfully uninstalled" . PHP_EOL;
-                    exit;
+                } else {
+                    echo "Failed to uninstall plugin" . PHP_EOL;
                 }
-                echo "Failed to uninstall plugin" . PHP_EOL;
-                break;
+
+                if (\crisp\api\Config::set("plugin_core_maintenance_enabled", false)) {
+                    echo "Maintenance Mode successfully disabled." . PHP_EOL;
+                }
             case "reinstall":
                 if ($argc < 4) {
                     echo "Missing plugin name" . PHP_EOL;
@@ -238,11 +276,19 @@ switch ($argv[1]) {
                     echo "This plugin does not exist" . PHP_EOL;
                     exit;
                 }
+
+                if (\crisp\api\Config::set("plugin_core_maintenance_enabled", true)) {
+                    echo "Maintenance Mode successfully enabled." . PHP_EOL;
+                }
                 if (crisp\core\Plugins::reinstall($argv[3], \crisp\api\Config::get("theme"), __FILE__, "cli")) {
                     echo "Plugin successfully reinstalled" . PHP_EOL;
-                    exit;
+                } else {
+                    echo "Failed to reinstall plugin" . PHP_EOL;
                 }
-                echo "Failed to reinstall plugin" . PHP_EOL;
+
+                if (\crisp\api\Config::set("plugin_core_maintenance_enabled", false)) {
+                    echo "Maintenance Mode successfully disabled." . PHP_EOL;
+                }
                 break;
         }
         break;
@@ -280,13 +326,17 @@ switch ($argv[1]) {
                             echo "This theme is not installed" . PHP_EOL;
                             exit;
                         }
-
+                        if (\crisp\api\Config::set("plugin_core_maintenance_enabled", true)) {
+                            echo "Maintenance Mode successfully enabled." . PHP_EOL;
+                        }
                         if (\crisp\core\Themes::refreshKVStorage(\crisp\core\Themes::getThemeMetadata($argv[4]))) {
                             echo "KV Storage refreshed!" . PHP_EOL;
-                            exit;
                         } else {
                             echo "Failed to refresh KV Storage" . PHP_EOL;
-                            exit;
+                        }
+
+                        if (\crisp\api\Config::set("plugin_core_maintenance_enabled", false)) {
+                            echo "Maintenance Mode successfully disabled." . PHP_EOL;
                         }
                         break;
                 }
@@ -316,13 +366,16 @@ switch ($argv[1]) {
                             echo "This theme is not installed" . PHP_EOL;
                             exit;
                         }
-
+                        if (\crisp\api\Config::set("plugin_core_maintenance_enabled", true)) {
+                            echo "Maintenance Mode successfully enabled." . PHP_EOL;
+                        }
                         if (\crisp\core\Themes::refreshTranslations($argv[4], \crisp\core\Themes::getThemeMetadata($argv[4]))) {
                             echo "Translations refreshed!" . PHP_EOL;
-                            exit;
                         } else {
                             echo "Failed to refresh translations" . PHP_EOL;
-                            exit;
+                        }
+                        if (\crisp\api\Config::set("plugin_core_maintenance_enabled", false)) {
+                            echo "Maintenance Mode successfully disabled." . PHP_EOL;
                         }
                         break;
                 }
@@ -347,11 +400,17 @@ switch ($argv[1]) {
                     echo "This theme does not exist" . PHP_EOL;
                     exit;
                 }
+                if (\crisp\api\Config::set("plugin_core_maintenance_enabled", true)) {
+                    echo "Maintenance Mode successfully enabled." . PHP_EOL;
+                }
                 if (crisp\core\Themes::install($argv[3], \crisp\api\Config::get("theme"), __FILE__, "cli")) {
                     echo "Theme successfully installed" . PHP_EOL;
-                    exit;
+                } else {
+                    echo "Failed to install theme" . PHP_EOL;
                 }
-                echo "Failed to install theme" . PHP_EOL;
+                if (\crisp\api\Config::set("plugin_core_maintenance_enabled", false)) {
+                    echo "Maintenance Mode successfully disabled." . PHP_EOL;
+                }
                 break;
             case "uninstall":
             case "remove":
@@ -388,11 +447,17 @@ switch ($argv[1]) {
                     echo "This theme does not exist" . PHP_EOL;
                     exit;
                 }
+                if (\crisp\api\Config::set("plugin_core_maintenance_enabled", true)) {
+                    echo "Maintenance Mode successfully enabled." . PHP_EOL;
+                }
                 if (crisp\core\Themes::reinstall($argv[3], \crisp\api\Config::get("theme"), __FILE__, "cli")) {
                     echo "Theme successfully reinstalled" . PHP_EOL;
-                    exit;
+                } else {
+                    echo "Failed to reinstall theme" . PHP_EOL;
                 }
-                echo "Failed to reinstall theme" . PHP_EOL;
+                if (\crisp\api\Config::set("plugin_core_maintenance_enabled", false)) {
+                    echo "Maintenance Mode successfully disabled." . PHP_EOL;
+                }
                 break;
         }
         break;
@@ -444,8 +509,14 @@ switch ($argv[1]) {
         \crisp\core\Migrations::create($argv[2]);
         break;
     case "migrate":
+        if (\crisp\api\Config::set("plugin_core_maintenance_enabled", true)) {
+            echo "Maintenance Mode successfully enabled." . PHP_EOL;
+        }
         $Migrations = new crisp\core\Migrations();
         $Migrations->migrate();
+        if (\crisp\api\Config::set("plugin_core_maintenance_enabled", false)) {
+            echo "Maintenance Mode successfully disabled." . PHP_EOL;
+        }
         break;
     default:
         echo "Crisp CLI" . PHP_EOL;

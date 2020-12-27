@@ -49,6 +49,7 @@ switch ($_GET["apiversion"]) {
         $render = new SvgFlatRender();
         $poser = new Poser($render);
         $Prefix = \crisp\api\Config::get("badge_prefix");
+        $Language = (isset($_GET["l"]) ? $_GET["l"] : "en");
 
         if (CURRENT_UNIVERSE >= crisp\Universe::UNIVERSE_DEV && isset($_GET["prefix"])) {
             $Prefix = $_GET["prefix"];
@@ -67,30 +68,32 @@ switch ($_GET["apiversion"]) {
 
             $Color;
 
+            $Translations = new \crisp\api\Translation($Language);
+
             switch ($RedisData["is_comprehensively_reviewed"] ? ($RedisData["rating"]) : false) {
                 case "A":
                     $Color = "46A546";
-                    $Rating = "Privacy Grade A";
+                    $Rating = $Translations->fetch("privacy_grade_a");
                     break;
                 case "B":
                     $Color = "79B752";
-                    $Rating = "Privacy Grade B";
+                    $Rating = $Translations->fetch("privacy_grade_b");
                     break;
                 case "C":
                     $Color = "F89406";
-                    $Rating = "Privacy Grade C";
+                    $Rating = $Translations->fetch("privacy_grade_c");
                     break;
                 case "D":
                     $Color = "D66F2C";
-                    $Rating = "Privacy Grade D";
+                    $Rating = $Translations->fetch("privacy_grade_d");
                     break;
                 case "E":
                     $Color = "C43C35";
-                    $Rating = "Privacy Grade E";
+                    $Rating = $Translations->fetch("privacy_grade_e");
                     break;
                 default:
                     $Color = "999999";
-                    $Rating = "No Privacy Grade Yet";
+                    $Rating = $Translations->fetch("privacy_grade_none");
             }
 
             $Prefix = \crisp\api\Config::get("badge_prefix") . "/#" . $RedisData["slug"];
@@ -100,27 +103,27 @@ switch ($_GET["apiversion"]) {
             }
             $SVG = $poser->generate($Prefix, $Rating, $Color, 'flat');
 
-            if (time() - filemtime(__DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"]) . ".svg") > 900) {
-                file_put_contents(__DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"]) . ".svg", $SVG);
+            if (time() - filemtime(__DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"] . $Language) . ".svg") > 900) {
+                file_put_contents(__DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"] . $Language) . ".svg", $SVG);
             }
 
             if ($_GET["apiversion"] === "badgepng") {
                 header("Content-Type: image/png");
                 // inkscape -e facebook.png facebook.svg
 
-                if (!file_exists(__DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"]) . ".svg")) {
+                if (!file_exists(__DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"] . $Language) . ".svg")) {
                     exit;
                 }
 
-                if (time() - filemtime(__DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"]) . ".png") > 900) {
+                if (time() - filemtime(__DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"] . $Language) . ".png") > 900) {
 
-                    exec("/usr/bin/inkscape -e \"" . __DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"]) . ".png\" \"" . __DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"]) . ".svg\"");
+                    exec("/usr/bin/inkscape -e \"" . __DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"] . $Language) . ".png\" \"" . __DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"] . $Language) . ".svg\"");
 
-                    if (!file_exists(__DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"]) . ".png")) {
+                    if (!file_exists(__DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"] . $Language) . ".png")) {
                         exit;
                     }
                 }
-                echo file_get_contents(__DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"]) . ".png");
+                echo file_get_contents(__DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"] . $Language) . ".png");
                 exit;
             }
 
@@ -151,53 +154,53 @@ switch ($_GET["apiversion"]) {
         switch ($RedisData["is_comprehensively_reviewed"] ? ($RedisData["rating"]) : false) {
             case "A":
                 $Color = "46A546";
-                $Rating = "Privacy Grade A";
+                $Rating = $Translations->fetch("privacy_grade_a");
                 break;
             case "B":
                 $Color = "79B752";
-                $Rating = "Privacy Grade B";
+                $Rating = $Translations->fetch("privacy_grade_b");
                 break;
             case "C":
                 $Color = "F89406";
-                $Rating = "Privacy Grade C";
+                $Rating = $Translations->fetch("privacy_grade_c");
                 break;
             case "D":
                 $Color = "D66F2C";
-                $Rating = "Privacy Grade D";
+                $Rating = $Translations->fetch("privacy_grade_d");
                 break;
             case "E":
                 $Color = "C43C35";
-                $Rating = "Privacy Grade E";
+                $Rating = $Translations->fetch("privacy_grade_e");
                 break;
             default:
                 $Color = "999999";
-                $Rating = "No Privacy Grade Yet";
+                $Rating = $Translations->fetch("privacy_grade_none");
         }
         header("Content-Type: image/svg+xml");
 
         $SVG = $poser->generate($Prefix, $Rating, $Color, 'flat');
 
-        if (time() - filemtime(__DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"]) . ".svg") > 900) {
-            file_put_contents(__DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"]) . ".svg", $SVG);
+        if (time() - filemtime(__DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"] . $Language) . ".svg") > 900) {
+            file_put_contents(__DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"] . $Language) . ".svg", $SVG);
         }
 
         if ($_GET["apiversion"] === "badgepng") {
             header("Content-Type: image/png");
             // inkscape -e facebook.png facebook.svg
 
-            if (!file_exists(__DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"]) . ".svg")) {
+            if (!file_exists(__DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"] . $Language) . ".svg")) {
                 exit;
             }
 
-            if (time() - filemtime(__DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"]) . ".png") > 900) {
+            if (time() - filemtime(__DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"] . $Language) . ".png") > 900) {
 
-                exec("/usr/bin/inkscape -e \"" . __DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"]) . ".png\" \"" . __DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"]) . ".svg\"");
+                exec("/usr/bin/inkscape -e \"" . __DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"] . $Language) . ".png\" \"" . __DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"] . $Language) . ".svg\"");
 
-                if (!file_exists(__DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"]) . ".png")) {
+                if (!file_exists(__DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"] . $Language) . ".png")) {
                     exit;
                 }
             }
-            echo file_get_contents(__DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"]) . ".png");
+            echo file_get_contents(__DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"] . $Language) . ".png");
             exit;
         }
 

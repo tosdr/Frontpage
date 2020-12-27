@@ -239,9 +239,14 @@ class Language extends \crisp\api\lists\Languages {
      * @param string $Value The translation text
      * @return bool
      */
-    public function newTranslation(string $Key, string $Value) {
+    public function newTranslation(string $Key, string $Value, string $Language = "en") {
         if ($this->LanguageID === null) {
             return null;
+        }
+        $Translation = new Translation($Language);
+        
+        if ($Translation->get($Key) === $Value) {
+            return false;
         }
         if (Translation::exists($Key)) {
             return $this->editTranslation($Key, $Value);

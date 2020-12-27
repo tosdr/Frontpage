@@ -114,6 +114,7 @@ class Themes {
             return false;
         }
 
+        $_processed = [];
         if (defined("CRISP_CLI")) {
             echo "----------" . PHP_EOL;
             echo "Installing translations for theme $ThemeName" . PHP_EOL;
@@ -144,13 +145,21 @@ class Themes {
 
                     foreach (json_decode(file_get_contents($File), true) as $Key => $Value) {
                         try {
-                            if (defined("CRISP_CLI")) {
-                                echo "Installing key $Key" . PHP_EOL;
+
+                            if ($Language->newTranslation($Key, $Value, substr(basename($File), 0, -5))) {
+                                $_processed[] = $Key;
+                                if (defined("CRISP_CLI")) {
+                                    echo "Installing key $Key" . PHP_EOL;
+                                }
                             }
-                            $Language->newTranslation($Key, $Value);
                         } catch (\PDOException $ex) {
                             continue 2;
                         }
+                    }
+
+                    if (defined("CRISP_CLI")) {
+                        echo "Installed/Updated " . count($_processed) . " keys" . PHP_EOL;
+                        $_processed = [];
                     }
                 }
             }
@@ -167,7 +176,7 @@ class Themes {
                     }
 
                     foreach ($Value as $KeyTranslation => $ValueTranslation) {
-                        $Language->newTranslation($KeyTranslation, $ValueTranslation);
+                        $Language->newTranslation($KeyTranslation, $ValueTranslation, $Key);
                     }
                 } catch (\PDOException $ex) {
                     continue;

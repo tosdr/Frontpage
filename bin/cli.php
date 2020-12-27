@@ -30,65 +30,6 @@ switch ($argv[1]) {
         }
         break;
 
-    case "export":
-        if ($argc < 3) {
-            echo "Missing argument: translations" . PHP_EOL;
-            exit;
-        }
-        switch ($argv[2]) {
-            case "translations":
-                if ($argc < 3) {
-                    echo json_encode(\crisp\api\Translation::fetchAll(), JSON_PRETTY_PRINT);
-                    exit;
-                }
-
-                echo json_encode(\crisp\api\Translation::fetchAllByKey($argv[3]), JSON_PRETTY_PRINT);
-                break;
-        }
-        break;
-    case "import":
-        if ($argc < 3) {
-            echo "Missing argument: translations" . PHP_EOL;
-            exit;
-        }
-        switch ($argv[2]) {
-            case "translations":
-
-                if ($argc < 4) {
-                    echo "Missing file to import" . PHP_EOL;
-                    exit;
-                }
-
-                if (\crisp\api\Config::set("plugin_core_maintenance_enabled", true)) {
-                    echo "Maintenance Mode successfully enabled." . PHP_EOL;
-                }
-                $Json = json_decode(file_get_contents($argv[3]));
-
-                foreach ($Json as $Key => $Value) {
-
-                    try {
-                        $Language = \crisp\api\lists\Languages::getLanguageByCode($Key);
-
-                        if (!$Language) {
-                            continue;
-                        }
-
-                        foreach ($Value as $KeyTranslation => $ValueTranslation) {
-                            $Language->newTranslation($KeyTranslation, $ValueTranslation);
-                        }
-                    } catch (\PDOException $ex) {
-                        continue;
-                    }
-                }
-
-                if (\crisp\api\Config::set("plugin_core_maintenance_enabled", false)) {
-                    echo "Maintenance Mode successfully disabled." . PHP_EOL;
-                }
-                break;
-        }
-        break;
-
-
     case "plugin":
         if ($argc < 3) {
             echo "Missing argument: enable/disable/reinstall/translations/storage" . PHP_EOL;
@@ -127,11 +68,14 @@ switch ($argv[1]) {
                         if (\crisp\api\Config::set("plugin_core_maintenance_enabled", true)) {
                             echo "Maintenance Mode successfully enabled." . PHP_EOL;
                         }
-                        if (\crisp\core\Plugins::refreshKVStorage($argv[4], \crisp\core\Plugins::getPluginMetadata($argv[4]))) {
+                        $Start = microtime(true);
+                        if (\crisp\core\Plugins::installKVStorage($argv[4], \crisp\core\Plugins::getPluginMetadata($argv[4]))) {
                             echo "KV Storage refreshed!" . PHP_EOL;
                         } else {
                             echo "Failed to refresh KV Storage" . PHP_EOL;
                         }
+                        $End = microtime(true);
+                        echo "Took " . \crisp\api\Helper::truncateText($End - $Start, 6, false) . "ms" . PHP_EOL;
                         if (\crisp\api\Config::set("plugin_core_maintenance_enabled", false)) {
                             echo "Maintenance Mode successfully disabled." . PHP_EOL;
                         }
@@ -168,11 +112,14 @@ switch ($argv[1]) {
                         if (\crisp\api\Config::set("plugin_core_maintenance_enabled", true)) {
                             echo "Maintenance Mode successfully enabled." . PHP_EOL;
                         }
-                        if (\crisp\core\Plugins::refreshTranslations($argv[4], \crisp\core\Plugins::getPluginMetadata($argv[4]))) {
+                        $Start = microtime(true);
+                        if (\crisp\core\Plugins::installTranslations($argv[4], \crisp\core\Plugins::getPluginMetadata($argv[4]))) {
                             echo "Translations refreshed!" . PHP_EOL;
                         } else {
                             echo "Failed to refresh translations" . PHP_EOL;
                         }
+                        $End = microtime(true);
+                        echo "Took " . \crisp\api\Helper::truncateText($End - $Start, 6, false) . "ms" . PHP_EOL;
                         if (\crisp\api\Config::set("plugin_core_maintenance_enabled", false)) {
                             echo "Maintenance Mode successfully disabled." . PHP_EOL;
                         }
@@ -229,8 +176,11 @@ switch ($argv[1]) {
                 if (\crisp\api\Config::set("plugin_core_maintenance_enabled", true)) {
                     echo "Maintenance Mode successfully enabled." . PHP_EOL;
                 }
+                $Start = microtime(true);
                 crisp\core\Plugins::migrate($argv[3]);
 
+                $End = microtime(true);
+                echo "Took " . \crisp\api\Helper::truncateText($End - $Start, 6, false) . "ms" . PHP_EOL;
                 if (\crisp\api\Config::set("plugin_core_maintenance_enabled", false)) {
                     echo "Maintenance Mode successfully disabled." . PHP_EOL;
                 }
@@ -329,11 +279,14 @@ switch ($argv[1]) {
                         if (\crisp\api\Config::set("plugin_core_maintenance_enabled", true)) {
                             echo "Maintenance Mode successfully enabled." . PHP_EOL;
                         }
-                        if (\crisp\core\Themes::refreshKVStorage(\crisp\core\Themes::getThemeMetadata($argv[4]))) {
+                        $Start = microtime(true);
+                        if (\crisp\core\Themes::installKVStorage(\crisp\core\Themes::getThemeMetadata($argv[4]))) {
                             echo "KV Storage refreshed!" . PHP_EOL;
                         } else {
                             echo "Failed to refresh KV Storage" . PHP_EOL;
                         }
+                        $End = microtime(true);
+                        echo "Took " . \crisp\api\Helper::truncateText($End - $Start, 6, false) . "ms" . PHP_EOL;
 
                         if (\crisp\api\Config::set("plugin_core_maintenance_enabled", false)) {
                             echo "Maintenance Mode successfully disabled." . PHP_EOL;
@@ -369,11 +322,14 @@ switch ($argv[1]) {
                         if (\crisp\api\Config::set("plugin_core_maintenance_enabled", true)) {
                             echo "Maintenance Mode successfully enabled." . PHP_EOL;
                         }
-                        if (\crisp\core\Themes::refreshTranslations($argv[4], \crisp\core\Themes::getThemeMetadata($argv[4]))) {
+                        $Start = microtime(true);
+                        if (\crisp\core\Themes::installTranslations($argv[4], \crisp\core\Themes::getThemeMetadata($argv[4]))) {
                             echo "Translations refreshed!" . PHP_EOL;
                         } else {
                             echo "Failed to refresh translations" . PHP_EOL;
                         }
+                        $End = microtime(true);
+                        echo "Took " . \crisp\api\Helper::truncateText($End - $Start, 6, false) . "ms" . PHP_EOL;
                         if (\crisp\api\Config::set("plugin_core_maintenance_enabled", false)) {
                             echo "Maintenance Mode successfully disabled." . PHP_EOL;
                         }

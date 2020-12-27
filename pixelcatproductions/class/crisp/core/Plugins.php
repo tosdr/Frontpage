@@ -179,6 +179,7 @@ class Plugins {
      * @param string $PluginName The name of the plugin
      * @param string $PluginMetadata plugin.json contents decoded
      * @return bool
+     * @deprecated 0.0.8-beta.RC4 Use self::installTranslations
      */
     public static function refreshTranslations($PluginName, $PluginMetadata) {
         self::uninstallTranslations($PluginName, $PluginMetadata);
@@ -190,6 +191,7 @@ class Plugins {
      * @param string $PluginName The name of the plugin
      * @param string $PluginMetadata plugin.json contents decoded
      * @return bool
+     * @deprecated 0.0.8-beta.RC4 Use self::installKVStorage
      */
     public static function refreshKVStorage($PluginName, $PluginMetadata) {
         self::uninstallKVStorage($PluginName, $PluginMetadata);
@@ -272,10 +274,11 @@ class Plugins {
 
                     foreach (json_decode(file_get_contents($File), true) as $Key => $Value) {
                         try {
-                            if (defined("CRISP_CLI")) {
-                                echo "Installing translation $Key" . PHP_EOL;
+                            if ($Language->newTranslation("plugin_" . $PluginName . "_$Key", $Value, substr(basename($File), 0, -5))) {
+                                if (defined("CRISP_CLI")) {
+                                    echo "Installing translation $Key" . PHP_EOL;
+                                }
                             }
-                            $Language->newTranslation("plugin_" . $PluginName . "_$Key", $Value);
                         } catch (\PDOException $ex) {
                             continue;
                         }
@@ -296,7 +299,7 @@ class Plugins {
                     }
 
                     foreach ($Value as $KeyTranslation => $ValueTranslation) {
-                        $Language->newTranslation("plugin_" . $PluginName . "_$KeyTranslation", $ValueTranslation);
+                        $Language->newTranslation("plugin_" . $PluginName . "_$KeyTranslation", $ValueTranslation, $Key);
                     }
                 } catch (\PDOException $ex) {
                     continue;

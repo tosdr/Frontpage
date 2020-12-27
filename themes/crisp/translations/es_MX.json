@@ -24,5 +24,9 @@
     "view_source": "Ver Código Fuente",
     "visit_case": "Ver los Casos",
     "visit_service": "Visitar Servicio",
-    "navbar_item_api": "API"
+    "navbar_item_api": "API",
+    "api_container_h2": "Toda la data en JSON legible para máquinas",
+    "api_container_h2_2": "Ejemplos",
+    "api_container_h3": "Uso",
+    "about_us_intro": "\"Terms of Service; Didn't Read\" (ToS;DR) es un proyecto que comenzó un Junio del año 2012 para arreglar \"la mayro mentira en la Red\": casi nadie lee los Términos y Condiciones que aceptamos frecuentemente."
 }

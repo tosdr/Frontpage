@@ -2,7 +2,7 @@
     "about_us_intro": "“Terms of Service; Didn't Read” (short: ToS;DR) is a project started in June 2012 to help fix the “biggest lie on the web”: almost no one really reads the terms of service we agree to all the time.",
     "add_to": "Add to {{ browser }}",
     "api": "API",
-    "api_container_h2": "All data in machine-readable JSON",
+    "api_container_h2": "All data is in machine-readable JSON",
     "api_container_h2_2": "Examples",
     "api_container_h3": "Use",
     "api_container_p_1": "The data format can be <a href=\"https://github.com/JustinBack/CrispCMS-ToS-DR/blob/master/api/api.php\">reverse engineered</a> on our GitHub. Please check the specification's version with the API version.",

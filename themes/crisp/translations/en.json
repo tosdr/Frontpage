@@ -101,5 +101,8 @@
     "privacy_grade_d": "Privacy Grade D",
     "privacy_grade_e": "Privacy Grade E",
     "privacy_grade_none": "No Privacy Grade Yet",
-    "service_not_found": "Service not found"
+    "service_not_found": "Service not found",
+    "presskit_container_p_1": "With our Presskit you can download official branding image to share on your website, social media or anywhere else!",
+    "presskit": "Presskit",
+    "download_presskit": "Download Presskit"
 }

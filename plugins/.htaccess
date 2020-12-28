@@ -1,0 +1,4 @@
+<Files ~ "\.(env|php|twig)$">
+    Order allow,deny
+    Deny from all
+</Files>

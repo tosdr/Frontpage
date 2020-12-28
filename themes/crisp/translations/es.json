@@ -47,5 +47,6 @@
     "error_service_not_found": "No hay servicios correspondientes",
     "error_service_not_found_description": "No se ha encontrado el servicio. Puedes pedir que sea añadido en nuestro Foro. <br><a href=\"https://forum.tosdr.org/request\">https://forum.tosdr.org/request</a>",
     "imprint_container_p_1": "Este proyecto es subvencionado por<a href=\"http://1901.tosdr.org\"> la asociación ToS;DR registrada como 1901-non-for-profit en Francia</a>. Algunos de los derechos y financias relacionados con el proyecto son gestionados por la asociación, pero no todos.\n<br>El proyecto ToS;DR en sí mismo no es una personalidad jurídica. ",
-    "legal_container_2_p_1": "¡Gracias por contribuir! Necesitamos que la licencia de tus contribuciones sea libre y abierta. "
+    "legal_container_2_p_1": "¡Gracias por contribuir! Necesitamos que la licencia de tus contribuciones sea libre y abierta. ",
+    "legal_container_2_p_2": "Contribuyendo al proyecto (p.ej. enviando un email o sometiendo a través de nuestras interfaces), consientes – a menos que se haya simultáneamente y explícitamente declarado de otra manera – que\n\ntu contribución sea incluída en el código fuente de ToS;DR y publicada bajo la licencia copyright siguiente:"
 }

@@ -60,11 +60,11 @@ var NAVTREEINDEX0 =
 "classcrisp_1_1api_1_1_language.html#a044c5d155f5d06187e1985383b764632":[3,0,0,0,5,16],
 "classcrisp_1_1api_1_1_language.html#a18d75736fd69bbba84ba5aa75fb702a2":[3,0,0,0,5,1],
 "classcrisp_1_1api_1_1_language.html#a288c91ba56af1e2a57e48043d799d529":[3,0,0,0,5,10],
-"classcrisp_1_1api_1_1_language.html#a2b0ce04b6f797dba362439e3d0175749":[3,0,0,0,5,12],
 "classcrisp_1_1api_1_1_language.html#a381de5803b7657f165a06185c38deec1":[3,0,0,0,5,8],
 "classcrisp_1_1api_1_1_language.html#a3d0963e68bb313b163a73f2803c64600":[3,0,0,0,5,9],
 "classcrisp_1_1api_1_1_language.html#a46b5aa9e8b383ec6b6a667cead4c9010":[3,0,0,0,5,15],
 "classcrisp_1_1api_1_1_language.html#a545341e59cc9a0dafc4e265d60d4b5d6":[3,0,0,0,5,2],
+"classcrisp_1_1api_1_1_language.html#a82677b6d2a8e55ba2e59ef3ac90aa871":[3,0,0,0,5,12],
 "classcrisp_1_1api_1_1_language.html#a85f68099f2c27e588c3a8a66086e05ec":[3,0,0,0,5,18],
 "classcrisp_1_1api_1_1_language.html#a8a8555c1bc9094e068a2f54cec96199f":[3,0,0,0,5,17],
 "classcrisp_1_1api_1_1_language.html#a91e658a6e3fccc3028f2d71122bc4b8f":[3,0,0,0,5,4],
@@ -197,8 +197,8 @@ var NAVTREEINDEX0 =
 "namespacecrisp_1_1api_1_1lists.html":[3,0,0,0,0],
 "namespacecrisp_1_1core.html":[2,0,0,1],
 "namespacecrisp_1_1core.html":[3,0,0,1],
-"namespacecrisp_1_1exceptions.html":[3,0,0,2],
 "namespacecrisp_1_1exceptions.html":[2,0,0,2],
+"namespacecrisp_1_1exceptions.html":[3,0,0,2],
 "namespaces.html":[2,0],
 "pages.html":[]
 };

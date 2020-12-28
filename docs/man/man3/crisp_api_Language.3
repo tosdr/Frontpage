@@ -1,4 +1,4 @@
-.TH "Language" 3 "Sat Dec 26 2020" "CrispCMS Plugin API" \" -*- nroff -*-
+.TH "Language" 3 "Mon Dec 28 2020" "CrispCMS Plugin API" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -54,7 +54,7 @@ Inherits \fBLanguages\fP\&.
 .RI "\fBeditTranslation\fP (string $Key, string $Value)"
 .br
 .ti -1c
-.RI "\fBnewTranslation\fP (string $Key, string $Value)"
+.RI "\fBnewTranslation\fP (string $Key, string $Value, string $\fBLanguage\fP='en')"
 .br
 .ti -1c
 .RI "\fBsetFlag\fP (string $Flag)"
@@ -196,7 +196,7 @@ string The current path of the flag
 .PP
 
 .PP
-Definition at line 273 of file Language\&.php\&.
+Definition at line 278 of file Language\&.php\&.
 .SS "getName ()"
 Gets the name of the language 
 .PP
@@ -230,7 +230,7 @@ boolean
 
 .PP
 Definition at line 93 of file Language\&.php\&.
-.SS "newTranslation (string $Key, string $Value)"
+.SS "newTranslation (string $Key, string $Value, string $Language = \fC'en'\fP)"
 Create a new translation key 
 .PP
 \fBParameters\fP
@@ -279,7 +279,7 @@ boolean TRUE if successfully set, otherwise false
 .PP
 
 .PP
-Definition at line 260 of file Language\&.php\&.
+Definition at line 265 of file Language\&.php\&.
 .SS "setName (string $Name)"
 Sets a new name for the language 
 .PP

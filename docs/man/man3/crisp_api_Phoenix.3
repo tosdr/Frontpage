@@ -1,4 +1,4 @@
-.TH "Phoenix" 3 "Sat Dec 26 2020" "CrispCMS Plugin API" \" -*- nroff -*-
+.TH "Phoenix" 3 "Mon Dec 28 2020" "CrispCMS Plugin API" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -17,6 +17,9 @@ Phoenix
 .br
 .ti -1c
 .RI "static \fBgetDocumentsByServicePG\fP (string $ID)"
+.br
+.ti -1c
+.RI "static \fBgetPointsPG\fP ()"
 .br
 .ti -1c
 .RI "static \fBgetPointPG\fP (string $ID)"
@@ -143,7 +146,7 @@ Use \fBPhoenix::getCasePG\fP
 .PP
 
 .PP
-Definition at line 297 of file Phoenix\&.php\&.
+Definition at line 322 of file Phoenix\&.php\&.
 .SS "static getCasePG (string $ID)\fC [static]\fP"
 Gets details about a case from postgres 
 .PP
@@ -164,7 +167,7 @@ array
 .PP
 
 .PP
-Definition at line 264 of file Phoenix\&.php\&.
+Definition at line 289 of file Phoenix\&.php\&.
 .SS "static getCases (bool $Force = \fCfalse\fP)\fC [static]\fP"
 Get a list of cases 
 .PP
@@ -189,7 +192,7 @@ Use \fBPhoenix::getCasesPG\fP
 .PP
 
 .PP
-Definition at line 902 of file Phoenix\&.php\&.
+Definition at line 927 of file Phoenix\&.php\&.
 .SS "static getCasesPG ()\fC [static]\fP"
 List all cases from postgres 
 .PP
@@ -205,7 +208,7 @@ array
 .PP
 
 .PP
-Definition at line 875 of file Phoenix\&.php\&.
+Definition at line 900 of file Phoenix\&.php\&.
 .SS "static getDocumentsByServicePG (string $ID)\fC [static]\fP"
 Get all documents by a service from postgres 
 .PP
@@ -253,7 +256,7 @@ Use \fBPhoenix::getPointPG\fP
 .PP
 
 .PP
-Definition at line 220 of file Phoenix\&.php\&.
+Definition at line 245 of file Phoenix\&.php\&.
 .SS "static getPointPG (string $ID)\fC [static]\fP"
 Gets details about a point from postgres 
 .PP
@@ -274,7 +277,7 @@ array
 .PP
 
 .PP
-Definition at line 188 of file Phoenix\&.php\&.
+Definition at line 213 of file Phoenix\&.php\&.
 .SS "static getPointsByServicePG (string $ID)\fC [static]\fP"
 Retrieve points by a service from postgres 
 .PP
@@ -296,6 +299,22 @@ array
 
 .PP
 Definition at line 124 of file Phoenix\&.php\&.
+.SS "static getPointsPG ()\fC [static]\fP"
+List all points from postgres 
+.PP
+\fBSee also\fP
+.RS 4
+https://github.com/tosdr/edit.tosdr.org/blob/8b900bf8879b8ed3a4a2a6bbabbeafa7d2ab540c/db/schema.rb#L89-L111 Database Schema 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+array 
+.RE
+.PP
+
+.PP
+Definition at line 187 of file Phoenix\&.php\&.
 .SS "static getService (string $ID, bool $Force = \fCfalse\fP)\fC [static]\fP"
 Get details of a service by name 
 .PP
@@ -322,7 +341,7 @@ Use \fBPhoenix::getServicePG\fP
 .PP
 
 .PP
-Definition at line 748 of file Phoenix\&.php\&.
+Definition at line 773 of file Phoenix\&.php\&.
 .SS "static getServiceByName (string $Name, bool $Force = \fCfalse\fP)\fC [static]\fP"
 Get details of a service by name 
 .PP
@@ -349,7 +368,7 @@ Use \fBPhoenix::getServiceByNamePG\fP
 .PP
 
 .PP
-Definition at line 419 of file Phoenix\&.php\&.
+Definition at line 444 of file Phoenix\&.php\&.
 .SS "static getServiceByNamePG (string $Name)\fC [static]\fP"
 Get details of a service via postgres by name 
 .PP
@@ -370,7 +389,7 @@ array
 .PP
 
 .PP
-Definition at line 518 of file Phoenix\&.php\&.
+Definition at line 543 of file Phoenix\&.php\&.
 .SS "static getServiceBySlugPG (string $Name)\fC [static]\fP"
 Get details of a service from postgres via a slug 
 .PP
@@ -391,11 +410,11 @@ array
 .PP
 
 .PP
-Definition at line 488 of file Phoenix\&.php\&.
+Definition at line 513 of file Phoenix\&.php\&.
 .SS "static getServicePG (string $ID)\fC [static]\fP"
 
 .PP
-Definition at line 708 of file Phoenix\&.php\&.
+Definition at line 733 of file Phoenix\&.php\&.
 .SS "static getServices (bool $Force = \fCfalse\fP)\fC [static]\fP"
 Get a list of services 
 .PP
@@ -420,7 +439,7 @@ Please use \fBPhoenix::getServicesPG\fP
 .PP
 
 .PP
-Definition at line 973 of file Phoenix\&.php\&.
+Definition at line 998 of file Phoenix\&.php\&.
 .SS "static getServicesPG ()\fC [static]\fP"
 List all services from postgres 
 .PP
@@ -436,7 +455,7 @@ array
 .PP
 
 .PP
-Definition at line 946 of file Phoenix\&.php\&.
+Definition at line 971 of file Phoenix\&.php\&.
 .SS "static getTopic (string $ID, bool $Force = \fCfalse\fP)\fC [static]\fP"
 Get details of a topic 
 .PP
@@ -463,7 +482,7 @@ Use \fBPhoenix::getTopicPG\fP
 .PP
 
 .PP
-Definition at line 373 of file Phoenix\&.php\&.
+Definition at line 398 of file Phoenix\&.php\&.
 .SS "static getTopicPG (string $ID)\fC [static]\fP"
 Gets details about a topic from postgres 
 .PP
@@ -484,7 +503,7 @@ array
 .PP
 
 .PP
-Definition at line 341 of file Phoenix\&.php\&.
+Definition at line 366 of file Phoenix\&.php\&.
 .SS "static getTopics (bool $Force = \fCfalse\fP)\fC [static]\fP"
 Get a list of topics 
 .PP
@@ -509,7 +528,7 @@ Use \fBPhoenix::getServicesPG\fP
 .PP
 
 .PP
-Definition at line 832 of file Phoenix\&.php\&.
+Definition at line 857 of file Phoenix\&.php\&.
 .SS "static getTopicsPG ()\fC [static]\fP"
 List all topics from postgres 
 .PP
@@ -525,7 +544,7 @@ array
 .PP
 
 .PP
-Definition at line 805 of file Phoenix\&.php\&.
+Definition at line 830 of file Phoenix\&.php\&.
 .SS "static pointExists (string $ID)\fC [static]\fP"
 Check if the point exists by name 
 .PP
@@ -546,7 +565,7 @@ bool
 .PP
 
 .PP
-Definition at line 628 of file Phoenix\&.php\&.
+Definition at line 653 of file Phoenix\&.php\&.
 .SS "static pointExistsPG (string $ID)\fC [static]\fP"
 Check if a point exists from postgres via slug 
 .PP
@@ -562,7 +581,7 @@ bool
 .PP
 
 .PP
-Definition at line 641 of file Phoenix\&.php\&.
+Definition at line 666 of file Phoenix\&.php\&.
 .SS "static searchServiceByNamePG (string $Name)\fC [static]\fP"
 Search for a service via postgres 
 .PP
@@ -583,7 +602,7 @@ array
 .PP
 
 .PP
-Definition at line 445 of file Phoenix\&.php\&.
+Definition at line 470 of file Phoenix\&.php\&.
 .SS "static serviceExists (string $ID)\fC [static]\fP"
 Check if a service exists by name 
 .PP
@@ -604,7 +623,7 @@ Use \fBPhoenix::serviceExistsPG\fP
 .PP
 
 .PP
-Definition at line 700 of file Phoenix\&.php\&.
+Definition at line 725 of file Phoenix\&.php\&.
 .SS "static serviceExistsByName (string $Name)\fC [static]\fP"
 Check if a service exists by name 
 .PP
@@ -625,7 +644,7 @@ Use \fBPhoenix::serviceExistsByNamePG\fP
 .PP
 
 .PP
-Definition at line 612 of file Phoenix\&.php\&.
+Definition at line 637 of file Phoenix\&.php\&.
 .SS "static serviceExistsByNamePG (string $Name)\fC [static]\fP"
 Check if a service exists from postgres via name 
 .PP
@@ -641,7 +660,7 @@ bool
 .PP
 
 .PP
-Definition at line 582 of file Phoenix\&.php\&.
+Definition at line 607 of file Phoenix\&.php\&.
 .SS "static serviceExistsBySlugPG (string $Name)\fC [static]\fP"
 Check if a service exists from postgres via slug 
 .PP
@@ -657,7 +676,7 @@ bool
 .PP
 
 .PP
-Definition at line 553 of file Phoenix\&.php\&.
+Definition at line 578 of file Phoenix\&.php\&.
 .SS "static serviceExistsPG (string $ID)\fC [static]\fP"
 Check if a service exists from postgres via the ID 
 .PP
@@ -673,7 +692,7 @@ bool
 .PP
 
 .PP
-Definition at line 670 of file Phoenix\&.php\&.
+Definition at line 695 of file Phoenix\&.php\&.
 
 .SH "Author"
 .PP 

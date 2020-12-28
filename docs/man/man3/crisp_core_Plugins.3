@@ -1,4 +1,4 @@
-.TH "Plugins" 3 "Sat Dec 26 2020" "CrispCMS Plugin API" \" -*- nroff -*-
+.TH "Plugins" 3 "Mon Dec 28 2020" "CrispCMS Plugin API" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -115,7 +115,7 @@ boolean TRUE if the data has been successfully deleted
 .PP
 
 .PP
-Definition at line 313 of file Plugins\&.php\&.
+Definition at line 348 of file Plugins\&.php\&.
 .SS "static getPluginMetadata ( $PluginName)\fC [static]\fP"
 Gets the decoded contents of the plugin\&.json 
 .PP
@@ -131,7 +131,7 @@ boolean
 .PP
 
 .PP
-Definition at line 362 of file Plugins\&.php\&.
+Definition at line 397 of file Plugins\&.php\&.
 .SS "static install ( $PluginName,  $TwigTheme,  $CurrentFile,  $CurrentPage)\fC [static]\fP"
 Install a plugin and load it into the CMS @broadcasts pluginInstall 
 .PP
@@ -158,7 +158,7 @@ boolean TRUE if install was successful, otherwise FALSE
 .PP
 
 .PP
-Definition at line 647 of file Plugins\&.php\&.
+Definition at line 709 of file Plugins\&.php\&.
 .SS "static installCrons ( $PluginName,  $PluginMetadata)\fC [static]\fP"
 Install all crons by plugin 
 .PP
@@ -176,7 +176,7 @@ bool
 .PP
 
 .PP
-Definition at line 394 of file Plugins\&.php\&.
+Definition at line 432 of file Plugins\&.php\&.
 .SS "static installKVStorage ( $PluginName,  $PluginMetadata)\fC [static]\fP"
 Install storage from plugin\&.json 
 .PP
@@ -194,7 +194,7 @@ bool
 .PP
 
 .PP
-Definition at line 205 of file Plugins\&.php\&.
+Definition at line 207 of file Plugins\&.php\&.
 .SS "static installTranslations ( $PluginName,  $PluginMetadata)\fC [static]\fP"
 Install all translations from plugin\&.json 
 .PP
@@ -212,7 +212,7 @@ bool
 .PP
 
 .PP
-Definition at line 230 of file Plugins\&.php\&.
+Definition at line 247 of file Plugins\&.php\&.
 .SS "static integrityCheck ( $PluginName,  $PluginMetadata)\fC [static]\fP"
 Check if the integrity of a plugin is still fine 
 .PP
@@ -230,7 +230,7 @@ array
 .PP
 
 .PP
-Definition at line 565 of file Plugins\&.php\&.
+Definition at line 627 of file Plugins\&.php\&.
 .SS "static isInstalled ( $PluginName)\fC [static]\fP"
 Checks if the specified plugin is installed 
 .PP
@@ -246,11 +246,11 @@ boolean TRUE if plugin is installed, otherwise FALSE
 .PP
 
 .PP
-Definition at line 291 of file Plugins\&.php\&.
+Definition at line 326 of file Plugins\&.php\&.
 .SS "static isValid ( $PluginName)\fC [static]\fP"
 
 .PP
-Definition at line 301 of file Plugins\&.php\&.
+Definition at line 336 of file Plugins\&.php\&.
 .SS "static listConfig ( $PluginName)\fC [static]\fP"
 List all storage items by plugins 
 .PP
@@ -266,7 +266,7 @@ array
 .PP
 
 .PP
-Definition at line 455 of file Plugins\&.php\&.
+Definition at line 510 of file Plugins\&.php\&.
 .SS "static listPlugins ()\fC [static]\fP"
 List all uninstalled plugins 
 .PP
@@ -293,7 +293,7 @@ array
 .PP
 
 .PP
-Definition at line 437 of file Plugins\&.php\&.
+Definition at line 492 of file Plugins\&.php\&.
 .SS "static load ( $TwigTheme,  $CurrentFile,  $CurrentPage)\fC [static]\fP"
 Load all plugins and check for matching templates 
 .PP
@@ -356,9 +356,14 @@ Reinstall all storage items
 bool 
 .RE
 .PP
+\fBDeprecated\fP
+.RS 4
+0\&.0\&.8-beta\&.RC4 Use self::installKVStorage 
+.RE
+.PP
 
 .PP
-Definition at line 194 of file Plugins\&.php\&.
+Definition at line 196 of file Plugins\&.php\&.
 .SS "static refreshTranslations ( $PluginName,  $PluginMetadata)\fC [static]\fP"
 Reinstall all translations 
 .PP
@@ -374,13 +379,18 @@ Reinstall all translations
 bool 
 .RE
 .PP
+\fBDeprecated\fP
+.RS 4
+0\&.0\&.8-beta\&.RC4 Use self::installTranslations 
+.RE
+.PP
 
 .PP
-Definition at line 183 of file Plugins\&.php\&.
+Definition at line 184 of file Plugins\&.php\&.
 .SS "static registerAfterRenderHook ( $PluginName,  $Function)\fC [static]\fP"
 
 .PP
-Definition at line 702 of file Plugins\&.php\&.
+Definition at line 764 of file Plugins\&.php\&.
 .SS "static registerInstallHook ( $PluginName,  $Function)\fC [static]\fP"
 Registers an install hook for your plugin\&. 
 .PP
@@ -398,7 +408,7 @@ boolean TRUE if hook could be registered, otherwise false
 .PP
 
 .PP
-Definition at line 716 of file Plugins\&.php\&.
+Definition at line 778 of file Plugins\&.php\&.
 .SS "static registerUninstallHook ( $PluginName,  $Function)\fC [static]\fP"
 Registers an uninstall hook for your plugin\&. 
 .PP
@@ -416,7 +426,7 @@ boolean TRUE if hook could be registered, otherwise false
 .PP
 
 .PP
-Definition at line 694 of file Plugins\&.php\&.
+Definition at line 756 of file Plugins\&.php\&.
 .SS "static reinstall ( $PluginName,  $TwigTheme,  $CurrentFile,  $CurrentPage)\fC [static]\fP"
 Reinstall a plugin 
 .PP
@@ -438,7 +448,7 @@ boolean
 .PP
 
 .PP
-Definition at line 509 of file Plugins\&.php\&.
+Definition at line 571 of file Plugins\&.php\&.
 .SS "static testVersion ( $VersionString)\fC [static]\fP"
 Compare the current version of crisp with a custom version string 
 .PP
@@ -459,7 +469,7 @@ bool|int
 .PP
 
 .PP
-Definition at line 338 of file Plugins\&.php\&.
+Definition at line 373 of file Plugins\&.php\&.
 .SS "static uninstall ( $PluginName,  $TwigTheme,  $CurrentFile,  $CurrentPage)\fC [static]\fP"
 Uninstall a plugin and prevent it from loading @broadcasts pluginUninstall 
 .PP
@@ -486,7 +496,7 @@ bool
 .PP
 
 .PP
-Definition at line 526 of file Plugins\&.php\&.
+Definition at line 588 of file Plugins\&.php\&.
 .SS "static uninstallCrons ( $PluginName,  $PluginMetadata)\fC [static]\fP"
 Uninstall all crons by plugin 
 .PP
@@ -504,7 +514,7 @@ bool
 .PP
 
 .PP
-Definition at line 378 of file Plugins\&.php\&.
+Definition at line 413 of file Plugins\&.php\&.
 .SS "static uninstallKVStorage ( $PluginName,  $PluginMetadata)\fC [static]\fP"
 uninstall all storage items by plugin 
 .PP
@@ -522,7 +532,7 @@ bool
 .PP
 
 .PP
-Definition at line 412 of file Plugins\&.php\&.
+Definition at line 460 of file Plugins\&.php\&.
 .SS "static uninstallTranslations ( $PluginName,  $PluginMetadata)\fC [static]\fP"
 Uninstall all translations by plugin 
 .PP
@@ -540,7 +550,7 @@ bool
 .PP
 
 .PP
-Definition at line 475 of file Plugins\&.php\&.
+Definition at line 530 of file Plugins\&.php\&.
 
 .SH "Author"
 .PP 

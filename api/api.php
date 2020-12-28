@@ -209,6 +209,27 @@ switch ($_GET["apiversion"]) {
 
         echo $SVG;
         break;
+    case "topic_v1":
+        if (!isset($Query) || empty($Query)) {
+            echo \crisp\core\PluginAPI::response(false, $Query, crisp\api\Phoenix::getTopicsPG());
+        } else {
+            echo \crisp\core\PluginAPI::response(false, $Query, crisp\api\Phoenix::getTopicPG($Query));
+        }
+        break;
+    case "case_v1":
+        if (!isset($Query) || empty($Query)) {
+            echo \crisp\core\PluginAPI::response(false, $Query, crisp\api\Phoenix::getCasesPG());
+        } else {
+            echo \crisp\core\PluginAPI::response(false, $Query, crisp\api\Phoenix::getCasePG($Query));
+        }
+        break;
+    case "point_v1":
+        if (!isset($Query) || empty($Query)) {
+            echo \crisp\core\PluginAPI::response(false, $Query, crisp\api\Phoenix::getPointsPG());
+        } else {
+            echo \crisp\core\PluginAPI::response(false, $Query, crisp\api\Phoenix::getPointPG($Query));
+        }
+        break;
     case "2":
     case "1":
         header("Content-Type: application/json");

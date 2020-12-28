@@ -129,8 +129,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a18d75736fd69bbba84ba5aa75fb702a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adfee32e203d4024721d158c5a2dba786"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcrisp_1_1api_1_1_language.html#adfee32e203d4024721d158c5a2dba786">editTranslation</a> (string $Key, string $Value)</td></tr>
 <tr class="separator:adfee32e203d4024721d158c5a2dba786"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2b0ce04b6f797dba362439e3d0175749"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcrisp_1_1api_1_1_language.html#a2b0ce04b6f797dba362439e3d0175749">newTranslation</a> (string $Key, string $Value)</td></tr>
-<tr class="separator:a2b0ce04b6f797dba362439e3d0175749"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a82677b6d2a8e55ba2e59ef3ac90aa871"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcrisp_1_1api_1_1_language.html#a82677b6d2a8e55ba2e59ef3ac90aa871">newTranslation</a> (string $Key, string $Value, string $<a class="el" href="classcrisp_1_1api_1_1_language.html">Language</a>=&quot;en&quot;)</td></tr>
+<tr class="separator:a82677b6d2a8e55ba2e59ef3ac90aa871"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af5b5bcbcf3f41b30df5f84c68994c9fc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcrisp_1_1api_1_1_language.html#af5b5bcbcf3f41b30df5f84c68994c9fc">setFlag</a> (string $Flag)</td></tr>
 <tr class="separator:af5b5bcbcf3f41b30df5f84c68994c9fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a381de5803b7657f165a06185c38deec1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcrisp_1_1api_1_1_language.html#a381de5803b7657f165a06185c38deec1">getFlag</a> ()</td></tr>
@@ -367,7 +367,7 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 <p>Gets the flag icon of a language </p><dl class="section return"><dt>Returns</dt><dd>string The current path of the flag </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_language_8php_source.html#l00273">273</a> of file <a class="el" href="_language_8php_source.html">Language.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_language_8php_source.html#l00278">278</a> of file <a class="el" href="_language_8php_source.html">Language.php</a>.</p>
 
 </div>
 </div>
@@ -431,8 +431,8 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="a2b0ce04b6f797dba362439e3d0175749"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2b0ce04b6f797dba362439e3d0175749">&#9670;&nbsp;</a></span>newTranslation()</h2>
+<a id="a82677b6d2a8e55ba2e59ef3ac90aa871"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a82677b6d2a8e55ba2e59ef3ac90aa871">&#9670;&nbsp;</a></span>newTranslation()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -447,7 +447,13 @@ Additional Inherited Members</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">string&#160;</td>
-          <td class="paramname"><em>$Value</em>&#160;</td>
+          <td class="paramname"><em>$Value</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>$Language</em> = <code>&quot;en&quot;</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -519,7 +525,7 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>boolean TRUE if successfully set, otherwise false </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_language_8php_source.html#l00260">260</a> of file <a class="el" href="_language_8php_source.html">Language.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_language_8php_source.html#l00265">265</a> of file <a class="el" href="_language_8php_source.html">Language.php</a>.</p>
 
 </div>
 </div>
@@ -619,7 +625,7 @@ Additional Inherited Members</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespacecrisp.html">crisp</a></li><li class="navelem"><a class="el" href="namespacecrisp_1_1api.html">api</a></li><li class="navelem"><a class="el" href="classcrisp_1_1api_1_1_language.html">Language</a></li>
-    <li class="footer">Generated on Sat Dec 26 2020 17:52:38 for CrispCMS Plugin API by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
+    <li class="footer">Generated on Mon Dec 28 2020 16:19:15 for CrispCMS Plugin API by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20 </li>
   </ul>
 </div>
 </body>

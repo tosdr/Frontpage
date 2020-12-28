@@ -180,6 +180,31 @@ class Phoenix {
     }
 
     /**
+     * List all points from postgres
+     * @see https://github.com/tosdr/edit.tosdr.org/blob/8b900bf8879b8ed3a4a2a6bbabbeafa7d2ab540c/db/schema.rb#L89-L111 Database Schema
+     * @return array
+     */
+    public static function getPointsPG() {
+        if (self::$Postgres_Database_Connection === NULL) {
+            self::initDB();
+        }
+
+        if (self::$Redis_Database_Connection->keys("pg_points")) {
+            return unserialize(self::$Redis_Database_Connection->get("pg_points"));
+        }
+
+        if (self::$Postgres_Database_Connection === NULL) {
+            self::initPGDB();
+        }
+
+        $Result = self::$Postgres_Database_Connection->query("SELECT * FROM points")->fetchAll(\PDO::FETCH_ASSOC);
+
+        self::$Redis_Database_Connection->set("pg_points", serialize($Result), 900);
+
+        return $Result;
+    }
+
+    /**
      * Gets details about a point from postgres
      * @see https://github.com/tosdr/edit.tosdr.org/blob/8b900bf8879b8ed3a4a2a6bbabbeafa7d2ab540c/db/schema.rb#L89-L111 Database Schema
      * @param string $ID The ID of a point

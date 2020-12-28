@@ -1,4 +1,4 @@
-.TH "deprecated" 3 "Sat Dec 26 2020" "CrispCMS Plugin API" \" -*- nroff -*-
+.TH "deprecated" 3 "Mon Dec 28 2020" "CrispCMS Plugin API" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -25,6 +25,10 @@ Use \fBPhoenix::getServicesPG\fP
 .IP "\fBGlobal \fBPhoenix::getCases\fP (bool $Force=false)\fP" 1c
 Use \fBPhoenix::getCasesPG\fP  
 .IP "\fBGlobal \fBPhoenix::getServices\fP (bool $Force=false)\fP" 1c
-Please use \fBPhoenix::getServicesPG\fP 
+Please use \fBPhoenix::getServicesPG\fP  
+.IP "\fBGlobal \fBPlugins::refreshTranslations\fP ($PluginName, $PluginMetadata)\fP" 1c
+0\&.0\&.8-beta\&.RC4 Use self::installTranslations  
+.IP "\fBGlobal \fBPlugins::refreshKVStorage\fP ($PluginName, $PluginMetadata)\fP" 1c
+0\&.0\&.8-beta\&.RC4 Use self::installKVStorage 
 .PP
 

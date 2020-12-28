@@ -12,7 +12,7 @@ var classcrisp_1_1api_1_1_language =
     [ "getName", "classcrisp_1_1api_1_1_language.html#a3d0963e68bb313b163a73f2803c64600", null ],
     [ "getNativeName", "classcrisp_1_1api_1_1_language.html#a288c91ba56af1e2a57e48043d799d529", null ],
     [ "isEnabled", "classcrisp_1_1api_1_1_language.html#ad734dc60b64a242fe183e0c23b192790", null ],
-    [ "newTranslation", "classcrisp_1_1api_1_1_language.html#a2b0ce04b6f797dba362439e3d0175749", null ],
+    [ "newTranslation", "classcrisp_1_1api_1_1_language.html#a82677b6d2a8e55ba2e59ef3ac90aa871", null ],
     [ "setCode", "classcrisp_1_1api_1_1_language.html#a95444594a3c8e26bc5c91d8b1747b2cd", null ],
     [ "setFlag", "classcrisp_1_1api_1_1_language.html#af5b5bcbcf3f41b30df5f84c68994c9fc", null ],
     [ "setName", "classcrisp_1_1api_1_1_language.html#a46b5aa9e8b383ec6b6a667cead4c9010", null ],

@@ -37,7 +37,7 @@
     "legal_container_2_p_1": "Thank you for contributing! We need you to license your contributions under free and open licenses. ",
     "legal_container_2_b_1": "Copyright",
     "legal_container_2_p_2": "By contributing to this project (e.g. by sending an email or by submitting through our interfaces), you agree – unless simultaneously and expressly stated otherwise – that\n\nyour contribution may be included in the source code of ToS;DR and published under the following copyright license:",
-    "legal_container_2_p_3": "<a href=\"http:\/\/creativecommons.org\/licenses\/by-sa\/3.0\/\">CC BY-SA 3.0<\/a> (or any later version approved by more than 50% of voting contributors) with a special exception to allow distribution in a \"larger program\" under the <a href=\"http:\/\/www.gnu.org\/licenses\/agpl-3.0-standalone.html\">GNU AGPL-3.0<\/a> or later.",
+    "legal_container_2_p_3": "<a href=\"http://creativecommons.org/licenses/by-sa/3.0/\">CC BY-SA 3.0</a> (or any later version approved by more than 50% of voting contributors) with a special exception to allow distribution in a \"larger program\" under the <a href=\"http://www.gnu.org/licenses/agpl-3.0-standalone.html\">GNU AGPL-3.0</a> or later.",
     "legal_container_2_b_2": "Definition of contributor",
     "legal_container_2_p_4": "A \"contributor\" is any person, excluding legal persons (e.g. corporations), who wrote at least one email to the group at least 90 days before the start of the poll.",
     "legal_container_2_b_3": "Changes",
@@ -102,7 +102,7 @@
     "privacy_grade_e": "Privacy Grade E",
     "privacy_grade_none": "No Privacy Grade Yet",
     "service_not_found": "Service not found",
-    "presskit_container_p_1": "With our Presskit you can download official branding image to share on your website, social media or anywhere else!",
+    "presskit_container_p_1": "With our Presskit you can download official branding images to share on your website, social media or anywhere else!",
     "presskit": "Presskit",
     "download_presskit": "Download Presskit"
 }

@@ -83,7 +83,7 @@ try {
         $runningJob = $_CRON["ID"];
         consoleLog("===== JOB #$runningJob PROCESSING =====");
 
-        \crisp\api\lists\Cron::markAsStarted($_CRON["ID"]);
+        \crisp\api\lists\Cron::markAsStarted($runningJob);
         if ($_CRON["Type"] === "execute_plugin_cron") {
 
             $_CRON["Data"] = json_decode($_CRON["Data"]);
@@ -91,7 +91,9 @@ try {
             consoleLog("Executing cron job for plugin " . $_CRON["Plugin"]);
 
             if (file_exists(__DIR__ . "/../plugins/" . $_CRON["Plugin"] . "/includes/cron.php")) {
+                consoleLog("Including cron file");
                 require __DIR__ . "/../plugins/" . $_CRON["Plugin"] . "/includes/cron.php";
+                consoleLog("Cron file included!");
             } else {
                 \terminateJob("Plugin has no cron file!");
             }
@@ -106,8 +108,8 @@ try {
 
             consoleLog("===== JOB #$runningJob PROCESSED =====");
 
-            \crisp\api\lists\Cron::markAsFinished($_CRON["ID"]);
-            \crisp\api\lists\Cron::setLog($_CRON["ID"], $Log);
+            \crisp\api\lists\Cron::markAsFinished($runningJob);
+            \crisp\api\lists\Cron::setLog($runningJob, $Log);
         }
     }
 } catch (\Exception $ex) {

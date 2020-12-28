@@ -99,8 +99,8 @@ class Plugin {
     /**
      * @see \crisp\api\lists\Cron::create
      */
-    public function createCron(string $Type, $Data, string $Interval = "2 MINUTE") {
-        return \crisp\api\lists\Cron::create("execute_plugin_cron", json_encode(array("data" => $Data, "name" => $Type)), $Interval, $this->PluginName);
+    public function createCron(string $Type, $Data, string $Interval = "2 MINUTE", bool $ExecuteOnce = false) {
+        return \crisp\api\lists\Cron::create("execute_plugin_cron", json_encode(array("data" => $Data, "name" => $Type)), $Interval, $this->PluginName, $ExecuteOnce);
     }
 
     /**

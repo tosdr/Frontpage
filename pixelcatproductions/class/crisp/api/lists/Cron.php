@@ -111,9 +111,10 @@ class Cron {
         if (self::$Database_Connection === null) {
             self::initDB();
         }
-        $statement = self::$Database_Connection->prepare("DELETE FROM Cron WHERE Finished = 1 OR Canceled = 1 OR Failed = 1;");
+        $statement = self::$Database_Connection->prepare("DELETE FROM Cron WHERE Finished = 1 OR Canceled = 1 OR Failed = 1 AND ExecuteOnce = 0;");
         return $statement->execute();
     }
+
     public static function deleteByPlugin($Plugin) {
         if (self::$Database_Connection === null) {
             self::initDB();
@@ -129,12 +130,12 @@ class Cron {
      * @param string $Interval In which interval should the cron be executed?
      * @return int The ID of the Cron
      */
-    public static function create(string $Type, string $Data, string $Interval = "2 MINUTE", string $Plugin = null) {
+    public static function create(string $Type, string $Data, string $Interval = "2 MINUTE", string $Plugin = null, bool $ExecuteOnce = false) {
         if (self::$Database_Connection === null) {
             self::initDB();
         }
-        $statement = self::$Database_Connection->prepare("INSERT INTO Cron (Type, Data, ScheduledAt, `Interval`, Plugin) VALUES (:Type, :Data, (NOW() + INTERVAL $Interval), :Interval, :Plugin)");
-        $statement->execute(array(":Type" => $Type, ":Data" => $Data, ":Interval" => $Interval, ":Plugin" => $Plugin));
+        $statement = self::$Database_Connection->prepare("INSERT INTO Cron (Type, Data, ScheduledAt, `Interval`, Plugin, ExecuteOnce) VALUES (:Type, :Data, (NOW() + INTERVAL $Interval), :Interval, :Plugin, :ExecuteOnce)");
+        $statement->execute(array(":Type" => $Type, ":Data" => $Data, ":Interval" => $Interval, ":Plugin" => $Plugin, ":ExecuteOnce" => ($ExecuteOnce ? 1 : 0)));
 
         return self::$Database_Connection->lastInsertId();
     }
@@ -164,8 +165,9 @@ class Cron {
         $statement = self::$Database_Connection->prepare("UPDATE Cron SET Canceled = 1, Started = 0, Finished = 0 WHERE ID = :ID");
         $Job = \crisp\api\lists\Cron::fetch($ID);
         $PluginData = json_decode($Job["Data"]);
-        \crisp\api\lists\Cron::create("execute_plugin_cron", json_encode(array("data" => $PluginData->data, "name" => $PluginData->name)), $Job["Interval"], $Job["Plugin"]);
-
+        if (!$Job["ExecuteOnce"]) {
+            \crisp\api\lists\Cron::create("execute_plugin_cron", json_encode(array("data" => $PluginData->data, "name" => $PluginData->name)), $Job["Interval"], $Job["Plugin"]);
+        }
         return $statement->execute(array(":ID" => $ID));
     }
 
@@ -182,8 +184,9 @@ class Cron {
 
         $Job = \crisp\api\lists\Cron::fetch($ID);
         $PluginData = json_decode($Job["Data"]);
-        \crisp\api\lists\Cron::create("execute_plugin_cron", json_encode(array("data" => $PluginData->data, "name" => $PluginData->name)), $Job["Interval"], $Job["Plugin"]);
-
+        if (!$Job["ExecuteOnce"]) {
+            \crisp\api\lists\Cron::create("execute_plugin_cron", json_encode(array("data" => $PluginData->data, "name" => $PluginData->name)), $Job["Interval"], $Job["Plugin"]);
+        }
         return $statement->execute(array(":ID" => $ID));
     }
 
@@ -200,8 +203,9 @@ class Cron {
 
         $Job = \crisp\api\lists\Cron::fetch($ID);
         $PluginData = json_decode($Job["Data"]);
-        \crisp\api\lists\Cron::create("execute_plugin_cron", json_encode(array("data" => $PluginData->data, "name" => $PluginData->name)), $Job["Interval"], $Job["Plugin"]);
-
+        if (!$Job["ExecuteOnce"]) {
+            \crisp\api\lists\Cron::create("execute_plugin_cron", json_encode(array("data" => $PluginData->data, "name" => $PluginData->name)), $Job["Interval"], $Job["Plugin"]);
+        }
         return $statement->execute(array(":ID" => $ID));
     }
 

@@ -102,5 +102,8 @@
     "privacy_grade_d": "Datenschutz Klasse D",
     "privacy_grade_e": "Datenschutz Klasse E",
     "privacy_grade_none": "Noch keine Datenschutz Klasse",
-    "service_not_found": "Dienst nicht gefunden"
+    "service_not_found": "Dienst nicht gefunden",
+    "presskit_container_p_1": "Mit unserem Presskit können Sie offizielle Branding-Bilder herunterladen, um sie auf Ihrer Website, in den sozialen Medien oder an anderer Stelle zu veröffentlichen!",
+    "presskit": "Pressekit",
+    "download_presskit": "Pressekit Herunterladen"
 }

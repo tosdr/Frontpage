@@ -165,6 +165,7 @@ class Translation {
             self::$Language = Helper::getLocale();
         }
 
+
         if (isset($_GET["debug"])) {
             return "$Key:" . self::$Language;
         }

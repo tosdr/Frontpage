@@ -94,5 +94,15 @@
     "class_a_desc": "son los mejores términos de uso: te tratan justamente, respetan tus derechos y no van a abusar de tus datos.",
     "language_es_MX": "Español mexicano",
     "class_c_desc": "Los términos de uso están bastante bien pero algunos problemas necesitan tu consideración.",
-    "class_d_desc": "Los términos de uso son muy injustos o hay problemas importantes que exigen tu atención."
+    "class_d_desc": "Los términos de uso son muy injustos o hay problemas importantes que exigen tu atención.",
+    "presskit_container_p_1": "¡Con nuestro Presskit puedes descargar imágenes publicitarias oficiales para compartirlas en tu página web, red social, o donde quieras!",
+    "presskit": "Presskit",
+    "download_presskit": "Descargar Presskit",
+    "privacy_grade_a": "Privacidad de Clase A",
+    "privacy_grade_b": "Privacidad de Clase B",
+    "privacy_grade_c": "Privacidad de Clase C",
+    "privacy_grade_d": "Privacidad de Clase D",
+    "privacy_grade_e": "Privacidad de Clase E",
+    "service_not_found": "No se ha encontrado el servicio",
+    "privacy_grade_none": "Aún sin clase de privacidad"
 }

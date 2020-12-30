@@ -22,7 +22,7 @@
     "navbar_item_ratings": "Calificaciones",
     "downloads": "Descargar",
     "downloads_jumbotron_paragraph_1": "¡Instala nuestras extensiones de navegador para mantenerte informado acerca de los Términos y Condiciones de los Sitios Web que visitas con frecuencia! ",
-    "frontpage_intro_bottom_text": "Los Términos y Condiciones suelen ser <strong>demasiado largos</strong>, pero ello no implica que dejen de ser importantes. Tus derechos en la Red dependen de ellos. Esperamos que nuestras reseñas te informen sobre tus derechos. No dudes en hacer clic <a href=\"#ratings\">sobre alguno de los servicios debajo</a> para obtener más información. También podéis checar nuestras clasificaciones descargando una de nuestras extensiones:",
+    "frontpage_intro_bottom_text": "Los Términos y Condiciones suelen ser <strong>demasiado largos</strong>, pero no implica que dejen de ser importantes. Tus derechos en la Red dependen de ellos. Esperamos que nuestras clasificaciones te informen sobre tus derechos. No dudes en hacer clic <a href=\"#ratings\">sobre alguno de los servicios debajo</a> para obtener más información. También puedes ver nuestras clasificaciones descargando una de nuestras extensiones:",
     "view_all_points": "¡Ver todos los Puntos en Phoenix!",
     "api_container_h2": "Todos los datos están en JSON legible por máquina",
     "api_container_h2_2": "Ejemplos",
@@ -104,5 +104,8 @@
     "privacy_grade_d": "Privacidad de Clase D",
     "privacy_grade_e": "Privacidad de Clase E",
     "service_not_found": "No se ha encontrado el servicio",
-    "privacy_grade_none": "Aún sin clase de privacidad"
+    "privacy_grade_none": "Aún sin clase de privacidad",
+    "embed_service": "Servicio empotrado",
+    "embed_service_desc": "Utiliza los códigos debajo para integrar una insignia de servicio a un blog, tu página web, ¡o donde quieras!",
+    "donate": "Donar en Opencollective"
 }

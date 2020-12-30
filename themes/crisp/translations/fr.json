@@ -105,5 +105,8 @@
     "point_good": "Bon",
     "presskit": "Dossier de presse",
     "download_presskit": "Télécharger le dossier de presse",
-    "presskit_container_p_1": "Grâce à notre dossier de presse vous pouvez télécharger nos logos officiels pour les partager sur votre site web, réseau social ou n'importe où !"
+    "presskit_container_p_1": "Grâce à notre dossier de presse vous pouvez télécharger nos logos officiels pour les partager sur votre site web, réseau social ou n'importe où !",
+    "embed_service_desc": "Utilisez les codes ci-dessous pour intégrer un badge de service sur un blog, votre site web ou n'importe où !",
+    "embed_service": "Service embarqué",
+    "donate": "Faire un don sur Opencollective"
 }

@@ -24,7 +24,7 @@
                 {% else %}
                     {% set rating = "N/A" %}
                 {% endif %}
-                {{ service.name }} {% include "components/rating.twig" with {'rating': rating} %}
+                {{ service.name }} <span class="ml-1">{% include "components/rating.twig" with {'rating': rating} %}</span>
             </div>
         </a>
         <div class="card-body">

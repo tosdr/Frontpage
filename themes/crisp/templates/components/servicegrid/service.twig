@@ -55,19 +55,41 @@
                         {% endif %}
 
 
-                        <li data-toggle="tooltip" title="{{ point.quoteText }}" class="list-group-item list-group-item-{{ color }}"><a  target="_blank" class="link-unstyled" href="{{ config.phoenix_url }}/points/{{ point.id }}">{{ point.title }}</a> <a data-toggle="tooltip" target="_blank" title="{{ 'visit_case'|translate }}" href="{{ config.phoenix_url }}/cases/{{ caseDetails.id }}"><span class="badge badge-primary badge-pill"><i class="fas fa-briefcase"></i></span></a></li>
+                        <li data-toggle="tooltip" title="{{ point.quoteText }}" class="list-group-item list-group-item-{{ color }}"><a  target="_blank" class="link-unstyled" href="{{ config.phoenix_url }}/points/{{ point.id }}">{{ point.title }}</a>
+                            <a class="float-right" data-toggle="tooltip" target="_blank" title="{{ 'visit_case'|translate }}" href="{{ config.phoenix_url }}/cases/{{ caseDetails.id }}"><span class="badge badge-primary badge-pill"><i class="fas fa-briefcase"></i></span></a></li>
 
                         {% set count = count + 1 %}
                     {% endif %}
                 {% endfor %}
             </ul>
-            {% if count == 5 %}
-                <a target="_blank" href="{{ config.phoenix_url }}/services/{{ service.id }}"><span class="badge badge-primary"><i class="fas fa-eye"></i> {{ 'view_all_points'|translate }}</span></a>
+            <div class="float-right">
 
-            {% else %}
-                <a target="_blank" href="{{ config.phoenix_url }}/services/{{ service.id }}"><span class="badge badge-success"><i class="fas fa-hands-helping"></i> {{ 'help_expanding'|translate }}</span></a>
+                {% if service.rating == "A" %}
+                    {% set color = "success" %}
+                {% endif %}
+                {% if service.rating == "B" %}
+                    {% set color = "ranking-B" %}
+                {% endif %}
+                {% if service.rating == "C" %}
+                    {% set color = "warning" %}
+                {% endif %}
+                {% if service.rating == "D" %}
+                    {% set color = "ranking-D" %}
+                {% endif %}
+                {% if service.rating == "E" %}
+                    {% set color = "danger" %}
+                {% endif %}
+                {% if service.rating == "N/A" %}
+                    {% set color = "secondary" %}
+                {% endif %}
+                {% if count == 5 %}
+                    <a target="_blank" href="{{ config.phoenix_url }}/services/{{ service.id }}"><span class="badge badge-{{ color }}"><i class="fas fa-eye"></i> {{ 'view_all_points'|translate }}</span></a>
 
-            {% endif %}
+                {% else %}
+                    <a target="_blank" href="{{ config.phoenix_url }}/services/{{ service.id }}"><span class="badge badge-success"><i class="fas fa-hands-helping"></i> {{ 'help_expanding'|translate }}</span></a>
+
+                {% endif %}
+            </div>
         </div>
         <div class="card-footer">
             {# API #}

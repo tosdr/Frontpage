@@ -14,7 +14,12 @@
             "contact_email": "team@tosdr.org",
             "forum_url": "https://forum.tosdr.org",
             "github_current_revision": null,
-            "page_delimiter": "--"
+            "page_delimiter": "--",
+            "opencollective_url": "https://opencollective.com/tosdr",
+            "github_link": "https://github.com/tosdr",
+            "discord_link": "https://discord.gg/QaCJUfwsKS",
+            "reddit_link": "https://reddit.com/r/tosdr",
+            "wikipedia_link": "https://en.wikipedia.org/wiki/Terms_of_Service;_Didn%27t_Read"
         },
         "activateDependencies": []
     },

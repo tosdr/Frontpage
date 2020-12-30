@@ -66,12 +66,24 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
                 <a class="mx-3" href="https://www.zeit.de/digital/internet/2012-08/terms-of-service-did-not-read"><img src="/{{ config.theme_dir }}/{{ config.theme }}/img/zeit.png" alt="Die Zeit"></a>
                 <a class="mx-3" href="https://www.wired.com/story/terms-of-service-didnt-read/"><img src="/{{ config.theme_dir }}/{{ config.theme }}/img/wired.gif" alt="Wired"></a>
                 <a class="mx-3" href="https://www.strategy-business.com/blog/Artificial-Intelligence-Ratings-and-the-Small-Print" style="color:grey;padding:8px">S+B</a>
-                <a class="mx-3" href="https://www.datingnews.com/daters-pulse/crisp-brings-transparency-to-dating-industry-by-assessing-terms-of-service/" style="color:grey;padding:8px">DN</a>
+                <a class="mx-3" href="https://www.datingnews.com/daters-pulse/tosdr-brings-transparency-to-dating-industry-by-assessing-terms-of-service/" style="color:grey;padding:8px">DN</a>
             </div>
             <hr>
             <div id="forum-link">
                 <a role="button" target="_blank" class="btn btn-primary btn-lg btn-block" href="{{ config.forum_url }}">{{ 'frontpage_forum_button_forum'|translate }}</a>
             </div>
+            <br>
+            <center>
+                <div class="btn-group">
+                    <a href="{{ config.twitter_link }}" class="btn btn-primary"><i class="fab fa-twitter"/></i></a>
+                    <a href="{{ config.opencollective_url }}" class="btn btn-info"><i class="fas fa-donate"/></i></a>
+                    <a href="{{ config.github_link }}" class="btn btn-dark"><i class="fab fa-github"/></i></a>
+                    <a href="{{ config.discord_link }}" style="background-color: #7289DA; border-color: #7289DA;" class="btn btn-dark"><i class="fab fa-discord"/></i></a>
+                    <a href="{{ config.reddit_link }}" style="background-color: #ff4500; border-color: #ff4500;" class="btn btn-dark"><i class="fab fa-reddit"/></i></a>
+                    <a href="{{ config.forum_url }}" class="btn btn-warning"><i class="fab fa-discourse"/></i></a>
+                    <a href="{{ config.wikipedia_link }}" class="btn btn-light"><i class="fab fa-wikipedia-w"/></i></a>
+                </div>
+            </center>
         </section>
         &nbsp;
         &nbsp;
@@ -113,7 +125,7 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
             if (window.location.hash.startsWith("#search=")) {
                 window.location.href = "/{{ locale }}/frontpage?search=" + window.location.hash.substr(8);
             } else {
-                
+
                 // https://stackoverflow.com/a/8896309
                 var url = window.location.href;
                 var exp = url.split(/^(([^:\/?#]+):)?(\/\/([^\/?#]*))?([^?#]*)(\?([^#]*))?(#(.*))?/);

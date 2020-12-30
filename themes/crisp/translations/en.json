@@ -105,5 +105,7 @@
     "presskit_container_p_1": "With our Presskit you can download official branding images to share on your website, social media or anywhere else!",
     "presskit": "Presskit",
     "download_presskit": "Download Presskit",
-    "donate": "Donate On Opencollective"
+    "donate": "Donate On Opencollective",
+    "embed_service": "Embed Service",
+    "embed_service_desc": "Use the codes below to embed a service badge into a blog post, your website or anywhere else!"
 }

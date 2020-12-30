@@ -27,7 +27,7 @@
     "api_container_h2": "Todos los datos en JSON legible por máquina",
     "api_container_h2_2": "Ejemplos",
     "api_container_h3": "Uso",
-    "about_us_intro": "\"Terms of Service; Didn't Read\" (ToS;DR) es un proyecto que comenzó un junio del año 2012 para arreglar \"la mayor mentira en la Red\": casi nadie lee los Términos y Condiciones que aceptamos todo el rato.",
+    "about_us_intro": "\"Terms of Service; Didn't Read\" (ToS;DR) es un proyecto que comenzó un junio del año 2012 para arreglar \"la mayor mentira en la Red\": casi nadie lee los Términos y Condiciones que aceptamos constantemente.",
     "api_container_p_1": "El formato de datos puede ser <a href=\"https://github.com/JustinBack/CrispCMS-ToS-DR/blob/master/api/api.php\"> ingeniería inversa</a> desde nuestro GitHub. Por favor comprueba la versión de la especificación con la versión del API.",
     "api_container_p_4": "ToS Checker es <a href=\"https://github.com/shybyte/tos-checker\">una extensión para Chrome y Chromium</a>, creada por shybyte.",
     "api_container_ul_li": "Cada servicio (p. ej., Facebook) tiene un archivo JSON. Puedes encontrarlos en <a href=\"https://github.com/tosdr/tosdr.org/tree/master/api/1/service/\">https://beta.tosdr.org/api/1/service/</a>",

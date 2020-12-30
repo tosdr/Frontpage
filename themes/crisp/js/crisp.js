@@ -6,14 +6,15 @@ function delay(fn, ms) {
     }
 }
 $(function () {
-    $('[data-toggle="tooltip"]').tooltip()
-
+    $('[data-toggle="tooltip"]').tooltip();
 
     $("#ratingsearch").on('keyup', delay(function (e) {
+        $('body').tooltip('dispose');
         $("#searchLoading").show();
         $.get("/api/search.php?q=" + this.value, function (data, status) {
             $("#services").html(data.grid);
             $("#searchLoading").hide();
+            $('[data-toggle="tooltip"]').tooltip();
         });
     }, 500));
 });

@@ -55,7 +55,7 @@
                         {% endif %}
 
 
-                        <li data-toggle="tooltip" title="{{ point.quoteText }}" class="list-group-item list-group-item-{{ color }}"><a  target="_blank" class="link-unstyled" href="{{ config.phoenix_url }}/points/{{ point.id }}">{{ point.title }}</a>
+                        <li data-toggle="tooltip" title="{{ point.quoteText|striptags|truncateText(300) }}" class="list-group-item list-group-item-{{ color }}"><a  target="_blank" class="link-unstyled" href="{{ config.phoenix_url }}/points/{{ point.id }}">{{ point.title }}</a>
                             <a class="float-right" data-toggle="tooltip" target="_blank" title="{{ 'visit_case'|translate }}" href="{{ config.phoenix_url }}/cases/{{ caseDetails.id }}"><span class="badge badge-primary badge-pill"><i class="fas fa-briefcase"></i></span></a></li>
 
                         {% set count = count + 1 %}

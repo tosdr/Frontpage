@@ -124,7 +124,7 @@ class Config {
         $statement = self::$Database_Connection->prepare("INSERT INTO Config (`key`) VALUES (:Key)");
         $statement->execute(array(":Key" => $Key));
 
-        return ($statement->rowCount() > 0);
+        return self::set($Key, $Value);
     }
 
     /**
@@ -151,6 +151,9 @@ class Config {
             self::initDB();
         }
 
+        if(!Config::exists($Key)){
+            Config::create($Key, $Value);
+        }
 
         $Type = gettype($Value);
 

@@ -190,6 +190,10 @@ class Migrations {
             "RUNCODE;" => '$this->createTable("MyTable", array("col1", \crisp\core\Migrations::DB_VARCHAR));'
         ));
 
+        if(!file_exists("$Dir/migrations/")){
+            mkdir("$Dir/migrations/");
+        }
+        
         $written = file_put_contents("$Dir/migrations/" . time() . "_$MigrationNameFiltered.php", $Skeleton);
 
         if (!$written) {

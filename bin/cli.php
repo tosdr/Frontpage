@@ -185,6 +185,32 @@ switch ($argv[1]) {
                     echo "Maintenance Mode successfully disabled." . PHP_EOL;
                 }
                 break;
+
+            case "reload":
+            case "refresh":
+                if ($argc < 4) {
+                    echo "Missing plugin name" . PHP_EOL;
+                    exit;
+                }
+                if (!crisp\core\Plugins::isInstalled($argv[3])) {
+                    echo "This plugin is not installed" . PHP_EOL;
+                    exit;
+                }
+                if (!crisp\core\Plugins::isValid($argv[3])) {
+                    echo "This plugin does not exist" . PHP_EOL;
+                    exit;
+                }
+                if (\crisp\api\Config::set("plugin_core_maintenance_enabled", true)) {
+                    echo "Maintenance Mode successfully enabled." . PHP_EOL;
+                }
+
+                crisp\core\Plugins::installKVStorage($argv[3], \crisp\core\Plugins::getPluginMetadata($argv[3]));
+                crisp\core\Plugins::installTranslations($argv[3], \crisp\core\Plugins::getPluginMetadata($argv[3]));
+
+                if (\crisp\api\Config::set("plugin_core_maintenance_enabled", false)) {
+                    echo "Maintenance Mode successfully disabled." . PHP_EOL;
+                }
+                break;
             case "uninstall":
             case "remove":
             case "delete":
@@ -240,6 +266,17 @@ switch ($argv[1]) {
                     echo "Maintenance Mode successfully disabled." . PHP_EOL;
                 }
                 break;
+            case "create_migration":
+                if ($argc < 4) {
+                    echo "Missing argument: plugin name" . PHP_EOL;
+                    exit;
+                }
+                if ($argc < 5) {
+                    echo "Missing argument: migration name" . PHP_EOL;
+                    exit;
+                }
+                \crisp\core\Migrations::create($argv[4], __DIR__ . "/../" . \crisp\api\Config::get("plugin_dir") . "/" . $argv[3]);
+                break;
         }
         break;
 
@@ -250,6 +287,34 @@ switch ($argv[1]) {
         }
 
         switch ($argv[2]) {
+
+
+
+            case "reload":
+            case "refresh":
+                if ($argc < 4) {
+                    echo "Missing theme name" . PHP_EOL;
+                    exit;
+                }
+                if (!crisp\core\Themes::isInstalled($argv[3])) {
+                    echo "This theme is not installed" . PHP_EOL;
+                    exit;
+                }
+                if (!crisp\core\Themes::isValid($argv[3])) {
+                    echo "This theme does not exist" . PHP_EOL;
+                    exit;
+                }
+                if (\crisp\api\Config::set("plugin_core_maintenance_enabled", true)) {
+                    echo "Maintenance Mode successfully enabled." . PHP_EOL;
+                }
+
+                crisp\core\Themes::installKVStorage($argv[3], \crisp\core\Themes::getThemeMetadata($argv[3]));
+                crisp\core\Themes::installTranslations($argv[3], \crisp\core\Themes::getThemeMetadata($argv[3]));
+
+                if (\crisp\api\Config::set("plugin_core_maintenance_enabled", false)) {
+                    echo "Maintenance Mode successfully disabled." . PHP_EOL;
+                }
+                break;
 
             case "storage":
 
@@ -461,6 +526,7 @@ switch ($argv[1]) {
 
         if ($argc < 3) {
             echo "Missing argument: migration name" . PHP_EOL;
+            exit;
         }
         \crisp\core\Migrations::create($argv[2]);
         break;
@@ -470,6 +536,11 @@ switch ($argv[1]) {
         }
         $Migrations = new crisp\core\Migrations();
         $Migrations->migrate();
+
+        $PluginMigrations = new crisp\core\Plugins();
+        foreach (\crisp\core\Plugins::loadedPlugins() as $PluginName) {
+            $PluginMigrations->migrate($PluginName["Name"]);
+        }
         if (\crisp\api\Config::set("plugin_core_maintenance_enabled", false)) {
             echo "Maintenance Mode successfully disabled." . PHP_EOL;
         }
@@ -491,6 +562,7 @@ switch ($argv[1]) {
         echo "import translations {File} - Import all translations from file" . PHP_EOL;
         echo "---------" . PHP_EOL;
         echo "plugin - Manage plugins on Crisp" . PHP_EOL;
+        echo "plugin create_migration {PluginName} {MigrationName} - Create a new migration file" . PHP_EOL;
         echo "plugin enable {PluginName} - Enable a specific plugin" . PHP_EOL;
         echo "plugin add {PluginName} - Enable a specific plugin" . PHP_EOL;
         echo "plugin install {PluginName} - Enable a specific plugin" . PHP_EOL;
@@ -500,25 +572,27 @@ switch ($argv[1]) {
         echo "plugin uninstall {PluginName} - Disable a specific plugin" . PHP_EOL;
         echo "plugin storage - Interact with the kv storage of a plugin" . PHP_EOL;
         echo "plugin storage reinstall {PluginName} - Reinstall the KV Storage of a plugin" . PHP_EOL;
+        echo "plugin refresh {PluginName} - Refresh a plugin without uninstalling it" . PHP_EOL;
         echo "plugin storage refresh {PluginName} - Reinstall the KV Storage of a plugin" . PHP_EOL;
         echo "plugin translations - Interact with the translations of a plugin" . PHP_EOL;
         echo "plugin translations reinstall {PluginName} - Reinstall the translations of a plugin" . PHP_EOL;
         echo "plugin translations refresh {PluginName} - Reinstall the translations of a plugin" . PHP_EOL;
         echo "---------" . PHP_EOL;
         echo "theme - Manage themes on Crisp" . PHP_EOL;
-        echo "theme enable {PluginName} - Enable a specific theme" . PHP_EOL;
-        echo "theme add {PluginName} - Enable a specific theme" . PHP_EOL;
-        echo "theme install {PluginName} - Enable a specific theme" . PHP_EOL;
-        echo "theme disable {PluginName} - Disable a specific theme" . PHP_EOL;
-        echo "theme delete {PluginName} - Disable a specific theme" . PHP_EOL;
-        echo "theme remove {PluginName} - Disable a specific theme" . PHP_EOL;
-        echo "theme uninstall {PluginName} - Disable a specific theme" . PHP_EOL;
+        echo "theme enable {ThemeName} - Enable a specific theme" . PHP_EOL;
+        echo "theme add {ThemeName} - Enable a specific theme" . PHP_EOL;
+        echo "theme install {ThemeName} - Enable a specific theme" . PHP_EOL;
+        echo "theme disable {ThemeName} - Disable a specific theme" . PHP_EOL;
+        echo "theme delete {ThemeName} - Disable a specific theme" . PHP_EOL;
+        echo "theme remove {ThemeName} - Disable a specific theme" . PHP_EOL;
+        echo "theme uninstall {ThemeName} - Disable a specific theme" . PHP_EOL;
         echo "theme storage - Interact with the kv storage of a theme" . PHP_EOL;
-        echo "theme storage reinstall {PluginName} - Reinstall the KV Storage of a theme" . PHP_EOL;
-        echo "theme storage refresh {PluginName} - Reinstall the KV Storage of a theme" . PHP_EOL;
+        echo "theme storage reinstall {ThemeName} - Reinstall the KV Storage of a theme" . PHP_EOL;
+        echo "theme storage refresh {ThemeName} - Reinstall the KV Storage of a theme" . PHP_EOL;
         echo "theme translations - Interact with the translations of a theme" . PHP_EOL;
-        echo "theme translations reinstall {PluginName} - Reinstall the translations of a theme" . PHP_EOL;
-        echo "theme translations refresh {PluginName} - Reinstall the translations of a theme" . PHP_EOL;
+        echo "theme refresh {ThemeName} - Refresh a theme without uninstalling it" . PHP_EOL;
+        echo "theme translations reinstall {ThemeName} - Reinstall the translations of a theme" . PHP_EOL;
+        echo "theme translations refresh {ThemeName} - Reinstall the translations of a theme" . PHP_EOL;
         if (\crisp\core\Plugins::isInstalled("core")) {
 
             echo "---------" . PHP_EOL;

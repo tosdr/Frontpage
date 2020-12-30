@@ -219,10 +219,11 @@ class Plugins {
                 if (is_array($Value) || \is_object($Value)) {
                     $Value = \serialize($Value);
                 }
+
                 try {
 
 
-                    if (\crisp\api\Config::create("plugin_" . $PluginName . "_$Key", $Value)) {
+                    if (\crisp\api\Config::set("plugin_" . $PluginName . "_$Key", $Value)) {
                         if (defined("CRISP_CLI")) {
                             echo "Installing key $Key" . PHP_EOL;
                         }

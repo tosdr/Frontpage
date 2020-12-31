@@ -52,9 +52,9 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
             -->
             <div class="input-group mt-3">
                 <div class="input-group-prepend">
-                    <span class="input-group-text"><img src="{{ URL }}/api/badge/{{ service.slug }}?l={{ locale }}"/></span>
+                    <span class="input-group-text"><img src="{{ URL }}/api/badge/{{ service.slug|url_encode }}?l={{ locale }}"/></span>
                 </div>
-                <input type="text" class="form-control" value="{{ URL }}/api/badge/{{ service.slug }}?l={{ locale }}" readonly>
+                <input type="text" class="form-control" value="{{ URL }}/api/badge/{{ service.slug|url_encode }}?l={{ locale }}" readonly>
             </div>
         </div>
     </div>
@@ -109,15 +109,15 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
         <!-- Tab panes -->
         <div class="tab-content">
             <div class="tab-pane container active" id="markdown">
-                <textarea class="form-control">[![]({{ URL }}/api/badge/{{ service.slug }}?l={{ locale }})]({{ URL }}/{{ locale }}/service/{{ service.id }})</textarea>
+                <textarea class="form-control">[![]({{ URL }}/api/badge/{{ service.slug|url_encode }}?l={{ locale }})]({{ URL }}/{{ locale }}/service/{{ service.id }})</textarea>
             </div>
             <div class="tab-pane container fade" id="html">
                 <textarea class="form-control">&#x3C;a href=&#x22;{{ URL }}/{{ locale }}/service/{{ service.id }}&#x22;&#x3E;
-    &#x3C;img src=&#x22;{{ URL }}/api/badge/{{ service.slug }}?l={{ locale }}&#x22;/&#x3E;
+    &#x3C;img src=&#x22;{{ URL }}/api/badge/{{ service.slug|url_encode }}?l={{ locale }}&#x22;/&#x3E;
 &#x3C;/a&#x3E;</textarea>
             </div>
             <div class="tab-pane container fade" id="bbcode">
-                <textarea class="form-control">[url={{ URL }}/{{ locale }}/service/{{ service.id }}][img]{{ URL }}/api/badge/{{ service.slug }}?l={{ locale }}[/img][/url]</textarea></div>
+                <textarea class="form-control">[url={{ URL }}/{{ locale }}/service/{{ service.id }}][img]{{ URL }}/api/badge/{{ service.slug|url_encode }}?l={{ locale }}[/img][/url]</textarea></div>
         </div>
 
 

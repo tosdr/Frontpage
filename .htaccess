@@ -1,25 +1,25 @@
 RewriteEngine On
 
-RewriteRule ^api/(.*)/service/(.*)$ api/api.php?apiversion=$1&q=$2 [NC,L,QSA]
-RewriteRule ^api/(.*)/(.*)$ api/api.php?apiversion=$1&q=$2 [NC,L,QSA]
+RewriteRule ^api/(.*)/service/(.*)$ api/api.php?apiversion=$1&q=$2 [NC,L,QSA,B]
+RewriteRule ^api/(.*)/(.*)$ api/api.php?apiversion=$1&q=$2 [NC,L,QSA,B]
 
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{SCRIPT_FILENAME}\.php !-d
-RewriteRule ^themes/(.*)/img/logo/(.*)$ api/img.php?theme=$1&logo=$2 [NC,L,QSA]
+RewriteRule ^themes/(.*)/img/logo/(.*)$ api/img.php?theme=$1&logo=$2 [NC,L,QSA,B]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{SCRIPT_FILENAME}\.php !-d
-RewriteRule ^(.*)/(.*)/(.*)$ index.php?l=$1&page=$2&q=$3 [NC,L,QSA]
+RewriteRule ^(.*)/(.*)/(.*)$ index.php?l=$1&page=$2&q=$3 [NC,L,QSA,B]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{SCRIPT_FILENAME}\.php !-d
-RewriteRule ^(.*)/(.*)$ index.php?l=$1&page=$2 [NC,L,QSA]
+RewriteRule ^(.*)/(.*)$ index.php?l=$1&page=$2 [NC,L,QSA,B]
 
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{SCRIPT_FILENAME}\.php !-d
-RewriteRule ^(.*)$ index.php?page=$1 [NC,L,QSA]
+RewriteRule ^(.*)$ index.php?page=$1 [NC,L,QSA,B]
 
 
 <Files ~ "\.(env)$">

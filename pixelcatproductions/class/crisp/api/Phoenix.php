@@ -55,8 +55,6 @@ class Phoenix {
             self::initPGDB();
         }
 
-
-        $AlexaRank = null;
         $ServiceLinks = array();
         $ServicePoints = array();
         $ServicePointsData = array();
@@ -85,8 +83,6 @@ class Phoenix {
                     "needsModeration" => ($Point["status"] != "approved"),
                     "quoteDoc" => $Document["name"],
                     "quoteText" => $Point["quoteText"],
-                    "quoteStart" => $Point["quoteStart"],
-                    "quoteEnd" => $Point["quoteEnd"],
                     "services" => array($ID),
                     "set" => "set+service+and+topic",
                     "slug" => $Point["slug"],
@@ -104,13 +100,18 @@ class Phoenix {
         }
 
         $SkeletonData = array(
-            "alexa" => $AlexaRank,
-            "class" => $service["rating"],
+            "id" => $service["id"],
+            "name" => $service["name"],
+            "slug" => $service["slug"],
+            "image" => $service["image"],
+            "class" => ($service["rating"] == "N/A" ? false : ($service["is_comprehensively_reviewed"] ? $service["rating"] : false)),
             "links" => $ServiceLinks,
             "points" => $ServicePoints,
             "pointsData" => $ServicePointsData,
             "urls" => explode(",", $service["url"])
         );
+
+        self::$Redis_Database_Connection->set("pg_generateapifiles_$ID", serialize($SkeletonData));
 
         return $SkeletonData;
     }

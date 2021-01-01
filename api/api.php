@@ -250,7 +250,7 @@ switch ($_GET["apiversion"]) {
                         "logo" => "https://$_SERVER[HTTP_HOST]/" . \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") . "/img/logo/" . \crisp\api\Helper::filterAlphaNum($Service["name"]) . ".png",
                         "name" => $Service["name"],
                         "slug" => $Service["slug"],
-                        "rated" => ($Service["rating"] == "N/A" ? false : $Service["rating"]),
+                        "rated" => ($Service["rating"] == "N/A" ? false : ($Service["is_comprehensively_reviewed"] ? $Service["rating"] : false)),
                         "points" => []
                     );
                 }

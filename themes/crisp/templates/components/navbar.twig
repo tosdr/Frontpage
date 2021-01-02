@@ -16,7 +16,7 @@
 #}
 <nav class="navbar navbar-expand-md  bg-dark navbar-dark">
     <!-- Brand -->
-    <a class="navbar-brand" href="/"><img width="32" src="/{{ config.theme_dir }}/{{ config.theme }}/img/tosdr-icon-32.svg"alt="Logo"/></a>
+    <a class="navbar-brand" href="/"><img width="32" src="{{ includeResource("/img/tosdr-icon-32.svg") }}"alt="Logo"/></a>
 
     <!-- Toggler/collapsibe Button -->
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -51,12 +51,12 @@
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="languageDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img id="currentLanguage" src="/themes/{{ config.theme }}/img/flags/{{ locale|getlang(false).Flag }}.svg" width="32">
+                    <img id="currentLanguage" src="{{ includeResource("img/flags/" ~ locale|getlang(false).Flag ~ ".svg") }}" width="32">
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="languageDropdownMenuLink">
                     {% for Language in languages %}
                         <a class="dropdown-item {% if locale|getlang(false).Code == Language.Code %}active{% endif %}" href="/{{ Language.Code }}/{{ CurrentPage }}">
-                            <img src="/themes/{{ config.theme }}/img/flags/{{ Language.Flag }}.svg" width="32"/>
+                            <img src="{{ includeResource("img/flags/" ~ Language.Flag ~ ".svg") }}" width="32"/>
                             {{ Language.NativeName|translate }} 
                             {% if Language.Name|translate != Language.NativeName|translate %}
                                 <span class="{% if locale|getlang(false).Code == Language.Code %}text-white{% else %}text-muted{% endif %}">

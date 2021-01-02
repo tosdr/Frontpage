@@ -103,7 +103,7 @@ class Phoenix {
             "id" => $service["id"],
             "name" => $service["name"],
             "slug" => $service["slug"],
-            "image" => $service["image"],
+            "image" => \crisp\core\Themes::includeResource($service["image"]),
             "class" => ($service["rating"] == "N/A" ? false : ($service["is_comprehensively_reviewed"] ? $service["rating"] : false)),
             "links" => $ServiceLinks,
             "points" => $ServicePoints,

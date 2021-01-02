@@ -32,6 +32,20 @@ class Helper {
         return preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i", $_SERVER["HTTP_USER_AGENT"]);
     }
 
+    public static function getAPIKey() {
+        if (isset(apache_request_headers()["Api-Key"])) {
+            return apache_request_headers()["Api-Key"];
+        } elseif (apache_request_headers()["X-Api-Key"]) {
+            return apache_request_headers()["X-Api-Key"];
+        } elseif (isset($_POST["apikey"])) {
+            return $_POST["apikey"];
+        } elseif (isset($_GET["apikey"])) {
+            return $_GET["apikey"];
+        } else {
+            return false;
+        }
+    }
+    
     /**
      * Gets the real ip address even behind a proxy
      * @return String containing the IP of the user

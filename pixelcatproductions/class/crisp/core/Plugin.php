@@ -103,6 +103,13 @@ class Plugin {
         return \crisp\api\lists\Cron::create("execute_plugin_cron", json_encode(array("data" => $Data, "name" => $Type)), $Interval, $this->PluginName, $ExecuteOnce);
     }
 
+    public function includeResource($File) {
+        if (strpos($File, "/") === 0) {
+            $File = substr($File, 1);
+        }
+        return "/" . \crisp\api\Config::get("plugin_dir") . "/" . $this->PluginName . "/$File?" . hash_file("sha256", __DIR__ . "/../../../../" . \crisp\api\Config::get("plugin_dir") . "/" . $this->PluginName . "/$File");
+    }
+
     /**
      * @see \crisp\api\Config::delete
      */

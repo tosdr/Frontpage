@@ -139,6 +139,7 @@ if (!defined('CRISP_CLI')) {
         $TwigTheme->addFunction(new \Twig\TwigFunction('getGitBranch', [new \crisp\api\Helper(), 'getGitBranch']));
         $TwigTheme->addFunction(new \Twig\TwigFunction('prettyDump', [new \crisp\api\Helper(), 'prettyDump']));
         $TwigTheme->addFunction(new \Twig\TwigFunction('microtime', 'microtime'));
+        $TwigTheme->addFunction(new \Twig\TwigFunction('includeResource', [new \crisp\core\Themes(), 'includeResource']));
 
 
         $Translation = new \crisp\api\Translation($Locale);

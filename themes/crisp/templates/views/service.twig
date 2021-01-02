@@ -33,7 +33,7 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
 
     <div class="jumbotron jumbotron-fluid">
         <div class="container text-center">
-            <h1 class="display-4"><img class="img-fluid" style="max-width: 128px;" src="{{ service.image }}"alt="Logo"/></h1>
+            <h1 class="display-4"><img class="img-fluid" style="max-width: 128px;" src="{{ includeResource(service.image) }}"alt="Logo"/></h1>
             <h2 class="mt-2">{{ service.name }}</h2>
             {% if service.is_comprehensively_reviewed or (GET.unreviewed is defined and UNIVERSE == 99)  %}
                 {% set rating = service.rating %}

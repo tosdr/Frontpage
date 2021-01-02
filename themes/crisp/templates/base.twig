@@ -28,12 +28,12 @@
 
             <meta charset="utf-8">
             <meta name="viewport" content="width=device-width, initial-scale=1">
-            <link rel="stylesheet" href="/themes/{{ config.theme }}/css/bootstrap/bootstrap.min.css">
-            {# <link rel="stylesheet" href="/themes/{{ config.theme }}/css/jquery/jquery-ui.min.css"> #}
-            <link rel="stylesheet" href="/themes/{{ config.theme }}/css/sweetalert/sweetalert.min.css">
+            <link rel="stylesheet" href="{{ includeResource("css/bootstrap/bootstrap.min.css") }}">
+            {# <link rel="stylesheet" href="/themes/{{ config.theme }}/css/jquery/jquery-ui.min.css{{ "/css/jquery/jquery-ui.min.css"|fileHash }}"> #}
+            <link rel="stylesheet" href="{{ includeResource("css/sweetalert/sweetalert.min.css") }}">
             <!-- START Default Crisp CSS -->
-            <link rel="stylesheet" href="/themes/{{ config.theme }}/css/general.min.css?v1">
-            <link rel="stylesheet" href="/themes/{{ config.theme }}/css/ranking-badges.min.css">
+            <link rel="stylesheet" href="{{ includeResource("css/general.min.css") }}">
+            <link rel="stylesheet" href="{{ includeResource("css/ranking-badges.min.css") }}">
 
             <!-- END Default Crisp CSS -->
             <title>{{ pageTitle }} {{ config.page_delimiter }} {{ config.site_name }}</title>
@@ -45,18 +45,16 @@
             {{ include("footer.twig") }}
         {% endblock %}
     </body>
-    <script src="/themes/{{ config.theme }}/js/jquery/jquery.min.js"></script>
-    <script src="/themes/{{ config.theme }}/js/jquery/popper.min.js"></script>
-    <script src="/themes/{{ config.theme }}/js/bootstrap/bootstrap.min.js"></script>
-    {# <script src="/themes/{{ config.theme }}/js/jquery/jquery-ui.min.js"></script> #}
-    <script src="/themes/{{ config.theme }}/js/sweetalert/sweetalert.min.js"></script>
-    <script src="/themes/{{ config.theme }}/js/fontawesome/all.min.js"></script>
+    <script src="{{ includeResource("js/jquery/jquery.min.js") }}"></script>
+    <script src="{{ includeResource("js/jquery/popper.min.js") }}"></script>
+    <script src="{{ includeResource("js/bootstrap/bootstrap.min.js") }}"></script>
+    <script src="{{ includeResource("js/sweetalert/sweetalert.min.js") }}"></script>
+    <script src="{{ includeResource("js/fontawesome/all.min.js") }}"></script>
 
     {% block scripts %}{% endblock %}
     <!-- START Default Crisp JS -->
     {% block default_scripts %}
-        <script src="/themes/{{ config.theme }}/js/crisp.min.js?v1"></script>
-        <script src="/themes/{{ config.theme }}/js/darkmode-js.min.js"></script>
+        <script src="{{ includeResource("css/general.min.css") }}/js/crisp.min.js?v1"></script>
         {#
         <script>
             function addDarkmodeWidget() {

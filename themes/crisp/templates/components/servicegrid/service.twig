@@ -18,7 +18,7 @@
     <div class="card d-flex h-100">
         <a href="/{{ locale }}/service/{{ service.id }}">
             <div class="card-header">
-                <img src="{{ service.image }}" class="mr-2" width="64"/> 
+                <img src="{{ includeResource(service.image) }}" class="mr-2" width="64"/> 
                 {% if service.is_comprehensively_reviewed %}
                     {% set rating = service.rating %}
                 {% else %}

@@ -50,13 +50,18 @@ switch ($_GET["apiversion"]) {
         $poser = new Poser($render);
         $Prefix = \crisp\api\Config::get("badge_prefix");
         $Language = (isset($_GET["l"]) ? $_GET["l"] : "en");
+        $ServiceName = $Query;
+        if (strpos($Query, "_")) {
+            $Language = explode("_", $Query)[0];
+            $ServiceName = explode("_", $Query)[1];
+        }
 
         if (CURRENT_UNIVERSE >= crisp\Universe::UNIVERSE_DEV && isset($_GET["prefix"])) {
             $Prefix = $_GET["prefix"];
         }
 
         if (!is_numeric($Query)) {
-            if (!\crisp\api\Phoenix::serviceExistsBySlugPG(urldecode($Query))) {
+            if (!\crisp\api\Phoenix::serviceExistsBySlugPG(urldecode($ServiceName))) {
                 header("Content-Type: image/svg+xml");
                 $Color = "999999";
                 $Rating = $Translation->fetch("service_not_found");
@@ -64,10 +69,10 @@ switch ($_GET["apiversion"]) {
                 echo $poser->generate($Prefix, $Rating, $Color, 'flat');
                 return;
             }
-            $RedisData = \crisp\api\Phoenix::getServiceBySlugPG(urldecode($Query));
+            $RedisData = \crisp\api\Phoenix::getServiceBySlugPG(urldecode($ServiceName));
 
             $Color;
-           
+
 
             $Translations = new \crisp\api\Translation($Language);
 
@@ -143,7 +148,7 @@ switch ($_GET["apiversion"]) {
             echo $poser->generate($Prefix, $Rating, $Color, 'flat');
             return;
         }
-        $RedisData = crisp\api\Phoenix::getServicePG($Query);
+        $RedisData = crisp\api\Phoenix::getServicePG($ServiceName);
 
         $Prefix = \crisp\api\Config::get("badge_prefix") . "/#" . htmlentities($RedisData["slug"]);
 

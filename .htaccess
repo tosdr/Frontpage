@@ -1,3 +1,11 @@
+Redirect 301 /index.html /
+Redirect 301 /about.html /about
+Redirect 301 /downloads.html /downloads
+Redirect 301 /contribute.html /about
+Redirect 301 /classification.html /classification
+Redirect 301 /thanks.html /thanks
+
+
 RewriteEngine On
 
 RewriteRule ^api/(.*)/service/(.*)$ api/api.php?apiversion=$1&q=$2 [NC,L,QSA,B]

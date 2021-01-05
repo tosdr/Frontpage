@@ -31,14 +31,14 @@ steps:
     
 
 - name: Migrate and Run Tests
-  image: php:7.4-alpine
+  image: php:7.4-buster
   commands:
-  - apk --no-cache add libpq autoconf gcc libc-dev make postgresql-dev postgresql-libs
+  - apt-get update && apt-get install libpq-dev autoconf gcc libc6-dev make
   - pecl install redis-5.3.2
   - docker-php-ext-install pgsql pdo_pgsql pdo_mysql
   - docker-php-ext-enable pdo_pgsql pdo_mysql redis
   - php bin/cli.php migrate
-  - vendor/bin/phpunit tests --bootstrap pixelcatproductions\crisp.php
+  - vendor/bin/phpunit tests --bootstrap pixelcatproductions/crisp.php
   
 
 services:

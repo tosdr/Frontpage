@@ -5,8 +5,8 @@ steps:
 - name: Test Redis
   image: redis
   commands:
-  - sleep 5
-  - redis-cli -h localhost ping
+  - sleep 15
+  - redis-cli -h redis ping
 
 - name: Test MySQL
   image: mariadb

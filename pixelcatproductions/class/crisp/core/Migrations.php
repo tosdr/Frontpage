@@ -190,10 +190,10 @@ class Migrations {
             "RUNCODE;" => '$this->createTable("MyTable", array("col1", \crisp\core\Migrations::DB_VARCHAR));'
         ));
 
-        if(!file_exists("$Dir/migrations/")){
+        if (!file_exists("$Dir/migrations/")) {
             mkdir("$Dir/migrations/");
         }
-        
+
         $written = file_put_contents("$Dir/migrations/" . time() . "_$MigrationNameFiltered.php", $Skeleton);
 
         if (!$written) {
@@ -230,6 +230,12 @@ class Migrations {
         }
         echo "Failed to add Index to Table $Table!" . PHP_EOL;
         throw new \Exception($statement->errorInfo());
+    }
+
+    public function deleteByPlugin($PluginName) {
+        $statement = $this->Database->prepare("DELETE FROM schema_migration WHERE plugin = :Plugin");
+
+        return $statement->execute(array(":Plugin" => $PluginName));
     }
 
     /**

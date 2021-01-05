@@ -42,76 +42,115 @@ class Phoenix {
      * @param string $ID The service ID from Phoenix to generate the API Files from
      * @return array The API data
      */
-    public static function generateApiFiles(string $ID) {
+    public static function generateApiFiles(string $ID, int $Version = 1) {
         if (self::$Redis_Database_Connection === NULL) {
             self::initDB();
         }
 
-        if (self::$Redis_Database_Connection->keys("pg_generateapifiles_$ID")) {
-            return unserialize(self::$Redis_Database_Connection->get("pg_generateapifiles_$ID"));
+        if (self::$Redis_Database_Connection->keys("pg_generateapifiles_" . $ID . "_$Version")) {
+            return unserialize(self::$Redis_Database_Connection->get("pg_generateapifiles_" . $ID . "_$Version"));
         }
 
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
         }
+        $SkeletonData = null;
 
-        $ServiceLinks = array();
-        $ServicePoints = array();
-        $ServicePointsData = array();
+        switch ($Version) {
+            case 1:
+            case 2:
+                $ServiceLinks = array();
+                $ServicePoints = array();
+                $ServicePointsData = array();
 
-        $points = self::getPointsByServicePG($ID);
-        $service = self::getServicePG($ID);
-        $documents = self::getDocumentsByServicePG($ID);
-        foreach ($documents as $Links) {
-            $ServiceLinks[$Links["name"]] = array(
-                "name" => $Links["name"],
-                "url" => $Links["url"]
-            );
-        }
-        foreach ($points as $Point) {
-            if ($Point["status"] == "approved") {
-                array_push($ServicePoints, $Point["id"]);
-            }
-        }
-        foreach ($points as $Point) {
-            $Document = array_column($documents, null, 'id')[$Point["document_id"]];
-            $Case = self::getCasePG($Point["case_id"]);
-            if ($Point["status"] == "approved") {
-                $ServicePointsData[$Point["id"]] = array(
-                    "discussion" => "https://edit.tosdr.org/points/" . $Point["id"],
-                    "id" => $Point["id"],
-                    "needsModeration" => ($Point["status"] != "approved"),
-                    "quoteDoc" => $Document["name"],
-                    "quoteText" => $Point["quoteText"],
-                    "services" => array($ID),
-                    "set" => "set+service+and+topic",
-                    "slug" => $Point["slug"],
-                    "title" => $Point["title"],
-                    "topics" => array(),
-                    "tosdr" => array(
-                        "binding" => true,
-                        "case" => $Case["title"],
-                        "point" => $Case["classification"],
-                        "score" => $Case["score"],
-                        "tldr" => $Point["analysis"]
-                    ),
+                $points = self::getPointsByServicePG($ID);
+                $service = self::getServicePG($ID);
+                $documents = self::getDocumentsByServicePG($ID);
+                foreach ($documents as $Links) {
+                    $ServiceLinks[$Links["name"]] = array(
+                        "name" => $Links["name"],
+                        "url" => $Links["url"]
+                    );
+                }
+                foreach ($points as $Point) {
+                    if ($Point["status"] == "approved") {
+                        array_push($ServicePoints, $Point["id"]);
+                    }
+                }
+                foreach ($points as $Point) {
+                    $Document = array_column($documents, null, 'id')[$Point["document_id"]];
+                    $Case = self::getCasePG($Point["case_id"]);
+                    if ($Point["status"] == "approved") {
+                        $ServicePointsData[$Point["id"]] = array(
+                            "discussion" => "https://edit.tosdr.org/points/" . $Point["id"],
+                            "id" => $Point["id"],
+                            "needsModeration" => ($Point["status"] != "approved"),
+                            "quoteDoc" => $Document["name"],
+                            "quoteText" => $Point["quoteText"],
+                            "services" => array($ID),
+                            "set" => "set+service+and+topic",
+                            "slug" => $Point["slug"],
+                            "title" => $Point["title"],
+                            "topics" => array(),
+                            "tosdr" => array(
+                                "binding" => true,
+                                "case" => $Case["title"],
+                                "point" => $Case["classification"],
+                                "score" => $Case["score"],
+                                "tldr" => $Point["analysis"]
+                            ),
+                        );
+                    }
+                }
+
+                $SkeletonData = array(
+                    "id" => $service["id"],
+                    "name" => $service["name"],
+                    "slug" => $service["slug"],
+                    "image" => \crisp\core\Themes::includeResource($service["image"]),
+                    "class" => ($service["rating"] == "N/A" ? false : ($service["is_comprehensively_reviewed"] ? $service["rating"] : false)),
+                    "links" => $ServiceLinks,
+                    "points" => $ServicePoints,
+                    "pointsData" => $ServicePointsData,
+                    "urls" => explode(",", $service["url"])
                 );
-            }
+                break;
+            case 3:
+                $ServiceLinks = array();
+                $ServicePoints = array();
+                $ServicePointsData = array();
+
+                $points = self::getPointsByServicePG($ID);
+                $service = self::getServicePG($ID);
+                $documents = self::getDocumentsByServicePG($ID);
+                foreach ($points as $Point) {
+                    $Document = array_column($documents, null, 'id')[$Point["document_id"]];
+                    $Case = self::getCasePG($Point["case_id"]);
+                    $ServicePointsData[] = array(
+                        "discussion" => "https://edit.tosdr.org/points/" . $Point["id"],
+                        "id" => $Point["id"],
+                        "needsModeration" => ($Point["status"] != "approved"),
+                        "document" => $Document,
+                        "quote" => $Point["quoteText"],
+                        "services" => array($ID),
+                        "set" => "set+service+and+topic",
+                        "slug" => $Point["slug"],
+                        "title" => $Point["title"],
+                        "topics" => array(),
+                        "case" => $Case
+                    );
+                }
+
+                $SkeletonData = $service;
+
+                $SkeletonData["image"] = \crisp\core\Themes::includeResource($service["image"]);
+                $SkeletonData["documents"] = $documents;
+                $SkeletonData["points"] = $ServicePointsData;
+                $SkeletonData["urls"] = explode(",", $service["url"]);
+                break;
         }
 
-        $SkeletonData = array(
-            "id" => $service["id"],
-            "name" => $service["name"],
-            "slug" => $service["slug"],
-            "image" => \crisp\core\Themes::includeResource($service["image"]),
-            "class" => ($service["rating"] == "N/A" ? false : ($service["is_comprehensively_reviewed"] ? $service["rating"] : false)),
-            "links" => $ServiceLinks,
-            "points" => $ServicePoints,
-            "pointsData" => $ServicePointsData,
-            "urls" => explode(",", $service["url"])
-        );
-
-        self::$Redis_Database_Connection->set("pg_generateapifiles_$ID", serialize($SkeletonData));
+        self::$Redis_Database_Connection->set("pg_generateapifiles_" . $ID . "_$Version", serialize($SkeletonData));
 
         return $SkeletonData;
     }
@@ -561,6 +600,10 @@ class Phoenix {
         $statement = self::$Postgres_Database_Connection->prepare("SELECT * FROM services WHERE LOWER(name) = LOWER(:ID)");
 
         $statement->execute(array(":ID" => $Name));
+
+        if ($statement->rowCount() == 0) {
+            return false;
+        }
 
         $response = $statement->fetch(\PDO::FETCH_ASSOC);
 

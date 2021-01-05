@@ -58,38 +58,38 @@ class core {
 
 }
 
-$GLOBALS["microtime"] = array();
-$GLOBALS["microtime"]["logic"] = array();
-$GLOBALS["microtime"]["template"] = array();
-
-$GLOBALS["microtime"]["logic"]["start"] = microtime(true);
-
-$GLOBALS["plugins"] = array();
-$GLOBALS['hook'] = array();
-$GLOBALS['navbar'] = array();
-$GLOBALS['navbar_right'] = array();
-$GLOBALS["render"] = array();
 require_once __DIR__ . '/../vendor/autoload.php';
-
-
 core::bootstrap();
-session_start();
+if (php_sapi_name() !== "cli") {
 
-$CurrentTheme = \crisp\api\Config::get("theme");
-$CurrentFile = substr(substr($_SERVER['PHP_SELF'], 1), 0, -4);
-$CurrentPage = (isset($_GET["page"]) ? $_GET["page"] : substr($_SERVER["REQUEST_URI"], 1));
-$CurrentPage = ($CurrentPage == "" ? "frontpage" : $CurrentPage);
+    $GLOBALS["microtime"] = array();
+    $GLOBALS["microtime"]["logic"] = array();
+    $GLOBALS["microtime"]["template"] = array();
 
-if (isset($_GET["universe"])) {
-    Universe::changeUniverse($_GET["universe"]);
-} elseif (!isset($_SESSION[core\Config::$Cookie_Prefix . "universe"])) {
-    Universe::changeUniverse(Universe::UNIVERSE_PUBLIC);
-}
+    $GLOBALS["microtime"]["logic"]["start"] = microtime(true);
 
-define("CURRENT_UNIVERSE", Universe::getUniverse($_SESSION[core\Config::$Cookie_Prefix . "universe"]));
-define("CURRENT_UNIVERSE_NAME", Universe::getUniverseName(CURRENT_UNIVERSE));
+    $GLOBALS["plugins"] = array();
+    $GLOBALS['hook'] = array();
+    $GLOBALS['navbar'] = array();
+    $GLOBALS['navbar_right'] = array();
+    $GLOBALS["render"] = array();
 
-if (!defined('CRISP_CLI')) {
+
+    session_start();
+
+    $CurrentTheme = \crisp\api\Config::get("theme");
+    $CurrentFile = substr(substr($_SERVER['PHP_SELF'], 1), 0, -4);
+    $CurrentPage = (isset($_GET["page"]) ? $_GET["page"] : substr($_SERVER["REQUEST_URI"], 1));
+    $CurrentPage = ($CurrentPage == "" ? "frontpage" : $CurrentPage);
+
+    if (isset($_GET["universe"])) {
+        Universe::changeUniverse($_GET["universe"]);
+    } elseif (!isset($_SESSION[core\Config::$Cookie_Prefix . "universe"])) {
+        Universe::changeUniverse(Universe::UNIVERSE_PUBLIC);
+    }
+
+    define("CURRENT_UNIVERSE", Universe::getUniverse($_SESSION[core\Config::$Cookie_Prefix . "universe"]));
+    define("CURRENT_UNIVERSE_NAME", Universe::getUniverseName(CURRENT_UNIVERSE));
 
     try {
 

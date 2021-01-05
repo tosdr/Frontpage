@@ -1,0 +1,37 @@
+kind: pipeline
+name: default
+
+steps:
+- name: Test Redis
+  image: redis
+  commands:
+  - sleep 5
+  - redis-cli -h localhost ping
+
+- name: Test MySQK
+  image: mariadb
+  commands:
+  - sleep 15
+  - mysql -u tosdr_dev -h tosdr_dev --execute="SELECT VERSION();"
+  
+steps:
+- name: Install Dependencies
+  image: composer
+  commands:
+  - composer install
+  
+- name: Run Tests
+  image: php:7.4
+  commands:
+  - vendor/bin/phpunit tests --bootstrap pixelcatproductions\crisp.php
+
+services:
+- name: redis
+  image: redis
+- name: mariadb
+  image: mariadb
+  environment:
+    MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+    MYSQL_DATABASE: tosdr_dev
+    MYSQL_ROOT_PASSWORD: tosdr_dev
+    MYSQL_USER: tosdr_dev

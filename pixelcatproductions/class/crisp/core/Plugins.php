@@ -153,7 +153,7 @@ class Plugins {
     public static function migrate(string $PluginName) {
         $Migrations = new Migrations();
         $PluginFolder = \crisp\api\Config::get("plugin_dir");
-        return $Migrations->migrate(__DIR__ . "/../../../../$PluginFolder/$PluginName/");
+        return $Migrations->migrate(__DIR__ . "/../../../../$PluginFolder/$PluginName/", $PluginName);
     }
 
     private static function performOnInstall($PluginName, $PluginMetadata, $TwigTheme, $CurrentFile, $CurrentPage) {
@@ -611,6 +611,10 @@ class Plugins {
 
         self::uninstallCrons($PluginName, $PluginMetadata);
 
+        $Migrations = new Migrations();
+
+        $Migrations->deleteByPlugin($PluginName);
+
         new \crisp\core\Plugin($PluginFolder, $PluginName, $PluginMetadata, $TwigTheme, $CurrentFile, $CurrentPage);
 
 
@@ -743,6 +747,8 @@ class Plugins {
 
         self::broadcastHook("pluginInstall_$PluginName", time());
         self::broadcastHook("pluginInstall", $PluginName);
+
+        self::migrate($PluginName);
 
         $statement = $DBConn->prepare("INSERT INTO loadedPlugins (Name) VALUES (:Key)");
         return $statement->execute(array(":Key" => $PluginName));

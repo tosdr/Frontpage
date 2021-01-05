@@ -28,8 +28,9 @@ class Helper {
      * Check if the user is on a mobile device
      * @return boolean TRUE if the user is on mobile
      */
-    public static function isMobile() {
-        return preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i", $_SERVER["HTTP_USER_AGENT"]);
+    public static function isMobile($UserAgent = null) {
+        $UserAgent = ($UserAgent === null ? $_SERVER["HTTP_USER_AGENT"] : $UserAgent);
+        return preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i", $UserAgent);
     }
 
     public static function getAPIKey() {
@@ -45,7 +46,7 @@ class Helper {
             return false;
         }
     }
-    
+
     /**
      * Gets the real ip address even behind a proxy
      * @return String containing the IP of the user

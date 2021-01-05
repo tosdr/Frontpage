@@ -297,6 +297,52 @@ switch ($_GET["apiversion"]) {
 
 
         break;
+    case "3":
+
+
+        if ($Query == "all") {
+            $Services = \crisp\api\Phoenix::getServicesPG();
+            $Response = array(
+                "version" => time(),
+            );
+            foreach ($Services as $Index => $Service) {
+
+                $Service["urls"] = explode(",", $Service["url"]);
+                $Service["nice_service"] = \crisp\api\Helper::filterAlphaNum($Service["name"]);
+                $Service["has_image"] = (file_exists(__DIR__ . "/../" . \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") . "/img/logo/" . $Service["nice_service"] . ".svg") ? true : file_exists(__DIR__ . "/../" . \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") . "/img/logo/" . $Service["nice_service"] . ".png") );
+                $Service["logo"] = crisp\core\Themes::includeResource("img/logo/" . \crisp\api\Helper::filterAlphaNum($Service["name"]) . ".png");
+
+                $Services[$Index] = $Service;
+            }
+
+            $Response["services"] = $Services;
+
+            echo \crisp\core\PluginAPI::response(false, "All services below", $Response);
+
+            return;
+        }
+
+        if (!is_numeric($Query)) {
+            if (!crisp\api\Phoenix::serviceExistsBySlugPG($Query)) {
+                echo \crisp\core\PluginAPI::response(["INVALID_SERVICE"], $Query, []);
+                return;
+            }
+            $Query = crisp\api\Phoenix::getServiceBySlugPG($Query)["id"];
+            $SkeletonData = \crisp\api\Phoenix::generateApiFiles($Query);
+            echo \crisp\core\PluginAPI::response(false, $Query, \crisp\api\Phoenix::generateApiFiles($Query, $_GET["apiversion"]));
+            exit;
+        }
+
+        if (!crisp\api\Phoenix::serviceExistsPG($Query)) {
+            echo \crisp\core\PluginAPI::response(["INVALID_SERVICE"], $Query, []);
+            return;
+        }
+
+
+        echo \crisp\core\PluginAPI::response(false, $Query, \crisp\api\Phoenix::generateApiFiles($Query, $_GET["apiversion"]));
+
+
+        break;
     default:
         \crisp\core\Plugins::loadAPI($_GET["apiversion"], $Query);
         break;

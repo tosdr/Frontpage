@@ -48,7 +48,7 @@ services:
   environment:
     MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
     MYSQL_DATABASE: tosdr_dev
-    MYSQL_ROOT_PASSWORD: tosdr_dev
+    MYSQL_PASSWORD: tosdr_dev
     MYSQL_USER: tosdr_dev
 
 node:

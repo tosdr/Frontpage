@@ -12,7 +12,7 @@ steps:
   image: mariadb
   commands:
   - sleep 15
-  - mysql -u tosdr_dev -h mariadb --execute="SELECT VERSION();"
+  - mysql -u tosdr_dev -h mariadb -p tosdr_dev --execute="SELECT VERSION();"
   
 - name: Create Config
   image: alpine

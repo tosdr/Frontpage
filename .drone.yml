@@ -53,4 +53,3 @@ services:
 
 node:
     os: linux
-    rack: atlas,styx

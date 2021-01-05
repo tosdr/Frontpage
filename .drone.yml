@@ -19,6 +19,11 @@ steps:
   image: composer
   commands:
   - composer install
+
+- name: Migrate Database
+  image: php:7.4
+  commands:
+  - php bin/cli.php migrate
   
 - name: Run Tests
   image: php:7.4

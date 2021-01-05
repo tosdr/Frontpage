@@ -8,13 +8,23 @@ steps:
   - sleep 5
   - redis-cli -h localhost ping
 
-- name: Test MySQK
+- name: Test MySQL
   image: mariadb
   commands:
   - sleep 15
   - mysql -u tosdr_dev -h tosdr_dev --execute="SELECT VERSION();"
   
-steps:
+- name: Create Config
+  image: alpine
+  commands:
+  - echo -e "MYSQL_HOSTNAME=mariadb\n" >> .env
+  - echo -e "MYSQL_USERNAME=tosdr_dev\n" >> .env
+  - echo -e "MYSQL_PASSWORD=tosdr_dev\n" >> .env
+  - echo -e "MYSQL_DATABASE=tosdr_dev\n" >> .env
+  - echo -e "MYSQL_DATABASE=tosdr_dev\n" >> .env
+  - echo -e "REDIS_HOST=redis\n" >> .env
+  - echo -e "REDIS_PORT=6379\n" >> .env
+    
 - name: Install Dependencies
   image: composer
   commands:
@@ -24,11 +34,15 @@ steps:
   image: php:7.4
   commands:
   - php bin/cli.php migrate
+  depends_on:
+      - Install Dependencies
   
 - name: Run Tests
   image: php:7.4
   commands:
   - vendor/bin/phpunit tests --bootstrap pixelcatproductions\crisp.php
+  depends_on:
+      - Migrate Database
 
 services:
 - name: redis

@@ -531,18 +531,12 @@ switch ($argv[1]) {
         \crisp\core\Migrations::create($argv[2]);
         break;
     case "migrate":
-        if (\crisp\api\Config::set("plugin_core_maintenance_enabled", true)) {
-            echo "Maintenance Mode successfully enabled." . PHP_EOL;
-        }
         $Migrations = new crisp\core\Migrations();
         $Migrations->migrate();
 
         $PluginMigrations = new crisp\core\Plugins();
         foreach (\crisp\core\Plugins::loadedPlugins() as $PluginName) {
             $PluginMigrations->migrate($PluginName["Name"]);
-        }
-        if (\crisp\api\Config::set("plugin_core_maintenance_enabled", false)) {
-            echo "Maintenance Mode successfully disabled." . PHP_EOL;
         }
         break;
     default:

@@ -8,6 +8,9 @@ class createmigration extends \crisp\core\Migrations {
         try {
             $this->begin();
             \crisp\core\Migrations::createTable("schema_migration", array("file", \crisp\core\Migrations::DB_VARCHAR));
+
+            $this->addColumn("schema_migration", array("plugin", self::DB_VARCHAR, "DEFAULT NULL"));
+
             return $this->end();
         } catch (\Exception $ex) {
             echo $ex->getMessage() . PHP_EOL;

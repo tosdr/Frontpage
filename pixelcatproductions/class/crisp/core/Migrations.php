@@ -121,11 +121,11 @@ class Migrations {
      * @return void
      */
     public function migrate(string $Dir = __DIR__ . "/../", string $Plugin = null) {
-        if (defined("CRISP_CLI")) {
+        if (php_sapi_name() == "cli") {
             echo "Starting Migration..." . PHP_EOL;
         }
         if (!file_exists("$Dir/migrations/")) {
-            if (defined("CRISP_CLI")) {
+            if (php_sapi_name() == "cli") {
                 echo "No migrations needed!" . PHP_EOL;
             }
             return;
@@ -141,8 +141,8 @@ class Migrations {
 
             $MigrationName = substr(basename($file), 0, -4);
 
-            if ($this->isMigrated($MigrationName)) {
-                if (defined("CRISP_CLI")) {
+            if ($MigrationName !== "0_createmigration" && $this->isMigrated($MigrationName)) {
+                if (php_sapi_name() == "cli") {
                     echo "$MigrationName is already migrated, skipping!" . PHP_EOL;
                 }
                 continue;
@@ -160,12 +160,12 @@ class Migrations {
 
                 $statement->execute(array(":file" => $MigrationName, ":plugin" => $Plugin));
 
-                if (defined("CRISP_CLI")) {
+                if (php_sapi_name() == "cli") {
                     echo "Migrated $MigrationName" . PHP_EOL;
                 }
             } else {
 
-                if (defined("CRISP_CLI")) {
+                if (php_sapi_name() == "cli") {
                     echo "Failed to migrate $MigrationName" . PHP_EOL;
                 }
             }
@@ -292,7 +292,7 @@ class Migrations {
      */
     protected function createTable(string $Table, ...$Columns) {
         echo "Creating Table $Table..." . PHP_EOL;
-        $SQL = "CREATE TABLE `$Table` (";
+        $SQL = "CREATE TABLE IF NOT EXISTS `$Table` (";
         $AutoIncrement = false;
         foreach ($Columns as $Key => $Column) {
             $Name = $Column[0];

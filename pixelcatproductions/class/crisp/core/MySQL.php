@@ -38,6 +38,9 @@ class MySQL {
             $EnvFile = parse_ini_file(__DIR__ . "/../../../../.env");
             $this->Database_Connection = new PDO("mysql:host=" . $EnvFile["MYSQL_HOSTNAME"] . ";dbname=" . $EnvFile["MYSQL_DATABASE"] . ";charset=utf8;", $EnvFile["MYSQL_USERNAME"], $EnvFile["MYSQL_PASSWORD"], [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::ATTR_EMULATE_PREPARES => true]);
         } catch (\Exception $ex) {
+            if (php_sapi_name() == "cli") {
+                throw new \Exception($ex);
+            }
             throw new \Exception("Failed to contact MySQL Server");
         }
     }

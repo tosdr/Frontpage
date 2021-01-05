@@ -2,43 +2,44 @@ kind: pipeline
 name: default
 
 steps:
-- name: Test Redis
-  image: redis
-  commands:
-  - sleep 15
-  - redis-cli -h redis ping
-
-- name: Test MySQL
-  image: mariadb
-  commands:
-  - sleep 15
-  - mysql -u tosdr_dev -h mariadb -ptosdr_dev --execute="SELECT VERSION();"
-  
-- name: Create Config
-  image: alpine
-  commands:
-  - echo -e "MYSQL_HOSTNAME=mariadb\n" >> .env
-  - echo -e "MYSQL_USERNAME=tosdr_dev\n" >> .env
-  - echo -e "MYSQL_PASSWORD=tosdr_dev\n" >> .env
-  - echo -e "MYSQL_DATABASE=tosdr_dev\n" >> .env
-  - echo -e "MYSQL_DATABASE=tosdr_dev\n" >> .env
-  - echo -e "REDIS_HOST=redis\n" >> .env
-  - echo -e "REDIS_PORT=6379\n" >> .env
-    
 - name: Install Dependencies
   image: composer
   commands:
   - composer install
 
-- name: Migrate Database
-  image: php:7.4
+- name: Test Redis
+  image: redis
   commands:
-  - php bin/cli.php migrate
+  - sleep 5
+  - redis-cli -h redis ping
+
+- name: Test MySQL
+  image: mariadb
+  commands:
+  - sleep 10
+  - mysql -u tosdr_dev -h mariadb -ptosdr_dev --execute="SELECT VERSION();"
   
-- name: Run Tests
-  image: php:7.4
+- name: Create Config
+  image: alpine
   commands:
+  - echo -e "MYSQL_HOSTNAME=mariadb\n" > .env
+  - echo -e "MYSQL_USERNAME=tosdr_dev\n" >> .env
+  - echo -e "MYSQL_PASSWORD=tosdr_dev\n" >> .env
+  - echo -e "MYSQL_DATABASE=tosdr_dev\n" >> .env
+  - echo -e "REDIS_HOST=redis\n" >> .env
+  - echo -e "REDIS_PORT=6379\n" >> .env
+    
+
+- name: Migrate and Run Tests
+  image: php:7.4-alpine
+  commands:
+  - apk --no-cache add libpq autoconf gcc libc-dev make postgresql-dev postgresql-libs
+  - pecl install redis-5.3.2
+  - docker-php-ext-install pgsql pdo_pgsql pdo_mysql
+  - docker-php-ext-enable pdo_pgsql pdo_mysql redis
+  - php bin/cli.php migrate
   - vendor/bin/phpunit tests --bootstrap pixelcatproductions\crisp.php
+  
 
 services:
 - name: redis
@@ -53,3 +54,4 @@ services:
 
 node:
     os: linux
+    

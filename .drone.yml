@@ -34,15 +34,11 @@ steps:
   image: php:7.4
   commands:
   - php bin/cli.php migrate
-  depends_on:
-      - Install Dependencies
   
 - name: Run Tests
   image: php:7.4
   commands:
   - vendor/bin/phpunit tests --bootstrap pixelcatproductions\crisp.php
-  depends_on:
-      - Migrate Database
 
 services:
 - name: redis

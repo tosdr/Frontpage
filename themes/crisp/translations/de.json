@@ -105,5 +105,8 @@
     "service_not_found": "Dienst nicht gefunden",
     "presskit_container_p_1": "Mit unserem Presskit können Sie offizielle Branding-Bilder herunterladen, um sie auf Ihrer Website, in den sozialen Medien oder an anderer Stelle zu veröffentlichen!",
     "presskit": "Pressekit",
-    "download_presskit": "Pressekit Herunterladen"
+    "download_presskit": "Pressekit Herunterladen",
+    "embed_service": "Service Einbetten",
+    "embed_service_desc": "Verwenden Sie die unten stehenden Codes, um ein Service-Badge in einen Blogbeitrag, Ihre Website oder an einem anderen Ort einzubetten!",
+    "donate": "Via Opencollective Spenden"
 }

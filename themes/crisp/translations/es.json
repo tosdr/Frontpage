@@ -28,7 +28,7 @@
     "api_container_h2_2": "Ejemplos",
     "api_container_h3": "Uso",
     "about_us_intro": "\"Terms of Service; Didn't Read\" (ToS;DR) es un proyecto que comenzó un Junio del año 2012 para arreglar \"La Mayor Mentira de La Red\": casi nadie lee los Términos y Condiciones que aceptamos constantemente.",
-    "api_container_p_1": "El formato de datos puede ser <a href=\"https://github.com/JustinBack/CrispCMS-ToS-DR/blob/master/api/api.php\">ingeniería inversa</a> desde nuestro GitHub. Por favor comprueba la versión de la especificación con la versión del API.",
+    "api_container_p_1": "El formato de datos puede ser <a href=\"https://github.com/JustinBack/CrispCMS-ToS-DR/blob/master/api/api.php\">deconstruido</a> desde nuestro GitHub. Por favor comprobad la versión de especificación con la versión del API.",
     "api_container_p_4": "ToS Checker es <a href=\"https://github.com/shybyte/tos-checker\">una extensión para Chrome y Chromium</a>, creada por shybyte.",
     "api_container_ul_li": "Cada Servicio (p.ej., Facebook) consiste en un archivo JSON. Podéis encontrar todos en <a href=\"https://github.com/tosdr/tosdr.org/tree/master/api/1/service/\">https://beta.tosdr.org/api/1/service/</a>",
     "api_container_p_2": "Hemos <a href=\"http://www.w3.org/wiki/CORS_Enabled\">habilitado CORS</a>. Como ejemplo, para obtener a Facebook con jQuery:",

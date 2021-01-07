@@ -2,6 +2,32 @@ kind: pipeline
 name: default
 
 steps:
+    
+- name: Clone Phoenix
+  image: alpine/git
+  volumes:
+  - name: phoenix
+    path: /phoenix
+  commands:
+  - git clone https://github.com/tosdr/edit.tosdr.org /phoenix
+    
+- name: Install Bundles
+  image: ruby:2.6.5
+  volumes:
+  - name: bundle
+    path: /usr/local/bundle
+  - name: phoenix
+    path: /phoenix
+  environment:
+    DATABASE_HOST: postgres
+    DATABASE_USER: postgres
+  commands:
+  - cd /phoenix
+  - gem install bundler
+  - gem install rails
+  - bundle install
+  - rails db:create db:migrate
+
 - name: Install Dependencies
   image: composer
   commands:
@@ -38,9 +64,14 @@ steps:
   - docker-php-ext-install pgsql pdo_pgsql pdo_mysql
   - docker-php-ext-enable pdo_pgsql pdo_mysql redis
   - php bin/cli.php migrate
-  - vendor/bin/phpunit tests --bootstrap pixelcatproductions/crisp.php
-  
+  - php ./vendor/bin/phpunit tests --bootstrap pixelcatproductions/crisp.php
 
+volumes:
+- name: bundle
+  temp: {}
+- name: phoenix
+  temp: {}
+  
 services:
 - name: redis
   image: redis
@@ -51,6 +82,12 @@ services:
     MYSQL_DATABASE: tosdr_dev
     MYSQL_PASSWORD: tosdr_dev
     MYSQL_USER: tosdr_dev
+- name: postgres
+  image: postgres
+  environment:
+    POSTGRES_USER: postgres
+    POSTGRES_DB: postgres
+    POSTGRES_HOST_AUTH_METHOD: trust
 
 node:
     os: linux

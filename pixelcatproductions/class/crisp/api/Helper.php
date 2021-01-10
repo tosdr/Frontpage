@@ -360,7 +360,7 @@ class Helper {
    * @return string the current domain
    */
   public static function currentDomain() {
-    return (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
+    return "https://tosdr.org";
   }
 
   public static function currentURL() {

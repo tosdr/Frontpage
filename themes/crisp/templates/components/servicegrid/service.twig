@@ -101,7 +101,7 @@
             {# Service URL #}
             <a target="_blank" href="//{{ service.url|split(',')[0] }}"><span class="badge badge-info"><i class="fas fa-link"></i> {{ 'visit_service'|translate }}</span></a>
 
-            <a target="_blank" href="{{ includeResource("/api/badge/service/"~ locale ~"_"~ service.slug|url_encode, false) }}"><img src="{{ includeResource("/api/badge/service/"~ locale ~"_"~ service.slug|url_encode, false) }}"></a>
+            <a target="_blank" href="{{ includeResource("/api/badge/service/"~ locale ~"_"~ service.id, false) }}"><img src="{{ includeResource("/api/badge/service/"~ locale ~"_"~ service.id, false) }}"></a>
 
         </div>
     </div>

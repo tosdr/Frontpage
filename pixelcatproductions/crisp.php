@@ -127,7 +127,7 @@ if (php_sapi_name() !== "cli") {
         $TwigTheme->addGlobal("COOKIE", $_COOKIE);
         $TwigTheme->addGlobal("isMobile", \crisp\api\Helper::isMobile());
         $TwigTheme->addGlobal("URL", api\Helper::currentDomain());
-
+        $TwigTheme->addGlobal("CLUSTER", gethostname());
 
         $TwigTheme->addExtension(new \Twig\Extension\StringLoaderExtension());
 

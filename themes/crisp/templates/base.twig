@@ -47,6 +47,22 @@
     {% block footer %}
       {{ include("footer.twig") }}
     {% endblock %}
+    <div class="toast bg-dark text-white w-100 mw-100 fixed-bottom p-4" role="alert" data-autohide="false">
+      <div class="toast-body p-4 d-flex flex-column">
+        <h4>{{ 'cookie_warning_header'|translate }}</h4>
+        <p>
+          {{ 'cookie_warning_text'|translate }}
+        </p>
+        <div class="ml-auto">
+          <button type="button" class="btn btn-outline-light mr-3" id="btnDeny">
+            {{ 'cookie_deny'|translate }}
+          </button>
+          <button type="button" class="btn btn-light" id="btnAccept">
+            {{ 'cookie_accept'|translate }}
+          </button>
+        </div>
+      </div>
+    </div>
   </body>
   <script src="{{ includeResource("js/jquery/jquery.min.js") }}"></script>
   <script src="{{ includeResource("js/jquery/popper.min.js") }}"></script>
@@ -58,6 +74,7 @@
   <!-- START Default Crisp JS -->
   {% block default_scripts %}
     <script src="{{ includeResource("js/crisp.min.js") }}"></script>
+    <script src="{{ includeResource("js/cookies_1.min.js") }}"></script>
     {#
     <script>
         function addDarkmodeWidget() {

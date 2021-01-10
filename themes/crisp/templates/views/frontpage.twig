@@ -31,13 +31,6 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
 {% block content %}
     {{ include("components/navbar.twig") }}
 
-    {% if SERVER.HTTP_REFERER == "https://tosdr.org/" or GET.from_tosdr == "1" %}
-        <div class="container mt-3">
-            <div class="alert alert-primary">
-                {{ 'redirect_notice'|translate|raw }}
-            </div>
-        </div>
-    {% endif %}
     <div class="jumbotron jumbotron-fluid">
         <div class="container text-center">
             <h1 class="display-4"><img class="img-fluid" src="{{ includeResource("img/tosdr-logo-128.svg") }}"alt="Logo"/></h1>
@@ -52,7 +45,7 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
         </section>
         &nbsp;
         &nbsp;
-        <div class="btn-group d-flex" role="group" aria-label="Basic example">
+        <div class="btn-group d-flex" role="group">
             <a role="button" class="btn btn-success btn-lg w-100 mb-2" href="/{{ locale }}/downloads">{{ 'frontpage_intro_button_download'|translate }}</a>
             <a role="button" target="_blank" class="btn btn-primary btn-lg w-100 mb-2" href="{{ config.phoenix_url }}">{{ 'frontpage_intro_button_contribute'|translate }}</a>
         </div>

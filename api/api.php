@@ -113,7 +113,6 @@ switch ($_GET["apiversion"]) {
 
       if ($_GET["apiversion"] === "badgepng") {
         header("Content-Type: image/png");
-        // inkscape -e facebook.png facebook.svg
 
         if (!file_exists(__DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"] . $Language) . ".svg")) {
           exit;

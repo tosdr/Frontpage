@@ -55,12 +55,13 @@ switch ($_GET["apiversion"]) {
       $Language = explode("_", $Query)[0];
       $ServiceName = explode("_", $Query)[1];
     }
+    $Translations = new \crisp\api\Translation($Language);
 
     if (CURRENT_UNIVERSE >= crisp\Universe::UNIVERSE_DEV && isset($_GET["prefix"])) {
       $Prefix = $_GET["prefix"];
     }
 
-    if (!is_numeric($Query)) {
+    if (!is_numeric($ServiceName)) {
       if (!\crisp\api\Phoenix::serviceExistsBySlugPG(urldecode($ServiceName))) {
         header("Content-Type: image/svg+xml");
         $Color = "999999";
@@ -72,9 +73,6 @@ switch ($_GET["apiversion"]) {
       $RedisData = \crisp\api\Phoenix::getServiceBySlugPG(urldecode($ServiceName));
 
       $Color;
-
-
-      $Translations = new \crisp\api\Translation($Language);
 
       switch ($RedisData["is_comprehensively_reviewed"] ? ($RedisData["rating"]) : false) {
         case "A":
@@ -140,7 +138,7 @@ switch ($_GET["apiversion"]) {
       return;
     }
 
-    if (count(crisp\api\Phoenix::serviceExistsPG($Query)) === 0) {
+    if (count(crisp\api\Phoenix::serviceExistsPG($ServiceName)) === 0) {
       header("Content-Type: image/svg+xml");
       $Color = "999999";
       $Rating = $Translation->fetch("service_not_found");

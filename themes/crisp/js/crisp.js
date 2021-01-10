@@ -1,17 +1,22 @@
+/*jslint browser: true*/
+/*global $, jQuery, alert*/
+
+'use strict';
+
 function delay(fn, ms) {
-    let timer = 0
-    return function (...args) {
-        clearTimeout(timer)
-        timer = setTimeout(fn.bind(this, ...args), ms || 0)
-    }
+    var timer = 0;
+    return function (args) {
+        clearTimeout(timer);
+        timer = setTimeout(fn.bind(this, args), ms || 0);
+    };
 }
 $(function () {
     $('[data-toggle="tooltip"]').tooltip();
 
-    $("#ratingsearch").on('keyup', delay(function (e) {
+    $("#ratingsearch").on('keyup', delay(function () {
         $('body').tooltip('dispose');
         $("#searchLoading").show();
-        $.get("/api/search.php?q=" + this.value, function (data, status) {
+        $.get("/api/search.php?q=" + this.value, function (data) {
             $("#services").html(data.grid);
             $("#searchLoading").hide();
             $('[data-toggle="tooltip"]').tooltip();

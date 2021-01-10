@@ -36,6 +36,7 @@ class Redis {
             $EnvFile = parse_ini_file(__DIR__ . "/../../../../.env");
             $redis = new \Redis();
             $redis->connect($EnvFile["REDIS_HOST"], $EnvFile["REDIS_PORT"]);
+            $redis->auth($EnvFile["REDIS_AUTH"]);
             $this->Database_Connection = $redis;
         } catch (\Exception $ex) {
             throw new \Exception("Failed to contact redis server");

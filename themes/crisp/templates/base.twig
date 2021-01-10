@@ -18,74 +18,77 @@
 {% set sessionType = 'visitor' %} {# visitor, customer, artist, admin #}
 
 {% if user is defined %}
-    {% set sessionType = 'user' %}
+  {% set sessionType = 'user' %}
 {% endif %}
 
 <!DOCTYPE html>
 <html>
-    <head>
-        {% block head %}
+  <head>
+    {% block head %}
 
-            <meta charset="utf-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1">
-            <link rel="stylesheet" href="{{ includeResource("css/bootstrap/bootstrap.min.css") }}">
-            {# <link rel="stylesheet" href="/themes/{{ config.theme }}/css/jquery/jquery-ui.min.css{{ "/css/jquery/jquery-ui.min.css"|fileHash }}"> #}
-            <link rel="stylesheet" href="{{ includeResource("css/sweetalert/sweetalert.min.css") }}">
-            <!-- START Default Crisp CSS -->
-            <link rel="stylesheet" href="{{ includeResource("css/general.min.css") }}">
-            <link rel="stylesheet" href="{{ includeResource("css/ranking-badges.min.css") }}">
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="{{ includeResource("css/bootstrap/bootstrap.min.css") }}">
+      {# <link rel="stylesheet" href="/themes/{{ config.theme }}/css/jquery/jquery-ui.min.css{{ "/css/jquery/jquery-ui.min.css"|fileHash }}"> #}
+      <link rel="stylesheet" href="{{ includeResource("css/sweetalert/sweetalert.min.css") }}">
+      <!-- START Default Crisp CSS -->
+      <link rel="stylesheet" href="{{ includeResource("css/general.min.css") }}">
+      <link rel="stylesheet" href="{{ includeResource("css/footer.min.css") }}">
+      <link rel="stylesheet" href="{{ includeResource("css/ribbon.min.css") }}">
+      <link rel="stylesheet" href="{{ includeResource("css/social-icons.min.css") }}">
+      <link rel="stylesheet" href="{{ includeResource("css/ranking-badges.min.css") }}">
 
-            <!-- END Default Crisp CSS -->
-            <title>{{ pageTitle }} {{ config.page_delimiter }} {{ config.site_name }}</title>
-        {% endblock %}
-    </head>
-    <body>
-        {% block content %}{% endblock %}
-        {% block footer %}
-            {{ include("footer.twig") }}
-        {% endblock %}
-    </body>
-    <script src="{{ includeResource("js/jquery/jquery.min.js") }}"></script>
-    <script src="{{ includeResource("js/jquery/popper.min.js") }}"></script>
-    <script src="{{ includeResource("js/bootstrap/bootstrap.min.js") }}"></script>
-    <script src="{{ includeResource("js/sweetalert/sweetalert.min.js") }}"></script>
-    <script src="{{ includeResource("js/fontawesome/all.min.js") }}"></script>
+      <!-- END Default Crisp CSS -->
+      <title>{{ pageTitle }} {{ config.page_delimiter }} {{ config.site_name }}</title>
+    {% endblock %}
+  </head>
+  <body>
+    {% block content %}{% endblock %}
+    {% block footer %}
+      {{ include("footer.twig") }}
+    {% endblock %}
+  </body>
+  <script src="{{ includeResource("js/jquery/jquery.min.js") }}"></script>
+  <script src="{{ includeResource("js/jquery/popper.min.js") }}"></script>
+  <script src="{{ includeResource("js/bootstrap/bootstrap.min.js") }}"></script>
+  <script src="{{ includeResource("js/sweetalert/sweetalert.min.js") }}"></script>
+  <script src="{{ includeResource("js/fontawesome/all.min.js") }}"></script>
 
-    {% block scripts %}{% endblock %}
-    <!-- START Default Crisp JS -->
-    {% block default_scripts %}
-        <script src="{{ includeResource("js/crisp.min.js") }}"></script>
-        {#
-        <script>
-            function addDarkmodeWidget() {
-                const options = {
-                    bottom: '64px', // default: '32px'
-                    right: 'unset', // default: '32px'
-                    left: '32px', // default: 'unset'
-                    time: '0.5s', // default: '0.3s'
-                    mixColor: '#fff', // default: '#fff'
-                    backgroundColor: '#fff', // default: '#fff'
-                    buttonColorDark: '#100f2c', // default: '#100f2c'
-                    buttonColorLight: '#fff', // default: '#fff'
-                    saveInCookies: false, // default: true,
-                    label: '🌓', // default: ''
-                    autoMatchOsTheme: false // default: true
-                }
-
-                const darkmode = new Darkmode(options);
-                darkmode.showWidget();
-
+  {% block scripts %}{% endblock %}
+  <!-- START Default Crisp JS -->
+  {% block default_scripts %}
+    <script src="{{ includeResource("js/crisp.min.js") }}"></script>
+    {#
+    <script>
+        function addDarkmodeWidget() {
+            const options = {
+                bottom: '64px', // default: '32px'
+                right: 'unset', // default: '32px'
+                left: '32px', // default: 'unset'
+                time: '0.5s', // default: '0.3s'
+                mixColor: '#fff', // default: '#fff'
+                backgroundColor: '#fff', // default: '#fff'
+                buttonColorDark: '#100f2c', // default: '#100f2c'
+                buttonColorLight: '#fff', // default: '#fff'
+                saveInCookies: false, // default: true,
+                label: '🌓', // default: ''
+                autoMatchOsTheme: false // default: true
             }
 
-            $(document).ready(function () {
-                $("body").on('classChange', function () {
-                    console.log("Darkmode");
-                });
-            });
+            const darkmode = new Darkmode(options);
+            darkmode.showWidget();
 
-            window.addEventListener('load', addDarkmodeWidget);
-        </script>
-        #}
-    {% endblock %}
-    <!-- END Default Crisp JS -->
+        }
+
+        $(document).ready(function () {
+            $("body").on('classChange', function () {
+                console.log("Darkmode");
+            });
+        });
+
+        window.addEventListener('load', addDarkmodeWidget);
+    </script>
+    #}
+  {% endblock %}
+  <!-- END Default Crisp JS -->
 </html>

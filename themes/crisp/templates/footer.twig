@@ -16,52 +16,52 @@
 #}
 
 <footer class="site-footer">
-    <br>
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-12 col-md-6">
-                <h6>{{ 'about'|translate }}</h6>
-                <p class="text-justify">{{ 'about_us_intro'|translate|raw }}</p>
-            </div>
+  <br>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12 col-md-6">
+        <h6>{{ 'about'|translate }}</h6>
+        <p class="text-justify">{{ 'about_us_intro'|translate|raw }}</p>
+      </div>
 
-            <div class="col-xs-6 col-md-3">
-                <h6>{{ 'links'|translate }}</h6>
-                <ul class="footer-links">
-                    <li><a href="/about">{{ 'navbar_item_about'|translate }}</a></li>
-                    <li><a href="mailto:{{ config.contact_email }}">{{ 'contact_us'|translate }}</a></li>
-                    <li><a href="/legal">{{ 'privacypolicy'|translate }}</a></li>
-                    <li><a href="/legal">{{ 'toc'|translate }}</a></li>
-                    <li><a href="/imprint">{{ 'imprint'|translate }}</a></li>
-                </ul>
-            </div>
+      <div class="col-xs-6 col-md-3">
+        <h6>{{ 'links'|translate }}</h6>
+        <ul class="footer-links">
+          <li><a href="/about">{{ 'navbar_item_about'|translate }}</a></li>
+          <li><a href="mailto:{{ config.contact_email }}">{{ 'contact_us'|translate }}</a></li>
+          <li><a href="/legal">{{ 'privacypolicy'|translate }}</a></li>
+          <li><a href="/legal">{{ 'toc'|translate }}</a></li>
+          <li><a href="/imprint">{{ 'imprint'|translate }}</a></li>
+        </ul>
+      </div>
 
-            {% if UNIVERSE >= 3 %}
-                <div class="col-xs-6 col-md-3">
-                    <h6>DEBUG</h6>
-                    <ul class="footer-links">
-                        <li>Cache: Disabled</li>
-                        <li>Universe: {{ UNIVERSE_NAME }}</li>
-                        <li>Logic Time: {{ LogicMicroTime|truncateText(5, false) }}ms</li>
-                        <li>Template Time: {{ (microtime(true) - GLOBALS.microtime.template.start)|truncateText(5, false) }}ms</li>
-                        <li>Total Render Time: {{ (microtime(true) - GLOBALS.microtime.template.start + LogicMicroTime)|truncateText(5, false) }}ms</li>
-                    </ul>
-                </div>
-            {% endif %}
+      {% if UNIVERSE >= 3 %}
+        <div class="col-xs-6 col-md-3">
+          <h6>DEBUG</h6>
+          <ul class="footer-links">
+            <li>Cache: Disabled</li>
+            <li>Universe: {{ UNIVERSE_NAME }}</li>
+            <li>Logic Time: {{ LogicMicroTime|truncateText(5, false) }}ms</li>
+            <li>Template Time: {{ (microtime(true) - GLOBALS.microtime.template.start)|truncateText(5, false) }}ms</li>
+            <li>Total Render Time: {{ (microtime(true) - GLOBALS.microtime.template.start + LogicMicroTime)|truncateText(5, false) }}ms</li>
+          </ul>
         </div>
-        <hr>
+      {% endif %}
     </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 col-sm-6 col-xs-12">
-                <p class="copyright-text">&copy; Copyright {{ 'Y'|date }} <a href="/">ToS;DR</a> Universe {{ UNIVERSE_NAME }}.
-                </p>
-            </div>
+    <hr>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-sm-6 col-xs-12">
+        <p class="copyright-text">&copy; Copyright {{ 'Y'|date }} <a href="/">ToS;DR</a> Universe {{ UNIVERSE_NAME }}.
+        </p>
+      </div>
 
-            <div class="col-md-4 col-sm-6 col-xs-12">
-                <ul class="social-icons">
-                    <li><a class="facebook" href="{{ config.twitter_link }}"><i class="fab fa-twitter"></i></a></li>
-                </ul>
-            </div>
-        </div>
+      <div class="col-md-4 col-sm-6 col-xs-12">
+        <ul class="social-icons">
+          <li><a class="facebook" href="{{ config.twitter_link }}"><i class="fab fa-twitter"></i></a></li>
+        </ul>
+      </div>
     </div>
+  </div>
 </footer>

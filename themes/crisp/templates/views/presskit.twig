@@ -29,38 +29,31 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
 {% extends "base.twig" %}
 
 {% block content %}
-    {{ include("components/navbar.twig") }}
+  {{ include("components/navbar.twig") }}
 
-    <div class="jumbotron" id="api">
-        <div><h1>{{ 'presskit'|translate }}</h1></div>
-        <a role="button" class="btn btn-outline-primary" href="?download">{{ 'download_presskit'|translate }}</a>
-    </div>
-
-
-    <div class="container">
+  <div class="jumbotron" id="api">
+    <div><h1>{{ 'presskit'|translate }}</h1></div>
+    <a role="button" class="btn btn-outline-primary" href="?download">{{ 'download_presskit'|translate }}</a>
+  </div>
 
 
-        <p>
-            {{ 'presskit_container_p_1'|translate|raw }}
-        </p>
+  <div class="container">
 
 
-        <div class="row mb-5">
+    <p>
+      {{ 'presskit_container_p_1'|translate|raw }}
+    </p>
 
-            <div class="col-6">
-                <div>
-                    <center>
-                        <img style="max-width:128px;" src="/{{ config.theme_dir }}/{{ config.theme }}/img/tosdr-icon-128.svg" alt="image">
-                    </center>
-                </div>
-            </div>
-            <div class="col-6">
-                <div>
-                    <center>
-                        <img src="/{{ config.theme_dir }}/{{ config.theme }}/img/tosdr-logo-128.svg" alt="image">
-                    </center>
-                </div>
-            </div>
+
+    <div class="row mb-5">
+
+      <div class="col-4">
+        <div>
+          <center>
+            <img style="max-width:512px;" src="{{ includeResource("img/branding/guidelines.svg") }}" alt="image">
+          </center>
         </div>
-    </div> <!-- /container -->
+      </div>
+    </div>
+  </div> <!-- /container -->
 {% endblock %}

@@ -27,7 +27,7 @@ namespace crisp;
 class core {
     /* Some important constants */
 
-    const CRISP_VERSION = "0.0.9-beta";
+    const CRISP_VERSION = "1.0.0";
 
     /**
      * This is my autoloader. 
@@ -177,7 +177,7 @@ if (php_sapi_name() !== "cli") {
 
         http_response_code(500);
         echo $TwigTheme->render("errors/exception.twig", array(
-            "ReferenceID" => api\ErrorReporter::create(500, $ex->getTraceAsString(), $ex->getMessage(), "exception_")
+            "ReferenceID" => api\ErrorReporter::create(500, $ex->getTraceAsString(), $ex->getMessage() ."\n\n". api\Helper::currentURL(), "exception_")
         ));
         exit;
     } catch (\TypeError $ex) {
@@ -190,7 +190,7 @@ if (php_sapi_name() !== "cli") {
 
         http_response_code(500);
         echo $TwigTheme->render("errors/exception.twig", array(
-            "ReferenceID" => api\ErrorReporter::create(500, $ex->getTraceAsString(), $ex->getMessage(), "typeerror_")
+            "ReferenceID" => api\ErrorReporter::create(500, $ex->getTraceAsString(), $ex->getMessage() ."\n\n". api\Helper::currentURL(), "typeerror_")
         ));
         exit;
     } catch (\Error $ex) {
@@ -203,7 +203,7 @@ if (php_sapi_name() !== "cli") {
 
         http_response_code(500);
         echo $TwigTheme->render("errors/exception.twig", array(
-            "ReferenceID" => api\ErrorReporter::create(500, $ex->getTraceAsString(), $ex->getMessage(), "error_")
+            "ReferenceID" => api\ErrorReporter::create(500, $ex->getTraceAsString(), $ex->getMessage() ."\n\n". api\Helper::currentURL(), "error_")
         ));
         exit;
     } catch (\CompileError $ex) {
@@ -216,7 +216,7 @@ if (php_sapi_name() !== "cli") {
 
         http_response_code(500);
         echo $TwigTheme->render("errors/exception.twig", array(
-            "ReferenceID" => api\ErrorReporter::create(500, $ex->getTraceAsString(), $ex->getMessage(), "compileerror_")
+            "ReferenceID" => api\ErrorReporter::create(500, $ex->getTraceAsString(), $ex->getMessage() ."\n\n". api\Helper::currentURL(), "compileerror_")
         ));
         exit;
     } catch (\ParseError $ex) {
@@ -229,7 +229,7 @@ if (php_sapi_name() !== "cli") {
 
         http_response_code(500);
         echo $TwigTheme->render("errors/exception.twig", array(
-            "ReferenceID" => api\ErrorReporter::create(500, $ex->getTraceAsString(), $ex->getMessage(), "parseerror_")
+            "ReferenceID" => api\ErrorReporter::create(500, $ex->getTraceAsString(), $ex->getMessage() ."\n\n". api\Helper::currentURL(), "parseerror_")
         ));
         exit;
     } catch (\Throwable $ex) {
@@ -242,11 +242,11 @@ if (php_sapi_name() !== "cli") {
 
         http_response_code(500);
         echo $TwigTheme->render("errors/exception.twig", array(
-            "ReferenceID" => api\ErrorReporter::create(500, $ex->getTraceAsString(), $ex->getMessage(), "throwable_")
+            "ReferenceID" => api\ErrorReporter::create(500, $ex->getTraceAsString(), $ex->getMessage() ."\n\n". api\Helper::currentURL(), "throwable_")
         ));
         exit;
     } catch (\Twig\Error\LoaderError $ex) {
-        $Error = api\ErrorReporter::create(500, $ex->getTraceAsString(), $ex->getMessage(), "twigerror_");
+        $Error = api\ErrorReporter::create(500, $ex->getTraceAsString(), $ex->getMessage() ."\n\n". api\Helper::currentURL(), "twigerror_");
         echo "Thats a twig error, cant even show a proper error page! Reference ID: $Error";
         exit;
     }

@@ -10,7 +10,7 @@ $Array;
 
 if (empty($_GET["q"])) {
     foreach (\crisp\api\Config::get("frontpage_services") as $ID) {
-        $Array[] = crisp\api\Phoenix::getService($ID);
+        $Array[] = crisp\api\Phoenix::getServicePG($ID);
     }
 } else {
     foreach (crisp\api\Phoenix::searchServiceByNamePG(strtolower($_GET["q"])) as $Service) {

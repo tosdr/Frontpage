@@ -91,7 +91,10 @@ class Helper {
    * @return bool
    */
   public static function setLocale() {
-    return setcookie(\crisp\core\Config::$Cookie_Prefix . "language", self::getLocale(), time() + (86400 * 30), "/");
+    if (isset($_COOKIE["allowCookies"])) {
+      return setcookie(\crisp\core\Config::$Cookie_Prefix . "language", self::getLocale(), time() + (86400 * 30), "/");
+    }
+    return true;
   }
 
   /**

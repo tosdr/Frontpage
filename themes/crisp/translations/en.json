@@ -111,6 +111,6 @@
   "status": "Status Page",
   "cookie_warning_header": "Cookie Notice",
   "cookie_warning_text": "Yep, we use cookies as well and we have to show it to you as we are based in Germany, sorry folks! It's only to store your language settings and for logins though :-)",
-  "cookie_deny": "Take me out of here!",
+  "cookie_deny": "No",
   "cookie_accept": "It's okay"
 }

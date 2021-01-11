@@ -424,7 +424,7 @@ switch ($argv[1]) {
                 if (\crisp\api\Config::set("plugin_core_maintenance_enabled", true)) {
                     echo "Maintenance Mode successfully enabled." . PHP_EOL;
                 }
-                if (crisp\core\Themes::install($argv[3], \crisp\api\Config::get("theme"), __FILE__, "cli")) {
+                if (crisp\core\Themes::install($argv[3])) {
                     echo "Theme successfully installed" . PHP_EOL;
                 } else {
                     echo "Failed to install theme" . PHP_EOL;

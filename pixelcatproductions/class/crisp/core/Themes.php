@@ -354,6 +354,7 @@ class Themes {
     $ThemeFolder = \crisp\api\Config::get("theme_dir");
 
     if (!\file_exists(__DIR__ . "/../../../../$ThemeFolder/$ThemeName/theme.json")) {
+      echo "No theme.json found!" . PHP_EOL;
       return false;
     }
 
@@ -363,6 +364,7 @@ class Themes {
     self::performOnInstall($ThemeName, $ThemeMetadata);
 
     if (!\is_object($ThemeMetadata) && !isset($ThemeMetadata->hookFile)) {
+      echo "No hookfile in theme.json found!" . PHP_EOL;
       return false;
     }
 

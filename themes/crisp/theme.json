@@ -1,33 +1,33 @@
 {
-    "name": "Crisp",
-    "author": "Justin René Back <jback@pixelcatproductions.net>",
-    "description": "Default theme for CrispCMS",
-    "type": 1,
-    "hookFile": "hook.php",
-    "onInstall": {
-        "createTranslationKeys": "translations/",
-        "createKVStorageItems": {
-            "frontpage_services": [182, 190, 194, 265, 222, 274, 1815, 314, 539, 616, 230, 418, 315, 175, 225, 318, 158],
-            "site_logo": "/themes/logo.png",
-            "twitter_link": "https://twitter.com/tosdr",
-            "status_url": "https://status.tosdr.org",
-            "site_name": "ToS;DR - Terms of Service; Didn't Read",
-            "contact_email": "team@tosdr.org",
-            "forum_url": "https://forum.tosdr.org",
-            "github_current_revision": null,
-            "page_delimiter": "--",
-            "opencollective_url": "https://opencollective.com/tosdr",
-            "github_link": "https://github.com/tosdr",
-            "discord_link": "https://discord.gg/QaCJUfwsKS",
-            "reddit_link": "https://reddit.com/r/tosdr",
-            "wikipedia_link": "https://en.wikipedia.org/wiki/Terms_of_Service;_Didn%27t_Read",
-            "cdn": "https://cdn.tosdr.org"
-        },
-        "activateDependencies": []
+  "name": "Crisp",
+  "author": "Justin René Back <jback@pixelcatproductions.net>",
+  "description": "Default theme for CrispCMS",
+  "type": 1,
+  "hookFile": "hook.php",
+  "onInstall": {
+    "createTranslationKeys": "translations/",
+    "createKVStorageItems": {
+      "frontpage_services": [182, 190, 194, 265, 222, 274, 1815, 314, 539, 616, 230, 418, 315, 175, 225, 318, 158],
+      "site_logo": "/themes/logo.png",
+      "twitter_link": "https://twitter.com/tosdr",
+      "status_url": "https://status.tosdr.org",
+      "site_name": "ToS;DR - Terms of Service; Didn't Read",
+      "contact_email": "team@tosdr.org",
+      "forum_url": "https://forum.tosdr.org",
+      "github_current_revision": null,
+      "page_delimiter": "--",
+      "opencollective_url": "https://opencollective.com/tosdr",
+      "github_link": "https://github.com/tosdr",
+      "discord_link": "https://discord.gg/QaCJUfwsKS",
+      "reddit_link": "https://reddit.com/r/tosdr",
+      "wikipedia_link": "https://en.wikipedia.org/wiki/Terms_of_Service;_Didn%27t_Read",
+      "cdn": "https://cdn.tosdr.org"
     },
-    "onUninstall": {
-        "deleteData": true,
-        "deactivateDependencies": [],
-        "purgeDependencies": []
-    }
+    "activateDependencies": []
+  },
+  "onUninstall": {
+    "deleteData": true,
+    "deactivateDependencies": [],
+    "purgeDependencies": []
+  }
 }

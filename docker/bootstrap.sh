@@ -12,8 +12,9 @@ apt-get install -y git-core libpq-dev autoconf gcc libc6-dev make apache2 php7.4
 a2enmod rewrite
 
 rm -R /var/www/html
-cp /tmp/crisp /var/www/html -r
+cp -rf /tmp/crisp /var/www/html
 cd /var/www/html
+rm /tmp/crisp -R
 composer install --no-dev
 
 service mysql start

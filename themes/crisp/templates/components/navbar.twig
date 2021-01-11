@@ -15,76 +15,81 @@
  # limitations under the License.
 #}
 <nav class="navbar navbar-expand-md  bg-dark navbar-dark">
-    <!-- Brand -->
-    <a class="navbar-brand" href="/"><img width="32" src="{{ includeResource("/img/tosdr-icon-32.svg") }}"alt="Logo"/></a>
+  <!-- Brand -->
+  <a class="navbar-brand" href="/"><img width="32" src="{{ includeResource("/img/tosdr-icon-32.svg") }}"alt="Logo"/></a>
 
-    <!-- Toggler/collapsibe Button -->
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+  <!-- Toggler/collapsibe Button -->
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
-    <!-- Navbar links -->
-    <div class="collapse navbar-collapse" id="collapsibleNavbar">
-        <ul class="navbar-nav">
-            {% for item in GLOBALS.navbar %}
-                <li class="nav-item {% if currentPage == item.ID %} active{% endif %}">
-                    <a target="{{ item.target }}" class="nav-link {% if currentPage == item.ID %} active{% endif %}" href="{{ item.href }}">{{ item.html|raw }}</a>
-                </li>
-            {% endfor %}
-        </ul>
-        <ul class="navbar-nav ml-auto">
-            {% for item in GLOBALS.navbar_right %}
-                <li class="nav-item {% if currentPage == item.ID %} active{% endif %}">
-                    <a target="{{ item.target }}" class="nav-link {% if currentPage == item.ID %} active{% endif %}" href="{{ item.href }}">{{ item.html|raw }}</a>
-                </li>
-            {% endfor %}
-            <li class="nav-item">
-                {% if UNIVERSE == 1 %}
-                    <a href="/?universe=2"><span class="badge badge-warning"><i class="fas fa-flask"></i> JOIN BETA</span></a>
-                {% endif %}
-                {% if UNIVERSE == 2 %}
-                    <a href="/?universe=1"><span class="badge badge-warning"><i class="fas fa-flask"></i> LEAVE BETA</span></a>
-                {% endif %}
-                {% if UNIVERSE == 3 %}
-                    <a href="/?universe=1"><span class="badge badge-danger"><i class="fas fa-wrench"></i> LEAVE DEVELOPMENT</span></a>
-                {% endif %}
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="languageDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img id="currentLanguage" src="{{ includeResource("img/flags/" ~ locale|getlang(false).Flag ~ ".svg") }}" width="32">
-                </a>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="languageDropdownMenuLink">
-                    {% for Language in languages %}
-                        <a class="dropdown-item {% if locale|getlang(false).Code == Language.Code %}active{% endif %}" href="/{{ Language.Code }}/{{ CurrentPage }}">
-                            <img src="{{ includeResource("img/flags/" ~ Language.Flag ~ ".svg") }}" width="32"/>
-                            {{ Language.NativeName|translate }} 
-                            {% if Language.Name|translate != Language.NativeName|translate %}
-                                <span class="{% if locale|getlang(false).Code == Language.Code %}text-white{% else %}text-muted{% endif %}">
-                                    ({{ Language.Name|translate }})
-                                </span>
-                            {% endif %}
-                            <img src="https://translate.jback.dev/widgets/crispcms/{{ Language.Code }}/crispcms-theme/svg-badge.svg" alt="Translation status" />
-                        </a>
-                    {% endfor %}
-                </div>
-            </li>
-        </ul>
+  <!-- Navbar links -->
+  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+    <ul class="navbar-nav">
+      {% for item in GLOBALS.navbar %}
+        <li class="nav-item {% if currentPage == item.ID %} active{% endif %}">
+          <a target="{{ item.target }}" class="nav-link {% if currentPage == item.ID %} active{% endif %}" href="{{ item.href }}">{{ item.html|raw }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+    <ul class="navbar-nav ml-auto">
+      {% for item in GLOBALS.navbar_right %}
+        <li class="nav-item {% if currentPage == item.ID %} active{% endif %}">
+          <a target="{{ item.target }}" class="nav-link {% if currentPage == item.ID %} active{% endif %}" href="{{ item.href }}">{{ item.html|raw }}</a>
+        </li>
+      {% endfor %}
+      <li class="nav-item">
+        {% if UNIVERSE == 1 %}
+          <a href="/?universe=2"><span class="badge badge-warning"><i class="fas fa-flask"></i> JOIN BETA</span></a>
+        {% endif %}
+        {% if UNIVERSE == 2 %}
+          <a href="/?universe=1"><span class="badge badge-warning"><i class="fas fa-flask"></i> LEAVE BETA</span></a>
+        {% endif %}
+        {% if UNIVERSE == 3 %}
+          <a href="/?universe=1"><span class="badge badge-danger"><i class="fas fa-wrench"></i> LEAVE DEVELOPMENT</span></a>
+        {% endif %}
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="languageDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <!-- See https://github.com/tosdr/CrispCMS/issues/51  
+          <img id="currentLanguage" src="{{ includeResource("img/flags/" ~ locale|getlang(false).Flag ~ ".svg") }}" width="32">
+          <-->
+          <i class="fas fa-language"></i> {{ locale|getlang(false).Name|translate }}
+        </a>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="languageDropdownMenuLink">
+          {% for Language in languages %}
+            <a class="dropdown-item {% if locale|getlang(false).Code == Language.Code %}active{% endif %}" href="/{{ Language.Code }}/{{ CurrentPage }}">
+              <!-- See https://github.com/tosdr/CrispCMS/issues/51
+              <img src="{{ includeResource("img/flags/" ~ Language.Flag ~ ".svg") }}" width="32"/>
+              -->
+              {{ Language.NativeName|translate }} 
+              {% if Language.Name|translate != Language.NativeName|translate %}
+                <span class="{% if locale|getlang(false).Code == Language.Code %}text-white{% else %}text-muted{% endif %}">
+                  ({{ Language.Name|translate }})
+                </span>
+              {% endif %}
+              <img src="https://translate.jback.dev/widgets/crispcms/{{ Language.Code }}/crispcms-theme/svg-badge.svg" alt="Translation status" />
+            </a>
+          {% endfor %}
+        </div>
+      </li>
+    </ul>
 
-    </div>
+  </div>
 </nav> 
 
 {% if Notice is defined %}
-    {% if Notice.Type is not defined %}
-        {% set Notice = Notice|merge({'Type': 'info'})%}
-    {% endif %}
-    <div class="container mt-4">
-        <div class="alert alert-{{ Notice.Type }}">
-            <span id="notice_text">
-                {% if Notice.Icon is defined %}
-                    <i class="{{ Notice.Icon }}"></i>
-                {% endif %}
-                {{ Notice.Text|raw }}
-            </span>
-        </div>
+  {% if Notice.Type is not defined %}
+    {% set Notice = Notice|merge({'Type': 'info'})%}
+  {% endif %}
+  <div class="container mt-4">
+    <div class="alert alert-{{ Notice.Type }}">
+      <span id="notice_text">
+        {% if Notice.Icon is defined %}
+          <i class="{{ Notice.Icon }}"></i>
+        {% endif %}
+        {{ Notice.Text|raw }}
+      </span>
     </div>
+  </div>
 {% endif %}

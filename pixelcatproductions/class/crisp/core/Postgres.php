@@ -25,38 +25,47 @@ namespace crisp\core;
  */
 class Postgres {
 
-    private $Database_Connection;
+  private $Database_Connection;
 
-    /**
-     * Constructs the Database_Connection
-     * @see getDBConnector
-     */
-    public function __construct() {
-        if(isset($_GET["simulate_heroku_kill"])){
-            throw new \Exception("Failed to contact edit.tosdr.org");
-        }
-        $db = parse_url(\crisp\api\Config::get("plugin_heroku_database_uri"));
-        try {
-            $pdo = new \PDO("pgsql:" . sprintf(
-                            "host=%s;port=%s;user=%s;password=%s;dbname=%s",
-                            $db["host"],
-                            $db["port"],
-                            $db["user"],
-                            $db["pass"],
-                            ltrim($db["path"], "/")
-            ));
-            $this->Database_Connection = $pdo;
-        } catch (\Exception $ex) {
-            throw new \Exception("Failed to contact edit.tosdr.org");
-        }
+  /**
+   * Constructs the Database_Connection
+   * @see getDBConnector
+   */
+  public function __construct() {
+    if (isset($_GET["simulate_heroku_kill"])) {
+      throw new \Exception("Failed to contact edit.tosdr.org");
     }
 
-    /**
-     * Get the database connector
-     * @return \PDO
-     */
-    public function getDBConnector() {
-        return $this->Database_Connection;
+    $EnvFile = parse_ini_file(__DIR__ . "/../../../../.env");
+
+    $db;
+    if (isset($EnvFile["POSTGRES_URI"])) {
+      $db = parse_url($EnvFile["POSTGRES_URI"]);
+    } else {
+      $db = parse_url(\crisp\api\Config::get("plugin_heroku_database_uri"));
     }
+
+    try {
+      $pdo = new \PDO("pgsql:" . sprintf(
+                      "host=%s;port=%s;user=%s;password=%s;dbname=%s",
+                      $db["host"],
+                      $db["port"],
+                      $db["user"],
+                      $db["pass"],
+                      ltrim($db["path"], "/")
+      ));
+      $this->Database_Connection = $pdo;
+    } catch (\Exception $ex) {
+      throw new \Exception("Failed to contact edit.tosdr.org");
+    }
+  }
+
+  /**
+   * Get the database connector
+   * @return \PDO
+   */
+  public function getDBConnector() {
+    return $this->Database_Connection;
+  }
 
 }

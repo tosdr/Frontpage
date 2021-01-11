@@ -104,6 +104,8 @@ class Helper {
     return file_get_contents(__DIR__ . '/../../../../.git/refs/heads/' . self::getGitBranch());
   }
 
+  
+  
   /**
    * Filter a string and remove non-alphanumeric and spaces
    * @param string $String The string to filter

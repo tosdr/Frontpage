@@ -347,5 +347,5 @@ try {
       break;
   }
 } catch (RateLimit\Exception\LimitExceeded $exception) {
-  
+  echo \crisp\core\PluginAPI::response(["RATE_LIMIT_REACHED"], "rate_limit", [], 429);
 }

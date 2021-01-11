@@ -364,6 +364,7 @@ class Themes {
     self::performOnInstall($ThemeName, $ThemeMetadata);
 
     if (!\is_object($ThemeMetadata) && !isset($ThemeMetadata->hookFile)) {
+      var_dump($ThemeMetadata);
       echo "No hookfile in theme.json found!" . PHP_EOL;
       return false;
     }

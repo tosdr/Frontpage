@@ -15,7 +15,7 @@ ENV DEBIAN_FRONTEND noninteractive
 ENV POSTGRES_URI ""
 ENV CDN_URL ""
 
-ARG CLONE_URL "https://github.com/tosdr/CrispCMS.git"
+ARG CLONE_URL
 ENV CLONE_URL ${CLONE_URL}
 
 # Expose Ports

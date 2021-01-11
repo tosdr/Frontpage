@@ -47,6 +47,7 @@
     {% block footer %}
       {{ include("footer.twig") }}
     {% endblock %}
+    {#
     <div class="toast bg-dark text-white w-100 mw-100 fixed-bottom p-4" role="alert" data-autohide="false">
       <div class="toast-body p-4 d-flex flex-column">
         <h4>{{ 'cookie_warning_header'|translate }}</h4>
@@ -63,6 +64,7 @@
         </div>
       </div>
     </div>
+    #}
   </body>
   <script src="{{ includeResource("js/jquery/jquery.min.js") }}"></script>
   <script src="{{ includeResource("js/jquery/popper.min.js") }}"></script>
@@ -74,7 +76,8 @@
   <!-- START Default Crisp JS -->
   {% block default_scripts %}
     <script src="{{ includeResource("js/crisp.min.js") }}"></script>
-    <script src="{{ includeResource("js/cookies_4.min.js") }}"></script>
+
+    {# <script src="{{ includeResource("js/cookies_4.min.js") }}"></script> #}
     {#
     <script>
         function addDarkmodeWidget() {

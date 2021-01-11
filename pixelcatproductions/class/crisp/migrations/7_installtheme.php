@@ -7,6 +7,8 @@ class installtheme extends \crisp\core\Migrations {
     public function run() {
         try {
             $this->begin();
+            $this->Database->query("INSERT INTO Config (`key`, value) VALUES ('theme_dir', 'themes')")->execute();
+            $this->Database->query("INSERT INTO Config (`key`, value) VALUES ('plugin_dir', 'plugins')")->execute();
             \crisp\core\Themes::install("crisp");
             return $this->end();
         } catch (\Exception $ex) {

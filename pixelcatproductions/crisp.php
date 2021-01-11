@@ -75,9 +75,8 @@ if (php_sapi_name() !== "cli") {
   $GLOBALS["render"] = array();
 
 
-  if (isset($_COOKIE["allowCookies"])) {
-    session_start();
-  }
+  session_start();
+
 
   $CurrentTheme = \crisp\api\Config::get("theme");
   $CurrentFile = substr(substr($_SERVER['PHP_SELF'], 1), 0, -4);

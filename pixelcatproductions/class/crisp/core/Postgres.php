@@ -38,8 +38,8 @@ class Postgres {
 
     $EnvFile = parse_ini_file(__DIR__ . "/../../../../.env");
 
-    $db;
-    if (isset($EnvFile["POSTGRES_URI"])) {
+    $db = "";
+    if (isset($EnvFile["POSTGRES_URI"]) && !empty($EnvFile["POSTGRES_URI"])) {
       $db = parse_url($EnvFile["POSTGRES_URI"]);
     } else {
       $db = parse_url(\crisp\api\Config::get("plugin_heroku_database_uri"));
@@ -56,7 +56,7 @@ class Postgres {
       ));
       $this->Database_Connection = $pdo;
     } catch (\Exception $ex) {
-      throw new \Exception("Failed to contact edit.tosdr.org");
+      throw new \Exception($ex);
     }
   }
 

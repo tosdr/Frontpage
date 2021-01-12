@@ -54,6 +54,8 @@ steps:
 
 - name: migrate_crisp_lint
   image: php:7.4-buster
+  environment:
+    COMPOSER_ALLOW_SUPERUSER: 1
   commands:
   - apt-get update && apt-get install -y libpq-dev autoconf gcc libc6-dev make libicu-dev
   - pecl install redis-5.3.2

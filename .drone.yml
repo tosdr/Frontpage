@@ -40,25 +40,6 @@ steps:
   - rails db:create db:migrate db:seed
   - echo 'u = Service.create :id => 1, :name => "Test Service", :url => "example.com", :created_at => "now()", :updated_at => "now()", :slug => "test_slug"' | rails c -e development
 
-- name: install_php_ext
-  image: php:7.4-buster
-  volumes:
-  - name: php
-    path: /usr/lib/php
-  commands:
-  - apt-get update && apt-get install -y libpq-dev autoconf gcc libc6-dev make libicu-dev
-  - pecl install redis-5.3.2
-  - docker-php-ext-install pgsql pdo_pgsql pdo_mysql intl
-  - docker-php-ext-enable pdo_pgsql pdo_mysql redis intl
-
-- name: install_crisp
-  image: composer
-  volumes:
-  - name: php
-    path: /usr/lib/php
-  commands:
-  - composer install
-  
   
 - name: create_crisp_config
   image: alpine
@@ -73,10 +54,13 @@ steps:
 
 - name: migrate_crisp_lint
   image: php:7.4-buster
-  volumes:
-  - name: php
-    path: /usr/lib/php
   commands:
+  - apt-get update && apt-get install -y libpq-dev autoconf gcc libc6-dev make libicu-dev
+  - pecl install redis-5.3.2
+  - docker-php-ext-install pgsql pdo_pgsql pdo_mysql intl
+  - docker-php-ext-enable pdo_pgsql pdo_mysql redis intl
+  - wget https://getcomposer.org/composer-stable.phar -O composer
+  - php composer install
   - php bin/cli.php migrate
   - vendor/bin/twig-linter lint themes/crisp/templates/
   - vendor/bin/phpunit tests --bootstrap pixelcatproductions/crisp.php
@@ -97,8 +81,6 @@ steps:
 
 volumes:
 - name: bundle
-  temp: {}
-- name: php
   temp: {}
 - name: phoenix
   temp: {}

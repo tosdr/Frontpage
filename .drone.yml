@@ -62,8 +62,8 @@ steps:
   commands:
   - apt-get update && apt-get install -y libpq-dev autoconf gcc libc6-dev make
   - pecl install redis-5.3.2
-  - docker-php-ext-install pgsql pdo_pgsql pdo_mysql
-  - docker-php-ext-enable pdo_pgsql pdo_mysql redis
+  - docker-php-ext-install pgsql pdo_pgsql pdo_mysql intl
+  - docker-php-ext-enable pdo_pgsql pdo_mysql redis intl
   - php bin/cli.php migrate
   - vendor/bin/twig-linter lint themes/crisp/templates/
   - vendor/bin/phpunit tests --bootstrap pixelcatproductions/crisp.php

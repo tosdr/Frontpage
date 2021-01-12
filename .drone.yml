@@ -46,7 +46,7 @@ steps:
   - name: php
     path: /usr/lib/php
   commands:
-  - apt-get update && apt-get install -y libpq-dev autoconf gcc libc6-dev make libicuuc-dev
+  - apt-get update && apt-get install -y libpq-dev autoconf gcc libc6-dev make libicu-dev
   - pecl install redis-5.3.2
   - docker-php-ext-install pgsql pdo_pgsql pdo_mysql intl
   - docker-php-ext-enable pdo_pgsql pdo_mysql redis intl

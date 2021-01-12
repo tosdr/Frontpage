@@ -23,6 +23,7 @@ service redis-server start
 cp /var/www/html/themes/crisp/theme.json.orig /var/www/html/themes/crisp/theme.json
 cp /var/www/html/themes/crisp/theme.json /var/www/html/themes/crisp/theme.json.orig
 sed 's/https\:\/\/cdn\.tosdr\.org/$CDN_URL/' /var/www/html/themes/crisp/theme.json.orig > /var/www/html/themes/crisp/theme.json
+sed 's/https\:\/\/shields\.tosdr\.org/$SHIELD_URL/' /var/www/html/themes/crisp/theme.json.orig > /var/www/html/themes/crisp/theme.json
 
 /usr/bin/php7.4 /var/www/html/bin/cli.php migrate
 /usr/bin/php7.4 /var/www/html/bin/cli.php theme install crisp

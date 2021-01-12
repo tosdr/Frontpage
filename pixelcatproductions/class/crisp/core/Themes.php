@@ -63,16 +63,16 @@ class Themes {
     }
   }
 
-  public static function includeResource($File, bool $Prefix = true) {
+  public static function includeResource($File, bool $Prefix = true, string $CDN = "cdn") {
     if (strpos($File, "/") === 0) {
       $File = substr($File, 1);
     }
 
     if (!file_exists(__DIR__ . "/../../../../" . \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") . "/$File")) {
-      return (\crisp\api\Config::exists("cdn") ? \crisp\api\Config::get("cdn") : "") . ($Prefix ? "/" . \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") : "") . "/$File";
+      return (\crisp\api\Config::exists($CDN) ? \crisp\api\Config::get($CDN) : "") . ($Prefix ? "/" . \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") : "") . "/$File";
     }
 
-    return (\crisp\api\Config::exists("cdn") ? \crisp\api\Config::get("cdn") : "") . "/" . ($Prefix ? \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") : "") . "/$File?" . hash_file("sha256", __DIR__ . "/../../../../" . \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") . "/$File");
+    return (\crisp\api\Config::exists($CDN) ? \crisp\api\Config::get($CDN) : "") . "/" . ($Prefix ? \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") : "") . "/$File?" . hash_file("sha256", __DIR__ . "/../../../../" . \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") . "/$File");
   }
 
   private static function performOnInstall($ThemeName, $ThemeMetadata) {

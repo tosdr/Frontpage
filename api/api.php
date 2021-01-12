@@ -71,10 +71,19 @@ switch ($_GET["apiversion"]) {
     $Prefix = \crisp\api\Config::get("badge_prefix");
     $Language = (isset($_GET["l"]) ? $_GET["l"] : "en");
     $ServiceName = $Query;
+    $Color;
+    $Type = pathinfo($Query, PATHINFO_EXTENSION);
+    $RedisData;
+
     if (strpos($Query, "_")) {
       $Language = explode("_", $Query)[0];
       $ServiceName = explode("_", $Query)[1];
     }
+    if ($Type != "") {
+      $ServiceName = substr($ServiceName, 0, (strlen($Type) + 1) * -1);
+    }
+
+
     $Translations = new \crisp\api\Translation($Language);
 
     if (CURRENT_UNIVERSE >= crisp\Universe::UNIVERSE_DEV && isset($_GET["prefix"])) {
@@ -91,88 +100,18 @@ switch ($_GET["apiversion"]) {
         return;
       }
       $RedisData = \crisp\api\Phoenix::getServiceBySlugPG(urldecode($ServiceName));
+    } else {
+      if (count(crisp\api\Phoenix::serviceExistsPG($ServiceName)) === 0) {
+        header("Content-Type: image/svg+xml");
+        $Color = "999999";
+        $Rating = $Translation->fetch("service_not_found");
 
-      $Color;
-
-      switch ($RedisData["is_comprehensively_reviewed"] ? ($RedisData["rating"]) : false) {
-        case "A":
-          $Color = "46A546";
-          $Rating = $Translations->fetch("privacy_grade_a");
-          break;
-        case "B":
-          $Color = "79B752";
-          $Rating = $Translations->fetch("privacy_grade_b");
-          break;
-        case "C":
-          $Color = "F89406";
-          $Rating = $Translations->fetch("privacy_grade_c");
-          break;
-        case "D":
-          $Color = "D66F2C";
-          $Rating = $Translations->fetch("privacy_grade_d");
-          break;
-        case "E":
-          $Color = "C43C35";
-          $Rating = $Translations->fetch("privacy_grade_e");
-          break;
-        default:
-          $Color = "999999";
-          $Rating = $Translations->fetch("privacy_grade_none");
+        echo $poser->generate($Prefix, $Rating, $Color, 'flat');
+        return;
       }
-
-      $Prefix = \crisp\api\Config::get("badge_prefix") . "/#" . htmlentities($RedisData["slug"]);
-
-      if (CURRENT_UNIVERSE >= crisp\Universe::UNIVERSE_DEV && isset($_GET["prefix"])) {
-        $Prefix = $_GET["prefix"];
-      }
-      $SVG = $poser->generate($Prefix, $Rating, $Color, 'flat');
-
-      if (time() - filemtime(__DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"] . $Language) . ".svg") > 900) {
-        file_put_contents(__DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"] . $Language) . ".svg", $SVG);
-      }
-
-      if ($_GET["apiversion"] === "badgepng") {
-        header("Content-Type: image/png");
-
-        if (!file_exists(__DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"] . $Language) . ".svg")) {
-          exit;
-        }
-
-        if (time() - filemtime(__DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"] . $Language) . ".png") > 900) {
-
-          exec("/usr/bin/inkscape -e \"" . __DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"] . $Language) . ".png\" \"" . __DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"] . $Language) . ".svg\"");
-
-          if (!file_exists(__DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"] . $Language) . ".png")) {
-            exit;
-          }
-        }
-        echo file_get_contents(__DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"] . $Language) . ".png");
-        exit;
-      }
-
-      header("Content-Type: image/svg+xml");
-
-
-      echo $SVG;
-      return;
+      $RedisData = \crisp\api\Phoenix::getServicePG(urldecode($ServiceName));
     }
 
-    if (count(crisp\api\Phoenix::serviceExistsPG($ServiceName)) === 0) {
-      header("Content-Type: image/svg+xml");
-      $Color = "999999";
-      $Rating = $Translation->fetch("service_not_found");
-
-      echo $poser->generate($Prefix, $Rating, $Color, 'flat');
-      return;
-    }
-    $RedisData = crisp\api\Phoenix::getServicePG($ServiceName);
-
-    $Prefix = \crisp\api\Config::get("badge_prefix") . "/#" . htmlentities($RedisData["slug"]);
-
-    if (CURRENT_UNIVERSE >= crisp\Universe::UNIVERSE_DEV && isset($_GET["prefix"])) {
-      $Prefix = $_GET["prefix"];
-    }
-    $Color;
 
     switch ($RedisData["is_comprehensively_reviewed"] ? ($RedisData["rating"]) : false) {
       case "A":
@@ -199,17 +138,20 @@ switch ($_GET["apiversion"]) {
         $Color = "999999";
         $Rating = $Translations->fetch("privacy_grade_none");
     }
-    header("Content-Type: image/svg+xml");
 
+    $Prefix = \crisp\api\Config::get("badge_prefix") . "/#" . htmlentities($RedisData["slug"]);
+
+    if (CURRENT_UNIVERSE >= crisp\Universe::UNIVERSE_DEV && isset($_GET["prefix"])) {
+      $Prefix = $_GET["prefix"];
+    }
     $SVG = $poser->generate($Prefix, $Rating, $Color, 'flat');
 
     if (time() - filemtime(__DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"] . $Language) . ".svg") > 900) {
       file_put_contents(__DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"] . $Language) . ".svg", $SVG);
     }
 
-    if ($_GET["apiversion"] === "badgepng") {
+    if ($_GET["apiversion"] === "badgepng" || $Type == "png") {
       header("Content-Type: image/png");
-// inkscape -e facebook.png facebook.svg
 
       if (!file_exists(__DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"] . $Language) . ".svg")) {
         exit;

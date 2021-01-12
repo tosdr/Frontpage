@@ -14,6 +14,7 @@ ENV REDIS_AUTH tosdr
 ENV DEBIAN_FRONTEND noninteractive
 ENV POSTGRES_URI ""
 ENV CDN_URL ""
+ENV SHIELD_URL ""
 
 # Expose Ports
 EXPOSE 80

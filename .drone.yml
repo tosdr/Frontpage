@@ -68,6 +68,20 @@ steps:
   - vendor/bin/twig-linter lint themes/crisp/templates/
   - vendor/bin/phpunit tests --bootstrap pixelcatproductions/crisp.php
 
+- name: docker  
+  image: plugins/docker
+  settings:
+    username:
+      from_secret: DOCKER_USERNAME
+    password:
+      from_secret: DOCKER_TOKEN
+    repo: jbackpcat/tosdr-crisp
+    tags: latest
+  when:
+  event:
+    exclude:
+    - pull_request
+
 volumes:
 - name: bundle
   temp: {}

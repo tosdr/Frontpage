@@ -57,15 +57,19 @@ steps:
   environment:
     COMPOSER_ALLOW_SUPERUSER: 1
   commands:
-  - apt-get update && apt-get install -y libpq-dev autoconf gcc libc6-dev make libicu-dev wget
+  - mkdir /tmp/ci
+  - cd /tmp/ci
+  - apt-get update && apt-get install -y libpq-dev autoconf gcc libc6-dev make libicu-dev wget git-core
   - pecl install redis-5.3.2
   - docker-php-ext-install pgsql pdo_pgsql pdo_mysql intl
   - docker-php-ext-enable pdo_pgsql pdo_mysql redis intl
-  - wget https://getcomposer.org/composer-stable.phar -O composer
-  - php composer install
+  - wget https://getcomposer.org/composer-stable.phar -O /tmp/ci/composer
+  - cd /drone/src
+  - php /tmp/ci/composer install
   - php bin/cli.php migrate
   - vendor/bin/twig-linter lint themes/crisp/templates/
   - vendor/bin/phpunit tests --bootstrap pixelcatproductions/crisp.php
+  - rm /tmp/ci/composer
 
 - name: docker  
   image: plugins/docker

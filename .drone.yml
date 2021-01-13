@@ -57,7 +57,7 @@ steps:
   environment:
     COMPOSER_ALLOW_SUPERUSER: 1
   commands:
-  - apt-get update && apt-get install -y libpq-dev autoconf gcc libc6-dev make libicu-dev
+  - apt-get update && apt-get install -y libpq-dev autoconf gcc libc6-dev make libicu-dev wget
   - pecl install redis-5.3.2
   - docker-php-ext-install pgsql pdo_pgsql pdo_mysql intl
   - docker-php-ext-enable pdo_pgsql pdo_mysql redis intl

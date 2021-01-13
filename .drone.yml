@@ -84,6 +84,7 @@ steps:
   event:
     exclude:
     - pull_request
+    - tag
 
 volumes:
 - name: bundle

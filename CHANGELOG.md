@@ -9,12 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added pull request templates
 - Add translation template
 - Added Changelog (Me!)
+- Added Dedicated API Domain
+- Added v{version} prefix to API
 
 ### Changed
 - Fix Generate API Files TTL
 
 ### Removed
-- Nothing
+- Ratelimit (temporarily)
 
 ## [1.0.2] - Jan 15, 2021, 12:18 AM GMT+1
 ### Added

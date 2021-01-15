@@ -26,18 +26,22 @@ if (CURRENT_UNIVERSE == crisp\Universe::UNIVERSE_TOSDR) {
   $Benefit = "staff";
 }
 
-$status = $rateLimiter->limitSilently($Indicator, $Limit);
-header("X-RateLimit-Amount: " . $status->getRemainingAttempts());
-header("X-RateLimit-Exceeded: " . ($status->limitExceeded() ? "true" : "false"));
-header("X-RateLimit-Limit: " . $status->getLimit());
-header("X-RateLimit-Indicator: $Indicator");
-header("X-RateLimit-Reset: " . $status->getResetAt()->getTimestamp());
-header("X-RateLimit-Benefit: " . $Benefit);
+/*
+ * $status = $rateLimiter->limitSilently($Indicator, $Limit);
 
-if ($status->limitExceeded()) {
+  header("X-RateLimit-Amount: " . $status->getRemainingAttempts());
+  header("X-RateLimit-Exceeded: " . ($status->limitExceeded() ? "true" : "false"));
+  header("X-RateLimit-Limit: " . $status->getLimit());
+  header("X-RateLimit-Indicator: $Indicator");
+  header("X-RateLimit-Reset: " . $status->getResetAt()->getTimestamp());
+  header("X-RateLimit-Benefit: " . $Benefit);
+
+  if ($status->limitExceeded()) {
   echo \crisp\core\PluginAPI::response(["RATE_LIMIT_REACHED"], "rate_limit", [], 429);
   exit;
-}
+  }
+ *
+ */
 switch ($_GET["apiversion"]) {
   case "export":
     switch ($Query) {
@@ -197,6 +201,8 @@ switch ($_GET["apiversion"]) {
     break;
   case "2":
   case "1":
+  case "v1":
+  case "v2":
     header("Content-Type: application/json");
 
     if ($Query == "all") {
@@ -257,6 +263,7 @@ switch ($_GET["apiversion"]) {
 
     break;
   case "3":
+  case "v3":
 
 
     if ($Query == "all") {
@@ -288,7 +295,7 @@ switch ($_GET["apiversion"]) {
       }
       $Query = crisp\api\Phoenix::getServiceBySlugPG($Query)["id"];
       $SkeletonData = \crisp\api\Phoenix::generateApiFiles($Query);
-      echo \crisp\core\PluginAPI::response(false, $Query, \crisp\api\Phoenix::generateApiFiles($Query, $_GET["apiversion"]));
+      echo \crisp\core\PluginAPI::response(false, $Query, \crisp\api\Phoenix::generateApiFiles($Query, "3"));
       exit;
     }
 
@@ -298,7 +305,7 @@ switch ($_GET["apiversion"]) {
     }
 
 
-    echo \crisp\core\PluginAPI::response(false, $Query, \crisp\api\Phoenix::generateApiFiles($Query, $_GET["apiversion"]));
+    echo \crisp\core\PluginAPI::response(false, $Query, \crisp\api\Phoenix::generateApiFiles($Query, "3"));
 
 
     break;

@@ -150,7 +150,7 @@ class Phoenix {
         break;
     }
 
-    self::$Redis_Database_Connection->set("pg_generateapifiles_" . $ID . "_$Version", serialize($SkeletonData));
+    self::$Redis_Database_Connection->set("pg_generateapifiles_" . $ID . "_$Version", serialize($SkeletonData), 900);
 
     return $SkeletonData;
   }

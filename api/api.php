@@ -216,6 +216,7 @@ switch ($_GET["apiversion"]) {
         foreach ($URLS as $URL) {
           $URL = trim($URL);
           $Response["tosdr/review/$URL"] = array(
+              "id" => (int) $Service["id"],
               "documents" => [],
               "logo" => "https://$_SERVER[HTTP_HOST]/" . \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") . "/img/logo/" . \crisp\api\Helper::filterAlphaNum($Service["name"]) . ".png",
               "name" => $Service["name"],
@@ -236,7 +237,7 @@ switch ($_GET["apiversion"]) {
       }
       $Query = crisp\api\Phoenix::getServiceBySlugPG($Query)["id"];
       $SkeletonData = \crisp\api\Phoenix::generateApiFiles($Query);
-      if ($_GET["apiversion"] === "1") {
+      if ($_GET["apiversion"] === "1" || $_GET["apiversion"] === "v1") {
         echo json_encode($SkeletonData);
       } else {
         echo \crisp\core\PluginAPI::response(false, $Query, $SkeletonData);
@@ -254,7 +255,7 @@ switch ($_GET["apiversion"]) {
 
     $SkeletonData = \crisp\api\Phoenix::generateApiFiles($Query);
 
-    if ($_GET["apiversion"] === "1") {
+    if ($_GET["apiversion"] === "1" || $_GET["apiversion"] === "v1") {
       echo json_encode($SkeletonData);
     } else {
       echo \crisp\core\PluginAPI::response(false, $Query, $SkeletonData);

@@ -82,6 +82,7 @@ if (php_sapi_name() !== "cli") {
   $CurrentFile = substr(substr($_SERVER['PHP_SELF'], 1), 0, -4);
   $CurrentPage = (isset($_GET["page"]) ? $_GET["page"] : substr($_SERVER["REQUEST_URI"], 1));
   $CurrentPage = ($CurrentPage == "" ? "frontpage" : $CurrentPage);
+  $CurrentPage = explode(".", $CurrentPage)[0];
 
   if (isset($_GET["universe"])) {
     Universe::changeUniverse($_GET["universe"]);

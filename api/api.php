@@ -178,6 +178,38 @@ switch ($_GET["apiversion"]) {
 
     echo $SVG;
     break;
+
+  case "updatecheck":
+
+    $opts = [
+        "http" => [
+            "method" => "GET",
+            "header" => "User-Agent: ToS;DR\r\n"
+        ]
+    ];
+
+    $context = stream_context_create($opts);
+
+    $Response = json_decode(file_get_contents("https://api.github.com/repos/tosdr/browser-extensions/releases/latest", false, $context));
+
+    if (!isset($Query) || empty($Query)) {
+      echo \crisp\core\PluginAPI::response(false, "Latest GitHub Release", ["release" => $Response->tag_name]);
+      exit;
+    } else {
+
+      $Version = $Query;
+      $Latest = $Response->tag_name;
+      if (\crisp\api\Helper::startsWith($Query, "v")) {
+        $Version = substr($Version, 1);
+      }
+      if (\crisp\api\Helper::startsWith($Latest, "v")) {
+        $Latest = substr($Latest, 1);
+      }
+
+      echo \crisp\core\PluginAPI::response(false, "Comparing versions", ["latest" => $Latest, "given" => $Version, "substring" => \crisp\api\Helper::startsWith($Query, "v"), "compare" => version_compare($Latest, $Version)]);
+    }
+    break;
+
   case "topic_v1":
     if (!isset($Query) || empty($Query)) {
       echo \crisp\core\PluginAPI::response(false, $Query, crisp\api\Phoenix::getTopicsPG());

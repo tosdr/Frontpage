@@ -27,7 +27,7 @@ namespace crisp;
 class core {
   /* Some important constants */
 
-  const CRISP_VERSION = "1.0.2";
+  const CRISP_VERSION = "1.1.0";
 
   /**
    * This is my autoloader. 
@@ -142,6 +142,7 @@ if (php_sapi_name() !== "cli") {
     $TwigTheme->addFunction(new \Twig\TwigFunction('prettyDump', [new \crisp\api\Helper(), 'prettyDump']));
     $TwigTheme->addFunction(new \Twig\TwigFunction('microtime', 'microtime'));
     $TwigTheme->addFunction(new \Twig\TwigFunction('includeResource', [new \crisp\core\Themes(), 'includeResource']));
+    $TwigTheme->addFunction(new \Twig\TwigFunction('generateLink', [new \crisp\api\Helper(), 'generateLink']));
 
 
     $Translation = new \crisp\api\Translation($Locale);

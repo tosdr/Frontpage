@@ -104,8 +104,6 @@ class Helper {
     return file_get_contents(__DIR__ . '/../../../../.git/refs/heads/' . self::getGitBranch());
   }
 
-  
-  
   /**
    * Filter a string and remove non-alphanumeric and spaces
    * @param string $String The string to filter
@@ -190,6 +188,10 @@ class Helper {
    */
   public static function getGitRevisionLink() {
     return "https://github.com/JustinBack/CrispCMS-ToS-DR/tree/" . self::getGitRevision();
+  }
+
+  public static function generateLink($Path, $External = false) {
+    return ($External ? $Path : "/" . self::getLocale() . "/$Path");
   }
 
   /**

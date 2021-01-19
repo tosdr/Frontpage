@@ -29,52 +29,52 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
 {% extends "base.twig" %}
 
 {% block content %}
-    {{ include("components/navbar.twig") }}
+  {{ include("components/navbar.twig") }}
 
-    <div class="jumbotron jumbotron-fluid">
-        <div class="container text-center">
-            <h1 class="display-4"><img class="img-fluid" src="{{ includeResource("img/tosdr-logo-128.svg") }}"alt="Logo"/></h1>
-            <h2 class="mt-2">{{ 'frontpage_jumbotron_text'|translate }}</h2>
-        </div>
+  <div class="jumbotron jumbotron-fluid">
+    <div class="container text-center">
+      <h1 class="display-4"><img class="img-fluid" src="{{ includeResource("img/tosdr-logo-128.svg") }}"alt="Logo"/></h1>
+      <h2 class="mt-2">{{ 'frontpage_jumbotron_text'|translate }}</h2>
+    </div>
+  </div>
+
+  <div class="container mt-5">
+    <section id="intro">
+      <p>{{ 'frontpage_intro_top_text'|translate|raw }}</p>
+      <p>{{ 'frontpage_intro_bottom_text'|translate|raw }}</p>
+    </section>
+    &nbsp;
+    &nbsp;
+    <div class="btn-group d-flex" role="group">
+      <a role="button" class="btn btn-success btn-lg w-100 mb-2" href="{{ generateLink("downloads") }}">{{ 'frontpage_intro_button_download'|translate }}</a>
+      <a role="button" target="_blank" class="btn btn-primary btn-lg w-100 mb-2" href="{{ generateLink(config.phoenix_url, true) }}">{{ 'frontpage_intro_button_contribute'|translate }}</a>
     </div>
 
-    <div class="container mt-5">
-        <section id="intro">
-            <p>{{ 'frontpage_intro_top_text'|translate|raw }}</p>
-            <p>{{ 'frontpage_intro_bottom_text'|translate|raw }}</p>
-        </section>
-        &nbsp;
-        &nbsp;
-        <div class="btn-group d-flex" role="group">
-            <a role="button" class="btn btn-success btn-lg w-100 mb-2" href="/{{ locale }}/downloads">{{ 'frontpage_intro_button_download'|translate }}</a>
-            <a role="button" target="_blank" class="btn btn-primary btn-lg w-100 mb-2" href="{{ config.phoenix_url }}">{{ 'frontpage_intro_button_contribute'|translate }}</a>
-        </div>
-
-        <section>
-            <div id="news-section mt-5" class="text-center">
-                <a class="mx-3" href="https://moneyland.time.com/2012/08/10/new-site-grades-those-pesky-terms-of-service-agreements-you-never-read/"><img src="/{{ config.theme_dir }}/{{ config.theme }}/img/time.png" alt="Time"></a>
-                <a class="mx-3" href="https://gigaom.com/2012/08/14/i-agree-why-terms-of-service-report-cards-are-a-good-idea/"><img src="/{{ config.theme_dir }}/{{ config.theme }}/img/gigaom.gif" alt="GigaOM"></a>
-                <a class="mx-3" href="https://www.theverge.com/2012/8/14/3241572/tos-dr-terms-of-service"><img src="/{{ config.theme_dir }}/{{ config.theme }}/img/verge.png" alt="The Verge"></a>
-                <a class="mx-3" href="https://www.lemonde.fr/technologies/article/2012/08/14/un-site-veut-mettre-fin-au-mensonge-des-conditions-d-utilisation-sur-internet_1745942_651865.html"><img src="/{{ config.theme_dir }}/{{ config.theme }}/img/lemondefr.png" alt="Le Monde"></a>
-                <a class="mx-3" href="https://www.zeit.de/digital/internet/2012-08/terms-of-service-did-not-read"><img src="/{{ config.theme_dir }}/{{ config.theme }}/img/zeit.png" alt="Die Zeit"></a>
-                <a class="mx-3" href="https://www.wired.com/story/terms-of-service-didnt-read/"><img src="/{{ config.theme_dir }}/{{ config.theme }}/img/wired.gif" alt="Wired"></a>
-                <a class="mx-3" href="https://www.strategy-business.com/blog/Artificial-Intelligence-Ratings-and-the-Small-Print" style="color:grey;padding:8px">S+B</a>
-                <a class="mx-3" href="https://www.datingnews.com/daters-pulse/tosdr-brings-transparency-to-dating-industry-by-assessing-terms-of-service/" style="color:grey;padding:8px">DN</a>
+    <section>
+      <div id="news-section mt-5" class="text-center">
+        <a class="mx-3" href="{{ generateLink("https://moneyland.time.com/2012/08/10/new-site-grades-those-pesky-terms-of-service-agreements-you-never-read/", true) }}"><img src="{{ includeResource("img/news/time.png") }}" alt="Time"></a>
+        <a class="mx-3" href="{{ generateLink("https://gigaom.com/2012/08/14/i-agree-why-terms-of-service-report-cards-are-a-good-idea/", true)}}"><img src="{{ includeResource("img/news/gigaom.gif") }}" alt="GigaOM"></a>
+        <a class="mx-3" href="{{ generateLink("https://www.theverge.com/2012/8/14/3241572/tos-dr-terms-of-service", true)}}"><img src="{{ includeResource("img/news/verge.png") }}" alt="The Verge"></a>
+                <a class="mx-3" href="{{ generateLink("https://www.lemonde.fr/technologies/article/2012/08/14/un-site-veut-mettre-fin-au-mensonge-des-conditions-d-utilisation-sur-internet_1745942_651865.html", true)}}"><img src="{{ includeResource("img/news/lemondefr.png") }}" alt="Le Monde"></a>
+                <a class="mx-3" href="{{ generateLink("https://www.zeit.de/digital/internet/2012-08/terms-of-service-did-not-read", true)}}"><img src="{{ includeResource("img/news/zeit.png") }}" alt="Die Zeit"></a>
+                <a class="mx-3" href="{{ generateLink("https://www.wired.com/story/terms-of-service-didnt-read/", true)}}"><img src="{{ includeResource("/img/news/wired.gif") }}" alt="Wired"></a>
+                <a class="mx-3" href="{{ generateLink("https://www.strategy-business.com/blog/Artificial-Intelligence-Ratings-and-the-Small-Print", true)}}" style="color:grey;padding:8px">S+B</a>
+                <a class="mx-3" href="{{ generateLink("https://www.datingnews.com/daters-pulse/tosdr-brings-transparency-to-dating-industry-by-assessing-terms-of-service/", true)}}" style="color:grey;padding:8px">DN</a>
             </div>
             <hr>
             <div id="forum-link">
-                <a role="button" target="_blank" class="btn btn-primary btn-lg btn-block" href="{{ config.forum_url }}">{{ 'frontpage_forum_button_forum'|translate }}</a>
+                <a role="button" target="_blank" class="btn btn-primary btn-lg btn-block" href="{{ generateLink(config.forum_url, true) }}">{{ 'frontpage_forum_button_forum'|translate }}</a>
             </div>
             <br>
             <center>
                 <div class="btn-group">
-                    <a href="{{ config.twitter_link }}" class="btn btn-primary"><i class="fab fa-twitter"/></i></a>
-                    <a href="{{ config.opencollective_url }}" class="btn btn-info"><i class="fas fa-donate"/></i></a>
-                    <a href="{{ config.github_link }}" class="btn btn-dark"><i class="fab fa-github"/></i></a>
-                    <a href="{{ config.discord_link }}" style="background-color: #7289DA; border-color: #7289DA;" class="btn btn-dark"><i class="fab fa-discord"/></i></a>
-                    <a href="{{ config.reddit_link }}" style="background-color: #ff4500; border-color: #ff4500;" class="btn btn-dark"><i class="fab fa-reddit"/></i></a>
-                    <a href="{{ config.forum_url }}" class="btn btn-warning"><i class="fab fa-discourse"/></i></a>
-                    <a href="{{ config.wikipedia_link }}" class="btn btn-light"><i class="fab fa-wikipedia-w"/></i></a>
+                    <a href="{{ generateLink(config.twitter_link, true) }}" class="btn btn-primary"><i class="fab fa-twitter"/></i></a>
+                    <a href="{{ generateLink(config.opencollective_url, true) }}" class="btn btn-info"><i class="fas fa-donate"/></i></a>
+                    <a href="{{ generateLink(config.github_link, true) }}" class="btn btn-dark"><i class="fab fa-github"/></i></a>
+                    <a href="{{ generateLink(config.discord_link, true) }}" style="background-color: #7289DA; border-color: #7289DA;" class="btn btn-dark"><i class="fab fa-discord"/></i></a>
+                    <a href="{{ generateLink(config.reddit_link, true) }}" style="background-color: #ff4500; border-color: #ff4500;" class="btn btn-dark"><i class="fab fa-reddit"/></i></a>
+                    <a href="{{ generateLink(config.forum_url, true) }}" class="btn btn-warning"><i class="fab fa-discourse"/></i></a>
+                    <a href="{{ generateLink(config.wikipedia_link, true) }}" class="btn btn-light"><i class="fab fa-wikipedia-w"/></i></a>
                 </div>
             </center>
         </section>

@@ -22,6 +22,9 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
 #}
 {% set currentPage = 'service' %}
 {% set pageTitle = service.name %}
+{% set ogTitle = service.name %}
+{% set ogImage = includeResource(service.image) %}
+{% set ogDescription = 'ogp_description_service'|translate(1, {"{{ service }}": service.name, "{{ grade }}": service.rating}) %}
 {% set error = false %}
 
 

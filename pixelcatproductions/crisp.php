@@ -111,6 +111,9 @@ if (php_sapi_name() !== "cli") {
       include __DIR__ . "/../themes/$CurrentTheme/hook.php";
     }
 
+    if (!isset($_SERVER['HTTP_USER_AGENT']) || empty($_SERVER['HTTP_USER_AGENT'])) {
+      throw new \Exception("Empty user agent");
+    }
 
 
     api\Helper::setLocale();
@@ -161,6 +164,40 @@ if (php_sapi_name() !== "cli") {
     $EnvFile = parse_ini_file(__DIR__ . "/../.env");
 
     if (!defined('CRISP_API')) {
+
+      $RedisClass = new \crisp\core\Redis();
+      $rateLimiter = new \RateLimit\RedisRateLimiter($RedisClass->getDBConnector());
+
+      $Limit = \RateLimit\Rate::perMinute(100);
+      $Benefit = "guest";
+      $Indicator = \crisp\api\Helper::getRealIpAddr();
+
+      if (CURRENT_UNIVERSE == \crisp\Universe::UNIVERSE_TOSDR || in_array(\crisp\api\Helper::getRealIpAddr(), \crisp\api\Config::get("office_ips"))) {
+        $Limit = \RateLimit\Rate::perSecond(10000);
+        $Benefit = "staff";
+        if (in_array(\crisp\api\Helper::getRealIpAddr(), \crisp\api\Config::get("office_ips"))) {
+          $Benefit = "office";
+        }
+      }
+
+      $status = $rateLimiter->limitSilently($Indicator, $Limit);
+
+      header("X-RateLimit-Amount: " . $status->getRemainingAttempts());
+      header("X-RateLimit-Exceeded: " . ($status->limitExceeded() ? "true" : "false"));
+      header("X-RateLimit-Limit: " . $status->getLimit());
+      header("X-RateLimit-Interval: " . $Limit->getInterval());
+      header("X-RateLimit-Operations: " . $Limit->getOperations());
+      header("X-RateLimit-Indicator: $Indicator");
+      header("X-RateLimit-Reset: " . $status->getResetAt()->getTimestamp());
+      header("X-RateLimit-Benefit: " . $Benefit);
+
+      if ($status->limitExceeded()) {
+        http_response_code(429);
+        echo $TwigTheme->render("errors/ratelimit.twig", array(
+            "ReferenceID" => api\ErrorReporter::create(429, $status->getResetAt(), $Benefit . "\n\n" . api\Helper::currentURL(), "ratelimit_")
+        ));
+        exit;
+      }
 
       if (!isset($_GET["l"]) && !defined("CRISP_API")) {
         header("Location: /$Locale/$CurrentPage");

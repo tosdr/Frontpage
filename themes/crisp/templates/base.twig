@@ -38,6 +38,13 @@
       <link rel="stylesheet" href="{{ includeResource("css/social-icons.min.css") }}">
       <link rel="stylesheet" href="{{ includeResource("css/ranking-badges.min.css") }}">
 
+      <meta property="og:title" content="{{ ogTitle|default(pageTitle) }} {{ config.page_delimiter }} {{ config.site_name }}" />
+      <meta property="og:description" content="{{ ogDescription|default('frontpage_jumbotron_text'|translate) }}" />
+      <meta property="og:type" content="website" />
+      <meta property="og:url" content="{{ URL }}" />
+      <meta property="og:locale" content="{{ locale }}" />
+      <meta property="og:image" content="{{ ogImage|default(includeResource("img/ogp.png")) }}" />
+
       <!-- END Default Crisp CSS -->
       <title>{{ pageTitle }} {{ config.page_delimiter }} {{ config.site_name }}</title>
     {% endblock %}
@@ -76,7 +83,7 @@
   <!-- START Default Crisp JS -->
   {% block default_scripts %}
     <script src="{{ includeResource("js/crisp.min.js") }}"></script>
-    
+
     {#
     <script>
         function addDarkmodeWidget() {

@@ -1,4 +1,3 @@
 <Files ~ "\.(env|php|twig|zip|rar|txt|7z)$">
-    Order allow,deny
-    Deny from all
+    Require all denied
 </Files>

@@ -36,6 +36,5 @@ RewriteRule ^(.*)$ index.php?page=$1 [NC,L,QSA,B]
 
 
 <Files ~ "\.(env)$">
-    Order allow,deny
-    Deny from all
+    Require all denied
 </Files>

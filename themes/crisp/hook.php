@@ -1,6 +1,6 @@
 <?php
 
-\crisp\core\Theme::addtoNavbar("frontpage", crisp\api\Translation::fetch("navbar_item_home"), \crisp\api\Helper::generateLink("/"), "_self", -99);
+\crisp\core\Theme::addtoNavbar("frontpage", crisp\api\Translation::fetch("navbar_item_home"), \crisp\api\Helper::generateLink("frontpage"), "_self", -99);
 \crisp\core\Theme::addtoNavbar("ratings", crisp\api\Translation::fetch("navbar_item_ratings"), \crisp\api\Helper::generateLink("#ratings"), "_self", -98);
 \crisp\core\Theme::addtoNavbar("api", crisp\api\Translation::fetch("navbar_item_api"), \crisp\api\Helper::generateLink("api"), "_self", -95);
 \crisp\core\Theme::addtoNavbar("forum", crisp\api\Translation::fetch("navbar_item_forum"), \crisp\api\Helper::generateLink(\crisp\api\Config::get("forum_url"), true), "_self", -94);

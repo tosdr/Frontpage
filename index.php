@@ -18,14 +18,3 @@
  */
 
 require_once __DIR__ . "/pixelcatproductions/crisp.php";
-
-/**
- * I am not needed anymore, all the magic happens in the following directories:
- * 
- * 
- * /themes/crisp/includes
- * /themes/crisp/views/templates/views
- * 
- * /plugins/pluginname/includes
- * /plugins/pluginname/templates/views
- */

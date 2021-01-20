@@ -21,27 +21,29 @@ $Limit = \RateLimit\Rate::perMinute(100);
 $Benefit = "guest";
 $Indicator = \crisp\api\Helper::getRealIpAddr();
 
-if (CURRENT_UNIVERSE == crisp\Universe::UNIVERSE_TOSDR) {
-  $Limit = \RateLimit\Rate::perSecond(1000);
+if (CURRENT_UNIVERSE == crisp\Universe::UNIVERSE_TOSDR || in_array(crisp\api\Helper::getRealIpAddr(), \crisp\api\Config::get("office_ips"))) {
+  $Limit = \RateLimit\Rate::perSecond(10000);
   $Benefit = "staff";
+  if (in_array(crisp\api\Helper::getRealIpAddr(), \crisp\api\Config::get("office_ips"))) {
+    $Benefit = "office";
+  }
 }
 
-/*
- * $status = $rateLimiter->limitSilently($Indicator, $Limit);
+$status = $rateLimiter->limitSilently($Indicator, $Limit);
 
-  header("X-RateLimit-Amount: " . $status->getRemainingAttempts());
-  header("X-RateLimit-Exceeded: " . ($status->limitExceeded() ? "true" : "false"));
-  header("X-RateLimit-Limit: " . $status->getLimit());
-  header("X-RateLimit-Indicator: $Indicator");
-  header("X-RateLimit-Reset: " . $status->getResetAt()->getTimestamp());
-  header("X-RateLimit-Benefit: " . $Benefit);
+header("X-RateLimit-Amount: " . $status->getRemainingAttempts());
+header("X-RateLimit-Exceeded: " . ($status->limitExceeded() ? "true" : "false"));
+header("X-RateLimit-Limit: " . $status->getLimit());
+header("X-RateLimit-Interval: " . $Limit->getInterval());
+header("X-RateLimit-Operations: " . $Limit->getOperations());
+header("X-RateLimit-Indicator: $Indicator");
+header("X-RateLimit-Reset: " . $status->getResetAt()->getTimestamp());
+header("X-RateLimit-Benefit: " . $Benefit);
 
-  if ($status->limitExceeded()) {
+if ($status->limitExceeded()) {
   echo \crisp\core\PluginAPI::response(["RATE_LIMIT_REACHED"], "rate_limit", [], 429);
   exit;
-  }
- *
- */
+}
 switch ($_GET["apiversion"]) {
   case "export":
     switch ($Query) {

@@ -39,7 +39,7 @@
           "browser": "Mozilla Firefox",
           "type": "components.extensiongrid.addon.type.addon",
           "image": "img/browser-extensions/icons/firefox.svg",
-          "description": "firefox_description",
+          "description": "views.downloads.addon.firefox_description",
           "url": "https://addons.mozilla.org/en-US/firefox/addon/terms-of-service-didnt-read/",
           "repository": "https://github.com/tosdr/browser-extensions",
           "direct": "https://addons.mozilla.org/firefox/downloads/latest/terms-of-service-didnt-read/addon-latest.xpi"
@@ -47,28 +47,28 @@
           "browser": "Google Chrome",
           "type": "components.extensiongrid.addon.type.extension",
           "image": "img/browser-extensions/icons/chrome.svg",
-          "description": "chrome_description",
+          "description": "views.downloads.addon.chrome_description",
           "url": "https://chrome.google.com/webstore/detail/hjdoplcnndgiblooccencgcggcoihigg",
           "repository": "https://github.com/tosdr/browser-extensions"
         }, {
           "browser": "Safari",
           "type": "components.extensiongrid.addon.type.extension",
           "image": "img/browser-extensions/icons/safari.svg",
-          "description": "safari_description",
+          "description": "views.downloads.addon.safari_description",
           "url": "https://safariextension.tosdr.org/",
           "repository": "https://github.com/tosdr/tosdr-safari"
         }, {
           "browser": "Microsoft Edge",
           "type": "components.extensiongrid.addon.type.extension",
           "image": "img/browser-extensions/icons/edge.svg",
-          "description": "edge_description",
+          "description": "views.downloads.addon.edge_description",
           "url": "https://microsoftedge.microsoft.com/addons/detail/oaaecoiolcpocebdnakfpfjegbmmpkjn",
           "repository": "https://github.com/tosdr/browser-extensions"
         }, {
           "browser": "Opera",
           "type": "components.extensiongrid.addon.type.addon",
           "image": "img/browser-extensions/icons/opera.svg",
-          "description": "opera_description",
+          "description": "views.downloads.addon.opera_description",
           "url": "https://addons.opera.com/extensions/details/terms-of-service-didnt-read/",
           "repository": "https://github.com/tosdr/tosdr-opera"
         }

@@ -29,50 +29,50 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
 {% extends "base.twig" %}
 
 {% block content %}
-    {{ include("components/navbar.twig") }}
+  {{ include("components/navbar.twig") }}
 
-    <div class="jumbotron" id="api">
-        <div><h1>{{ 'api'|translate }}</h1></div>
-        <p>
-            {{ 'api_jumbotron'|translate|raw }}
-        </p>
-    </div>
-
-
-    <div class="container">
+  <div class="jumbotron" id="api">
+    <div><h1>{{ 'views.api.jumbotron.header'|translate }}</h1></div>
+    <p>
+      {{ 'views.api.jumbotron.text'|translate|raw }}
+    </p>
+  </div>
 
 
-        <h2>{{ 'api_container_h2'|translate }}</h2>
-        <p>
-            {{ 'api_container_p_1'|translate|raw }}
-        </p>
+  <div class="container">
 
-        <ul>
-            <li>{{ 'api_container_ul_li'|translate|raw }}</li>
-        </ul>
 
-        <h3 class="page-header">{{ 'api_container_h3'|translate|raw }}</h3>
-        <p>
-            {{ 'api_container_p_2'|translate|raw }}
-        </p>
-        <pre>
+    <h2>{{ 'views.api.info.header'|translate }}</h2>
+    <p>
+      {{ 'views.api.info.text'|translate|raw }}
+    </p>
+
+    <ul>
+      <li>{{ 'views.api.info.list.text'|translate|raw }}</li>
+    </ul>
+
+    <h3 class="page-header">{{ 'views.api.use.header'|translate|raw }}</h3>
+    <p>
+      {{ 'views.api.use.text'|translate|raw }}
+    </p>
+    <pre>
 $.getJSON("https://api.tosdr.org/v1/service/facebook.json").done(function(data) {
   return console.log(JSON.stringify(data));
 });
-        </pre>
+    </pre>
 
-        <p id="licensing">{{ 'api_container_p_3'|translate|raw }}</p>
+    <p id="licensing">{{ 'views.api.use.license'|translate|raw }}</p>
 
 
 
-        <h2 class="page-header">{{ 'api_container_h2_2'|translate|raw }}</h2>
-        <p>
-            {{ 'api_container_p_4'|translate|raw }}
-        </p>
+    <h2 class="page-header">{{ 'views.api.examples.header'|translate|raw }}</h2>
+    <p>
+      {{ 'views.api.examples.text'|translate|raw }}
+    </p>
 
-        <p>
-            {{ 'api_container_p_5'|translate|raw }}
-        </p>
+    <p>
+      {{ 'views.api.feedback.text'|translate|raw }}
+    </p>
 
-    </div> <!-- /container -->
+  </div> <!-- /container -->
 {% endblock %}

@@ -21,7 +21,7 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
     - JB
 #}
 {% set currentPage = 'classification' %}
-{% set pageTitle = 'classification'|translate %}
+{% set pageTitle = 'views.classification.jumbotron.header'|translate %}
 {% set error = false %}
 
 
@@ -32,49 +32,49 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
     {{ include("components/navbar.twig") }}
 
     <div class="jumbotron" id="api">
-        <div><h1>{{ 'classification'|translate }}</h1></div>
-        <p>{{ 'classification_jumbotron_p_1'|translate|raw }}</p>
+        <div><h1>{{ 'views.classification.jumbotron.header'|translate }}</h1></div>
+        <p>{{ 'views.classification.jumbotron.text'|translate|raw }}</p>
     </div>
 
 
     <div class="container">
         <p>
         <p>
-            {{ 'classification_container_content_p_1'|translate }}
+            {{ 'views.classification.container.text.1'|translate }}
         </p>
-        <span class="badge badge-success"><i class="fas fa-thumbs-up"></i> {{ 'point_good'|translate }}</span>, 
-        <span class="badge badge-warning"><i class="fas fa-thumbs-down"></i> {{ 'point_bad'|translate }}</span>, 
-        <span class="badge badge-danger"><i class="fas fa-times"></i> {{ 'point_blocker'|translate }}</span> {{ 'or'|translate }}
-        <span class="badge badge-secondary"><i class="fas fa-arrow-right"></i> {{ 'point_neutral'|translate }}</span>
+        <span class="badge badge-success"><i class="fas fa-thumbs-up"></i> {{ 'views.classification.point.good'|translate }}</span>, 
+        <span class="badge badge-warning"><i class="fas fa-thumbs-down"></i> {{ 'views.classification.point.bad'|translate }}</span>, 
+        <span class="badge badge-danger"><i class="fas fa-times"></i> {{ 'views.classification.point.blocker'|translate }}</span> {{ 'views.classification.utility.or'|translate }}
+        <span class="badge badge-secondary"><i class="fas fa-arrow-right"></i> {{ 'views.classification.point.neutral'|translate }}</span>
         
         <p>
-            {{ 'classification_container_content_p_2'|translate }}
+            {{ 'views.classification.container.text.2'|translate }}
         </p>
         <p>
-        {% include "components/rating.twig" with {'rating': "A"} %} {{ 'class_a_desc'|translate }}
-        </p>
-        
-        <p>
-        {% include "components/rating.twig" with {'rating': "B"} %} {{ 'class_b_desc'|translate }}
+        {% include "components/rating.twig" with {'rating': "A"} %} {{ 'views.classification.class.a.desc'|translate }}
         </p>
         
         <p>
-        {% include "components/rating.twig" with {'rating': "C"} %} {{ 'class_c_desc'|translate }}
+        {% include "components/rating.twig" with {'rating': "B"} %} {{ 'views.classification.class.b.desc'|translate }}
         </p>
         
         <p>
-        {% include "components/rating.twig" with {'rating': "D"} %} {{ 'class_d_desc'|translate }}
+        {% include "components/rating.twig" with {'rating': "C"} %} {{ 'views.classification.class.c.desc'|translate }}
         </p>
         
         <p>
-        {% include "components/rating.twig" with {'rating': "E"} %} {{ 'class_e_desc'|translate }}
+        {% include "components/rating.twig" with {'rating': "D"} %} {{ 'views.classification.class.d.desc'|translate }}
         </p>
         
         <p>
-        {% include "components/rating.twig" with {'rating': "N/A"} %} {{ 'class_none_desc'|translate }}
+        {% include "components/rating.twig" with {'rating': "E"} %} {{ 'views.classification.class.e.desc'|translate }}
+        </p>
+        
+        <p>
+        {% include "components/rating.twig" with {'rating': "N/A"} %} {{ 'views.classification.class.none.desc'|translate }}
         </p>
         <p>
-            {{ 'classification_container_content_p_3'|translate }}
+            {{ 'views.classification.container.text.3'|translate }}
         </p>
     </p>
 </div> <!-- /container -->

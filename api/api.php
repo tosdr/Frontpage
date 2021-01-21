@@ -96,27 +96,27 @@ switch ($_GET["apiversion"]) {
     switch ($RedisData["is_comprehensively_reviewed"] ? ($RedisData["rating"]) : false) {
       case "A":
         $Color = "46A546";
-        $Rating = $Translations->fetch("privacy_grade_a");
+        $Rating = $Translations->fetch("badges.grade.a");
         break;
       case "B":
         $Color = "79B752";
-        $Rating = $Translations->fetch("privacy_grade_b");
+        $Rating = $Translations->fetch("badges.grade.b");
         break;
       case "C":
         $Color = "F89406";
-        $Rating = $Translations->fetch("privacy_grade_c");
+        $Rating = $Translations->fetch("badges.grade.c");
         break;
       case "D":
         $Color = "D66F2C";
-        $Rating = $Translations->fetch("privacy_grade_d");
+        $Rating = $Translations->fetch("badges.grade.d");
         break;
       case "E":
         $Color = "C43C35";
-        $Rating = $Translations->fetch("privacy_grade_e");
+        $Rating = $Translations->fetch("badges.grade.e");
         break;
       default:
         $Color = "999999";
-        $Rating = $Translations->fetch("privacy_grade_none");
+        $Rating = $Translations->fetch("badges.grade.none");
     }
 
     header("X-API-Service: " . $RedisData["id"]);

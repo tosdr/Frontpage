@@ -124,7 +124,7 @@ class Translation {
 
             $Array = array();
             foreach ($Translations as $Item) {
-                if (strpos($Item["key"], "plugin_") !== false) {
+                if (strpos($Item["key"], "plugin.") !== false) {
                     continue;
                 }
                 if ($Item[$Key] === null) {
@@ -248,7 +248,7 @@ class Translation {
 
         $statement = self::$Database_Connection->prepare("SELECT * FROM Translations WHERE `key` = :Key");
         $statement->execute(array(
-            ":Key" => $Key . "_plural",
+            ":Key" => $Key . ".plural",
                 //":Language" => $this->Language
         ));
         if ($statement->rowCount() > 0) {
@@ -256,14 +256,14 @@ class Translation {
 
             if ($Translation[self::$Language] === null) {
                 if (self::$Language == "en") {
-                    return $Key . "_plural";
+                    return $Key . ".plural";
                 }
                 return strtr($Translation["en"], $Options);
             }
 
             return strtr($Translation[self::$Language], $Options);
         }
-        return $Key . "_plural";
+        return $Key . ".plural";
     }
 
 }

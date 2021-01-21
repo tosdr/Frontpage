@@ -21,7 +21,7 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
     - JB
 #}
 {% set currentPage = 'imprint' %}
-{% set pageTitle = 'imprint'|translate %}
+{% set pageTitle = 'views.imprint.title'|translate %}
 {% set error = false %}
 
 
@@ -32,7 +32,7 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
     {{ include("components/navbar.twig") }}
 
     <div class="jumbotron" id="api">
-        <div><h1>{{ 'imprint'|translate }}</h1></div>
+        <div><h1>{{ 'views.imprint.title'|translate }}</h1></div>
     </div>
 
 
@@ -40,7 +40,7 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
 
 
         <p>
-            {{ 'imprint_container_p_1'|translate|raw }}
+            {{ 'views.imprint.container.text'|translate|raw }}
         </p>
 
     </div> <!-- /container -->

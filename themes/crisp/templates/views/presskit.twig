@@ -21,7 +21,7 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
     - JB
 #}
 {% set currentPage = 'presskit' %}
-{% set pageTitle = 'presskit'|translate %}
+{% set pageTitle = 'views.presskit.title'|translate %}
 {% set error = false %}
 
 
@@ -32,8 +32,8 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
   {{ include("components/navbar.twig") }}
 
   <div class="jumbotron" id="api">
-    <div><h1>{{ 'presskit'|translate }}</h1></div>
-    <a role="button" class="btn btn-outline-primary" href="?download">{{ 'download_presskit'|translate }}</a>
+    <div><h1>{{ 'views.presskit.title'|translate }}</h1></div>
+    <a role="button" class="btn btn-outline-primary" href="?download">{{ 'views.presskit.button.download.text'|translate }}</a>
   </div>
 
 
@@ -41,7 +41,7 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
 
 
     <p>
-      {{ 'presskit_container_p_1'|translate|raw }}
+      {{ 'views.presskit.container.text'|translate|raw }}
     </p>
 
 

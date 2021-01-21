@@ -21,7 +21,7 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
     - JB
 #}
 {% set currentPage = 'frontpage' %}
-{% set pageTitle = 'frontpage'|translate %}
+{% set pageTitle = 'views.frontpage.title'|translate %}
 {% set error = false %}
 
 
@@ -34,20 +34,20 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
   <div class="jumbotron jumbotron-fluid">
     <div class="container text-center">
       <h1 class="display-4"><img class="img-fluid" src="{{ includeResource("img/tosdr-logo-128.svg") }}"alt="Logo"/></h1>
-      <h2 class="mt-2">{{ 'frontpage_jumbotron_text'|translate }}</h2>
+      <h2 class="mt-2">{{ 'views.frontpage.jumbotron.text'|translate }}</h2>
     </div>
   </div>
 
   <div class="container mt-5">
     <section id="intro">
-      <p>{{ 'frontpage_intro_top_text'|translate|raw }}</p>
-      <p>{{ 'frontpage_intro_bottom_text'|translate|raw }}</p>
+      <p>{{ 'views.frontpage.intro.text.top'|translate|raw }}</p>
+      <p>{{ 'views.frontpage.intro.text.bottom'|translate|raw }}</p>
     </section>
     &nbsp;
     &nbsp;
     <div class="btn-group d-flex" role="group">
-      <a role="button" class="btn btn-success btn-lg w-100 mb-2" href="{{ generateLink("downloads") }}">{{ 'frontpage_intro_button_download'|translate }}</a>
-      <a role="button" target="_blank" class="btn btn-primary btn-lg w-100 mb-2" href="{{ generateLink(config.phoenix_url, true) }}">{{ 'frontpage_intro_button_contribute'|translate }}</a>
+      <a role="button" class="btn btn-success btn-lg w-100 mb-2" href="{{ generateLink("downloads") }}">{{ 'views.frontpage.button.download.text'|translate }}</a>
+      <a role="button" target="_blank" class="btn btn-primary btn-lg w-100 mb-2" href="{{ generateLink(config.phoenix_url, true) }}">{{ 'views.frontpage.button.phoenix.text'|translate }}</a>
     </div>
 
     <section>
@@ -55,76 +55,76 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
         <a class="mx-3" href="{{ generateLink("https://moneyland.time.com/2012/08/10/new-site-grades-those-pesky-terms-of-service-agreements-you-never-read/", true) }}"><img src="{{ includeResource("img/news/time.png") }}" alt="Time"></a>
         <a class="mx-3" href="{{ generateLink("https://gigaom.com/2012/08/14/i-agree-why-terms-of-service-report-cards-are-a-good-idea/", true)}}"><img src="{{ includeResource("img/news/gigaom.gif") }}" alt="GigaOM"></a>
         <a class="mx-3" href="{{ generateLink("https://www.theverge.com/2012/8/14/3241572/tos-dr-terms-of-service", true)}}"><img src="{{ includeResource("img/news/verge.png") }}" alt="The Verge"></a>
-                <a class="mx-3" href="{{ generateLink("https://www.lemonde.fr/technologies/article/2012/08/14/un-site-veut-mettre-fin-au-mensonge-des-conditions-d-utilisation-sur-internet_1745942_651865.html", true)}}"><img src="{{ includeResource("img/news/lemondefr.png") }}" alt="Le Monde"></a>
-                <a class="mx-3" href="{{ generateLink("https://www.zeit.de/digital/internet/2012-08/terms-of-service-did-not-read", true)}}"><img src="{{ includeResource("img/news/zeit.png") }}" alt="Die Zeit"></a>
-                <a class="mx-3" href="{{ generateLink("https://www.wired.com/story/terms-of-service-didnt-read/", true)}}"><img src="{{ includeResource("/img/news/wired.gif") }}" alt="Wired"></a>
-                <a class="mx-3" href="{{ generateLink("https://www.strategy-business.com/blog/Artificial-Intelligence-Ratings-and-the-Small-Print", true)}}" style="color:grey;padding:8px">S+B</a>
-                <a class="mx-3" href="{{ generateLink("https://www.datingnews.com/daters-pulse/tosdr-brings-transparency-to-dating-industry-by-assessing-terms-of-service/", true)}}" style="color:grey;padding:8px">DN</a>
-            </div>
-            <hr>
-            <div id="forum-link">
-                <a role="button" target="_blank" class="btn btn-primary btn-lg btn-block" href="{{ generateLink(config.forum_url, true) }}">{{ 'frontpage_forum_button_forum'|translate }}</a>
-            </div>
-            <br>
-            <center>
-                <div class="btn-group">
-                    <a href="{{ generateLink(config.twitter_link, true) }}" class="btn btn-primary"><i class="fab fa-twitter"/></i></a>
-                    <a href="{{ generateLink(config.opencollective_url, true) }}" class="btn btn-info"><i class="fas fa-donate"/></i></a>
-                    <a href="{{ generateLink(config.github_link, true) }}" class="btn btn-dark"><i class="fab fa-github"/></i></a>
-                    <a href="{{ generateLink(config.discord_link, true) }}" style="background-color: #7289DA; border-color: #7289DA;" class="btn btn-dark"><i class="fab fa-discord"/></i></a>
-                    <a href="{{ generateLink(config.reddit_link, true) }}" style="background-color: #ff4500; border-color: #ff4500;" class="btn btn-dark"><i class="fab fa-reddit"/></i></a>
-                    <a href="{{ generateLink(config.forum_url, true) }}" class="btn btn-warning"><i class="fab fa-discourse"/></i></a>
-                    <a href="{{ generateLink(config.wikipedia_link, true) }}" class="btn btn-light"><i class="fab fa-wikipedia-w"/></i></a>
-                </div>
-            </center>
-        </section>
-        &nbsp;
-        &nbsp;
-        &nbsp;
-        &nbsp;
-        &nbsp;
-        <section id="ratings">
-            <input type="text" placeholder="{{ 'frontpage_ratings_ratingssearch_placeholder'|translate }}" class="form-control form-control-lg" value="{{ GET.search }}" id="ratingsearch"/>
-            {% include "components/loadingSpinner.twig" with {'elementID': 'searchLoading'} %}
-        </section>
-        &nbsp;
-        &nbsp;
-        &nbsp;
-        &nbsp;
-        &nbsp;
-        <section id="services">
+        <a class="mx-3" href="{{ generateLink("https://www.lemonde.fr/technologies/article/2012/08/14/un-site-veut-mettre-fin-au-mensonge-des-conditions-d-utilisation-sur-internet_1745942_651865.html", true)}}"><img src="{{ includeResource("img/news/lemondefr.png") }}" alt="Le Monde"></a>
+        <a class="mx-3" href="{{ generateLink("https://www.zeit.de/digital/internet/2012-08/terms-of-service-did-not-read", true)}}"><img src="{{ includeResource("img/news/zeit.png") }}" alt="Die Zeit"></a>
+        <a class="mx-3" href="{{ generateLink("https://www.wired.com/story/terms-of-service-didnt-read/", true)}}"><img src="{{ includeResource("/img/news/wired.gif") }}" alt="Wired"></a>
+        <a class="mx-3" href="{{ generateLink("https://www.strategy-business.com/blog/Artificial-Intelligence-Ratings-and-the-Small-Print", true)}}" style="color:grey;padding:8px">S+B</a>
+        <a class="mx-3" href="{{ generateLink("https://www.datingnews.com/daters-pulse/tosdr-brings-transparency-to-dating-industry-by-assessing-terms-of-service/", true)}}" style="color:grey;padding:8px">DN</a>
+      </div>
+      <hr>
+      <div id="forum-link">
+        <a role="button" target="_blank" class="btn btn-primary btn-lg btn-block" href="{{ generateLink(config.forum_url, true) }}">{{ 'views.frontpage.button.forum.text'|translate }}</a>
+      </div>
+      <br>
+      <center>
+        <div class="btn-group">
+          <a href="{{ generateLink(config.twitter_link, true) }}" class="btn btn-primary"><i class="fab fa-twitter"/></i></a>
+          <a href="{{ generateLink(config.opencollective_url, true) }}" class="btn btn-info"><i class="fas fa-donate"/></i></a>
+          <a href="{{ generateLink(config.github_link, true) }}" class="btn btn-dark"><i class="fab fa-github"/></i></a>
+          <a href="{{ generateLink(config.discord_link, true) }}" style="background-color: #7289DA; border-color: #7289DA;" class="btn btn-dark"><i class="fab fa-discord"/></i></a>
+          <a href="{{ generateLink(config.reddit_link, true) }}" style="background-color: #ff4500; border-color: #ff4500;" class="btn btn-dark"><i class="fab fa-reddit"/></i></a>
+          <a href="{{ generateLink(config.forum_url, true) }}" class="btn btn-warning"><i class="fab fa-discourse"/></i></a>
+          <a href="{{ generateLink(config.wikipedia_link, true) }}" class="btn btn-light"><i class="fab fa-wikipedia-w"/></i></a>
+        </div>
+      </center>
+    </section>
+    &nbsp;
+    &nbsp;
+    &nbsp;
+    &nbsp;
+    &nbsp;
+    <section id="ratings">
+      <input type="text" placeholder="{{ 'views.frontpage.search.input.placeholder'|translate }}" class="form-control form-control-lg" value="{{ GET.search }}" id="ratingsearch"/>
+      {% include "components/loadingSpinner.twig" with {'elementID': 'searchLoading'} %}
+    </section>
+    &nbsp;
+    &nbsp;
+    &nbsp;
+    &nbsp;
+    &nbsp;
+    <section id="services">
 
-            {% if isMobile == true %}
-                {% set colSize = 1 %}
-            {% else %}
-                {% set colSize = 2 %}
-            {% endif %}
-            {% if PopularServices|length > 0 %}
-                {% include "components/servicegrid/grid.twig" with {'Services': PopularServices, 'columns': colSize} %}
-            {% else %}
-                {% include "components/servicegrid/no_service.twig" %}
-            {% endif %}
-        </section>
+      {% if isMobile == true %}
+        {% set colSize = 1 %}
+      {% else %}
+        {% set colSize = 2 %}
+      {% endif %}
+      {% if PopularServices|length > 0 %}
+        {% include "components/servicegrid/grid.twig" with {'Services': PopularServices, 'columns': colSize} %}
+      {% else %}
+        {% include "components/servicegrid/no_service.twig" %}
+      {% endif %}
+    </section>
 
 
-    </div>
+  </div>
 
 {% endblock %}
 {% block scripts %}
-    <script>
+  <script>
 
-        // Backwards compability from old.tosdr.org
-        if (window.location.hash && window.location.hash !== "#ratings") {
-            if (window.location.hash.startsWith("#search=")) {
-                window.location.href = "/{{ locale }}/frontpage?search=" + encodeURIComponent(window.location.hash.substr(8));
-            } else {
+    // Backwards compability from old.tosdr.org
+    if (window.location.hash && window.location.hash !== "#ratings") {
+        if (window.location.hash.startsWith("#search=")) {
+            window.location.href = "/{{ locale }}/frontpage?search=" + encodeURIComponent(window.location.hash.substr(8));
+        } else {
 
-                // https://stackoverflow.com/a/8896309
-                var url = window.location.href;
-                var exp = url.split(/^(([^:\/?#]+):)?(\/\/([^\/?#]*))?([^?#]*)(\?([^#]*))?(#(.*))?/);
-                var firstPortion = exp[5].split("/")[1]
-                window.location.href = "/" + firstPortion + "/service/" + encodeURIComponent(window.location.hash.substr(1));
-            }
+            // https://stackoverflow.com/a/8896309
+            var url = window.location.href;
+            var exp = url.split(/^(([^:\/?#]+):)?(\/\/([^\/?#]*))?([^?#]*)(\?([^#]*))?(#(.*))?/);
+            var firstPortion = exp[5].split("/")[1]
+            window.location.href = "/" + firstPortion + "/service/" + encodeURIComponent(window.location.hash.substr(1));
         }
-    </script>
+    }
+  </script>
 {% endblock %}

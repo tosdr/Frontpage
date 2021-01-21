@@ -56,7 +56,7 @@
 
 
             <li data-toggle="tooltip" title="{{ point.quoteText|striptags|truncateText(300) }}" class="list-group-item list-group-item-{{ color }}"><a  target="_blank" class="link-unstyled" href="{{ config.phoenix_url }}/points/{{ point.id }}">{{ point.title }}</a>
-              <a class="float-right" data-toggle="tooltip" target="_blank" title="{{ 'visit_case'|translate }}" href="{{ config.phoenix_url }}/cases/{{ caseDetails.id }}"><span class="badge badge-primary badge-pill"><i class="fas fa-briefcase"></i></span></a></li>
+              <a class="float-right" data-toggle="tooltip" target="_blank" title="{{ 'components.servicegrid.service.button.case.text'|translate }}" href="{{ config.phoenix_url }}/cases/{{ caseDetails.id }}"><span class="badge badge-primary badge-pill"><i class="fas fa-briefcase"></i></span></a></li>
 
             {% set count = count + 1 %}
           {% endif %}
@@ -83,23 +83,23 @@
           {% set color = "secondary" %}
         {% endif %}
         {% if count == 5 %}
-          <a target="_blank" href="{{ generateLink(config.phoenix_url ~ "/services/" ~ service.id, true) }}"><span class="badge badge-{{ color }}"><i class="fas fa-eye"></i> {{ 'view_all_points'|translate }}</span></a>
+          <a target="_blank" href="{{ generateLink(config.phoenix_url ~ "/services/" ~ service.id, true) }}"><span class="badge badge-{{ color }}"><i class="fas fa-eye"></i> {{ 'components.servicegrid.service.button.allpoints.text'|translate }}</span></a>
 
         {% else %}
-          <a target="_blank" href="{{ generateLink(config.phoenix_url ~ "/services/" ~ service.id, true) }}"><span class="badge badge-success"><i class="fas fa-hands-helping"></i> {{ 'help_expanding'|translate }}</span></a>
+          <a target="_blank" href="{{ generateLink(config.phoenix_url ~ "/services/" ~ service.id, true) }}"><span class="badge badge-success"><i class="fas fa-hands-helping"></i> {{ 'components.servicegrid.service.button.expand.text'|translate }}</span></a>
 
         {% endif %}
       </div>
     </div>
     <div class="card-footer">
       {# API #}
-      <a target="_blank" href="{{ generateLink(config.phoenix_url ~ config.phoenix_api_endpoint ~ "/services/" ~ service.id, true) }}"><span class="badge badge-warning"><i class="fas fa-code"></i> {{ 'api'|translate }}</span></a>
+      <a target="_blank" href="{{ generateLink(config.phoenix_url ~ config.phoenix_api_endpoint ~ "/services/" ~ service.id, true) }}"><span class="badge badge-warning"><i class="fas fa-code"></i> {{ 'component.servicegrid.service.button.api'|translate }}</span></a>
 
       {# Documents #}
-      <a target="_blank" href="{{ generateLink(config.phoenix_url ~ "/services/" ~ service.id ~ "/annotate/", true) }}"><span class="badge badge-primary"><i class="fas fa-gavel"></i> {{ 'view_documents'|translate }}</span></a>
+      <a target="_blank" href="{{ generateLink(config.phoenix_url ~ "/services/" ~ service.id ~ "/annotate/", true) }}"><span class="badge badge-primary"><i class="fas fa-gavel"></i> {{ 'components.servicegrid.service.button.documents.text'|translate }}</span></a>
 
       {# Service URL #}
-      <a target="_blank" href="//{{ service.url|split(',')[0] }}"><span class="badge badge-info"><i class="fas fa-link"></i> {{ 'visit_service'|translate }}</span></a>
+      <a target="_blank" href="//{{ service.url|split(',')[0] }}"><span class="badge badge-info"><i class="fas fa-link"></i> {{ 'components.servicegrid.service.button.service.text'|translate }}</span></a>
 
       <a target="_blank" href="{{ includeResource(locale ~"_"~ service.id ~ ".svg", false, "shield_cdn") }}"><img src="{{ includeResource(locale ~"_"~ service.id ~ ".svg", false, "shield_cdn") }}"></a>
 

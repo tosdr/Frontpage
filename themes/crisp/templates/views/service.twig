@@ -24,7 +24,7 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
 {% set pageTitle = service.name %}
 {% set ogTitle = service.name %}
 {% set ogImage = includeResource(service.image) %}
-{% set ogDescription = 'ogp_description_service'|translate(1, {"{{ service }}": service.name, "{{ grade }}": service.rating}) %}
+{% set ogDescription = 'views.service.ogp.description'|translate(1, {"{{ service }}": service.name, "{{ grade }}": service.rating}) %}
 {% set error = false %}
 
 
@@ -95,8 +95,8 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
 
     <hr>
 
-    <h1>{{ 'embed_service'|translate }}</h1>
-    <p>{{ 'embed_service_desc'|translate }}</p>
+    <h1>{{ 'views.service.embed.header'|translate }}</h1>
+    <p>{{ 'views.service.embed.text'|translate }}</p>
     <ul class="nav nav-tabs">
       <li class="nav-item">
         <a class="nav-link active" data-toggle="tab" href="#markdown">Markdown</a>

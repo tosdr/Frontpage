@@ -21,7 +21,7 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
     - JB
 #}
 {% set currentPage = 'legal' %}
-{% set pageTitle = 'legal'|translate %}
+{% set pageTitle = 'views.legal.title'|translate %}
 {% set error = false %}
 
 
@@ -32,9 +32,9 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
   {{ include("components/navbar.twig") }}
 
   <div class="jumbotron" id="api">
-    <div><h1>{{ 'legal'|translate }}</h1></div>
+    <div><h1>{{ 'views.legal.title'|translate }}</h1></div>
     <p>
-      {{ 'legal_jumbotron'|translate|raw }}
+      {{ 'views.legal.jumbotron.text'|translate|raw }}
     </p>
   </div>
 
@@ -42,20 +42,20 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
   <div class="container">
 
 
-    <h2>{{ 'legal_container_h2'|translate }}</h2>
+    <h2>{{ 'views.legal.container.privacy.header'|translate }}</h2>
     <p>
-      {{ 'legal_container_p_1'|translate|raw }}
+      {{ 'views.legal.container.privacy.text'|translate|raw }}
     </p>
 
 
-    <h2>{{ 'legal_container_2_h2'|translate }}</h2>
+    <h2>{{ 'views.legal.container.terms.header'|translate }}</h2>
     <p>
-      {{ 'legal_container_2_p_1'|translate|raw }}
+      {{ 'views.legal.container.terms.text'|translate|raw }}
     </p>
     <p>
-      <b>{{ 'legal_container_2_b_1'|translate }}</b><br>
-      {{ 'legal_container_2_p_2'|translate|raw }}
-      {{ 'legal_container_2_p_3'|translate|raw }}
+      <b>{{ 'views.legal.container.copyright.header'|translate }}</b><br>
+      {{ 'views.legal.container.copyright.text.top'|translate|raw }}
+      {{ 'views.legal.container.copyright.text.bottom'|translate|raw }}
     </p>
     <ul>
       <li>
@@ -68,23 +68,23 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
 
 
     <p>
-      <b>{{ 'legal_container_2_b_2'|translate }}</b><br>
-      {{ 'legal_container_2_p_4'|translate|raw }}
+      <b>{{ 'views.legal.container.contributor.header'|translate }}</b><br>
+      {{ 'views.legal.container.contributor.text'|translate|raw }}
     </p>
 
     <p>
-      <b>{{ 'legal_container_2_b_3'|translate }}</b><br>
-      {{ 'legal_container_2_p_5'|translate|raw }}
+      <b>{{ 'views.legal.container.changes.header'|translate }}</b><br>
+      {{ 'views.legal.container.changes.text'|translate|raw }}
     </p>
 
     <p>
-    <p><b>{{ 'legal_container_2_b_4'|translate }}</b><br>
-      {{ 'legal_container_2_p_6'|translate|raw }}
+    <p><b>{{ 'views.legal.container.votes.header'|translate }}</b><br>
+      {{ 'views.legal.container.votes.text'|translate|raw }}
     </p>
 
     <p>
-      <b>{{ 'legal_container_2_b_5'|translate }}</b><br>
-      {{ 'legal_container_2_p_7'|translate|raw }}
+      <b>{{ 'views.legal.container.team.header'|translate }}</b><br>
+      {{ 'views.legal.container.team.text'|translate|raw }}
     </p>
 
   </div> <!-- /container -->

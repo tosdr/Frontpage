@@ -130,7 +130,7 @@ class Languages {
         }
 
 
-        if (\crisp\api\lists\Languages::createLanguage("language_$Code", $Code, "language_native_$Code", $Flag)) {
+        if (\crisp\api\lists\Languages::createLanguage("base.language.$Code", $Code, "base.language.native.$Code", $Flag)) {
             return self::getLanguageByCode($Code, $FetchIntoClass);
         }
 

@@ -1,0 +1,113 @@
+{# 
+ # Copyright 2020 Pixelcat Productions <support@pixelcatproductions.net>
+ # @author 2020 Justin René Back <jback@pixelcatproductions.net>
+ #
+ # Licensed under the Apache License, Version 2.0 (the "License");
+ # you may not use this file except in compliance with the License.
+ # You may obtain a copy of the License at
+ #
+ #      http://www.apache.org/licenses/LICENSE-2.0
+ #
+ # Unless required by applicable law or agreed to in writing, software
+ # distributed under the License is distributed on an "AS IS" BASIS,
+ # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ # See the License for the specific language governing permissions and
+ # limitations under the License.
+#}
+
+
+{#
+Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
+    - JB
+#}
+{% set currentPage = 'thanks' %}
+{% set pageTitle = 'views.thanks.title'|translate %}
+{% set error = false %}
+
+
+
+{% extends "base.twig" %}
+
+{% block content %}
+  {{ include("components/navbar.twig") }}
+
+  <div class="jumbotron jumbotron-fluid">
+    <div class="container text-center">
+      <h1 class="display-4">{{ 'views.thanks.title'|translate }}</h1>
+      <p class="mt-2">{{ 'views.thanks.jumbotron.text.1'|translate|raw }}</p>
+      <p class="mt-2">{{ 'views.thanks.jumbotron.text.2'|translate|raw }}</p>
+      <p class="mt-2">{{ 'views.thanks.jumbotron.text.3'|translate|raw }}</p>
+      <p class="mt-2">{{ 'views.thanks.jumbotron.text.4'|translate|raw }}</p>
+    </div>
+  </div>
+  <div class="container">
+    <section id="funders">
+      {% if isMobile == true %}
+        {% set colSize = 2 %}
+      {% else %}
+        {% set colSize = 6 %}
+      {% endif %}
+
+      <a target="_blank" href="https://www.indiegogo.com/partners/ggde">
+        <div class="text-center">
+          <img src="/themes/{{ config.theme }}/img/grundergarage.png">
+        </div>
+      </a>
+
+
+      <h1>{{ "views.thanks.section.supporters.text"|translate }}</h1>
+      <hr>
+      <div class="text-center">
+        <div class="row">
+          <div class="col-6">
+            <a target="_blank"  href="https://duckduckgo.com/about.html">
+              <img src="/themes/{{ config.theme }}/img/duckduckgo.png">
+            </a>
+          </div>
+          <div class="col-6">
+            <a target="_blank"  href="https://app.net/">
+              <img src="/themes/{{ config.theme }}/img/appdotnet.png">
+            </a>
+          </div>
+        </div>
+      </div>
+      <hr>
+      {% include "components/thanksgrid/grid.twig" with {'ThanksList': ThanksList, 'columns': colSize} %}
+    </section>
+    <section id="translators">
+      {% if isMobile == true %}
+        {% set colSize = 1 %}
+      {% else %}
+        {% set colSize = 2 %}
+      {% endif %}
+      <hr>
+      <h1>{{ 'views.thanks.section.translators.text'|translate }}</h1>
+      <br>
+      <div id="de">
+        <h3>{{ 'base.language.de'|translate }} - {{ 'base.language.native.de'|translate }}</h3>
+        <p>
+          {% include "components/thanksgrid/grid.twig" with {'ThanksList': config.translators_de, 'columns': colSize} %}
+        </p>
+      </div>
+      <div id="es">
+        <h3>{{ 'base.language.es'|translate }} - {{ 'base.language.native.es'|translate }}</h3>
+        <p>
+          {% include "components/thanksgrid/grid.twig" with {'ThanksList': config.translators_es, 'columns': colSize} %}
+        </p>
+      </div>
+
+      <div id="fr">
+        <h3>{{ 'base.language.fr'|translate }} - {{ 'base.language.native.fr'|translate }}</h3>
+        <p>
+          {% include "components/thanksgrid/grid.twig" with {'ThanksList': config.translators_fr, 'columns': colSize} %}
+        </p>
+      </div>
+      <div id="es_MX">
+        <h3>{{ 'base.language.es_MX'|translate }} - {{ 'base.language.native.es_MX'|translate }}</h3>
+        <p>
+          {% include "components/thanksgrid/grid.twig" with {'ThanksList': config.translators_es_MX, 'columns': colSize} %}
+        </p>
+      </div>
+    </section>
+  </div>
+{% endblock %}

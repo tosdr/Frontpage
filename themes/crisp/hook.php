@@ -7,3 +7,16 @@
 \crisp\core\Theme::addtoNavbar("presskit", crisp\api\Translation::fetch("components.navbar.presskit"), \crisp\api\Helper::generateLink("presskit"), "_self", -93);
 \crisp\core\Theme::addtoNavbar("status", crisp\api\Translation::fetch("components.navbar.status"), \crisp\api\Helper::generateLink(\crisp\api\Config::get("status_url"), true), "_self", -92);
 \crisp\core\Theme::addtoNavbar("donate", crisp\api\Translation::fetch("components.navbar.donate"), \crisp\api\Helper::generateLink(\crisp\api\Config::get("opencollective_url"), true), "_self", 0, "right");
+\crisp\core\Theme::addtoNavbar("about", crisp\api\Translation::fetch("components.navbar.about"), \crisp\api\Helper::generateLink("about"), "_self", -97);
+\crisp\core\Theme::addtoNavbar("downloads", crisp\api\Translation::fetch("components.navbar.download"), \crisp\api\Helper::generateLink("downloads"), "_self", -96);
+
+if (\crisp\api\Config::get("maintenance_enabled") || isset($_GET["simulate_maintenance"])) {
+  http_response_code(503);
+  echo $TwigTheme->render("/templates/maintenance/maintenance.twig", array("plugin" => $this));
+  exit;
+}
+if (\crisp\api\Config::get("highload_enabled") || isset($_GET["simulate_highload"])) {
+  http_response_code(503);
+  echo $TwigTheme->render("/templates/highload/highload.twig", array("plugin" => $this));
+  exit;
+}

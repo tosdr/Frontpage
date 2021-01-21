@@ -1,0 +1,73 @@
+{# 
+ # Copyright 2020 Pixelcat Productions <support@pixelcatproductions.net>
+ # @author 2020 Justin René Back <jback@pixelcatproductions.net>
+ #
+ # Licensed under the Apache License, Version 2.0 (the "License");
+ # you may not use this file except in compliance with the License.
+ # You may obtain a copy of the License at
+ #
+ #      http://www.apache.org/licenses/LICENSE-2.0
+ #
+ # Unless required by applicable law or agreed to in writing, software
+ # distributed under the License is distributed on an "AS IS" BASIS,
+ # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ # See the License for the specific language governing permissions and
+ # limitations under the License.
+#}
+
+
+{#
+Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
+    - JB
+#}
+{% set currentPage = 'downloads' %}
+{% set pageTitle = 'views.downloads.title'|translate %}
+{% set error = false %}
+
+
+
+{% extends "base.twig" %}
+
+{% block content %}
+  {{ include("components/navbar.twig") }}
+
+  <div class="jumbotron jumbotron-fluid">
+    <div class="container text-center">
+      <h1 class="display-4">{{ 'views.downloads.title'|translate }}</h1>
+      <p class="mt-2">{{ 'views.downloads.jumbotron.text'|translate|raw }}</p>
+      {% if featured is not null %}
+        <div class="card h-100">
+          <div class="card-body d-flex flex-column">
+            <h4 class="card-title">
+              {{ "views.downloads.featured.text"|translate }}
+              <p>
+                <img class="img-responsive" style="max-width: 128px;" src="{{ includeResource(featured.image) }}">
+              </p>
+            </h4>
+            <div class="card-text mb-2">
+              <div class="row">
+                {{ featured.description|translate|raw }}
+
+              </div>
+            </div>
+            <div class="btn-group d-flex mt-auto" role="group" aria-label="...">
+              <a target="_blank" href="{{ generateLink(featured.repository, true) }}" class="btn btn-warning btn-block mt-auto w-100 h-100"><i class="fab fa-github"></i> {{ 'views.downloads.featured.source'|translate }}</a>
+              <a href="{% if featured.direct is defined %}{{ generateLink(featured.direct, true) }}{% else %}{{ generateLink(featured.url, true) }}{% endif %}" class="btn btn-success btn-block mt-auto w-100 h-100"><i class="fas fa-download"></i> {{ 'views.downloads.featured.add'|translate(1, {"{{ browser }}": featured.browser}) }}</a>
+            </div>
+
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+  <div class="container-fluid">
+    <section id="team">
+      {% if isMobile == true %}
+        {% set colSize = 1 %}
+      {% else %}
+        {% set colSize = 2 %}
+      {% endif %}
+      {% include "components/extensiongrid/grid.twig" with {'Extensions': extensions, 'columns': colSize} %}
+    </section>
+  </div>
+{% endblock %}

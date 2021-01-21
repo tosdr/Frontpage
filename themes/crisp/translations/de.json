@@ -1,1 +1,11 @@
-{}
+{
+    "badges.grade.a": "Datenschutz Klasse A",
+    "badges.grade.b": "Datenschutz Klasse B",
+    "base.footer.about.text": "“Nutzungsbedingungen; Nicht gelesen” (kurz: ToS;DR) ist ein Projekt gestartet im Juni 2012 um “die größte Lüge im Internet” zu beseitigen: fast keiner liest wirklich die Nutzungsbedingungen denen wir ständig zustimmen.",
+    "badges.grade.c": "Datenschutz Klasse C",
+    "badges.grade.d": "Datenschutz Klasse D",
+    "badges.grade.e": "Datenschutz Klasse E",
+    "badges.grade.none": "Noch keine Datenschutz Klasse",
+    "base.footer.about.header": "Über",
+    "base.footer.links.about": "Über uns"
+}

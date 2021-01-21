@@ -14,13 +14,10 @@
  # See the License for the specific language governing permissions and
  # limitations under the License.
 #}
-
 {% set sessionType = 'visitor' %} {# visitor, customer, artist, admin #}
-
 {% if user is defined %}
   {% set sessionType = 'user' %}
 {% endif %}
-
 <!DOCTYPE html>
 <html>
   <head>

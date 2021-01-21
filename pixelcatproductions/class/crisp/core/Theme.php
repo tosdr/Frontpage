@@ -84,7 +84,7 @@ class Theme {
                 $GLOBALS["microtime"]["logic"]["end"] = microtime(true);
                 $GLOBALS["microtime"]["template"]["start"] = microtime(true);
                 $TwigTheme->addGlobal("LogicMicroTime", ($GLOBALS["microtime"]["logic"]["end"] - $GLOBALS["microtime"]["logic"]["start"]));
-
+                header("X-CMS-LogicTime: ". ($GLOBALS["microtime"]["logic"]["end"] - $GLOBALS["microtime"]["logic"]["start"]));
                 echo $TwigTheme->render("views/$CurrentPage.twig", $_vars);
             }
         } else {

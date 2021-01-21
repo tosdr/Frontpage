@@ -23,7 +23,8 @@
       "reddit_link": "https://reddit.com/r/tosdr",
       "wikipedia_link": "https://en.wikipedia.org/wiki/Terms_of_Service;_Didn%27t_Read",
       "cdn": "https://cdn.tosdr.org",
-      "shield_cdn": "https://shields.tosdr.org"
+      "shield_cdn": "https://shields.tosdr.org",
+      "api_cdn": "https://api.tosdr.org"
     },
     "activateDependencies": []
   },

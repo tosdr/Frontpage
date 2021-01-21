@@ -54,6 +54,9 @@ class core {
       }
       return false;
     });
+    /** Core headers, can be accessed anywhere */
+    header("X-Cluster: " . gethostname());
+    /** After autoloading we include additional headers below */
   }
 
 }
@@ -112,12 +115,26 @@ if (php_sapi_name() !== "cli") {
     }
 
     if (!isset($_SERVER['HTTP_USER_AGENT']) || empty($_SERVER['HTTP_USER_AGENT'])) {
-      throw new \Exception("Empty user agent");
+      if (!defined('CRISP_API')) {
+        http_response_code(403);
+        echo $TwigTheme->render("errors/403.twig", array(
+            "ReferenceID" => api\ErrorReporter::create(403, "No Useragent", api\Helper::currentURL(), "badrequest_"),
+            "ErrorText" => 'You must supply a user agent!'
+        ));
+      } else {
+        echo \crisp\core\PluginAPI::response(["NO_USERAGENT_SUPPLIED"], "", [], null, 403);
+      }
+      exit;
     }
 
 
     api\Helper::setLocale();
     $Locale = \crisp\api\Helper::getLocale();
+
+    header("X-CMS-CurrentPage: $CurrentPage");
+    header("X-CMS-Locale: $Locale");
+    header("X-CMS-Universe: " . CURRENT_UNIVERSE);
+    header("X-CMS-Universe-Human: " . CURRENT_UNIVERSE_NAME);
 
     $TwigTheme->addGlobal("config", \crisp\api\Config::list());
     $TwigTheme->addGlobal("locale", $Locale);
@@ -163,41 +180,47 @@ if (php_sapi_name() !== "cli") {
 
     $EnvFile = parse_ini_file(__DIR__ . "/../.env");
 
+
+    $RedisClass = new \crisp\core\Redis();
+    $rateLimiter = new \RateLimit\RedisRateLimiter($RedisClass->getDBConnector());
+
+    $Limit = \RateLimit\Rate::perMinute(100);
+    $Benefit = "guest";
+    $Indicator = \crisp\api\Helper::getRealIpAddr();
+
+    if (CURRENT_UNIVERSE == \crisp\Universe::UNIVERSE_TOSDR || in_array(\crisp\api\Helper::getRealIpAddr(), \crisp\api\Config::get("office_ips"))) {
+      $Limit = \RateLimit\Rate::perSecond(10000);
+      $Benefit = "staff";
+      if (in_array(\crisp\api\Helper::getRealIpAddr(), \crisp\api\Config::get("office_ips"))) {
+        $Benefit = "office";
+      }
+    }
+
+    $status = $rateLimiter->limitSilently($Indicator, $Limit);
+
+    header("X-RateLimit-Amount: " . $status->getRemainingAttempts());
+    header("X-RateLimit-Exceeded: " . ($status->limitExceeded() ? "true" : "false"));
+    header("X-RateLimit-Limit: " . $status->getLimit());
+    header("X-RateLimit-Interval: " . $Limit->getInterval());
+    header("X-RateLimit-Operations: " . $Limit->getOperations());
+    header("X-RateLimit-Indicator: $Indicator");
+    header("X-RateLimit-Benefit: " . $Benefit);
+    header("X-CMS-CDN: " . api\Config::get("cdn"));
+    header("X-CMS-SHIELDS: " . api\Config::get("shield_cdn"));
+    header("X-CMS-API: " . api\Config::get("api_cdn"));
+
+    if ($status->limitExceeded() && !defined('CRISP_API')) {
+      http_response_code(429);
+      echo $TwigTheme->render("errors/ratelimit.twig", array(
+          "ReferenceID" => api\ErrorReporter::create(429, $status->getResetAt(), $Benefit . "\n\n" . api\Helper::currentURL(), "ratelimit_")
+      ));
+      exit;
+    } else if ($status->limitExceeded()) {
+      echo \crisp\core\PluginAPI::response(["RATE_LIMIT_REACHED"], "rate_limit", [], 429);
+      exit;
+    }
+
     if (!defined('CRISP_API')) {
-
-      $RedisClass = new \crisp\core\Redis();
-      $rateLimiter = new \RateLimit\RedisRateLimiter($RedisClass->getDBConnector());
-
-      $Limit = \RateLimit\Rate::perMinute(100);
-      $Benefit = "guest";
-      $Indicator = \crisp\api\Helper::getRealIpAddr();
-
-      if (CURRENT_UNIVERSE == \crisp\Universe::UNIVERSE_TOSDR || in_array(\crisp\api\Helper::getRealIpAddr(), \crisp\api\Config::get("office_ips"))) {
-        $Limit = \RateLimit\Rate::perSecond(10000);
-        $Benefit = "staff";
-        if (in_array(\crisp\api\Helper::getRealIpAddr(), \crisp\api\Config::get("office_ips"))) {
-          $Benefit = "office";
-        }
-      }
-
-      $status = $rateLimiter->limitSilently($Indicator, $Limit);
-
-      header("X-RateLimit-Amount: " . $status->getRemainingAttempts());
-      header("X-RateLimit-Exceeded: " . ($status->limitExceeded() ? "true" : "false"));
-      header("X-RateLimit-Limit: " . $status->getLimit());
-      header("X-RateLimit-Interval: " . $Limit->getInterval());
-      header("X-RateLimit-Operations: " . $Limit->getOperations());
-      header("X-RateLimit-Indicator: $Indicator");
-      header("X-RateLimit-Reset: " . $status->getResetAt()->getTimestamp());
-      header("X-RateLimit-Benefit: " . $Benefit);
-
-      if ($status->limitExceeded()) {
-        http_response_code(429);
-        echo $TwigTheme->render("errors/ratelimit.twig", array(
-            "ReferenceID" => api\ErrorReporter::create(429, $status->getResetAt(), $Benefit . "\n\n" . api\Helper::currentURL(), "ratelimit_")
-        ));
-        exit;
-      }
 
       if (!isset($_GET["l"]) && !defined("CRISP_API")) {
         header("Location: /$Locale/$CurrentPage");

@@ -13,37 +13,11 @@ if (strpos($_GET["q"], ".json")) {
   $Query = substr($_GET["q"], 0, -5);
 }
 
-$RedisClass = new crisp\core\Redis();
 \crisp\api\APIStats::add($_GET["apiversion"], $Query);
-$rateLimiter = new \RateLimit\RedisRateLimiter($RedisClass->getDBConnector());
 
-$Limit = \RateLimit\Rate::perMinute(100);
-$Benefit = "guest";
-$Indicator = \crisp\api\Helper::getRealIpAddr();
+header("X-API-Interface: " . $_GET["apiversion"]);
+header("X-API-Query: $Query");
 
-if (CURRENT_UNIVERSE == crisp\Universe::UNIVERSE_TOSDR || in_array(crisp\api\Helper::getRealIpAddr(), \crisp\api\Config::get("office_ips"))) {
-  $Limit = \RateLimit\Rate::perSecond(10000);
-  $Benefit = "staff";
-  if (in_array(crisp\api\Helper::getRealIpAddr(), \crisp\api\Config::get("office_ips"))) {
-    $Benefit = "office";
-  }
-}
-
-$status = $rateLimiter->limitSilently($Indicator, $Limit);
-
-header("X-RateLimit-Amount: " . $status->getRemainingAttempts());
-header("X-RateLimit-Exceeded: " . ($status->limitExceeded() ? "true" : "false"));
-header("X-RateLimit-Limit: " . $status->getLimit());
-header("X-RateLimit-Interval: " . $Limit->getInterval());
-header("X-RateLimit-Operations: " . $Limit->getOperations());
-header("X-RateLimit-Indicator: $Indicator");
-header("X-RateLimit-Reset: " . $status->getResetAt()->getTimestamp());
-header("X-RateLimit-Benefit: " . $Benefit);
-
-if ($status->limitExceeded()) {
-  echo \crisp\core\PluginAPI::response(["RATE_LIMIT_REACHED"], "rate_limit", [], 429);
-  exit;
-}
 switch ($_GET["apiversion"]) {
   case "export":
     switch ($Query) {
@@ -145,6 +119,9 @@ switch ($_GET["apiversion"]) {
         $Rating = $Translations->fetch("privacy_grade_none");
     }
 
+    header("X-API-Service: " . $RedisData["id"]);
+    header("X-API-Service-Rating: " . $RedisData["rating"]);
+    header("X-API-Service-Reviewed: " . $RedisData["is_comprehensively_reviewed"]);
     $Prefix = \crisp\api\Config::get("badge_prefix") . "/#" . htmlentities($RedisData["slug"]);
 
     if (CURRENT_UNIVERSE >= crisp\Universe::UNIVERSE_DEV && isset($_GET["prefix"])) {
@@ -160,6 +137,7 @@ switch ($_GET["apiversion"]) {
       header("Content-Type: image/png");
 
       if (!file_exists(__DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"] . $Language) . ".svg")) {
+        echo \crisp\core\PluginAPI::response(["GENERATE_FAILED"], $Query, [], null, 500);
         exit;
       }
 
@@ -168,6 +146,7 @@ switch ($_GET["apiversion"]) {
         exec("/usr/bin/inkscape -e \"" . __DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"] . $Language) . ".png\" \"" . __DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"] . $Language) . ".svg\"");
 
         if (!file_exists(__DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"] . $Language) . ".png")) {
+          echo \crisp\core\PluginAPI::response(["GENERATE_FAILED"], $Query, [], null, 500);
           exit;
         }
       }

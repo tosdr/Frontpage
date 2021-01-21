@@ -61,7 +61,7 @@ class Helper {
     }
     return $ip;
   }
-
+  
   /**
    * Get the current locale a user has set
    * @return string current letter code 

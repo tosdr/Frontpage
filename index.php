@@ -18,3 +18,6 @@
  */
 
 require_once __DIR__ . "/pixelcatproductions/crisp.php";
+/**
+ * This is our entry point, nothing cool happens in this file.
+ */

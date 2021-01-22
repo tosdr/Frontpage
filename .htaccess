@@ -29,7 +29,7 @@ RewriteRule ^themes/(.*)/img/logo/(.*)$ api/img/theme/$1/logo/$2 [NC,L,QSA,B]
 #RewriteRule ^(.*)/(.*)$ index.php?l=$1&page=$2 [NC,L,QSA,B]
 
 
-#RewriteCond %{REQUEST_URI} !=/balancer-manager
+RewriteCond %{REQUEST_URI} !=/balancer-manager
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{SCRIPT_FILENAME}\.php !-d
 RewriteRule ^(.*)$ index.php?route=$1 [NC,L,QSA,B]

@@ -132,7 +132,7 @@
     "views.frontpage.button.forum.text": "Visitez notre forum !",
     "views.frontpage.button.phoenix.text": "Contribuez sur Phoenix !",
     "views.frontpage.intro.text.top": "Nous sommes une <a href=\"/about\" title=\"Learn more about us\">initiative axée sur les droits des utilisateurs</a> pour<a href=\"/classification\" title=\"What's our classification?\"> évaluer et classer</a> les conditions des sites web&amp; politiques de confidentialité, allant d'Excellent <span class=\"label A\">Classe A</span> à Très Mauvais <span class=\"label E\">Classe E</span>.",
-    "views.frontpage.jumbotron.text": "\"J'ai lu et accepte les Conditions d'Utilisation\" est le pire mensonge du web. Nous visons à le réparer.",
+    "views.frontpage.jumbotron.text": "\"J'ai lu et accepte les Conditions d'Utilisation\" est le pire mensonge du web. Nous visons à y remédier.",
     "views.frontpage.search.input.placeholder": "Cherchez un service ici…",
     "views.frontpage.title": "Accueil",
     "views.imprint.container.text": "Ce project est subventionné par <a href=\"http://1901.tosdr.org\">l'association ToS;DR loi de 1901 en France</a>. Certains droits et finances liés au project sont gérés par l'association, mais pas tous.\n<br>Le project ToS;DR en lui-même n'est pas une personnalité juridique. ",

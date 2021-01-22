@@ -1,55 +1,30 @@
 <?php
 
-header("Access-Control-Allow-Origin: *");
-define('CRISP_API', true);
-require_once __DIR__ . "/../pixelcatproductions/crisp.php";
-
 use PUGX\Poser\Render\SvgFlatRender;
 use PUGX\Poser\Poser;
 
-$Query = $_GET["q"];
+$Query = (isset($GLOBALS["route"]->GET["q"]) ? $GLOBALS["route"]->GET["q"] : $GLOBALS["route"]->GET["service"]);
 
-if (strpos($_GET["q"], ".json")) {
-  $Query = substr($_GET["q"], 0, -5);
+if (strpos($Query, ".json")) {
+  $Query = substr($Query, 0, -5);
 }
 
-\crisp\api\APIStats::add($_GET["apiversion"], $Query);
+if (strlen($Query) === 0) {
+  $Query = "no_query";
+}
 
-header("X-API-Interface: " . $_GET["apiversion"]);
+\crisp\api\APIStats::add($GLOBALS["route"]->Page, $Query);
+
+header("X-API-Interface: " . $GLOBALS["route"]->Page);
 header("X-API-Query: $Query");
 
-switch ($_GET["apiversion"]) {
-  case "export":
-    switch ($Query) {
-      case "translations":
-
-        $Export = \crisp\api\Translation::fetchAll();
-
-        foreach ($Export as $Language => $Translations) {
-          foreach ($Translations as $Key => $Translation) {
-            if (strpos($Key, "plugin_") !== false) {
-              unset($Export[$Language][$Key]);
-            }
-          }
-        }
-
-        if (!isset($_GET["metadata"])) {
-          echo \crisp\core\PluginAPI::response(false, "Exported", $Export, JSON_PRETTY_PRINT);
-        } else {
-          header("Content-Type: application/json");
-          echo json_encode($Export);
-        }
-        break;
-      default:
-        echo \crisp\core\PluginAPI::response(["INVALID_OPTIONS"], $Query, []);
-    }
-    break;
+switch ($GLOBALS["route"]->Page) {
   case "badgepng":
   case "badge":
     $render = new SvgFlatRender();
     $poser = new Poser($render);
     $Prefix = \crisp\api\Config::get("badge_prefix");
-    $Language = (isset($_GET["l"]) ? $_GET["l"] : "en");
+    $Language = $GLOBALS["route"]->Language;
     $ServiceName = $Query;
     $Color;
     $Type = pathinfo($Query, PATHINFO_EXTENSION);
@@ -63,12 +38,7 @@ switch ($_GET["apiversion"]) {
       $ServiceName = substr($ServiceName, 0, (strlen($Type) + 1) * -1);
     }
 
-
     $Translations = new \crisp\api\Translation($Language);
-
-    if (CURRENT_UNIVERSE >= crisp\Universe::UNIVERSE_DEV && isset($_GET["prefix"])) {
-      $Prefix = $_GET["prefix"];
-    }
 
     if (!is_numeric($ServiceName)) {
       if (!\crisp\api\Phoenix::serviceExistsBySlugPG(urldecode($ServiceName))) {
@@ -124,16 +94,13 @@ switch ($_GET["apiversion"]) {
     header("X-API-Service-Reviewed: " . $RedisData["is_comprehensively_reviewed"]);
     $Prefix = \crisp\api\Config::get("badge_prefix") . "/#" . htmlentities($RedisData["slug"]);
 
-    if (CURRENT_UNIVERSE >= crisp\Universe::UNIVERSE_DEV && isset($_GET["prefix"])) {
-      $Prefix = $_GET["prefix"];
-    }
     $SVG = $poser->generate($Prefix, $Rating, $Color, 'flat');
 
     if (time() - filemtime(__DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"] . $Language) . ".svg") > 900) {
       file_put_contents(__DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"] . $Language) . ".svg", $SVG);
     }
 
-    if ($_GET["apiversion"] === "badgepng" || $Type == "png") {
+    if ($GLOBALS["route"]->Page === "badgepng" || $Type == "png") {
       header("Content-Type: image/png");
 
       if (!file_exists(__DIR__ . "/badges/" . sha1($Prefix . $RedisData["id"] . $Language) . ".svg")) {
@@ -190,28 +157,6 @@ switch ($_GET["apiversion"]) {
       echo \crisp\core\PluginAPI::response(false, "Comparing versions", ["latest" => $Latest, "given" => $Version, "substring" => \crisp\api\Helper::startsWith($Query, "v"), "compare" => version_compare($Latest, $Version)]);
     }
     break;
-
-  case "topic_v1":
-    if (!isset($Query) || empty($Query)) {
-      echo \crisp\core\PluginAPI::response(false, $Query, crisp\api\Phoenix::getTopicsPG());
-    } else {
-      echo \crisp\core\PluginAPI::response(false, $Query, crisp\api\Phoenix::getTopicPG($Query));
-    }
-    break;
-  case "case_v1":
-    if (!isset($Query) || empty($Query)) {
-      echo \crisp\core\PluginAPI::response(false, $Query, crisp\api\Phoenix::getCasesPG());
-    } else {
-      echo \crisp\core\PluginAPI::response(false, $Query, crisp\api\Phoenix::getCasePG($Query));
-    }
-    break;
-  case "point_v1":
-    if (!isset($Query) || empty($Query)) {
-      echo \crisp\core\PluginAPI::response(false, $Query, crisp\api\Phoenix::getPointsPG());
-    } else {
-      echo \crisp\core\PluginAPI::response(false, $Query, crisp\api\Phoenix::getPointPG($Query));
-    }
-    break;
   case "2":
   case "1":
   case "v1":
@@ -231,7 +176,7 @@ switch ($_GET["apiversion"]) {
           $Response["tosdr/review/$URL"] = array(
               "id" => (int) $Service["id"],
               "documents" => [],
-              "logo" => "https://$_SERVER[HTTP_HOST]/" . \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") . "/img/logo/" . \crisp\api\Helper::filterAlphaNum($Service["name"]) . ".png",
+              "logo" => crisp\core\Themes::includeResource("img/logo/" . \crisp\api\Helper::filterAlphaNum($Service["name"]) . ".png"),
               "name" => $Service["name"],
               "slug" => $Service["slug"],
               "rated" => ($Service["rating"] == "N/A" ? false : ($Service["is_comprehensively_reviewed"] ? $Service["rating"] : false)),
@@ -250,7 +195,7 @@ switch ($_GET["apiversion"]) {
       }
       $Query = crisp\api\Phoenix::getServiceBySlugPG($Query)["id"];
       $SkeletonData = \crisp\api\Phoenix::generateApiFiles($Query);
-      if ($_GET["apiversion"] === "1" || $_GET["apiversion"] === "v1") {
+      if ($GLOBALS["route"]->Page === "1" || $GLOBALS["route"]->Page === "v1") {
         echo json_encode($SkeletonData);
       } else {
         echo \crisp\core\PluginAPI::response(false, $Query, $SkeletonData);
@@ -268,7 +213,7 @@ switch ($_GET["apiversion"]) {
 
     $SkeletonData = \crisp\api\Phoenix::generateApiFiles($Query);
 
-    if ($_GET["apiversion"] === "1" || $_GET["apiversion"] === "v1") {
+    if ($GLOBALS["route"]->Page === "1" || $GLOBALS["route"]->Page === "v1") {
       echo json_encode($SkeletonData);
     } else {
       echo \crisp\core\PluginAPI::response(false, $Query, $SkeletonData);
@@ -323,7 +268,56 @@ switch ($_GET["apiversion"]) {
 
 
     break;
+  case "search":
+    if (empty($Query)) {
+      foreach (\crisp\api\Config::get("frontpage_services") as $ID) {
+        $Array[] = crisp\api\Phoenix::getServicePG($ID);
+      }
+    } else {
+      foreach (crisp\api\Phoenix::searchServiceByNamePG(strtolower($Query)) as $Service) {
+        $Array[] = $Service;
+      }
+    }
+    $Array = array_slice($Array, 0, 10);
+    if (count($Array) > 0) {
+      $cols = 2;
+      if (crisp\api\Helper::isMobile()) {
+        $cols = 1;
+      }
+      echo \crisp\core\PluginAPI::response(false, $Query, (array("service" => $Array, "grid" => $TwigTheme->render("components/servicegrid/grid.twig", array("Services" => $Array, "columns" => $cols)))));
+      exit;
+    }
+    echo \crisp\core\PluginAPI::response(false, $Query, (array("service" => $Array, "grid" => $TwigTheme->render("components/servicegrid/no_service.twig", []))));
+
+    break;
+  case "img":
+    header("Access-Control-Allow-Origin: *");
+
+
+    if (!isset($GLOBALS["route"]->GET["theme"])) {
+      \crisp\api\Helper::PlaceHolder("Invalid Theme");
+    }
+    if (!isset($GLOBALS["route"]->GET["logo"])) {
+      \crisp\api\Helper::PlaceHolder("Invalid Service");
+    }
+
+    if (file_exists(__DIR__ . "/../themes/" . $GLOBALS["route"]->GET["theme"] . "/img/logo/" . $GLOBALS["route"]->GET["logo"])) {
+      $ext = pathinfo(__DIR__ . "/../themes/" . $GLOBALS["route"]->GET["theme"] . "/img/logo/" . $GLOBALS["route"]->GET["logo"], PATHINFO_EXTENSION);
+      if ($ext == "png") {
+        header("Content-Type: image/png");
+      }
+      if ($ext == "svg") {
+        header("Content-Type: image/svg+xml");
+      }
+      if ($ext == "jpg") {
+        header("Content-Type: image/jpg");
+      }
+      echo file_get_contents(__DIR__ . "/../themes/" . $GLOBALS["route"]->GET["theme"] . "/img/logo/" . $GLOBALS["route"]->GET["logo"]);
+    } else {
+      \crisp\api\Helper::PlaceHolder("Missing Logo");
+    }
+    break;
   default:
-    \crisp\core\Plugins::loadAPI($_GET["apiversion"], $Query);
+    \crisp\core\Plugins::loadAPI($GLOBALS["route"]->Page, $Query);
     break;
 }

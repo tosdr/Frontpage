@@ -65,6 +65,8 @@ require_once __DIR__ . '/../vendor/autoload.php';
 core::bootstrap();
 if (php_sapi_name() !== "cli") {
 
+  $GLOBALS["route"] = api\Helper::processRoute($_GET["route"]);
+
   $GLOBALS["microtime"] = array();
   $GLOBALS["microtime"]["logic"] = array();
   $GLOBALS["microtime"]["template"] = array();
@@ -80,20 +82,24 @@ if (php_sapi_name() !== "cli") {
 
   session_start();
 
+  if (explode("/", $_GET["route"])[0] === "api") {
+    define('CRISP_API', true);
+  }
+
 
   $CurrentTheme = \crisp\api\Config::get("theme");
   $CurrentFile = substr(substr($_SERVER['PHP_SELF'], 1), 0, -4);
-  $CurrentPage = (isset($_GET["page"]) ? $_GET["page"] : substr($_SERVER["REQUEST_URI"], 1));
+  $CurrentPage = $GLOBALS["route"]->Page;
   $CurrentPage = ($CurrentPage == "" ? "frontpage" : $CurrentPage);
   $CurrentPage = explode(".", $CurrentPage)[0];
 
   if (isset($_GET["universe"])) {
     Universe::changeUniverse($_GET["universe"]);
-  } elseif (!isset($_SESSION[core\Config::$Cookie_Prefix . "universe"])) {
+  } elseif (!isset($_COOKIE[core\Config::$Cookie_Prefix . "universe"])) {
     Universe::changeUniverse(Universe::UNIVERSE_PUBLIC);
   }
 
-  define("CURRENT_UNIVERSE", Universe::getUniverse($_SESSION[core\Config::$Cookie_Prefix . "universe"]));
+  define("CURRENT_UNIVERSE", Universe::getUniverse($_COOKIE[core\Config::$Cookie_Prefix . "universe"]));
   define("CURRENT_UNIVERSE_NAME", Universe::getUniverseName(CURRENT_UNIVERSE));
 
   try {
@@ -114,22 +120,16 @@ if (php_sapi_name() !== "cli") {
       include __DIR__ . "/../themes/$CurrentTheme/hook.php";
     }
 
-    if (!isset($_SERVER['HTTP_USER_AGENT']) || empty($_SERVER['HTTP_USER_AGENT'])) {
-      if (!defined('CRISP_API')) {
-        http_response_code(403);
-        echo $TwigTheme->render("errors/403.twig", array(
-            "ReferenceID" => api\ErrorReporter::create(403, "No Useragent", api\Helper::currentURL(), "badrequest_"),
-            "ErrorText" => 'You must supply a user agent!'
-        ));
-      } else {
-        echo \crisp\core\PluginAPI::response(["NO_USERAGENT_SUPPLIED"], "", [], null, 403);
-      }
-      exit;
-    }
-
-
     api\Helper::setLocale();
     $Locale = \crisp\api\Helper::getLocale();
+
+    if (CURRENT_UNIVERSE >= Universe::UNIVERSE_BETA) {
+      if (isset($_GET["test_theme_component"])) {
+        core\Themes::setThemeMode($_GET["test_theme_component"]);
+      }
+    } else {
+      core\Themes::setThemeMode("0");
+    }
 
     header("X-CMS-CurrentPage: $CurrentPage");
     header("X-CMS-Locale: $Locale");
@@ -150,6 +150,7 @@ if (php_sapi_name() !== "cli") {
     $TwigTheme->addGlobal("isMobile", \crisp\api\Helper::isMobile());
     $TwigTheme->addGlobal("URL", api\Helper::currentDomain());
     $TwigTheme->addGlobal("CLUSTER", gethostname());
+    $TwigTheme->addGlobal("THEME_MODE", \crisp\core\Themes::getThemeMode());
 
     $TwigTheme->addExtension(new \Twig\Extension\StringLoaderExtension());
 
@@ -184,12 +185,12 @@ if (php_sapi_name() !== "cli") {
     $RedisClass = new \crisp\core\Redis();
     $rateLimiter = new \RateLimit\RedisRateLimiter($RedisClass->getDBConnector());
 
-    $Limit = \RateLimit\Rate::perMinute(100);
+    $Limit = \RateLimit\Rate::perSecond(15);
     $Benefit = "guest";
     $Indicator = \crisp\api\Helper::getRealIpAddr();
 
     if (CURRENT_UNIVERSE == \crisp\Universe::UNIVERSE_TOSDR || in_array(\crisp\api\Helper::getRealIpAddr(), \crisp\api\Config::get("office_ips"))) {
-      $Limit = \RateLimit\Rate::perSecond(10000);
+      $Limit = \RateLimit\Rate::perSecond(15000);
       $Benefit = "staff";
       if (in_array(\crisp\api\Helper::getRealIpAddr(), \crisp\api\Config::get("office_ips"))) {
         $Benefit = "office";
@@ -202,7 +203,6 @@ if (php_sapi_name() !== "cli") {
     header("X-RateLimit-Exceeded: " . ($status->limitExceeded() ? "true" : "false"));
     header("X-RateLimit-Limit: " . $status->getLimit());
     header("X-RateLimit-Interval: " . $Limit->getInterval());
-    header("X-RateLimit-Operations: " . $Limit->getOperations());
     header("X-RateLimit-Indicator: $Indicator");
     header("X-RateLimit-Benefit: " . $Benefit);
     header("X-CMS-CDN: " . api\Config::get("cdn"));
@@ -212,7 +212,7 @@ if (php_sapi_name() !== "cli") {
     if ($status->limitExceeded() && !defined('CRISP_API')) {
       http_response_code(429);
       echo $TwigTheme->render("errors/ratelimit.twig", array(
-          "ReferenceID" => api\ErrorReporter::create(429, $status->getResetAt(), $Benefit . "\n\n" . api\Helper::currentURL(), "ratelimit_")
+          "ReferenceID" => api\ErrorReporter::create(429, $status->getResetAt()->getTimestamp(), $Benefit . "\n\n" . api\Helper::currentURL(), "ratelimit_")
       ));
       exit;
     } else if ($status->limitExceeded()) {
@@ -220,9 +220,26 @@ if (php_sapi_name() !== "cli") {
       exit;
     }
 
+    if (!isset($_SERVER['HTTP_USER_AGENT']) || empty($_SERVER['HTTP_USER_AGENT'])) {
+      if (!defined('CRISP_API')) {
+        http_response_code(403);
+        echo $TwigTheme->render("errors/forbidden.twig", array(
+            "ReferenceID" => api\ErrorReporter::create(403, "No Useragent", api\Helper::currentURL(), "badrequest_"),
+            "ErrorText" => 'You must supply a user agent!'
+        ));
+      } else {
+        echo \crisp\core\PluginAPI::response(["NO_USERAGENT_SUPPLIED"], "", [], null, 403);
+      }
+      exit;
+    }
+
+    if (defined('CRISP_API')) {
+      include __DIR__ . "/../api/api.php";
+    }
+
     if (!defined('CRISP_API')) {
 
-      if (!isset($_GET["l"]) && !defined("CRISP_API")) {
+      if (!$GLOBALS["route"]->Language && !defined("CRISP_API")) {
         header("Location: /$Locale/$CurrentPage");
         exit;
       }

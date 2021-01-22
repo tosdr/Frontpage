@@ -54,6 +54,7 @@ class Plugins {
       }
     }
     \crisp\core\PluginAPI::response(array("INTERFACE_NOT_FOUND"), "API Interface not found", [], null, 404);
+    exit;
   }
 
   /**

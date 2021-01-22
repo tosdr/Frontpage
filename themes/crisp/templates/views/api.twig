@@ -21,7 +21,7 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
     - JB
 #}
 {% set currentPage = 'api' %}
-{% set pageTitle = 'api'|translate %}
+{% set pageTitle = 'views.api.jumbotron.header'|translate %}
 {% set error = false %}
 
 
@@ -55,11 +55,9 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
     <p>
       {{ 'views.api.use.text'|translate|raw }}
     </p>
-    <pre>
-$.getJSON("https://api.tosdr.org/v1/service/facebook.json").done(function(data) {
+    <pre>$.getJSON("https://api.tosdr.org/v1/service/facebook.json").done(function(data) {
   return console.log(JSON.stringify(data));
-});
-    </pre>
+});</pre>
 
     <p id="licensing">{{ 'views.api.use.license'|translate|raw }}</p>
 

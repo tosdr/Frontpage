@@ -61,15 +61,15 @@ class Helper {
     }
     return $ip;
   }
-  
+
   /**
    * Get the current locale a user has set
    * @return string current letter code 
    */
   public static function getLocale() {
     $Locale = locale_accept_from_http($_SERVER['HTTP_ACCEPT_LANGUAGE']);
-    if (isset($_GET["l"])) {
-      $Locale = $_GET["l"];
+    if (isset($GLOBALS["route"]->Language)) {
+      $Locale = $GLOBALS["route"]->Language;
     } else {
       $Locale = "en";
     }
@@ -79,7 +79,7 @@ class Helper {
       $Locale = "en";
     }
 
-    if (isset($_COOKIE[\crisp\core\Config::$Cookie_Prefix . "language"]) && !isset($_GET["l"])) {
+    if (isset($_COOKIE[\crisp\core\Config::$Cookie_Prefix . "language"]) && !isset($GLOBALS["route"]->Language)) {
       $Locale = $_COOKIE[\crisp\core\Config::$Cookie_Prefix . "language"];
     }
     return $Locale;
@@ -92,8 +92,6 @@ class Helper {
    */
   public static function setLocale() {
     return setcookie(\crisp\core\Config::$Cookie_Prefix . "language", self::getLocale(), time() + (86400 * 30), "/");
-
-    return true;
   }
 
   /**
@@ -192,6 +190,33 @@ class Helper {
 
   public static function generateLink($Path, $External = false) {
     return ($External ? $Path : "/" . self::getLocale() . "/$Path");
+  }
+
+  public static function processRoute($Route) {
+
+    $_Route = explode("/", $Route);
+    $obj = new \stdClass();
+    $obj->Language = (lists\Languages::languageExists($_Route[0]) && strlen($_Route[0]) > 0 ? $_Route[0] : self::getLocale());
+    $obj->Page = (strlen($_Route[1]) === 0 ? (strlen($_Route[0]) > 0 ? $_Route[0] : false) : $_Route[1]);
+    $obj->GET = array();
+    if (strlen($_Route[2]) > 0) {
+      $_RouteArray = $_Route;
+      array_shift($_RouteArray);
+      array_shift($_RouteArray);
+      for ($i = 0; $i <= count($_RouteArray); $i = $i + 2) {
+        $key = $_RouteArray[$i];
+        $value = $_RouteArray[$i + 1];
+        if (strlen($key) > 0) {
+          if ($value === null) {
+            $obj->GET["q"] = $key;
+          } else {
+            $obj->GET[$key] = $value;
+          }
+        }
+      }
+    }
+
+    return $obj;
   }
 
   /**

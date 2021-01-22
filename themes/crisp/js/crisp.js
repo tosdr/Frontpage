@@ -16,8 +16,8 @@ $(function () {
     $("#ratingsearch").on('keyup', delay(function () {
         $('body').tooltip('dispose');
         $("#searchLoading").show();
-        $.get("/api/search.php?q=" + this.value, function (data) {
-            $("#services").html(data.grid);
+        $.get("/api/search/" + this.value, function (data) {
+            $("#services").html(data.parameters.grid);
             $("#searchLoading").hide();
             $('[data-toggle="tooltip"]').tooltip();
         });

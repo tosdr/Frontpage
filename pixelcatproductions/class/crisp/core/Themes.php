@@ -45,6 +45,19 @@ class Themes {
     return true;
   }
 
+  public static function getThemeMode() {
+    if (isset($_COOKIE[\crisp\core\Config::$Cookie_Prefix . "theme_mode"])) {
+      $Mode = $_COOKIE[\crisp\core\Config::$Cookie_Prefix . "theme_mode"];
+    } else {
+      $Mode = "0";
+    }
+    return $Mode;
+  }
+
+  public static function setThemeMode(string $Mode) {
+    return setcookie(\crisp\core\Config::$Cookie_Prefix . "theme_mode", $Mode, time() + (86400 * 30), "/");
+  }
+
   public static function load($TwigTheme, $CurrentFile, $CurrentPage) {
     try {
       if (count($GLOBALS["render"]) === 0) {
@@ -55,7 +68,7 @@ class Themes {
           $GLOBALS["microtime"]["template"]["start"] = microtime(true);
           $TwigTheme->addGlobal("LogicMicroTime", ($GLOBALS["microtime"]["logic"]["end"] - $GLOBALS["microtime"]["logic"]["start"]));
           http_response_code(404);
-          echo $TwigTheme->render("errors/404.twig", []);
+          echo $TwigTheme->render("errors/notfound.twig", []);
         }
       }
     } catch (\Exception $ex) {

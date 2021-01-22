@@ -24,38 +24,38 @@ namespace crisp;
  */
 class Universe {
 
-    const UNIVERSE_PUBLIC = 1;
-    const UNIVERSE_BETA = 2;
-    const UNIVERSE_DEV = 3;
-    const UNIVERSE_TOSDR = 99;
+  const UNIVERSE_PUBLIC = 1;
+  const UNIVERSE_BETA = 2;
+  const UNIVERSE_DEV = 3;
+  const UNIVERSE_TOSDR = 99;
 
-    public static function changeUniverse($Universe, $Authorize = false) {
-        if(!$Authorize && $Universe == self::UNIVERSE_TOSDR){
-            return false;
-        }
-        return $_SESSION[core\Config::$Cookie_Prefix . "universe"] = self::getUniverse($Universe);
+  public static function changeUniverse($Universe, $Authorize = false) {
+    if (!$Authorize && $Universe == self::UNIVERSE_TOSDR) {
+      return false;
     }
+    return setcookie(\crisp\core\Config::$Cookie_Prefix . "universe", self::getUniverse($Universe), time() + (86400 * 30), "/");
+  }
 
-    public static function getUniverse($Universe) {
-        switch ($Universe) {
-            case self::UNIVERSE_PUBLIC:
-                return self::UNIVERSE_PUBLIC;
-            case self::UNIVERSE_BETA:
-                return self::UNIVERSE_BETA;
-            case self::UNIVERSE_DEV:
-                return self::UNIVERSE_DEV;
-            case self::UNIVERSE_TOSDR:
-                return self::UNIVERSE_TOSDR;
-            default:
-                return self::UNIVERSE_PUBLIC;
-        }
+  public static function getUniverse($Universe) {
+    switch ($Universe) {
+      case self::UNIVERSE_PUBLIC:
+        return self::UNIVERSE_PUBLIC;
+      case self::UNIVERSE_BETA:
+        return self::UNIVERSE_BETA;
+      case self::UNIVERSE_DEV:
+        return self::UNIVERSE_DEV;
+      case self::UNIVERSE_TOSDR:
+        return self::UNIVERSE_TOSDR;
+      default:
+        return self::UNIVERSE_PUBLIC;
     }
+  }
 
-    public static function getUniverseName($value) {
-        $class = new \ReflectionClass(__CLASS__);
-        $constants = array_flip($class->getConstants());
+  public static function getUniverseName($value) {
+    $class = new \ReflectionClass(__CLASS__);
+    $constants = array_flip($class->getConstants());
 
-        return $constants[$value];
-    }
+    return $constants[$value];
+  }
 
 }

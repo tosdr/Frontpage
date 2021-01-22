@@ -25,7 +25,12 @@
 
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
-      <link rel="stylesheet" href="{{ includeResource("css/bootstrap/bootstrap.min.css") }}">
+      {% if THEME_MODE == "dark" %}
+        <link rel="stylesheet" href="{{ includeResource("css/bootstrap/bootstrap-dark.min.css") }}">
+        <link rel="stylesheet" href="{{ includeResource("css/general-dark.min.css") }}">
+      {% else %}
+        <link rel="stylesheet" href="{{ includeResource("css/bootstrap/bootstrap.min.css") }}">
+      {% endif %}
       {# <link rel="stylesheet" href="/themes/{{ config.theme }}/css/jquery/jquery-ui.min.css{{ "/css/jquery/jquery-ui.min.css"|fileHash }}"> #}
       <link rel="stylesheet" href="{{ includeResource("css/sweetalert/sweetalert.min.css") }}">
       <!-- START Default Crisp CSS -->
@@ -36,7 +41,7 @@
       <link rel="stylesheet" href="{{ includeResource("css/ranking-badges.min.css") }}">
 
       <meta property="og:title" content="{{ ogTitle|default(pageTitle) }} {{ config.page_delimiter }} {{ config.site_name }}" />
-      <meta property="og:description" content="{{ ogDescription|default('frontpage_jumbotron_text'|translate) }}" />
+      <meta property="og:description" content="{{ ogDescription|default('base.footer.about.text'|translate) }}" />
       <meta property="og:type" content="website" />
       <meta property="og:url" content="{{ URL }}" />
       <meta property="og:locale" content="{{ locale }}" />
@@ -79,7 +84,7 @@
   {% block scripts %}{% endblock %}
   <!-- START Default Crisp JS -->
   {% block default_scripts %}
-    <script src="{{ includeResource("js/crisp.min.js") }}"></script>
+    <script src="{{ includeResource("js/crisp.min.js", true, "") }}"></script>
 
     {#
     <script>

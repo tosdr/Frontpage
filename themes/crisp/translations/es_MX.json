@@ -1,1 +1,16 @@
-{}
+{
+    "badges.grade.a": "Grado E de Privacidad",
+    "badges.grade.b": "Grado B de Privacidad",
+    "badges.grade.c": "Grado C de Privacidad",
+    "badges.grade.d": "Grado D de Privacidad",
+    "badges.grade.e": "Grado E de Privacidad",
+    "badges.grade.none": "No Hay Grado de Privacidad Aún",
+    "base.footer.about.header": "Sobre Nosotros",
+    "base.footer.about.text": "\"Terms of Service; Didn't Read\" (ToS;DR) es un proyecto que comenzó un Junio del año 2012 para arreglar \"la mayor mentira en la Red\": casi nadie lee los Términos y Condiciones que aceptamos frecuentemente.",
+    "base.footer.links.about": "Sobre Nosotros",
+    "base.footer.links.contact": "Contáctanos",
+    "base.footer.links.downloads": "Descargas",
+    "base.footer.links.imprint": "Impresión",
+    "base.footer.links.privacy": "Política de Privacidad",
+    "base.footer.links.tos": "Términos y Condiciones"
+}

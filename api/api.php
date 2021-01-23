@@ -13,8 +13,6 @@ if (strlen($Query) === 0) {
   $Query = "no_query";
 }
 
-\crisp\api\APIStats::add($GLOBALS["route"]->Page, $Query);
-
 header("X-API-Interface: " . $GLOBALS["route"]->Page);
 header("X-API-Query: $Query");
 

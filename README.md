@@ -23,7 +23,7 @@ _This readme is still a_ **WIP**_, but should cover basic requirements to instal
 
 ## Updating Submodules
 
-To update the submodules in this repository, simply do:
+To update the submodules in this repository, simply run:
 
 ```bash
 $ git submodule update --init --recursive
@@ -35,13 +35,42 @@ And you're set!
 
 ## Requirements
 
-<!--TODO(?): Add Installation for some of these dependencies.-->
+<!--TODO(?): Add Installation for (some) of these dependencies.-->
 
 * `Redis Server` &mdash; Used to cache [Phoenix](https://edit.tosdr.org/) requests
 
-* `MySQL` &mdash; Used for the Crisp database.
+* `MySQL` &mdash; Used for running the Crisp database.
+
+  - To install on Debian-based Distros (Ubuntu, Mint, Pop OS, etc.), run:
+
+  ```bash
+  $ sudo apt-get update
+  $ sudo apt-get install mysql-server     # Accept the installation.
+  $ sudo mysql_secure_installation        # Configure and set-up the server.
+  ```
+
+  * *Additional instructions for server setup can be found [here](https://www.digitalocean.com/community/tutorials/how-to-install-mysql-on-ubuntu-20-04).*
+
+  - For users running on Arch-based Distros (Arch Linux, Manjaro, etc.), check [this ArchWiki Article](https://wiki.archlinux.org/index.php/MySQL).
 
 * `PHP-7.4` &mdash; Self explainatory.
+  
+  - To install on Debian-based Distros, run:
+
+  ```bash
+  $ sudo apt-get update
+  $ sudo apt-get install php libapache2-mod-php     # Comes with Apache libraries for PHP.
+  ```
+
+  <!--
+  TODO: Check for other required dependencies on Arch.
+  
+  - To install on Arch-based distros, run:
+
+  ```bash
+  $ sudo pacman -S php php-apache   # Installs PHP and modules for Apache.
+  ```
+  -->
 
 * `Composer` &mdash; Used to install required dependencies from `composer.json`.
 
@@ -49,16 +78,25 @@ And you're set!
 
 * `Apache2.4` &mdash; As of right now only [Apache](https://httpd.apache.org/) is supported. [`Nginx`](https://nginx.org/en/) may come as well in the future, though!
 
-  * `mod_rewrite` - Used for the `.htaccess` instances, to enable URL redirection and rewriting. _[More info](https://httpd.apache.org/docs/current/mod/mod_rewrite.html)_
+  - To install on Debian-based distros, run:
+
+  ```bash
+  $ sudo apt-get update
+  $ sudo apt-get install apache2    # Installs apache2
+  ```
+
+  * *Your configuration files are located on `/etc/apache2/`, and your Server Roots will (usually) be stored on `/var/www/`. For more info, check* [*this article*](https://linuxconfig.org/how-to-install-apache-on-ubuntu-20-04).
+
+  - `mod_rewrite` - Used for the `.htaccess` instances to enable URL redirection and rewriting. [_More info_](https://httpd.apache.org/docs/current/mod/mod_rewrite.html)
 
 * [Phoenix](https://github.com/tosdr/edit.tosdr.org) &mdash; We recommend running your own Phoenix instance during development so you have control over the API and you don't get ratelimited. Check its repository for more info.
 
-* `Discourse Plugins` &mdash; Crisp is also responsible for webhooks on [our Forum](https://forum.tosdr.org/), to detect if a service has been added on Phoenix. _(This is entirely optional)_
+* `Discourse Plugins` &mdash; Crisp is also responsible for webhooks on [**our forum**](https://forum.tosdr.org/) to, for example, detect if and/or when a service has been added on Phoenix. _(This is entirely optional)_
 
 
 ### Plugins
 
-Crisp has a plugin system integrated. More info about development can be found here:
+Crisp has a plugin system integrated. More info about development can be found within this topic on our forum:
 
 https://forum.tosdr.org/t/374
 
@@ -74,28 +112,31 @@ From the repository root, execute the following command:
 $ composer install
 ```
 
+If no errors are returned, you're good to go!
+
 ### Configuring Crisp
 
-Copy `.env.example` to `.env` and edit it according to your settings.
+From the repository root, copy `.env.example` to `.env` and edit it according to your settings.
 
 ```bash
 $ cp .env.example .env
 ```
 
-* *The* `GITHUB_TOKEN` *property is required for private repos to access metadata.*
+* *The* `$GITHUB_TOKEN` *variable is required for private repos to access metadata.*
 
 ### Running Database Migrations
 
-The database needs to be setup on initial clone, to do this run this command:
+The database needs to be setup after the initial clone. To do this, run this command from the root
+of this repository:
 
 ```bash
 $ php bin/cli.php migrate
 ```
 
-This will create all necessary tables, install plugins and themes.
+This will create all necessary tables, aswell as install plugins and themes.
 
 <!--
-No longer required ,managed by migrations
+No longer required, managed by migrations
 
 ### Install crisp theme
 
@@ -114,4 +155,4 @@ php bin/cli.php plugin install core
 ```
 -->
 
-Your instance is ready now!
+And so your instance is ready to run now!

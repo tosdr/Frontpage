@@ -2,7 +2,7 @@
 
 ![](https://beta.tosdr.org/api/badge/service/tos;dr) [![Translation status](https://translate.jback.dev/widgets/crispcms/-/crispcms-theme/svg-badge.svg)](https://translate.jback.dev/engage/crispcms/) [![Build Status](https://ci.jback.dev/api/badges/tosdr/CrispCMS/status.svg)](https://ci.jback.dev/tosdr/CrispCMS)
 
-![](https://raw.githubusercontent.com/tosdr/CrispCMS/master/themes/crisp/img/tosdr-logo-128-w.png)
+  ![](https://raw.githubusercontent.com/tosdr/CrispCMS/master/themes/crisp/img/tosdr-logo-128-w.png)
 
 Welcome to the official repository for our frontpage, [tosdr.org](https://tosdr.org/).
 This is a redo of our previous frontpage, which used JS.

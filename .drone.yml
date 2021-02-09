@@ -81,10 +81,10 @@ steps:
     repo: jbackpcat/tosdr-crisp
     tags: latest
   when:
-  event:
-    exclude:
-    - pull_request
-    - tag
+    event:
+        exclude:
+        - pull_request
+        - tag
 
 volumes:
 - name: bundle

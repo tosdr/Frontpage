@@ -15,23 +15,23 @@ _This readme is still a **Work in Progress**, but should cover basic requirement
 
 1. [Requirements](#requirements)
 2. [Installation](#installation)
-  1. [Composer Dependencies](#installing-composer-dependencies)
+  - [Composer Dependencies](#installing-composer-dependencies)
 3. [Configuring Crisp](#configuring-crisp)
-  1. [Updating Submodules](#updating-submodules)
-  2. [Running Database Migrations](#running-database-migrations)
+  - [Updating Submodules](#updating-submodules)
+  - [Running Database Migrations](#running-database-migrations)
 4. [Plugins](#plugins)
 
 ## Requirements
 
 <!--TODO: Add Installation instructions for (some of) these dependencies.-->
 
-### [`Redis Server`](https://redis.io/)
+### [Redis Server](https://redis.io/)
 
 This is used to cache [Phoenix](https://edit.tosdr.org/) requests.
 
 - For users running on Debian-based distros, check [this article](https://bitlaunch.io/blog/installing-redis-server-on-ubuntu-20-04-lts/)
 
-### `MySQL`
+### MySQL
 This is used for running the Crisp database.
 
 - To install on Debian-based Distros, run:
@@ -46,7 +46,7 @@ $ sudo mysql_secure_installation        # Configure and set-up the server.
 
 - For users running on Arch-based Distros, check [this ArchWiki Article](https://wiki.archlinux.org/index.php/MySQL).
 
-### `PHP-7.4`
+### PHP-7.4
 This one is quite self explainatory.
 
 - To install on Debian-based Distros, run:
@@ -66,15 +66,15 @@ $ sudo pacman -S php php-apache   # Installs PHP and modules for Apache.
 ```
 -->
 
-### [`Composer`](https://getcomposer.org/)
+### [Composer](https://getcomposer.org/)
 This is used to install required dependencies from `composer.json`.
 
 - To install on Debian-based distros, follow [this tutorial](https://www.digitalocean.com/community/tutorials/how-to-install-composer-on-ubuntu-20-04-quickstart).
 
-### `Shell Access`
+### Shell Access
 You'll need it to install plugins or setup cron jobs.
 
-### `Apache2.4`
+### Apache2.4
 As of right now only [Apache](https://httpd.apache.org/) is supported. [`Nginx`](https://nginx.org/en/) may come as well in the future, though!
 
 - To install on Debian-based distros, run:
@@ -91,7 +91,7 @@ $ sudo apt-get install apache2    # Installs apache2
 ### [Phoenix](https://github.com/tosdr/edit.tosdr.org)
 We recommend running your own Phoenix instance during development so you have control over the API and you don't get ratelimited. Check its repository for more info.
 
-### `Discourse Plugins`
+### Discourse Plugins
 Crisp is also responsible for webhooks on [**our forum**](https://forum.tosdr.org/) to, for example, detect if and/or when a service has been added on Phoenix. _(This is entirely optional)_
 
 ## Installation
@@ -127,7 +127,7 @@ $ cp .env.example .env
 
 Then edit it accordingly.
 
-* *The* `$GITHUB_TOKEN` *variable is required for private repos to access metadata.* [More Info](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token)
+* _The `$GITHUB_TOKEN` variable is required for private repos to access metadata._ [More Info](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token)
 
 ### Updating Submodules
 

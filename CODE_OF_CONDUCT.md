@@ -1,7 +1,5 @@
 # Contributor Covenant Code of Conduct
 
-* **Last Updated:** 02/07/2021
-
 [![](https://raw.githubusercontent.com/tosdr/CrispCMS/master/themes/crisp/img/tosdr-logo-128-w.png)](https://tosdr.org/)
 
 In the ToS;DR Project, to ensure the safety of our users, aswell as to guarantee

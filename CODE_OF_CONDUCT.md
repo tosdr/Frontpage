@@ -13,11 +13,11 @@ Thus, let's begin.
 ## Table of Contents
 
 1. Contributor Covenant Code of Conduct
-  1. [Our Pledge](#our-pledge)
-  2. [Our Standards](#our-responsibilities)
-  3. [Our Responsibilities](#our-responsibilities)
-  4. [Scope of These Guidelines](#scope-of-these-guidelines)
-  5. [Enforcement](#enforcement)
+  * [Our Pledge](#our-pledge)
+  * [Our Standards](#our-responsibilities)
+  * [Our Responsibilities](#our-responsibilities)
+  * [Scope of These Guidelines](#scope-of-these-guidelines)
+  * [Enforcement](#enforcement)
 2. [Attribution](#attribution)
 
 ## Our Pledge

@@ -15,15 +15,15 @@ _This readme is still a **Work in Progress**, but should cover basic requirement
 
 1. [Requirements](#requirements)
 2. [Installation](#installation)
-  - [Composer Dependencies](#installing-composer-dependencies)
+  * [Composer Dependencies](#installing-composer-dependencies)
 3. [Configuring Crisp](#configuring-crisp)
-  - [Updating Submodules](#updating-submodules)
-  - [Running Database Migrations](#running-database-migrations)
+  * [Updating Submodules](#updating-submodules)
+  * [Running Database Migrations](#running-database-migrations)
 4. [Plugins](#plugins)
 
 ## Requirements
 
-<!--TODO: Add Installation instructions for (some of) these dependencies.-->
+You will need these requirements to run your instance of Crisp.
 
 ### [Redis Server](https://redis.io/)
 
@@ -152,6 +152,7 @@ $ php bin/cli.php migrate
 
 This will create all necessary tables, aswell as install plugins and themes.
 
+And so your instance is ready to run now!
 <!--
 No longer required, managed by migrations
 
@@ -171,8 +172,6 @@ To install the core plugin you need shell access and execute the following comma
 php bin/cli.php plugin install core
 ```
 -->
-
-And so your instance is ready to run now!
 
 ## Plugins
 

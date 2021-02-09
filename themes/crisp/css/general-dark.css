@@ -14,6 +14,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+/* stylelint-disable */
 
 body {
   color: white;
@@ -31,27 +32,6 @@ body {
 .badge-info {
   color: white !important;
 }
-/*
-.list-group-item-success {
-  color: #fff;
-  background-color: #52ae66;
-}
-
-.list-group-item-warning {
-  color: #fff;
-  background-color: #ddb53c;
-}
-
-.list-group-item-secondary {
-  color: #fff;
-  background-color: #acadae;
-}
-
-.list-group-item-danger {
-  color: #fff;
-  background-color: #b32937;
-}
-*/
 
 .btn-primary,
 .btn-success {

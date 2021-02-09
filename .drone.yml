@@ -22,7 +22,7 @@ steps:
   - git clone https://github.com/tosdr/edit.tosdr.org /phoenix
     
 - name: install_phoenix
-  image: ruby:2.6.5
+  image: ruby:2.7.2
   volumes:
   - name: bundle
     path: /usr/local/bundle
@@ -81,10 +81,10 @@ steps:
     repo: jbackpcat/tosdr-crisp
     tags: latest
   when:
-  event:
-    exclude:
-    - pull_request
-    - tag
+    event:
+        exclude:
+        - pull_request
+        - tag
 
 volumes:
 - name: bundle

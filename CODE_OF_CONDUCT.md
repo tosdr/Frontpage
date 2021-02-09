@@ -1,5 +1,23 @@
 # Contributor Covenant Code of Conduct
 
+[![](https://raw.githubusercontent.com/tosdr/CrispCMS/master/themes/crisp/img/tosdr-logo-128-w.png)](https://tosdr.org/)
+
+In the ToS;DR Project, to ensure the safety of our users, aswell as to guarantee
+the quality of our software, we have to commit ourselvs to certain standards,
+and that includes some rules for people to understand.
+
+Thus, let's begin.
+
+## Table of Contents
+
+1. Contributor Covenant Code of Conduct
+  * [Our Pledge](#our-pledge)
+  * [Our Standards](#our-responsibilities)
+  * [Our Responsibilities](#our-responsibilities)
+  * [Scope of These Guidelines](#scope-of-these-guidelines)
+  * [Enforcement](#enforcement)
+2. [Attribution](#attribution)
+
 ## Our Pledge
 
 In the interest of fostering an open and welcoming environment, we as
@@ -43,7 +61,7 @@ that are not aligned to this Code of Conduct, or to ban temporarily or
 permanently any contributor for other behaviors that they deem inappropriate,
 threatening, offensive, or harmful.
 
-## Scope
+## Scope of These Guidelines
 
 This Code of Conduct applies both within project spaces and in public spaces
 when an individual is representing the project or its community. Examples of
@@ -65,7 +83,7 @@ Project maintainers who do not follow or enforce the Code of Conduct in good
 faith may face temporary or permanent repercussions as determined by other
 members of the project's leadership.
 
-## Attribution
+# Attribution
 
 This Code of Conduct is adapted from the [Contributor Covenant][homepage], version 1.4,
 available at https://www.contributor-covenant.org/version/1/4/code-of-conduct.html

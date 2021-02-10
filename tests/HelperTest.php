@@ -48,7 +48,7 @@ final class HelperTest extends TestCase {
         );
         $this->assertEquals(
                 false,
-                \crisp\api\Helper::templateExists('crisp', 'errors/notfound.twig')
+                \crisp\api\Helper::templateExists('crisp', 'errors/_notfound.twig')
         );
     }
 

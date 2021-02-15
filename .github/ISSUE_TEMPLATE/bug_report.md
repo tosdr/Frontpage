@@ -1,32 +1,33 @@
 ---
 name: Bug report
-about: Create a report to help us improve
+about: Create a report to help us improve the site
 title: ''
 labels: bug
-assignees: ''
+assignees: 'JustinBack'
 
 ---
 
-**Describe the bug**
-A clear and concise description of what the bug is.
+## Description
+<!---A clear and concise description of what the bug is.-->
 
-**To Reproduce**
+### How To Reproduce It
 Steps to reproduce the behavior:
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
+1. _Go to '...'_
+2. _Click on '....'_
+3. _Scroll down to '....'_
+4. _See error_
 
-**Expected behavior**
-A clear and concise description of what you expected to happen.
+### Expected behavior
+<!---A clear and concise description of what you expected to happen.-->
 
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
+### Screenshots
+<!---If applicable, or otherwise possible, add screenshots to help explain your problem.-->
 
-**Response Headers**
-If bug report is related to a server error or unexpected behavior, add HTTP response headers
+### Response Headers
+<!---If your bug report is related to a server error or unexpected behavior
+make sure to add the HTTP response headers-->
+<!---They should look like this:
 
-<!-- They look like this
 HTTP/1.1 200 OK
 Date: Wed, 20 Jan 2021 23:46:45 GMT
 Server: Apache/2.4.38 (Debian)
@@ -57,18 +58,20 @@ Set-Cookie: crisp_language=en; expires=Fri, 19-Feb-2021 23:46:45 GMT; Max-Age=25
 Keep-Alive: timeout=5, max=100
 Connection: Keep-Alive
 Transfer-Encoding: chunked
+
 --> 
 
-**Desktop (please complete the following information):**
- - OS: [e.g. iOS]
- - Browser [e.g. chrome, safari]
- - Version [e.g. 22]
+<!---Please fill the section that applies to you:-->
+## Desktop Specs
+ - OS: [_e.g. OS X, Windows 10_]
+ - Browser [_e.g. Chrome, Safari_]
+ - Browser Version [_e.g. 22.0.1, 16.0.3_]
 
-**Smartphone (please complete the following information):**
- - Device: [e.g. iPhone6]
- - OS: [e.g. iOS8.1]
- - Browser [e.g. stock browser, safari]
- - Version [e.g. 22]
+## Smartphone Specs
+ - Device: [_e.g. iPhone 6, Samsung Galaxy Note 20_]
+ - OS: [_e.g. iOS8.1_]
+ - Browser [_e.g. Google, Safari_]
+ - Browser Version [_e.g. 22_]
 
-**Additional context**
-Add any other context about the problem here.
+## Additional Context
+<!---Do you have any extra information? Feel free to include it here!-->

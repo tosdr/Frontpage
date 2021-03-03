@@ -48,6 +48,7 @@ class Bitmask {
     public const MERGE_CASE = 0x00004000;
     public const CHANGE_KV = 0x00008000;
     public const INSTALL_PLUGINS = 0x00010000;
+    public const UNINSTALL_PLUGINS = 0x00020000;
 
     public static function hasBitmask(int $BitwisePermissions, int $PermissionFlag = 0x00000000) {
         if (!is_numeric($BitwisePermissions)) {

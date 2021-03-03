@@ -46,6 +46,7 @@ class Bitmask {
     public const CHANGE_PASSWORD = 0x00001000;
     public const SUPERUSER = 0x00002000;
     public const MERGE_CASE = 0x00004000;
+    public const CHANGE_KV = 0x00008000;
 
     public static function hasBitmask(int $BitwisePermissions, int $PermissionFlag = 0x00000000) {
         if (!is_numeric($BitwisePermissions)) {

@@ -52,6 +52,7 @@ class Bitmask {
     public const REFRESH_PLUGINS_KV = 0x00040000;
     public const REFRESH_PLUGINS_TRANSLATIONS = 0x00080000;
     public const UPDATE_PLUGINS = 0x00100000;
+    public const PURGE_PLUGINS = 0x00200000;
 
     public static function hasBitmask(int $BitwisePermissions, int $PermissionFlag = 0x00000000) {
         if (!is_numeric($BitwisePermissions)) {

@@ -69,7 +69,7 @@ class Bitmask {
     }
 
     private static function getConstants() {
-        $oClass = new ReflectionClass(__CLASS__);
+        $oClass = new \ReflectionClass(__CLASS__);
         return $oClass->getConstants();
     }
 
@@ -80,10 +80,15 @@ class Bitmask {
         if ($BitwisePermissions === 0x00000000) {
             throw new \TypeError("Parameter BitwisePermissions is zero.");
         }
-        
-        
-        var_dump(self::getConstants());
-        
+
+        $MatchedBits = [];
+
+        foreach (self::getConstants() as $Permission) {
+            if (self::hasBitmask($BitwisePermissions, $Permission)) {
+                $MatchedBits[array_search($Permission, self::getConstants())] = $Permission;
+            }
+        }
+        return $MatchedBits;
     }
 
 }

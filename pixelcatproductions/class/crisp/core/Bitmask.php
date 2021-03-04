@@ -68,4 +68,22 @@ class Bitmask {
         return ($BitwisePermissions & $PermissionFlag ? true : false);
     }
 
+    private static function getConstants() {
+        $oClass = new ReflectionClass(__CLASS__);
+        return $oClass->getConstants();
+    }
+
+    public static function getBitmask(int $BitwisePermissions) {
+        if (!is_numeric($BitwisePermissions)) {
+            throw new \TypeError("Parameter BitwisePermissions is not a hexadecimal or number.");
+        }
+        if ($BitwisePermissions === 0x00000000) {
+            throw new \TypeError("Parameter BitwisePermissions is zero.");
+        }
+        
+        
+        var_dump(self::getConstants());
+        
+    }
+
 }

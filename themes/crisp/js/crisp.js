@@ -16,7 +16,7 @@ $(function () {
     $("#ratingsearch").on('keyup', delay(function () {
         $('body').tooltip('dispose');
         $("#searchLoading").show();
-        $.get("/api/search/" + this.value, function (data) {
+        $.get("https://search.tosdr.org/" + this.value, function (data) {
             $("#services").html(data.parameters.grid);
             $("#searchLoading").hide();
             $('[data-toggle="tooltip"]').tooltip();

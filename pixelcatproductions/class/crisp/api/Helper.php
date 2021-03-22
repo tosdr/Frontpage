@@ -52,14 +52,15 @@ class Helper {
    * @return String containing the IP of the user
    */
   public static function getRealIpAddr() {
-    if (!empty($_SERVER['HTTP_CLIENT_IP'])) {   //check ip from share internet
-      $ip = $_SERVER['HTTP_CLIENT_IP'];
-    } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {   //to check ip is pass from proxy
-      $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+    if(!empty($_SERVER["HTTP_X_REAL_IP"])){
+      return $_SERVER['HTTP_X_REAL_IP'];
+    }else if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {   //to check ip is pass from proxy
+      return $_SERVER['HTTP_X_FORWARDED_FOR'];
+    } else if(!empty($_SERVER['HTTP_CLIENT_IP'])) {   //check ip from share internet
+      return $_SERVER['HTTP_CLIENT_IP'];
     } else {
-      $ip = $_SERVER['REMOTE_ADDR'];
+      return $_SERVER['REMOTE_ADDR'];
     }
-    return $ip;
   }
 
   /**

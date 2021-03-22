@@ -20,6 +20,8 @@ switch ($GLOBALS["route"]->Page) {
     case "pihole":
 
         $exclude = explode(",", $GLOBALS["route"]->GET["exclude"]);
+        
+        array_shift($exclude);
 
         $_all = crisp\api\Phoenix::getServicesPG();
 

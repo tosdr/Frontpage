@@ -26,11 +26,11 @@ switch ($GLOBALS["route"]->Page) {
         $_all = crisp\api\Phoenix::getServicesPG();
 
         $Content = "";
+        $isExcluded = false;
 
         foreach ($_all as $Service) {
-            $isExcluded = false;
             if ($Service["is_comprehensively_reviewed"] && $Service["rating"] === "E") {
-
+                $isExcluded = false;
                 if (count($exclude) > 0) {
                     if (in_array($Service["name"], $exclude)) {
                         $isExcluded = true;

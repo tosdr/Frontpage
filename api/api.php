@@ -18,7 +18,44 @@ header("X-API-Query: $Query");
 
 switch ($GLOBALS["route"]->Page) {
     case "pihole":
-        
+
+        $exclude = explode(",", $GLOBALS["route"]->GET["exclude"]);
+
+
+
+        $_all = crisp\api\Phoenix::getServicesPG();
+
+        $Content = "";
+
+        foreach ($_all as $Service) {
+            $isExcluded = false;
+            if ($Service["is_comprehensively_reviewed"] && $Service["rating"] === "E") {
+
+                if (in_array($Service["name"], $exclude)) {
+                    $isExcluded = true;
+                } else if (in_array($Service["id"], $exclude)) {
+                    $isExcluded = true;
+                } else if (in_array($Service["slug"], $exclude)) {
+                    $isExcluded = true;
+                }
+                $Content .= "#### " . $Service["name"] . " ####\n";
+                ($isExcluded ? $Content .= "# WARNING: GOOGLE HAS BEEN EXCLUDED\n" : null);
+                ($Service["wikipedia"] ? $Content .= "# Wikipedia: " . $Service["wikipedia"] . "\n" : null);
+                $Content .= "# ToS;DR: https://tosdr.org/en/service/" . $Service["id"] . "\n";
+                foreach (explode(",", $Service["url"]) as $URL) {
+                    $Content .= ($isExcluded ? "# 0.0.0.0 $URL\n" : "0.0.0.0 $URL\n");
+                }
+                $Content .= "\n\n";
+            }
+        }
+
+        header("Content-Type: text/plain");
+        echo $TwigTheme->render("pihole.twig", [
+            "content" => $Content,
+            "expires" => date('M d, Y', strtotime("+7 day")),
+            "version" => time(),
+            "modified" => time()
+        ]);
         break;
     case "badgepng":
     case "badge":

@@ -210,14 +210,14 @@ class Translation {
 
       $Translation = $statement->fetch(\PDO::FETCH_ASSOC);
 
-      if (!isset($Translation[self::$Language])) {
+      if (!isset($Translation[strtolower(self::$Language)])) {
         if (self::$Language == "en") {
           return $Key;
         }
         return $Translation["en"];
       }
 
-      return strtr($Translation[self::$Language], $Options);
+      return strtr($Translation[strtolower(self::$Language)], $Options);
     }
     return $Key;
   }
@@ -254,14 +254,14 @@ class Translation {
     if ($statement->rowCount() > 0) {
       $Translation = $statement->fetch(\PDO::FETCH_ASSOC);
 
-      if ($Translation[self::$Language] === null) {
+      if ($Translation[strtolower(self::$Language)] === null) {
         if (self::$Language == "en") {
           return $Key . ".plural";
         }
         return strtr($Translation["en"], $Options);
       }
 
-      return strtr($Translation[self::$Language], $Options);
+      return strtr($Translation[strtolower(self::$Language)], $Options);
     }
     return $Key . ".plural";
   }

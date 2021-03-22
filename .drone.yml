@@ -44,9 +44,9 @@ steps:
 - name: create_crisp_config
   image: alpine
   commands:
-  - echo -e "MYSQL_HOSTNAME=mariadb\n" > .env
-  - echo -e "MYSQL_USERNAME=tosdr_dev\n" >> .env
-  - echo -e "MYSQL_PASSWORD=tosdr_dev\n" >> .env
+  - echo -e "MYSQL_HOSTNAME=postgres\n" > .env
+  - echo -e "MYSQL_USERNAME=postgres\n" >> .env
+  - echo -e "MYSQL_PASSWORD=postgres\n" >> .env
   - echo -e "MYSQL_DATABASE=tosdr_dev\n" >> .env
   - echo -e "REDIS_HOST=redis\n" >> .env
   - echo -e "REDIS_PORT=6379\n" >> .env
@@ -97,13 +97,6 @@ volumes:
 services:
 - name: redis
   image: redis
-- name: mariadb
-  image: mariadb
-  environment:
-    MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
-    MYSQL_DATABASE: tosdr_dev
-    MYSQL_PASSWORD: tosdr_dev
-    MYSQL_USER: tosdr_dev
 - name: postgres
   image: postgres
   environment:

@@ -21,6 +21,7 @@ switch ($GLOBALS["route"]->Page) {
 
         $exclude = explode(",", $GLOBALS["route"]->GET["exclude"]);
 
+        var_dump($exclude);
 
 
         $_all = crisp\api\Phoenix::getServicesPG();
@@ -36,7 +37,7 @@ switch ($GLOBALS["route"]->Page) {
                         $isExcluded = true;
                     } else if (in_array($Service["id"], $exclude)) {
                         $isExcluded = true;
-                    } else if ($Service["slug"] !== "" && in_array($Service["slug"], $exclude)) {
+                    } else if ((!$Service["slug"] || $Service["slug"] !== "") && in_array($Service["slug"], $exclude)) {
                         $isExcluded = true;
                     }
                 }
@@ -45,6 +46,9 @@ switch ($GLOBALS["route"]->Page) {
                 ($Service["wikipedia"] ? $Content .= "# Wikipedia: " . $Service["wikipedia"] . "\n" : null);
                 $Content .= "# ToS;DR: https://tosdr.org/en/service/" . $Service["id"] . "\n";
                 foreach (explode(",", $Service["url"]) as $URL) {
+                    if ($Service["url"] === "") {
+                        continue;
+                    }
                     $Content .= ($isExcluded ? "# 0.0.0.0 $URL\n" : "0.0.0.0 $URL\n");
                 }
                 $Content .= "\n\n";

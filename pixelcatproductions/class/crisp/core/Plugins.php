@@ -109,7 +109,7 @@ class Plugins {
     $DB = new \crisp\core\MySQL();
     $DBConnection = $DB->getDBConnector();
 
-    $statement = $DBConnection->prepare("SELECT * FROM loadedPlugins ORDER BY `order` DESC");
+    $statement = $DBConnection->prepare("SELECT * FROM loadedPlugins ORDER BY \"order\" DESC");
     $statement->execute();
 
 
@@ -330,7 +330,7 @@ class Plugins {
     $DB = new \crisp\core\MySQL();
     $DBConn = $DB->getDBConnector();
 
-    $statement = $DBConn->prepare("SELECT * FROM loadedPlugins WHERE `Name` = :Key");
+    $statement = $DBConn->prepare("SELECT * FROM loadedPlugins WHERE Name = :Key");
     $statement->execute(array(":Key" => $PluginName));
 
     return ($statement->rowCount() > 0 ? true : false);

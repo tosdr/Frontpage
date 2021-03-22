@@ -45,7 +45,7 @@ class Config {
         if (self::$Database_Connection === null) {
             self::initDB();
         }
-        $statement = self::$Database_Connection->prepare("SELECT value FROM Config WHERE `key` = :ID");
+        $statement = self::$Database_Connection->prepare("SELECT value FROM Config WHERE key = :ID");
         $statement->execute(array(":ID" => $Key));
         if ($statement->rowCount() > 0) {
             return true;
@@ -62,7 +62,7 @@ class Config {
         if (self::$Database_Connection === null) {
             self::initDB();
         }
-        $statement = self::$Database_Connection->prepare("SELECT value, type FROM Config WHERE `key` = :ID");
+        $statement = self::$Database_Connection->prepare("SELECT value, type FROM Config WHERE key = :ID");
         $statement->execute(array(":ID" => $Key));
         if ($statement->rowCount() > 0) {
 
@@ -95,7 +95,7 @@ class Config {
         if (self::$Database_Connection === null) {
             self::initDB();
         }
-        $statement = self::$Database_Connection->prepare("SELECT last_changed, created_at FROM Config WHERE `key` = :ID");
+        $statement = self::$Database_Connection->prepare("SELECT last_changed, created_at FROM Config WHERE key = :ID");
         $statement->execute(array(":ID" => $Key));
         if ($statement->rowCount() > 0) {
 
@@ -121,7 +121,7 @@ class Config {
             return self::set($Key, $Value);
         }
 
-        $statement = self::$Database_Connection->prepare("INSERT INTO Config (`key`) VALUES (:Key)");
+        $statement = self::$Database_Connection->prepare("INSERT INTO Config (key) VALUES (:Key)");
         $statement->execute(array(":Key" => $Key));
 
         return self::set($Key, $Value);
@@ -136,7 +136,7 @@ class Config {
         if (self::$Database_Connection === null) {
             self::initDB();
         }
-        $statement = self::$Database_Connection->prepare("DELETE FROM Config WHERE `key` = :Key");
+        $statement = self::$Database_Connection->prepare("DELETE FROM Config WHERE key = :Key");
         return $statement->execute(array(":Key" => $Key));
     }
 
@@ -170,7 +170,7 @@ class Config {
         }
 
 
-        $statement = self::$Database_Connection->prepare("UPDATE Config SET value = :val, type = :type WHERE `key` = :key");
+        $statement = self::$Database_Connection->prepare("UPDATE Config SET value = :val, type = :type WHERE key = :key");
         $statement->execute(array(":val" => $Value, ":key" => $Key, ":type" => $Type));
 
         return ($statement->rowCount() > 0);
@@ -186,7 +186,7 @@ class Config {
             self::initDB();
         }
 
-        $statement = self::$Database_Connection->prepare("SELECT `key`, value FROM Config");
+        $statement = self::$Database_Connection->prepare("SELECT key, value FROM Config");
         $statement->execute();
 
         if (!$KV) {

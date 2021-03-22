@@ -36,9 +36,9 @@ class Migrations {
     const DB_VARCHAR = "varchar(255)";
     const DB_TEXT = "text";
     const DB_INTEGER = "integer";
-    const DB_TIMESTAMP = "datetime";
-    const DB_BOOL = "tinyint(1)";
-    const DB_LONGTEXT = "LONGTEXT";
+    const DB_TIMESTAMP = "timestamp";
+    const DB_BOOL = "smallint";
+    const DB_LONGTEXT = "text";
 
     /* Keys */
     const DB_PRIMARYKEY = "PRIMARY";
@@ -217,9 +217,9 @@ class Migrations {
         $SQL = "";
         echo "Adding index to table $Table..." . PHP_EOL;
         if ($Type == self::DB_PRIMARYKEY) {
-            $SQL = "ALTER TABLE `$Table` ADD $Type KEY (`$Column`);";
+            $SQL = "ALTER TABLE $Table ADD $Type KEY ($Column);";
         } else {
-            $SQL = "ALTER TABLE `$Table` ADD $Type INDEX `$IndexName` (`$Column`);";
+            $SQL = "CREATE $Type INDEX $IndexName ON $Table ($Column);";
         }
 
         $statement = $this->Database->prepare($SQL);
@@ -248,7 +248,7 @@ class Migrations {
      */
     protected function dropColumn(string $Table, string $Column) {
         echo "Removing column from Table $Table..." . PHP_EOL;
-        $SQL = "ALTER TABLE `$Table` DROP COLUMN `$Column`";
+        $SQL = "ALTER TABLE $Table DROP COLUMN '$Column'";
 
         $statement = $this->Database->prepare($SQL);
 
@@ -270,7 +270,7 @@ class Migrations {
      */
     protected function addColumn(string $Table, array $Column) {
         echo "Adding column to Table $Table..." . PHP_EOL;
-        $SQL = "ALTER TABLE `$Table` ADD COLUMN `$Column[0]` $Column[1] $Column[2];";
+        $SQL = "ALTER TABLE $Table ADD COLUMN $Column[0] $Column[1] $Column[2];";
 
         $statement = $this->Database->prepare($SQL);
 
@@ -292,24 +292,22 @@ class Migrations {
      */
     protected function createTable(string $Table, ...$Columns) {
         echo "Creating Table $Table..." . PHP_EOL;
-        $SQL = "CREATE TABLE IF NOT EXISTS `$Table` (";
+        $SQL = "CREATE TABLE IF NOT EXISTS $Table (";
         $AutoIncrement = false;
         foreach ($Columns as $Key => $Column) {
             $Name = $Column[0];
             $Type = $Column[1];
             $Additional = $Column[2];
-            if (strpos($Additional, "AUTO_INCREMENT") !== false) {
-                $AutoIncrement = $Name;
+            if (strpos($Additional, "SERIAL") !== false) {
+                $SQL .= "$Name SERIAL,";
+            } else {
+                $SQL .= "$Name $Type $Additional,";
             }
-            $SQL .= "`$Name` $Type $Additional,";
             if ($Key == count($Columns) - 1) {
                 $SQL = substr($SQL, 0, -1);
-                if ($AutoIncrement !== false) {
-                    $SQL .= ", KEY `$AutoIncrement` (`$AutoIncrement`)";
-                }
             }
         }
-        $SQL .= ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4";
+        $SQL .= ");";
 
 
         $statement = $this->Database->prepare($SQL);

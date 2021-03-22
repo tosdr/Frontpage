@@ -56,7 +56,7 @@ class Languages {
       $Array = array();
 
       foreach ($statement->fetchAll(\PDO::FETCH_ASSOC) as $Language) {
-        array_push($Array, new \crisp\api\Language($Language["ID"]));
+        array_push($Array, new \crisp\api\Language($Language["id"]));
       }
       return $Array;
     }
@@ -86,14 +86,14 @@ class Languages {
     }
 
 
-    $statement2 = self::$Database_Connection->prepare("SHOW COLUMNS FROM `Translations` LIKE '$Code'");
+    $statement2 = self::$Database_Connection->prepare("SELECT table_name, column_name, data_type FROM information_schema.columns WHERE table_name = 'translations' AND column_name = '$Code';");
     $statement2->execute();
     if ($statement2->rowCount() > 0) {
       return self::$Database_Connection->commit();
     }
 
 
-    $statement3 = self::$Database_Connection->prepare("ALTER TABLE Translations ADD COLUMN `$Code` TEXT NULL");
+    $statement3 = self::$Database_Connection->prepare("ALTER TABLE Translations ADD COLUMN $Code TEXT NULL");
 
     $success3 = $statement3->execute();
 
@@ -127,7 +127,7 @@ class Languages {
     $statement->execute(array(":code" => $Code));
     if ($statement->rowCount() > 0) {
       if ($FetchIntoClass) {
-        return new \crisp\api\Language($statement->fetch(\PDO::FETCH_ASSOC)["ID"]);
+        return new \crisp\api\Language($statement->fetch(\PDO::FETCH_ASSOC)["id"]);
       }
       return $statement->fetch(\PDO::FETCH_ASSOC);
     }
@@ -160,7 +160,7 @@ class Languages {
     $statement->execute(array(":ID" => $ID));
     if ($statement->rowCount() > 0) {
       if ($FetchIntoClass) {
-        return new \crisp\api\Language($statement->fetch(\PDO::FETCH_ASSOC)["ID"]);
+        return new \crisp\api\Language($statement->fetch(\PDO::FETCH_ASSOC)["id"]);
       }
       return $statement->fetch(\PDO::FETCH_ASSOC);
     }

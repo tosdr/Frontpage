@@ -27,9 +27,9 @@ class createconfig extends \crisp\core\Migrations {
             $this->createTable("Config",
                     array("key", $this::DB_VARCHAR),
                     array("value", $this::DB_TEXT),
-                    array("last_changed", $this::DB_TIMESTAMP, "NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP()"),
+                    array("last_changed", $this::DB_TIMESTAMP, "DEFAULT NULL"),
                     array("type", $this::DB_VARCHAR, "NOT NULL DEFAULT 'string'"),
-                    array("created_at", $this::DB_TIMESTAMP, "NOT NULL DEFAULT CURRENT_TIMESTAMP()")
+                    array("created_at", $this::DB_TIMESTAMP, "NOT NULL DEFAULT CURRENT_TIMESTAMP")
             );
             $this->addIndex("Config", "key", $this::DB_PRIMARYKEY);
             

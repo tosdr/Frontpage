@@ -98,7 +98,7 @@ class Language extends \crisp\api\lists\Languages {
         $statement = $this->Database_Connection->prepare("SELECT Enabled FROM Languages WHERE ID = :ID");
         $statement->execute(array(":ID" => $this->LanguageID));
 
-        return $statement->fetch(\PDO::FETCH_ASSOC)["Enabled"];
+        return $statement->fetch(\PDO::FETCH_ASSOC)["enabled"];
     }
 
     /**
@@ -142,7 +142,7 @@ class Language extends \crisp\api\lists\Languages {
         $statement = $this->Database_Connection->prepare("SELECT Name FROM Languages WHERE ID = :ID");
         $statement->execute(array(":ID" => $this->LanguageID));
 
-        return $statement->fetch(\PDO::FETCH_ASSOC)["Name"];
+        return $statement->fetch(\PDO::FETCH_ASSOC)["name"];
     }
 
     /**
@@ -171,7 +171,7 @@ class Language extends \crisp\api\lists\Languages {
         $statement = $this->Database_Connection->prepare("SELECT Code FROM Languages WHERE ID = :ID");
         $statement->execute(array(":ID" => $this->LanguageID));
 
-        return $statement->fetch(\PDO::FETCH_ASSOC)["Code"];
+        return $statement->fetch(\PDO::FETCH_ASSOC)["code"];
     }
 
     /**
@@ -200,7 +200,7 @@ class Language extends \crisp\api\lists\Languages {
         $statement = $this->Database_Connection->prepare("SELECT NativeName FROM Languages WHERE ID = :ID");
         $statement->execute(array(":ID" => $this->LanguageID));
 
-        return $statement->fetch(\PDO::FETCH_ASSOC)["NativeName"];
+        return $statement->fetch(\PDO::FETCH_ASSOC)["nativename"];
     }
 
     /**
@@ -213,7 +213,7 @@ class Language extends \crisp\api\lists\Languages {
             return null;
         }
 
-        $statement = $this->Database_Connection->prepare("DELETE FROM Translations WHERE `key` = :key");
+        $statement = $this->Database_Connection->prepare("DELETE FROM Translations WHERE key = :key");
         return $statement->execute(array(":key" => $Key));
     }
 
@@ -229,7 +229,7 @@ class Language extends \crisp\api\lists\Languages {
         }
 
         $Code = $this->getCode();
-        $statement = $this->Database_Connection->prepare("UPDATE Translations SET $Code = :value WHERE `key` = :key");
+        $statement = $this->Database_Connection->prepare("UPDATE Translations SET $Code = :value WHERE key = :key");
         return $statement->execute(array(":key" => $Key, ":value" => $Value));
     }
 
@@ -253,7 +253,7 @@ class Language extends \crisp\api\lists\Languages {
         }
 
         $Code = $this->getCode();
-        $statement = $this->Database_Connection->prepare("INSERT INTO Translations (`key`, $Code) VALUES (:key, :value)");
+        $statement = $this->Database_Connection->prepare("INSERT INTO Translations (key, $Code) VALUES (:key, :value)");
         return $statement->execute(array(":key" => $Key, ":value" => $Value));
     }
 
@@ -283,7 +283,7 @@ class Language extends \crisp\api\lists\Languages {
         $statement = $this->Database_Connection->prepare("SELECT Flag FROM Languages WHERE ID = :ID");
         $statement->execute(array(":ID" => $this->LanguageID));
 
-        return $statement->fetch(\PDO::FETCH_ASSOC)["Flag"];
+        return $statement->fetch(\PDO::FETCH_ASSOC)["flag"];
     }
 
 }

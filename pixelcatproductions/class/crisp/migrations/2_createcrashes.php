@@ -13,7 +13,7 @@ class createcrashes extends \crisp\core\Migrations {
                     array("HttpStatusCode", $this::DB_INTEGER, "NOT NULL DEFAULT 500"),
                     array("Traceback", $this::DB_TEXT, "DEFAULT NULL"),
                     array("Summary", $this::DB_TEXT, "DEFAULT NULL"),
-                    array("CreatedAt", $this::DB_TIMESTAMP, "NOT NULL DEFAULT CURRENT_TIMESTAMP()")
+                    array("CreatedAt", $this::DB_TIMESTAMP, "NOT NULL DEFAULT CURRENT_TIMESTAMP")
             );
             $this->addIndex("Crashes", "ReferenceID", $this::DB_PRIMARYKEY);
 

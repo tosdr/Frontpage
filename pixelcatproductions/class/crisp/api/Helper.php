@@ -193,8 +193,8 @@ class Helper {
   }
 
   public static function processRoute($Route) {
-
     $_Route = explode("/", $Route);
+    array_shift($_Route);
     $obj = new \stdClass();
     $obj->Language = (lists\Languages::languageExists($_Route[0]) && strlen($_Route[0]) > 0 ? $_Route[0] : self::getLocale());
     $obj->Page = (strlen($_Route[1]) === 0 ? (strlen($_Route[0]) > 0 ? $_Route[0] : false) : $_Route[1]);
@@ -215,7 +215,6 @@ class Helper {
         }
       }
     }
-
     return $obj;
   }
 

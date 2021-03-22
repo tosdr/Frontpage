@@ -147,7 +147,7 @@ class Translation {
     if (self::$Database_Connection === null) {
       self::initDB();
     }
-    $statement = self::$Database_Connection->prepare("SELECT * FROM Translations WHERE `key` = :key");
+    $statement = self::$Database_Connection->prepare("SELECT * FROM Translations WHERE key = :key");
     $statement->execute(array(":key" => $Key));
     return ($statement->rowCount() > 0);
   }
@@ -201,7 +201,7 @@ class Translation {
 
 
 
-    $statement = self::$Database_Connection->prepare("SELECT * FROM Translations WHERE `key` = :Key");
+    $statement = self::$Database_Connection->prepare("SELECT * FROM Translations WHERE key = :Key");
     $statement->execute(array(
         ":Key" => $Key,
             //":Language" => $this->Language
@@ -246,7 +246,7 @@ class Translation {
 
 
 
-    $statement = self::$Database_Connection->prepare("SELECT * FROM Translations WHERE `key` = :Key");
+    $statement = self::$Database_Connection->prepare("SELECT * FROM Translations WHERE key = :Key");
     $statement->execute(array(
         ":Key" => $Key . ".plural",
             //":Language" => $this->Language

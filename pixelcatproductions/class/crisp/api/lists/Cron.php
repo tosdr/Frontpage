@@ -134,7 +134,7 @@ class Cron {
         if (self::$Database_Connection === null) {
             self::initDB();
         }
-        $statement = self::$Database_Connection->prepare("INSERT INTO Cron (Type, Data, ScheduledAt, `Interval`, Plugin, ExecuteOnce) VALUES (:Type, :Data, (NOW() + INTERVAL $Interval), :Interval, :Plugin, :ExecuteOnce)");
+        $statement = self::$Database_Connection->prepare("INSERT INTO Cron (Type, Data, ScheduledAt, Interval, Plugin, ExecuteOnce) VALUES (:Type, :Data, (NOW() + INTERVAL $Interval), :Interval, :Plugin, :ExecuteOnce)");
         $statement->execute(array(":Type" => $Type, ":Data" => $Data, ":Interval" => $Interval, ":Plugin" => $Plugin, ":ExecuteOnce" => ($ExecuteOnce ? 1 : 0)));
 
         return self::$Database_Connection->lastInsertId();

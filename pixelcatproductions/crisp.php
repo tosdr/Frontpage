@@ -82,7 +82,8 @@ if (php_sapi_name() !== "cli") {
 
   session_start();
 
-  if (explode("/", $_GET["route"])[0] === "api") {
+  if (explode("/", $_GET["route"])[1] === "api") {
+    header('Access-Control-Allow-Origin: *'); 
     define('CRISP_API', true);
   }
 

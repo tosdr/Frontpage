@@ -53,23 +53,23 @@
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="languageDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <!-- See https://github.com/tosdr/CrispCMS/issues/51  
-          <img id="currentLanguage" src="{{ includeResource("img/flags/" ~ locale|getlang(false).Flag ~ ".svg") }}" width="32">
+          <img id="currentLanguage" src="{{ includeResource("img/flags/" ~ locale|getlang(false).flag ~ ".svg") }}" width="32">
           <-->
-          <i class="fas fa-language"></i> {{ locale|getlang(false).Name|translate }}
+          <i class="fas fa-language"></i> {{ locale|getlang(false).name|translate }}
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="languageDropdownMenuLink">
           {% for Language in languages %}
-            <a class="dropdown-item {% if locale|getlang(false).Code == Language.Code %}active{% endif %}" href="/{{ Language.Code }}/{{ CurrentPage }}">
+            <a class="dropdown-item {% if locale|getlang(false).code == Language.code %}active{% endif %}" href="/{{ Language.code }}/{{ CurrentPage }}">
               <!-- See https://github.com/tosdr/CrispCMS/issues/51
-              <img src="{{ includeResource("img/flags/" ~ Language.Flag ~ ".svg") }}" width="32"/>
+              <img src="{{ includeResource("img/flags/" ~ Language.flag ~ ".svg") }}" width="32"/>
               -->
-              {{ Language.NativeName|translate }} 
-              {% if Language.Name|translate != Language.NativeName|translate %}
-                <span class="{% if locale|getlang(false).Code == Language.Code %}text-white{% else %}text-muted{% endif %}">
-                  ({{ Language.Name|translate }})
+              {{ Language.nativename|translate }} 
+              {% if Language.name|translate != Language.nativename|translate %}
+                <span class="{% if locale|getlang(false).code == Language.code %}text-white{% else %}text-muted{% endif %}">
+                  ({{ Language.name|translate }})
                 </span>
               {% endif %}
-              <img src="https://translate.jback.dev/widgets/crispcms/{{ Language.Code }}/crispcms-theme/svg-badge.svg" alt="Translation status" />
+              <!--<img src="https://translate.jback.dev/widgets/crispcms/{{ Language.code }}/crispcms-theme/svg-badge.svg" alt="Translation status" />-->
             </a>
           {% endfor %}
         </div>

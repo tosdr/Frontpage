@@ -56,7 +56,7 @@ class ErrorReporter {
     if (php_sapi_name() !== 'cli') {
       header("X-Error-ReferenceID: $ReferenceID");
     }
-    $statement = self::$Database_Connection->prepare("INSERT INTO Crashes (`ReferenceID`, `HttpStatusCode`, `Traceback`, `Summary`) VALUES (:ReferenceID, :HttpStatusCode, :Traceback, :Summary)");
+    $statement = self::$Database_Connection->prepare("INSERT INTO Crashes (ReferenceID, HttpStatusCode, Traceback, Summary) VALUES (:ReferenceID, :HttpStatusCode, :Traceback, :Summary)");
     $statement->execute(array(":ReferenceID" => $ReferenceID, ":HttpStatusCode" => $HttpStatusCode, ":Traceback" => $Traceback, ":Summary" => $Summary));
     if ($statement->rowCount() > 0) {
       return $ReferenceID;

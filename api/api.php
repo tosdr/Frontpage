@@ -21,9 +21,6 @@ switch ($GLOBALS["route"]->Page) {
 
         $exclude = explode(",", $GLOBALS["route"]->GET["exclude"]);
 
-        var_dump($exclude);
-
-
         $_all = crisp\api\Phoenix::getServicesPG();
 
         $Content = "";

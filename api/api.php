@@ -36,12 +36,12 @@ switch ($GLOBALS["route"]->Page) {
                         $isExcluded = true;
                     } else if (in_array($Service["id"], $exclude)) {
                         $isExcluded = true;
-                    } else if (in_array($Service["slug"], $exclude)) {
+                    } else if ($Service["slug"] !== "" && in_array($Service["slug"], $exclude)) {
                         $isExcluded = true;
                     }
                 }
                 $Content .= "#### " . $Service["name"] . " ####\n";
-                ($isExcluded ? $Content .= "# WARNING: GOOGLE HAS BEEN EXCLUDED\n" : null);
+                ($isExcluded ? $Content .= "# WARNING: " . $Service["name"] . " HAS BEEN EXCLUDED\n" : null);
                 ($Service["wikipedia"] ? $Content .= "# Wikipedia: " . $Service["wikipedia"] . "\n" : null);
                 $Content .= "# ToS;DR: https://tosdr.org/en/service/" . $Service["id"] . "\n";
                 foreach (explode(",", $Service["url"]) as $URL) {

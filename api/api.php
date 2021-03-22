@@ -31,12 +31,14 @@ switch ($GLOBALS["route"]->Page) {
             $isExcluded = false;
             if ($Service["is_comprehensively_reviewed"] && $Service["rating"] === "E") {
 
-                if (in_array($Service["name"], $exclude)) {
-                    $isExcluded = true;
-                } else if (in_array($Service["id"], $exclude)) {
-                    $isExcluded = true;
-                } else if (in_array($Service["slug"], $exclude)) {
-                    $isExcluded = true;
+                if (count($exclude) > 0) {
+                    if (in_array($Service["name"], $exclude)) {
+                        $isExcluded = true;
+                    } else if (in_array($Service["id"], $exclude)) {
+                        $isExcluded = true;
+                    } else if (in_array($Service["slug"], $exclude)) {
+                        $isExcluded = true;
+                    }
                 }
                 $Content .= "#### " . $Service["name"] . " ####\n";
                 ($isExcluded ? $Content .= "# WARNING: GOOGLE HAS BEEN EXCLUDED\n" : null);

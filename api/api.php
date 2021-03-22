@@ -42,8 +42,8 @@ switch ($GLOBALS["route"]->Page) {
                 ($isExcluded ? $Content .= "# WARNING: " . $Service["name"] . " HAS BEEN EXCLUDED\n" : null);
                 ($Service["wikipedia"] ? $Content .= "# Wikipedia: " . $Service["wikipedia"] . "\n" : null);
                 $Content .= "# ToS;DR: https://tosdr.org/en/service/" . $Service["id"] . "\n";
-                foreach (explode(",", $Service["url"]) as $URL) {
-                    if ($Service["url"] === "") {
+                foreach (explode(",", $Service["url"]) as trim($URL)) {
+                    if ($URL === "") {
                         continue;
                     }
                     $Content .= ($isExcluded ? "# 0.0.0.0 $URL\n" : "0.0.0.0 $URL\n");

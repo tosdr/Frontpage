@@ -84,6 +84,7 @@ if (php_sapi_name() !== "cli") {
 
   if (explode("/", $_GET["route"])[1] === "api") {
     header('Access-Control-Allow-Origin: *'); 
+    header("Cache-Control: max-age=600, public, must-revalidate");
     define('CRISP_API', true);
   }
 

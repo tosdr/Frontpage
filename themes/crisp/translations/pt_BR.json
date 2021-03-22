@@ -79,6 +79,8 @@
     "views.api.use.header": "Uso",
     "views.api.use.license": "Todos os arquivos JSON estão publicados sob uma <a href=\"/legal\">licença Creative Commons</a>.",
     "views.api.use.text": "Nós <a href=\"http://www.w3.org/wiki/CORS_Enabled\">habilitamos o CORS</a>. Exemplo com jQuery para pegar o Facebook:",
+    "views.api.pihole.header": "Blocklist do Pi-Hole",
+    "views.api.pihole.text": "Desde março de 2021, oferecemos uma Blocklist de Más Práticas de Privacidade para o seu pihole ou arquivo hosts. Você pode acessá-lo usando a nossa API em <a href=\"https://api.tosdr.org/pihole\">https://api.tosdr.org/pihole</a>. Para excluir um serviço, acrescente <kbd>exclude/{service_name/service_id/service_slug}</kbd> à url. Você pode excluir múltiplos serviços delimitando-os por vírgula. Ex.: <a href=\"https://api.tosdr.org/pihole/exclude/google,facebook\">https://api.tosdr.org/pihole/exclude/google,facebook</a>",
     "views.classification.class.a": "Nota A",
     "views.classification.class.a.desc": "são os melhores termos de serviço: eles tratam-no de forma justa, respeitam os seus direitos e não abusam dos seus dados.",
     "views.classification.class.b": "Nota B",

@@ -345,8 +345,8 @@ switch ($GLOBALS["route"]->Page) {
             \crisp\api\Helper::PlaceHolder("Invalid Service");
         }
 
-        if (file_exists(__DIR__ . "/../themes/" . $GLOBALS["route"]->GET["theme"] . "/img/logo/" . $GLOBALS["route"]->GET["logo"])) {
-            $ext = pathinfo(__DIR__ . "/../themes/" . $GLOBALS["route"]->GET["theme"] . "/img/logo/" . $GLOBALS["route"]->GET["logo"], PATHINFO_EXTENSION);
+        if (file_exists(__DIR__ . "/../themes/" . $GLOBALS["route"]->GET["theme"] . "/img/logo/" . explode("?",$GLOBALS["route"]->GET["logo"])[0])) {
+            $ext = pathinfo(__DIR__ . "/../themes/" . $GLOBALS["route"]->GET["theme"] . "/img/logo/" . explode("?",$GLOBALS["route"]->GET["logo"])[0], PATHINFO_EXTENSION);
             if ($ext == "png") {
                 header("Content-Type: image/png");
             }
@@ -356,7 +356,7 @@ switch ($GLOBALS["route"]->Page) {
             if ($ext == "jpg") {
                 header("Content-Type: image/jpg");
             }
-            echo file_get_contents(__DIR__ . "/../themes/" . $GLOBALS["route"]->GET["theme"] . "/img/logo/" . $GLOBALS["route"]->GET["logo"]);
+            echo file_get_contents(__DIR__ . "/../themes/" . $GLOBALS["route"]->GET["theme"] . "/img/logo/" . explode("?",$GLOBALS["route"]->GET["logo"])[0]);
         } else {
             \crisp\api\Helper::PlaceHolder("Missing Logo");
         }

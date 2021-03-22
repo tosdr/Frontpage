@@ -31,40 +31,103 @@ This is used to cache [Phoenix](https://edit.tosdr.org/) requests.
 
 - For users running on Debian-based distros, check [this article](https://bitlaunch.io/blog/installing-redis-server-on-ubuntu-20-04-lts/)
 
-### MySQL
+### Postgres
 This is used for running the Crisp database.
 
 - To install on Debian-based Distros, run:
 
 ```bash
 $ sudo apt-get update
-$ sudo apt-get install mysql-server     # Accept the installation.
-$ sudo mysql_secure_installation        # Configure and set-up the server.
+$ sudo apt-get install postgresql     # Accept the installation.
 ```
 
 *Additional instructions for server setup can be found [here](https://www.digitalocean.com/community/tutorials/how-to-install-mysql-on-ubuntu-20-04).*
 
 - For users running on Arch-based Distros, check [this ArchWiki Article](https://wiki.archlinux.org/index.php/MySQL).
 
+### Apache vs Nginx
+
+For testing we recommend using apache, however we use nginx on our production servers to combat the high volume
+
+#### Nginx
+
+Frontpage config:
+```nginx
+server {
+    server_name tosdr.org;
+
+    root   PATH_TO_YOUR_GITHUB_REPO;
+    index  index.php index.html index.htm;
+
+    location ~ /\. {
+        deny all;
+    }
+
+    location / {
+        try_files $uri /index.php?route=$uri$is_args$args;
+        if ($request_uri ~ ^/(.*)\.html$) {
+            return 302 /$1;
+        }
+    }
+
+    location ~ \.php$ {
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+        fastcgi_pass   unix:/var/run/php/php7.4-fpm.sock;
+        fastcgi_index  index.php;
+        fastcgi_param  SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        include        fastcgi_params;
+    }
+
+    listen 80 default_server;
+}
+```
+
+API Config:
+```nginx
+server {
+    server_name api.tosdr.org;
+
+    location ~ /\. {
+        deny all;
+    }
+
+    location / {
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_pass https://$VLAN_CONN_DC_14/api/;
+    }
+
+    listen 80;
+}
+```
+
+#### Apache
+
+Apache only requires mod rewrite and headers to be enabled as everything is handled by the htaccess files.
+
 ### PHP-7.4
 This one is quite self explainatory.
+
+#### Apache
 
 - To install on Debian-based Distros, run:
 
 ```bash
 $ sudo apt-get update
-$ sudo apt-get install php libapache2-mod-php     # Comes with Apache libraries for PHP.
+$ sudo apt-get install apache2 php7.4 libapache2-mod-php     # Comes with Apache libraries for PHP.
+$ sudo apt-get install php7.4-apcu php7.4-cli php7.4-curl php7.4-gd php7.4-gmp php7.4-intl php7.4-json php7.4-mbstring php7.4-pgsql php7.4-redis php7.4-xml php7.4-zip # The dependencies
 ```
 
-<!--
-TODO: Check for other required dependencies on Arch.
+#### Nginx
 
-- To install on Arch-based distros, run:
+- To install on Debian-based Distros, run:
 
 ```bash
-$ sudo pacman -S php php-apache   # Installs PHP and modules for Apache.
+$ sudo apt-get update
+$ sudo apt install php7.4-fpm nginx
+$ sudo apt-get install php7.4-apcu php7.4-cli php7.4-curl php7.4-gd php7.4-gmp php7.4-intl php7.4-json php7.4-mbstring php7.4-pgsql php7.4-redis php7.4-xml php7.4-zip # The dependencies
 ```
--->
+
+See Nginx configuration above on how to connect to your FPM socket.
 
 ### [Composer](https://getcomposer.org/)
 This is used to install required dependencies from `composer.json`.
@@ -73,20 +136,6 @@ This is used to install required dependencies from `composer.json`.
 
 ### Shell Access
 You'll need it to install plugins or setup cron jobs.
-
-### Apache2.4
-As of right now only [Apache](https://httpd.apache.org/) is supported. [`Nginx`](https://nginx.org/en/) may come as well in the future, though!
-
-- To install on Debian-based distros, run:
-
-```bash
-$ sudo apt-get update
-$ sudo apt-get install apache2    # Installs apache2
-```
-
-* *Your configuration files are located on `/etc/apache2/`, and your Server Roots will (usually) be stored on `/var/www/`. For more info, check* [*this article*](https://linuxconfig.org/how-to-install-apache-on-ubuntu-20-04).
-
-- Also, the `mod_rewrite` module is needed for the `.htaccess` instances to enable URL redirection and rewriting. [_More info_](https://httpd.apache.org/docs/current/mod/mod_rewrite.html)
 
 ### [Phoenix](https://github.com/tosdr/edit.tosdr.org)
 We recommend running your own Phoenix instance during development so you have control over the API and you don't get ratelimited. Check its repository for more info.
@@ -148,30 +197,13 @@ of this repository:
 
 ```bash
 $ php bin/cli.php migrate
+$ php bin/cli.php theme install crisp
+$ php bin/cli.php plugin install core
 ```
 
 This will create all necessary tables, aswell as install plugins and themes.
 
 And so your instance is ready to run now!
-<!--
-No longer required, managed by migrations
-
-### Install crisp theme
-
-To install the default theme and create necessary data run
-
-```bash
-php bin/cli.php theme install crisp
-```
-
-### Install core plugin
-
-To install the core plugin you need shell access and execute the following commands in the bin folder:
-
-```bash
-php bin/cli.php plugin install core
-```
--->
 
 ## Plugins
 

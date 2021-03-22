@@ -45,7 +45,7 @@ class Plugins {
 
     foreach ($loadedPlugins as $Plugin) {
       $PluginFolder = \crisp\api\Config::get("plugin_dir");
-      $PluginName = $Plugin["Name"];
+      $PluginName = $Plugin["name"];
       if (\crisp\api\Helper::isValidPluginName($PluginName)) {
         new \crisp\core\PluginAPI($PluginFolder, $PluginName, $Interface, $_QUERY);
       } else {

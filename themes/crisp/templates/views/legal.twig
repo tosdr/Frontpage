@@ -25,67 +25,67 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
 {% set error = false %}
 
 
-<!-- 20x000032 -->
 {% extends "base.twig" %}
 
 {% block content %}
-  {{ include("components/navbar.twig") }}
+    <!-- 20x000032 -->
+    {{ include("components/navbar.twig") }}
 
-  <div class="jumbotron" id="api">
-    <div><h1>{{ 'views.legal.title'|translate }}</h1></div>
-    <p>
-      {{ 'views.legal.jumbotron.text'|translate|raw }}
-    </p>
-  </div>
-
-
-  <div class="container">
+    <div class="jumbotron" id="api">
+        <div><h1>{{ 'views.legal.title'|translate }}</h1></div>
+        <p>
+            {{ 'views.legal.jumbotron.text'|translate|raw }}
+        </p>
+    </div>
 
 
-    <h2>{{ 'views.legal.container.privacy.header'|translate }}</h2>
-    <p>
-      {{ 'views.legal.container.privacy.text'|translate|raw }}
-    </p>
+    <div class="container">
 
 
-    <h2>{{ 'views.legal.container.terms.header'|translate }}</h2>
-    <p>
-      {{ 'views.legal.container.terms.text'|translate|raw }}
-    </p>
-    <p>
-      <b>{{ 'views.legal.container.copyright.header'|translate }}</b><br>
-      {{ 'views.legal.container.copyright.text.top'|translate|raw }}
-      {{ 'views.legal.container.copyright.text.bottom'|translate|raw }}
-    </p>
-    <ul>
-      <li>
-        <a href="{{ generateLink("http://creativecommons.org/licenses/by-sa/3.0/", true) }}">http://creativecommons.org/licenses/by-sa/3.0/</a>
-      </li>
-      <li>
-        <a href="{{ generateLink("http://www.gnu.org/licenses/agpl-3.0-standalone.html", true) }}">http://www.gnu.org/licenses/agpl-3.0-standalone.html</a>
-      </li>
-    </ul>
+        <h2>{{ 'views.legal.container.privacy.header'|translate }}</h2>
+        <p>
+            {{ 'views.legal.container.privacy.text'|translate|raw }}
+        </p>
 
 
-    <p>
-      <b>{{ 'views.legal.container.contributor.header'|translate }}</b><br>
-      {{ 'views.legal.container.contributor.text'|translate|raw }}
-    </p>
+        <h2>{{ 'views.legal.container.terms.header'|translate }}</h2>
+        <p>
+            {{ 'views.legal.container.terms.text'|translate|raw }}
+        </p>
+        <p>
+            <b>{{ 'views.legal.container.copyright.header'|translate }}</b><br>
+            {{ 'views.legal.container.copyright.text.top'|translate|raw }}
+            {{ 'views.legal.container.copyright.text.bottom'|translate|raw }}
+        </p>
+        <ul>
+            <li>
+                <a href="{{ generateLink("http://creativecommons.org/licenses/by-sa/3.0/", true) }}">http://creativecommons.org/licenses/by-sa/3.0/</a>
+            </li>
+            <li>
+                <a href="{{ generateLink("http://www.gnu.org/licenses/agpl-3.0-standalone.html", true) }}">http://www.gnu.org/licenses/agpl-3.0-standalone.html</a>
+            </li>
+        </ul>
 
-    <p>
-      <b>{{ 'views.legal.container.changes.header'|translate }}</b><br>
-      {{ 'views.legal.container.changes.text'|translate|raw }}
-    </p>
 
-    <p>
-    <p><b>{{ 'views.legal.container.votes.header'|translate }}</b><br>
-      {{ 'views.legal.container.votes.text'|translate|raw }}
-    </p>
+        <p>
+            <b>{{ 'views.legal.container.contributor.header'|translate }}</b><br>
+            {{ 'views.legal.container.contributor.text'|translate|raw }}
+        </p>
 
-    <p>
-      <b>{{ 'views.legal.container.team.header'|translate }}</b><br>
-      {{ 'views.legal.container.team.text'|translate|raw }}
-    </p>
+        <p>
+            <b>{{ 'views.legal.container.changes.header'|translate }}</b><br>
+            {{ 'views.legal.container.changes.text'|translate|raw }}
+        </p>
 
-  </div> <!-- /container -->
+        <p>
+        <p><b>{{ 'views.legal.container.votes.header'|translate }}</b><br>
+            {{ 'views.legal.container.votes.text'|translate|raw }}
+        </p>
+
+        <p>
+            <b>{{ 'views.legal.container.team.header'|translate }}</b><br>
+            {{ 'views.legal.container.team.text'|translate|raw }}
+        </p>
+
+    </div> <!-- /container -->
 {% endblock %}

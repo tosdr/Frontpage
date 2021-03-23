@@ -1,6 +1,6 @@
 <?php
 
-if (isset($_GET["download"])) {
+if (isset($GLOBALS["route"]->GET["download"])) {
     header("Content-type: application/zip");
     header("Content-Disposition: attachment; filename=Presskit.zip");
     header("Content-length: " . filesize(__DIR__."/../presskit/ToSDR.zip"));

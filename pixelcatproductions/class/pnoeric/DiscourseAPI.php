@@ -703,6 +703,7 @@ class DiscourseAPI {
         $users = $this->_getRequest('/admin/users/list/active.json', [
             'filter' => $email,
         ]);
+
         foreach ($users->apiresult as $user) {
             if (strtolower($user->email) === strtolower($email)) {
                 return $user;

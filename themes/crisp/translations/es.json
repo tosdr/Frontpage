@@ -149,5 +149,7 @@
     "views.thanks.section.supporters.text": "Los que nos apoyan",
     "views.thanks.section.translators.text": "Traductores",
     "views.thanks.title": "¡Muchas gracias!",
-    "views.service.embed.header": "Insignias de Privacidad integradas"
+    "views.service.embed.header": "Insignias de Privacidad integradas",
+    "views.api.pihole.text": "Desde marzo 2021, ofrecemos una lista de bloqueo de malas Prácticas de Privacidad para tu pihole o archivo hosts. Puedes accederla utilizando nuestra API en <a href=\"https://api.tosdr.org/pihole\">https://api.tosdr.org/pihole</a>, para excluir un servicio, añade <kbd>exclude/{service_name/service_id/service_slug}</kbd> al url. Puedes excluir múltiples servicios delimitándolos por una coma. E.j. <a href=\"https://api.tosdr.org/pihole/exclude/google,facebook\">https://api.tosdr.org/pihole/exclude/google,facebook</a>",
+    "views.api.pihole.header": "Lista de bloqueo Pi-Hole"
 }

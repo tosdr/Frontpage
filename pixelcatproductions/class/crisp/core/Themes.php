@@ -67,7 +67,7 @@ class Themes {
         if (file_exists(__DIR__ . "/../../../../" . \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") . "/includes/api/$Interface.php")) {
             new \crisp\core\ThemeAPI($ThemeLoader, $Interface, $_QUERY);
         } else {
-            \crisp\core\ThemeAPI::response(array("INTERFACE_NOT_FOUND"), "API Interface not found", [], null, 404);
+            \crisp\core\PluginAPI::response(\crisp\core\Bitmask::INTERFACE_NOT_FOUND, "API Interface not found", [], null, 404);
         }
         exit;
     }

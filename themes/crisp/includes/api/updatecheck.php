@@ -12,7 +12,7 @@ $context = stream_context_create($opts);
 $Response = json_decode(file_get_contents("https://api.github.com/repos/tosdr/browser-extensions/releases/latest", false, $context));
 
 if (!isset($this->Query) || empty($this->Query)) {
-    echo \crisp\core\PluginAPI::response(false, "Latest GitHub Release", ["release" => $Response->tag_name]);
+    echo \crisp\core\PluginAPI::response(\crisp\core\Bitmask::NONE, "Latest GitHub Release", ["release" => $Response->tag_name]);
     exit;
 } else {
 
@@ -25,5 +25,5 @@ if (!isset($this->Query) || empty($this->Query)) {
         $Latest = substr($Latest, 1);
     }
 
-    echo \crisp\core\PluginAPI::response(false, "Comparing versions", ["latest" => $Latest, "given" => $Version, "substring" => \crisp\api\Helper::startsWith($this->Query, "v"), "compare" => version_compare($Latest, $Version)]);
+    echo \crisp\core\PluginAPI::response(\crisp\core\Bitmask::NONE, "Comparing versions", ["latest" => $Latest, "given" => $Version, "substring" => \crisp\api\Helper::startsWith($this->Query, "v"), "compare" => version_compare($Latest, $Version)]);
 }

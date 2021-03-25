@@ -27,24 +27,24 @@ if ($this->Query == "all") {
 
 if (!is_numeric($this->Query)) {
     if (!crisp\api\Phoenix::serviceExistsBySlugPG($this->Query)) {
-        echo \crisp\core\PluginAPI::response(["INVALID_SERVICE"], $this->Query, [], null, 404);
+        echo \crisp\core\PluginAPI::response(\crisp\core\Bitmask::INVALID_SERVICE, $this->Query, [], null, 404);
         return;
     }
     $this->Query = crisp\api\Phoenix::getServiceBySlugPG($this->Query)["id"];
     $SkeletonData = \crisp\api\Phoenix::generateApiFiles($this->Query);
-    echo \crisp\core\PluginAPI::response(false, $this->Query, $SkeletonData);
+    echo \crisp\core\PluginAPI::response(\crisp\core\Bitmask::NONE, $this->Query, $SkeletonData);
 
 
     exit;
 }
 
 if (!crisp\api\Phoenix::serviceExistsPG($this->Query)) {
-    echo \crisp\core\PluginAPI::response(["INVALID_SERVICE"], $this->Query, [], null, 404);
+    echo \crisp\core\PluginAPI::response(\crisp\core\Bitmask::INVALID_SERVICE, $this->Query, [], null, 404);
     return;
 }
 
 $SkeletonData = \crisp\api\Phoenix::generateApiFiles($this->Query);
 
-echo \crisp\core\PluginAPI::response(false, $this->Query, $SkeletonData);
+echo \crisp\core\PluginAPI::response(\crisp\core\Bitmask::NONE, $this->Query, $SkeletonData);
 
 

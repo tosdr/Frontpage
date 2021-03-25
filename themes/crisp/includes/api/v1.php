@@ -29,7 +29,7 @@ if ($this->Query == "all") {
 
 if (!is_numeric($this->Query)) {
     if (!crisp\api\Phoenix::serviceExistsBySlugPG($this->Query)) {
-        echo \crisp\core\PluginAPI::response(["INVALID_SERVICE"], $this->Query, [], null, 404);
+        echo \crisp\core\PluginAPI::response(\crisp\core\Bitmask::INVALID_SERVICE, $this->Query, [], null, 404);
         return;
     }
     $this->Query = crisp\api\Phoenix::getServiceBySlugPG($this->Query)["id"];
@@ -43,7 +43,7 @@ if (!is_numeric($this->Query)) {
 
 
 if (!crisp\api\Phoenix::serviceExistsPG($this->Query)) {
-    echo \crisp\core\PluginAPI::response(["INVALID_SERVICE"], $this->Query, [], null, 404);
+    echo \crisp\core\PluginAPI::response(\crisp\core\Bitmask::INVALID_SERVICE, $this->Query, [], null, 404);
     return;
 }
 

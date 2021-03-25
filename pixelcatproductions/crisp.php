@@ -209,7 +209,17 @@ if (php_sapi_name() !== "cli") {
         if (explode("/", $_GET["route"])[1] === "api") {
             header('Access-Control-Allow-Origin: *');
             header("Cache-Control: max-age=600, public, must-revalidate");
-            define('CRISP_API', true);
+
+
+            if ($status->limitExceeded()) {
+                http_response_code(429);
+                exit;
+            }
+
+            if (!isset($_SERVER['HTTP_USER_AGENT']) || empty($_SERVER['HTTP_USER_AGENT'])) {
+                http_response_code(403);
+                exit;
+            }
 
             $Query = (isset($GLOBALS["route"]->GET["q"]) ? $GLOBALS["route"]->GET["q"] : $GLOBALS["route"]->GET["service"]);
 
@@ -230,19 +240,7 @@ if (php_sapi_name() !== "cli") {
             exit;
         }
 
-        if ($status->limitExceeded()) {
-            http_response_code(429);
-            exit;
-        }
-
-        if (!isset($_SERVER['HTTP_USER_AGENT']) || empty($_SERVER['HTTP_USER_AGENT'])) {
-            http_response_code(403);
-
-            exit;
-        }
-
-
-        if (!$GLOBALS["route"]->Language && !defined("CRISP_API")) {
+        if (!$GLOBALS["route"]->Language) {
             header("Location: /$Locale/$CurrentPage");
             exit;
         }

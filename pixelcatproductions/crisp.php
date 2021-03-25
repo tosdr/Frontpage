@@ -213,11 +213,13 @@ if (php_sapi_name() !== "cli") {
 
             if ($status->limitExceeded()) {
                 http_response_code(429);
+                echo $TwigTheme->render("errors/nginx/429.twig", ["error_msg" => "Request forbidden by administrative rules. You are sending too many requests in a certain timeframe."]);
                 exit;
             }
 
             if (!isset($_SERVER['HTTP_USER_AGENT']) || empty($_SERVER['HTTP_USER_AGENT'])) {
                 http_response_code(403);
+                echo $TwigTheme->render("errors/nginx/403.twig", ["error_msg" => "Request forbidden by administrative rules. Please make sure your request has a User-Agent header"]);
                 exit;
             }
 

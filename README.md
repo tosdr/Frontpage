@@ -198,7 +198,6 @@ of this repository:
 ```bash
 $ php bin/cli.php migrate
 $ php bin/cli.php theme install crisp
-$ php bin/cli.php plugin install core
 ```
 
 This will create all necessary tables, aswell as install plugins and themes.

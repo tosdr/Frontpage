@@ -86,14 +86,14 @@ class Plugin {
         $Translation = new \crisp\api\Translation($Locale);
 
 
-        return $Translation->fetch("plugin_" . $this->PluginName . "_$Key", $Count, $UserOptions);
+        return $Translation->fetch("plugin." . $this->PluginName . ".$Key", $Count, $UserOptions);
     }
 
     /**
      * @see \crisp\api\Config::get
      */
     public function getConfig($Key) {
-        return \crisp\api\Config::get("plugin_" . $this->PluginName . "_$Key");
+        return \crisp\api\Config::get("plugin." . $this->PluginName . ".$Key");
     }
 
     /**
@@ -107,11 +107,11 @@ class Plugin {
         if (strpos($File, "/") === 0) {
             $File = substr($File, 1);
         }
-        
-        if(!file_exists(__DIR__ . "/../../../../" . \crisp\api\Config::get("plugin_dir") . "/" . $this->PluginName . "/$File")){
+
+        if (!file_exists(__DIR__ . "/../../../../" . \crisp\api\Config::get("plugin_dir") . "/" . $this->PluginName . "/$File")) {
             return (\crisp\api\Config::exists("cdn") ? \crisp\api\Config::get("cdn") : "") . "/" . \crisp\api\Config::get("plugin_dir") . "/" . $this->PluginName . "/$File";
         }
-        
+
         return (\crisp\api\Config::exists("cdn") ? \crisp\api\Config::get("cdn") : "") . "/" . \crisp\api\Config::get("plugin_dir") . "/" . $this->PluginName . "/$File?" . hash_file("sha256", __DIR__ . "/../../../../" . \crisp\api\Config::get("plugin_dir") . "/" . $this->PluginName . "/$File");
     }
 

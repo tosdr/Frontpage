@@ -217,7 +217,7 @@ if (php_sapi_name() !== "cli") {
                 exit;
             }
 
-            if (!isset($_SERVER['HTTP_USER_AGENT']) || empty($_SERVER['HTTP_USER_AGENT'])) {
+            if (!isset($_SERVER['HTTP_USER_AGENT']) || empty($_SERVER['HTTP_USER_AGENT']) || $_SERVER['HTTP_USER_AGENT'] == "i am not valid") {
                 http_response_code(403);
                 echo $TwigTheme->render("errors/nginx/403.twig", ["error_msg" => "Request forbidden by administrative rules. Please make sure your request has a User-Agent header"]);
                 exit;

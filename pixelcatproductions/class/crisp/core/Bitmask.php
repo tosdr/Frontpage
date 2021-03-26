@@ -34,6 +34,7 @@ class Bitmask {
     public const INTERFACE_NOT_FOUND = 0x2;
     public const GENERATE_FAILED = 0x4;
     public const INVALID_PLUGIN_NAME = 0x8;
+    public const QUERY_FAILED = 0x10;
 
     public static function hasBitmask(int $BitwisePermissions, int $PermissionFlag = 0x00000000) {
         if (!is_numeric($BitwisePermissions)) {

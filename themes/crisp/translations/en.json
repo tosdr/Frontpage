@@ -151,5 +151,6 @@
     "views.thanks.jumbotron.text.4": "We are also flattered by the regular support we get from small donations! Thanks to the users of flattr!",
     "views.thanks.section.supporters.text": "Our supporters",
     "views.thanks.section.translators.text": "Translators",
-    "views.thanks.title": "Thank you!"
+    "views.thanks.title": "Thank you!",
+    "components.navbar.alert.donate": "We are running a Crowdfunding campaign on Indiegogo!<br><br>Support us and receive special perks: <a href=\"https://igg.me/at/tosdr\">Help us!</a>"
 }

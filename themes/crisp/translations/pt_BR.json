@@ -70,7 +70,7 @@
     "views.about.title": "Sobre nós",
     "views.api.examples.header": "Exemplos",
     "views.api.examples.text": "O verificador de ToS Checker é <a href=\"https://github.com/shybyte/tos-checker\">uma extensão para Chrome/Chromium</a>, feita por shybyte.",
-    "views.api.feedback.text": "Seria ótimo se você puder nos dar um feedback através desta simples página da API no Github ou via e-mail. Obrigado!",
+    "views.api.feedback.text": "Seria ótimo se você puder nos dar um feedback sobre esta simples página da API pelo Github ou via e-mail. Obrigado!",
     "views.api.info.header": "Todos os dados estão em JSON legível por máquina",
     "views.api.info.list.text": "Cada serviço (ex.: Facebook) tem um arquivo JSON, veja todos em <a href=\"https://github.com/tosdr/tosdr.org/tree/master/api/1/service/\">https://beta.tosdr.org/api/1/service/</a>",
     "views.api.info.text": "O formato dos dados pode ser submetido a <a href=\"https://github.com/JustinBack/CrispCMS-ToS-DR/blob/master/api/api.php\">engenharia reversa</a> na nossa página do Github. Por gentileza, verifique a versão da especificação com a versão da API.",

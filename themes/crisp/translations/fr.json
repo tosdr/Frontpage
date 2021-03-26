@@ -149,5 +149,7 @@
     "views.legal.container.privacy.header": "Politique de Confidentialité",
     "views.legal.container.team.header": "Définition d'un Membre de l'Equipe",
     "views.legal.container.team.text": "Un Membre de l'Equipe est toute personne, personnalités juridiques exclues, qui est notée dans la page de l'équipe du projet du site web, ou bien qui a obtenu l'accès à la modification du code source du projet.",
-    "views.legal.container.copyright.text.top": "En contribuant à ce projet (par exemple en nous envoyant un e-mail ou en soumettant via nos interfaces), vous acceptez– sauf simultanément et expressément stipulé autrement– que \n\nvotre contribution puisse être inclue dans le code source de ToS ;DR et publiée sous la licence copyright suivante :"
+    "views.legal.container.copyright.text.top": "En contribuant à ce projet (par exemple en nous envoyant un e-mail ou en soumettant via nos interfaces), vous acceptez– sauf simultanément et expressément stipulé autrement– que \n\nvotre contribution puisse être inclue dans le code source de ToS ;DR et publiée sous la licence copyright suivante :",
+    "views.api.pihole.text": "Depuis mars 2021, on offre une liste de blocage de mauvaises Pratiques de Confidentialité pour votre Pi-Hole ou fichier hosts. Vous pouvez y accéder en utilisant notre API sur <a href=\"https://api.tosdr.org/pihole\">https://api.tosdr.org/pihole</a>, pour exclure un service, ajoutez <kbd>exclude/{service_name/service_id/service_slug}</kbd> à l'url. Vous pouvez exclure plusieurs services en les délimitant d'une virgule. Par exemple <a href=\"https://api.tosdr.org/pihole/exclude/google,facebook\">https://api.tosdr.org/pihole/exclude/google,facebook</a>.",
+    "views.api.pihole.header": "Liste de blocage Pi-Hole"
 }

@@ -13,13 +13,13 @@ steps:
   - npx stylelint "themes/crisp/css/*.css"
   - jslint "themes/crisp/js/!(*.min).js"
     
-- name: clone_phoenix
-  image: alpine/git
-  volumes:
-  - name: phoenix
-    path: /phoenix
-  commands:
-  - git clone https://github.com/tosdr/edit.tosdr.org /phoenix
+#- name: clone_phoenix
+#  image: alpine/git
+#  volumes:
+#  - name: phoenix
+#    path: /phoenix
+#  commands:
+#  - git clone https://github.com/tosdr/edit.tosdr.org /phoenix
     
 #- name: install_phoenix
 #  image: ruby:2.7.2

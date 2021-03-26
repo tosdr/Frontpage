@@ -89,7 +89,7 @@ if (time() - filemtime(__DIR__ . "/../../../../pixelcatproductions/cache/badges/
 if ($GLOBALS["route"]->Page === "badgepng" || $Type == "png") {
     header("Content-Type: image/png");
 
-    if (!file_exists(__DIR__ . "/../../../../cache/badges/" . sha1($Prefix . $RedisData["id"] . $Language) . ".svg")) {
+    if (!file_exists(__DIR__ . "/../../../../pixelcatproductions/cache/badges/" . sha1($Prefix . $RedisData["id"] . $Language) . ".svg")) {
         echo \crisp\core\PluginAPI::response(\crisp\core\Bitmask::GENERATE_FAILED, "FS Source SVG not found", [], null, 500);
         exit;
     }

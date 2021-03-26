@@ -20,9 +20,7 @@
 namespace crisp\core;
 
 /**
- * New Permission System
- * 
- * DO NOT AUTOLOAD YET, NOT FULLY TESTED
+ * API Error Codes
  */
 class Bitmask {
 
@@ -31,28 +29,11 @@ class Bitmask {
     /**
      * Maybe we should use categories for permissions?
      */
-    public const PURGE_CACHE = 0x00000001;
-    public const MERGE_SERVICE = 0x00000002;
-    public const DELETE_SERVICE = 0x00000004;
-    public const MOVE_POINTS = 0x00000008;
-    public const DELETE_POINTS = 0x00000010;
-    public const MERGE_POINTS = 0x00000020;
-    public const DELETE_DOCUMENT = 0x00000040;
-    public const CRAWL_DOCUMENT = 0x00000080;
-    public const PROMOTE_TO_BOT = 0x00000100;
-    public const PROMOTE_TO_CURATOR = 0x00000200;
-    public const PROMOTE_TO_ADMIN = 0x00000400;
-    public const RESET_PASSWORD = 0x00000800;
-    public const CHANGE_PASSWORD = 0x00001000;
-    public const SUPERUSER = 0x00002000;
-    public const MERGE_CASE = 0x00004000;
-    public const CHANGE_KV = 0x00008000;
-    public const INSTALL_PLUGINS = 0x00010000;
-    public const UNINSTALL_PLUGINS = 0x00020000;
-    public const REFRESH_PLUGINS_KV = 0x00040000;
-    public const REFRESH_PLUGINS_TRANSLATIONS = 0x00080000;
-    public const UPDATE_PLUGINS = 0x00100000;
-    public const PURGE_PLUGINS = 0x00200000;
+    public const NONE = 0x0;
+    public const INVALID_SERVICE = 0x1;
+    public const INTERFACE_NOT_FOUND = 0x2;
+    public const GENERATE_FAILED = 0x4;
+    public const INVALID_PLUGIN_NAME = 0x8;
 
     public static function hasBitmask(int $BitwisePermissions, int $PermissionFlag = 0x00000000) {
         if (!is_numeric($BitwisePermissions)) {

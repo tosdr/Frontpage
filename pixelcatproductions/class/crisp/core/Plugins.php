@@ -49,11 +49,11 @@ class Plugins {
             if (\crisp\api\Helper::isValidPluginName($PluginName)) {
                 new \crisp\core\PluginAPI($PluginFolder, $PluginName, $Interface, $_QUERY);
             } else {
-                PluginAPI::response(array("INVALID_PLUGIN_NAME"), \crisp\api\Helper::isValidPluginName($PluginName), $PluginName);
+                PluginAPI::response(\crisp\core\Bitmask::INVALID_PLUGIN_NAME, \crisp\api\Helper::isValidPluginName($PluginName), $PluginName);
                 exit;
             }
         }
-        \crisp\core\PluginAPI::response(array("INTERFACE_NOT_FOUND"), "API Interface not found", [], null, 404);
+        \crisp\core\PluginAPI::response(\crisp\core\Bitmask::INTERFACE_NOT_FOUND, "API Interface not found", [], null, 404);
         exit;
     }
 

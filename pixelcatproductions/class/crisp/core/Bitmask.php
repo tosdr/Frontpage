@@ -35,6 +35,10 @@ class Bitmask {
     public const GENERATE_FAILED = 0x4;
     public const INVALID_PLUGIN_NAME = 0x8;
     public const QUERY_FAILED = 0x10;
+    public const METHOD_DEPRECATED = 0x20;
+    public const INTERFACE_DEPRECATED = 0x40;
+    public const VERSION_DEPRECATED = 0x80;
+    public const REQUEST_SUCCESS = 0x100; // Request went through just fine. Used in new versions
 
     public static function hasBitmask(int $BitwisePermissions, int $PermissionFlag = 0x00000000) {
         if (!is_numeric($BitwisePermissions)) {

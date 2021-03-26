@@ -26,7 +26,7 @@ if (!is_numeric($ServiceName)) {
     if (!\crisp\api\Phoenix::serviceExistsBySlugPG(urldecode($ServiceName))) {
         header("Content-Type: image/svg+xml");
         $Color = "999999";
-        $Rating = $Translation->fetch("service_not_found");
+        $Rating = $Translations->fetch("service_not_found");
 
         echo $poser->generate($Prefix, $Rating, $Color, 'flat');
         return;
@@ -36,7 +36,7 @@ if (!is_numeric($ServiceName)) {
     if (count(crisp\api\Phoenix::serviceExistsPG($ServiceName)) === 0) {
         header("Content-Type: image/svg+xml");
         $Color = "999999";
-        $Rating = $Translation->fetch("service_not_found");
+        $Rating = $Translations->fetch("service_not_found");
 
         echo $poser->generate($Prefix, $Rating, $Color, 'flat');
         return;

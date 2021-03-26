@@ -43,7 +43,7 @@ steps:
 - name: create_postgres_db
   image: postgres:9-alpine
   commands:
-  - psql -U postgres -c "CREATE DATABASE tosdr_dev;"
+  - psql -h postgres -U postgres -c "CREATE DATABASE tosdr_dev;"
   
 - name: create_crisp_config
   image: alpine

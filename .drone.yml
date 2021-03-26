@@ -40,6 +40,10 @@ steps:
 #  - rails db:create db:migrate db:seed
 #  - echo 'u = Service.create :id => 1, :name => "Test Service", :url => "example.com", :created_at => "now()", :updated_at => "now()", :slug => "test_slug"' | rails c -e development
 
+- name: create_postgres_db
+  image: postgres:9-alpine
+  commands:
+  - psql -U postgres -c "CREATE DATABASE tosdr_dev;"
   
 - name: create_crisp_config
   image: alpine

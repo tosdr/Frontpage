@@ -78,28 +78,32 @@ $Prefix = \crisp\api\Config::get("badge_prefix") . "/#" . htmlentities($RedisDat
 
 $SVG = $poser->generate($Prefix, $Rating, $Color, 'flat');
 
-if (time() - filemtime(__DIR__ . "/../../../../cache/badges/" . sha1($Prefix . $RedisData["id"] . $Language) . ".svg") > 900) {
-    file_put_contents(__DIR__ . "/../../../../cache/badges/" . sha1($Prefix . $RedisData["id"] . $Language) . ".svg", $SVG);
+if (!file_exists(__DIR__ . "/../../../../pixelcatproductions/cache/badges/")) {
+    mkdir(__DIR__ . "/../../../../pixelcatproductions/cache/badges/");
+}
+
+if (time() - filemtime(__DIR__ . "/../../../../pixelcatproductions/cache/badges/" . sha1($Prefix . $RedisData["id"] . $Language) . ".svg") > 900) {
+    file_put_contents(__DIR__ . "/../../../../pixelcatproductions/cache/badges/" . sha1($Prefix . $RedisData["id"] . $Language) . ".svg", $SVG);
 }
 
 if ($GLOBALS["route"]->Page === "badgepng" || $Type == "png") {
     header("Content-Type: image/png");
 
-    if (!file_exists(__DIR__ . "/../../../../cache//badges/" . sha1($Prefix . $RedisData["id"] . $Language) . ".svg")) {
-        echo \crisp\core\PluginAPI::response(\crisp\core\Bitmask::GENERATE_FAILED, $this->Query, [], null, 500);
+    if (!file_exists(__DIR__ . "/../../../../pixelcatproductions/cache/badges/" . sha1($Prefix . $RedisData["id"] . $Language) . ".svg")) {
+        echo \crisp\core\PluginAPI::response(\crisp\core\Bitmask::GENERATE_FAILED, "FS Source SVG not found", [], null, 500);
         exit;
     }
 
-    if (time() - filemtime(__DIR__ . "/../../../../cache/badges/" . sha1($Prefix . $RedisData["id"] . $Language) . ".png") > 900) {
+    if (time() - filemtime(__DIR__ . "/../../../../pixelcatproductions/cache/badges/" . sha1($Prefix . $RedisData["id"] . $Language) . ".png") > 900) {
 
-        exec("/usr/bin/inkscape -e \"" . __DIR__ . "/../../../../cache/badges/" . sha1($Prefix . $RedisData["id"] . $Language) . ".png\" \"" . __DIR__ . "/../../../../cache/badges/" . sha1($Prefix . $RedisData["id"] . $Language) . ".svg\"");
+        exec("/usr/bin/inkscape -e \"" . __DIR__ . "/../../../../pixelcatproductions/cache/badges/" . sha1($Prefix . $RedisData["id"] . $Language) . ".png\" \"" . __DIR__ . "/../../../../pixelcatproductions/cache/badges/" . sha1($Prefix . $RedisData["id"] . $Language) . ".svg\"");
 
-        if (!file_exists(__DIR__ . "/../../../../cache/badges/" . sha1($Prefix . $RedisData["id"] . $Language) . ".png")) {
-            echo \crisp\core\PluginAPI::response(\crisp\core\Bitmask::GENERATE_FAILED, $this->Query, [], null, 500);
+        if (!file_exists(__DIR__ . "/../../../../pixelcatproductions/cache/badges/" . sha1($Prefix . $RedisData["id"] . $Language) . ".png")) {
+            echo \crisp\core\PluginAPI::response(\crisp\core\Bitmask::GENERATE_FAILED, "FS PNG not found", [], null, 500);
             exit;
         }
     }
-    echo file_get_contents(__DIR__ . "/../../../../cache/badges/" . sha1($Prefix . $RedisData["id"] . $Language) . ".png");
+    echo file_get_contents(__DIR__ . "/../../../../pixelcatproductions/cache/badges/" . sha1($Prefix . $RedisData["id"] . $Language) . ".png");
     exit;
 }
 

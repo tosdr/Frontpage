@@ -238,7 +238,7 @@ if (php_sapi_name() !== "cli") {
 
 
             core\Themes::loadAPI($TwigTheme, $GLOBALS["route"]->Page, $Query);
-            core\Plugins::loadAPI($GLOBALS["route"]->Page, $_QUERY);
+            core\Plugins::loadAPI($GLOBALS["route"]->Page, $QUERY);
             exit;
         }
 

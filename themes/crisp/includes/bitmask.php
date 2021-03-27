@@ -1,4 +1,4 @@
 <?php
 
 
-var_dump(\crisp\core\Bitmask::getBitmask(65412));
+$_vars = array("bitmasks" => crisp\core\Bitmask::getConstants());

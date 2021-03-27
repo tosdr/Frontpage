@@ -55,7 +55,7 @@ class Bitmask {
         return ($BitwisePermissions & $PermissionFlag ? true : false);
     }
 
-    private static function getConstants() {
+    public static function getConstants() {
         $oClass = new \ReflectionClass(__CLASS__);
         return $oClass->getConstants();
     }

@@ -97,7 +97,7 @@
     "views.classification.container.text.2": "Uma vez que o serviço tem insígnias suficientes para avaliar a justeza de seus termos de serviço para os usuários, uma classe é atribuída automaticamente, ponderando as pontuações médias.",
     "views.classification.container.text.3": "Neste momento, você irá perceber que não existem muitos serviços com uma classe atribuída. Isso é porque nós precisamos de mais dados e mais revisões antes que possamos começar a atribui-las. Além disso, ainda estamos experimentado como aplicar as classes.",
     "views.classification.jumbotron.header": "Classificação",
-    "views.classification.jumbotron.text": "O ToS;DR visa criar um processo transparente e fortemente revisado para avaliar e analisar Termos de Serviço e Políticas de Privacidade a fim de criar uma avaliação que parte da Nota A até a Nota E. ",
+    "views.classification.jumbotron.text": "O ToS;DR visa criar um processo transparente e revisado por pares para avaliar e analisar Termos de Serviço e Políticas de Privacidade a fim de criar uma avaliação que parte da Nota A até a Nota E. ",
     "views.classification.point.bad": "Ruim",
     "views.classification.point.blocker": "Bloqueador",
     "views.classification.point.good": "Bom",

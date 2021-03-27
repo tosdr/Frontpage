@@ -40,6 +40,9 @@ class Bitmask {
     public const VERSION_DEPRECATED = 0x80;
     public const REQUEST_SUCCESS = 0x100; // Request went through just fine. Used in new versions
     public const VERSION_NOT_FOUND = 0x200;
+    public const INVALID_CASE = 0x400;
+    public const INVALID_TOPIC = 0x800;
+    public const INVALID_POINT = 0x1000;
 
     public static function hasBitmask(int $BitwisePermissions, int $PermissionFlag = 0x00000000) {
         if (!is_numeric($BitwisePermissions)) {

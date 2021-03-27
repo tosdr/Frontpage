@@ -1,6 +1,6 @@
 <?php
 
-$Interface = "default";
+$Interface = "v1";
 
 if (is_array($GLOBALS["route"]->GET)) {
     $Interface = array_key_first($GLOBALS["route"]->GET);
@@ -12,6 +12,7 @@ if (is_array($GLOBALS["route"]->GET)) {
 }
 
 switch ($Interface) {
+    case "v1":
     default:
-        require_once __DIR__ . '/get-service/v4.php';
+        require_once __DIR__ . '/get-case/v1.php';
 }

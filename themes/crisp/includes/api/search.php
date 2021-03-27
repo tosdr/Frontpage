@@ -14,6 +14,7 @@ if (is_array($GLOBALS["route"]->GET)) {
 switch ($Interface) {
     case "v2":
         require_once __DIR__ . '/search/v2.php';
+    case "v1":
     default:
-        require_once __DIR__ . '/search/default.php';
+        require_once __DIR__ . '/search/v1.php';
 }

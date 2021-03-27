@@ -13,5 +13,5 @@ if (is_array($GLOBALS["route"]->GET)) {
 
 switch ($Interface) {
     default:
-        require_once __DIR__ . '/allservices/v4.php';
+        require_once __DIR__ . '/all-services/v4.php';
 }

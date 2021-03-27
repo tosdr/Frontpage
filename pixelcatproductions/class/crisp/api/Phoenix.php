@@ -950,12 +950,12 @@ class Phoenix {
      * @see https://github.com/tosdr/edit.tosdr.org/blob/8b900bf8879b8ed3a4a2a6bbabbeafa7d2ab540c/db/schema.rb#L42-L52 Database Schema
      * @return array
      */
-    public static function getCasesPG() {
+    public static function getCasesPG(bool $FreshData = false) {
         if (self::$Redis_Database_Connection === NULL) {
             self::initDB();
         }
 
-        if (self::$Redis_Database_Connection->keys("pg_cases")) {
+        if (self::$Redis_Database_Connection->keys("pg_cases") && !$FreshData) {
             return unserialize(self::$Redis_Database_Connection->get("pg_cases"));
         }
 
@@ -963,9 +963,11 @@ class Phoenix {
             self::initPGDB();
         }
 
-        $Result = self::$Postgres_Database_Connection->query("SELECT * FROM cases")->fetchAll(\PDO::FETCH_ASSOC);
+        $Result = self::$Postgres_Database_Connection->query("SELECT * FROM cases ORDER BY id ASC")->fetchAll(\PDO::FETCH_ASSOC);
 
-        self::$Redis_Database_Connection->set("pg_cases", serialize($Result), 900);
+        if (!$FreshData) {
+            self::$Redis_Database_Connection->set("pg_cases", serialize($Result), 900);
+        }
 
         return $Result;
     }

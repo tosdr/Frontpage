@@ -66,10 +66,7 @@ class Themes {
     public static function loadAPI($ThemeLoader, $Interface, $_QUERY) {
         if (file_exists(__DIR__ . "/../../../../" . \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") . "/includes/api/$Interface.php")) {
             new \crisp\core\ThemeAPI($ThemeLoader, $Interface, $_QUERY);
-        } else {
-            \crisp\core\PluginAPI::response(\crisp\core\Bitmask::INTERFACE_NOT_FOUND, "API Interface not found", [], null, 404);
         }
-        exit;
     }
 
     public static function load($TwigTheme, $CurrentFile, $CurrentPage) {

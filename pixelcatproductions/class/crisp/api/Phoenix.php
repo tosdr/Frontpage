@@ -107,7 +107,7 @@ class Phoenix {
                     "id" => $service["id"],
                     "name" => $service["name"],
                     "slug" => $service["slug"],
-                    "image" => \crisp\core\Themes::includeResource($service["image"]),
+                    "image" => ($service["image"]),
                     "class" => ($service["rating"] == "N/A" ? false : ($service["is_comprehensively_reviewed"] ? $service["rating"] : false)),
                     "links" => $ServiceLinks,
                     "points" => $ServicePoints,
@@ -787,8 +787,7 @@ class Phoenix {
         if (self::$Redis_Database_Connection->keys("pg_service_$ID")) {
             $response = unserialize(self::$Redis_Database_Connection->get("pg_service_$ID"));
             $response["nice_service"] = Helper::filterAlphaNum($response["name"]);
-            $response["has_image"] = (file_exists(__DIR__ . "/../../../../" . \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") . "/img/logo/" . $response["nice_service"] . ".svg") ? true : file_exists(__DIR__ . "/../../../../" . \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") . "/img/logo/" . $response["nice_service"] . ".png") );
-            $response["image"] = "/img/logo/" . $response["nice_service"] . (file_exists(__DIR__ . "/../../../../" . \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") . "/img/logo/" . $response["nice_service"] . ".svg") ? ".svg" : ".png");
+            $response["image"] = $response["nice_service"] . ".png";
             return $response;
         }
 
@@ -810,8 +809,7 @@ class Phoenix {
 
 
         $response["nice_service"] = Helper::filterAlphaNum($response["name"]);
-        $response["has_image"] = (file_exists(__DIR__ . "/../../../../" . \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") . "/img/logo/" . $response["nice_service"] . ".svg") ? true : file_exists(__DIR__ . "/../../../../" . \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") . "/img/logo/" . $response["nice_service"] . ".png") );
-        $response["image"] = "/img/logo/" . $response["nice_service"] . (file_exists(__DIR__ . "/../../../../" . \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") . "/img/logo/" . $response["nice_service"] . ".svg") ? ".svg" : ".png");
+        $response["image"] = $response["nice_service"] . ".png";
         return $response;
     }
 

@@ -32,98 +32,98 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
 {% extends "base.twig" %}
 
 {% block content %}
-  {{ include("components/navbar.twig") }}
-  <!-- 0x000097 -->
-  <div class="jumbotron jumbotron-fluid">
-    <div class="container text-center">
-      <h1 class="display-4"><img class="img-fluid" style="max-width: 128px;" src="{{ includeResource(service.image) }}"alt="Logo"/></h1>
-      <h2 class="mt-2">{{ service.name }}</h2>
-      {% if service.is_comprehensively_reviewed or (GET.unreviewed is defined and UNIVERSE == 99)  %}
-        {% set rating = service.rating %}
-      {% else %}
-        {% set rating = "N/A" %}
-      {% endif %}
-      <h3>{% include "components/rating.twig" with {'rating': rating} %}</h3>
-      {% if GET.unreviewed is defined and UNIVERSE == 99 %}
-        <h4 class="alert alert-danger">Warning! Viewing unreviewed Data! <span class="badge badge-danger"><i class="fas fa-shield-alt"></i> ADMIN</span></h4>
-      {% endif %}
-      <!--
-      <div class="btn-group">
-          <a role="button" href="{{ config.phoenix_url }}/services/{{ GET.q }}/annotate" class="btn btn-primary">{{ service.documents|length }} {{ 'documents'|translate }}</a>
-          <a role="button" href="{{ config.phoenix_url }}/services/{{ GET.q }}" class="btn btn-primary">{{ service.points|length }} {{ 'points'|translate }}</a>
-      </div>
-      -->
-      <div class="input-group mt-3">
-        <div class="input-group-prepend">
-          <span class="input-group-text"><img src="{{ includeResource(locale ~"_"~ service.id ~ ".svg", false, "shield_cdn") }}"/></span>
+    {{ include("components/navbar.twig") }}
+    <!-- 0x000097 -->
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container text-center">
+            <h1 class="display-4"><img class="img-fluid" style="max-width: 128px;" src="{{ config.s3_logos ~ "/" ~ service.image }}"alt="Logo"/></h1>
+            <h2 class="mt-2">{{ service.name }}</h2>
+            {% if service.is_comprehensively_reviewed or (GET.unreviewed is defined and UNIVERSE == 99)  %}
+                {% set rating = service.rating %}
+            {% else %}
+                {% set rating = "N/A" %}
+            {% endif %}
+            <h3>{% include "components/rating.twig" with {'rating': rating} %}</h3>
+            {% if GET.unreviewed is defined and UNIVERSE == 99 %}
+                <h4 class="alert alert-danger">Warning! Viewing unreviewed Data! <span class="badge badge-danger"><i class="fas fa-shield-alt"></i> ADMIN</span></h4>
+            {% endif %}
+            <!--
+            <div class="btn-group">
+                <a role="button" href="{{ config.phoenix_url }}/services/{{ GET.q }}/annotate" class="btn btn-primary">{{ service.documents|length }} {{ 'documents'|translate }}</a>
+                <a role="button" href="{{ config.phoenix_url }}/services/{{ GET.q }}" class="btn btn-primary">{{ service.points|length }} {{ 'points'|translate }}</a>
+            </div>
+            -->
+            <div class="input-group mt-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><img src="{{ includeResource(locale ~"_"~ service.id ~ ".svg", false, "shield_cdn") }}"/></span>
+                </div>
+                <input type="text" class="form-control" value="{{ includeResource(locale ~"_"~ service.id ~ ".svg", false, "shield_cdn") }}" readonly>
+            </div>
         </div>
-        <input type="text" class="form-control" value="{{ includeResource(locale ~"_"~ service.id ~ ".svg", false, "shield_cdn") }}" readonly>
-      </div>
     </div>
-  </div>
 
-  <div class="container mt-5">
+    <div class="container mt-5">
 
-    <ul class="list-group mb-4">
-      {% for point in getPointsByService(service.id) %}
-        {% if point.status == "approved" %}
+        <ul class="list-group mb-4">
+            {% for point in getPointsByService(service.id) %}
+                {% if point.status == "approved" %}
 
 
-          {% set caseDetails = getCase(point.case_id) %}
+                    {% set caseDetails = getCase(point.case_id) %}
 
-          {% if caseDetails.classification == "bad" %}
-            {% set color = "warning" %}
-          {% endif %}
+                    {% if caseDetails.classification == "bad" %}
+                        {% set color = "warning" %}
+                    {% endif %}
 
-          {% if caseDetails.classification == "good" %}
-            {% set color = "success" %}
-          {% endif %}
+                    {% if caseDetails.classification == "good" %}
+                        {% set color = "success" %}
+                    {% endif %}
 
-          {% if caseDetails.classification == "neutral" %}
-            {% set color = "secondary" %}
-          {% endif %}
+                    {% if caseDetails.classification == "neutral" %}
+                        {% set color = "secondary" %}
+                    {% endif %}
 
-          {% if caseDetails.classification == "blocker" %}
-            {% set color = "danger" %}
-          {% endif %}
+                    {% if caseDetails.classification == "blocker" %}
+                        {% set color = "danger" %}
+                    {% endif %}
 
-          <li data-toggle="tooltip" title="{{ point.quoteText|striptags|truncateText(300) }}" class="list-group-item list-group-item-{{ color }}"><a  target="_blank" class="link-unstyled" href="{{ config.phoenix_url }}/points/{{ point.id }}">{{ point.title }}</a> <a data-toggle="tooltip" target="_blank" title="{{ 'visit_case'|translate }}" href="{{ config.phoenix_url }}/cases/{{ caseDetails.id }}"><span class="badge badge-primary badge-pill"><i class="fas fa-briefcase"></i></span></a> <span class="badge badge-primary badge-pill" data-toggle="tooltip" title="{{ point.created_at }}"><i class="fas fa-clock"></i></span></li>
+                    <li data-toggle="tooltip" title="{{ point.quoteText|striptags|truncateText(300) }}" class="list-group-item list-group-item-{{ color }}"><a  target="_blank" class="link-unstyled" href="{{ config.phoenix_url }}/points/{{ point.id }}">{{ point.title }}</a> <a data-toggle="tooltip" target="_blank" title="{{ 'visit_case'|translate }}" href="{{ config.phoenix_url }}/cases/{{ caseDetails.id }}"><span class="badge badge-primary badge-pill"><i class="fas fa-briefcase"></i></span></a> <span class="badge badge-primary badge-pill" data-toggle="tooltip" title="{{ point.created_at }}"><i class="fas fa-clock"></i></span></li>
 
-        {% endif %}
-      {% endfor %}
-    </ul> 
+                {% endif %}
+            {% endfor %}
+        </ul> 
 
-    <hr>
+        <hr>
 
-    <h1>{{ 'views.service.embed.header'|translate }}</h1>
-    <p>{{ 'views.service.embed.text'|translate }}</p>
-    <ul class="nav nav-tabs">
-      <li class="nav-item">
-        <a class="nav-link active" data-toggle="tab" href="#markdown">Markdown</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-toggle="tab" href="#html">HTML</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-toggle="tab" href="#bbcode">BBCode</a>
-      </li>
-    </ul>
+        <h1>{{ 'views.service.embed.header'|translate }}</h1>
+        <p>{{ 'views.service.embed.text'|translate }}</p>
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#markdown">Markdown</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#html">HTML</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#bbcode">BBCode</a>
+            </li>
+        </ul>
 
-    <!-- Tab panes -->
-    <div class="tab-content">
-      <div class="tab-pane container active" id="markdown">
-        <textarea class="form-control">[![]({{ includeResource(locale ~"_"~ service.id ~ ".svg", false, "shield_cdn") }})]({{ URL }}/{{ locale }}/service/{{ service.id }})</textarea>
-      </div>
-      <div class="tab-pane container fade" id="html">
-        <textarea class="form-control">&#x3C;a href=&#x22;{{ URL }}/{{ locale }}/service/{{ service.id }}&#x22;&#x3E;
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div class="tab-pane container active" id="markdown">
+                <textarea class="form-control">[![]({{ includeResource(locale ~"_"~ service.id ~ ".svg", false, "shield_cdn") }})]({{ URL }}/{{ locale }}/service/{{ service.id }})</textarea>
+            </div>
+            <div class="tab-pane container fade" id="html">
+                <textarea class="form-control">&#x3C;a href=&#x22;{{ URL }}/{{ locale }}/service/{{ service.id }}&#x22;&#x3E;
     &#x3C;img src=&#x22;{{ includeResource(locale ~"_"~ service.id ~ ".svg", false, "shield_cdn") }}&#x22;/&#x3E;
 &#x3C;/a&#x3E;</textarea>
-      </div>
-      <div class="tab-pane container fade" id="bbcode">
-        <textarea class="form-control">[url={{ URL }}/{{ locale }}/service/{{ service.id }}][img]{{ includeResource(locale ~"_"~ service.id ~ ".svg", false, "shield_cdn") }}[/img][/url]</textarea></div>
+            </div>
+            <div class="tab-pane container fade" id="bbcode">
+                <textarea class="form-control">[url={{ URL }}/{{ locale }}/service/{{ service.id }}][img]{{ includeResource(locale ~"_"~ service.id ~ ".svg", false, "shield_cdn") }}[/img][/url]</textarea></div>
+        </div>
+
+
     </div>
-
-
-  </div>
 
 {% endblock %}

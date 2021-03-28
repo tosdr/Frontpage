@@ -15,7 +15,7 @@ if ($this->Query == "all") {
             $Response["tosdr/review/$URL"] = array(
                 "id" => (int) $Service["id"],
                 "documents" => [],
-                "logo" => crisp\core\Themes::includeResource("img/logo/" . \crisp\api\Helper::filterAlphaNum($Service["name"]) . ".png"),
+                "logo" => \crisp\api\Config::get("s3_logos") . "/" . \crisp\api\Helper::filterAlphaNum($Service["name"]) . ".png",
                 "name" => $Service["name"],
                 "slug" => $Service["slug"],
                 "rated" => ($Service["rating"] == "N/A" ? false : ($Service["is_comprehensively_reviewed"] ? $Service["rating"] : false)),

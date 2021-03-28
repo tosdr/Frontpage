@@ -219,7 +219,7 @@
 				}, {
 					"name": "Inés Rubio",
 					"sub": "",
-					"image": "ines.png",
+					"image": "https://tosdr-team.s3.eu-west-2.jbcdn.net/ines.png",
 					"description": "Inés Rubio (alias Agnes de Lion) is a teenage girl committed to informing people about their rights online. Strangely enough, she enjoys spending time reading long and tortuous terms of service. She currently resides in France.",
 					"pgp": "",
 					"email": "ines@tosdr.org"

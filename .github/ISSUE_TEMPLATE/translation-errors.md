@@ -3,7 +3,7 @@ name: Translation Errors
 about: Report any translation errors found on our frontpage
 title: ''
 labels: translations
-assignees: 'JustinBack'
+assignees: JustinBack
 
 ---
 

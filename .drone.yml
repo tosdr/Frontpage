@@ -81,7 +81,7 @@ steps:
   commands:
   - apk --no-cache add zip bash
   - mkdir dist
-  - zip -r dist/build.zip ./ -x '*.git*' -x 'pixelcatproductions/cache' -x '.env' -x 'static' -x '.vscode'
+  - zip -r dist/build.zip ./ -x '*.git*' -x 'pixelcatproductions/cache' -x '.env' -x 'static' -x '.vscode' -x 'dist'
   
   
 - name: Upload Build Artifacts

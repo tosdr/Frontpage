@@ -806,7 +806,7 @@ class Phoenix {
 
 
         $response["nice_service"] = Helper::filterAlphaNum($response["name"]);
-        $response["image"] = $response["nice_service"] . ".png";
+        $response["image"] = $response["id"] . ".png";
         return $response;
     }
 

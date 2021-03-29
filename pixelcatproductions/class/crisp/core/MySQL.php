@@ -41,7 +41,7 @@ class MySQL {
             if (php_sapi_name() == "cli") {
                 throw new \Exception($ex);
             }
-            throw new \Exception("Failed to contact MySQL Server");
+            throw new \Exception("Failed to contact MySQL Server". $ex->getMessage());
         }
     }
 

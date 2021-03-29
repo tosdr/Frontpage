@@ -16,7 +16,7 @@
 #}
 <nav class="navbar navbar-expand-md  bg-dark navbar-dark">
     <!-- Brand -->
-    <a class="navbar-brand" href="/"><img width="32" src="{{ config.s3_branding ~ "/img/tosdr-icon-32.svg") }}"alt="Logo"/></a>
+    <a class="navbar-brand" href="/"><img width="32" src="{{ config.s3_branding ~ "/img/tosdr-icon-32.svg" }}"alt="Logo"/></a>
 
     <!-- Toggler/collapsibe Button -->
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -69,7 +69,7 @@
                                     ({{ Language.name|translate }})
                                 </span>
                             {% endif %}
-                            <img src="https://translate.tosdr.org/widgets/crispcms/{{ Language.code }}/svg-badge.svg" alt="Translation status" />
+                            <img src="https://translate.tosdr.org/widgets/crispcms/{{ Language.code }}/svg-badge.svg" alt="Translation Progress" />
                         </a>
                     {% endfor %}
                 </div>

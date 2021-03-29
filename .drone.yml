@@ -75,6 +75,27 @@ steps:
   - vendor/bin/twig-linter lint themes/crisp/templates/
 #  - vendor/bin/phpunit tests --bootstrap pixelcatproductions/crisp.php
   - rm /tmp/ci/composer
+  
+- name: Zip Production
+  image: node:alpine
+  commands:
+  - apk --no-cache add zip bash
+  - mkdir dist
+  - zip -r dist/build.zip ./ -x '*.git*' -x 'pixelcatproductions/cache' -x '.env' -x 'static' -x '.vscode'
+  
+  
+- name: Upload Build Artifacts
+  image: plugins/s3
+  settings:
+    bucket: tosdr-artifacts
+    source: ./dist/*
+    strip_prefix: true
+    access_key:
+      from_secret: aws_access_key_id
+    secret_key:
+      from_secret: aws_secret_access_key
+    target: /CrispCMS/builds/${DRONE_BUILD_NUMBER}
+    endpoint: https://s3.eu-west-2.jbcdn.net
 
 #- name: docker  
 #  image: plugins/docker

@@ -107,7 +107,7 @@ class Phoenix {
                     "id" => $service["id"],
                     "name" => $service["name"],
                     "slug" => $service["slug"],
-                    "image" => ($service["image"]),
+                    "image" => \crisp\api\Config::get("s3_logos") . "/" . ($service["image"]),
                     "class" => ($service["rating"] == "N/A" ? false : ($service["is_comprehensively_reviewed"] ? $service["rating"] : false)),
                     "links" => $ServiceLinks,
                     "points" => $ServicePoints,
@@ -143,7 +143,7 @@ class Phoenix {
 
                 $SkeletonData = $service;
 
-                $SkeletonData["image"] = \crisp\core\Themes::includeResource($service["image"]);
+                $SkeletonData["image"] = \crisp\api\Config::get("s3_logos") . "/" . $service["image"];
                 $SkeletonData["documents"] = $documents;
                 $SkeletonData["points"] = $ServicePointsData;
                 $SkeletonData["urls"] = explode(",", $service["url"]);

@@ -33,9 +33,9 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
 
     <div class="jumbotron jumbotron-fluid">
         <div class="container text-center">
-            {% set Logo = "/tosdr-logo-128.svg") %}
+            {% set Logo = config.s3_branding ~ "/tosdr-logo-128.svg" %}
             {% if THEME_MODE == "dark" %}
-                {% set Logo = "/tosdr-logo-128-w.svg") %}
+                {% set Logo = config.s3_branding ~ "/tosdr-logo-128-w.svg" %}
             {% endif %}
             <h1 class="display-4"><img class="img-fluid" src="{{ Logo }}"alt="Logo"/></h1>
             <h2 class="mt-2">{{ 'views.frontpage.jumbotron.text'|translate }}</h2>

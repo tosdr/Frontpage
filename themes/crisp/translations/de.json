@@ -136,5 +136,6 @@
     "views.presskit.container.text": "Mit unserem Presskit können Sie offizielle Branding-Bilder herunterladen, um sie auf Ihrer Website, in den sozialen Medien oder an anderer Stelle zu veröffentlichen!",
     "views.presskit.title": "Pressekit",
     "views.service.embed.text": "Verwenden Sie die unten stehenden Codes, um ein Service-Badge in einen Blogbeitrag, Ihre Website oder an einem anderen Ort einzubetten!",
-    "views.thanks.jumbotron.text.1": "Wir möchten uns bei den Personen und Organisationen bedanken, die das Projekt unterstützen. Ohne sie wäre diese Anstrengung nicht nachhaltig! Ein besonderer Dank geht auch an diejenigen, die dem Projekt zum Start verholfen haben:"
+    "views.thanks.jumbotron.text.1": "Wir möchten uns bei den Personen und Organisationen bedanken, die das Projekt unterstützen. Ohne sie wäre diese Anstrengung nicht nachhaltig! Ein besonderer Dank geht auch an diejenigen, die dem Projekt zum Start verholfen haben:",
+    "components.navbar.status": "Status Seite"
 }

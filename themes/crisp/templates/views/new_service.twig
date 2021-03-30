@@ -1,0 +1,147 @@
+{# 
+ # Copyright 2020 Pixelcat Productions <support@pixelcatproductions.net>
+ # @author 2020 Justin René Back <jback@pixelcatproductions.net>
+ #
+ # Licensed under the Apache License, Version 2.0 (the "License");
+ # you may not use this file except in compliance with the License.
+ # You may obtain a copy of the License at
+ #
+ #      http://www.apache.org/licenses/LICENSE-2.0
+ #
+ # Unless required by applicable law or agreed to in writing, software
+ # distributed under the License is distributed on an "AS IS" BASIS,
+ # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ # See the License for the specific language governing permissions and
+ # limitations under the License.
+#}
+
+
+{#
+Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
+    - JB
+#}
+{% set currentPage = 'new_service' %}
+{% set pageTitle = 'views.new_service.title'|translate %}
+{% set error = false %}
+
+
+{% extends "base.twig" %}
+
+{% block content %}
+    <!-- 20x000032 -->
+    {{ include("components/navbar.twig") }}
+
+    <div class="jumbotron" id="api">
+        <div><h1>{{ 'views.new_service.title'|translate }}</h1></div>
+        <p>
+            {{ 'views.new_service.jumbotron.text'|translate|raw }}
+        </p>
+    </div>
+
+
+    <div class="container mb-4">
+
+
+        <form>
+            <div class="form-group">
+                <label for="service_name">{{ 'views.new_service.form.service_name.label'|translate }}:</label>
+                <input type="text" class="form-control" placeholder="{{ 'views.new_service.form.service_name.placeholder'|translate }}" id="service_name">
+                <div class="valid-feedback">
+                    {{ 'views.new_service.form.service_name.valid_feedback'|translate }}
+                </div>
+                <div class="invalid-feedback">
+                    {{ 'views.new_service.form.service_name.invalid_feedback'|translate }}
+                </div>
+                <label for="service_name" class="text-muted">{{ 'views.new_service.form.service_name.label_muted'|translate }}</label>
+            </div>
+
+            <label for="service_domains">{{ 'views.new_service.form.service_domains.label'|translate }}:</label>
+            <div id="service_domains">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" name="service_domain" placeholder="domain.tld">
+                    <div class="input-group-append">
+                        <button type="button" class="btn btn-success" data-add="domain">+</button>
+                    </div>
+                    <div class="valid-feedback">
+                        {{ 'views.new_service.form.service_domains.valid_feedback'|translate }}
+                    </div>
+                    <div class="invalid-feedback">
+                        {{ 'views.new_service.form.service_domains.invalid_feedback'|translate }}
+                    </div>
+                </div>
+            </div>
+            <label for="service_domains" class="text-muted">{{ 'views.new_service.form.service_domains.label_muted.1'|translate }}</label>
+            <br>
+            <label for="service_domains" class="text-muted">{{ 'views.new_service.form.service_domains.label_muted.2'|translate }}</label>
+            <br>
+            <label for="service_domains" class="text-muted">{{ 'views.new_service.form.service_domains.label_muted.3'|translate }}</label>
+
+
+            <div class="form-group">
+                <label for="service_wikipedia">{{ 'views.new_service.form.service_wikipedia.label'|translate }}:</label>
+                <input type="text" class="form-control" placeholder="{{ 'views.new_service.form.service_wikipedia.placeholder'|translate }}" id="service_wikipedia">
+                <div class="valid-feedback">
+                    {{ 'views.new_service.form.service_wikipedia.valid_feedback'|translate }}
+                </div>
+                <div class="invalid-feedback">
+                    {{ 'views.new_service.form.service_wikipedia.invalid_feedback'|translate }}
+                </div>
+                <label for="service_wikipedia" class="text-muted">{{ 'views.new_service.form.service_wikipedia.label_muted'|translate }}</label>
+            </div>
+            <hr>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form> 
+    </div> <!-- /container -->
+{% endblock %}
+{% block scripts %}
+    <script>
+        let domainIterator = 0;
+        $(document).ready(function () {
+            $(document).on('click', '[data-add="domain"]', function () {
+                domainIterator++;
+                $("#service_domains").append('<div id="domain-' + domainIterator + '" class="input-group mb-3"><input data-di="' + domainIterator + '" type="text" class="form-control is-invalid" name="service_domain" placeholder="domain.tld"><div class="input-group-append"><button data-di="' + domainIterator + '" type="button" class="btn btn-danger" data-remove="domain">-</button></div><div class="valid-feedback">{{ 'views.new_service.form.service_domains.valid_feedback'|translate }}</div><div class="invalid-feedback">{{ 'views.new_service.form.service_domains.invalid_feedback'|translate }}</div></div>');
+            });
+            $(document).on('click', '[data-remove="domain"]', function () {
+                $("#domain-" + $(this).data('di')).remove();
+            });
+            $(document).on('keyup', '#service_name', function () {
+                $(this).removeClass("is-valid");
+                if ($(this).val() === "") {
+                    return $(this).addClass("is-invalid");
+                }
+                $(this).removeClass("is-invalid");
+                $(this).addClass("is-valid");
+            });
+
+            $(document).on('keyup', '#service_wikipedia', function () {
+                $(this).removeClass("is-valid");
+                if (!$(this).val().startsWith("https://en.wikipedia.org/wiki/")) {
+                    return $(this).addClass("is-invalid");
+                }
+
+                $(this).removeClass("is-invalid");
+                $(this).addClass("is-valid");
+            });
+
+            $(document).on('keyup', 'input[name="service_domain"]', function () {
+                $(this).removeClass("is-valid");
+                if ($(this).val() === "") {
+                    return $(this).addClass("is-invalid");
+                }
+                if (new RegExp(/^.*?:\/\//).test($(this).val())) {
+                    return $(this).addClass("is-invalid");
+                }
+                if (!new RegExp(/^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]$/).test($(this).val())) {
+                    return $(this).addClass("is-invalid");
+                }
+                if ($(this).val().startsWith("www.")) {
+                    return $(this).addClass("is-invalid");
+                }
+
+                $(this).removeClass("is-invalid");
+                $(this).addClass("is-valid");
+            });
+        });
+    </script>
+{% endblock %}

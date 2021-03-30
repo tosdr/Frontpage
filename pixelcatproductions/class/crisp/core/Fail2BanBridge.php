@@ -20,16 +20,16 @@
 namespace crisp\core;
 
 /**
- * Requires exec()
+ * Requires exec() and the socket group to be www-data
  */
 class Fail2BanBridge {
 
     public static function banIP($IP) {
-        return (exec("/usr/bin/fail2ban-client set empty banip $IP") === $IP ? true : false);
+        return (exec("/usr/bin/fail2ban-client set crisp-malicious banip $IP") === $IP ? true : false);
     }
 
     public static function unbanIP($IP) {
-        return (exec("/usr/bin/fail2ban-client set empty unbanip $IP") === $IP ? true : false);
+        return (exec("/usr/bin/fail2ban-client set crisp-malicious unbanip $IP") === $IP ? true : false);
     }
 
 }

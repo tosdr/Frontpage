@@ -20,7 +20,7 @@
 namespace crisp\core;
 
 /**
- * Requires exec()
+ * Totally unfinished
  */
 class Security {
 
@@ -29,8 +29,14 @@ class Security {
         if (preg_match('/<script[\s\S]*?>[\s\S]*?<\/script>/i', $String)) {
             return true;
         }
-        
+
         return false;
+    }
+
+    public static function validate($String) {
+        if (self::containsBlacklistedHTML($String)) {
+            return Fail2BanBridge::banIP(\crisp\api\Helper::getRealIpAddr());
+        }
     }
 
 }

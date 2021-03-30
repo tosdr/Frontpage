@@ -43,6 +43,8 @@ class Bitmask {
     public const INVALID_CASE = 0x400;
     public const INVALID_TOPIC = 0x800;
     public const INVALID_POINT = 0x1000;
+    public const METHOD_NOT_ALLOWED = 0x2000; // Send this along with a 405
+    public const NOT_IMPLEMENTED = 0x4000; // Send this along with a 501
 
     public static function hasBitmask(int $BitwisePermissions, int $PermissionFlag = 0x00000000) {
         if (!is_numeric($BitwisePermissions)) {

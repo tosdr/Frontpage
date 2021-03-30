@@ -1,5 +1,10 @@
 <?php
 
+if ($_SERVER["REQUEST_METHOD"] !== "GET") {
+    echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::NOT_IMPLEMENTED, "Invalid Request Method", [], null, 405);
+    exit;
+}
+
 $Services = \crisp\api\Phoenix::getServicesPG();
 $Response = array(
     "version" => time(),

@@ -13,7 +13,7 @@ if (is_array($GLOBALS["route"]->GET)) {
 
 switch ($Interface) {
     case "v1":
-        require_once __DIR__ . '/get-case/v1.php';
+        require_once __DIR__ . '/case/v1.php';
         break;
     default:
         echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::VERSION_NOT_FOUND, "Invalid Version", []);

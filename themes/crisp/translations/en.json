@@ -170,5 +170,12 @@
     "views.thanks.jumbotron.text.4": "We are also flattered by the regular support we get from small donations! Thanks to the users of flattr!",
     "views.thanks.section.supporters.text": "Our supporters",
     "views.thanks.section.translators.text": "Translators",
-    "views.thanks.title": "Thank you!"
+    "views.thanks.title": "Thank you!",
+    "views.txt.title": "tosdr.txt - A new way to crawl your service",
+    "views.txt.jumbotron.text": "With a tosdr.txt, you can make it easy for us to crawl you. Simply place it in the root directory, customize it to your legal documents and let us do the rest.",
+    "views.txt.form.service_domain.label": "Domain",
+    "views.txt.form.service_domain.placeholder": "tosdr.org",
+    "views.txt.form.service_domain.label_muted": "Only use a domain with toplevel domain or subdomain. No protocol and no path.",
+    "views.txt.form.service_domain.valid_feedback": "Looks like the domain is valid, now hit Validate!",
+    "views.txt.form.service_domain.invalid_feedback": "Please make sure not to use a protocol or a path in your domain!"
 }

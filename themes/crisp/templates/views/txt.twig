@@ -49,14 +49,24 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
                 <div class="valid-feedback">
                     {{ 'views.txt.form.service_domain.valid_feedback'|translate }}
                 </div>
-                <div class="invalid-feedback">
+                <div class="invalid-feedback" id="error">
                     {{ 'views.txt.form.service_domain.invalid_feedback'|translate }}
                 </div>
-                <label for="service_name" class="text-muted">{{ 'views.txt.form.service_domain.label_muted'|translate }}</label>
+                <label for="service_domain" class="text-muted">{{ 'views.txt.form.service_domain.label_muted'|translate }}</label>
+            </div>
+            <div class="card" id="resultcard" style="display: none;">
+                <div class="card-header">
+                    {{ 'views.txt.card.results.header'|translate }}
+                </div>
+                <div class="card-body">
+                    <pre id="result">
+
+                    </pre>
+                </div>
             </div>
             <hr>
 
-            <button type="submit" class="btn btn-primary">Validate</button>
+            <button type="submit" id="submit" class="btn btn-primary" disabled>Validate</button>
         </form> 
     </div> <!-- /container -->
 {% endblock %}
@@ -65,8 +75,28 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
         let domainIterator = 0;
         $(document).ready(function () {
 
+            $("form").on('submit', function (e) {
+                $("#service_domain").removeClass("is-invalid");
+                $("#service_domain").removeClass("is-valid");
+                $("#resultcard").hide();
+                e.preventDefault();
+                $.post("", {domain: $("#service_domain").val()}, function (result) {
+                    if (result.error & 0x10) {
+                        $("#error").html(result.message);
+                        $("#service_domain").addClass("is-invalid");
+                    }
+                    if (result.error & 0x100) {
+                        $("#result").html(result.message);
+                        $("#resultcard").show();
+                    }
+                });
+
+            });
+
             $(document).on('keyup', '#service_domain', function () {
                 $(this).removeClass("is-valid");
+                $("#error").html('{{ 'views.txt.form.service_domain.invalid_feedback'|translate }}');
+                $("#submit").prop('disabled', true);
                 if ($(this).val() === "") {
                     return $(this).addClass("is-invalid");
                 }
@@ -82,6 +112,7 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
 
                 $(this).removeClass("is-invalid");
                 $(this).addClass("is-valid");
+                $("#submit").prop('disabled', false);
             });
         });
     </script>

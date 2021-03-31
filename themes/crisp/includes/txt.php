@@ -37,6 +37,9 @@ if (isset($_POST["domain"])) {
     }
     $txtFileExploded = explode("\n", $txtFile);
     foreach ($txtFileExploded as $key => $line) {
+        if (strpos($line, "Domains:") !== false) {
+            continue;
+        }
         if (strpos($line, "Document-Name:") !== false) {
             continue;
         }
@@ -49,14 +52,62 @@ if (isset($_POST["domain"])) {
         unset($txtFileExploded[$key]);
     }
 
+    $domainLine = getLineWithString($txtFileExploded, "Domains:");
+
+    if ($domainLine === -1) {
+        echo crisp\core\PluginAPI::response(crisp\core\Bitmask::QUERY_FAILED, \crisp\api\Translation::fetch("views.txt.errors.invalid_line", 1, [
+                    "{{ line }}" => -1,
+                    "{{ expected }}" => "Domains",
+                    "{{ got }}" => "Nothing"
+        ]));
+        exit;
+    }
+
     $parsed = array();
+
+    $dmarray = array();
+
+    $domains = explode(",", explode(":", $txtFileExploded[$domainLine])[1]);
+
+    $domainRegex = '/^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]$/';
+    foreach ($domains as $domain) {
+
+        if (empty(trim($domain))) {
+            echo crisp\core\PluginAPI::response(crisp\core\Bitmask::QUERY_FAILED, \crisp\api\Translation::fetch("views.txt.errors.invalid_domain_list", 1, [
+                        "{{ domain }}" => trim($domain),
+            ]));
+            exit;
+        }
+
+        if (preg_match($domainRegex, trim($domain))) {
+            $dmarray[] = trim($domain);
+            continue;
+        }
+        echo crisp\core\PluginAPI::response(crisp\core\Bitmask::QUERY_FAILED, \crisp\api\Translation::fetch("views.txt.errors.invalid_domain_list", 1, [
+                    "{{ domain }}" => trim($domain),
+        ]));
+        exit;
+    }
+
+    $parsed["Domains"] = $dmarray;
+    
+    array_shift($txtFileExploded);
+
 
     $countDocuments = substr_count($txtFile, "Document-Name:");
     for ($i = 0; $i < $countDocuments; $i++) {
 
-
-
         $firstDocumentLine = getLineWithString($txtFileExploded, "Document-Name:");
+
+        if ($firstDocumentLine === -1) {
+            echo crisp\core\PluginAPI::response(crisp\core\Bitmask::QUERY_FAILED, \crisp\api\Translation::fetch("views.txt.errors.invalid_line", 1, [
+                        "{{ line }}" => -1,
+                        "{{ expected }}" => "Document-Name",
+                        "{{ got }}" => "Nothing"
+            ]));
+            exit;
+        }
+
 
         $documentName = explode(":", $txtFileExploded[$firstDocumentLine]);
         $documentUrl = explode(":", $txtFileExploded[$firstDocumentLine + 1]);
@@ -104,7 +155,7 @@ if (isset($_POST["domain"])) {
         $_array["Url"] = trim(implode(":", $documentUrl));
         $_array["Path"] = trim(implode(":", $documentPath));
 
-        $parsed[] = $_array;
+        $parsed["Documents"][] = $_array;
     }
 
     echo crisp\core\PluginAPI::response(crisp\core\Bitmask::REQUEST_SUCCESS, var_export($parsed, true));

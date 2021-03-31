@@ -184,5 +184,6 @@
     "views.txt.errors.not_found": "I could not find a tosdr.txt located at {{ path }}",
     "views.txt.errors.non_success": "I received a non 200 error code at {{ path }}",
     "views.txt.card.results.header": "I have found this",
-    "views.txt.errors.invalid_line": "Error on line {{ line }}. Expected \"{{ expected }}\" but received \"{{ got }}\""
+    "views.txt.errors.invalid_line": "Error on line {{ line }}. Expected \"{{ expected }}\" but received \"{{ got }}\"",
+    "views.txt.errors.invalid_domain_list": "Failed to parse {{ domain }}"
 }

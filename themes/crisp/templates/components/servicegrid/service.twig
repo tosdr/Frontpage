@@ -16,15 +16,15 @@
 #}
 <div class="col-{{ col }}">
     <div class="card d-flex h-100">
-        <a href="/{{ locale }}/service/{{ service.id }}">
+        <a href="/{{ locale }}/service/{{ service._source.id }}">
             <div class="card-header">
-                <img src="{{ config.s3_logos ~ "/" ~ service.image }}" class="mr-2" width="64"/> 
-                {% if service.is_comprehensively_reviewed %}
-                    {% set rating = service.rating %}
+                <img src="{{ config.s3_logos ~ "/" ~ service._source.id }}.png" class="mr-2" width="64"/> 
+                {% if service._source.is_comprehensively_reviewed %}
+                    {% set rating = service._source.rating %}
                 {% else %}
                     {% set rating = "N/A" %}
                 {% endif %}
-                {{ service.name }} <span class="ml-1">{% include "components/rating.twig" with {'rating': rating} %}</span>
+                {{ service._source.name }} <span class="ml-1">{% include "components/rating.twig" with {'rating': rating} %}</span>
             </div>
         </a>
         <div class="card-body">
@@ -32,7 +32,7 @@
 
             <ul class="list-group">
                 {% set count = 0 %}
-                {% for point in getPointsByService(service.id) %}
+                {% for point in getPointsByService(service._source.id) %}
                     {% if point.status == "approved" and count < 5 %}
 
 
@@ -64,44 +64,44 @@
             </ul>
             <div class="float-right">
 
-                {% if service.rating == "A" %}
+                {% if service._source.rating == "A" %}
                     {% set color = "success" %}
                 {% endif %}
-                {% if service.rating == "B" %}
+                {% if service._source.rating == "B" %}
                     {% set color = "ranking-B" %}
                 {% endif %}
-                {% if service.rating == "C" %}
+                {% if service._source.rating == "C" %}
                     {% set color = "warning" %}
                 {% endif %}
-                {% if service.rating == "D" %}
+                {% if service._source.rating == "D" %}
                     {% set color = "ranking-D" %}
                 {% endif %}
-                {% if service.rating == "E" %}
+                {% if service._source.rating == "E" %}
                     {% set color = "danger" %}
                 {% endif %}
-                {% if service.rating == "N/A" %}
+                {% if service._source.rating == "N/A" %}
                     {% set color = "secondary" %}
                 {% endif %}
                 {% if count == 5 %}
-                    <a target="_blank" href="{{ generateLink(config.phoenix_url ~ "/services/" ~ service.id, true) }}"><span class="badge badge-{{ color }}"><i class="fas fa-eye"></i> {{ 'components.servicegrid.service.button.allpoints.text'|translate }}</span></a>
+                    <a target="_blank" href="{{ generateLink(config.phoenix_url ~ "/services/" ~ service._source.id, true) }}"><span class="badge badge-{{ color }}"><i class="fas fa-eye"></i> {{ 'components.servicegrid.service.button.allpoints.text'|translate }}</span></a>
 
                 {% else %}
-                    <a target="_blank" href="{{ generateLink(config.phoenix_url ~ "/services/" ~ service.id, true) }}"><span class="badge badge-success"><i class="fas fa-hands-helping"></i> {{ 'components.servicegrid.service.button.expand.text'|translate }}</span></a>
+                    <a target="_blank" href="{{ generateLink(config.phoenix_url ~ "/services/" ~ service._source.id, true) }}"><span class="badge badge-success"><i class="fas fa-hands-helping"></i> {{ 'components.servicegrid.service.button.expand.text'|translate }}</span></a>
 
                 {% endif %}
             </div>
         </div>
         <div class="card-footer">
             {# API #}
-            <a target="_blank" href="{{ generateLink(config.phoenix_url ~ config.phoenix_api_endpoint ~ "/services/" ~ service.id, true) }}"><span class="badge badge-warning"><i class="fas fa-code"></i> {{ 'component.servicegrid.service.button.api'|translate }}</span></a>
+            <a target="_blank" href="{{ generateLink(config.phoenix_url ~ config.phoenix_api_endpoint ~ "/services/" ~ service._source.id, true) }}"><span class="badge badge-warning"><i class="fas fa-code"></i> {{ 'component.servicegrid.service.button.api'|translate }}</span></a>
 
             {# Documents #}
-            <a target="_blank" href="{{ generateLink(config.phoenix_url ~ "/services/" ~ service.id ~ "/annotate/", true) }}"><span class="badge badge-primary"><i class="fas fa-gavel"></i> {{ 'components.servicegrid.service.button.documents.text'|translate }}</span></a>
+            <a target="_blank" href="{{ generateLink(config.phoenix_url ~ "/services/" ~ service._source.id ~ "/annotate/", true) }}"><span class="badge badge-primary"><i class="fas fa-gavel"></i> {{ 'components.servicegrid.service.button.documents.text'|translate }}</span></a>
 
             {# Service URL #}
-            <a target="_blank" href="//{{ service.url|split(',')[0] }}"><span class="badge badge-info"><i class="fas fa-link"></i> {{ 'components.servicegrid.service.button.service.text'|translate }}</span></a>
+            <a target="_blank" href="//{{ service._source.url|split(',')[0] }}"><span class="badge badge-info"><i class="fas fa-link"></i> {{ 'components.servicegrid.service.button.service.text'|translate }}</span></a>
 
-            <a target="_blank" href="{{ includeResource(locale ~"_"~ service.id ~ ".svg", false, "shield_cdn") }}"><img src="{{ includeResource(locale ~"_"~ service.id ~ ".svg", false, "shield_cdn") }}"></a>
+            <a target="_blank" href="{{ includeResource(locale ~"_"~ service._source.id ~ ".svg", false, "shield_cdn") }}"><img src="{{ includeResource(locale ~"_"~ service._source.id ~ ".svg", false, "shield_cdn") }}"></a>
 
         </div>
     </div>

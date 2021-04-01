@@ -21,10 +21,10 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
     - JB
 #}
 {% set currentPage = 'service' %}
-{% set pageTitle = service.name %}
-{% set ogTitle = service.name %}
-{% set ogImage = includeResource(service.image) %}
-{% set ogDescription = 'views.service.ogp.description'|translate(1, {"{{ service }}": service.name, "{{ grade }}": service.rating}) %}
+{% set pageTitle = service._source.name %}
+{% set ogTitle = service._source.name %}
+{% set ogImage = config.s3_logos ~ "/" ~ service._source.image %}
+{% set ogDescription = 'views.service._source.ogp.description'|translate(1, {"{{ service }}": service._source.name, "{{ grade }}": service._source.rating}) %}
 {% set error = false %}
 
 
@@ -36,10 +36,10 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
     <!-- 0x000097 -->
     <div class="jumbotron jumbotron-fluid">
         <div class="container text-center">
-            <h1 class="display-4"><img class="img-fluid" style="max-width: 128px;" src="{{ config.s3_logos ~ "/" ~ service.image }}"alt="Logo"/></h1>
-            <h2 class="mt-2">{{ service.name }}</h2>
-            {% if service.is_comprehensively_reviewed or (GET.unreviewed is defined and UNIVERSE == 99)  %}
-                {% set rating = service.rating %}
+            <h1 class="display-4"><img class="img-fluid" style="max-width: 128px;" src="{{ config.s3_logos ~ "/" ~ service._source.image }}"alt="Logo"/></h1>
+            <h2 class="mt-2">{{ service._source.name }}</h2>
+            {% if service._source.is_comprehensively_reviewed or (GET.unreviewed is defined and UNIVERSE == 99)  %}
+                {% set rating = service._source.rating %}
             {% else %}
                 {% set rating = "N/A" %}
             {% endif %}
@@ -49,15 +49,15 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
             {% endif %}
             <!--
             <div class="btn-group">
-                <a role="button" href="{{ config.phoenix_url }}/services/{{ GET.q }}/annotate" class="btn btn-primary">{{ service.documents|length }} {{ 'documents'|translate }}</a>
-                <a role="button" href="{{ config.phoenix_url }}/services/{{ GET.q }}" class="btn btn-primary">{{ service.points|length }} {{ 'points'|translate }}</a>
+                <a role="button" href="{{ config.phoenix_url }}/services/{{ GET.q }}/annotate" class="btn btn-primary">{{ service._source.documents|length }} {{ 'documents'|translate }}</a>
+                <a role="button" href="{{ config.phoenix_url }}/services/{{ GET.q }}" class="btn btn-primary">{{ service._source.points|length }} {{ 'points'|translate }}</a>
             </div>
             -->
             <div class="input-group mt-3">
                 <div class="input-group-prepend">
-                    <span class="input-group-text"><img src="{{ includeResource(locale ~"_"~ service.id ~ ".svg", false, "shield_cdn") }}"/></span>
+                    <span class="input-group-text"><img src="{{ includeResource(locale ~"_"~ service._source.id ~ ".svg", false, "shield_cdn") }}"/></span>
                 </div>
-                <input type="text" class="form-control" value="{{ includeResource(locale ~"_"~ service.id ~ ".svg", false, "shield_cdn") }}" readonly>
+                <input type="text" class="form-control" value="{{ includeResource(locale ~"_"~ service._source.id ~ ".svg", false, "shield_cdn") }}" readonly>
             </div>
         </div>
     </div>
@@ -65,7 +65,7 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
     <div class="container mt-5">
 
         <ul class="list-group mb-4">
-            {% for point in getPointsByService(service.id) %}
+            {% for point in getPointsByService(service._source.id) %}
                 {% if point.status == "approved" %}
 
 
@@ -112,15 +112,15 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
         <!-- Tab panes -->
         <div class="tab-content">
             <div class="tab-pane container active" id="markdown">
-                <textarea class="form-control">[![]({{ includeResource(locale ~"_"~ service.id ~ ".svg", false, "shield_cdn") }})]({{ URL }}/{{ locale }}/service/{{ service.id }})</textarea>
+                <textarea class="form-control">[![]({{ includeResource(locale ~"_"~ service._source.id ~ ".svg", false, "shield_cdn") }})]({{ URL }}/{{ locale }}/service/{{ service._source.id }})</textarea>
             </div>
             <div class="tab-pane container fade" id="html">
-                <textarea class="form-control">&#x3C;a href=&#x22;{{ URL }}/{{ locale }}/service/{{ service.id }}&#x22;&#x3E;
-    &#x3C;img src=&#x22;{{ includeResource(locale ~"_"~ service.id ~ ".svg", false, "shield_cdn") }}&#x22;/&#x3E;
+                <textarea class="form-control">&#x3C;a href=&#x22;{{ URL }}/{{ locale }}/service/{{ service._source.id }}&#x22;&#x3E;
+    &#x3C;img src=&#x22;{{ includeResource(locale ~"_"~ service._source.id ~ ".svg", false, "shield_cdn") }}&#x22;/&#x3E;
 &#x3C;/a&#x3E;</textarea>
             </div>
             <div class="tab-pane container fade" id="bbcode">
-                <textarea class="form-control">[url={{ URL }}/{{ locale }}/service/{{ service.id }}][img]{{ includeResource(locale ~"_"~ service.id ~ ".svg", false, "shield_cdn") }}[/img][/url]</textarea></div>
+                <textarea class="form-control">[url={{ URL }}/{{ locale }}/service/{{ service._source.id }}][img]{{ includeResource(locale ~"_"~ service._source.id ~ ".svg", false, "shield_cdn") }}[/img][/url]</textarea></div>
         </div>
 
 

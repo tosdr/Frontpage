@@ -15,6 +15,9 @@ switch ($Interface) {
     case "v2":
         require_once __DIR__ . '/search/v2.php';
         break;
+    case "v3":
+        require_once __DIR__ . '/search/v3.php';
+        break;
     case "v1":
     default:
         require_once __DIR__ . '/search/v1.php';

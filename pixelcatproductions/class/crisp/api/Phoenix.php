@@ -785,7 +785,10 @@ class Phoenix {
             $response = unserialize(self::$Redis_Database_Connection->get("pg_service_$ID"));
             $response["nice_service"] = Helper::filterAlphaNum($response["name"]);
             $response["image"] = $response["id"] . ".png";
-            return $response;
+            $dummy;
+
+            $dummy["_source"] = $response;
+            return $dummy;
         }
 
         if (self::$Postgres_Database_Connection === NULL) {
@@ -807,7 +810,10 @@ class Phoenix {
 
         $response["nice_service"] = Helper::filterAlphaNum($response["name"]);
         $response["image"] = $response["id"] . ".png";
-        return $response;
+        $dummy;
+
+        $dummy["_source"] = $response;
+        return $dummy;
     }
 
     /**

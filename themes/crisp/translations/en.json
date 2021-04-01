@@ -201,5 +201,6 @@
     "views.new_service.form.service_documents.input.document_xpath.invalid_feedback": "Looks like the XPath is not valid?",
     "views.new_service.form.service_documents.input.document_name.valid_feedback": "Looks good!",
     "views.new_service.form.service_documents.input.document_url.valid_feedback": "That url seems to be valid!",
-    "views.new_service.form.service_documents.input.document_xpath.valid_feedback": "Looks good!"
+    "views.new_service.form.service_documents.input.document_xpath.valid_feedback": "Looks good!",
+    "views.new_service.form.service_documents.button.add_domain.text": "Add another domain"
 }

@@ -1,0 +1,19 @@
+{
+    "views.curator_dashboard.header": "Curator Dashboard",
+    "views.login.header": "Curator Login",
+    "views.login.form.email.label": "E-Mail",
+    "views.login.form.password.label": "Password",
+    "views.login.form.email.placeholder": "Your Phoenix E-Mail",
+    "views.login.form.password.placeholder": "Your Phoenix Password",
+    "views.login.form.submit": "Login",
+    "views.login.ajax.login.failure": "Password or E-Mail invalid",
+    "views.login.ajax.login.success": "Success! We'll redirect you shortly...",
+    "views.service_requests.header": "Service Requests",
+    "views.service_requests.table.th.service_name": "Name",
+    "views.service_requests.table.th.service_domains": "Domains",
+    "views.service_requests.table.th.service_documents": "Documents",
+    "views.service_requests.table.th.service_wikipedia": "Wikipedia",
+    "views.service_requests.table.th.service_actions": "Actions",
+    "views.service_requests.table.td.button.reject": "Reject",
+    "views.service_requests.table.td.button.approve": "Approve"
+}

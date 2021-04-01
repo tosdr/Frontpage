@@ -170,6 +170,7 @@ if (php_sapi_name() !== "cli") {
         $TwigTheme->addFilter(new \Twig\TwigFilter('double', 'doubleval'));
         $TwigTheme->addFilter(new \Twig\TwigFilter('json', 'json_decode'));
         $TwigTheme->addFilter(new \Twig\TwigFilter('json_encode', 'json_encode'));
+        $TwigTheme->addFilter(new \Twig\TwigFilter('json_decode', 'json_decode'));
         $TwigTheme->addFilter(new \Twig\TwigFilter('translate', [$Translation, 'fetch']));
         $TwigTheme->addFilter(new \Twig\TwigFilter('getlang', [new \crisp\api\lists\Languages(), 'getLanguageByCode']));
         $TwigTheme->addFilter(new \Twig\TwigFilter('truncateText', [new \crisp\api\Helper(), 'truncateText']));

@@ -143,6 +143,11 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
                 </div>
                 <label for="service_email" class="text-muted">{{ 'views.new_service.form.service_email.label_muted'|translate }}</label>
             </div>
+            <div class="form-group">
+                <label for="service_note">{{ 'views.new_service.form.service_note.label'|translate }}:</label>
+                <textarea class="form-control" placeholder="{{ 'views.new_service.form.service_note.placeholder'|translate }}" id="service_note"></textarea>
+                <label for="service_note" class="text-muted">{{ 'views.new_service.form.service_note.label_muted'|translate }}</label>
+            </div>
             <hr>
 
             <button type="submit" class="btn btn-primary">Submit</button>
@@ -170,7 +175,8 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
                     documents: [],
                     domains: [],
                     wikipedia: $("#service_wikipedia").val(),
-                    email: $("#service_email").val()
+                    email: $("#service_email").val(),
+                    note: $("#service_note").val()
                 };
 
                 $('input[name="document_name"]').each(function () {

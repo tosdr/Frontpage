@@ -84,10 +84,11 @@ if (isset($_POST["payload"]) || !empty($_POST["payload"])) {
 
     $Postgres = new crisp\core\MySQL();
 
-    $db = $Postgres->getDBConnector()->prepare("INSERT INTO service_requests (name, domains, documents, wikipedia, email) VALUES (:name, :domains, :documents, :wikipedia, :email)");
+    $db = $Postgres->getDBConnector()->prepare("INSERT INTO service_requests (name, domains, documents, wikipedia, email, note) VALUES (:name, :domains, :documents, :wikipedia, :email, :note)");
 
     $success = $db->execute(array(
         ":name" => $payload["name"],
+        ":note" => $payload["note"],
         ":domains" => implode(",", $payload["domains"]),
         ":documents" => json_encode($payload["documents"]),
         ":wikipedia" => $payload["wikipedia"],
@@ -138,7 +139,7 @@ if (isset($_POST["payload"]) || !empty($_POST["payload"])) {
 
             $resp = curl_exec($curl);
         }
-        
+
         echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::REQUEST_SUCCESS, "OK", []);
         exit;
     }

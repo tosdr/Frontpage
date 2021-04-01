@@ -144,6 +144,9 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
         $(document).ready(function () {
             $('form').on('submit', function (e) {
                 e.preventDefault();
+                if($(this).valid()){
+                    console.log("Valid!");
+                }
                 let documents;
                 let payload = {};
 
@@ -154,8 +157,9 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
                     let DocumentName = $('input[data-di="' + Index + '"][name="document_name"]').val();
                     let DocumentUrl = $('input[data-di="' + Index + '"][name="document_url"]').val();
                     let DocumentXPath = $('input[data-di="' + Index + '"][name="document_xpath"]').val();
-                    console.log(Index, DocumentName, DocumentUrl, DocumentXPath);
+                    payload["documents"] = {name: DocumentName, url: DocumentUrl, xpath: DocumentXPath};
                 });
+                console.log(payload);
             });
             $(document).on('click', '[data-add="domain"]', function () {
                 domainIterator++;
@@ -199,7 +203,7 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
                 $(this).removeClass("is-invalid");
                 $(this).addClass("is-valid");
             });
-            
+
             $(document).on('keyup', 'input[name="service_domain"]', function () {
                 $(this).removeClass("is-valid");
                 if ($(this).val() === "") {
@@ -224,7 +228,7 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
                 if ($(this).val() === "") {
                     return $(this).addClass("is-invalid");
                 }
-                if (!new RegExp(/^\b(https?):\/\/[\-A-Za-z0-9+&@#\/%?=~_|!:,.;]*[\-A-Za-z0-9+&@#\/%=~_|]\.+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]$/).test($(this).val())) {
+                if (!new RegExp(/^\b(https?):\/\/[\-A-Za-z0-9+&@#\/%?=~_|!:,.;]*[\-A-Za-z0-9+&@#\/%=~_|]\.+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]\/.*$/).test($(this).val())) {
                     return $(this).addClass("is-invalid");
                 }
 

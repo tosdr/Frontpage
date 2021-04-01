@@ -236,9 +236,9 @@ if (php_sapi_name() !== "cli") {
             }
 
             if (api\Helper::getAPIKey()) {
-                $LimitSecond = \RateLimit\Rate::perSecond(15000);
-                $LimitHour = \RateLimit\Rate::perHour(100000);
-                $LimitDay = \RateLimit\Rate::perHour(150000);
+                $LimitSecond = \RateLimit\Rate::perSecond(150);
+                $LimitHour = \RateLimit\Rate::perHour(10000);
+                $LimitDay = \RateLimit\Rate::perHour(50000);
                 $Benefit = "Partner";
             }
 

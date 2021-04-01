@@ -1,10 +1,11 @@
 <?php
 
+header("X-SKIPCACHE: skip");
 if (!isset($_SESSION[\crisp\core\Config::$Cookie_Prefix . "session_login"])) {
     header("Location: /login");
     exit;
 }
-header("X-SKIPCACHE: true");
+
 
 $User = new crisp\plugin\curator\PhoenixUser($_SESSION[\crisp\core\Config::$Cookie_Prefix . "session_login"]["User"]);
 

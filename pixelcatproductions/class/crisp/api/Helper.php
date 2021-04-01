@@ -34,17 +34,25 @@ class Helper {
     }
 
     public static function getAPIKey() {
-        if (isset(apache_request_headers()["Api-Key"])) {
-            return apache_request_headers()["Api-Key"];
-        } elseif (apache_request_headers()["X-Api-Key"]) {
-            return apache_request_headers()["X-Api-Key"];
-        } elseif (isset($_POST["apikey"])) {
-            return $_POST["apikey"];
-        } elseif (isset($_GET["apikey"])) {
-            return $_GET["apikey"];
+
+        $apikey = "";
+
+        $Postgres = new \crisp\core\MySQL();
+
+        $statement = $Postgres->getDBConnector()->prepare("SELECT * FROM apikeys WHERE key = :key");
+
+        if (isset(apache_request_headers()["Authorization"])) {
+            $apikey = apache_request_headers()["Authorization"];
         } else {
             return false;
         }
+        $statement->execute([":key" => $apikey]);
+
+
+        if ($statement->rowCount() > 0) {
+            return true;
+        }
+        return false;
     }
 
     /**

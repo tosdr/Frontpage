@@ -194,6 +194,11 @@ if (php_sapi_name() !== "cli") {
             }
         }
 
+        if (api\Helper::getAPIKey()) {
+            $Limit = \RateLimit\Rate::perSecond(100);
+            $Benefit = "partner";
+        }
+
         $status = $rateLimiter->limitSilently($Indicator, $Limit);
 
         header("X-RateLimit-Amount: " . $status->getRemainingAttempts());
@@ -237,6 +242,11 @@ if (php_sapi_name() !== "cli") {
             header("X-API-Interface: " . $GLOBALS["route"]->Page);
             header("X-API-Query: $Query");
 
+            if (isset(apache_request_headers()["Authorization"]) && !api\Helper::getAPIKey()) {
+                http_response_code(401);
+                echo $TwigTheme->render("errors/nginx/401.twig", ["error_msg" => "Request forbidden by administrative rules. Please make sure your request has a valid Authorization header"]);
+                exit;
+            }
 
             core\Themes::loadAPI($TwigTheme, $GLOBALS["route"]->Page, $Query);
             core\Plugins::loadAPI($GLOBALS["route"]->Page, $QUERY);

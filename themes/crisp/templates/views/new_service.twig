@@ -76,8 +76,51 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
             <br>
             <label for="service_domains" class="text-muted">{{ 'views.new_service.form.service_domains.label_muted.3'|translate }}</label>
 
+            <br>
+            <label for="service_documents">{{ 'views.new_service.form.service_documents.label'|translate }}</label>
+            <div id="service_documents" class="card card-body">
+                <button type="button" class="btn btn-success btn-block" data-add="document">+</button>
+                <div class="card card-body mb-2" id="document-0">
+                    <div class="form-group">
+                        <label for="document_name" class="text-muted">{{ 'views.new_service.form.service_documents.input.document_name.label'|translate }}:</label>
+                        <input type="text" data-di="0" class="form-control" name="document_name" placeholder="{{ 'views.new_service.form.service_documents.input.document_name.placeholder'|translate }}">
 
-            <div class="form-group">
+                        <label class="text-muted">{{ 'views.new_service.form.service_documents.input.document_name.hint'|translate }}</label>
+                        <div class="valid-feedback">
+                            {{ 'views.new_service.form.service_domains.valid_feedback'|translate }}
+                        </div>
+                        <div class="invalid-feedback">
+                            {{ 'views.new_service.form.service_domains.invalid_feedback'|translate }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="document_url" class="text-muted">{{ 'views.new_service.form.service_documents.input.document_url.label'|translate }}:</label>
+                        <input type="text" data-di="0" class="form-control" name="document_url" placeholder="{{ 'views.new_service.form.service_documents.input.document_url.placeholder'|translate }}">
+
+                        <label class="text-muted">{{ 'views.new_service.form.service_documents.input.document_url.hint'|translate }}</label>
+                        <div class="valid-feedback">
+                            {{ 'views.new_service.form.service_domains.valid_feedback'|translate }}
+                        </div>
+                        <div class="invalid-feedback">
+                            {{ 'views.new_service.form.service_domains.invalid_feedback'|translate }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="document_xpath" class="text-muted">{{ 'views.new_service.form.service_documents.input.document_xpath.label'|translate }}:</label>
+                        <input type="text" data-di="0" class="form-control" name="document_xpath" placeholder="{{ 'views.new_service.form.service_documents.input.document_xpath.placeholder'|translate }}">
+
+                        <label class="text-muted">{{ 'views.new_service.form.service_documents.input.document_xpath.hint'|translate|raw }}</label>
+                        <div class="valid-feedback">
+                            {{ 'views.new_service.form.service_domains.valid_feedback'|translate }}
+                        </div>
+                        <div class="invalid-feedback">
+                            {{ 'views.new_service.form.service_domains.invalid_feedback'|translate }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group mt-3">
                 <label for="service_wikipedia">{{ 'views.new_service.form.service_wikipedia.label'|translate }}:</label>
                 <input type="text" class="form-control" placeholder="{{ 'views.new_service.form.service_wikipedia.placeholder'|translate }}" id="service_wikipedia">
                 <div class="valid-feedback">
@@ -97,13 +140,21 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
 {% block scripts %}
     <script>
         let domainIterator = 0;
+        let documentIterator = 1;
         $(document).ready(function () {
             $(document).on('click', '[data-add="domain"]', function () {
                 domainIterator++;
                 $("#service_domains").append('<div id="domain-' + domainIterator + '" class="input-group mb-3"><input data-di="' + domainIterator + '" type="text" class="form-control is-invalid" name="service_domain" placeholder="domain.tld"><div class="input-group-append"><button data-di="' + domainIterator + '" type="button" class="btn btn-danger" data-remove="domain">-</button></div><div class="valid-feedback">{{ 'views.new_service.form.service_domains.valid_feedback'|translate }}</div><div class="invalid-feedback">{{ 'views.new_service.form.service_domains.invalid_feedback'|translate }}</div></div>');
             });
+            $(document).on('click', '[data-add="document"]', function () {
+                documentIterator++;
+                $("#service_documents").append('<div class="card card-body mb-2" id="document-' + documentIterator + '"> <div class="form-group"> <label for="document_name" class="text-muted">{{'views.new_service.form.service_documents.input.document_name.label'|translate}}:</label> <input type="text" data-di="' + documentIterator + '" class="form-control" name="document_name" placeholder="{{'views.new_service.form.service_documents.input.document_name.placeholder'|translate}}"> <label class="text-muted">{{'views.new_service.form.service_documents.input.document_name.hint'|translate}}</label> <div class="valid-feedback">{{'views.new_service.form.service_domains.valid_feedback'|translate}}</div><div class="invalid-feedback">{{'views.new_service.form.service_domains.invalid_feedback'|translate}}</div></div><div class="form-group"> <label for="document_url" class="text-muted">{{'views.new_service.form.service_documents.input.document_url.label'|translate}}:</label> <input type="text" data-di="' + documentIterator + '" class="form-control" name="document_url" placeholder="{{'views.new_service.form.service_documents.input.document_url.placeholder'|translate}}"> <label class="text-muted">{{'views.new_service.form.service_documents.input.document_url.hint'|translate}}</label> <div class="valid-feedback">{{'views.new_service.form.service_domains.valid_feedback'|translate}}</div><div class="invalid-feedback">{{'views.new_service.form.service_domains.invalid_feedback'|translate}}</div></div><div class="form-group"> <label for="document_xpath" class="text-muted">{{'views.new_service.form.service_documents.input.document_xpath.label'|translate}}:</label> <input type="text" data-di="' + documentIterator + '" class="form-control" name="document_xpath" placeholder="{{'views.new_service.form.service_documents.input.document_xpath.placeholder'|translate}}"> <label class="text-muted">{{'views.new_service.form.service_documents.input.document_xpath.hint'|translate|raw}}</label> <div class="valid-feedback">{{'views.new_service.form.service_domains.valid_feedback'|translate}}</div><div class="invalid-feedback">{{'views.new_service.form.service_domains.invalid_feedback'|translate}}</div></div><button type="button" class="btn btn-danger btn-block" data-di="' + documentIterator + '" data-remove="document">-</button> </div>');
+            });
             $(document).on('click', '[data-remove="domain"]', function () {
                 $("#domain-" + $(this).data('di')).remove();
+            });
+            $(document).on('click', '[data-remove="document"]', function () {
+                $("#document-" + $(this).data('di')).remove();
             });
             $(document).on('keyup', '#service_name', function () {
                 $(this).removeClass("is-valid");
@@ -116,7 +167,7 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
 
             $(document).on('keyup', '#service_wikipedia', function () {
                 $(this).removeClass("is-valid");
-                if (!$(this).val().startsWith("https://en.wikipedia.org/wiki/")) {
+                if (!new RegExp(/^https\:\/\/[a-z]+\.wikipedia\.org\/wiki\/([\w%]+)$/).test($(this).val())) {
                     return $(this).addClass("is-invalid");
                 }
 

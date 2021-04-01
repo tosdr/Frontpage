@@ -182,46 +182,12 @@ if (php_sapi_name() !== "cli") {
         $RedisClass = new \crisp\core\Redis();
         $rateLimiter = new \RateLimit\RedisRateLimiter($RedisClass->getDBConnector());
 
-        $Limit = \RateLimit\Rate::perSecond(15);
-        $Benefit = "guest";
-        $Indicator = \crisp\api\Helper::getRealIpAddr();
-
-        if (CURRENT_UNIVERSE == \crisp\Universe::UNIVERSE_TOSDR || in_array(\crisp\api\Helper::getRealIpAddr(), \crisp\api\Config::get("office_ips"))) {
-            $Limit = \RateLimit\Rate::perSecond(15000);
-            $Benefit = "staff";
-            if (in_array(\crisp\api\Helper::getRealIpAddr(), \crisp\api\Config::get("office_ips"))) {
-                $Benefit = "office";
-            }
-        }
-
-        if (api\Helper::getAPIKey()) {
-            $Limit = \RateLimit\Rate::perSecond(100);
-            $Benefit = "partner";
-        }
-
-        $status = $rateLimiter->limitSilently($Indicator, $Limit);
-
-        header("X-RateLimit-Amount: " . $status->getRemainingAttempts());
-        header("X-RateLimit-Exceeded: " . ($status->limitExceeded() ? "true" : "false"));
-        header("X-RateLimit-Limit: " . $status->getLimit());
-        header("X-RateLimit-Interval: " . $Limit->getInterval());
-        header("X-RateLimit-Indicator: $Indicator");
-        header("X-RateLimit-Benefit: " . $Benefit);
-        header("X-CMS-CDN: " . api\Config::get("cdn"));
-        header("X-CMS-SHIELDS: " . api\Config::get("shield_cdn"));
-        header("X-CMS-API: " . api\Config::get("api_cdn"));
 
 
         if (explode("/", $_GET["route"])[1] === "api") {
             header('Access-Control-Allow-Origin: *');
             header("Cache-Control: max-age=600, public, must-revalidate");
 
-
-            if ($status->limitExceeded()) {
-                http_response_code(429);
-                echo $TwigTheme->render("errors/nginx/429.twig", ["error_msg" => "Request forbidden by administrative rules. You are sending too many requests in a certain timeframe."]);
-                exit;
-            }
 
             if (!isset($_SERVER['HTTP_USER_AGENT']) || empty($_SERVER['HTTP_USER_AGENT']) || $_SERVER['HTTP_USER_AGENT'] == "i am not valid") {
                 http_response_code(403);
@@ -239,17 +205,69 @@ if (php_sapi_name() !== "cli") {
                 $Query = "no_query";
             }
 
-            header("X-API-Interface: " . $GLOBALS["route"]->Page);
-            header("X-API-Query: $Query");
-
             if (isset(apache_request_headers()["Authorization"]) && !api\Helper::getAPIKey()) {
                 http_response_code(401);
                 echo $TwigTheme->render("errors/nginx/401.twig", ["error_msg" => "Request forbidden by administrative rules. Please make sure your request has a valid Authorization header"]);
                 exit;
             }
 
+            $Benefit = "Guest";
+            $IndicatorSecond = "s_" . \crisp\api\Helper::getRealIpAddr();
+            $IndicatorHour = "h_" . \crisp\api\Helper::getRealIpAddr();
+            $IndicatorDay = "d_" . \crisp\api\Helper::getRealIpAddr();
+
+
+            $LimitSecond = \RateLimit\Rate::perSecond(15);
+            $LimitHour = \RateLimit\Rate::perHour(1000);
+            $LimitDay = \RateLimit\Rate::perHour(15000);
+
+
+
+            if (CURRENT_UNIVERSE == \crisp\Universe::UNIVERSE_TOSDR || in_array(\crisp\api\Helper::getRealIpAddr(), \crisp\api\Config::get("office_ips"))) {
+
+                $LimitSecond = \RateLimit\Rate::perSecond(15000);
+                $LimitHour = \RateLimit\Rate::perHour(100000);
+                $LimitDay = \RateLimit\Rate::perHour(150000);
+
+                $Benefit = "Staff";
+                if (in_array(\crisp\api\Helper::getRealIpAddr(), \crisp\api\Config::get("office_ips"))) {
+                    $Benefit = "Office";
+                }
+            }
+
+            if (api\Helper::getAPIKey()) {
+                $LimitSecond = \RateLimit\Rate::perSecond(15000);
+                $LimitHour = \RateLimit\Rate::perHour(100000);
+                $LimitDay = \RateLimit\Rate::perHour(150000);
+                $Benefit = "Partner";
+            }
+
+            $statusSecond = $rateLimiter->limitSilently($IndicatorSecond, $LimitSecond);
+            $statusHour = $rateLimiter->limitSilently($IndicatorHour, $LimitHour);
+            $statusDay = $rateLimiter->limitSilently($IndicatorDay, $LimitDay);
+
+
+            if ($statusSecond->limitExceeded() || $statusHour->limitExceeded() || $statusDay->limitExceeded()) {
+                http_response_code(429);
+                echo $TwigTheme->render("errors/nginx/429.twig", ["error_msg" => "Request forbidden by administrative rules. You are sending too many requests in a certain timeframe."]);
+                exit;
+            }
+
+
+            header("X-CMS-CDN: " . api\Config::get("cdn"));
+            header("X-CMS-SHIELDS: " . api\Config::get("shield_cdn"));
+            header("X-RateLimit-Benefit: " . $Benefit);
+            header("X-RateLimit-S: " . $statusSecond->getRemainingAttempts());
+            header("X-RateLimit-H: " . $statusHour->getRemainingAttempts());
+            header("X-RateLimit-D: " . $statusDay->getRemainingAttempts());
+            header("X-RateLimit-Benefit: " . $Benefit);
+            header("X-CMS-API: " . api\Config::get("api_cdn"));
+
             core\Themes::loadAPI($TwigTheme, $GLOBALS["route"]->Page, $Query);
             core\Plugins::loadAPI($GLOBALS["route"]->Page, $QUERY);
+
+
+
             exit;
         }
 

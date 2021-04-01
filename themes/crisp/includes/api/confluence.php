@@ -58,8 +58,8 @@ curl_setopt_array($curl, array(
 $resp = curl_exec($curl);
 
 if (!$resp) {
-    error_log("Discord response: " . $resp);
-    error_log("Discord error code: " . curl_error($curl));
+    
+    file_put_contents(".wh_resp", curl_error($curl));
     echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::GENERIC_ERROR, "Webhook error", [], null, 502);
 }
 

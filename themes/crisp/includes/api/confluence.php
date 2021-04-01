@@ -1,19 +1,19 @@
 <?php
 
 if (crisp\api\Helper::getRealIpAddr() !== "202.61.251.191") {
-    echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::INVALID_SUBNET, "IP not whitelisted", []);
+    echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::INVALID_SUBNET, "IP not whitelisted", [], null, 401);
     exit;
 }
 
 $data = json_decode(file_get_contents('php://input'));
 
 if (!$data) {
-    echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::INVALID_PARAMETER, "Missing data", []);
+    echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::INVALID_PARAMETER, "Missing data", [], null, 400);
     exit;
 }
 
 if (!$data->event == "page_updated" || $data->event == "page_created") {
-    echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::INVALID_PARAMETER, "Invalid Event", []);
+    echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::INVALID_PARAMETER, "Invalid Event", [], null, 400);
     exit;
 }
 

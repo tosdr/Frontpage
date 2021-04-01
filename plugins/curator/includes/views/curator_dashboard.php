@@ -9,7 +9,7 @@ if (!isset($_SESSION[\crisp\core\Config::$Cookie_Prefix . "session_login"])) {
 
 $User = new crisp\plugin\curator\PhoenixUser($_SESSION[\crisp\core\Config::$Cookie_Prefix . "session_login"]["User"]);
 
-if (!$User->isSessionValid() || CURRENT_UNIVERSE != crisp\Universe::UNIVERSE_TOSDR) {
+if (!$User->isSessionValid()) {
     header("Location: /login");
     exit;
 }

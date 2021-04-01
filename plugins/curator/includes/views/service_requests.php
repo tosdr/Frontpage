@@ -46,7 +46,7 @@ if (isset($_POST["approve"]) && !empty($_POST["approve"])) {
         $request->execute([":id" => $_POST["approve"]]);
 
 
-        echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::REQUEST_SUCCESS, "OK", []);
+        echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::REQUEST_SUCCESS, $Phoenix->getDBConnector()->lastInsertId(), []);
         exit;
     } else {
         echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::GENERIC_ERROR, "SQL Error" . var_export($newstatement->errorInfo(), true), []);

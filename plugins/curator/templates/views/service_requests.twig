@@ -76,6 +76,7 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
                 $.post("", {approve: id}, function (result) {
                     if (result.error & 0x100) {
                         $("#request-" + id).remove();
+                        window.open("https://edit.tosdr.org/services/" + result.message + "/annotate");
                     } else {
                         alert("Error! " + result.message);
                     }

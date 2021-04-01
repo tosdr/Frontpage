@@ -208,5 +208,6 @@
     "views.new_service.form.invalid.alert": "Some fields are invalid. Check those before submitting the form!",
     "views.new_service.form.success.alert": "The service has been submitted. Check back later while we verify it.",
     "views.new_service.form.error.alert": "An error occurred submitting the service:",
-    "components.navbar.request_service": "Add a new Service"
+    "components.navbar.request_service": "Add a new Service",
+    "views.global.report_a_bug": "Report a bug"
 }

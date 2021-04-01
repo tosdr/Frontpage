@@ -2,7 +2,7 @@
     "base.footer.about.text": "\"Conditions d'utilisation ; non lues\" (en anglais \"Terms of Service ; Didn't Read\" soit ToS ;DR) est un projet qui a débuté en juin 2012 pour aider à réparer le \"plus grand mensonge du web\" : presque personne ne lit vraiment les conditions d'utilisation qu'on accepte tout le temps.",
     "views.about.jumbotron.text.1": "\"Conditions d'utilisation ; non lues\" (en anglais \"Terms of Service ; Didn't Read\" soit ToS ;DR) est un projet qui a débuté en juin 2012 pour aider à réparer le \"plus grand mensonge du web\" : presque personne ne lit vraiment les conditions d'utilisation qu'on accepte tout le temps.",
     "views.api.info.header": "Toutes les données en JSON lisible par machine",
-    "views.api.info.list.text": "Chaque service (par exemple Facebook) a un fichier JSON, regardez tout sur <a href=\"https://github.com/tosdr/tosdr.org/tree/master/api/1/service/\">https://beta.tosdr.org/api/1/service/</a>",
+    "views.api.info.list.text": "Pour des demandes liées à la documentation<a href=\"https://github.com/tosdr/CrispCMS/issues/new?assignees=JustinBack&labels=documentation\">ouvrez une issue sur GitHub</a> sur ceci",
     "views.api.jumbotron.text": "Nous encourageons le développement d'applications et d'autres services intégrant nos classements. Cette page devrait vous aider à utiliser nos données pour votre propre application. Notre code source est <a href=\"http://github.com/tosdr\"> sur Github </a>.",
     "views.classification.class.e.desc": "Les conditions d'utilisation soulèvent de très sérieuses préoccupations.",
     "views.classification.container.text.1": "Les conditions d'utilisation sont passées en revue par des contributeurs et divisées en petits points que l'on peut discuter, comparer et enfin on peut leur assigner un score avec un badge :",
@@ -151,5 +151,16 @@
     "views.legal.container.team.text": "Un Membre de l'Equipe est toute personne, personnalités juridiques exclues, qui est notée dans la page de l'équipe du projet du site web, ou bien qui a obtenu l'accès à la modification du code source du projet.",
     "views.legal.container.copyright.text.top": "En contribuant à ce projet (par exemple en nous envoyant un e-mail ou en soumettant via nos interfaces), vous acceptez– sauf simultanément et expressément stipulé autrement– que \n\nvotre contribution puisse être inclue dans le code source de ToS ;DR et publiée sous la licence copyright suivante :",
     "views.api.pihole.text": "Depuis mars 2021, on offre une liste de blocage de mauvaises Pratiques de Confidentialité pour votre Pi-Hole ou fichier hosts. Vous pouvez y accéder en utilisant notre API sur <a href=\"https://api.tosdr.org/pihole\">https://api.tosdr.org/pihole</a>, pour exclure un service, ajoutez <kbd>exclude/{service_name/service_id/service_slug}</kbd> à l'url. Vous pouvez exclure plusieurs services en les délimitant d'une virgule. Par exemple <a href=\"https://api.tosdr.org/pihole/exclude/google,facebook\">https://api.tosdr.org/pihole/exclude/google,facebook</a>.",
-    "views.api.pihole.header": "Liste de blocage Pi-Hole"
+    "views.api.pihole.header": "Liste de blocage Pi-Hole",
+    "views.txt.form.service_domain.label": "Domaine",
+    "views.txt.form.service_domain.placeholder": "tosdr.org",
+    "components.navbar.alert.donate": "On a lancé une campagne de financement participatif sur Indiegogo ! <br><br>Soutenez-nous et recevez des avantages spéciaux : <a href=\"https://igg.me/at/tosdr\">Aidez-nous !</a>",
+    "views.new_service.form.service_domains.invalid_feedback": "Un domaine ne doit pas inclure le protocole, ou le sous-domaine www. Aussi, évitez d'y mettre des paths. Ce champ est obligatoire.",
+    "views.new_service.form.service_wikipedia.label_muted": "Un lien vers un article Wikipédia valide. Il doit commencer par https://en.wikipedia.org/wiki/. Facultatif",
+    "views.new_service.form.service_name.label": "Nom du Service",
+    "views.new_service.form.service_domains.label_muted.1": "Un domaine ne doit pas inclure le protocole (http://,https://).",
+    "views.new_service.form.service_domains.valid_feedback": "Domaine valide !",
+    "views.new_service.form.service_domains.label_muted.2": "Un domaine ne doit pas inclure le sous-domaine www (www.google.com n'est pas valide).",
+    "views.new_service.form.service_domains.label": "Domaines du Service",
+    "views.new_service.form.service_domains.label_muted.3": "Il est préférable d'ajouter tous les sous-domaines également."
 }

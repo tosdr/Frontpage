@@ -170,7 +170,7 @@
     "views.txt.jumbotron.text": "Grâce à un tosdr.txt, vous pouvez nous rendre facile la tâche de vous indexer. Placez-le simplement dans le directoire root, personalisez-le à vos documents légaux et laissez-nous faire le reste. <a href=\"https://tosdr.org/tosdr.txt\">Exemple tosdr.txt</a>",
     "views.txt.errors.no_domain": "Veuillez vous assurer d'insérer un domaine !",
     "views.txt.errors.no_ssl": "Le domaine n'a pas activé SSL.",
-    "views.txt.errors.invalid_domain": "Ce domaine n'a pas d'archive IP assignée, êtes-vous sûr qu'il soit correct ?",
+    "views.txt.errors.invalid_domain": "Ce domaine n'a pas d'archive active d'IP assignée, êtes-vous sûr qu'il soit correct ?",
     "views.txt.errors.not_found": "Je n'ai pas pu trouver un tosdr.txt localisé sur {{ path }}",
     "views.txt.errors.non_success": "J'ai reçu un code d'erreur non 200 sur {{ path }}",
     "views.txt.errors.invalid_domain_list": "Echec en analysant {{ domain }}",
@@ -214,5 +214,8 @@
     "views.new_service.form.service_wikipedia.placeholder": "https://en.wikipedia.org/wiki/Facebook",
     "views.new_service.form.service_wikipedia.valid_feedback": "Le lien semble valable !",
     "views.new_service.title": "Demander un nouveau service",
-    "views.new_service.jumbotron.text": "Remplissez le questionnaire ci-dessous pour demander un nouveau service"
+    "views.new_service.jumbotron.text": "Remplissez le questionnaire ci-dessous pour demander un nouveau service",
+    "views.new_service.form.service_note.label": "Notes complémentaires",
+    "views.new_service.form.service_note.label_muted": "Notes complémentaires pour nos vérificateurs",
+    "views.new_service.form.service_note.placeholder": "Il y a-t-il quelque chose d'autre que nos vérificateurs devraient savoir ?"
 }

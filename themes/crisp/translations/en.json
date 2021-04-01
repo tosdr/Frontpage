@@ -189,7 +189,7 @@
     "views.new_service.form.service_documents.label": "Documents",
     "views.new_service.form.service_documents.input.document_name.placeholder": "e.g. \"Privacy Policy\"",
     "views.new_service.form.service_documents.input.document_url.placeholder": "e.g. \"https://www.facebook.com/about/privacy\"",
-    "views.new_service.form.service_documents.input.document_xpath.placeholder": "e.g. \"//*[@id='content']//div[@class='_5tkp _3m9']\"",
+    "views.new_service.form.service_documents.input.document_xpath.placeholder": "e.g. \"//*[@id='content']//div[@class='_5tkp _3m9']\" (Optional)",
     "views.new_service.form.service_documents.input.document_name.label": "Document Name", 
     "views.new_service.form.service_documents.input.document_url.label": "Document URL", 
     "views.new_service.form.service_documents.input.document_xpath.label": "Document XPath",

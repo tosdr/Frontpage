@@ -99,12 +99,12 @@
     "views.api.examples.header": "Ejemplos",
     "views.api.info.header": "Todos los datos en JSON legible por máquina",
     "views.api.jumbotron.header": "API",
-    "views.api.info.list.text": "Cada servicio (p. ej. facebook) tiene un archivo JSON. Puedes encontrarlos en <a href=\"https://github.com/tosdr/tosdr.org/tree/master/api/1/service/\">https://beta.tosdr.org/api/1/service/</a>",
+    "views.api.info.list.text": "Para preguntas relacionadas con la documentación <a href=\"https://github.com/tosdr/CrispCMS/issues/new?assignees=JustinBack&labels=documentation\">abre un issue en GitHub</a> sobre esto",
     "views.classification.class.b": "Clase B",
     "views.classification.class.b.desc": "Los términos de uso son justos para los usuarios pero podrían ser mejorados.",
     "views.classification.class.c": "Clase C",
     "views.classification.class.c.desc": "Los términos de uso no están mal pero algunos problemas necesitan tu consideración.",
-    "views.api.info.text": "El formato de datos puede ser <a href=\"https://github.com/JustinBack/CrispCMS-ToS-DR/blob/master/api/api.php\"> ingeniería inversa</a> desde nuestro GitHub. Por favor comprueba la versión de la especificación con la versión del API.",
+    "views.api.info.text": "Tenemos una documentación disponible sobre <a href=\"https://docs.tosdr.org/x/DIAF\">docs.tosdr.org</a>. Por favor, verifica la versión de la especificación con la versión de la API.",
     "views.classification.container.text.2": "Cuando un servicio tiene suficientes insignias para evaluar la justeza de sus términos de uso, se le asigna automáticamente una clase considerando la media de las puntuaciones.",
     "views.classification.container.text.3": "De momento, notarás que no muchos servicios tienen asignada una clase. Esto se debe al hecho que necesitamos más datos y más revisiones antes de poder empezar a asignarlas. Además, aún estamos experimentando sobre la manera de aplicar las clases.",
     "views.downloads.featured.add": "Agregar a {{ browser }}",
@@ -151,5 +151,12 @@
     "views.thanks.title": "¡Muchas gracias!",
     "views.service.embed.header": "Insignias de Privacidad integradas",
     "views.api.pihole.text": "Desde marzo 2021, ofrecemos una lista de bloqueo de malas Prácticas de Privacidad para tu pihole o archivo hosts. Puedes accederla utilizando nuestra API en <a href=\"https://api.tosdr.org/pihole\">https://api.tosdr.org/pihole</a>, para excluir un servicio, añade <kbd>exclude/{service_name/service_id/service_slug}</kbd> al url. Puedes excluir múltiples servicios delimitándolos por una coma. E.j. <a href=\"https://api.tosdr.org/pihole/exclude/google,facebook\">https://api.tosdr.org/pihole/exclude/google,facebook</a>",
-    "views.api.pihole.header": "Lista de bloqueo Pi-Hole"
+    "views.api.pihole.header": "Lista de bloqueo Pi-Hole",
+    "components.navbar.alert.donate": "¡Hemos lanzado una campaña de financiamiento colectivo en Indiegogo!<br><br>Apóyanos y recibe recompensas especiales: <a href=\"https://igg.me/at/tosdr\">¡Ayúdanos!</a>",
+    "views.new_service.form.service_domains.invalid_feedback": "Un dominio no debe incluir el protocolo, o el subdominio www. También, evita poner paths. Este campo es obligatorio.",
+    "views.new_service.form.service_wikipedia.label_muted": "Un enlace a un artículo Wikipedia válido. Debe empezar por https://en.wikipedia.org/wiki/. Facultativo",
+    "views.new_service.form.service_domains.label_muted.2": "Un dominio no debe incluir el subdominio www (www.google.com es inválido).",
+    "views.new_service.form.service_domains.label": "Dominios del Servicio",
+    "views.new_service.form.service_name.label": "Nombre del Servicio",
+    "views.new_service.form.service_domains.label_muted.1": "Un dominio no debe incluir el protocolo (http://,https://)."
 }

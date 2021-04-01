@@ -89,7 +89,7 @@ if (isset($_POST["payload"]) || !empty($_POST["payload"])) {
     if ($success) {
 
 
-        $EnvFile = parse_ini_file(__DIR__ . "/../../../../.env");
+        $EnvFile = parse_ini_file(__DIR__ . "/../../../.env");
 
         if ($EnvFile["SERVICE_DISCORD_WEBHOOK"] !== false) {
 

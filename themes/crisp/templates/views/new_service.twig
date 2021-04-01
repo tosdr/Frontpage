@@ -45,7 +45,7 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
         <form>
             <div class="form-group">
                 <label for="service_name">{{ 'views.new_service.form.service_name.label'|translate }}:</label>
-                <input type="text" class="form-control" placeholder="{{ 'views.new_service.form.service_name.placeholder'|translate }}" id="service_name">
+                <input type="text" class="form-control is-invalid" placeholder="{{ 'views.new_service.form.service_name.placeholder'|translate }}" id="service_name">
                 <div class="valid-feedback">
                     {{ 'views.new_service.form.service_name.valid_feedback'|translate }}
                 </div>
@@ -58,7 +58,7 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
             <label for="service_domains">{{ 'views.new_service.form.service_domains.label'|translate }}:</label>
             <div id="service_domains">
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" name="service_domain" placeholder="domain.tld">
+                    <input type="text" class="form-control is-invalid" name="service_domain" placeholder="domain.tld">
                     <div class="input-group-append">
                         <button type="button" class="btn btn-success" data-add="domain">{{ 'views.new_service.form.service_domains.button.add_domain.text'|translate }}</button>
                     </div>
@@ -83,7 +83,7 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
                 <div class="card card-body mb-2" id="document-0">
                     <div class="form-group">
                         <label for="document_name" class="text-muted">{{ 'views.new_service.form.service_documents.input.document_name.label'|translate }}:</label>
-                        <input type="text" data-di="0" class="form-control" name="document_name" placeholder="{{ 'views.new_service.form.service_documents.input.document_name.placeholder'|translate }}">
+                        <input type="text" data-di="0" class="form-control is-invalid" name="document_name" placeholder="{{ 'views.new_service.form.service_documents.input.document_name.placeholder'|translate }}">
 
                         <div class="valid-feedback">
                             {{ 'views.new_service.form.service_documents.input.document_name.valid_feedback'|translate }}
@@ -95,7 +95,7 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
                     </div>
                     <div class="form-group">
                         <label for="document_url" class="text-muted">{{ 'views.new_service.form.service_documents.input.document_url.label'|translate }}:</label>
-                        <input type="text" data-di="0" class="form-control" name="document_url" placeholder="{{ 'views.new_service.form.service_documents.input.document_url.placeholder'|translate }}">
+                        <input type="text" data-di="0" class="form-control is-invalid" name="document_url" placeholder="{{ 'views.new_service.form.service_documents.input.document_url.placeholder'|translate }}">
 
                         <div class="valid-feedback">
                             {{ 'views.new_service.form.service_documents.input.document_url.valid_feedback'|translate }}
@@ -144,12 +144,16 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
         $(document).ready(function () {
             $('form').on('submit', function (e) {
                 e.preventDefault();
-                if($(this).valid()){
-                    console.log("Valid!");
+                if ($(".is-invalid").length > 0) {
+                    alert("{{ 'views.new_service.form.invalid.alert'|translate }}");
+                    return;
                 }
-                let documents;
-                let payload = {};
-
+                let payload = {
+                    name: $("#service_name").val(),
+                    documents: [],
+                    domains: [],
+                    wikipedia: $("#service_wikipedia").val()
+                };
 
                 $('input[name="document_name"]').each(function () {
                     let Index = $(this).data('di');
@@ -157,9 +161,20 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
                     let DocumentName = $('input[data-di="' + Index + '"][name="document_name"]').val();
                     let DocumentUrl = $('input[data-di="' + Index + '"][name="document_url"]').val();
                     let DocumentXPath = $('input[data-di="' + Index + '"][name="document_xpath"]').val();
-                    payload["documents"] = {name: DocumentName, url: DocumentUrl, xpath: DocumentXPath};
+                    payload["documents"].push({name: DocumentName, url: DocumentUrl, xpath: DocumentXPath});
                 });
-                console.log(payload);
+                $('input[name="service_domain"]').each(function () {
+                    payload["domains"].push($(this).val());
+                });
+                $.post("", payload, function (result) {
+                    if (result.error & 0x10) {
+                        alert("An error occurred submitting the service: " + result.message);
+                    }
+                    if (result.error & 0x100) {
+                        $("#result").html(result.message);
+                        $("#resultcard").show();
+                    }
+                });
             });
             $(document).on('click', '[data-add="domain"]', function () {
                 domainIterator++;

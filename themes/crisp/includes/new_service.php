@@ -87,6 +87,49 @@ if (isset($_POST["payload"]) || !empty($_POST["payload"])) {
     ));
 
     if ($success) {
+
+
+        $EnvFile = parse_ini_file(__DIR__ . "/../../../../.env");
+
+        if ($EnvFile["SERVICE_DISCORD_WEBHOOK"] !== false) {
+
+            $fields = [];
+
+            foreach ($payload["documents"] as $document) {
+                $fields[] = array("name" => $document["name"], "value" => $document["url"]);
+            }
+
+            $embed = array(
+                'content' => 'New Service Request',
+                'embeds' =>
+                array(
+                    array(
+                        'title' => $payload["name"],
+                        'description' => 'The service request contains ' . count($payload["domains"]) . " domain(s) and " . count($payload["documents"]) . " document(s).",
+                        'url' => 'https://tosdr.org/service_requests',
+                        'color' => 0,
+                        'fields' => $fields,
+                        'footer' =>
+                        array(
+                            'text' => $payload["wikipedia"],
+                        ),
+                    ),
+                ),
+            );
+
+            $curl = curl_init();
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => $EnvFile["SERVICE_DISCORD_WEBHOOK"],
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_CUSTOMREQUEST => 'POST',
+                CURLOPT_POSTFIELDS => json_encode($embed),
+                CURLOPT_HTTPHEADER => array(
+                    'Content-Type: application/json'
+                ),
+            ));
+
+            $resp = curl_exec($curl);
+        }
         echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::REQUEST_SUCCESS, "OK", []);
         exit;
     }

@@ -166,7 +166,7 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
                 $('input[name="service_domain"]').each(function () {
                     payload["domains"].push($(this).val());
                 });
-                $.post("", payload, function (result) {
+                $.post("", {payload: payload}, function (result) {
                     if (result.error & 0x10) {
                         alert("An error occurred submitting the service: " + result.message);
                     }

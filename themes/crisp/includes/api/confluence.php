@@ -40,15 +40,14 @@ $embed = array(
 curl_init();
 $EnvFile = parse_ini_file(__DIR__ . "/../../../../.env");
 
+if (!$EnvFile["CONFLUENCE_DISCORD_WEBHOOK"]) {
+    echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::GENERIC_ERROR, "Webhook not set", [], null, 500);
+    exit;
+}
 
 curl_setopt_array($curl, array(
     CURLOPT_URL => $EnvFile["CONFLUENCE_DISCORD_WEBHOOK"],
     CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_ENCODING => '',
-    CURLOPT_MAXREDIRS => 10,
-    CURLOPT_TIMEOUT => 0,
-    CURLOPT_FOLLOWLOCATION => true,
-    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
     CURLOPT_CUSTOMREQUEST => 'POST',
     CURLOPT_POSTFIELDS => json_encode($embed),
     CURLOPT_HTTPHEADER => array(
@@ -58,7 +57,7 @@ curl_setopt_array($curl, array(
 
 if (!curl_exec($curl)) {
 
-    echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::GENERIC_ERROR, "Webhook error", [], null, 500);
+    echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::GENERIC_ERROR, "Webhook error", [], null, 502);
 }
 
 curl_close($curl);

@@ -1,5 +1,10 @@
 <?php
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
+$EnvFile = parse_ini_file(__DIR__ . "/../../../../.env");
 include __DIR__ . '/../Phoenix.php';
 header("X-SKIPCACHE: 1");
 
@@ -29,6 +34,8 @@ if (isset($_POST["approve"]) && !empty($_POST["approve"])) {
         exit;
     }
 
+
+
     $Name = $request["name"];
     $Domains = $request["domains"];
     $Wikipedia = $request["wikipedia"];
@@ -47,6 +54,46 @@ if (isset($_POST["approve"]) && !empty($_POST["approve"])) {
         $request->execute([":id" => $_POST["approve"]]);
 
 
+
+        if ($request["email"]) {
+            $mail = new PHPMailer();
+
+            $mail->IsSMTP();
+            $mail->CharSet = 'UTF-8';
+
+            $mail->Host = $EnvFile["SMTP_HOST"];
+            $mail->SMTPAuth = true;
+            $mail->Port = $EnvFile["SMTP_PORT"];
+            $mail->Username = $EnvFile["SMTP_USER"];
+            $mail->Password = $EnvFile["SMTP_PASSWORD"];
+            $mail->Subject = 'About your ToS;DR service request';
+            $mail->Body = 'This is the HTML message body <b>in bold!</b>';
+
+            $mail->send();
+            return;
+        }
+
+        if ($request["email"]) {
+            $mail = new PHPMailer();
+
+            $mail->IsSMTP();
+            $mail->CharSet = 'UTF-8';
+
+            $mail->setFrom($EnvFile['SMTP_FROM'], 'ToS;DR Service Requests');
+            $mail->addAddress($request["email"]);
+            $mail->Host = $EnvFile["SMTP_HOST"];
+            $mail->SMTPAuth = true;
+            $mail->Timeout = 10;
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->Port = $EnvFile["SMTP_PORT"];
+            $mail->Username = $EnvFile["SMTP_USER"];
+            $mail->Password = $EnvFile["SMTP_PASSWORD"];
+            $mail->Subject = 'About your ToS;DR service request';
+            $mail->Body = "Your Service Request over at tosdr.org has been approved. You can find the service here: https://edit.tosdr.org/services/$service_id";
+
+            $mail->send();
+        }
+
         echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::REQUEST_SUCCESS, $service_id, []);
         exit;
     } else {
@@ -62,6 +109,26 @@ if (isset($_POST["reject"]) && !empty($_POST["reject"])) {
     $request = $Mysql->getDBConnector()->prepare("DELETE FROM service_requests WHERE id = :id;");
     $request->execute([":id" => $_POST["approve"]]);
 
+    if ($request["email"]) {
+        $mail = new PHPMailer();
+
+        $mail->IsSMTP();
+        $mail->CharSet = 'UTF-8';
+
+        $mail->setFrom($EnvFile['SMTP_FROM'], 'ToS;DR Service Requests');
+        $mail->addAddress($request["email"]);
+        $mail->Host = $EnvFile["SMTP_HOST"];
+        $mail->SMTPAuth = true;
+        $mail->Timeout = 10;
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        $mail->Port = $EnvFile["SMTP_PORT"];
+        $mail->Username = $EnvFile["SMTP_USER"];
+        $mail->Password = $EnvFile["SMTP_PASSWORD"];
+        $mail->Subject = 'About your ToS;DR service request';
+        $mail->Body = "Your Service Request over at tosdr.org has been rejected. You can resubmit the request at any time here: https://tosdr.org/new_service";
+
+        $mail->send();
+    }
 
     echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::REQUEST_SUCCESS, "OK", []);
     exit;

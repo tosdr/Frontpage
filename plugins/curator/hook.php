@@ -20,18 +20,15 @@
 include __DIR__ . '/includes/Users.php';
 include __DIR__ . '/includes/PhoenixUser.php';
 
-if (CURRENT_UNIVERSE == \crisp\Universe::UNIVERSE_TOSDR) {
-    \crisp\core\Theme::addtoNavbar("curator", '<span class="badge badge-info"><i class="fas fa-hands-helping"></i> CURATOR</span>', "/curator_dashboard", "_self", -1, "right");
-} else {
-    \crisp\core\Theme::addtoNavbar("login", $this->getTranslation("views.login.header"), "/login", "_self", 99);
-}
-
 if (isset($_SESSION[\crisp\core\Config::$Cookie_Prefix . "session_login"])) {
 
-    $User = new \crisp\plugin\curator\PhoenixUser($_SESSION[\crisp\core\Config::$Cookie_Prefix . "session_login"]["User"]);
+    $User = new \crisp\plugin\curator\PhoenixUser($_SESSION[\crisp\core\Config::$Cookie_Prefix . "session_login"]["user"]);
 
-    if (!$User->isSessionValid() || CURRENT_UNIVERSE !== crisp\Universe::UNIVERSE_TOSDR) {
+    if (!$User->isSessionValid()) {
         unset($_SESSION[\crisp\core\Config::$Cookie_Prefix . "session_login"]);
-        crisp\Universe::changeUniverse(crisp\Universe::UNIVERSE_PUBLIC);
+    } else {
+        \crisp\core\Theme::addtoNavbar("curator", '<span class="badge badge-info"><i class="fas fa-hands-helping"></i> CURATOR</span>', "/curator_dashboard", "_self", -1, "right");
     }
+} else {
+    \crisp\core\Theme::addtoNavbar("login", $this->getTranslation("views.login.header"), "/login", "_self", 99);
 }

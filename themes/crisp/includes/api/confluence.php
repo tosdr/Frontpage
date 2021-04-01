@@ -56,6 +56,9 @@ curl_setopt_array($curl, array(
     ),
 ));
 
-curl_exec($curl);
+if (!curl_exec($curl)) {
+
+    echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::GENERIC_ERROR, "Webhook error", [], null, 500);
+}
 
 curl_close($curl);

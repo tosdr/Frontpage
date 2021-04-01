@@ -17,6 +17,8 @@ if (!$data->event == "page_updated" || $data->event == "page_created") {
     exit;
 }
 
+
+
 $confluencePage = json_decode(file_get_contents("https://docs.tosdr.org/rest/api/content/" . $data->page->id));
 #$confluencePage = json_decode(file_get_contents("https://docs.tosdr.org/rest/api/content/360496"));
 
@@ -37,7 +39,7 @@ $embed = array(
     ),
 );
 
-curl_init();
+$curl = curl_init();
 $EnvFile = parse_ini_file(__DIR__ . "/../../../../.env");
 
 if (!$EnvFile["CONFLUENCE_DISCORD_WEBHOOK"]) {
@@ -58,9 +60,7 @@ curl_setopt_array($curl, array(
 $resp = curl_exec($curl);
 
 if (!$resp) {
-    
-    file_put_contents(".wh_resp", curl_error($curl));
-    echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::GENERIC_ERROR, "Webhook error", [], null, 502);
+    echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::GENERIC_ERROR, curl_errno($curl), [], null, 502);
 }
 
 curl_close($curl);

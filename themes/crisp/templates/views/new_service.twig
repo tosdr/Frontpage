@@ -206,7 +206,7 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
 
             $(document).on('keyup', '#service_wikipedia', function () {
                 $(this).removeClass("is-valid");
-                if (!new RegExp(/^https\:\/\/[a-z]+\.wikipedia\.org\/wiki\/([\w%]+)$/).test($(this).val())) {
+                if (!new RegExp(/^https\:\/\/[a-z]+\.wikipedia\.org\/wiki\/([\w%\-\(\)\.]+)$/).test($(this).val())) {
                     return $(this).addClass("is-invalid");
                 }
 

@@ -69,7 +69,7 @@ if (isset($_POST["payload"]) || !empty($_POST["payload"])) {
     }
 
     if (isset($payload["wikipedia"]) && !empty($payload["wikipedia"])) {
-        if (!preg_match('/^\b(https?):\/\/[\-A-Za-z0-9+&@#\/%?=~_|!:,.;]*[\-A-Za-z0-9+&@#\/%=~_|]\.+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]\/.*$/', $payload["wikipedia"])) {
+        if (!preg_match('^https\:\/\/[a-z]+\.wikipedia\.org\/wiki\/([\w%\-\(\)\.]+)$/', $payload["wikipedia"])) {
             echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::INVALID_PARAMETER, "wikipedia is not conform.", []);
             exit;
         }

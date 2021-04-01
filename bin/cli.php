@@ -536,7 +536,7 @@ switch ($argv[1]) {
 
         $PluginMigrations = new crisp\core\Plugins();
         foreach (\crisp\core\Plugins::loadedPlugins() as $PluginName) {
-            $PluginMigrations->migrate($PluginName["Name"]);
+            $PluginMigrations->migrate($PluginName["name"]);
         }
         break;
     default:

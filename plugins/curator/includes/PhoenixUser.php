@@ -123,9 +123,9 @@ class PhoenixUser {
         }
 
         $Session = array(
-            "Identifier" => $Identifier,
-            "Token" => $Token,
-            "User" => $this->UserID
+            "identifier" => $Identifier,
+            "token" => $Token,
+            "user" => $this->UserID
         );
 
         $_SESSION[\crisp\core\Config::$Cookie_Prefix . "session_$Identifier"] = $Session;
@@ -152,7 +152,7 @@ class PhoenixUser {
         }
 
         $statement = $this->Database_Connection->prepare('DELETE FROM sessions WHERE token = :Token AND "user" = :User');
-        $Action = $statement->execute(array(":User" => $this->UserID, ":Token" => $_SESSION[\crisp\core\Config::$Cookie_Prefix . "session_$Identifier"]["Token"]));
+        $Action = $statement->execute(array(":User" => $this->UserID, ":Token" => $_SESSION[\crisp\core\Config::$Cookie_Prefix . "session_$Identifier"]["token"]));
 
 
 
@@ -181,7 +181,7 @@ class PhoenixUser {
             return false;
         }
 
-        $Token = $_SESSION[\crisp\core\Config::$Cookie_Prefix . "session_$Identifier"]["Token"];
+        $Token = $_SESSION[\crisp\core\Config::$Cookie_Prefix . "session_$Identifier"]["token"];
 
         $statement = $DBConnection->prepare('SELECT * FROM sessions WHERE token = :Token AND "user" = :ID');
         $statement->execute(array(":ID" => $this->UserID, ":Token" => $Token));

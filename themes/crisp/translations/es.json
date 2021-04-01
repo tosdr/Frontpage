@@ -206,5 +206,16 @@
     "views.new_service.form.service_wikipedia.placeholder": "https://en.wikipedia.org/wiki/Facebook",
     "views.new_service.form.service_wikipedia.valid_feedback": "¡El enlace parece válido!",
     "views.new_service.jumbotron.text": "Rellena el formulario a continuación para solicitar un servicio",
-    "views.new_service.title": "Solicitar un nuevo servicio"
+    "views.new_service.title": "Solicitar un nuevo servicio",
+    "views.new_service.form.success.alert": "El servicio ha sido entregado. Vuelve más tarde mientras lo verificamos.",
+    "views.new_service.form.error.alert": "Ha ocurrido un error entregando el servicio:",
+    "components.navbar.request_service": "Añadir un nuevo Servicio",
+    "views.new_service.form.service_email.label": "Correo electrónico",
+    "views.new_service.form.service_email.placeholder": "mail@ejemplo.com",
+    "views.new_service.form.service_email.valid_feedback": "¡Te contactaremos sobre el estado del servicio con este email!",
+    "views.new_service.form.service_email.invalid_feedback": "No se parece a un correo válido",
+    "views.new_service.form.service_email.label_muted": "Opcionalmente, un correo electrónico al que enviaremos un mail sobre el estado de tu solicitud.",
+    "views.new_service.form.service_note.label": "Notas adicionales",
+    "views.new_service.form.service_note.label_muted": "Notas adicionales para nuestros verificadores",
+    "views.new_service.form.service_note.placeholder": "¿Hay algo más que nuestros verificadores necesitan saber?"
 }

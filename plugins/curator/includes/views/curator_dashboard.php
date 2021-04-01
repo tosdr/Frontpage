@@ -7,7 +7,7 @@ if (!isset($_SESSION[\crisp\core\Config::$Cookie_Prefix . "session_login"])) {
 }
 
 
-$User = new crisp\plugin\curator\PhoenixUser($_SESSION[\crisp\core\Config::$Cookie_Prefix . "session_login"]["User"]);
+$User = new crisp\plugin\curator\PhoenixUser($_SESSION[\crisp\core\Config::$Cookie_Prefix . "session_login"]["user"]);
 
 if (!$User->isSessionValid()) {
     header("Location: /login");

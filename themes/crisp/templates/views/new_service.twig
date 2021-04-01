@@ -172,6 +172,7 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
                     }
                     if (result.error & 0x100) {
                         alert("{{ 'views.new_service.form.success.alert'|translate }}");
+                        window.location.href = "/";
                     }
                 });
             });

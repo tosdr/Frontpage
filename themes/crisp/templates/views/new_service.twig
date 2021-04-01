@@ -60,7 +60,7 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" name="service_domain" placeholder="domain.tld">
                     <div class="input-group-append">
-                        <button type="button" class="btn btn-success" data-add="domain">+</button>
+                        <button type="button" class="btn btn-success" data-add="domain">{{ 'views.new_service.form.service_documents.button.add_domain.text'|translate }}</button>
                     </div>
                     <div class="valid-feedback">
                         {{ 'views.new_service.form.service_domains.valid_feedback'|translate }}
@@ -79,7 +79,7 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
             <br>
             <label for="service_documents">{{ 'views.new_service.form.service_documents.label'|translate }}</label>
             <div id="service_documents" class="card card-body">
-                <button type="button" class="btn btn-success btn-block" data-add="document">{{ 'views.new_service.form.service_documents.button.add_domain.text'|translate }}</button>
+                <button type="button" class="btn btn-success btn-block" data-add="document">+</button>
                 <div class="card card-body mb-2" id="document-0">
                     <div class="form-group">
                         <label for="document_name" class="text-muted">{{ 'views.new_service.form.service_documents.input.document_name.label'|translate }}:</label>

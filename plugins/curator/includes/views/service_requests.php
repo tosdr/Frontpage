@@ -1,5 +1,7 @@
 <?php
 
+header("X-SKIPCACHE: true");
+
 if (!isset($_SESSION[\crisp\core\Config::$Cookie_Prefix . "session_login"])) {
     header("Location: /login");
     exit;

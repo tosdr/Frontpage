@@ -43,6 +43,13 @@ class Phoenix {
         self::$Database_Connection = $DB->getDBConnector();
     }
 
+    public static function getDBConnector() {
+        if (self::$Database_Connection === null) {
+            self::initDB();
+        }
+        return self::$Database_Connection;
+    }
+
     /**
      * Fetches all users from the database.
      */

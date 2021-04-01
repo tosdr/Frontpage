@@ -68,3 +68,29 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
     </div>
 
 {% endblock %}
+{% block scripts %}
+    <script>
+        $(document).ready(function () {
+            $(document).on('click', '[name="approve"]', function () {
+                let id = $(this).data('id');
+                $.post("", {approve: id}, function (result) {
+                    if (result.error & 0x100) {
+                        $("#request-" + id).remove();
+                    } else
+                        alert("Error! " + result.message);
+                }
+                });
+            });
+            $(document).on('click', '[name="reject"]', function () {
+                let id = $(this).data('id');
+                $.post("", {reject: id}, function (result) {
+                    if (result.error & 0x100) {
+                        $("#request-" + id).remove();
+                    } else {
+                        alert("Error! " + result.message);
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}

@@ -7,7 +7,7 @@ if (isset($_SESSION[\crisp\core\Config::$Cookie_Prefix . "session_login"])) {
 
     if (!$User->isSessionValid()) {
         unset($_SESSION[\crisp\core\Config::$Cookie_Prefix . "session_login"]);
-        header("Location: /login");
+        header("Location: ". \crisp\api\Helper::generateLink("login/?invalid_login"));
         exit;
     }
     header("Location: /curator_dashboard");

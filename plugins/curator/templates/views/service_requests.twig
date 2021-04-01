@@ -46,6 +46,7 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
                     <th>{{ plugin.getTranslation('views.service_requests.table.th.service_documents') }}</th>
                     <th>{{ plugin.getTranslation('views.service_requests.table.th.service_wikipedia') }}</th>
                     <th>{{ plugin.getTranslation('views.service_requests.table.th.service_actions') }}</th>
+                    <th><i class="fas fa-envelope-open-text"></i></th>
                 </tr>
             </thead>
             <tbody>
@@ -61,6 +62,7 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
                                 <button type="button" data-id="{{ request.id }}" name="reject" class="btn btn-danger">{{ plugin.getTranslation('views.service_requests.table.td.button.reject') }}</button>
                             </div> 
                         </td>
+                        <td>{{ (request.email ? '<i class="fas fa-check"></i>'|raw : '<i class="fas fa-times"></i>'|raw) }}</td>
                     </tr>
                 {% endfor %}
             </tbody>

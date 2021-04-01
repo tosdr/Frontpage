@@ -138,6 +138,7 @@ if (isset($_POST["payload"]) || !empty($_POST["payload"])) {
 
             $resp = curl_exec($curl);
         }
+        
         echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::REQUEST_SUCCESS, "OK", []);
         exit;
     }

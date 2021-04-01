@@ -168,11 +168,10 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
                 });
                 $.post("", {payload: payload}, function (result) {
                     if (result.error & 0x10) {
-                        alert("An error occurred submitting the service: " + result.message);
+                        alert("{{ 'views.new_service.form.error.alert'|translate }} " + result.message);
                     }
                     if (result.error & 0x100) {
-                        $("#result").html(result.message);
-                        $("#resultcard").show();
+                        alert("{{ 'views.new_service.form.success.alert'|translate }}");
                     }
                 });
             });

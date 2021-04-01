@@ -205,5 +205,7 @@
     "views.new_service.form.service_domains.button.add_domain.text": "Add another domain",
     "views.new_service.form.service_documents.button.add_document.text": "Add another document",
     "views.new_service.form.service_documents.button.remove_document.text": "Remove document",
-    "views.new_service.form.invalid.alert": "Some fields are invalid. Check those before submitting the form!"
+    "views.new_service.form.invalid.alert": "Some fields are invalid. Check those before submitting the form!",
+    "views.new_service.form.success.alert": "The service has been submitted. Check back later while we verify it.",
+    "views.new_service.form.error.alert": "An error occurred submitting the service:"
 }

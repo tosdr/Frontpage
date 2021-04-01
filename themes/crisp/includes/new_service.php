@@ -75,15 +75,23 @@ if (isset($_POST["payload"]) || !empty($_POST["payload"])) {
         }
     }
 
+    if (isset($payload["email"]) && !empty($payload["email"])) {
+        if (!preg_match('/^[^\s@]+@[^\s@]+$/', $payload["email"])) {
+            echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::INVALID_PARAMETER, "email is not conform.", []);
+            exit;
+        }
+    }
+
     $Postgres = new crisp\core\MySQL();
 
-    $db = $Postgres->getDBConnector()->prepare("INSERT INTO service_requests (name, domains, documents, wikipedia) VALUES (:name, :domains, :documents, :wikipedia)");
+    $db = $Postgres->getDBConnector()->prepare("INSERT INTO service_requests (name, domains, documents, wikipedia, email) VALUES (:name, :domains, :documents, :wikipedia, :email)");
 
     $success = $db->execute(array(
         ":name" => $payload["name"],
         ":domains" => implode(",", $payload["domains"]),
         ":documents" => json_encode($payload["documents"]),
-        ":wikipedia" => $payload["wikipedia"]
+        ":wikipedia" => $payload["wikipedia"],
+        ":email" => $payload["email"]
     ));
 
     if ($success) {

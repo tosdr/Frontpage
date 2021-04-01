@@ -209,5 +209,10 @@
     "views.new_service.form.success.alert": "The service has been submitted. Check back later while we verify it.",
     "views.new_service.form.error.alert": "An error occurred submitting the service:",
     "components.navbar.request_service": "Add a new Service",
-    "views.global.report_a_bug": "Report a bug"
+    "views.global.report_a_bug": "Report a bug",
+    "views.new_service.form.service_email.label": "E-Mail Address",
+    "views.new_service.form.service_email.placeholder": "mail@example.com",
+    "views.new_service.form.service_email.valid_feedback": "We'll contact you about the service status with this email!",
+    "views.new_service.form.service_email.invalid_feedback": "That doesn't look like a valid email",
+    "views.new_service.form.service_email.label_muted": "Optionally, an email address where we will send an automated mail about the status of your request."
 }

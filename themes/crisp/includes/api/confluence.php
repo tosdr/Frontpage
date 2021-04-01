@@ -52,8 +52,7 @@ curl_setopt_array($curl, array(
     CURLOPT_CUSTOMREQUEST => 'POST',
     CURLOPT_POSTFIELDS => json_encode($embed),
     CURLOPT_HTTPHEADER => array(
-        'Content-Type: application/json',
-        'Cookie: __cfduid=da10b465cbb61e008d647271bb47b4cc21615412202'
+        'Content-Type: application/json'
     ),
 ));
 

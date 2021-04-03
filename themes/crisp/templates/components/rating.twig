@@ -15,33 +15,57 @@
  # limitations under the License.
 #}
 
-{% if rating is not defined %}
-  {% set rating = "N/A" %}
+{% if not SIMPLE %}
+    {% if rating is not defined %}
+        {% set rating = "N/A" %}
+    {% endif %}
+
+    {% if rating == "N/A" %}
+        <span class="badge badge-dark">{{ 'components.rating.class.none'|translate }}</span>
+    {% endif %}
+
+    {% if rating == "A" %}
+        <span class="badge badge-success">{{ 'components.rating.class.a'|translate }}</span>
+    {% endif %}
+
+    {% if rating == "B" %}
+        <span class="badge badge-ranking-B">{{ 'components.rating.class.b'|translate }}</span>
+    {% endif %}
+
+    {% if rating == "C" %}
+        <span class="badge badge-warning">{{ 'components.rating.class.c'|translate }}</span>
+    {% endif %}
+
+    {% if rating == "D" %}
+        <span class="badge badge-ranking-D">{{ 'components.rating.class.d'|translate }}</span>
+    {% endif %}
+
+    {% if rating == "E" %}
+        <span class="badge badge-danger">{{ 'components.rating.class.e'|translate }}</span>
+    {% endif %}
+
+{% else %}
+    {% if rating == "N/A" %}
+        <span style="background-color: #adadad;">{{ 'components.rating.class.none'|translate }}</span>
+    {% endif %}
+
+    {% if rating == "A" %}
+        <span style="background-color: #00ff15;">{{ 'components.rating.class.a'|translate }}</span>
+    {% endif %}
+
+    {% if rating == "B" %}
+        <span style="background-color: #b7ff1c;">{{ 'components.rating.class.b'|translate }}</span>
+    {% endif %}
+
+    {% if rating == "C" %}
+        <span style="background-color: #ffe81c;">{{ 'components.rating.class.c'|translate }}</span>
+    {% endif %}
+
+    {% if rating == "D" %}
+        <span style="background-color: #ffb71c;">{{ 'components.rating.class.d'|translate }}</span>
+    {% endif %}
+
+    {% if rating == "E" %}
+        <span style="background-color: #fc0303;">{{ 'components.rating.class.e'|translate }}</span>
+    {% endif %}
 {% endif %}
-
-{% if rating == "N/A" %}
-  <span class="badge badge-dark">{{ 'components.rating.class.none'|translate }}</span>
-{% endif %}
-
-{% if rating == "A" %}
-  <span class="badge badge-success">{{ 'components.rating.class.a'|translate }}</span>
-{% endif %}
-
-{% if rating == "B" %}
-  <span class="badge badge-ranking-B">{{ 'components.rating.class.b'|translate }}</span>
-{% endif %}
-
-{% if rating == "C" %}
-  <span class="badge badge-warning">{{ 'components.rating.class.c'|translate }}</span>
-{% endif %}
-
-{% if rating == "D" %}
-  <span class="badge badge-ranking-D">{{ 'components.rating.class.d'|translate }}</span>
-{% endif %}
-
-{% if rating == "E" %}
-  <span class="badge badge-danger">{{ 'components.rating.class.e'|translate }}</span>
-{% endif %}
-
-
-

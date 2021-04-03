@@ -88,7 +88,8 @@ if (php_sapi_name() !== "cli") {
     $CurrentPage = $GLOBALS["route"]->Page;
     $CurrentPage = ($CurrentPage == "" ? "frontpage" : $CurrentPage);
     $CurrentPage = explode(".", $CurrentPage)[0];
-
+    $Simple = (explode('.', $_SERVER["HTTP_HOST"])[0] === "simple" ? true : false);
+    
     if (isset($_GET["universe"])) {
         Universe::changeUniverse($_GET["universe"]);
     } elseif (!isset($_COOKIE[core\Config::$Cookie_Prefix . "universe"])) {
@@ -105,9 +106,15 @@ if (php_sapi_name() !== "cli") {
         $TwigTheme;
 
         if (CURRENT_UNIVERSE <= Universe::UNIVERSE_BETA) {
-            $TwigTheme = new \Twig\Environment($ThemeLoader, [
-                'cache' => __DIR__ . '/cache/'
-            ]);
+            if (!$Simple) {
+                $TwigTheme = new \Twig\Environment($ThemeLoader, [
+                    'cache' => __DIR__ . '/cache/'
+                ]);
+            }else{
+                $TwigTheme = new \Twig\Environment($ThemeLoader, [
+                    'cache' => __DIR__ . '/cache/simple/'
+                ]);
+            }
         } else {
             $TwigTheme = new \Twig\Environment($ThemeLoader, []);
         }
@@ -143,6 +150,7 @@ if (php_sapi_name() !== "cli") {
         $TwigTheme->addGlobal("SERVER", $_SERVER);
         $TwigTheme->addGlobal("GLOBALS", $GLOBALS);
         $TwigTheme->addGlobal("COOKIE", $_COOKIE);
+        $TwigTheme->addGlobal("SIMPLE", $Simple);
         $TwigTheme->addGlobal("isMobile", \crisp\api\Helper::isMobile());
         $TwigTheme->addGlobal("URL", api\Helper::currentDomain());
         $TwigTheme->addGlobal("CLUSTER", gethostname());

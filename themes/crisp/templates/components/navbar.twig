@@ -14,93 +14,105 @@
  # See the License for the specific language governing permissions and
  # limitations under the License.
 #}
-<nav class="navbar navbar-expand-md  bg-dark navbar-dark">
-    <!-- Brand -->
-    <a class="navbar-brand" href="/"><img width="32" src="{{ config.s3_branding ~ "/tosdr-icon-32.svg" }}"alt="Logo"/></a>
 
-    <!-- Toggler/collapsibe Button -->
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+{% if not SIMPLE %}
+    <nav class="navbar navbar-expand-md  bg-dark navbar-dark">
+        <!-- Brand -->
+        <a class="navbar-brand" href="/"><img width="32" src="{{ config.s3_branding ~ "/tosdr-icon-32.svg" }}"alt="Logo"/></a>
 
-    <!-- 20x000101 -->
-    <!-- Navbar links -->
-    <div class="collapse navbar-collapse" id="collapsibleNavbar">
-        <ul class="navbar-nav">
-            {% for item in GLOBALS.navbar %}
-                <li class="nav-item {% if currentPage == item.ID %} active{% endif %}">
-                    <a target="{{ item.target }}" class="nav-link {% if currentPage == item.ID %} active{% endif %}" href="{{ item.href }}">{{ item.html|raw }}</a>
+        <!-- Toggler/collapsibe Button -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- 20x000101 -->
+        <!-- Navbar links -->
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <ul class="navbar-nav">
+                {% for item in GLOBALS.navbar %}
+                    <li class="nav-item {% if currentPage == item.ID %} active{% endif %}">
+                        <a target="{{ item.target }}" class="nav-link {% if currentPage == item.ID %} active{% endif %}" href="{{ item.href }}">{{ item.html|raw }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                {% for item in GLOBALS.navbar_right %}
+                    <li class="nav-item {% if currentPage == item.ID %} active{% endif %}">
+                        <a target="{{ item.target }}" class="nav-link {% if currentPage == item.ID %} active{% endif %}" href="{{ item.href }}">{{ item.html|raw }}</a>
+                    </li>
+                {% endfor %}
+                <li class="nav-item">
+                    {% if UNIVERSE == 1 %}
+                        <a href="/?universe=2"><span class="badge badge-warning"><i class="fas fa-flask"></i> JOIN BETA</span></a>
+                    {% endif %}
+                    {% if UNIVERSE == 2 %}
+                        <a href="/?universe=1"><span class="badge badge-warning"><i class="fas fa-flask"></i> LEAVE BETA</span></a>
+                    {% endif %}
+                    {% if UNIVERSE == 3 %}
+                        <a href="/?universe=1"><span class="badge badge-danger"><i class="fas fa-wrench"></i> LEAVE DEVELOPMENT</span></a>
+                    {% endif %}
                 </li>
-            {% endfor %}
-        </ul>
-        <ul class="navbar-nav ml-auto">
-            {% for item in GLOBALS.navbar_right %}
-                <li class="nav-item {% if currentPage == item.ID %} active{% endif %}">
-                    <a target="{{ item.target }}" class="nav-link {% if currentPage == item.ID %} active{% endif %}" href="{{ item.href }}">{{ item.html|raw }}</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="languageDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <!-- See https://github.com/tosdr/CrispCMS/issues/51  
+                        <img id="currentLanguage" src="{{ includeResource("img/flags/" ~ locale|getlang(false).flag ~ ".svg") }}" width="32">
+                        <-->
+                        <i class="fas fa-language"></i> {{ locale|getlang(false).name|translate }}
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="languageDropdownMenuLink">
+                        {% for Language in languages %}
+                            <a class="dropdown-item {% if locale|getlang(false).code == Language.code %}active{% endif %}" href="/{{ Language.code }}/{{ CurrentPage }}">
+                                <!-- See https://github.com/tosdr/CrispCMS/issues/51
+                                <img src="{{ includeResource("img/flags/" ~ Language.flag ~ ".svg") }}" width="32"/>
+                                -->
+                                {{ Language.nativename|translate }} 
+                                {% if Language.name|translate != Language.nativename|translate %}
+                                    <span class="{% if locale|getlang(false).code == Language.code %}text-white{% else %}text-muted{% endif %}">
+                                        ({{ Language.name|translate }})
+                                    </span>
+                                {% endif %}
+                                <img src="https://translate.tosdr.org/widgets/crispcms/{{ Language.code }}/svg-badge.svg" alt="Translation Progress" />
+                            </a>
+                        {% endfor %}
+                    </div>
                 </li>
-            {% endfor %}
-            <li class="nav-item">
-                {% if UNIVERSE == 1 %}
-                    <a href="/?universe=2"><span class="badge badge-warning"><i class="fas fa-flask"></i> JOIN BETA</span></a>
-                {% endif %}
-                {% if UNIVERSE == 2 %}
-                    <a href="/?universe=1"><span class="badge badge-warning"><i class="fas fa-flask"></i> LEAVE BETA</span></a>
-                {% endif %}
-                {% if UNIVERSE == 3 %}
-                    <a href="/?universe=1"><span class="badge badge-danger"><i class="fas fa-wrench"></i> LEAVE DEVELOPMENT</span></a>
-                {% endif %}
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="languageDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <!-- See https://github.com/tosdr/CrispCMS/issues/51  
-                    <img id="currentLanguage" src="{{ includeResource("img/flags/" ~ locale|getlang(false).flag ~ ".svg") }}" width="32">
-                    <-->
-                    <i class="fas fa-language"></i> {{ locale|getlang(false).name|translate }}
-                </a>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="languageDropdownMenuLink">
-                    {% for Language in languages %}
-                        <a class="dropdown-item {% if locale|getlang(false).code == Language.code %}active{% endif %}" href="/{{ Language.code }}/{{ CurrentPage }}">
-                            <!-- See https://github.com/tosdr/CrispCMS/issues/51
-                            <img src="{{ includeResource("img/flags/" ~ Language.flag ~ ".svg") }}" width="32"/>
-                            -->
-                            {{ Language.nativename|translate }} 
-                            {% if Language.name|translate != Language.nativename|translate %}
-                                <span class="{% if locale|getlang(false).code == Language.code %}text-white{% else %}text-muted{% endif %}">
-                                    ({{ Language.name|translate }})
-                                </span>
-                            {% endif %}
-                            <img src="https://translate.tosdr.org/widgets/crispcms/{{ Language.code }}/svg-badge.svg" alt="Translation Progress" />
-                        </a>
-                    {% endfor %}
-                </div>
-            </li>
-        </ul>
+            </ul>
 
-    </div>
-</nav> 
+        </div>
+    </nav> 
 
-{% if Notice is defined %}
-    {% if Notice.Type is not defined %}
-        {% set Notice = Notice|merge({'Type': 'info'})%}
+    {% if Notice is defined %}
+        {% if Notice.Type is not defined %}
+            {% set Notice = Notice|merge({'Type': 'info'})%}
+        {% endif %}
+        <div class="container mt-4">
+            <div class="alert alert-{{ Notice.Type }}">
+                <span id="notice_text">
+                    {% if Notice.Icon is defined %}
+                        <i class="{{ Notice.Icon }}"></i>
+                    {% endif %}
+                    {{ Notice.Text|raw }}
+                </span>
+            </div>
+        </div>
     {% endif %}
     <div class="container mt-4">
-        <div class="alert alert-{{ Notice.Type }}">
+        <div class="alert alert-success">
             <span id="notice_text">
                 {% if Notice.Icon is defined %}
-                    <i class="{{ Notice.Icon }}"></i>
+                    <i class="fas fa-donate"></i>
                 {% endif %}
-                {{ Notice.Text|raw }}
+                {{ 'components.navbar.alert.donate'|translate|raw }}
             </span>
         </div>
     </div>
+{% else %}
+    <h4>{{ 'components.navbar.simple.text'|translate }}</h4>
+    <ul class="navbar-nav">
+        {% for item in GLOBALS.navbar %}
+            <li class="nav-item {% if currentPage == item.ID %} active{% endif %}">
+                <a target="{{ item.target }}" class="nav-link {% if currentPage == item.ID %} active{% endif %}" href="{{ item.href }}">{{ item.html|raw }}</a>
+            </li>
+        {% endfor %}
+    </ul>
 {% endif %}
-<div class="container mt-4">
-    <div class="alert alert-success">
-        <span id="notice_text">
-            {% if Notice.Icon is defined %}
-                <i class="fas fa-donate"></i>
-            {% endif %}
-            {{ 'components.navbar.alert.donate'|translate|raw }}
-        </span>
-    </div>
-</div>

@@ -16,107 +16,80 @@
 #}
 {% set sessionType = 'visitor' %} {# visitor, customer, artist, admin #}
 {% if user is defined %}
-  {% set sessionType = 'user' %}
+    {% set sessionType = 'user' %}
 {% endif %}
 <!DOCTYPE html>
 <html>
-  <head>
-    {% block head %}
+    <head>
+        {% block head %}
 
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      {% if THEME_MODE == "dark" %}
-        <link rel="stylesheet" href="{{ includeResource("css/bootstrap/bootstrap-dark.min.css") }}">
-        <link rel="stylesheet" href="{{ includeResource("css/general-dark.min.css") }}">
-      {% else %}
-        <link rel="stylesheet" href="{{ includeResource("css/bootstrap/bootstrap.min.css") }}">
-      {% endif %}
-      {# <link rel="stylesheet" href="/themes/{{ config.theme }}/css/jquery/jquery-ui.min.css{{ "/css/jquery/jquery-ui.min.css"|fileHash }}"> #}
-      <link rel="stylesheet" href="{{ includeResource("css/sweetalert/sweetalert.min.css") }}">
-      <!-- START Default Crisp CSS -->
-      <link rel="stylesheet" href="{{ includeResource("css/general.min.css") }}">
-      <link rel="stylesheet" href="{{ includeResource("css/footer.min.css") }}">
-      <link rel="stylesheet" href="{{ includeResource("css/ribbon.min.css") }}">
-      <link rel="stylesheet" href="{{ includeResource("css/social-icons.min.css") }}">
-      <link rel="stylesheet" href="{{ includeResource("css/ranking-badges.min.css") }}">
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            {% if not SIMPLE %}
+                {% if THEME_MODE == "dark" %}
+                    <link rel="stylesheet" href="{{ includeResource("css/bootstrap/bootstrap-dark.min.css") }}">
+                    <link rel="stylesheet" href="{{ includeResource("css/general-dark.min.css") }}">
+                {% else %}
+                    <link rel="stylesheet" href="{{ includeResource("css/bootstrap/bootstrap.min.css") }}">
+                {% endif %}
+                {# <link rel="stylesheet" href="/themes/{{ config.theme }}/css/jquery/jquery-ui.min.css{{ "/css/jquery/jquery-ui.min.css"|fileHash }}"> #}
+                <link rel="stylesheet" href="{{ includeResource("css/sweetalert/sweetalert.min.css") }}">
+                <!-- START Default Crisp CSS -->
+                <link rel="stylesheet" href="{{ includeResource("css/general.min.css") }}">
+                <link rel="stylesheet" href="{{ includeResource("css/footer.min.css") }}">
+                <link rel="stylesheet" href="{{ includeResource("css/ribbon.min.css") }}">
+                <link rel="stylesheet" href="{{ includeResource("css/social-icons.min.css") }}">
+                <link rel="stylesheet" href="{{ includeResource("css/ranking-badges.min.css") }}">
+            {% endif %}
 
-      <meta property="og:title" content="{{ ogTitle|default(pageTitle) }} {{ config.page_delimiter }} {{ config.site_name }}" />
-      <meta property="og:description" content="{{ ogDescription|default('base.footer.about.text'|translate) }}" />
-      <meta property="og:type" content="website" />
-      <meta property="og:url" content="{{ URL }}" />
-      <meta property="og:locale" content="{{ locale }}" />
-      <meta property="og:image" content="{{ ogImage|default(includeResource("img/ogp.png")) }}" />
+            <meta property="og:title" content="{{ ogTitle|default(pageTitle) }} {{ config.page_delimiter }} {{ config.site_name }}" />
+            <meta property="og:description" content="{{ ogDescription|default('base.footer.about.text'|translate) }}" />
+            <meta property="og:type" content="website" />
+            <meta property="og:url" content="{{ URL }}" />
+            <meta property="og:locale" content="{{ locale }}" />
+            <meta property="og:image" content="{{ ogImage|default(includeResource("img/ogp.png")) }}" />
 
-      <!-- END Default Crisp CSS -->
-      <title>{{ pageTitle }} {{ config.page_delimiter }} {{ config.site_name }}</title>
-    {% endblock %}
-  </head>
-  <body>
-    {% block content %}{% endblock %}
-    {% block footer %}
-      {{ include("footer.twig") }}
-    {% endblock %}
-    {#
-    <div class="toast bg-dark text-white w-100 mw-100 fixed-bottom p-4" role="alert" data-autohide="false">
-      <div class="toast-body p-4 d-flex flex-column">
-        <h4>{{ 'cookie_warning_header'|translate }}</h4>
-        <p>
-          {{ 'cookie_warning_text'|translate }}
-        </p>
-        <div class="ml-auto">
-          <button type="button" class="btn btn-outline-light mr-3" id="btnDeny">
-            {{ 'cookie_deny'|translate }}
-          </button>
-          <button type="button" class="btn btn-light" id="btnAccept">
-            {{ 'cookie_accept'|translate }}
-          </button>
+            <!-- END Default Crisp CSS -->
+            <title>{{ pageTitle }} {{ config.page_delimiter }} {{ config.site_name }}</title>
+        {% endblock %}
+    </head>
+    <body>
+        {% block content %}{% endblock %}
+        {% block footer %}
+            {{ include("footer.twig") }}
+        {% endblock %}
+        {#
+        <div class="toast bg-dark text-white w-100 mw-100 fixed-bottom p-4" role="alert" data-autohide="false">
+          <div class="toast-body p-4 d-flex flex-column">
+            <h4>{{ 'cookie_warning_header'|translate }}</h4>
+            <p>
+              {{ 'cookie_warning_text'|translate }}
+            </p>
+            <div class="ml-auto">
+              <button type="button" class="btn btn-outline-light mr-3" id="btnDeny">
+                {{ 'cookie_deny'|translate }}
+              </button>
+              <button type="button" class="btn btn-light" id="btnAccept">
+                {{ 'cookie_accept'|translate }}
+              </button>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-    #}
-  </body>
-  <script src="{{ includeResource("js/jquery/jquery.min.js") }}"></script>
-  <script src="{{ includeResource("js/jquery/popper.min.js") }}"></script>
-  <script src="{{ includeResource("js/bootstrap/bootstrap.min.js") }}"></script>
-  <script src="{{ includeResource("js/sweetalert/sweetalert.min.js") }}"></script>
-  <script src="{{ includeResource("js/fontawesome/all.min.js") }}"></script>
-
-  {% block scripts %}{% endblock %}
-  <!-- START Default Crisp JS -->
-  {% block default_scripts %}
-    <script src="{{ includeResource("js/crisp.min.js", true, "") }}"></script>
-
-    {#
-    <script>
-        function addDarkmodeWidget() {
-            const options = {
-                bottom: '64px', // default: '32px'
-                right: 'unset', // default: '32px'
-                left: '32px', // default: 'unset'
-                time: '0.5s', // default: '0.3s'
-                mixColor: '#fff', // default: '#fff'
-                backgroundColor: '#fff', // default: '#fff'
-                buttonColorDark: '#100f2c', // default: '#100f2c'
-                buttonColorLight: '#fff', // default: '#fff'
-                saveInCookies: false, // default: true,
-                label: '🌓', // default: ''
-                autoMatchOsTheme: false // default: true
-            }
-
-            const darkmode = new Darkmode(options);
-            darkmode.showWidget();
-
-        }
-
-        $(document).ready(function () {
-            $("body").on('classChange', function () {
-                console.log("Darkmode");
-            });
-        });
-
-        window.addEventListener('load', addDarkmodeWidget);
-    </script>
-    #}
-  {% endblock %}
-  <!-- END Default Crisp JS -->
+        #}
+    </body>
+    {% if not SIMPLE %}
+        <script src="{{ includeResource("js/jquery/jquery.min.js") }}"></script>
+        <script src="{{ includeResource("js/jquery/popper.min.js") }}"></script>
+        <script src="{{ includeResource("js/bootstrap/bootstrap.min.js") }}"></script>
+        <script src="{{ includeResource("js/sweetalert/sweetalert.min.js") }}"></script>
+        <script src="{{ includeResource("js/fontawesome/all.min.js") }}"></script>
+    {% endif %}
+    {% block scripts %}{% endblock %}
+    <!-- START Default Crisp JS -->
+    {% block default_scripts %}
+        {% if not SIMPLE %}
+            <script src="{{ includeResource("js/crisp.min.js", true, "") }}"></script>
+        {% endif %}
+    {% endblock %}
+    <!-- END Default Crisp JS -->
 </html>

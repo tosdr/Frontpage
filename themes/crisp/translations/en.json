@@ -217,5 +217,6 @@
     "views.new_service.form.service_email.label_muted": "Optionally, an email address where we will send an automated mail about the status of your request.",
     "views.new_service.form.service_note.label": "Additional notes",
     "views.new_service.form.service_note.placeholder": "Is there anything else our reviewers need to know?",
-    "views.new_service.form.service_note.label_muted": "Additional notes for our reviewers"
+    "views.new_service.form.service_note.label_muted": "Additional notes for our reviewers",
+    "components.navbar.simple.text": "Site Navigation"
 }

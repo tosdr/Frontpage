@@ -89,7 +89,7 @@ if (php_sapi_name() !== "cli") {
     $CurrentPage = ($CurrentPage == "" ? "frontpage" : $CurrentPage);
     $CurrentPage = explode(".", $CurrentPage)[0];
     $Simple = (explode('.', $_SERVER["HTTP_HOST"])[0] === "simple" ? true : false);
-    
+
     if (isset($_GET["universe"])) {
         Universe::changeUniverse($_GET["universe"]);
     } elseif (!isset($_COOKIE[core\Config::$Cookie_Prefix . "universe"])) {
@@ -110,7 +110,7 @@ if (php_sapi_name() !== "cli") {
                 $TwigTheme = new \Twig\Environment($ThemeLoader, [
                     'cache' => __DIR__ . '/cache/'
                 ]);
-            }else{
+            } else {
                 $TwigTheme = new \Twig\Environment($ThemeLoader, [
                     'cache' => __DIR__ . '/cache/simple/'
                 ]);
@@ -119,9 +119,7 @@ if (php_sapi_name() !== "cli") {
             $TwigTheme = new \Twig\Environment($ThemeLoader, []);
         }
 
-        if (file_exists(__DIR__ . "/../themes/$CurrentTheme/hook.php")) {
-            include __DIR__ . "/../themes/$CurrentTheme/hook.php";
-        }
+
 
         api\Helper::setLocale();
         $Locale = \crisp\api\Helper::getLocale();
@@ -190,7 +188,9 @@ if (php_sapi_name() !== "cli") {
         $RedisClass = new \crisp\core\Redis();
         $rateLimiter = new \RateLimit\RedisRateLimiter($RedisClass->getDBConnector());
 
-
+        if (file_exists(__DIR__ . "/../themes/$CurrentTheme/hook.php")) {
+            include __DIR__ . "/../themes/$CurrentTheme/hook.php";
+        }
 
         if (explode("/", $_GET["route"])[1] === "api") {
             header('Access-Control-Allow-Origin: *');

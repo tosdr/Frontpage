@@ -10,14 +10,15 @@
 \crisp\core\Theme::addtoNavbar("about", crisp\api\Translation::fetch("components.navbar.about"), \crisp\api\Helper::generateLink("about"), "_self", -97);
 \crisp\core\Theme::addtoNavbar("downloads", crisp\api\Translation::fetch("components.navbar.download"), \crisp\api\Helper::generateLink("downloads"), "_self", -96);
 \crisp\core\Theme::addtoNavbar("new_service", crisp\api\Translation::fetch("components.navbar.request_service"), \crisp\api\Helper::generateLink("new_service"), "_self", 100);
-
-if (\crisp\api\Config::get("maintenance_enabled") || isset($_GET["simulate_maintenance"])) {
-  http_response_code(503);
-  echo $TwigTheme->render("errors/maintenance.twig");
-  exit;
-}
-if (\crisp\api\Config::get("highload_enabled") || isset($_GET["simulate_highload"])) {
-  http_response_code(503);
-  echo $TwigTheme->render("errors/highload.twig");
-  exit;
+if (explode("/", $_GET["route"])[1] !== "api") {
+    if (\crisp\api\Config::get("maintenance_enabled") || isset($_GET["simulate_maintenance"])) {
+        http_response_code(503);
+        echo $TwigTheme->render("errors/maintenance.twig");
+        exit;
+    }
+    if (\crisp\api\Config::get("highload_enabled") || isset($_GET["simulate_highload"])) {
+        http_response_code(503);
+        echo $TwigTheme->render("errors/highload.twig");
+        exit;
+    }
 }

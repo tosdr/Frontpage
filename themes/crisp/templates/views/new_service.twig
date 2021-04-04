@@ -192,13 +192,12 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
                     payload["domains"].push($(this).val());
                 });
                 $.post("", {payload: payload}, function (result) {
-                    if (result.error & 0x10) {
-                        $("#submitservice").attr('disabled', false);
-                        alert("{{ 'views.new_service.form.error.alert'|translate }} " + result.message);
-                    }
                     if (result.error & 0x100) {
                         alert("{{ 'views.new_service.form.success.alert'|translate }}");
                         window.location.href = "/new_service";
+                    } else {
+                        $("#submitservice").attr('disabled', false);
+                        alert("{{ 'views.new_service.form.error.alert'|translate }} " + result.message);
                     }
                 });
             });

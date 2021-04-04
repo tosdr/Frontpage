@@ -27,19 +27,19 @@ if (isset($_POST["approve"]) && !empty($_POST["approve"])) {
 
     $request = $Mysql->getDBConnector()->prepare("SELECT * FROM service_requests WHERE id = :id;");
     $request->execute([":id" => $_POST["approve"]]);
-    $request = $request->fetch(PDO::FETCH_ASSOC);
+    $_request = $request->fetch(PDO::FETCH_ASSOC);
 
-    if (!$request) {
+    if (!$_request) {
         echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::INVALID_PARAMETER, "Invalid Request", []);
         exit;
     }
 
 
 
-    $Name = $request["name"];
-    $Domains = $request["domains"];
-    $Wikipedia = $request["wikipedia"];
-    $Documents = json_decode($request["documents"], true);
+    $Name = $_request["name"];
+    $Domains = $_request["domains"];
+    $Wikipedia = $_request["wikipedia"];
+    $Documents = json_decode($_request["documents"], true);
     $service_id;
     $newstatement = $Phoenix->getDBConnector()->prepare("INSERT INTO services (name, url, wikipedia, created_at, updated_at) VALUES (:name, :url, :wikipedia, NOW(), NOW())");
 
@@ -55,7 +55,7 @@ if (isset($_POST["approve"]) && !empty($_POST["approve"])) {
 
 
 
-        if ($request["email"]) {
+        if ($_request["email"]) {
             $mail = new PHPMailer();
 
             $mail->IsSMTP();
@@ -73,14 +73,14 @@ if (isset($_POST["approve"]) && !empty($_POST["approve"])) {
             return;
         }
 
-        if ($request["email"]) {
+        if ($_request["email"]) {
             $mail = new PHPMailer();
 
             $mail->IsSMTP();
             $mail->CharSet = 'UTF-8';
 
             $mail->setFrom($EnvFile['SMTP_FROM'], 'ToS;DR Service Requests');
-            $mail->addAddress($request["email"]);
+            $mail->addAddress($_request["email"]);
             $mail->Host = $EnvFile["SMTP_HOST"];
             $mail->SMTPAuth = true;
             $mail->Timeout = 10;
@@ -107,16 +107,16 @@ if (isset($_POST["approve"]) && !empty($_POST["approve"])) {
 if (isset($_POST["reject"]) && !empty($_POST["reject"])) {
 
     $request = $Mysql->getDBConnector()->prepare("DELETE FROM service_requests WHERE id = :id;");
-    $request->execute([":id" => $_POST["approve"]]);
+    $request->execute([":id" => $_POST["reject"]]);
 
-    if ($request["email"]) {
+    if ($_request["email"]) {
         $mail = new PHPMailer();
 
         $mail->IsSMTP();
         $mail->CharSet = 'UTF-8';
 
         $mail->setFrom($EnvFile['SMTP_FROM'], 'ToS;DR Service Requests');
-        $mail->addAddress($request["email"]);
+        $mail->addAddress($_request["email"]);
         $mail->Host = $EnvFile["SMTP_HOST"];
         $mail->SMTPAuth = true;
         $mail->Timeout = 10;

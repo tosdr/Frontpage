@@ -189,7 +189,7 @@ if (php_sapi_name() !== "cli") {
         $rateLimiter = new \RateLimit\RedisRateLimiter($RedisClass->getDBConnector());
 
         if (file_exists(__DIR__ . "/../themes/$CurrentTheme/hook.php")) {
-            include __DIR__ . "/../themes/$CurrentTheme/hook.php";
+            require_once __DIR__ . "/../themes/$CurrentTheme/hook.php";
         }
 
         if (explode("/", $_GET["route"])[1] === "api") {

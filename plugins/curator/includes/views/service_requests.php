@@ -61,24 +61,6 @@ if (isset($_POST["approve"]) && !empty($_POST["approve"])) {
             $mail->IsSMTP();
             $mail->CharSet = 'UTF-8';
 
-            $mail->Host = $EnvFile["SMTP_HOST"];
-            $mail->SMTPAuth = true;
-            $mail->Port = $EnvFile["SMTP_PORT"];
-            $mail->Username = $EnvFile["SMTP_USER"];
-            $mail->Password = $EnvFile["SMTP_PASSWORD"];
-            $mail->Subject = 'About your ToS;DR service request';
-            $mail->Body = 'This is the HTML message body <b>in bold!</b>';
-
-            $mail->send();
-            return;
-        }
-
-        if ($_request["email"]) {
-            $mail = new PHPMailer();
-
-            $mail->IsSMTP();
-            $mail->CharSet = 'UTF-8';
-
             $mail->setFrom($EnvFile['SMTP_FROM'], 'ToS;DR Service Requests');
             $mail->addAddress($_request["email"]);
             $mail->Host = $EnvFile["SMTP_HOST"];

@@ -193,6 +193,7 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
                 });
                 $.post("", {payload: payload}, function (result) {
                     if (result.error & 0x10) {
+                        $("#submitservice").attr('disabled', false);
                         alert("{{ 'views.new_service.form.error.alert'|translate }} " + result.message);
                     }
                     if (result.error & 0x100) {

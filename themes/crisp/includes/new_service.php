@@ -82,7 +82,20 @@ if (isset($_POST["payload"]) || !empty($_POST["payload"])) {
         }
     }
 
+
     $Postgres = new crisp\core\MySQL();
+
+    $duplicatereq = $Postgres->getDBConnector()->prepare("SELECT * FROM service_requests WHERE name = :name OR domains = :domains");
+    $duplicatereq->execute([
+        ":name" => $payload["name"],
+        ":domains" => implode(",", $payload["domains"])
+    ]);
+
+    if ($duplicatereq->rowCount() > 0) {
+        echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::SERVICE_DUPLICATE, "Service Request already exists", []);
+        exit;
+    }
+
 
     $db = $Postgres->getDBConnector()->prepare("INSERT INTO service_requests (name, domains, documents, wikipedia, email, note) VALUES (:name, :domains, :documents, :wikipedia, :email, :note)");
 

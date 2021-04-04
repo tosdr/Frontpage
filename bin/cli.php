@@ -65,7 +65,7 @@ switch ($argv[1]) {
                             exit;
                         }
 
-                        if (\crisp\api\Config::set("plugin_core_maintenance_enabled", true)) {
+                        if (\crisp\api\Config::set("maintenance_enabled", true)) {
                             echo "Maintenance Mode successfully enabled." . PHP_EOL;
                         }
                         $Start = microtime(true);
@@ -76,7 +76,7 @@ switch ($argv[1]) {
                         }
                         $End = microtime(true);
                         echo "Took " . \crisp\api\Helper::truncateText($End - $Start, 6, false) . "ms" . PHP_EOL;
-                        if (\crisp\api\Config::set("plugin_core_maintenance_enabled", false)) {
+                        if (\crisp\api\Config::set("maintenance_enabled", false)) {
                             echo "Maintenance Mode successfully disabled." . PHP_EOL;
                         }
                         break;
@@ -109,7 +109,7 @@ switch ($argv[1]) {
                             exit;
                         }
 
-                        if (\crisp\api\Config::set("plugin_core_maintenance_enabled", true)) {
+                        if (\crisp\api\Config::set("maintenance_enabled", true)) {
                             echo "Maintenance Mode successfully enabled." . PHP_EOL;
                         }
                         $Start = microtime(true);
@@ -120,7 +120,7 @@ switch ($argv[1]) {
                         }
                         $End = microtime(true);
                         echo "Took " . \crisp\api\Helper::truncateText($End - $Start, 6, false) . "ms" . PHP_EOL;
-                        if (\crisp\api\Config::set("plugin_core_maintenance_enabled", false)) {
+                        if (\crisp\api\Config::set("maintenance_enabled", false)) {
                             echo "Maintenance Mode successfully disabled." . PHP_EOL;
                         }
                         break;
@@ -146,7 +146,7 @@ switch ($argv[1]) {
                     exit;
                 }
 
-                if (\crisp\api\Config::set("plugin_core_maintenance_enabled", true)) {
+                if (\crisp\api\Config::set("maintenance_enabled", true)) {
                     echo "Maintenance Mode successfully enabled." . PHP_EOL;
                 }
                 if (crisp\core\Plugins::install($argv[3], \crisp\api\Config::get("theme"), __FILE__, "cli")) {
@@ -155,7 +155,7 @@ switch ($argv[1]) {
                     echo "Failed to install plugin" . PHP_EOL;
                 }
 
-                if (\crisp\api\Config::set("plugin_core_maintenance_enabled", false)) {
+                if (\crisp\api\Config::set("maintenance_enabled", false)) {
                     echo "Maintenance Mode successfully disabled." . PHP_EOL;
                 }
                 break;
@@ -173,7 +173,7 @@ switch ($argv[1]) {
                     exit;
                 }
 
-                if (\crisp\api\Config::set("plugin_core_maintenance_enabled", true)) {
+                if (\crisp\api\Config::set("maintenance_enabled", true)) {
                     echo "Maintenance Mode successfully enabled." . PHP_EOL;
                 }
                 $Start = microtime(true);
@@ -181,7 +181,7 @@ switch ($argv[1]) {
 
                 $End = microtime(true);
                 echo "Took " . \crisp\api\Helper::truncateText($End - $Start, 6, false) . "ms" . PHP_EOL;
-                if (\crisp\api\Config::set("plugin_core_maintenance_enabled", false)) {
+                if (\crisp\api\Config::set("maintenance_enabled", false)) {
                     echo "Maintenance Mode successfully disabled." . PHP_EOL;
                 }
                 break;
@@ -200,14 +200,14 @@ switch ($argv[1]) {
                     echo "This plugin does not exist" . PHP_EOL;
                     exit;
                 }
-                if (\crisp\api\Config::set("plugin_core_maintenance_enabled", true)) {
+                if (\crisp\api\Config::set("maintenance_enabled", true)) {
                     echo "Maintenance Mode successfully enabled." . PHP_EOL;
                 }
 
                 crisp\core\Plugins::installKVStorage($argv[3], \crisp\core\Plugins::getPluginMetadata($argv[3]));
                 crisp\core\Plugins::installTranslations($argv[3], \crisp\core\Plugins::getPluginMetadata($argv[3]));
 
-                if (\crisp\api\Config::set("plugin_core_maintenance_enabled", false)) {
+                if (\crisp\api\Config::set("maintenance_enabled", false)) {
                     echo "Maintenance Mode successfully disabled." . PHP_EOL;
                 }
                 break;
@@ -227,7 +227,7 @@ switch ($argv[1]) {
                     echo "This plugin does not exist" . PHP_EOL;
                     exit;
                 }
-                if (\crisp\api\Config::set("plugin_core_maintenance_enabled", true)) {
+                if (\crisp\api\Config::set("maintenance_enabled", true)) {
                     echo "Maintenance Mode successfully enabled." . PHP_EOL;
                 }
                 if (crisp\core\Plugins::uninstall($argv[3], \crisp\api\Config::get("theme"), __FILE__, "cli")) {
@@ -236,7 +236,7 @@ switch ($argv[1]) {
                     echo "Failed to uninstall plugin" . PHP_EOL;
                 }
 
-                if (\crisp\api\Config::set("plugin_core_maintenance_enabled", false)) {
+                if (\crisp\api\Config::set("maintenance_enabled", false)) {
                     echo "Maintenance Mode successfully disabled." . PHP_EOL;
                 }
             case "reinstall":
@@ -253,7 +253,7 @@ switch ($argv[1]) {
                     exit;
                 }
 
-                if (\crisp\api\Config::set("plugin_core_maintenance_enabled", true)) {
+                if (\crisp\api\Config::set("maintenance_enabled", true)) {
                     echo "Maintenance Mode successfully enabled." . PHP_EOL;
                 }
                 if (crisp\core\Plugins::reinstall($argv[3], \crisp\api\Config::get("theme"), __FILE__, "cli")) {
@@ -262,7 +262,7 @@ switch ($argv[1]) {
                     echo "Failed to reinstall plugin" . PHP_EOL;
                 }
 
-                if (\crisp\api\Config::set("plugin_core_maintenance_enabled", false)) {
+                if (\crisp\api\Config::set("maintenance_enabled", false)) {
                     echo "Maintenance Mode successfully disabled." . PHP_EOL;
                 }
                 break;
@@ -304,14 +304,14 @@ switch ($argv[1]) {
                     echo "This theme does not exist" . PHP_EOL;
                     exit;
                 }
-                if (\crisp\api\Config::set("plugin_core_maintenance_enabled", true)) {
+                if (\crisp\api\Config::set("maintenance_enabled", true)) {
                     echo "Maintenance Mode successfully enabled." . PHP_EOL;
                 }
 
                 crisp\core\Themes::installKVStorage($argv[3], \crisp\core\Themes::getThemeMetadata($argv[3]));
                 crisp\core\Themes::installTranslations($argv[3], \crisp\core\Themes::getThemeMetadata($argv[3]));
 
-                if (\crisp\api\Config::set("plugin_core_maintenance_enabled", false)) {
+                if (\crisp\api\Config::set("maintenance_enabled", false)) {
                     echo "Maintenance Mode successfully disabled." . PHP_EOL;
                 }
                 break;
@@ -341,7 +341,7 @@ switch ($argv[1]) {
                             echo "This theme is not installed" . PHP_EOL;
                             exit;
                         }
-                        if (\crisp\api\Config::set("plugin_core_maintenance_enabled", true)) {
+                        if (\crisp\api\Config::set("maintenance_enabled", true)) {
                             echo "Maintenance Mode successfully enabled." . PHP_EOL;
                         }
                         $Start = microtime(true);
@@ -353,7 +353,7 @@ switch ($argv[1]) {
                         $End = microtime(true);
                         echo "Took " . \crisp\api\Helper::truncateText($End - $Start, 6, false) . "ms" . PHP_EOL;
 
-                        if (\crisp\api\Config::set("plugin_core_maintenance_enabled", false)) {
+                        if (\crisp\api\Config::set("maintenance_enabled", false)) {
                             echo "Maintenance Mode successfully disabled." . PHP_EOL;
                         }
                         break;
@@ -384,7 +384,7 @@ switch ($argv[1]) {
                             echo "This theme is not installed" . PHP_EOL;
                             exit;
                         }
-                        if (\crisp\api\Config::set("plugin_core_maintenance_enabled", true)) {
+                        if (\crisp\api\Config::set("maintenance_enabled", true)) {
                             echo "Maintenance Mode successfully enabled." . PHP_EOL;
                         }
                         $Start = microtime(true);
@@ -395,7 +395,7 @@ switch ($argv[1]) {
                         }
                         $End = microtime(true);
                         echo "Took " . \crisp\api\Helper::truncateText($End - $Start, 6, false) . "ms" . PHP_EOL;
-                        if (\crisp\api\Config::set("plugin_core_maintenance_enabled", false)) {
+                        if (\crisp\api\Config::set("maintenance_enabled", false)) {
                             echo "Maintenance Mode successfully disabled." . PHP_EOL;
                         }
                         break;
@@ -421,7 +421,7 @@ switch ($argv[1]) {
                     echo "This theme does not exist" . PHP_EOL;
                     exit;
                 }
-                if (\crisp\api\Config::set("plugin_core_maintenance_enabled", true)) {
+                if (\crisp\api\Config::set("maintenance_enabled", true)) {
                     echo "Maintenance Mode successfully enabled." . PHP_EOL;
                 }
                 if (crisp\core\Themes::install($argv[3])) {
@@ -429,7 +429,7 @@ switch ($argv[1]) {
                 } else {
                     echo "Failed to install theme" . PHP_EOL;
                 }
-                if (\crisp\api\Config::set("plugin_core_maintenance_enabled", false)) {
+                if (\crisp\api\Config::set("maintenance_enabled", false)) {
                     echo "Maintenance Mode successfully disabled." . PHP_EOL;
                 }
                 break;
@@ -468,7 +468,7 @@ switch ($argv[1]) {
                     echo "This theme does not exist" . PHP_EOL;
                     exit;
                 }
-                if (\crisp\api\Config::set("plugin_core_maintenance_enabled", true)) {
+                if (\crisp\api\Config::set("maintenance_enabled", true)) {
                     echo "Maintenance Mode successfully enabled." . PHP_EOL;
                 }
                 if (crisp\core\Themes::reinstall($argv[3], \crisp\api\Config::get("theme"), __FILE__, "cli")) {
@@ -476,18 +476,13 @@ switch ($argv[1]) {
                 } else {
                     echo "Failed to reinstall theme" . PHP_EOL;
                 }
-                if (\crisp\api\Config::set("plugin_core_maintenance_enabled", false)) {
+                if (\crisp\api\Config::set("maintenance_enabled", false)) {
                     echo "Maintenance Mode successfully disabled." . PHP_EOL;
                 }
                 break;
         }
         break;
     case "maintenance":
-
-        if (!\crisp\core\Plugins::isInstalled("core")) {
-            echo "Core plugin is not installed!";
-            exit;
-        }
 
         if ($argc < 3) {
             echo "Missing argument: enable/disable" . PHP_EOL;
@@ -497,7 +492,7 @@ switch ($argv[1]) {
             case "enable":
             case "on":
             case "true":
-                if (\crisp\api\Config::set("plugin_core_maintenance_enabled", true)) {
+                if (\crisp\api\Config::set("maintenance_enabled", true)) {
                     echo "Maintenance Mode successfully enabled." . PHP_EOL;
                     exit;
                 }
@@ -506,14 +501,14 @@ switch ($argv[1]) {
             case "false":
             case "disable":
             case "off":
-                if (\crisp\api\Config::set("plugin_core_maintenance_enabled", false)) {
+                if (\crisp\api\Config::set("maintenance_enabled", false)) {
                     echo "Maintenance Mode successfully disabled." . PHP_EOL;
                     exit;
                 }
                 echo "Failed to disable maintenance mode" . PHP_EOL;
                 break;
             default:
-                if (\crisp\api\Config::get("plugin_core_maintenance_enabled")) {
+                if (\crisp\api\Config::get("maintenance_enabled")) {
                     echo "Maintenance Mode is currently enabled!" . PHP_EOL;
                 } else {
                     echo "Maintenance Mode is currently disabled." . PHP_EOL;

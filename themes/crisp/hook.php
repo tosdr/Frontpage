@@ -13,11 +13,11 @@
 
 if (\crisp\api\Config::get("maintenance_enabled") || isset($_GET["simulate_maintenance"])) {
   http_response_code(503);
-  echo $TwigTheme->render("/templates/errors/maintenance.twig", array("plugin" => $this));
+  echo $TwigTheme->render("errors/maintenance.twig");
   exit;
 }
 if (\crisp\api\Config::get("highload_enabled") || isset($_GET["simulate_highload"])) {
   http_response_code(503);
-  echo $TwigTheme->render("/templates/errors/highload.twig", array("plugin" => $this));
+  echo $TwigTheme->render("errors/highload.twig");
   exit;
 }

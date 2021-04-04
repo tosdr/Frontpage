@@ -150,7 +150,7 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
             </div>
             <hr>
 
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" id="submitservice" class="btn btn-primary">Submit</button>
 
             <br>
             <small>
@@ -170,6 +170,7 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
                     alert("{{ 'views.new_service.form.invalid.alert'|translate }}");
                     return;
                 }
+                $("#submitservice").attr('disabled', true);
                 let payload = {
                     name: $("#service_name").val(),
                     documents: [],

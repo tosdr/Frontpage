@@ -77,21 +77,27 @@ Die Variablen unten sind sehr wichtig bitte bei jeder Datei setzen!
         $(document).ready(function () {
             $(document).on('click', '[name="approve"]', function () {
                 let id = $(this).data('id');
+                let button = $(this);
+                $(this).attr('disabled', true);
                 $.post("", {approve: id}, function (result) {
                     if (result.error & 0x100) {
                         $("#request-" + id).remove();
                         window.open("https://edit.tosdr.org/services/" + result.message + "/annotate");
                     } else {
+                        $(this).attr('disabled', false);
                         alert("Error! " + result.message);
                     }
                 });
             });
             $(document).on('click', '[name="reject"]', function () {
                 let id = $(this).data('id');
+                let button = $(this);
+                $(this).attr('disabled', true);
                 $.post("", {reject: id}, function (result) {
                     if (result.error & 0x100) {
                         $("#request-" + id).remove();
                     } else {
+                        button.attr('disabled', false);
                         alert("Error! " + result.message);
                     }
                 });

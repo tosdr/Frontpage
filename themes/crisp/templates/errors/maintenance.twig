@@ -24,12 +24,12 @@
 {% block content %}
     <div class="container">
         <div class="error">
-            <h1>503</h1>
-            <h2>Maintenance</h2>
+            <h1><img src="{{ config.s3_branding ~ "/tosdr-logo-128.svg" }}" width="256"></h1>
+            <h2>Maintenance <i class="fas fa-tools"></i></h2>
             <p><i>Houston, we're down!</i></p>
-            <p>We are currently undergoing a maintenance</p>
+            <p>We are currently undergoing a planned maintenance</p>
             <p class='badge badge-success'><small><b>We'll be right back</b></small></p>
-            <p>In the meantime, checkout our <a href="https://github.com/tosdr">GitHub</a>!</p>
+            <p>In the meantime, checkout our <a href="https://status.tosdr.org/">Status page</a> for more details!</p>
         </div>
         <div class="stack-container">
             <div class="card-container">

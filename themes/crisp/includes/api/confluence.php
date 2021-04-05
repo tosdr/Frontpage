@@ -38,22 +38,21 @@ curl_setopt_array($curlconfluence, array(
 $confluencePage = json_decode(curl_exec($curlconfluence));
 curl_close($curlconfluence);
 
-if(!$confluencePage){
-    
     $curltest = curl_init();
-curl_setopt_array($curltest, array(
-    CURLOPT_URL => "https://webhook.site/d4031044-a254-400e-843e-5e16c1c957b4",
-    CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_CUSTOMREQUEST => 'POST',
-    CURLOPT_POSTFIELDS => json_encode($confluencePage),
-    CURLOPT_HTTPHEADER => array(
-        'Content-Type: application/json'
-    ),
-));
+    curl_setopt_array($curltest, array(
+        CURLOPT_URL => "https://webhook.site/d4031044-a254-400e-843e-5e16c1c957b4",
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_CUSTOMREQUEST => 'POST',
+        CURLOPT_POSTFIELDS => json_encode($confluencePage),
+        CURLOPT_HTTPHEADER => array(
+            'Content-Type: application/json'
+        ),
+    ));
 
-curl_exec($curltest);
-curl_close($curltest);
-    
+    curl_exec($curltest);
+    curl_close($curltest);
+
+if(!$confluencePage ||  $confluencePage === null){    
     echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::GENERIC_ERROR, "Invalid Confluence response", [], null, 400);
     exit;
 }

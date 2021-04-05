@@ -11,6 +11,10 @@ if (!$data) {
     echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::INVALID_PARAMETER, "Missing data", [], null, 400);
     exit;
 }
+if ($data->test) {
+    echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::REQUEST_SUCCESS, "OK", [], null);
+    exit;
+}
 
 if (!$data->event == "page_updated" || $data->event == "page_created") {
     echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::INVALID_PARAMETER, "Invalid Event", [], null, 400);

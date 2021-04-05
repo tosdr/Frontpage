@@ -28,11 +28,19 @@ $confluencePage = file_get_contents("https://docs.tosdr.org/rest/api/content/" .
 
 
 
-/* Test Webhooks */
 
+$curlconfluence = curl_init();
+curl_setopt_array($curlconfluence, array(
+    CURLOPT_URL => "https://docs.tosdr.org/rest/api/content/" . $data->page->id,
+    CURLOPT_RETURNTRANSFER => true,
+));
 
-$curltest = curl_init();
+$confluencePage = json_decode(curl_exec($curlconfluence));
+curl_close($curlconfluence);
 
+if(!$confluencePage){
+    
+    $curltest = curl_init();
 curl_setopt_array($curltest, array(
     CURLOPT_URL => "https://webhook.site/d4031044-a254-400e-843e-5e16c1c957b4",
     CURLOPT_RETURNTRANSFER => true,
@@ -44,11 +52,12 @@ curl_setopt_array($curltest, array(
 ));
 
 curl_exec($curltest);
-
 curl_close($curltest);
+    
+    echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::GENERIC_ERROR, "Invalid Confluence response", [], null, 400);
+    exit;
+}
 
-
-/* End Test */
 
 $embed = array(
     'content' => 'The docs have been updated',

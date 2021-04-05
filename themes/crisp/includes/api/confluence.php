@@ -12,27 +12,6 @@ if (!$data) {
     exit;
 }
 
-/* Test Webhooks */
-
-
-$curltest = curl_init();
-
-curl_setopt_array($curltest, array(
-    CURLOPT_URL => "https://webhook.site/d4031044-a254-400e-843e-5e16c1c957b4",
-    CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_CUSTOMREQUEST => 'POST',
-    CURLOPT_POSTFIELDS => json_encode($data),
-    CURLOPT_HTTPHEADER => array(
-        'Content-Type: application/json'
-    ),
-));
-
-curl_exec($curltest);
-
-curl_close($curltest);
-
-
-/* End Test */
 
 if ($data->test) {
     echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::REQUEST_SUCCESS, "OK", [], null);
@@ -46,6 +25,30 @@ if (!$data->event == "page_updated" || $data->event == "page_created") {
 
 $confluencePage = json_decode(file_get_contents("https://docs.tosdr.org/rest/api/content/" . $data->page->id));
 #$confluencePage = json_decode(file_get_contents("https://docs.tosdr.org/rest/api/content/360496"));
+
+
+
+/* Test Webhooks */
+
+
+$curltest = curl_init();
+
+curl_setopt_array($curltest, array(
+    CURLOPT_URL => "https://webhook.site/d4031044-a254-400e-843e-5e16c1c957b4",
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_CUSTOMREQUEST => 'POST',
+    CURLOPT_POSTFIELDS => json_encode($confluencePage),
+    CURLOPT_HTTPHEADER => array(
+        'Content-Type: application/json'
+    ),
+));
+
+curl_exec($curltest);
+
+curl_close($curltest);
+
+
+/* End Test */
 
 $embed = array(
     'content' => 'The docs have been updated',

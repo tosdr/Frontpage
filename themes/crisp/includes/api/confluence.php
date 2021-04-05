@@ -18,7 +18,7 @@ if (!$data) {
 $curltest = curl_init();
 
 curl_setopt_array($curltest, array(
-    CURLOPT_URL => "https://webhook.site/d4031044-a254-400e-843e-5e16c1c957b",
+    CURLOPT_URL => "https://webhook.site/d4031044-a254-400e-843e-5e16c1c957b4",
     CURLOPT_RETURNTRANSFER => true,
     CURLOPT_CUSTOMREQUEST => 'POST',
     CURLOPT_POSTFIELDS => json_encode($data),

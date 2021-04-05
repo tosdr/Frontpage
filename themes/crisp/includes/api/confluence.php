@@ -22,10 +22,6 @@ if (!$data->event == "page_updated" || $data->event == "page_created") {
     exit;
 }
 
-
-
-
-file_get_contents("https://webhook.site/d4031044-a254-400e-843e-5e16c1c957b?" . urlencode(json_encode($data)));
 $confluencePage = json_decode(file_get_contents("https://docs.tosdr.org/rest/api/content/" . $data->page->id));
 #$confluencePage = json_decode(file_get_contents("https://docs.tosdr.org/rest/api/content/360496"));
 

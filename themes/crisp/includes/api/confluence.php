@@ -23,7 +23,7 @@ if (!$data->event == "page_updated" || $data->event == "page_created") {
     exit;
 }
 
-$confluencePage = file_get_contents("https://docs.tosdr.org/rest/api/content/" . $data->page->id));
+$confluencePage = file_get_contents("https://docs.tosdr.org/rest/api/content/" . $data->page->id);
 #$confluencePage = json_decode(file_get_contents("https://docs.tosdr.org/rest/api/content/360496"));
 
 

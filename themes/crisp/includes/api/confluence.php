@@ -52,7 +52,7 @@ curl_close($curlconfluence);
     curl_exec($curltest);
     curl_close($curltest);
 
-if(!$confluencePage ||  $confluencePage === null){    
+if(!$confluencePage ||  $confluencePage === null || $confluencePage->statusCode == 404){    
     echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::GENERIC_ERROR, "Invalid Confluence response", [], null, 400);
     exit;
 }

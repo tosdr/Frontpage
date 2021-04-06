@@ -35,7 +35,7 @@ if ($data->test) {
     exit;
 }
 
-if (!$data->event == "page_updated" || $data->event == "page_created") {
+if (!$data->event == "page_updated" || !$data->event == "page_created" || !$data->event == "blog_created" || !$data->event == "blog_updated") {
     echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::INVALID_PARAMETER, "Invalid Event", [], null, 400);
     exit;
 }

@@ -1,0 +1,70 @@
+{# 
+ # Copyright 2020 Pixelcat Productions <support@pixelcatproductions.net>
+ # @author 2020 Justin René Back <jback@pixelcatproductions.net>
+ #
+ # Licensed under the Apache License, Version 2.0 (the "License");
+ # you may not use this file except in compliance with the License.
+ # You may obtain a copy of the License at
+ #
+ #      http://www.apache.org/licenses/LICENSE-2.0
+ #
+ # Unless required by applicable law or agreed to in writing, software
+ # distributed under the License is distributed on an "AS IS" BASIS,
+ # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ # See the License for the specific language governing permissions and
+ # limitations under the License.
+#}
+<div class="col-{{ col }}">
+    <div class="card d-flex h-100">
+        <div class="card-header">
+            {% if metadata.version is defined %}
+                {% set version = metadata.version %}
+            {% else %}
+                {% set version = plugin.getTranslation("unknown") %}
+            {% endif %}
+
+            <i class="fas fa-puzzle-piece"></i> {{ metadata.name }} <span class="badge badge-warning"><i class="fas fa-code-branch"></i> {{ version }}</span>
+            {% if metadata.repository is defined %}
+                <a href="{{ metadata.repository }}" class="badge badge-info"><i class="fab fa-github"></i> {{ plugin.getTranslation("repository") }}</a>
+            {% endif %}
+            {# Version #}
+            {% if testVersion(metadata.testedVersion) and metadata.testedVersion is defined %}
+                <span class="badge badge-success"><i class="fas fa-check"></i> {{ plugin.getTranslation("compatible") }}</span>
+            {% elseif testVersion(metadata.incompatibleVersion) and metadata.incompatibleVersion is defined %}
+                <span class="badge badge-danger"><i class="fas fa-times"></i> {{ plugin.getTranslation("incompatible") }}</span>
+            {% else %}    
+                <span class="badge badge-warning"><i class="fas fa-question"></i> {{ plugin.getTranslation("may_be_incompatible") }}</span>
+            {% endif %}
+        </div>
+        <div class="card-body">
+            <small>{{ metadata.author }}</small>
+            <br><br>
+            {{ metadata.description }}
+            <br>
+            <b>{{ plugin.getTranslation("dependencies") }}:</b> 
+            {% if metadata.onInstall.activateDependencies|length == 0 %}
+                <span class="badge badge-success"><i class="fas fa-check"></i> {{ plugin.getTranslation("none") }}</span>
+            {% else %}
+                {% for dependency in metadata.onInstall.activateDependencies %}
+                    {% if isInstalled(dependency) %}
+                        <span class="badge badge-success"><i class="fas fa-puzzle-piece"></i> {{ dependency }}</span>
+                    {% else %}
+                        <span class="badge badge-danger"><i class="fas fa-puzzle-piece"></i> {{ dependency }} ({{ plugin.getTranslation("missing")|upper }})</span>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div class="card-footer">
+            {% if plugindata.Name != "admin" and plugindata.Name != "core" and plugindata.loadedAt is defined %}
+                <button data-action="uninstall" data-plugin="{{ plugindata.Name }}" class="btn badge badge-danger"><i class="fas fa-minus-circle"></i> {{ plugin.getTranslation("uninstall") }}</button>
+            {% endif %}
+            {% if plugindata.loadedAt is defined %}
+                <button data-action="refresh_translations" data-plugin="{{ plugindata.Name }}"  class="btn badge badge-warning"><i class="fas fa-language"></i> {{ plugin.getTranslation("refresh_translation") }}</button>
+                <button data-action="reset_storage" data-plugin="{{ plugindata.Name }}"  class="btn badge badge-danger"><i class="fas fa-database"></i> {{ plugin.getTranslation("reset_storage") }}</button>
+                <button data-action="integrity" data-plugin="{{ plugindata.Name }}"  class="btn badge badge-primary"><i class="fas fa-shield-alt"></i> {{ plugin.getTranslation("integrity_check") }}</button>
+            {% else %}
+                <button data-action="install" data-plugin="{{ plugindata.Name }}"  class="btn badge badge-success"><i class="fas fa-plus-circle"></i> {{ plugin.getTranslation("install") }}</button>
+            {% endif %}
+        </div>
+    </div>
+</div>

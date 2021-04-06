@@ -104,15 +104,15 @@ class Phoenix {
                 }
 
                 $SkeletonData = array(
-                    "id" => $service["id"],
-                    "name" => $service["name"],
-                    "slug" => $service["slug"],
-                    "image" => \crisp\api\Config::get("s3_logos") . "/" . ($service["image"]),
-                    "class" => ($service["rating"] == "N/A" ? false : ($service["is_comprehensively_reviewed"] ? $service["rating"] : false)),
+                    "id" => $service["_source"]["id"],
+                    "name" => $service["_source"]["name"],
+                    "slug" => $service["_source"]["slug"],
+                    "image" => \crisp\api\Config::get("s3_logos") . "/" . ($service["_source"]["image"]),
+                    "class" => ($service["_source"]["rating"] == "N/A" ? false : ($service["_source"]["is_comprehensively_reviewed"] ? $service["_source"]["rating"] : false)),
                     "links" => $ServiceLinks,
                     "points" => $ServicePoints,
                     "pointsData" => $ServicePointsData,
-                    "urls" => explode(",", $service["url"])
+                    "urls" => explode(",", $service["_source"]["url"])
                 );
                 break;
             case 3:
@@ -143,10 +143,10 @@ class Phoenix {
 
                 $SkeletonData = $service;
 
-                $SkeletonData["image"] = \crisp\api\Config::get("s3_logos") . "/" . $service["image"];
+                $SkeletonData["image"] = \crisp\api\Config::get("s3_logos") . "/" . $service["_source"]["image"];
                 $SkeletonData["documents"] = $documents;
                 $SkeletonData["points"] = $ServicePointsData;
-                $SkeletonData["urls"] = explode(",", $service["url"]);
+                $SkeletonData["urls"] = explode(",", $service["_source"]["url"]);
                 break;
         }
 

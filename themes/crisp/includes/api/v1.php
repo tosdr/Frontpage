@@ -33,6 +33,7 @@ if (!is_numeric($this->Query)) {
         return;
     }
     $this->Query = crisp\api\Phoenix::getServiceBySlugPG($this->Query)["id"];
+    
     $SkeletonData = \crisp\api\Phoenix::generateApiFiles($this->Query);
     echo json_encode($SkeletonData);
 

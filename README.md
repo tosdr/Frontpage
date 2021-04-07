@@ -1,8 +1,8 @@
 # CrispCMS - The new ToS;DR Frontpage
 
-![](https://beta.tosdr.org/api/badge/service/tos;dr) [![Translation status](https://translate.jback.dev/widgets/crispcms/-/crispcms-theme/svg-badge.svg)](https://translate.jback.dev/engage/crispcms/) [![Build Status](https://ci.jback.dev/api/badges/tosdr/CrispCMS/status.svg)](https://ci.jback.dev/tosdr/CrispCMS)
+![](https://shields.tosdr.org/tosdr.svg) [![Translation status](https://translate.tosdr.org/widgets/crispcms/-/svg-badge.svg)](https://translate.tosdr.org/engage/crispcms/) [![Build Status](https://ci.tosdr.org/api/badges/tosdr/CrispCMS/status.svg)](https://ci.tosdr.org/tosdr/CrispCMS)
 
-  ![](https://raw.githubusercontent.com/tosdr/CrispCMS/master/themes/crisp/img/tosdr-logo-128-w.png)
+  ![](https://tosdr-branding.s3.eu-west-2.jbcdn.net/tosdr-logo-128.svg)
 
 Welcome to the official repository for our frontpage, [tosdr.org](https://tosdr.org/).
 This is a redo of our previous frontpage, which used JS.

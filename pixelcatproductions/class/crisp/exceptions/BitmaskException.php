@@ -1,6 +1,6 @@
 <?php
 
-/* 
+/*
  * Copyright (C) 2021 Justin René Back <justin@tosdr.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,7 +17,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 namespace crisp\exceptions;
 
 /**
@@ -26,8 +25,8 @@ namespace crisp\exceptions;
  * @author Justin René Back <jback@pixelcatproductions.net>
  */
 class BitmaskException extends \Exception {
-    
-    public function __construct($message, $code = 0, \Exception $previous = null) {
+
+    public function __construct($message, $code, \Exception $previous = null) {
         parent::__construct($message, $code, $previous);
     }
 

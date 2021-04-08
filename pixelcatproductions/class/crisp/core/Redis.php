@@ -1,6 +1,6 @@
 <?php
 
-/* 
+/*
  * Copyright (C) 2021 Justin René Back <justin@tosdr.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 
 namespace crisp\core;
 
@@ -40,7 +39,7 @@ class Redis {
             $redis->auth($EnvFile["REDIS_AUTH"]);
             $this->Database_Connection = $redis;
         } catch (\Exception $ex) {
-            throw new \Exception("Failed to contact redis server");
+            throw new \crisp\exceptions\BitmaskException($ex, Bitmask::REDIS_CONN_ERROR);
         }
     }
 

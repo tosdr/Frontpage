@@ -1,6 +1,6 @@
 <?php
 
-/* 
+/*
  * Copyright (C) 2021 Justin René Back <justin@tosdr.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 
 namespace crisp\core;
 
@@ -39,10 +38,7 @@ class MySQL {
             $EnvFile = parse_ini_file(__DIR__ . "/../../../../.env");
             $this->Database_Connection = new PDO("pgsql:host=" . $EnvFile["MYSQL_HOSTNAME"] . ";dbname=" . $EnvFile["MYSQL_DATABASE"] . ";", $EnvFile["MYSQL_USERNAME"], $EnvFile["MYSQL_PASSWORD"], [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::ATTR_EMULATE_PREPARES => true]);
         } catch (\Exception $ex) {
-            if (php_sapi_name() == "cli") {
-                throw new \Exception($ex);
-            }
-            throw new \Exception("Failed to contact MySQL Server". $ex->getMessage());
+            throw new \crisp\exceptions\BitmaskException($ex, Bitmask::POSTGRES_CONN_ERROR);
         }
     }
 

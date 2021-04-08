@@ -1,6 +1,6 @@
 <?php
 
-/* 
+/*
  * Copyright (C) 2021 Justin René Back <justin@tosdr.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 
 namespace crisp;
 
@@ -62,10 +61,9 @@ class core {
 
 }
 
-require_once __DIR__ . '/../vendor/autoload.php';
-core::bootstrap();
-if (php_sapi_name() !== "cli") {
-
+try {
+    require_once __DIR__ . '/../vendor/autoload.php';
+    core::bootstrap();
     $GLOBALS["route"] = api\Helper::processRoute($_GET["route"]);
 
     $GLOBALS["microtime"] = array();
@@ -100,274 +98,217 @@ if (php_sapi_name() !== "cli") {
     define("CURRENT_UNIVERSE", Universe::getUniverse($_COOKIE[core\Config::$Cookie_Prefix . "universe"]));
     define("CURRENT_UNIVERSE_NAME", Universe::getUniverseName(CURRENT_UNIVERSE));
 
+
+    $ThemeLoader = new \Twig\Loader\FilesystemLoader(array(__DIR__ . "/../themes/$CurrentTheme/templates/", __DIR__ . "/../plugins/"));
+    $TwigTheme;
+
+    if (CURRENT_UNIVERSE <= Universe::UNIVERSE_BETA) {
+        if (!$Simple) {
+            $TwigTheme = new \Twig\Environment($ThemeLoader, [
+                'cache' => __DIR__ . '/cache/'
+            ]);
+        } else {
+            $TwigTheme = new \Twig\Environment($ThemeLoader, [
+                'cache' => __DIR__ . '/cache/simple/'
+            ]);
+        }
+    } else {
+        $TwigTheme = new \Twig\Environment($ThemeLoader, []);
+    }
+
+
+    api\Helper::setLocale();
+    $Locale = \crisp\api\Helper::getLocale();
+
+    if (CURRENT_UNIVERSE >= Universe::UNIVERSE_BETA) {
+        if (isset($_GET["test_theme_component"])) {
+            core\Themes::setThemeMode($_GET["test_theme_component"]);
+        }
+    } else {
+        core\Themes::setThemeMode("0");
+    }
+
+    header("X-CMS-CurrentPage: $CurrentPage");
+    header("X-CMS-Locale: $Locale");
+    header("X-CMS-Universe: " . CURRENT_UNIVERSE);
+    header("X-CMS-Universe-Human: " . CURRENT_UNIVERSE_NAME);
+
+    $TwigTheme->addGlobal("config", \crisp\api\Config::list());
+    $TwigTheme->addGlobal("locale", $Locale);
+    $TwigTheme->addGlobal("languages", \crisp\api\Translation::listLanguages(false));
+    $TwigTheme->addGlobal("GET", $_GET);
+    $TwigTheme->addGlobal("UNIVERSE", CURRENT_UNIVERSE);
+    $TwigTheme->addGlobal("UNIVERSE_NAME", CURRENT_UNIVERSE_NAME);
+    $TwigTheme->addGlobal("CurrentPage", $CurrentPage);
+    $TwigTheme->addGlobal("POST", $_POST);
+    $TwigTheme->addGlobal("SERVER", $_SERVER);
+    $TwigTheme->addGlobal("GLOBALS", $GLOBALS);
+    $TwigTheme->addGlobal("COOKIE", $_COOKIE);
+    $TwigTheme->addGlobal("SIMPLE", $Simple);
+    $TwigTheme->addGlobal("isMobile", \crisp\api\Helper::isMobile());
+    $TwigTheme->addGlobal("URL", api\Helper::currentDomain());
+    $TwigTheme->addGlobal("CLUSTER", gethostname());
+    $TwigTheme->addGlobal("THEME_MODE", \crisp\core\Themes::getThemeMode());
+
+    $TwigTheme->addExtension(new \Twig\Extension\StringLoaderExtension());
+
+    $TwigTheme->addFunction(new \Twig\TwigFunction('getGitRevision', [new \crisp\api\Helper(), 'getGitRevision']));
+    $TwigTheme->addFunction(new \Twig\TwigFunction('getService', [new \crisp\api\Phoenix(), 'getServicePG']));
+    $TwigTheme->addFunction(new \Twig\TwigFunction('getPoint', [new \crisp\api\Phoenix(), 'getPointPG']));
+    $TwigTheme->addFunction(new \Twig\TwigFunction('getPointsByService', [new \crisp\api\Phoenix(), 'getPointsByServicePG']));
+    $TwigTheme->addFunction(new \Twig\TwigFunction('getCase', [new \crisp\api\Phoenix(), 'getCasePG']));
+    $TwigTheme->addFunction(new \Twig\TwigFunction('getGitBranch', [new \crisp\api\Helper(), 'getGitBranch']));
+    $TwigTheme->addFunction(new \Twig\TwigFunction('prettyDump', [new \crisp\api\Helper(), 'prettyDump']));
+    $TwigTheme->addFunction(new \Twig\TwigFunction('microtime', 'microtime'));
+    $TwigTheme->addFunction(new \Twig\TwigFunction('includeResource', [new \crisp\core\Themes(), 'includeResource']));
+    $TwigTheme->addFunction(new \Twig\TwigFunction('generateLink', [new \crisp\api\Helper(), 'generateLink']));
+
+
+    $Translation = new \crisp\api\Translation($Locale);
+
+    $TwigTheme->addFilter(new \Twig\TwigFilter('date', 'date'));
+    $TwigTheme->addFilter(new \Twig\TwigFilter('bcdiv', 'bcdiv'));
+    $TwigTheme->addFilter(new \Twig\TwigFilter('integer', 'intval'));
+    $TwigTheme->addFilter(new \Twig\TwigFilter('double', 'doubleval'));
+    $TwigTheme->addFilter(new \Twig\TwigFilter('json', 'json_decode'));
+    $TwigTheme->addFilter(new \Twig\TwigFilter('json_encode', 'json_encode'));
+    $TwigTheme->addFilter(new \Twig\TwigFilter('json_decode', 'json_decode'));
+    $TwigTheme->addFilter(new \Twig\TwigFilter('translate', [$Translation, 'fetch']));
+    $TwigTheme->addFilter(new \Twig\TwigFilter('getlang', [new \crisp\api\lists\Languages(), 'getLanguageByCode']));
+    $TwigTheme->addFilter(new \Twig\TwigFilter('truncateText', [new \crisp\api\Helper(), 'truncateText']));
+
+
+    $EnvFile = parse_ini_file(__DIR__ . "/../.env");
+
+
+    $RedisClass = new \crisp\core\Redis();
+    $rateLimiter = new \RateLimit\RedisRateLimiter($RedisClass->getDBConnector());
+
+    if (file_exists(__DIR__ . "/../themes/$CurrentTheme/hook.php")) {
+        require_once __DIR__ . "/../themes/$CurrentTheme/hook.php";
+    }
+
+    if (explode("/", $_GET["route"])[1] === "api") {
+        header('Access-Control-Allow-Origin: *');
+        header("Cache-Control: max-age=600, public, must-revalidate");
+
+
+        if (!isset($_SERVER['HTTP_USER_AGENT']) || empty($_SERVER['HTTP_USER_AGENT']) || $_SERVER['HTTP_USER_AGENT'] == "i am not valid") {
+            http_response_code(403);
+            echo $TwigTheme->render("errors/nginx/403.twig", ["error_msg" => "Request forbidden by administrative rules. Please make sure your request has a User-Agent header"]);
+            exit;
+        }
+
+        $Query = (isset($GLOBALS["route"]->GET["q"]) ? $GLOBALS["route"]->GET["q"] : $GLOBALS["route"]->GET["service"]);
+
+        if (strpos($Query, ".json")) {
+            $Query = substr($Query, 0, -5);
+        }
+
+        if (strlen($Query) === 0) {
+            $Query = "no_query";
+        }
+
+        if (isset(apache_request_headers()["Authorization"]) && !api\Helper::getAPIKey()) {
+            http_response_code(401);
+            echo $TwigTheme->render("errors/nginx/401.twig", ["error_msg" => "Request forbidden by administrative rules. Please make sure your request has a valid Authorization header"]);
+            exit;
+        }
+
+        $Benefit = "Guest";
+        $IndicatorSecond = "s_" . \crisp\api\Helper::getRealIpAddr();
+        $IndicatorHour = "h_" . \crisp\api\Helper::getRealIpAddr();
+        $IndicatorDay = "d_" . \crisp\api\Helper::getRealIpAddr();
+
+
+        $LimitSecond = \RateLimit\Rate::perSecond(15);
+        $LimitHour = \RateLimit\Rate::perHour(1000);
+        $LimitDay = \RateLimit\Rate::perHour(15000);
+
+
+
+        if (CURRENT_UNIVERSE == \crisp\Universe::UNIVERSE_TOSDR || in_array(\crisp\api\Helper::getRealIpAddr(), \crisp\api\Config::get("office_ips"))) {
+
+            $LimitSecond = \RateLimit\Rate::perSecond(15000);
+            $LimitHour = \RateLimit\Rate::perHour(100000);
+            $LimitDay = \RateLimit\Rate::perHour(150000);
+
+            $Benefit = "Staff";
+            if (in_array(\crisp\api\Helper::getRealIpAddr(), \crisp\api\Config::get("office_ips"))) {
+                $Benefit = "Office";
+            }
+        }
+
+        if (api\Helper::getAPIKey()) {
+            $LimitSecond = \RateLimit\Rate::perSecond(150);
+            $LimitHour = \RateLimit\Rate::perHour(10000);
+            $LimitDay = \RateLimit\Rate::perHour(50000);
+            $Benefit = "Partner";
+        }
+
+        $statusSecond = $rateLimiter->limitSilently($IndicatorSecond, $LimitSecond);
+        $statusHour = $rateLimiter->limitSilently($IndicatorHour, $LimitHour);
+        $statusDay = $rateLimiter->limitSilently($IndicatorDay, $LimitDay);
+
+
+        if ($statusSecond->limitExceeded() || $statusHour->limitExceeded() || $statusDay->limitExceeded()) {
+            http_response_code(429);
+            echo $TwigTheme->render("errors/nginx/429.twig", ["error_msg" => "Request forbidden by administrative rules. You are sending too many requests in a certain timeframe."]);
+            exit;
+        }
+
+
+        header("X-CMS-CDN: " . api\Config::get("cdn"));
+        header("X-CMS-SHIELDS: " . api\Config::get("shield_cdn"));
+        header("X-RateLimit-Benefit: " . $Benefit);
+        header("X-RateLimit-S: " . $statusSecond->getRemainingAttempts());
+        header("X-RateLimit-H: " . $statusHour->getRemainingAttempts());
+        header("X-RateLimit-D: " . $statusDay->getRemainingAttempts());
+        header("X-RateLimit-Benefit: " . $Benefit);
+        header("X-CMS-API: " . api\Config::get("api_cdn"));
+
+        core\Themes::loadAPI($TwigTheme, $GLOBALS["route"]->Page, $Query);
+        core\Plugins::loadAPI($GLOBALS["route"]->Page, $QUERY);
+
+
+
+        exit;
+    }
+
+    if (!$GLOBALS["route"]->Language) {
+        header("Location: /$Locale/$CurrentPage");
+        exit;
+    }
+
+    \crisp\core\Plugins::load($TwigTheme, $CurrentFile, $CurrentPage);
+    \crisp\core\Themes::load($TwigTheme, $CurrentFile, $CurrentPage);
+} catch (\crisp\exceptions\BitmaskException $ex) {
+    http_response_code(500);
+    $errorraw = file_get_contents(__DIR__ . "/../themes/emergency/error.html");
     try {
-
-
-        $ThemeLoader = new \Twig\Loader\FilesystemLoader(array(__DIR__ . "/../themes/$CurrentTheme/templates/", __DIR__ . "/../plugins/"));
-        $TwigTheme;
-
-        if (CURRENT_UNIVERSE <= Universe::UNIVERSE_BETA) {
-            if (!$Simple) {
-                $TwigTheme = new \Twig\Environment($ThemeLoader, [
-                    'cache' => __DIR__ . '/cache/'
-                ]);
-            } else {
-                $TwigTheme = new \Twig\Environment($ThemeLoader, [
-                    'cache' => __DIR__ . '/cache/simple/'
-                ]);
-            }
-        } else {
-            $TwigTheme = new \Twig\Environment($ThemeLoader, []);
-        }
-
-
-
-        api\Helper::setLocale();
-        $Locale = \crisp\api\Helper::getLocale();
-
-        if (CURRENT_UNIVERSE >= Universe::UNIVERSE_BETA) {
-            if (isset($_GET["test_theme_component"])) {
-                core\Themes::setThemeMode($_GET["test_theme_component"]);
-            }
-        } else {
-            core\Themes::setThemeMode("0");
-        }
-
-        header("X-CMS-CurrentPage: $CurrentPage");
-        header("X-CMS-Locale: $Locale");
-        header("X-CMS-Universe: " . CURRENT_UNIVERSE);
-        header("X-CMS-Universe-Human: " . CURRENT_UNIVERSE_NAME);
-
-        $TwigTheme->addGlobal("config", \crisp\api\Config::list());
-        $TwigTheme->addGlobal("locale", $Locale);
-        $TwigTheme->addGlobal("languages", \crisp\api\Translation::listLanguages(false));
-        $TwigTheme->addGlobal("GET", $_GET);
-        $TwigTheme->addGlobal("UNIVERSE", CURRENT_UNIVERSE);
-        $TwigTheme->addGlobal("UNIVERSE_NAME", CURRENT_UNIVERSE_NAME);
-        $TwigTheme->addGlobal("CurrentPage", $CurrentPage);
-        $TwigTheme->addGlobal("POST", $_POST);
-        $TwigTheme->addGlobal("SERVER", $_SERVER);
-        $TwigTheme->addGlobal("GLOBALS", $GLOBALS);
-        $TwigTheme->addGlobal("COOKIE", $_COOKIE);
-        $TwigTheme->addGlobal("SIMPLE", $Simple);
-        $TwigTheme->addGlobal("isMobile", \crisp\api\Helper::isMobile());
-        $TwigTheme->addGlobal("URL", api\Helper::currentDomain());
-        $TwigTheme->addGlobal("CLUSTER", gethostname());
-        $TwigTheme->addGlobal("THEME_MODE", \crisp\core\Themes::getThemeMode());
-
-        $TwigTheme->addExtension(new \Twig\Extension\StringLoaderExtension());
-
-        $TwigTheme->addFunction(new \Twig\TwigFunction('getGitRevision', [new \crisp\api\Helper(), 'getGitRevision']));
-        $TwigTheme->addFunction(new \Twig\TwigFunction('getService', [new \crisp\api\Phoenix(), 'getServicePG']));
-        $TwigTheme->addFunction(new \Twig\TwigFunction('getPoint', [new \crisp\api\Phoenix(), 'getPointPG']));
-        $TwigTheme->addFunction(new \Twig\TwigFunction('getPointsByService', [new \crisp\api\Phoenix(), 'getPointsByServicePG']));
-        $TwigTheme->addFunction(new \Twig\TwigFunction('getCase', [new \crisp\api\Phoenix(), 'getCasePG']));
-        $TwigTheme->addFunction(new \Twig\TwigFunction('getGitBranch', [new \crisp\api\Helper(), 'getGitBranch']));
-        $TwigTheme->addFunction(new \Twig\TwigFunction('prettyDump', [new \crisp\api\Helper(), 'prettyDump']));
-        $TwigTheme->addFunction(new \Twig\TwigFunction('microtime', 'microtime'));
-        $TwigTheme->addFunction(new \Twig\TwigFunction('includeResource', [new \crisp\core\Themes(), 'includeResource']));
-        $TwigTheme->addFunction(new \Twig\TwigFunction('generateLink', [new \crisp\api\Helper(), 'generateLink']));
-
-
-        $Translation = new \crisp\api\Translation($Locale);
-
-        $TwigTheme->addFilter(new \Twig\TwigFilter('date', 'date'));
-        $TwigTheme->addFilter(new \Twig\TwigFilter('bcdiv', 'bcdiv'));
-        $TwigTheme->addFilter(new \Twig\TwigFilter('integer', 'intval'));
-        $TwigTheme->addFilter(new \Twig\TwigFilter('double', 'doubleval'));
-        $TwigTheme->addFilter(new \Twig\TwigFilter('json', 'json_decode'));
-        $TwigTheme->addFilter(new \Twig\TwigFilter('json_encode', 'json_encode'));
-        $TwigTheme->addFilter(new \Twig\TwigFilter('json_decode', 'json_decode'));
-        $TwigTheme->addFilter(new \Twig\TwigFilter('translate', [$Translation, 'fetch']));
-        $TwigTheme->addFilter(new \Twig\TwigFilter('getlang', [new \crisp\api\lists\Languages(), 'getLanguageByCode']));
-        $TwigTheme->addFilter(new \Twig\TwigFilter('truncateText', [new \crisp\api\Helper(), 'truncateText']));
-
-
-        $EnvFile = parse_ini_file(__DIR__ . "/../.env");
-
-
-        $RedisClass = new \crisp\core\Redis();
-        $rateLimiter = new \RateLimit\RedisRateLimiter($RedisClass->getDBConnector());
-
-        if (file_exists(__DIR__ . "/../themes/$CurrentTheme/hook.php")) {
-            require_once __DIR__ . "/../themes/$CurrentTheme/hook.php";
-        }
-
-        if (explode("/", $_GET["route"])[1] === "api") {
-            header('Access-Control-Allow-Origin: *');
-            header("Cache-Control: max-age=600, public, must-revalidate");
-
-
-            if (!isset($_SERVER['HTTP_USER_AGENT']) || empty($_SERVER['HTTP_USER_AGENT']) || $_SERVER['HTTP_USER_AGENT'] == "i am not valid") {
-                http_response_code(403);
-                echo $TwigTheme->render("errors/nginx/403.twig", ["error_msg" => "Request forbidden by administrative rules. Please make sure your request has a User-Agent header"]);
-                exit;
-            }
-
-            $Query = (isset($GLOBALS["route"]->GET["q"]) ? $GLOBALS["route"]->GET["q"] : $GLOBALS["route"]->GET["service"]);
-
-            if (strpos($Query, ".json")) {
-                $Query = substr($Query, 0, -5);
-            }
-
-            if (strlen($Query) === 0) {
-                $Query = "no_query";
-            }
-
-            if (isset(apache_request_headers()["Authorization"]) && !api\Helper::getAPIKey()) {
-                http_response_code(401);
-                echo $TwigTheme->render("errors/nginx/401.twig", ["error_msg" => "Request forbidden by administrative rules. Please make sure your request has a valid Authorization header"]);
-                exit;
-            }
-
-            $Benefit = "Guest";
-            $IndicatorSecond = "s_" . \crisp\api\Helper::getRealIpAddr();
-            $IndicatorHour = "h_" . \crisp\api\Helper::getRealIpAddr();
-            $IndicatorDay = "d_" . \crisp\api\Helper::getRealIpAddr();
-
-
-            $LimitSecond = \RateLimit\Rate::perSecond(15);
-            $LimitHour = \RateLimit\Rate::perHour(1000);
-            $LimitDay = \RateLimit\Rate::perHour(15000);
-
-
-
-            if (CURRENT_UNIVERSE == \crisp\Universe::UNIVERSE_TOSDR || in_array(\crisp\api\Helper::getRealIpAddr(), \crisp\api\Config::get("office_ips"))) {
-
-                $LimitSecond = \RateLimit\Rate::perSecond(15000);
-                $LimitHour = \RateLimit\Rate::perHour(100000);
-                $LimitDay = \RateLimit\Rate::perHour(150000);
-
-                $Benefit = "Staff";
-                if (in_array(\crisp\api\Helper::getRealIpAddr(), \crisp\api\Config::get("office_ips"))) {
-                    $Benefit = "Office";
-                }
-            }
-
-            if (api\Helper::getAPIKey()) {
-                $LimitSecond = \RateLimit\Rate::perSecond(150);
-                $LimitHour = \RateLimit\Rate::perHour(10000);
-                $LimitDay = \RateLimit\Rate::perHour(50000);
-                $Benefit = "Partner";
-            }
-
-            $statusSecond = $rateLimiter->limitSilently($IndicatorSecond, $LimitSecond);
-            $statusHour = $rateLimiter->limitSilently($IndicatorHour, $LimitHour);
-            $statusDay = $rateLimiter->limitSilently($IndicatorDay, $LimitDay);
-
-
-            if ($statusSecond->limitExceeded() || $statusHour->limitExceeded() || $statusDay->limitExceeded()) {
-                http_response_code(429);
-                echo $TwigTheme->render("errors/nginx/429.twig", ["error_msg" => "Request forbidden by administrative rules. You are sending too many requests in a certain timeframe."]);
-                exit;
-            }
-
-
-            header("X-CMS-CDN: " . api\Config::get("cdn"));
-            header("X-CMS-SHIELDS: " . api\Config::get("shield_cdn"));
-            header("X-RateLimit-Benefit: " . $Benefit);
-            header("X-RateLimit-S: " . $statusSecond->getRemainingAttempts());
-            header("X-RateLimit-H: " . $statusHour->getRemainingAttempts());
-            header("X-RateLimit-D: " . $statusDay->getRemainingAttempts());
-            header("X-RateLimit-Benefit: " . $Benefit);
-            header("X-CMS-API: " . api\Config::get("api_cdn"));
-
-            core\Themes::loadAPI($TwigTheme, $GLOBALS["route"]->Page, $Query);
-            core\Plugins::loadAPI($GLOBALS["route"]->Page, $QUERY);
-
-
-
-            exit;
-        }
-
-        if (!$GLOBALS["route"]->Language) {
-            header("Location: /$Locale/$CurrentPage");
-            exit;
-        }
-
-        \crisp\core\Plugins::load($TwigTheme, $CurrentFile, $CurrentPage);
-        \crisp\core\Themes::load($TwigTheme, $CurrentFile, $CurrentPage);
+        echo strtr($errorraw, array("{{ exception }}" => api\ErrorReporter::create(500, $ex->getTraceAsString(), $ex->getMessage() . "\n\n" . api\Helper::currentURL(), $ex->getCode() . "_")));
+    } catch (\Exception $ex2) {
+        echo strtr($errorraw, array("{{ exception }}" => $ex->getCode()));
+        exit;
+    }
+} catch (\TypeError | \Exception | \Error | \CompileError | \ParseError | \Throwable $ex) {
+    http_response_code(500);
+    $errorraw = file_get_contents(__DIR__ . "/../themes/emergency/error.html");
+    try {
+        echo strtr($errorraw, array("{{ exception }}" => api\ErrorReporter::create(500, $ex->getTraceAsString(), $ex->getMessage() . "\n\n" . api\Helper::currentURL(), "ca_")));
+        exit;
     } catch (\Exception $ex) {
-
-
-        $TwigTheme = new \Twig\Environment($ThemeLoader, [
-            'cache' => __DIR__ . '/cache/'
-        ]);
-
-
-        http_response_code(500);
-        echo $TwigTheme->render("errors/exception.twig", array(
-            "ReferenceID" => api\ErrorReporter::create(500, $ex->getTraceAsString(), $ex->getMessage() . "\n\n" . api\Helper::currentURL(), "exception_")
-        ));
+        echo strtr($errorraw, array("{{ exception }}" => "An error occurred... reporting the error?!?"));
         exit;
-    } catch (\TypeError $ex) {
-
-
-        $TwigTheme = new \Twig\Environment($ThemeLoader, [
-            'cache' => __DIR__ . '/cache/'
-        ]);
-
-
-        http_response_code(500);
-        echo $TwigTheme->render("errors/exception.twig", array(
-            "ReferenceID" => api\ErrorReporter::create(500, $ex->getTraceAsString(), $ex->getMessage() . "\n\n" . api\Helper::currentURL(), "typeerror_")
-        ));
+    }
+} catch (\Twig\Error\LoaderError $ex) {
+    http_response_code(500);
+    $errorraw = file_get_contents(__DIR__ . "/../themes/emergency/error.html");
+    try {
+        echo strtr($errorraw, array("{{ exception }}" => api\ErrorReporter::create(500, $ex->getTraceAsString(), $ex->getMessage() . "\n\n" . api\Helper::currentURL(), crisp\core\Bitmask::TWIG_ERROR . "_")));
         exit;
-    } catch (\Error $ex) {
-
-
-        $TwigTheme = new \Twig\Environment($ThemeLoader, [
-            'cache' => __DIR__ . '/cache/'
-        ]);
-
-
-        http_response_code(500);
-        echo $TwigTheme->render("errors/exception.twig", array(
-            "ReferenceID" => api\ErrorReporter::create(500, $ex->getTraceAsString(), $ex->getMessage() . "\n\n" . api\Helper::currentURL(), "error_")
-        ));
-        exit;
-    } catch (\CompileError $ex) {
-
-
-        $TwigTheme = new \Twig\Environment($ThemeLoader, [
-            'cache' => __DIR__ . '/cache/'
-        ]);
-
-
-        http_response_code(500);
-        echo $TwigTheme->render("errors/exception.twig", array(
-            "ReferenceID" => api\ErrorReporter::create(500, $ex->getTraceAsString(), $ex->getMessage() . "\n\n" . api\Helper::currentURL(), "compileerror_")
-        ));
-        exit;
-    } catch (\ParseError $ex) {
-
-
-        $TwigTheme = new \Twig\Environment($ThemeLoader, [
-            'cache' => __DIR__ . '/cache/'
-        ]);
-
-
-        http_response_code(500);
-        echo $TwigTheme->render("errors/exception.twig", array(
-            "ReferenceID" => api\ErrorReporter::create(500, $ex->getTraceAsString(), $ex->getMessage() . "\n\n" . api\Helper::currentURL(), "parseerror_")
-        ));
-        exit;
-    } catch (\Throwable $ex) {
-
-
-        $TwigTheme = new \Twig\Environment($ThemeLoader, [
-            'cache' => __DIR__ . '/cache/'
-        ]);
-
-
-        http_response_code(500);
-        echo $TwigTheme->render("errors/exception.twig", array(
-            "ReferenceID" => api\ErrorReporter::create(500, $ex->getTraceAsString(), $ex->getMessage() . "\n\n" . api\Helper::currentURL(), "throwable_")
-        ));
-        exit;
-    } catch (\Twig\Error\LoaderError $ex) {
-        $Error = api\ErrorReporter::create(500, $ex->getTraceAsString(), $ex->getMessage() . "\n\n" . api\Helper::currentURL(), "twigerror_");
-        echo "Thats a twig error, cant even show a proper error page! Reference ID: $Error";
+    } catch (\Exception $ex) {
+        echo strtr($errorraw, array("{{ exception }}" => "An error occurred... reporting the error?!?"));
         exit;
     }
 }

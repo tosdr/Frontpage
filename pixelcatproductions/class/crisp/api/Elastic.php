@@ -1,6 +1,6 @@
 <?php
 
-/* 
+/*
  * Copyright (C) 2021 Justin René Back <justin@tosdr.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 
 namespace crisp\api;
 
@@ -36,6 +35,15 @@ class Elastic {
         curl_setopt($ch, CURLOPT_URL, $this->Elastic_URI . "/" . $this->Elastic_Index . "/_search?q=*" . urlencode($Query) . "*");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         $output = curl_exec($ch);
+        if (Helper::startsWith(curl_getinfo($ch, CURLINFO_HTTP_CODE), "5")) {
+            throw new \crisp\exceptions\BitmaskException(curl_getinfo($ch, CURLINFO_HTTP_CODE), \crisp\core\Bitmask::ELASTIC_CONN_ERROR);
+        }
+        if (curl_getinfo($ch, CURLINFO_HTTP_CODE) !== 200) {
+            throw new \crisp\exceptions\BitmaskException(curl_getinfo($ch, CURLINFO_HTTP_CODE), \crisp\core\Bitmask::ELASTIC_QUERY_MALFORMED);
+        }
+        if (!$output) {
+            throw new \crisp\exceptions\BitmaskException(curl_error($ch), \crisp\core\Bitmask::ELASTIC_CONN_ERROR);
+        }
         curl_close($ch);
         return json_decode($output)->hits;
     }

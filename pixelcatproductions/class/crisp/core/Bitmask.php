@@ -57,6 +57,7 @@ class Bitmask {
     public const REDIS_CONN_ERROR = 0x1000000;
     public const REDIS_QUERY_MALFORMED = 0x2000000;
     public const TWIG_ERROR = 0x4000000;
+    public const PLUGIN_MISSING_INCLUDES = 0x8000000;
 
     public static function hasBitmask(int $BitwisePermissions, int $PermissionFlag = 0x00000000) {
         if (!is_numeric($BitwisePermissions)) {

@@ -1,6 +1,6 @@
 <?php
 
-/* 
+/*
  * Copyright (C) 2021 Justin René Back <justin@tosdr.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 
 namespace crisp\core;
 
@@ -72,7 +71,7 @@ class Plugin {
                 unset($_vars);
             }
         } else {
-            throw new \Exception("Plugin <b>" . $this->PluginName . "</b> failed to load due to a missing includes file");
+            throw new \crisp\exceptions\BitmaskException("Plugin <b>" . $this->PluginName . "</b> failed to load due to a missing includes file", Bitmask::PLUGIN_MISSING_INCLUDES);
         }
     }
 

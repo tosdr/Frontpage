@@ -1,6 +1,6 @@
 <?php
 
-/* 
+/*
  * Copyright (C) 2021 Justin René Back <justin@tosdr.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 
 namespace crisp\core;
 
@@ -51,6 +50,12 @@ class Bitmask {
     public const GENERIC_ERROR = 0x20000;
     public const SERVICE_DUPLICATE = 0x40000;
     public const INVALID_SUBNET = 0x80000;
+    public const POSTGRES_CONN_ERROR = 0x100000;
+    public const POSTGRES_QUERY_MALFORMED = 0x200000;
+    public const ELASTIC_CONN_ERROR = 0x400000;
+    public const ELASTIC_QUERY_MALFORMED = 0x800000;
+    public const REDIS_CONN_ERROR = 0x1000000;
+    public const REDIS_QUERY_MALFORMED = 0x2000000;
 
     public static function hasBitmask(int $BitwisePermissions, int $PermissionFlag = 0x00000000) {
         if (!is_numeric($BitwisePermissions)) {

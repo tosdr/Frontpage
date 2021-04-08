@@ -1,6 +1,6 @@
 <?php
 
-/* 
+/*
  * Copyright (C) 2021 Justin René Back <justin@tosdr.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,7 +17,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 namespace crisp\core;
 
 /**
@@ -26,47 +25,43 @@ namespace crisp\core;
  */
 class Postgres {
 
-  private $Database_Connection;
+    private $Database_Connection;
 
-  /**
-   * Constructs the Database_Connection
-   * @see getDBConnector
-   */
-  public function __construct() {
-    if (isset($_GET["simulate_heroku_kill"])) {
-      throw new \Exception("Failed to contact edit.tosdr.org");
+    /**
+     * Constructs the Database_Connection
+     * @see getDBConnector
+     */
+    public function __construct() {
+        $EnvFile = parse_ini_file(__DIR__ . "/../../../../.env");
+
+        $db = "";
+        if (isset($EnvFile["POSTGRES_URI"]) && !empty($EnvFile["POSTGRES_URI"])) {
+            $db = parse_url($EnvFile["POSTGRES_URI"]);
+        } else {
+            $db = parse_url(\crisp\api\Config::get("plugin_heroku_database_uri"));
+        }
+
+        try {
+            $pdo = new \PDO("pgsql:" . sprintf(
+                            "host=%s;port=%s;user=%s;password=%s;dbname=%s",
+                            $db["host"],
+                            $db["port"],
+                            $db["user"],
+                            $db["pass"],
+                            ltrim($db["path"], "/")
+            ));
+            $this->Database_Connection = $pdo;
+        } catch (\Exception $ex) {
+            throw new \crisp\exceptions\BitmaskException($ex, Bitmask::POSTGRES_CONN_ERROR);
+        }
     }
 
-    $EnvFile = parse_ini_file(__DIR__ . "/../../../../.env");
-
-    $db = "";
-    if (isset($EnvFile["POSTGRES_URI"]) && !empty($EnvFile["POSTGRES_URI"])) {
-      $db = parse_url($EnvFile["POSTGRES_URI"]);
-    } else {
-      $db = parse_url(\crisp\api\Config::get("plugin_heroku_database_uri"));
+    /**
+     * Get the database connector
+     * @return \PDO
+     */
+    public function getDBConnector() {
+        return $this->Database_Connection;
     }
-
-    try {
-      $pdo = new \PDO("pgsql:" . sprintf(
-                      "host=%s;port=%s;user=%s;password=%s;dbname=%s",
-                      $db["host"],
-                      $db["port"],
-                      $db["user"],
-                      $db["pass"],
-                      ltrim($db["path"], "/")
-      ));
-      $this->Database_Connection = $pdo;
-    } catch (\Exception $ex) {
-      throw new \Exception($ex);
-    }
-  }
-
-  /**
-   * Get the database connector
-   * @return \PDO
-   */
-  public function getDBConnector() {
-    return $this->Database_Connection;
-  }
 
 }

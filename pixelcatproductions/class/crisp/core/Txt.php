@@ -39,6 +39,7 @@ class Txt {
                                 ]), Bitmask::QUERY_FAILED);
                     }
                 }
+                $DocumentExploded[$key] = preg_replace("/\#.+/", "", $line);
             }
 
             foreach (self::ALLOWED_KEYS as $allowedKey) {
@@ -46,6 +47,7 @@ class Txt {
                     continue 2;
                 }
             }
+
             unset($DocumentExploded[$key]);
         }
 
@@ -87,7 +89,7 @@ class Txt {
         }
 
         $parsed["Domains"] = $dmarray;
-        
+
         unset($DocumentExploded[$domainLine]);
 
         /* End Domains */
@@ -99,27 +101,22 @@ class Txt {
 
 
         if ($idLine !== -1 && $url !== false) {
-            $ID = explode(",", explode(":", $DocumentExploded[$idLine])[1]);
-            $_services = [];
-            foreach ($ID as $Key) {
-                $Service = \crisp\api\Phoenix::getServicePG($Key)["_source"];
-                if (!$Service) {
-                    continue;
-                }
+            $ID = explode(":", $DocumentExploded[$idLine])[1];
+            $Service = \crisp\api\Phoenix::getServicePG($ID)["_source"];
+            if ($Service) {
 
                 foreach (explode(",", $Service["url"]) as $_url) {
-                    if (!in_array($_url, $url)) {
-                        continue;
+                    if (in_array($_url, $url)) {
+                        $parsed["ID"] = $Service;
+                        break;
                     }
                 }
-
-                $_services[] = $Service;
             }
-
-            $parsed["ID"] = $_services;
-
             unset($DocumentExploded[$idLine]);
         }
+
+
+
 
         /* End URL */
 

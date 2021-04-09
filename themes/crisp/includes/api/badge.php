@@ -62,7 +62,7 @@ if (!is_numeric($ServiceName)) {
 }
 
 
-switch ($RedisData["is_comprehensively_reviewed"] ? ($RedisData["rating"]) : false) {
+switch ($RedisData["_source"]["is_comprehensively_reviewed"] ? ($RedisData["_source"]["rating"]) : false) {
     case "A":
         $Color = "46A546";
         $Rating = $Translations->fetch("badges.grade.a");

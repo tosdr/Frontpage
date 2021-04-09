@@ -1,6 +1,6 @@
 <?php
 
-/* 
+/*
  * Copyright (C) 2021 Justin René Back <justin@tosdr.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
@@ -58,14 +57,11 @@ if (isset($_POST["approve"]) && !empty($_POST["approve"])) {
     $Domains = $_request["domains"];
     $Wikipedia = $_request["wikipedia"];
     $Documents = json_decode($_request["documents"], true);
-    $service_id;
-    $newstatement = $Phoenix->getDBConnector()->prepare("INSERT INTO services (name, url, wikipedia, created_at, updated_at) VALUES (:name, :url, :wikipedia, NOW(), NOW())");
+    $service_id = \crisp\api\Phoenix::createService($Name, $Domains, $Wikipedia, $User->UserID);
 
-    if ($newstatement->execute([":name" => $Name, ":url" => $Domains, ":wikipedia" => $Wikipedia])) {
-        $service_id = $Phoenix->getDBConnector()->lastInsertId();
+    if ($service_id !== false) {
         foreach ($Documents as $Document) {
-            $newstatementdoc = $Phoenix->getDBConnector()->prepare("INSERT INTO documents (name, url, xpath, created_at, updated_at, service_id) VALUES (:name, :url, :xpath, NOW(), NOW(), :service_id)");
-            $newstatementdoc->execute([":name" => $Document["name"], ":url" => $Document["url"], ":xpath" => $Document["xpath"], ":service_id" => $service_id]);
+            \crisp\api\Phoenix::createDocument($Document["name"], $Document["url"], $Document["xpath"], $service_id, $User->UserID);
         }
 
         $request = $Mysql->getDBConnector()->prepare("DELETE FROM service_requests WHERE id = :id;");

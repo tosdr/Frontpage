@@ -1,6 +1,6 @@
 <?php
 
-/* 
+/*
  * Copyright (C) 2021 Justin René Back <justin@tosdr.org>
  *
  * This program is free software; you can redistribute it and/or
@@ -17,8 +17,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-
-
 
 namespace crisp\api;
 
@@ -588,7 +586,7 @@ class Phoenix {
      * @return array
      */
     public static function getServiceByNamePG(string $Name) {
-        if (self::$Postgres_Database_Connection === NULL) {
+        if (self::$Redis_Database_Connection === NULL) {
             self::initDB();
         }
 
@@ -625,7 +623,7 @@ class Phoenix {
      * @return bool
      */
     public static function serviceExistsBySlugPG(string $Name) {
-        if (self::$Postgres_Database_Connection === NULL) {
+        if (self::$Redis_Database_Connection === NULL) {
             self::initDB();
         }
 
@@ -649,12 +647,95 @@ class Phoenix {
     }
 
     /**
+     * Create a service on phoenix
+     * @return bool
+     */
+    public static function createService(string $Name, string $Url, string $Wikipedia, string $User) {
+        if (self::$Postgres_Database_Connection === NULL) {
+            self::initPGDB();
+        }
+
+        if (self::serviceExistsByNamePG($Name)) {
+            return false;
+        }
+
+        $statement = self::$Postgres_Database_Connection->prepare("INSERT INTO services (name, url, wikipedia, created_at, updated_at) VALUES (:name, :url, :wikipedia, NOW(), NOW())");
+
+        $statement->execute([":name" => $Name, ":url" => $Url, ":wikipedia" => $Wikipedia]);
+
+        $service_id = self::$Postgres_Database_Connection->lastInsertId();
+
+        $Result = ($statement->rowCount() > 0 ? true : false);
+
+        if ($Result) {
+            self::createVersion("Service", $service_id, "create", "Created service", $User, null);
+            return $service_id;
+        }
+
+        return false;
+    }
+
+    /**
+     * Create a version on phoenix
+     * @return bool
+     */
+    public static function createDocument(string $Name, string $Url, string $Xpath, string $Service, string $User) {
+        if (self::$Postgres_Database_Connection === NULL) {
+            self::initPGDB();
+        }
+
+        if (!self::serviceExistsPG($Service)) {
+            return false;
+        }
+
+        $statement = self::$Postgres_Database_Connection->prepare("INSERT INTO documents (name, url, xpath, created_at, updated_at, service_id) VALUES (:name, :url, :xpath, NOW(), NOW(), :service_id)");
+
+        $statement->execute([":name" => $Name, ":url" => $Url, ":xpath" => $Xpath, ":service_id" => $Service]);
+
+        $Result = ($statement->rowCount() > 0 ? true : false);
+
+        $document_id = self::$Postgres_Database_Connection->lastInsertId();
+
+        if ($Result) {
+            self::createVersion("Document", $document_id, "create", "Created document", $User, null);
+            return $document_id;
+        }
+
+        return false;
+    }
+
+    /**
+     * Create a document on phoenix
+     * @return bool
+     */
+    public static function createVersion(string $itemType, string $itemId, string $event, string $objectChanges = null, string $whodunnit, string $object = null) {
+        if (self::$Postgres_Database_Connection === NULL) {
+            self::initPGDB();
+        }
+
+        $statement = self::$Postgres_Database_Connection->prepare("INSERT INTO versions (item_type, item_id, event, created_at, object_changes, whodunnit, object) VALUES (:item_type, :item_id, :event, NOW(), :object_changes, :whodunnit, :object)");
+
+        $statement->execute([
+            ":item_type" => $itemType,
+            ":item_id" => $itemId,
+            ":event" => $event,
+            ":object_changes" => $objectChanges,
+            ":whodunnit" => $whodunnit,
+            ":object" => $object
+        ]);
+
+        $Result = ($statement->rowCount() > 0 ? true : false);
+
+        return $Result;
+    }
+
+    /**
      * Check if a service exists from postgres via name
      * @param string $Name The name of the service
      * @return bool
      */
     public static function serviceExistsByNamePG(string $Name) {
-        if (self::$Postgres_Database_Connection === NULL) {
+        if (self::$Redis_Database_Connection === NULL) {
             self::initDB();
         }
 

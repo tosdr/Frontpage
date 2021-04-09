@@ -103,15 +103,10 @@ class Txt {
         if ($idLine !== -1 && $url !== false) {
             $ID = explode(":", $DocumentExploded[$idLine])[1];
             $Service = \crisp\api\Phoenix::getServicePG($ID)["_source"];
-            if ($Service) {
-
-                foreach (explode(",", $Service["url"]) as $_url) {
-                    if (in_array($_url, $url)) {
-                        $parsed["ID"] = $Service;
-                        break;
-                    }
-                }
+            if ($Service && in_array($url, explode(",", $Service["url"]))) {
+                $parsed["ID"] = $Service;
             }
+
             unset($DocumentExploded[$idLine]);
         }
 

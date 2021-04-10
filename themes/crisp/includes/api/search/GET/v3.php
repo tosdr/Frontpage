@@ -17,10 +17,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-switch ($_SERVER["REQUEST_METHOD"]) {
-    case "GET":
-        require_once __DIR__ . '/GET/v1.php';
-        break;
-    default:
-        echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::NOT_IMPLEMENTED, "Invalid Request Method", [], null, 405);
+$inputQuery = $_GET["query"] ?? $inputQuery;
+$ES = new \crisp\api\Elastic();
+
+if (!$inputQuery || $inputQuery === null) {
+    echo \crisp\core\PluginAPI::response(\crisp\core\Bitmask::QUERY_FAILED, "Missing query", array(
+        "services" => array(),
+        "grid" => null
+    ));
+    exit;
 }
+
+$services = $ES->search($inputQuery);
+
+echo \crisp\core\PluginAPI::response(\crisp\core\Bitmask::REQUEST_SUCCESS, $inputQuery, array(
+    "services" => $services,
+    "grid" => $this->TwigTheme->render("components/servicegrid/grid.twig", array("Services" => $services->hits, "columns" => 2))
+));
+

@@ -1,6 +1,6 @@
 <?php
 
-/* 
+/*
  * Copyright (C) 2021 Justin René Back <justin@tosdr.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,29 +17,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-$inputQuery = $_GET["query"] ?? $inputQuery;
-
-if (empty($inputQuery) || !isset($inputQuery)) {
-    echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::QUERY_FAILED + \crisp\core\Bitmask::VERSION_DEPRECATED, "Empty request", (array(
-        "results" => 0,
-        "service" => []
-    )));
-    exit;
+switch ($_SERVER["REQUEST_METHOD"]) {
+    case "GET":
+        require_once __DIR__ . '/GET/v2.php';
+        break;
+    default:
+        echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::NOT_IMPLEMENTED, "Invalid Request Method", [], null, 405);
 }
-
-
-foreach (crisp\api\Phoenix::searchServiceByNamePG(strtolower($inputQuery)) as $Service) {
-    $Array[] = $Service;
-}
-
-if (count($Array) > 0) {
-    echo \crisp\core\PluginAPI::response(\crisp\core\Bitmask::REQUEST_SUCCESS + \crisp\core\Bitmask::VERSION_DEPRECATED, $inputQuery, (array(
-        "results" => count($Array),
-        "service" => $Array
-    )));
-    exit;
-}
-echo \crisp\core\PluginAPI::response(\crisp\core\Bitmask::REQUEST_SUCCESS + crisp\core\Bitmask::QUERY_FAILED + \crisp\core\Bitmask::VERSION_DEPRECATED, $inputQuery, (array(
-    "results" => count($Array),
-    "service" => $Array
-)));

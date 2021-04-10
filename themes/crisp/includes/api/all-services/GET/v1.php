@@ -1,6 +1,6 @@
 <?php
 
-/*
+/* 
  * Copyright (C) 2021 Justin René Back <justin@tosdr.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,10 +17,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-switch ($_SERVER["REQUEST_METHOD"]) {
-    case "GET":
-        require_once __DIR__ . '/GET/v1.php';
-        break;
-    default:
-        echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::NOT_IMPLEMENTED, "Invalid Request Method", [], null, 405);
+$Services = \crisp\api\Phoenix::getServicesPG();
+$Response = array(
+    "version" => time(),
+);
+foreach ($Services as $Index => $Service) {
+
+    $Service["urls"] = explode(",", $Service["url"]);
+    $Service["logo"] = \crisp\api\Config::get("s3_logos") . "/" . $Service["id"] . ".png";
+
+    $Services[$Index] = $Service;
 }
+
+$Response["services"] = $Services;
+
+echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::REQUEST_SUCCESS, "All services below", $Response);

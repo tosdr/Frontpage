@@ -1,6 +1,6 @@
 <?php
 
-/* 
+/*
  * Copyright (C) 2021 Justin René Back <justin@tosdr.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,21 +17,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-$inputQuery = $_GET["query"] ?? $inputQuery;
-$ES = new \crisp\api\Elastic();
-
-if (!$inputQuery || $inputQuery === null) {
-    echo \crisp\core\PluginAPI::response(\crisp\core\Bitmask::QUERY_FAILED, "Missing query", array(
-        "services" => array(),
-        "grid" => null
-    ));
-    exit;
+switch ($_SERVER["REQUEST_METHOD"]) {
+    case "GET":
+        require_once __DIR__ . '/GET/v3.php';
+        break;
+    default:
+        echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::NOT_IMPLEMENTED, "Invalid Request Method", [], null, 405);
 }
-
-$services = $ES->search($inputQuery);
-
-echo \crisp\core\PluginAPI::response(\crisp\core\Bitmask::REQUEST_SUCCESS, $inputQuery, array(
-    "services" => $services,
-    "grid" => $this->TwigTheme->render("components/servicegrid/grid.twig", array("Services" => $services->hits, "columns" => 2))
-));
-

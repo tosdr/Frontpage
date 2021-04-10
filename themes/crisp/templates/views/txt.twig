@@ -26,6 +26,18 @@
     <!-- 20x000032 -->
     {{ include("components/navbar.twig") }}
 
+    <style>
+        pre code {
+            display: block;
+            background: none;
+            white-space: pre;
+            -webkit-overflow-scrolling: touch;
+            overflow-x: scroll;
+            max-width: 100%;
+            min-width: 100px;
+            padding: 0;
+        }
+    </style>
     <div class="jumbotron" id="api">
         <div><h1>{{ 'views.txt.title'|translate }}</h1></div>
         <p>
@@ -54,8 +66,13 @@
                     {{ 'views.txt.card.results.header'|translate }}
                 </div>
                 <div class="card-body">
-                    <pre id="result">
-
+                    <h5>{{ 'views.txt.card.results.failed_validations.h5'|translate }}</h5>
+                    <pre>
+                        <code id="failed_validations" style="color: red;"></code>
+                    </pre>
+                    <h5>{{ 'views.txt.card.results.result.h5'|translate }}</h5>
+                    <pre>
+                        <code id="result"></code>
                     </pre>
                 </div>
             </div>
@@ -69,7 +86,7 @@
     <script>
         let domainIterator = 0;
         $(document).ready(function () {
-
+            hljs.highlightAll();
             $("form").on('submit', function (e) {
                 $("#service_domain").removeClass("is-invalid");
                 $("#service_domain").removeClass("is-valid");
@@ -81,7 +98,8 @@
                         $("#service_domain").addClass("is-invalid");
                     }
                     if (result.error & 0x100) {
-                        $("#result").html(result.message);
+                        $("#result").html(result.parameters.results);
+                        $("#failed_validations").html(result.parameters.failed_validations);
                         $("#resultcard").show();
                     }
                 });

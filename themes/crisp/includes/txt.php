@@ -68,6 +68,9 @@ if (isset($_POST["domain"])) {
         exit;
     }
 
-    echo crisp\core\PluginAPI::response(crisp\core\Bitmask::REQUEST_SUCCESS, var_export($parsed, true));
+    echo crisp\core\PluginAPI::response(crisp\core\Bitmask::REQUEST_SUCCESS, "OK", array(
+        "results" => var_export($parsed["results"], true),
+        "failed_validations" => var_export($parsed["failed_validations"], true)
+    ));
     exit;
 }

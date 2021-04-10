@@ -25,7 +25,11 @@ class Txt {
 
     public static function parse($Document, $url = false) {
         $parsed = array();
+        $failed = array();
         $DocumentExploded = explode("\n", $Document);
+
+
+
         foreach ($DocumentExploded as $key => $line) {
 
             if (!empty($line)) {
@@ -43,6 +47,7 @@ class Txt {
             }
 
             foreach (self::ALLOWED_KEYS as $allowedKey) {
+
                 if (strpos($line, "$allowedKey:") !== false) {
                     continue 2;
                 }
@@ -51,139 +56,179 @@ class Txt {
             unset($DocumentExploded[$key]);
         }
 
+        // Duplicate keys check
+
+        $_doctmp = implode("\n", $DocumentExploded);
+        foreach (self::ALLOWED_KEYS as $allowedKey) {
+            if (substr_count($_doctmp, "$allowedKey:") === 1) {
+                continue;
+            } else {
+                if (substr_count($_doctmp, "$allowedKey:") > 1) {
+                    if ($allowedKey === "Document-Name" || $allowedKey === "Url" || $allowedKey === "Path") {
+                        continue;
+                    }
+                    $failed["duplicate_keys"][] = $allowedKey;
+                }
+            }
+        }
+
 
 
         /* Domains */
 
-        $domainLine = getLineWithString($DocumentExploded, "Domains:");
+        if (!is_numeric(array_search("Domains", $failed["duplicate_keys"]))) {
 
-        if ($domainLine === -1) {
-            throw new \crisp\exceptions\BitmaskException(\crisp\api\Translation::fetch("views.txt.errors.invalid_line", 1, [
-                        "{{ line }}" => -1,
-                        "{{ expected }}" => "Domains",
-                        "{{ got }}" => "Nothing"
-                    ]), Bitmask::QUERY_FAILED);
-        }
+            $domainLine = getLineWithString($DocumentExploded, "Domains:");
+
+            if ($domainLine === -1) {
+                $failed["missing_domain_list"] = true;
+            } else {
 
 
-        $dmarray = array();
+                $dmarray = array();
 
-        $domains = explode(",", explode(":", $DocumentExploded[$domainLine])[1]);
+                $explodedDomains = explode(":", $DocumentExploded[$domainLine]);
 
-        $domainRegex = '/^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]$/';
-        foreach ($domains as $domain) {
+                array_shift($explodedDomains);
 
-            if (empty(trim($domain))) {
-                throw new \crisp\exceptions\BitmaskException(\crisp\api\Translation::fetch("views.txt.errors.invalid_domain_list", 1, [
-                            "{{ domain }}" => trim($domain),
-                        ]), Bitmask::QUERY_FAILED);
+                $domains = explode(",", implode(":", $explodedDomains));
+
+                $domainRegex = '/^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]$/';
+                foreach ($domains as $domain) {
+
+                    if (empty(trim($domain))) {
+                        $failed["invalid_domain_list"][] = trim($domain);
+                    } else if (preg_match($domainRegex, trim($domain))) {
+                        $dmarray[] = trim($domain);
+                        continue;
+                    }
+
+                    $failed["invalid_domain_list"][] = trim($domain);
+                    //throw new \crisp\exceptions\BitmaskException(\crisp\api\Translation::fetch("views.txt.errors.invalid_domain_list", 1, [
+                    //            "{{ domain }}" => trim($domain),
+                    //        ]), Bitmask::QUERY_FAILED);
+                }
+
+                $parsed["Domains"] = $dmarray;
+
+                unset($DocumentExploded[$domainLine]);
             }
-
-            if (preg_match($domainRegex, trim($domain))) {
-                $dmarray[] = trim($domain);
-                continue;
-            }
-            throw new \crisp\exceptions\BitmaskException(\crisp\api\Translation::fetch("views.txt.errors.invalid_domain_list", 1, [
-                        "{{ domain }}" => trim($domain),
-                    ]), Bitmask::QUERY_FAILED);
         }
-
-        $parsed["Domains"] = $dmarray;
-
-        unset($DocumentExploded[$domainLine]);
 
         /* End Domains */
 
 
         /* ID */
 
-        $idLine = getLineWithString($DocumentExploded, "ID:");
+        if (!is_numeric(array_search("Domains", $failed["duplicate_keys"])) && !is_numeric(array_search("ID", $failed["duplicate_keys"]))) {
+
+            $idLine = getLineWithString($DocumentExploded, "ID:");
 
 
-        if ($idLine !== -1 && $url !== false) {
-            $ID = explode(":", $DocumentExploded[$idLine])[1];
-            $Service = \crisp\api\Phoenix::getServicePG($ID)["_source"];
-            if ($Service && in_array($url, explode(",", $Service["url"]))) {
-                $parsed["ID"] = $Service;
+            if ($idLine !== -1 && $url !== false) {
+                $explodedID = explode(":", $DocumentExploded[$idLine]);
+                array_shift($explodedID);
+                $ID = trim(implode(":", $explodedID));
+
+                if (!is_numeric($ID)) {
+                    $failed["id_not_numeric"][] = trim($ID);
+                }
+                if ($ID < 1) {
+                    $failed["id_invalid"][] = trim($ID);
+                }
+
+
+                if (count($failed["id_not_numeric"]) === 0) {
+                    $Service = \crisp\api\Phoenix::getServicePG($ID)["_source"];
+                    if ($Service && in_array($url, explode(",", $Service["url"]))) {
+                        $parsed["ID"] = $Service;
+                    } else {
+                        $failed["id_no_match_domains"][] = trim($url);
+                    }
+                }
+
+                unset($DocumentExploded[$idLine]);
             }
-
-            unset($DocumentExploded[$idLine]);
         }
 
 
 
-
-        /* End URL */
+        /* End ID */
 
 
         /* Documents */
 
         $countDocuments = substr_count($Document, "Document-Name:");
-        for ($i = 0; $i < $countDocuments; $i++) {
 
-            $firstDocumentLine = getLineWithString($DocumentExploded, "Document-Name:");
+        if ($countDocuments === 0) {
+            $failed["missing_documents"] = -1;
+        } else {
 
-            if ($firstDocumentLine === -1) {
-                throw new \crisp\exceptions\BitmaskException(\crisp\api\Translation::fetch("views.txt.errors.invalid_line", 1, [
-                            "{{ line }}" => -1,
-                            "{{ expected }}" => "Document-Name",
-                            "{{ got }}" => "Nothing"
-                        ]), crisp\core\Bitmask::QUERY_FAILED);
+            for ($i = 0; $i < $countDocuments; $i++) {
+
+                $firstDocumentLine = getLineWithString($DocumentExploded, "Document-Name:");
+
+                if ($firstDocumentLine === -1) {
+                    $failed["missing_document_name"][] = -1;
+                } else {
+
+
+                    $documentName = explode(":", $DocumentExploded[$firstDocumentLine]);
+                    $documentUrl = explode(":", $DocumentExploded[$firstDocumentLine + 1]);
+                    $documentPath = explode(":", $DocumentExploded[$firstDocumentLine + 2]);
+
+                    #array_shift($DocumentExploded);
+                    #array_shift($DocumentExploded);
+                    #array_shift($DocumentExploded);
+
+
+                    unset($DocumentExploded[$firstDocumentLine]);
+                    unset($DocumentExploded[$firstDocumentLine + 1]);
+                    unset($DocumentExploded[$firstDocumentLine + 2]);
+
+                    if ($documentName[0] !== "Document-Name") {
+                        $failed["missing_document_name"][] = array(
+                            "line" => $firstDocumentLine + 1,
+                            "expected" => "Document-Name",
+                            "got" => $documentName[0]
+                        );
+                    } else {
+                        array_shift($documentName);
+                    }
+                    if ($documentUrl[0] !== "Url") {
+                        $failed["missing_document_url"][] = array(
+                            "line" => $firstDocumentLine + 2,
+                            "expected" => "Url",
+                            "got" => $documentUrl[0]
+                        );
+                    } else {
+                        array_shift($documentUrl);
+                    }
+
+                    if ($documentPath[0] !== "Path") {
+                        $failed["missing_document_path"][] = array(
+                            "line" => $firstDocumentLine + 3,
+                            "expected" => "Path",
+                            "got" => $documentUrl[0]
+                        );
+                    } else {
+                        array_shift($documentPath);
+                    }
+
+                    $_array = array();
+
+
+                    $_array["Name"] = trim(implode(":", $documentName));
+                    $_array["Url"] = trim(implode(":", $documentUrl));
+                    $_array["Path"] = trim(implode(":", $documentPath));
+
+                    $parsed["Documents"][] = $_array;
+                }
             }
-
-
-            $documentName = explode(":", $DocumentExploded[$firstDocumentLine]);
-            $documentUrl = explode(":", $DocumentExploded[$firstDocumentLine + 1]);
-            $documentPath = explode(":", $DocumentExploded[$firstDocumentLine + 2]);
-
-            #array_shift($DocumentExploded);
-            #array_shift($DocumentExploded);
-            #array_shift($DocumentExploded);
-
-
-            unset($DocumentExploded[$firstDocumentLine]);
-            unset($DocumentExploded[$firstDocumentLine + 1]);
-            unset($DocumentExploded[$firstDocumentLine + 2]);
-
-            if ($documentName[0] !== "Document-Name") {
-                throw new \crisp\exceptions\BitmaskException(\crisp\api\Translation::fetch("views.txt.errors.invalid_line", 1, [
-                            "{{ line }}" => $firstDocumentLine + 1,
-                            "{{ expected }}" => "Document-Name",
-                            "{{ got }}" => $documentName[0]
-                        ]), Bitmask::QUERY_FAILED);
-            }
-
-            if ($documentUrl[0] !== "Url") {
-                throw new \crisp\exceptions\BitmaskException(\crisp\api\Translation::fetch("views.txt.errors.invalid_line", 1, [
-                            "{{ line }}" => $firstDocumentLine + 2,
-                            "{{ expected }}" => "Url",
-                            "{{ got }}" => $documentUrl[0]
-                        ]), Bitmask::QUERY_FAILED);
-            }
-
-            if ($documentPath[0] !== "Path") {
-                throw new \crisp\exceptions\BitmaskException(\crisp\api\Translation::fetch("views.txt.errors.invalid_line", 1, [
-                            "{{ line }}" => $firstDocumentLine + 3,
-                            "{{ expected }}" => "Path",
-                            "{{ got }}" => $documentPath[0]
-                        ]), Bitmask::QUERY_FAILED);
-            }
-
-            $_array = array();
-
-            array_shift($documentName);
-            array_shift($documentUrl);
-            array_shift($documentPath);
-
-            $_array["Name"] = trim(implode(":", $documentName));
-            $_array["Url"] = trim(implode(":", $documentUrl));
-            $_array["Path"] = trim(implode(":", $documentPath));
-
-            $parsed["Documents"][] = $_array;
         }
         /* End Documents */
 
-        return $parsed;
+        return array("results" => $parsed, "failed_validations" => $failed);
     }
 
 }

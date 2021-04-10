@@ -1,6 +1,6 @@
 <?php
 
-/* 
+/*
  * Copyright (C) 2021 Justin René Back <justin@tosdr.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -29,9 +29,7 @@ $Response = array(
 foreach ($Services as $Index => $Service) {
 
     $Service["urls"] = explode(",", $Service["url"]);
-    $Service["nice_service"] = \crisp\api\Helper::filterAlphaNum($Service["name"]);
-    $Service["has_image"] = (file_exists(__DIR__ . "/../" . \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") . "/img/logo/" . $Service["nice_service"] . ".svg") ? true : file_exists(__DIR__ . "/../" . \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") . "/img/logo/" . $Service["nice_service"] . ".png") );
-    $Service["logo"] = crisp\core\Themes::includeResource("img/logo/" . \crisp\api\Helper::filterAlphaNum($Service["name"]) . ".png");
+    $Service["logo"] = \crisp\api\Config::get("s3_logos") . "/" . $Service["id"] . ".png";
 
     $Services[$Index] = $Service;
 }

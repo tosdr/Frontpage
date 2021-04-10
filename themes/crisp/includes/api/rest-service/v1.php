@@ -25,7 +25,6 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
             return;
         }
         $_GET["service"] ?? $this->Query = crisp\api\Phoenix::getServiceBySlugPG($_GET["service"] ?? $this->Query)["id"];
-        $SkeletonData = \crisp\api\Phoenix::generateApiFiles($_GET["service"] ?? $this->Query);
         echo \crisp\core\PluginAPI::response(\crisp\core\Bitmask::REQUEST_SUCCESS, $_GET["service"] ?? $this->Query, \crisp\api\Phoenix::generateApiFiles($_GET["service"] ?? $this->Query, "3"));
         exit;
     }

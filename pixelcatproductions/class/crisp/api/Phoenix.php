@@ -142,7 +142,7 @@ class Phoenix {
                     );
                 }
 
-                $SkeletonData = $service;
+                $SkeletonData = $service["_source"];
 
                 $SkeletonData["image"] = \crisp\api\Config::get("s3_logos") . "/" . $service["_source"]["image"];
                 $SkeletonData["documents"] = $documents;

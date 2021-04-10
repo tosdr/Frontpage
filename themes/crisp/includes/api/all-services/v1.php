@@ -31,7 +31,7 @@ foreach ($Services as $Index => $Service) {
     $Service["urls"] = explode(",", $Service["url"]);
     $Service["logo"] = \crisp\api\Config::get("s3_logos") . "/" . $Service["id"] . ".png";
 
-    $Services[$Index] = $Service;
+    $Services[$Index] = $Service["_source"];
 }
 
 $Response["services"] = $Services;

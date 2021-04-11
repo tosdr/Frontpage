@@ -867,7 +867,6 @@ class Phoenix {
 
         if (self::$Redis_Database_Connection->keys("pg_service_$ID")) {
             $response = unserialize(self::$Redis_Database_Connection->get("pg_service_$ID"));
-            $response["nice_service"] = Helper::filterAlphaNum($response["name"]);
             $response["image"] = $response["id"] . ".png";
             $dummy;
 

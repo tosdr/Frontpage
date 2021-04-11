@@ -1,9 +1,34 @@
 # CrispCMS - The new ToS;DR Frontpage
 
-![](https://shields.tosdr.org/tosdr.svg) [![Translation status](https://translate.tosdr.org/widgets/crispcms/-/svg-badge.svg)](https://translate.tosdr.org/engage/crispcms/) [![Build Status](https://ci.tosdr.org/api/badges/tosdr/CrispCMS/status.svg)](https://ci.tosdr.org/tosdr/CrispCMS)
 
-  ![](https://tosdr-branding.s3.eu-west-2.jbcdn.net/tosdr-logo-128.svg)
 
+<p align="center">
+  <a href="https://tosdr.org/en/service/596" title="Privacy Grade">
+    <img src="https://shields.tosdr.org/tosdr.svg">
+  </a>
+  <a href="https://discord.gg/tosdr" title="Join the Discord chat at https://discord.gg/tosdr">
+    <img src="https://img.shields.io/discord/324969783508467715.svg">
+  </a>
+  <a href="https://translate.tosdr.org/engage/crispcms/" title="Translations">
+    <img src="https://translate.tosdr.org/widgets/crispcms/-/svg-badge.svg">
+  </a>
+  <a href="https://github.com/tosdr/CrispCMS/releases/latest" title="GitHub release">
+    <img src="https://img.shields.io/github/release/tosdr/CrispCMS.svg">
+  </a>
+  <a href="https://opencollective.com/tosdr" title="Become a backer/sponsor of ToS;DR">
+    <img src="https://opencollective.com/tosdr/tiers/backers/badge.svg?label=backers&color=brightgreen">
+  </a>
+  <a href="https://opensource.org/licenses/GPL-3.0" title="License: GPL-3.0">
+    <img src="https://img.shields.io/badge/License-GPL%203.0-blue.svg">
+  </a>
+  <a href="https://ci.tosdr.org/tosdr/CrispCMS" title="Build Status">
+    <img src="https://ci.tosdr.org/api/badges/tosdr/CrispCMS/status.svg">
+  </a>
+</p>
+
+<p align="center">
+	<img src="https://tosdr-branding.s3.eu-west-2.jbcdn.net/tosdr-logo-128.svg">
+</p>
 Welcome to the official repository for our frontpage, [tosdr.org](https://tosdr.org/).
 This is a redo of our previous frontpage, which used JS.
 
@@ -28,8 +53,6 @@ You will need these requirements to run your instance of Crisp.
 ### [Redis Server](https://redis.io/)
 
 This is used to cache [Phoenix](https://edit.tosdr.org/) requests.
-
-- For users running on Debian-based distros, check [this article](https://bitlaunch.io/blog/installing-redis-server-on-ubuntu-20-04-lts/)
 
 ### Postgres
 This is used for running the Crisp database.

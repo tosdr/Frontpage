@@ -43,8 +43,22 @@ $points = crisp\api\Phoenix::getPointsByServicePG($ID);
 $service = crisp\api\Phoenix::getServicePG($ID);
 $documents = crisp\api\Phoenix::getDocumentsByServicePG($ID);
 
+$_service = [
+    "id" => $service["_source"]["id"],
+    "name" => $service["_source"]["name"],
+    "created_at" => $service["_source"]["created_at"],
+    "updated_at" => $service["_source"]["updated_at"],
+    "wikipedia" => (trim($service["_source"]["wikipedia"]) === "" ? null : $service["_source"]["wikipedia"]),
+    "keywords" => $service["_source"]["keywords"],
+    "related" => $service["_source"]["related"],
+    "slug" => $service["_source"]["slug"],
+    "is_comprehensively_reviewed" => $service["_source"]["is_comprehensively_reviewed"],
+    "rating" => \crisp\models\ServiceRatings::get($service["_source"]["rating"]),
+    "status" => $service["_source"]["status"],
+    "image" => $service["_source"]["image"],
+    "url" => $service["_source"]["url"],
+];
 $_documents = [];
-
 
 foreach ($documents as $Document) {
     $_documents[] = [
@@ -78,12 +92,12 @@ foreach ($points as $Point) {
     $ServicePointsData[] = $_Point;
 }
 
-$SkeletonData = $service["_source"];
+$SkeletonData = $_service;
 
-$SkeletonData["image"] = \crisp\api\Config::get("s3_logos") . "/" . $service["_source"]["image"];
+$SkeletonData["image"] = \crisp\api\Config::get("s3_logos") . "/" . $_service["image"];
 $SkeletonData["documents"] = $_documents;
 $SkeletonData["points"] = $ServicePointsData;
-$SkeletonData["urls"] = explode(",", $service["_source"]["url"]);
+$SkeletonData["urls"] = explode(",", $_service["url"]);
 
 
 echo \crisp\core\PluginAPI::response(\crisp\core\Bitmask::REQUEST_SUCCESS, "OK", $SkeletonData);

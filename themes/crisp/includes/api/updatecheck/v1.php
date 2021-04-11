@@ -17,19 +17,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-$Interface = "default";
-
-if (is_array($GLOBALS["route"]->GET)) {
-    $Interface = array_key_first($GLOBALS["route"]->GET);
-
-    $this->Query = $GLOBALS["route"]->GET[$Interface];
-    if (strpos($GLOBALS["route"]->GET[$Interface], ".json")) {
-        $this->Query = substr($this->Query, 0, -5);
-    }
-}
-
-switch ($Interface) {
+switch ($_SERVER["REQUEST_METHOD"]) {
+    case "GET":
+        require_once __DIR__ . '/GET/v1.php';
+        break;
     default:
-    case "v1":
-        require_once __DIR__ . '/updatecheck/v1.php';
+        echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::NOT_IMPLEMENTED, "Invalid Request Method", [], null, 405);
 }

@@ -277,13 +277,6 @@ try {
             $statusDay = $rateLimiter->limitSilently($IndicatorDay, $LimitDay);
 
 
-            if ($statusSecond->limitExceeded() || $statusHour->limitExceeded() || $statusDay->limitExceeded()) {
-                http_response_code(429);
-                echo $TwigTheme->render("errors/nginx/429.twig", ["error_msg" => "Request forbidden by administrative rules. You are sending too many requests in a certain timeframe."]);
-                exit;
-            }
-
-
             header("X-CMS-CDN: " . api\Config::get("cdn"));
             header("X-CMS-SHIELDS: " . api\Config::get("shield_cdn"));
             header("X-RateLimit-Benefit: " . $Benefit);
@@ -292,6 +285,14 @@ try {
             header("X-RateLimit-D: " . $statusDay->getRemainingAttempts());
             header("X-RateLimit-Benefit: " . $Benefit);
             header("X-CMS-API: " . api\Config::get("api_cdn"));
+
+            if ($statusSecond->limitExceeded() || $statusHour->limitExceeded() || $statusDay->limitExceeded()) {
+                http_response_code(429);
+                echo $TwigTheme->render("errors/nginx/429.twig", ["error_msg" => "Request forbidden by administrative rules. You are sending too many requests in a certain timeframe."]);
+                exit;
+            }
+
+
 
             core\Themes::loadAPI($TwigTheme, $GLOBALS["route"]->Page, $Query);
             core\Plugins::loadAPI($GLOBALS["route"]->Page, $QUERY);

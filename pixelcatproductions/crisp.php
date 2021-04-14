@@ -215,7 +215,7 @@ try {
                 $keyDetails = api\Helper::getAPIKeyDetails(apache_request_headers()["Authorization"]);
 
 
-                header("X-APIKey: " . ($keyDetails["revoked"] ? "Revoked" : "OK"));
+                header("X-APIKey: " . ($keyDetails["revoked"] ? "revoked" : "ok"));
             } else {
                 header("X-APIKey: not-given");
             }

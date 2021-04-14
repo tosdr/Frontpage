@@ -1,6 +1,6 @@
 <?php
 
-/* 
+/*
  * Copyright (C) 2021 Justin René Back <justin@tosdr.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 
 namespace crisp\api;
 
@@ -34,13 +33,29 @@ class Helper {
         return preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i", $UserAgent);
     }
 
+    public static function getAPIKeyDetails($ApiKey) {
+
+        
+        $Postgres = new \crisp\core\MySQL();
+
+        $statement = $Postgres->getDBConnector()->prepare("SELECT * FROM apikeys WHERE key = :key");
+
+        $statement->execute([":key" => $ApiKey]);
+
+
+        if ($statement->rowCount() > 0) {
+            return $statement->fetch(\PDO::FETCH_ASSOC);
+        }
+        return false;
+    }
+
     public static function getAPIKey() {
 
         $apikey = "";
 
         $Postgres = new \crisp\core\MySQL();
 
-        $statement = $Postgres->getDBConnector()->prepare("SELECT * FROM apikeys WHERE key = :key");
+        $statement = $Postgres->getDBConnector()->prepare("SELECT * FROM apikeys WHERE key = :key AND revoked = 0");
 
         if (isset(apache_request_headers()["Authorization"])) {
             $apikey = apache_request_headers()["Authorization"];

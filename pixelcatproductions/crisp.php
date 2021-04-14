@@ -240,12 +240,36 @@ try {
                     $Benefit = "Office";
                 }
             }
+            $apikey = api\Helper::getAPIKey();
+            if ($apikey) {
 
-            if (api\Helper::getAPIKey()) {
-                $LimitSecond = \RateLimit\Rate::perSecond(150);
-                $LimitHour = \RateLimit\Rate::perHour(10000);
-                $LimitDay = \RateLimit\Rate::perHour(50000);
-                $Benefit = "Partner";
+                $keyDetails = api\Helper::getAPIKeyDetails(apache_request_headers()["Authorization"]);
+                $LimitSecond;
+                $LimitHour;
+                $LimitDay;
+                $Benefit;
+                if ($keyDetails["ratelimit_second"] === null) {
+                    $LimitSecond = \RateLimit\Rate::perSecond(150);
+                } else {
+                    $LimitSecond = \RateLimit\Rate::perSecond($keyDetails["ratelimit_second"]);
+                }
+                if ($keyDetails["ratelimit_hour"] === null) {
+                    $LimitHour = \RateLimit\Rate::perHour(10000);
+                } else {
+                    $LimitHour = \RateLimit\Rate::perHour($keyDetails["ratelimit_hour"]);
+                }
+
+                if ($keyDetails["ratelimit_day"] === null) {
+                    $LimitDay = \RateLimit\Rate::perHour(50000);
+                } else {
+                    $LimitDay = \RateLimit\Rate::perHour($keyDetails["ratelimit_day"]);
+                }
+
+                if ($keyDetails["ratelimit_benefit"] === null) {
+                    $Benefit = "Partner";
+                } else {
+                    $Benefit = $keyDetails["ratelimit_benefit"];
+                }
             }
 
             $statusSecond = $rateLimiter->limitSilently($IndicatorSecond, $LimitSecond);

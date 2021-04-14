@@ -17,18 +17,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace crisp\core;
 
-/**
- * API Permission Bitmask
- */
-class APIPermissions extends \crisp\types\Bitmask {
+$apikey = ($_GET["apikey"] ?? $this->Query);
 
-    use \crisp\core\Hook;
 
-    public const NONE = 0x1;
-    public const POST_SERVICE_REQUEST = 0x2;
-    public const GET_API_KEY_DETAILS = 0x4;
-    public const CAN_USE_CRAWLER = 0x8;
-
+if (empty($apikey)) {
+    echo \crisp\core\PluginAPI::response(\crisp\core\Bitmask::MISSING_PARAMETER, "apikey parameter missing", []);
+    return;
 }
+
+
+$details = crisp\api\Helper::getAPIKeyDetails($apikey);
+
+if (!$details) {
+    echo \crisp\core\PluginAPI::response(\crisp\core\Bitmask::QUERY_FAILED, "Invalid apikey", $details);
+    return;
+}
+
+echo \crisp\core\PluginAPI::response(\crisp\core\Bitmask::REQUEST_SUCCESS, "OK", $details);

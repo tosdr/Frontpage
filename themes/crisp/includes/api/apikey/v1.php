@@ -17,18 +17,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace crisp\core;
 
-/**
- * API Permission Bitmask
- */
-class APIPermissions extends \crisp\types\Bitmask {
-
-    use \crisp\core\Hook;
-
-    public const NONE = 0x1;
-    public const POST_SERVICE_REQUEST = 0x2;
-    public const GET_API_KEY_DETAILS = 0x4;
-    public const CAN_USE_CRAWLER = 0x8;
-
+switch ($_SERVER["REQUEST_METHOD"]) {
+    case "GET":
+        require_once __DIR__ . '/GET/v1.php';
+        break;
+    default:
+        echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::NOT_IMPLEMENTED, "Invalid Request Method", [], null, 405);
 }

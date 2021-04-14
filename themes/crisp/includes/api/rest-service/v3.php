@@ -1,6 +1,6 @@
 <?php
 
-/* 
+/*
  * Copyright (C) 2021 Justin René Back <justin@tosdr.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,27 +17,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-$Interface = "default";
 
-if (is_array($GLOBALS["route"]->GET)) {
-    $Interface = array_key_first($GLOBALS["route"]->GET);
-
-    $this->Query = $GLOBALS["route"]->GET[$Interface];
-    if (strpos($GLOBALS["route"]->GET[$Interface], ".json")) {
-        $this->Query = substr($this->Query, 0, -5);
-    }
-}
-
-switch ($Interface) {
-    case "v1":
-        require_once __DIR__ . '/rest-service/v1.php';
+switch ($_SERVER["REQUEST_METHOD"]) {
+    case "GET":
+        require_once __DIR__ . '/GET/v3.php';
         break;
-    case "v2":
-        require_once __DIR__ . '/rest-service/v2.php';
-        break;
-    case "v3":
-        require_once __DIR__ . '/rest-service/v3.php';
+    case "POST":
+        echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::NOT_IMPLEMENTED, "Not yet implemented", [], null, 405);
         break;
     default:
-        echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::VERSION_NOT_FOUND, "Invalid Version", []);
+        echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::NOT_IMPLEMENTED, "Invalid Request Method", [], null, 405);
 }

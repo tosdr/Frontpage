@@ -36,13 +36,7 @@ if (is_array($GLOBALS["route"]->GET)) {
 
 switch ($Interface) {
     case "v1":
-        require_once __DIR__ . '/rest-service/v1.php';
-        break;
-    case "v2":
-        require_once __DIR__ . '/rest-service/v2.php';
-        break;
-    case "v3":
-        require_once __DIR__ . '/rest-service/v3.php';
+        require_once __DIR__ . '/apikey/v1.php';
         break;
     default:
         echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::VERSION_NOT_FOUND, "Invalid Version", []);

@@ -210,6 +210,15 @@ try {
             if (strlen($Query) === 0) {
                 $Query = "no_query";
             }
+            $keyDetails;
+            if (isset(apache_request_headers()["Authorization"])) {
+                $keyDetails = api\Helper::getAPIKeyDetails(apache_request_headers()["Authorization"]);
+
+
+                header("X-APIKey: " . ($keyDetails["revoked"] ? "Revoked" : "OK"));
+            } else {
+                header("X-APIKey: not-given");
+            }
 
             if (isset(apache_request_headers()["Authorization"]) && !api\Helper::getAPIKey()) {
                 http_response_code(401);
@@ -243,7 +252,6 @@ try {
             $apikey = api\Helper::getAPIKey();
             if ($apikey) {
 
-                $keyDetails = api\Helper::getAPIKeyDetails(apache_request_headers()["Authorization"]);
                 $LimitSecond;
                 $LimitHour;
                 $LimitDay;

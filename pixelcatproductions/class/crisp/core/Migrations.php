@@ -40,6 +40,7 @@ class Migrations {
     const DB_TIMESTAMP = "timestamp";
     const DB_BOOL = "smallint";
     const DB_LONGTEXT = "text";
+    const DB_BIGINT = "bigint";
 
     /* Keys */
     const DB_PRIMARYKEY = "PRIMARY";

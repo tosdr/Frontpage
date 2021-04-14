@@ -23,6 +23,12 @@ switch ($_SERVER["REQUEST_METHOD"]) {
         require_once __DIR__ . '/GET/v1.php';
         break;
     case "POST":
+
+        if (!crisp\api\Helper::hasApiPermissions(crisp\core\APIPermissions::POST_SERVICE_REQUEST)) {
+            echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::MISSING_PERMISSIONS, "Missing Permissions " . crisp\core\APIPermissions::getBitmask(crisp\core\APIPermissions::POST_SERVICE_REQUEST, true)[0], [], null, 403);
+            return;
+        }
+
         echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::NOT_IMPLEMENTED, "Not yet implemented", [], null, 405);
         break;
     default:

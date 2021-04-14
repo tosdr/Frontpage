@@ -22,7 +22,7 @@ namespace crisp\core;
 /**
  * API Error Codes
  */
-class Bitmask {
+class Bitmask extends \crisp\types\Bitmask {
 
     use \crisp\core\Hook;
 
@@ -59,42 +59,6 @@ class Bitmask {
     public const TWIG_ERROR = 0x4000000;
     public const PLUGIN_MISSING_INCLUDES = 0x8000000;
     public const THEME_MISSING_INCLUDES = 0x10000000;
-
-    public static function hasBitmask(int $BitwisePermissions, int $PermissionFlag = 0x00000000) {
-        if (!is_numeric($BitwisePermissions)) {
-            throw new \TypeError("Parameter BitwisePermissions is not a hexadecimal or number.");
-        }
-        if (!is_numeric($PermissionFlag)) {
-            throw new \TypeError("Parameter PermissionFlag is not a hexadecimal or number.");
-        }
-
-        if ($BitwisePermissions === 0x00000000) {
-            return true;
-        }
-        return ($BitwisePermissions & $PermissionFlag ? true : false);
-    }
-
-    public static function getConstants() {
-        $oClass = new \ReflectionClass(__CLASS__);
-        return $oClass->getConstants();
-    }
-
-    public static function getBitmask(int $BitwisePermissions) {
-        if (!is_numeric($BitwisePermissions)) {
-            throw new \TypeError("Parameter BitwisePermissions is not a hexadecimal or number.");
-        }
-        if ($BitwisePermissions === 0x00000000) {
-            throw new \TypeError("Parameter BitwisePermissions is zero.");
-        }
-
-        $MatchedBits = [];
-
-        foreach (self::getConstants() as $Permission) {
-            if (self::hasBitmask($BitwisePermissions, $Permission)) {
-                $MatchedBits[array_search($Permission, self::getConstants())] = $Permission;
-            }
-        }
-        return $MatchedBits;
-    }
+    public const MISSING_PERMISSIONS = 0x20000000;
 
 }

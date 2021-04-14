@@ -33,9 +33,30 @@ class Helper {
         return preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i", $UserAgent);
     }
 
+    public static function hasApiPermissions($BitmaskFlag) {
+
+        $apikey;
+
+        if (isset(apache_request_headers()["Authorization"])) {
+            $apikey = apache_request_headers()["Authorization"];
+        } else {
+            return false;
+        }
+
+        $keyDetails = self::getAPIKeyDetails($apikey);
+
+
+        if (!$keyDetails) {
+            return false;
+        }
+
+
+        return ($keyDetails["permissions"] & $BitmaskFlag);
+    }
+
     public static function getAPIKeyDetails($ApiKey) {
 
-        
+
         $Postgres = new \crisp\core\MySQL();
 
         $statement = $Postgres->getDBConnector()->prepare("SELECT * FROM apikeys WHERE key = :key");

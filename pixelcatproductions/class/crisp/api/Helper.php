@@ -55,7 +55,7 @@ class Helper {
 
         $Postgres = new \crisp\core\MySQL();
 
-        $statement = $Postgres->getDBConnector()->prepare("SELECT * FROM apikeys WHERE key = :key AND revoked = 0");
+        $statement = $Postgres->getDBConnector()->prepare("SELECT * FROM apikeys WHERE key = :key AND revoked = 0 AND (expires_at is null OR expires_at > NOW())");
 
         if (isset(apache_request_headers()["Authorization"])) {
             $apikey = apache_request_headers()["Authorization"];

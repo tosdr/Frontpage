@@ -215,7 +215,13 @@ try {
                 $keyDetails = api\Helper::getAPIKeyDetails(apache_request_headers()["Authorization"]);
 
 
-                header("X-APIKey: " . ($keyDetails["revoked"] ? "revoked" : "ok"));
+                if ($keyDetails["expires_at"] !== null && strtotime($keyDetails["expires_at"]) < time()) {
+                    header("X-APIKey: expired");
+                } elseif ($keyDetails["revoked"]) {
+                    header("X-APIKey: revoked");
+                } else {
+                    header("X-APIKey: ok");
+                }
             } else {
                 header("X-APIKey: not-given");
             }

@@ -50,29 +50,51 @@
                     {% set documents = request.documents|json_decode %}
                     {% set key = 1 %}
                     <tr id="request-{{ request.id }}">
-                        <td>{{ request.name }}</td>
-                        <td>{{ request.domains|split(',')|join('<br>')|raw }}</td>
+                        <td>
+                            <div class='card'>
+                                <div class='card-body'>
+                                    {{ request.name }}
+                                </div>
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class='card'>
+                                <div class='card-body'>
+                                    {{ request.domains|split(',')|join('<br>')|raw }}
+                                </div>
+                            </div>
+                        </td>
                         <td>
                             {% for document in documents %}
-                                <div>
-                                    <p>
-                                        <span><b>#</b> {{ key }}</span>
-                                    </p>
-                                    <p>
-                                        <span><b>Document Name:</b></span> <span>{{ document.name }}</span>
-                                    </p>
-                                    <p>
-                                        <span><b>Document Url:</b></span> <span>{{ document.url }}</span>
-                                    </p>
-                                    <p>
-                                        <span><b>Document XPath:</b></span> <span>{{ document.xpath }}</span>
-                                    </p>
-                                    <hr>
+
+                                <div class='card'>
+                                    <div class='card-body'>
+                                        <p>
+                                            <span><b>#</b> {{ key }}</span>
+                                        </p>
+                                        <p>
+                                            <span><b>{{ plugin.getTranslation('views.service_requests.table.td.document.name') }}:</b></span> <span>{{ document.name }}</span>
+                                        </p>
+                                        <p>
+                                            <span><b>{{ plugin.getTranslation('views.service_requests.table.td.document.url') }}:</b></span> <span>{{ document.url }}</span>
+                                        </p>
+                                        <p>
+                                            <span><b>{{ plugin.getTranslation('views.service_requests.table.td.document.xpath') }}:</b></span> <span>{{ document.xpath }}</span>
+                                        </p>
+                                    </div>
                                 </div>
                                 {% set key = key + 1 %}
                             {% endfor %}
                         </td>
-                        <td>{{ request.wikipedia }}</td>
+
+                        <td>
+                            <div class='card {{ (request.wikipedia is empty ? 'text-white bg-warning mb-3' : '') }}'>
+                                <div class='card-body'>
+                                    {{ request.wikipedia|default(plugin.getTranslation('views.service_requests.table.td.wikipedia.card.default')) }}
+                                </div>
+                            </div>
+                        </td>
                         <td>
                             <div class="btn-group">
                                 <button type="button" data-id="{{ request.id }}" name="approve" class="btn btn-success">{{ plugin.getTranslation('views.service_requests.table.td.button.approve') }}</button>
@@ -80,7 +102,13 @@
                             </div> 
                         </td>
                         <td>{{ (request.email ? '<i class="fas fa-check"></i>'|raw : '<i class="fas fa-times"></i>'|raw) }}</td>
-                        <td>{{ request.note }}</td>
+                        <td>
+                            <div class='card {{ (request.note is not empty ? 'text-white bg-success mb-3' : '') }}'>
+                                <div class='card-body'>
+                                    {{ request.note|default(plugin.getTranslation('views.service_requests.table.td.notes.card.default')) }}
+                                </div>
+                            </div>
+                        </td>
                     </tr>
                 {% endfor %}
             </tbody>

@@ -15,5 +15,10 @@
     "views.service_requests.table.th.service_wikipedia": "Wikipedia",
     "views.service_requests.table.th.service_actions": "Actions",
     "views.service_requests.table.td.button.reject": "Reject",
-    "views.service_requests.table.td.button.approve": "Approve"
+    "views.service_requests.table.td.button.approve": "Approve",
+    "views.service_requests.table.td.wikipedia.card.default": "None",
+    "views.service_requests.table.td.notes.card.default": "None",
+    "views.service_requests.table.td.document.name": "Document Name",
+    "views.service_requests.table.td.document.url": "Document Url",
+    "views.service_requests.table.td.document.xpath": "Document XPath"
 }

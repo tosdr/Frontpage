@@ -47,10 +47,31 @@
             </thead>
             <tbody>
                 {% for request in requests %}
+                    {% set documents = request.documents|json_decode %}
+                    {% set key = 1 %}
                     <tr id="request-{{ request.id }}">
                         <td>{{ request.name }}</td>
-                        <td>{{ request.domains }}</td>
-                        <td>{{ prettyDump(request.documents|json_decode) }}</td>
+                        <td>{{ request.domains|split(',')|join('<br>')|raw }}</td>
+                        <td>
+                            {% for document in documents %}
+                                <div>
+                                    <p>
+                                        <span><b>#</b> {{ key }}</span>
+                                    </p>
+                                    <p>
+                                        <span><b>Document Name:</b></span> <span>{{ document.name }}</span>
+                                    </p>
+                                    <p>
+                                        <span><b>Document Url:</b></span> <span>{{ document.url }}</span>
+                                    </p>
+                                    <p>
+                                        <span><b>Document XPath:</b></span> <span>{{ document.xpath }}</span>
+                                    </p>
+                                    <hr>
+                                </div>
+                                {% set key = key + 1 %}
+                            {% endfor %}
+                        </td>
                         <td>{{ request.wikipedia }}</td>
                         <td>
                             <div class="btn-group">

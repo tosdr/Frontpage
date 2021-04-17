@@ -18,10 +18,7 @@
  */
 
 
-if (!$userDetails["curator"]) {
-    header("Location: /dashboard");
-    exit;
-}
+
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
@@ -38,6 +35,11 @@ if (!isset($_SESSION[\crisp\core\Config::$Cookie_Prefix . "session_login"])) {
 
 if (!$User->isSessionValid()) {
     header("Location: " . \crisp\api\Helper::generateLink("login/?invalid_sr"));
+    exit;
+}
+
+if (!$userDetails["curator"]) {
+    header("Location: /dashboard");
     exit;
 }
 

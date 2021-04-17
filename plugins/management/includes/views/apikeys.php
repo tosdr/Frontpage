@@ -38,7 +38,7 @@ if (!$User->isSessionValid()) {
     exit;
 }
 
-if (!$userDetails["curator"]) {
+if (!$userDetails["admin"]) {
     header("Location: /dashboard");
     exit;
 }

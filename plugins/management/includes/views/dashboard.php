@@ -17,8 +17,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-if (!$userDetails["curator"] || !$userDetails["admin"]) {
-    header("Location: /dashboard");
+if (!$userDetails["curator"]) {
+    header("Location: /");
+    exit;
+} elseif (!$userDetails["admin"]) {
+    header("Location: /");
     exit;
 }
 

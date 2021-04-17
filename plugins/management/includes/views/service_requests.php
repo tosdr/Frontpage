@@ -17,6 +17,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+
+if (!$userDetails["curator"]) {
+    header("Location: /dashboard");
+    exit;
+}
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
@@ -29,8 +35,6 @@ if (!isset($_SESSION[\crisp\core\Config::$Cookie_Prefix . "session_login"])) {
     header("Location: " . \crisp\api\Helper::generateLink("login/?invalid_sess_sr"));
     exit;
 }
-
-$User = new crisp\plugin\curator\PhoenixUser($_SESSION[\crisp\core\Config::$Cookie_Prefix . "session_login"]["user"]);
 
 if (!$User->isSessionValid()) {
     header("Location: " . \crisp\api\Helper::generateLink("login/?invalid_sr"));

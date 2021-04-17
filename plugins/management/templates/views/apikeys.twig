@@ -1,0 +1,155 @@
+{# 
+ # Copyright (C) 2021 Justin René Back <justin@tosdr.org>
+ #
+ # This program is free software: you can redistribute it and/or modify
+ # it under the terms of the GNU General Public License as published by
+ # the Free Software Foundation, either version 3 of the License, or
+ # (at your option) any later version.
+ #
+ # This program is distributed in the hope that it will be useful,
+ # but WITHOUT ANY WARRANTY; without even the implied warranty of
+ # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ # GNU General Public License for more details.
+ #
+ # You should have received a copy of the GNU General Public License
+ # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#}
+
+{% set currentPage = 'apikeys' %}
+{% set pageTitle = plugin.getTranslation('views.apikeys.header') %}
+{% set error = false %}
+
+
+
+{% extends plugin.PluginName ~  "/templates/base.twig" %}
+
+{% set pagination %}
+    <span>
+        {% if currentPagination > 1 %}
+            <a href="/{{ locale }}/apikeys/page/{{ previousPagination }}{{ (route.query is defined ? '/query/' ~ route.query : '') }}">&laquo;</a>
+        {% endif %}
+        {{ plugin.getTranslation('views.apikeys.page', 1, {"{{ pagination }}": currentPagination ~ '/' ~ lastPagination}) }}
+
+        {% if currentPagination < pages %}
+            <a href="/{{ locale }}/apikeys/page/{{ nextPagination }}{{ (route.query is defined ? '/query/' ~ route.query : '') }}">&raquo;</a>
+        {% endif %}
+    </span>
+{% endset %}
+
+{% block content %}
+    {% include plugin.PluginName ~  "/templates/components/navbar.twig" %}
+
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container text-center">
+            <h1 class="display-4">{{ plugin.getTranslation('views.apikeys.header') }}</h1>
+        </div>
+    </div>
+
+    <div class="container-fluid table-responsive">
+        <span>
+            {{ pagination }}
+        </span>
+        <span class="float-right">
+            <form>
+                <input type="text" class="form-control" id="search" value="{{ route.query }}" placeholder="{{ plugin.getTranslation('views.apikeys.input.search.placeholder') }}">
+            </form>
+        </span>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>{{ plugin.getTranslation('views.apikeys.table.th.key') }}</th>
+                    <th>{{ plugin.getTranslation('views.apikeys.table.th.user') }}</th>
+                    <th>{{ plugin.getTranslation('views.apikeys.table.th.last_changed') }}</th>
+                    <th>{{ plugin.getTranslation('views.apikeys.table.th.status') }}</th>
+                    <th>{{ plugin.getTranslation('views.apikeys.table.th.created_at') }}</th>
+                    <th>{{ plugin.getTranslation('views.apikeys.table.th.ratelimit') }}</th>
+                    <th>{{ plugin.getTranslation('views.apikeys.table.th.benefit') }}</th>
+                    <th>{{ plugin.getTranslation('views.apikeys.table.th.expires_at') }}</th>
+                    <th>{{ plugin.getTranslation('views.apikeys.table.th.permissions') }}</th>
+                    <th>{{ plugin.getTranslation('views.apikeys.table.th.key_actions') }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for key in keys %}
+                    <tr class="{{ (key.revoked or (key.expires_at is not null and key.expires_at|strtotime > 'now'|date('U')) ? 'table-danger': '') }}" id="request-{{ key.key }}">
+                        <td>
+                            <div class='card'>
+                                <div class='card-body'>
+                                    {{ key.key }}
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <a target="_blank" href="{{ config.phoenix_url }}/admin/users/{{ key.userid }}">{{ fetch_phoenix_user(key.userid).username|default(plugin.getTranslation('views.apikeys.table.td.user.unknown')) }}</a>
+                        </td>
+                        <td>
+                            {{ key.last_changed|default(plugin.getTranslation('views.apikeys.table.td.date.unknown')) }}
+                        </td>
+                        <td>
+                            {% if key.revoked %}
+                                <span class="badge badge-danger">{{ plugin.getTranslation('views.apikeys.table.td.status.revoked')|upper }}</span>
+                            {% elseif key.expires_at is not null and key.expires_at|strtotime > 'now'|date('U') %}
+                                <span class="badge badge-danger">{{ plugin.getTranslation('views.apikeys.table.td.status.expired')|upper }}</span>
+                            {% else %}
+                                <span class="badge badge-success">{{ plugin.getTranslation('views.apikeys.table.td.status.valid')|upper }}</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {{ key.created_at|default(plugin.getTranslation('views.apikeys.table.td.date.unknown')) }}
+                        </td>
+                        <td>
+                            {{ key.ratelimit_second|default('15') }}/{{ key.ratelimit_hour|default('1000') }}/{{ key.ratelimit_day|default('15000') }}
+                        </td>
+                        <td>
+                            {{ key.ratelimit_benefit|default(plugin.getTranslation('views.apikeys.table.td.benefit.unknown')) }}
+                        </td>
+                        <td>
+                            {{ key.expires_at|default(plugin.getTranslation('views.apikeys.table.td.date.unknown')) }}
+                        </td>
+                        <td>
+                            {% for name,hex in api_permissions %}
+                                {% if hex b-and key.permissions %}
+                                    <span class="badge badge-success">{{ name|upper }}</span>
+                                {% else %}
+                                    <span class="badge badge-danger">{{ name|upper }}</span>
+                                {% endif %}
+                            {% endfor %}
+                        </td>
+                        <td>
+                            <div class="btn-group">
+                                <button type="button" data-id="{{ key.key }}" name="revoke" class="btn btn-danger" {{ (key.revoked or (key.expires_at is not null and key.expires_at|strtotime > 'now'|date('U')) ? 'disabled': '') }}>{{ plugin.getTranslation('views.apikeys.table.td.button.revoke') }}</button>
+                            </div> 
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {{ pagination }}
+    </div>
+
+{% endblock %}
+{% block scripts %}
+    <script>
+        $(document).ready(function () {
+
+            $(document).on('submit', 'form', function (e) {
+                e.preventDefault();
+                window.location.href = "/{{ locale }}/apikeys/page/{{ currentPagination }}/query/" + $("#search").val();
+            });
+
+            $(document).on('click', '[name="revoke"]', function () {
+                let id = $(this).data('id');
+                let button = $(this);
+                $(button).attr('disabled', true);
+                $.post("", {revoke: id}, function (result) {
+                    if (result.error & 0x100) {
+                        $("#request-" + id).addClass("table-danger");
+                    } else {
+                        $(button).attr('disabled', false);
+                        alert("Error! " + result.message);
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}

@@ -1,6 +1,6 @@
 <?php
 
-/* 
+/*
  * Copyright (C) 2021 Justin René Back <justin@tosdr.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,7 +17,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 namespace crisp\plugin\curator;
 
 use \PDO;
@@ -32,7 +31,7 @@ class PhoenixUser {
 
     use \crisp\core\Hook;
 
-    private PDO $Database_Connection;
+    private static PDO $Database_Connection;
 
     /**
      * The userID
@@ -48,7 +47,7 @@ class PhoenixUser {
 
     public function __construct($UserID = null) {
         $DB = new \crisp\core\Postgres();
-        $this->Database_Connection = $DB->getDBConnector();
+        self::$Database_Connection = $DB->getDBConnector();
         if (is_numeric($UserID)) {
             $this->UserID = $UserID;
         } else {
@@ -71,8 +70,20 @@ class PhoenixUser {
             return null;
         }
 
-        $statement = $this->Database_Connection->prepare("SELECT * FROM users WHERE id = :ID");
+        $statement = self::$Database_Connection->prepare("SELECT * FROM users WHERE id = :ID");
         $statement->execute(array(":ID" => $this->UserID));
+
+        $Action = $statement->fetch(\PDO::FETCH_ASSOC);
+
+
+
+        return $Action;
+    }
+
+    public static function fetchStatic($ID) {
+
+        $statement = self::$Database_Connection->prepare("SELECT * FROM users WHERE id = :ID");
+        $statement->execute(array(":ID" => $ID));
 
         $Action = $statement->fetch(\PDO::FETCH_ASSOC);
 
@@ -86,7 +97,7 @@ class PhoenixUser {
             return null;
         }
 
-        $statement = $this->Database_Connection->prepare("UPDATE users SET \"deactivated\" = true WHERE id = :ID");
+        $statement = self::$Database_Connection->prepare("UPDATE users SET \"deactivated\" = true WHERE id = :ID");
         return $statement->execute(array(":ID" => $this->UserID));
     }
 
@@ -152,7 +163,7 @@ class PhoenixUser {
             return false;
         }
 
-        $statement = $this->Database_Connection->prepare('DELETE FROM sessions WHERE token = :Token AND "user" = :User');
+        $statement = self::$Database_Connection->prepare('DELETE FROM sessions WHERE token = :Token AND "user" = :User');
         $Action = $statement->execute(array(":User" => $this->UserID, ":Token" => $_SESSION[\crisp\core\Config::$Cookie_Prefix . "session_$Identifier"]["token"]));
 
 

@@ -1,6 +1,6 @@
 <?php
 
-/* 
+/*
  * Copyright (C) 2021 Justin René Back <justin@tosdr.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -42,8 +42,8 @@ if (!$User->verifyPassword($_POST["password"])) {
     $this->response(array("INVALID_PASSWORD"), "Password is invalid");
     exit;
 }
-if (!$User->fetch()["curator"]) {
-    $this->response(array("NOT_CURATOR"), "You are not an curator!");
+if (!$User->fetch()["curator"] || !$User->fetch()["admin"]) {
+    $this->response(array("MISSING_LEVEL"), "You are not an admin or curator!");
     exit;
 }
 if (!$User->createSession()) {

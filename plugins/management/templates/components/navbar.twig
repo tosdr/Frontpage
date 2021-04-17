@@ -26,13 +26,11 @@
     <!-- Navbar links -->
     <div class="collapse navbar-collapse" id="collapsibleNavbar">
         <ul class="navbar-nav">
-
-            <li class="nav-item {% if currentPage == "curator_dashboard" %} active{% endif %}">
-                <a class="nav-link {% if currentPage == "curator_dashboard" %} active{% endif %}" href="/{{ locale }}/curator_dashboard">{{ plugin.getTranslation('views.curator_dashboard.header') }}</a>
-            </li>
-            <li class="nav-item {% if currentPage == "service_requests" %} active{% endif %}">
-                <a class="nav-link {% if currentPage == "service_requests" %} active{% endif %}" href="/{{ locale }}/service_requests">{{ plugin.getTranslation('views.service_requests.header') }}</a>
-            </li>
+            {% for item in management_navbar %}
+                <li class="nav-item {% if currentPage == item.ID %} active{% endif %}">
+                    <a target="{{ item.target }}" class="nav-link {% if currentPage == item.ID %} active{% endif %}" href="{{ item.href }}">{{ item.html|raw }}</a>
+                </li>
+            {% endfor %}
         </ul>
     </div>
 </nav> 

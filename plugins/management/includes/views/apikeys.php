@@ -193,7 +193,7 @@ if (isset($_POST["verify"]) && !empty($_POST["verify"])) {
     }
 
 
-    $delrequest = $Mysql->getDBConnector()->prepare("UPDATE apikeys SET revoked = 1 last_changed = NOW() WHERE key = :id;");
+    $delrequest = $Mysql->getDBConnector()->prepare("UPDATE apikeys SET revoked = 1, last_changed = NOW() WHERE key = :id;");
     if (!$delrequest->execute([":id" => $_POST["revoke"]])) {
         echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::GENERIC_ERROR, "Failed to revoke", []);
         exit;

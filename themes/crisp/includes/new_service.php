@@ -1,6 +1,6 @@
 <?php
 
-/* 
+/*
  * Copyright (C) 2021 Justin René Back <justin@tosdr.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -84,13 +84,15 @@ if (isset($_POST["payload"]) || !empty($_POST["payload"])) {
 
         // Validations end here //
     }
-
-    if (isset($payload["wikipedia"]) && !empty($payload["wikipedia"])) {
-        if (!preg_match('^https\:\/\/[a-z]+\.wikipedia\.org\/wiki\/([\w%\-\(\)\.]+)$/', $payload["wikipedia"])) {
-            echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::INVALID_PARAMETER, "wikipedia is not conform.", []);
-            exit;
-        }
-    }
+    /*
+      if (isset($payload["wikipedia"]) && !empty($payload["wikipedia"])) {
+      if (!preg_match('^https\:\/\/[a-z]+\.wikipedia\.org\/wiki\/([\w%\-\(\)\.]+)$/', $payload["wikipedia"])) {
+      echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::INVALID_PARAMETER, "wikipedia is not conform.", []);
+      exit;
+      }
+      }
+     *
+     */
 
     if (isset($payload["email"]) && !empty($payload["email"])) {
         if (!preg_match('/^[^\s@]+@[^\s@]+$/', $payload["email"])) {

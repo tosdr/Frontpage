@@ -30,5 +30,6 @@ class APIPermissions extends \crisp\types\Bitmask {
     public const POST_SERVICE_REQUEST = 0x2;
     public const GET_API_KEY_DETAILS = 0x4;
     public const CAN_USE_CRAWLER = 0x8;
+    public const CAN_USE_DOCBOT = 0x10;
 
 }

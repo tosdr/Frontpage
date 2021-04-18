@@ -92,6 +92,30 @@ class PhoenixUser {
         return $Action;
     }
 
+    public static function fetchStaticByEmail($ID) {
+
+        $statement = self::$Database_Connection->prepare("SELECT * FROM users WHERE email = :ID");
+        $statement->execute(array(":ID" => $ID));
+
+        $Action = $statement->fetch(\PDO::FETCH_ASSOC);
+
+
+
+        return $Action;
+    }
+    
+    public static function fetchStaticByUsername($ID) {
+
+        $statement = self::$Database_Connection->prepare("SELECT * FROM users WHERE username = :ID");
+        $statement->execute(array(":ID" => $ID));
+
+        $Action = $statement->fetch(\PDO::FETCH_ASSOC);
+
+
+
+        return $Action;
+    }
+
     public function deactivate() {
         if ($this->UserID === null) {
             return null;

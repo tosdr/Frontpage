@@ -40,5 +40,19 @@
     "views.apikeys.table.td.benefit.unknown": "None",
     "views.apikeys.table.td.button.revoke": "Revoke (IRREVERSIBLE) (Notifies User)",
     "views.apikeys.page": "Page {{ pagination }}",
-    "views.apikeys.input.search.placeholder": "Search"
+    "views.apikeys.input.search.placeholder": "Search",
+    "views.apikeys.button.create": "Generate API Key",
+    "views.apikeys.modal.bitmask": "Permissions",
+    "views.apikeys.modal.user.button": "Validate User",
+    "views.apikeys.modal.user": "User ID, E-Mail, Username",
+    "views.apikeys.modal.user.valid_feedback": "I have found {{ username }} with {{ email }} and User ID {{ id }}",
+    "views.apikeys.modal.user.invalid_feedback": "I was not able to find any user",
+    "views.apikeys.modal.close": "Close",
+    "views.apikeys.modal.create": "Create",
+    "views.apikeys.modal.benefit": "Benefit",
+    "views.apikeys.modal.ratelimit_second": "Ratelimit per second",
+    "views.apikeys.modal.ratelimit_hour": "Ratelimit per hour",
+    "views.apikeys.modal.ratelimit_day": "Ratelimit per day",
+    "views.apikeys.modal.expires_at": "Expires At",
+    "views.apikeys.modal.type": "Type"
 }

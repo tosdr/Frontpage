@@ -54,6 +54,7 @@ if (isset($_SESSION[\crisp\core\Config::$Cookie_Prefix . "session_login"])) {
     $this->TwigTheme->addGlobal("api_permissions", \crisp\core\APIPermissions::getConstants());
     $this->TwigTheme->addFunction(new \Twig\TwigFunction('fetch_phoenix_user', [new \crisp\plugin\curator\PhoenixUser(), 'fetchStatic']));
     $this->TwigTheme->addFilter(new \Twig\TwigFilter('strtotime', 'strtotime'));
+    $this->TwigTheme->addFunction(new \Twig\TwigFunction('time', 'time'));
 } else {
     \crisp\core\Theme::addtoNavbar("login", $this->getTranslation("views.login.header"), "/login", "_self", 99);
 }

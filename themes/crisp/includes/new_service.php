@@ -147,7 +147,7 @@ if (isset($_POST["payload"]) || !empty($_POST["payload"])) {
                     array(
                         'title' => $payload["name"],
                         'description' => 'The service request contains ' . count($payload["domains"]) . " domain(s) and " . count($payload["documents"]) . " document(s).",
-                        'url' => 'https://tosdr.org/service_requests',
+                        'url' => crisp\api\Config::get("root_url") . '/service_requests',
                         'color' => 0,
                         'fields' => $fields,
                         'footer' =>

@@ -17,9 +17,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
-
-
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
@@ -127,7 +124,7 @@ if (isset($_POST["reject"]) && !empty($_POST["reject"])) {
         $mail->Username = $EnvFile["SMTP_USER"];
         $mail->Password = $EnvFile["SMTP_PASSWORD"];
         $mail->Subject = 'About your ToS;DR service request';
-        $mail->Body = "Your Service Request over at tosdr.org has been rejected. You can resubmit the request at any time here: https://tosdr.org/new_service";
+        $mail->Body = "Your Service Request over at tosdr.org has been rejected. You can resubmit the request at any time here: " . crisp\api\Config::get("root_url") . "/new_service";
 
         $mail->send();
     }

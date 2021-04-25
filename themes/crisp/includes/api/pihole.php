@@ -1,6 +1,6 @@
 <?php
 
-/* 
+/*
  * Copyright (C) 2021 Justin René Back <justin@tosdr.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -41,7 +41,7 @@ foreach ($_all as $Service) {
         $Content .= "#### " . $Service["name"] . " ####\n";
         ($isExcluded ? $Content .= "# WARNING: " . $Service["name"] . " HAS BEEN EXCLUDED\n" : null);
         ($Service["wikipedia"] ? $Content .= "# Wikipedia: " . $Service["wikipedia"] . "\n" : null);
-        $Content .= "# ToS;DR: https://tosdr.org/en/service/" . $Service["id"] . "\n";
+        $Content .= "# ToS;DR: " . crisp\api\Config::get("root_url") . "/en/service/" . $Service["id"] . "\n";
         foreach (explode(",", $Service["url"]) as $URL) {
             $URL = trim($URL);
             if ($URL === "") {

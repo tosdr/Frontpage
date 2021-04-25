@@ -442,6 +442,7 @@ class Helper {
     /**
      * Gets the current domain
      * @return string the current domain
+     * @deprecated Use theme root url instead
      */
     public static function currentDomain() {
         return "https://tosdr.org";

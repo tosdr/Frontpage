@@ -20,15 +20,8 @@
         <div class="row mb-5">
         {% endif %}
 
-
-
         {% include "components/servicegrid/service.twig" with {'service': Service, 'col': (12 /columns)} %}
 
-        {% if loop.last and loop.index is not divisible by(columns) %}
-            {% for n in range(low=columns - (loop.index % columns), high=1, step=-1) %}
-
-            {% endfor %}
-        {% endif %}
         {% if loop.last or loop.index is divisible by(columns) %}
         </div>
     {% endif %}

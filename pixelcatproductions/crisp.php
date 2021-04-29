@@ -27,7 +27,7 @@ namespace crisp;
 class core {
     /* Some important constants */
 
-    const CRISP_VERSION = "2.0.0";
+    const CRISP_VERSION = "3.0.0";
 
     /**
      * This is my autoloader. 
@@ -46,7 +46,6 @@ class core {
     public static function bootstrap() {
         spl_autoload_register(function ($class) {
             $file = __DIR__ . "/class/" . str_replace('\\', DIRECTORY_SEPARATOR, $class) . '.php';
-
 
             if (file_exists($file)) {
                 require $file;
@@ -80,9 +79,7 @@ try {
         $GLOBALS['navbar_right'] = array();
         $GLOBALS["render"] = array();
 
-
         session_start();
-
 
         $CurrentTheme = \crisp\api\Config::get("theme");
         $CurrentFile = substr(substr($_SERVER['PHP_SELF'], 1), 0, -4);
@@ -99,7 +96,6 @@ try {
 
         define("CURRENT_UNIVERSE", Universe::getUniverse($_COOKIE[core\Config::$Cookie_Prefix . "universe"]));
         define("CURRENT_UNIVERSE_NAME", Universe::getUniverseName(CURRENT_UNIVERSE));
-
 
         $ThemeLoader = new \Twig\Loader\FilesystemLoader(array(__DIR__ . "/../themes/$CurrentTheme/templates/", __DIR__ . "/../plugins/"));
         $TwigTheme;
@@ -165,7 +161,6 @@ try {
         $TwigTheme->addFunction(new \Twig\TwigFunction('includeResource', [new \crisp\core\Themes(), 'includeResource']));
         $TwigTheme->addFunction(new \Twig\TwigFunction('generateLink', [new \crisp\api\Helper(), 'generateLink']));
 
-
         $Translation = new \crisp\api\Translation($Locale);
 
         $TwigTheme->addFilter(new \Twig\TwigFilter('date', 'date'));
@@ -179,9 +174,7 @@ try {
         $TwigTheme->addFilter(new \Twig\TwigFilter('getlang', [new \crisp\api\lists\Languages(), 'getLanguageByCode']));
         $TwigTheme->addFilter(new \Twig\TwigFilter('truncateText', [new \crisp\api\Helper(), 'truncateText']));
 
-
         $EnvFile = parse_ini_file(__DIR__ . "/../.env");
-
 
         $RedisClass = new \crisp\core\Redis();
         $rateLimiter = new \RateLimit\RedisRateLimiter($RedisClass->getDBConnector());
@@ -193,7 +186,6 @@ try {
         if (explode("/", $_GET["route"])[1] === "api") {
             header('Access-Control-Allow-Origin: *');
             header("Cache-Control: max-age=600, public, must-revalidate");
-
 
             if (!isset($_SERVER['HTTP_USER_AGENT']) || empty($_SERVER['HTTP_USER_AGENT']) || $_SERVER['HTTP_USER_AGENT'] == "i am not valid") {
                 http_response_code(403);
@@ -213,7 +205,6 @@ try {
             $keyDetails;
             if (isset(apache_request_headers()["Authorization"])) {
                 $keyDetails = api\Helper::getAPIKeyDetails(apache_request_headers()["Authorization"]);
-
 
                 if ($keyDetails["expires_at"] !== null && strtotime($keyDetails["expires_at"]) < time()) {
                     header("X-APIKey: expired");
@@ -237,12 +228,9 @@ try {
             $IndicatorHour = "h_" . \crisp\api\Helper::getRealIpAddr();
             $IndicatorDay = "d_" . \crisp\api\Helper::getRealIpAddr();
 
-
             $LimitSecond = \RateLimit\Rate::perSecond(15);
             $LimitHour = \RateLimit\Rate::perHour(1000);
             $LimitDay = \RateLimit\Rate::perHour(15000);
-
-
 
             if (CURRENT_UNIVERSE == \crisp\Universe::UNIVERSE_TOSDR || in_array(\crisp\api\Helper::getRealIpAddr(), \crisp\api\Config::get("office_ips"))) {
 
@@ -290,7 +278,6 @@ try {
             $statusHour = $rateLimiter->limitSilently($IndicatorHour, $LimitHour);
             $statusDay = $rateLimiter->limitSilently($IndicatorDay, $LimitDay);
 
-
             header("X-CMS-CDN: " . api\Config::get("cdn"));
             header("X-CMS-SHIELDS: " . api\Config::get("shield_cdn"));
             header("X-RateLimit-Benefit: " . $Benefit);
@@ -310,8 +297,6 @@ try {
 
             core\Themes::loadAPI($TwigTheme, $GLOBALS["route"]->Page, $Query);
             core\Plugins::loadAPI($GLOBALS["route"]->Page, $QUERY);
-
-
 
             exit;
         }

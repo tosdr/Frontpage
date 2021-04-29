@@ -45,7 +45,6 @@ class Helper {
 
         $keyDetails = self::getAPIKeyDetails($apikey);
 
-
         if (!$keyDetails) {
             return false;
         }
@@ -62,7 +61,6 @@ class Helper {
         $statement = $Postgres->getDBConnector()->prepare("SELECT * FROM apikeys WHERE key = :key");
 
         $statement->execute([":key" => $ApiKey]);
-
 
         if ($statement->rowCount() > 0) {
             return $statement->fetch(\PDO::FETCH_ASSOC);
@@ -84,7 +82,6 @@ class Helper {
             return false;
         }
         $statement->execute([":key" => $apikey]);
-
 
         if ($statement->rowCount() > 0) {
             return true;
@@ -121,7 +118,7 @@ class Helper {
         }
 
 
-        if (!in_array($Locale, array_keys(array_column(\crisp\api\lists\Languages::fetchLanguages(false), null, "Code")))) {
+        if (!in_array($Locale, array_keys(array_column(\crisp\api\lists\Languages::fetchLanguages(false), null, "code")))) {
             $Locale = "en";
         }
 

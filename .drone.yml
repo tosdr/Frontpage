@@ -72,7 +72,7 @@ steps:
   - php /tmp/ci/composer install
   - php bin/cli.php migrate
   - php bin/cli.php theme install crisp
-  - vendor/bin/twig-linter lint themes/crisp/templates/
+#  - vendor/bin/twig-linter lint themes/crisp/templates/
 #  - vendor/bin/phpunit tests --bootstrap pixelcatproductions/crisp.php
   - rm /tmp/ci/composer
   

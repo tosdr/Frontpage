@@ -1,6 +1,6 @@
 <?php
 
-/* 
+/*
  * Copyright (C) 2021 Justin René Back <justin@tosdr.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,13 +21,15 @@ $FeaturedExtension;
 
 $_vars["extensions"] = \crisp\api\Config::get("extensions");
 
-if (CURRENT_UNIVERSE >= crisp\Universe::UNIVERSE_PUBLIC) {
-  foreach ($_vars["extensions"] as $Key => $Extension) {
-    if (strpos($Extension->browser, get_browser(null, true)["browser"]) !== false) {
-      $FeaturedExtension = $Extension;
-      unset($_vars["extensions"][$Key]);
+if (ini_get('browscap') !== "") {
+    if (CURRENT_UNIVERSE >= crisp\Universe::UNIVERSE_PUBLIC) {
+        foreach ($_vars["extensions"] as $Key => $Extension) {
+            if (strpos($Extension->browser, get_browser(null, true)["browser"]) !== false) {
+                $FeaturedExtension = $Extension;
+                unset($_vars["extensions"][$Key]);
+            }
+        }
     }
-  }
 }
 
 $_vars["featured"] = $FeaturedExtension;

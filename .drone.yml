@@ -135,6 +135,39 @@ steps:
   cron:
   - deploy
 
+- name: Discord Success Deploy
+  image: appleboy/drone-discord
+  settings:
+    webhook_id:
+      from_secret: discord_webhook_id
+    webhook_token:
+      from_secret: discord_webhook_token
+    message: "Crisp has been successfully deployed from master branch\n\n{{build.link}}"
+  when:
+    event:
+    - promote
+    - cron
+  cron:
+  - deploy
+  
+- name: Discord Failure Deploy
+  image: appleboy/drone-discord
+  settings:
+    webhook_id:
+      from_secret: discord_webhook_id
+    webhook_token:
+      from_secret: discord_webhook_secret
+    message: "Failed to deploy Crisp from master branch\n\n{{build.link}}"
+  when:
+    status:
+    - failure
+    event:
+    - promote
+    - cron
+  cron:
+  - deploy
+  
+
 #- name: docker  
 #  image: plugins/docker
 #  settings:

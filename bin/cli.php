@@ -1,6 +1,6 @@
 <?php
 
-/* 
+/*
  * Copyright (C) 2021 Justin René Back <justin@tosdr.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -32,7 +32,6 @@ if (php_sapi_name() !== 'cli') {
 
 error_reporting(error_reporting() & ~E_NOTICE);
 require_once __DIR__ . "/../pixelcatproductions/crisp.php";
-
 
 switch ($argv[1]) {
     case "cache":
@@ -129,9 +128,6 @@ switch ($argv[1]) {
                             exit;
                         }
 
-                        if (\crisp\api\Config::set("maintenance_enabled", true)) {
-                            echo "Maintenance Mode successfully enabled." . PHP_EOL;
-                        }
                         $Start = microtime(true);
                         if (\crisp\core\Plugins::installTranslations($argv[4], \crisp\core\Plugins::getPluginMetadata($argv[4]))) {
                             echo "Translations refreshed!" . PHP_EOL;
@@ -140,9 +136,6 @@ switch ($argv[1]) {
                         }
                         $End = microtime(true);
                         echo "Took " . \crisp\api\Helper::truncateText($End - $Start, 6, false) . "ms" . PHP_EOL;
-                        if (\crisp\api\Config::set("maintenance_enabled", false)) {
-                            echo "Maintenance Mode successfully disabled." . PHP_EOL;
-                        }
                         break;
                 }
                 break;
@@ -324,16 +317,10 @@ switch ($argv[1]) {
                     echo "This theme does not exist" . PHP_EOL;
                     exit;
                 }
-                if (\crisp\api\Config::set("maintenance_enabled", true)) {
-                    echo "Maintenance Mode successfully enabled." . PHP_EOL;
-                }
 
                 crisp\core\Themes::installKVStorage($argv[3], \crisp\core\Themes::getThemeMetadata($argv[3]));
                 crisp\core\Themes::installTranslations($argv[3], \crisp\core\Themes::getThemeMetadata($argv[3]));
 
-                if (\crisp\api\Config::set("maintenance_enabled", false)) {
-                    echo "Maintenance Mode successfully disabled." . PHP_EOL;
-                }
                 break;
 
             case "storage":

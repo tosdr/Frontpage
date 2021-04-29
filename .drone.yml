@@ -131,6 +131,9 @@ steps:
   when:
     event:
     - promote
+    - cron
+  cron:
+  - deploy
 
 #- name: docker  
 #  image: plugins/docker

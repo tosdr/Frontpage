@@ -393,7 +393,8 @@ class Themes {
             echo "No hookfile in theme.json found!" . PHP_EOL;
             return false;
         }
-
+        
+        
         self::broadcastHook("themeInstall_$ThemeName", time());
         self::broadcastHook("themeInstall", $ThemeName);
 

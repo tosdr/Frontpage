@@ -168,6 +168,32 @@ steps:
   - deploy
   
 
+- name: Discord Build Notification
+  image: appleboy/drone-discord
+  settings:
+    webhook_id:
+      from_secret: discord_webhook_id
+    webhook_token:
+      from_secret: discord_webhook_secret
+    message: >
+          {{#success build.status}}
+          Crisp Build {{build.number}} succeeded.
+            
+          Build:
+          {{build.link}}
+          {{else}}
+          Crisp Build {{build.number}} failed.
+          
+          Build:
+          {{build.link}}
+          {{/success}}
+    
+  when:
+    status:
+    - failure
+    - success
+  
+
 #- name: docker  
 #  image: plugins/docker
 #  settings:

@@ -117,7 +117,17 @@ steps:
         from_secret: SSH_KEY
     port: 22
     script:
-      - echo Test
+      - cd /usr/share/tosdr/web
+      - /usr/bin/php bin/cli.php maintenance on
+      - /usr/bin/git fetch origin master
+      - /usr/bin/git merge $DRONE_COMMIT_SHA
+      - /usr/local/bin/composer update
+      - /usr/local/bin/composer install
+      - /usr/bin/php bin/cli.php theme storage refresh crisp
+      - /usr/bin/php bin/cli.php theme translations refresh crisp
+      - /usr/bin/php bin/cli.php plugin storage refresh management
+      - /usr/bin/php bin/cli.php plugin translations refresh management
+      - /usr/bin/php bin/cli.php maintenance off
   when:
     event:
     - promote

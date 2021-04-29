@@ -105,6 +105,22 @@ steps:
       - master
       event:
       - push
+      
+- name: Deploy Production
+  image: appleboy/drone-ssh
+  settings:
+    host: 
+        from_secret: SSH_HOST
+    username:
+        from_secret: SSH_USER
+    key:
+        from_secret: SSH_KEY
+    port: 22
+    script:
+      - echo Test
+  when:
+    event:
+    - promote
 
 #- name: docker  
 #  image: plugins/docker

@@ -57,7 +57,7 @@ steps:
     
 
 - name: migrate_crisp_lint
-  image: php:7.4-buster
+  image: php:8.0-buster
   environment:
     COMPOSER_ALLOW_SUPERUSER: 1
   commands:

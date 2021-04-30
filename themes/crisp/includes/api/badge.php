@@ -50,7 +50,7 @@ if (!is_numeric($ServiceName)) {
     }
     $RedisData["_source"] = \crisp\api\Phoenix::getServiceBySlugPG(urldecode($ServiceName));
 } else {
-    if (count(crisp\api\Phoenix::serviceExistsPG($ServiceName)) === 0) {
+    if (!crisp\api\Phoenix::serviceExistsPG($ServiceName)) {
         header("Content-Type: image/svg+xml");
         $Color = "999999";
         $Rating = $Translations->fetch("service_not_found");

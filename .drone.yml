@@ -141,7 +141,7 @@ steps:
     webhook_id:
       from_secret: discord_webhook_id
     webhook_token:
-      from_secret: discord_webhook_token
+      from_secret: discord_webhook_secret
     message: "Crisp has been successfully deployed from master branch\n\n{{build.link}}"
   when:
     event:

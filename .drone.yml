@@ -120,6 +120,7 @@ steps:
       - cd /usr/share/tosdr/web
       - /usr/bin/php bin/cli.php maintenance on
       - /usr/bin/git fetch origin master
+      - /usr/bin/git reset --hard HEAD
       - /usr/bin/git merge $DRONE_COMMIT_SHA
       - /usr/local/bin/composer update
       - /usr/local/bin/composer install

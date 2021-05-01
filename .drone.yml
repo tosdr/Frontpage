@@ -128,6 +128,7 @@ steps:
       - /usr/bin/php bin/cli.php theme translations refresh crisp
       - /usr/bin/php bin/cli.php plugin storage refresh management
       - /usr/bin/php bin/cli.php plugin translations refresh management
+      - /usr/bin/php bin/cli.php cache clear
       - /usr/bin/php bin/cli.php maintenance off
   when:
     event:

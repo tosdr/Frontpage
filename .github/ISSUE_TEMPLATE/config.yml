@@ -1,3 +1,4 @@
+  contact_links:
   - name: API
     url: https://tosdr.atlassian.net/jira/software/c/projects/API/issues/
     about: Report bugs or suggest features for the API.

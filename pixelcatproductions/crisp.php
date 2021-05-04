@@ -183,7 +183,8 @@ try {
             require_once __DIR__ . "/../themes/$CurrentTheme/hook.php";
         }
 
-        if (explode("/", $_GET["route"])[1] === "api") {
+        if (explode("/", $_GET["route"])[1] === "api" || isset($_SERVER["IS_API_ENDPOINT"])) {
+
             header('Access-Control-Allow-Origin: *');
             header("Cache-Control: max-age=600, public, must-revalidate");
 

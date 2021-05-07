@@ -9,7 +9,6 @@
         "createKVStorageItems": {
             "s3_branding": "https://tosdr-branding.s3.eu-west-2.jbcdn.net",
             "s3_logos": "https://tosdr-logos.s3.eu-west-2.jbcdn.net",
-            "office_ips": ["176.9.76.173", "144.76.3.178", "45.136.28.177", "176.9.161.62", "136.243.27.157", "87.78.131.160"],
             "frontpage_services": [182, 190, 194, 265, 222, 274, 1815, 314, 539, 616, 230, 418, 315, 175, 225, 318, 158],
             "site_logo": "/themes/logo.png",
             "root_url": "https://tosdr.org",
@@ -36,9 +35,6 @@
             "translators_es": ["Agnes de Lion", "Guennadi Maximov"],
             "translators_fr": ["Agnes de Lion", "Anonymous"],
             "translators_es_MX": ["Guennadi Maximov", "Anonymous"],
-            "maintenance_allowed_ips": [
-                "144.76.3.178", "144.76.3.178", "45.136.28.177", "87.78.131.160"
-            ],
             "pgp_dir": "pgp/",
             "extensions": [{
                     "browser": "Mozilla Firefox",

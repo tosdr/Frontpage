@@ -22,7 +22,7 @@ use PUGX\Poser\Poser;
 
 $render = new SvgFlatRender();
 $poser = new Poser($render);
-$Prefix = \crisp\api\Config::get("badge_prefix");
+$Prefix = \crisp\api\Config::get("site_name");
 $Language = $GLOBALS["route"]->Language;
 $ServiceName = $this->Query;
 $Color;
@@ -88,7 +88,7 @@ switch ($RedisData["_source"]["is_comprehensively_reviewed"] ? ($RedisData["_sou
         $Rating = $Translations->fetch("badges.grade.none");
 }
 
-$Prefix = \crisp\api\Config::get("badge_prefix") . "/#" . htmlentities($RedisData["_source"]["slug"]);
+$Prefix = $RedisData["_source"]["name"];
 
 $SVG = $poser->generate($Prefix, $Rating, $Color, 'flat');
 

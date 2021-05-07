@@ -82,7 +82,7 @@
             "members": [{
                     "name": "Michiel de Jong",
                     "sub": "Code Communist",
-                    "image": "https://tosdr-team.s3.eu-west-2.jbcdn.net/michiel.png",
+                    "image": "https://tosdr-team.s3.eu-west-2.jbcdn.net/6.jpg",
                     "twitter": "michielbdejong",
                     "description": "Michiel de Jong is an independent freedom hacker, travelling the world while programming for the revolution from his laptop. Apart from ToS;DR he is also involved in <a href=\"http://2012.unhosted.org\">The Unhosted Unconference</a> and he is a co-author of <a href=\"http://www.w3.org/community/unhosted/wiki/RemoteStorage\">the remoteStorage protocol</a>.",
                     "url": "http://michielbdejong.com/",
@@ -104,7 +104,7 @@
                 {
                     "name": "Hugo Roy",
                     "sub": "Legal Liberator",
-                    "image": "https://tosdr-team.s3.eu-west-2.jbcdn.net/hugo.jpg",
+                    "image": "https://tosdr-team.s3.eu-west-2.jbcdn.net/2552.jpg",
                     "twitter": "hugoroyd",
                     "description": "Hugo is an <a href=\"https://attorney.hroy.eu\">attorney</a> at the Paris bar, and a volunteer at the <a href=\"http://fsfe.org\">Free Software Foundation Europe</a>. He currently lives in Paris, where he is often referred to as a Zappa Freak.",
                     "url": "http://hugoroy.eu/index.en.html",
@@ -146,7 +146,7 @@
                 {
                     "name": "Madeline O'Leary",
                     "sub": "Developer",
-                    "image": "https://tosdr-team.s3.eu-west-2.jbcdn.net/madeline.png",
+                    "image": "https://tosdr-team.s3.eu-west-2.jbcdn.net/133.jpg",
                     "twitter": "madeline_oh",
                     "description": "When not developing the Edit Tool for ToS;DR, Madeline O'Leary is a software developer for the International Consortium of Investigative Journalists. She also spends considerable time making weird music.",
                     "url": "",
@@ -168,7 +168,7 @@
                 {
                     "name": "Christopher Talib",
                     "sub": "",
-                    "image": "https://tosdr-team.s3.eu-west-2.jbcdn.net/chris.jpg",
+                    "image": "https://tosdr-team.s3.eu-west-2.jbcdn.net/7.jpg",
                     "twitter": "christalib_",
                     "description": "Working for a better Internet everyday.",
                     "url": "",
@@ -179,7 +179,7 @@
                 {
                     "name": "Evan Mullen",
                     "sub": "Privacy Philanthropist",
-                    "image": "https://tosdr-team.s3.eu-west-2.jbcdn.net/evan.jpg",
+                    "image": "https://tosdr-team.s3.eu-west-2.jbcdn.net/2527.jpg",
                     "twitter": "",
                     "description": "Evan is dedicated to making the world a better place by giving consumers more information about what they agree to in the fine print. He currently resides in San Antonio, Texas.",
                     "url": "",
@@ -190,7 +190,7 @@
                 {
                     "name": "Justin Ren&#xE9; Back",
                     "sub": "Software Developer",
-                    "image": "https://tosdr-team.s3.eu-west-2.jbcdn.net/justin.jpg",
+                    "image": "https://tosdr-team.s3.eu-west-2.jbcdn.net/1764.jpg",
                     "twitter": "justinreneback",
                     "description": "Software Developer and CEO of a privacy focused company. He also has a cat!",
                     "url": "https://justinback.com",
@@ -201,7 +201,7 @@
                 {
                     "name": "Guennadi Maximov Cort&#xE9;s",
                     "sub": "Self Taught",
-                    "image": "https://tosdr-team.s3.eu-west-2.jbcdn.net/guennadi.jpg",
+                    "image": "https://tosdr-team.s3.eu-west-2.jbcdn.net/20149.jpg",
                     "twitter": "jeffsamonarch",
                     "description": "19 year-old Guennadi (AKA \"Dr.Jeff\") has yet a lot to learn, but is determined to help in any way he can. He currently resides in Mexico, and is barely starting his career on Philosophy, expecting to someday focus his research on Privacy. Also learning to code.",
                     "url": "",
@@ -211,7 +211,7 @@
                 }, {
                     "name": "Dmitri Pedersen",
                     "sub": "Privacy Philanthropist",
-                    "image": "https://tosdr-team.s3.eu-west-2.jbcdn.net/dmitri.png",
+                    "image": "https://tosdr-team.s3.eu-west-2.jbcdn.net/2130.jpg",
                     "twitter": "",
                     "description": "Dmitri is dedicated to making the world a better place and  giving people advise and helping people. He currently resides in Washington.",
                     "url": "",
@@ -221,7 +221,7 @@
                 }, {
                     "name": "Inés Rubio",
                     "sub": "",
-                    "image": "https://tosdr-team.s3.eu-west-2.jbcdn.net/ines.png",
+                    "image": "https://tosdr-team.s3.eu-west-2.jbcdn.net/20760.jpg",
                     "description": "Inés Rubio (alias Agnes de Lion) is a teenage girl committed to informing people about their rights online. Strangely enough, she enjoys spending time reading long and tortuous terms of service. She currently resides in France.",
                     "pgp": "",
                     "email": "ines@tosdr.org"

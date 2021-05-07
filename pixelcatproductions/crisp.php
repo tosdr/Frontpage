@@ -161,6 +161,11 @@ try {
         $TwigTheme->addFunction(new \Twig\TwigFunction('includeResource', [new \crisp\core\Themes(), 'includeResource']));
         $TwigTheme->addFunction(new \Twig\TwigFunction('generateLink', [new \crisp\api\Helper(), 'generateLink']));
 
+        /* CSRF Stuff */
+        $TwigTheme->addFunction(new \Twig\TwigFunction('csrf', [new \crisp\core\Security(), 'getCSRF']));
+        $TwigTheme->addFunction(new \Twig\TwigFunction('refreshCSRF', [new \crisp\core\Security(), 'regenCSRF']));
+        $TwigTheme->addFunction(new \Twig\TwigFunction('validateCSRF', [new \crisp\core\Security(), 'matchCSRF']));
+
         $Translation = new \crisp\api\Translation($Locale);
 
         $TwigTheme->addFilter(new \Twig\TwigFilter('date', 'date'));

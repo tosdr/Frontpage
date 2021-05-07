@@ -20,22 +20,37 @@
 
 namespace crisp\core;
 
+use crisp\api\Helper;
+use crisp\api\lists\Languages;
+use crisp\api\Translation;
+use Exception;
+use PDOException;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
+use function file_exists;
+use function file_get_contents;
+use function function_exists;
+use function is_array;
+use function is_callable;
+use function is_object;
+use function serialize;
+
 /**
  * Used internally, theme loader
  *
  */
 class Themes {
 
-    use \crisp\core\Hook;
+    use Hook;
 
     /**
      * Clear the theme cache
      * @return boolean
      */
     public static function clearCache() {
-        $it = new \RecursiveDirectoryIterator(realpath(__DIR__ . "/../../../cache/"), \RecursiveDirectoryIterator::SKIP_DOTS);
-        $files = new \RecursiveIteratorIterator($it,
-                \RecursiveIteratorIterator::CHILD_FIRST);
+        $it = new RecursiveDirectoryIterator(realpath(__DIR__ . "/../../../cache/"), RecursiveDirectoryIterator::SKIP_DOTS);
+        $files = new RecursiveIteratorIterator($it,
+                RecursiveIteratorIterator::CHILD_FIRST);
         foreach ($files as $file) {
             if ($file->isDir()) {
                 rmdir($file->getRealPath());
@@ -47,8 +62,8 @@ class Themes {
     }
 
     public static function getThemeMode() {
-        if (isset($_COOKIE[\crisp\core\Config::$Cookie_Prefix . "theme_mode"])) {
-            $Mode = $_COOKIE[\crisp\core\Config::$Cookie_Prefix . "theme_mode"];
+        if (isset($_COOKIE[Config::$Cookie_Prefix . "theme_mode"])) {
+            $Mode = $_COOKIE[Config::$Cookie_Prefix . "theme_mode"];
         } else {
             $Mode = "0";
         }
@@ -56,7 +71,7 @@ class Themes {
     }
 
     public static function setThemeMode(string $Mode) {
-        return setcookie(\crisp\core\Config::$Cookie_Prefix . "theme_mode", $Mode, time() + (86400 * 30), "/");
+        return setcookie(Config::$Cookie_Prefix . "theme_mode", $Mode, time() + (86400 * 30), "/");
     }
 
     /**
@@ -66,15 +81,15 @@ class Themes {
      */
     public static function loadAPI($ThemeLoader, $Interface, $_QUERY) {
         if (file_exists(__DIR__ . "/../../../../" . \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") . "/includes/api/$Interface.php")) {
-            new \crisp\core\ThemeAPI($ThemeLoader, $Interface, $_QUERY);
+            new ThemeAPI($ThemeLoader, $Interface, $_QUERY);
         }
     }
 
     public static function load($TwigTheme, $CurrentFile, $CurrentPage) {
         try {
             if (count($GLOBALS["render"]) === 0) {
-                if (file_exists(__DIR__ . "/../../../../" . \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") . "/includes/$CurrentPage.php") && \crisp\api\Helper::templateExists(\crisp\api\Config::get("theme"), "/views/$CurrentPage.twig")) {
-                    new \crisp\core\Theme($TwigTheme, $CurrentFile, $CurrentPage);
+                if (file_exists(__DIR__ . "/../../../../" . \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") . "/includes/$CurrentPage.php") && Helper::templateExists(\crisp\api\Config::get("theme"), "/views/$CurrentPage.twig")) {
+                    new Theme($TwigTheme, $CurrentFile, $CurrentPage);
                 } else {
                     $GLOBALS["microtime"]["logic"]["end"] = microtime(true);
                     $GLOBALS["microtime"]["template"]["start"] = microtime(true);
@@ -83,8 +98,8 @@ class Themes {
                     echo $TwigTheme->render("errors/notfound.twig", []);
                 }
             }
-        } catch (\Exception $ex) {
-            throw new \Exception($ex);
+        } catch (Exception $ex) {
+            throw new Exception($ex);
         }
     }
 
@@ -108,7 +123,7 @@ class Themes {
         self::installKVStorage($ThemeMetadata);
         self::installTranslations($ThemeName, $ThemeMetadata);
 
-        if (isset($ThemeMetadata->onInstall->activateDependencies) && \is_array($ThemeMetadata->onInstall->activateDependencies)) {
+        if (isset($ThemeMetadata->onInstall->activateDependencies) && is_array($ThemeMetadata->onInstall->activateDependencies)) {
             foreach ($ThemeMetadata->onInstall->activateDependencies as $Theme) {
                 if (!self::isInstalled($Theme)) {
                     self::install($Theme);
@@ -127,18 +142,38 @@ class Themes {
         return self::installKVStorage($ThemeMetadata);
     }
 
-    public static function installKVStorage($ThemeMetadata) {
-        if (!\is_object($ThemeMetadata) && !isset($ThemeMetadata->hookFile)) {
+    public static function installKVStorage($ThemeMetadata, bool $Overwrite = false) {
+
+        if (!is_object($ThemeMetadata) && !isset($ThemeMetadata->hookFile)) {
             return false;
         }
-        if (isset($ThemeMetadata->onInstall->createKVStorageItems) && \is_object($ThemeMetadata->onInstall->createKVStorageItems)) {
+        if (isset($ThemeMetadata->onInstall->createKVStorageItems) && is_object($ThemeMetadata->onInstall->createKVStorageItems)) {
+
+            if (defined("CRISP_CLI")) {
+                echo "----------" . PHP_EOL;
+                echo "Installing KVStorage for theme ". $ThemeMetadata->name . PHP_EOL;
+                echo "----------" . PHP_EOL;
+            }
+
             foreach ($ThemeMetadata->onInstall->createKVStorageItems as $Key => $Value) {
-                if (is_array($Value) || \is_object($Value)) {
-                    $Value = \serialize($Value);
+                if (is_array($Value) || is_object($Value)) {
+                    $Value = serialize($Value);
+                }
+                if(!$Overwrite && \crisp\api\Config::exists($Key)){
+                    if (defined("CRISP_CLI")) {
+                        echo "Skipping KV key $Key as it already exists and overwrite is false" . PHP_EOL;
+                    }
+                    continue;
                 }
                 try {
+                    if (defined("CRISP_CLI")) {
+                        echo "Installing KV key $Key" . PHP_EOL;
+                    }
                     \crisp\api\Config::create($Key, $Value);
-                } catch (\PDOException $ex) {
+                    if (defined("CRISP_CLI")) {
+                        echo "Installed KV key $Key" . PHP_EOL;
+                    }
+                } catch (PDOException $ex) {
                     continue;
                 }
             }
@@ -147,7 +182,7 @@ class Themes {
     }
 
     public static function installTranslations($ThemeName, $ThemeMetadata) {
-        if (!\is_object($ThemeMetadata) && !isset($ThemeMetadata->hookFile)) {
+        if (!is_object($ThemeMetadata) && !isset($ThemeMetadata->hookFile)) {
             return false;
         }
 
@@ -174,7 +209,7 @@ class Themes {
                     if (!file_exists($File)) {
                         continue;
                     }
-                    $Language = \crisp\api\lists\Languages::getLanguageByCode(substr(basename($File), 0, -5));
+                    $Language = Languages::getLanguageByCode(substr(basename($File), 0, -5));
 
                     if (!$Language) {
                         continue;
@@ -186,27 +221,27 @@ class Themes {
                             if ($Language->newTranslation($Key, $Value, substr(basename($File), 0, -5))) {
                                 $_processed[] = $Key;
                                 if (defined("CRISP_CLI")) {
-                                    echo "Installing key $Key" . PHP_EOL;
+                                    echo "Installing translation key $Key" . PHP_EOL;
                                 }
                             }
-                        } catch (\PDOException $ex) {
+                        } catch (PDOException $ex) {
                             continue 2;
                         }
                     }
 
                     if (defined("CRISP_CLI")) {
-                        echo "Installed/Updated " . count($_processed) . " keys" . PHP_EOL;
+                        echo "Installed/Updated " . count($_processed) . " translation keys" . PHP_EOL;
                         $_processed = [];
                     }
                 }
             }
             return true;
         }
-        if (isset($ThemeMetadata->onInstall->createTranslationKeys) && \is_object($ThemeMetadata->onInstall->createTranslationKeys)) {
+        if (isset($ThemeMetadata->onInstall->createTranslationKeys) && is_object($ThemeMetadata->onInstall->createTranslationKeys)) {
             foreach ($ThemeMetadata->onInstall->createTranslationKeys as $Key => $Value) {
 
                 try {
-                    $Language = \crisp\api\lists\Languages::getLanguageByCode($Key);
+                    $Language = Languages::getLanguageByCode($Key);
 
                     if (!$Language) {
                         continue;
@@ -215,7 +250,7 @@ class Themes {
                     foreach ($Value as $KeyTranslation => $ValueTranslation) {
                         $Language->newTranslation($KeyTranslation, $ValueTranslation, $Key);
                     }
-                } catch (\PDOException $ex) {
+                } catch (PDOException $ex) {
                     continue;
                 }
             }
@@ -242,7 +277,7 @@ class Themes {
 
         $ThemeFolder = \crisp\api\Config::get("theme_dir");
 
-        if (!\file_exists(__DIR__ . "/../../../../$ThemeFolder/$ThemeName/theme.json")) {
+        if (!file_exists(__DIR__ . "/../../../../$ThemeFolder/$ThemeName/theme.json")) {
             return false;
         }
 
@@ -250,10 +285,10 @@ class Themes {
 
         \crisp\api\Config::set("theme", null);
 
-        $ThemeMetadata = json_decode(\file_get_contents(__DIR__ . "/../../../../$ThemeFolder/$ThemeName/theme.json"));
+        $ThemeMetadata = json_decode(file_get_contents(__DIR__ . "/../../../../$ThemeFolder/$ThemeName/theme.json"));
 
 
-        if (!\is_object($ThemeMetadata) && !isset($ThemeMetadata->hookFile)) {
+        if (!is_object($ThemeMetadata) && !isset($ThemeMetadata->hookFile)) {
             return false;
         }
         self::performOnUninstall($ThemeName, $ThemeMetadata);
@@ -267,11 +302,11 @@ class Themes {
 
     private static function performOnUninstall($ThemeName, $ThemeMetadata) {
 
-        if (isset($ThemeMetadata->onUninstall->purgeDependencies) && \is_array($ThemeMetadata->onUninstall->purgeDependencies)) {
+        if (isset($ThemeMetadata->onUninstall->purgeDependencies) && is_array($ThemeMetadata->onUninstall->purgeDependencies)) {
             foreach ($ThemeMetadata->onUninstall->purgeDependencies as $Theme) {
                 self::deleteData($Theme);
             }
-        } else if (isset($ThemeMetadata->onUninstall->deactivateDependencies) && \is_array($ThemeMetadata->onUninstall->deactivateDependencies)) {
+        } else if (isset($ThemeMetadata->onUninstall->deactivateDependencies) && is_array($ThemeMetadata->onUninstall->deactivateDependencies)) {
             foreach ($ThemeMetadata->onUninstall->deactivateDependencies as $Theme) {
                 self::uninstall($Theme);
             }
@@ -297,11 +332,11 @@ class Themes {
 
         $ThemeFolder = \crisp\api\Config::get("theme_dir");
 
-        if (!\file_exists(__DIR__ . "/../../../../$ThemeFolder/$ThemeName/theme.json")) {
+        if (!file_exists(__DIR__ . "/../../../../$ThemeFolder/$ThemeName/theme.json")) {
             return false;
         }
 
-        $ThemeMetadata = json_decode(\file_get_contents(__DIR__ . "/../../../../$ThemeFolder/$ThemeName/theme.json"));
+        $ThemeMetadata = json_decode(file_get_contents(__DIR__ . "/../../../../$ThemeFolder/$ThemeName/theme.json"));
 
         self::uninstallKVStorage($ThemeMetadata);
         self::uninstallTranslations($ThemeMetadata);
@@ -317,19 +352,19 @@ class Themes {
     public static function getThemeMetadata($ThemeName) {
         $ThemeFolder = \crisp\api\Config::get("theme_dir");
 
-        if (!\file_exists(__DIR__ . "/../../../../$ThemeFolder/$ThemeName/theme.json")) {
+        if (!file_exists(__DIR__ . "/../../../../$ThemeFolder/$ThemeName/theme.json")) {
             return false;
         }
 
-        return json_decode(\file_get_contents(__DIR__ . "/../../../../$ThemeFolder/$ThemeName/theme.json"));
+        return json_decode(file_get_contents(__DIR__ . "/../../../../$ThemeFolder/$ThemeName/theme.json"));
     }
 
     public static function uninstallKVStorage($ThemeMetadata) {
-        if (!\is_object($ThemeMetadata) && !isset($ThemeMetadata->hookFile)) {
+        if (!is_object($ThemeMetadata) && !isset($ThemeMetadata->hookFile)) {
             return false;
         }
 
-        if (isset($ThemeMetadata->onInstall->createKVStorageItems) && \is_object($ThemeMetadata->onInstall->createKVStorageItems)) {
+        if (isset($ThemeMetadata->onInstall->createKVStorageItems) && is_object($ThemeMetadata->onInstall->createKVStorageItems)) {
             foreach ($ThemeMetadata->onInstall->createKVStorageItems as $Key => $Value) {
                 \crisp\api\Config::delete($Key);
             }
@@ -337,7 +372,7 @@ class Themes {
     }
 
     public static function uninstallTranslations($ThemeMetadata) {
-        if (!\is_object($ThemeMetadata) && !isset($ThemeMetadata->hookFile)) {
+        if (!is_object($ThemeMetadata) && !isset($ThemeMetadata->hookFile)) {
             return false;
         }
         if (defined("CRISP_CLI")) {
@@ -346,10 +381,10 @@ class Themes {
             echo "----------" . PHP_EOL;
         }
         try {
-            $Configs = \crisp\api\Translation::listTranslations();
+            $Configs = Translation::listTranslations();
 
 
-            $Language = \crisp\api\lists\Languages::getLanguageByCode("en");
+            $Language = Languages::getLanguageByCode("en");
 
             foreach ($Configs as $Key => $Translation) {
                 if (strpos($Translation["key"], "plugin_") !== false) {
@@ -365,7 +400,7 @@ class Themes {
                     }
                 }
             }
-        } catch (\PDOException $ex) {
+        } catch (PDOException $ex) {
             
         }
     }
@@ -378,17 +413,17 @@ class Themes {
 
         $ThemeFolder = \crisp\api\Config::get("theme_dir");
 
-        if (!\file_exists(__DIR__ . "/../../../../$ThemeFolder/$ThemeName/theme.json")) {
+        if (!file_exists(__DIR__ . "/../../../../$ThemeFolder/$ThemeName/theme.json")) {
             echo "No theme.json found!" . PHP_EOL;
             return false;
         }
 
-        $ThemeMetadata = json_decode(\file_get_contents(__DIR__ . "/../../../../$ThemeFolder/$ThemeName/theme.json"));
+        $ThemeMetadata = json_decode(file_get_contents(__DIR__ . "/../../../../$ThemeFolder/$ThemeName/theme.json"));
 
 
         self::performOnInstall($ThemeName, $ThemeMetadata);
 
-        if (!\is_object($ThemeMetadata) && !isset($ThemeMetadata->hookFile)) {
+        if (!is_object($ThemeMetadata) && !isset($ThemeMetadata->hookFile)) {
             var_dump($ThemeMetadata);
             echo "No hookfile in theme.json found!" . PHP_EOL;
             return false;
@@ -408,7 +443,7 @@ class Themes {
      * @returns boolean TRUE if hook could be registered, otherwise false
      */
     public static function registerUninstallHook($ThemeName, $Function) {
-        if (\is_callable($Function) || \function_exists($ThemeName)($Function)) {
+        if (is_callable($Function) || function_exists($ThemeName)($Function)) {
             self::on("themeUninstall_$ThemeName", $Function);
             return true;
         }
@@ -422,7 +457,7 @@ class Themes {
      * @returns boolean TRUE if hook could be registered, otherwise false
      */
     public static function registerInstallHook($ThemeName, $Function) {
-        if (\is_callable($Function) || \function_exists($ThemeName)($Function)) {
+        if (is_callable($Function) || function_exists($ThemeName)($Function)) {
             self::on("themeInstall_$ThemeName", $Function);
             return true;
         }

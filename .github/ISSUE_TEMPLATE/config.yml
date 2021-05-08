@@ -2,3 +2,6 @@
   - name: API
     url: https://tosdr.atlassian.net/jira/software/c/projects/API/issues/
     about: Report bugs or suggest features for the API.
+  - name: Translations
+    about: Report translation errors or new translations using our Localization Management Platform
+    url: https://translate.tosdr.org

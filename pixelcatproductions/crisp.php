@@ -28,6 +28,8 @@ class core {
     /* Some important constants */
 
     const CRISP_VERSION = "3.0.0";
+    
+    const API_VERSION = "1.0.0";
 
     /**
      * This is my autoloader. 

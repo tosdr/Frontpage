@@ -54,5 +54,7 @@
     "views.apikeys.modal.ratelimit_hour": "Ratelimit per hour",
     "views.apikeys.modal.ratelimit_day": "Ratelimit per day",
     "views.apikeys.modal.expires_at": "Expires At",
-    "views.apikeys.modal.type": "Type"
+    "views.apikeys.modal.type": "Type",
+    "views.apikeys.table.td.sen.unknown": "Unknown",
+    "views.apikeys.table.th.sen": "Support Entitlement Number"
 }

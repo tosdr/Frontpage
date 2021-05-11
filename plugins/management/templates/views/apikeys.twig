@@ -56,16 +56,15 @@
             {{ pagination }}
         </span>
         <span class="float-right">
-            <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#new_key_modal">{{ plugin.getTranslation('views.apikeys.button.create') }}</button>
             <form>
-                <input type="text" class="form-control" id="search" value="{{ route.query }}" placeholder="{{ plugin.getTranslation('views.apikeys.input.search.placeholder') }}">
+                <input type="text" class="form-control" id="search" value="{{ route.query }}" placeholder="Search">
             </form>
         </span>
         <table class="table table-striped">
             <thead>
                 <tr>
                     <th>{{ plugin.getTranslation('views.apikeys.table.th.key') }}</th>
-                    <th>{{ plugin.getTranslation('views.apikeys.table.th.user') }}</th>
+                    <th>{{ plugin.getTranslation('views.apikeys.table.th.sen') }}</th>
                     <th>{{ plugin.getTranslation('views.apikeys.table.th.last_changed') }}</th>
                     <th>{{ plugin.getTranslation('views.apikeys.table.th.status') }}</th>
                     <th>{{ plugin.getTranslation('views.apikeys.table.th.created_at') }}</th>
@@ -87,7 +86,7 @@
                             </div>
                         </td>
                         <td>
-                            <a target="_blank" href="{{ config.phoenix_url }}/admin/users/{{ key.userid }}">{{ fetch_phoenix_user(key.userid).username|default(plugin.getTranslation('views.apikeys.table.td.user.unknown')) }}</a>
+                            {{ key.sen|default(plugin.getTranslation('views.apikeys.table.td.sen.unknown')) }}
                         </td>
                         <td>
                             {{ key.last_changed|default(plugin.getTranslation('views.apikeys.table.td.date.unknown')) }}
@@ -134,162 +133,10 @@
         {{ pagination }}
     </div>
 
-    <div class="modal fade" id="new_key_modal" tabindex="-1" role="dialog" aria-labelledby="keyModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="keyModalLabel">{{ plugin.getTranslation('views.apikeys.button.create') }}</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="form-group">
-                            <label for="bitmask_input">{{ plugin.getTranslation('views.apikeys.modal.bitmask') }}</label>
-                            <input type="text" class="form-control" id="bitmask_input" placeholder="1" value="1">
-                        </div>
-                        <div id="bitmasks">
-                        </div>
-                        <div class="form-group">
-                            <label for="user_input">{{ plugin.getTranslation('views.apikeys.modal.user') }}</label>
-                            <div id="lookup_user" class="input-group">
-                                <input type="text" class="form-control" id="user_input">
-                                <div class="input-group-append">
-                                    <button class="btn btn-success" id="verify_user" type="button">{{ plugin.getTranslation('views.apikeys.modal.user.button') }}</button>
-                                </div>
-                            </div>
-                            <div id="feedback_user" class="valid-feedback">
-                                {{ plugin.getTranslation('views.apikeys.modal.user.valid_feedback') }}
-                            </div>
-                            <div class="invalid-feedback">
-                                {{ plugin.getTranslation('views.apikeys.modal.user.invalid_feedback') }}
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="benefit">{{ plugin.getTranslation('views.apikeys.modal.benefit') }}</label>
-                            <input type="text" class="form-control" id="benefit">
-                        </div>
-                        <div class="form-group">
-                            <label for="ratelimit_second">{{ plugin.getTranslation('views.apikeys.modal.ratelimit_second') }}</label>
-                            <input type="text" class="form-control" id="ratelimit_second">
-                        </div>
-                        <div class="form-group">
-                            <label for="ratelimit_hour">{{ plugin.getTranslation('views.apikeys.modal.ratelimit_hour') }}</label>
-                            <input type="text" class="form-control" id="ratelimit_hour">
-                        </div>
-                        <div class="form-group">
-                            <label for="ratelimit_day">{{ plugin.getTranslation('views.apikeys.modal.ratelimit_day') }}</label>
-                            <input type="text" class="form-control" id="ratelimit_day">
-                        </div>
-                        <div class="form-group">
-                            <label for="expires_at">{{ plugin.getTranslation('views.apikeys.modal.expires_at') }}</label>
-                            <input type="date" class="form-control" id="expires_at">
-                        </div>
-                        <div class="form-group">
-                            <label for="key_type">{{ plugin.getTranslation('views.apikeys.modal.type') }}</label>
-                            <select class="form-control" id="key_type">
-                                <option selected>production</option>
-                                <option>development</option>
-                            </select>
-                        </div>
-
-                    </form>
-                    <hr>
-                    <div class="card">
-                        <div class="card-body" id="result">
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ plugin.getTranslation('views.apikeys.modal.close') }}</button>
-                    <button type="button" class="btn btn-primary" id="create_key" disabled>{{ plugin.getTranslation('views.apikeys.modal.create') }}</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
 {% endblock %}
 {% block scripts %}
     <script>
-
-
-        let bitmasks = JSON.parse('{{ bitmasks|json_encode|raw }}');
-        let totalHex = 0;
-        for (var entry of Object.entries(bitmasks)) {
-            let name = entry[0];
-            let hex = entry[1];
-            $("#bitmasks").append(`<div class="form-check form-check-inline"><input class="form-check-input" type="checkbox" id="bitmask_${name}" value="${hex}" ${name === 'NONE' ? 'checked' : null}><label class="form-check-label" for="bitmask_${name}">${name}</label></div>`);
-
-        }
-
         $(document).ready(function () {
-
-
-            $("#create_key").on('click', function () {
-                let button = $(this);
-                button.attr('disabled', true);
-                $.post("", {
-                    create: true,
-                    permissions: $("#bitmask_input").val(),
-                    user: $("#user_input").val(),
-                    ratelimit_second: $("#ratelimit_second").val(),
-                    ratelimit_hour: $("#ratelimit_hour").val(),
-                    ratelimit_day: $("#ratelimit_day").val(),
-                    benefit: $("#benefit").val(),
-                    expires_at: $("#expires_at").val(),
-                    type: $("#key_type").val()
-                }, function (result) {
-                    button.attr('disabled', false);
-                    if (result.error & 0x100) {
-                        $("#result").html("API Key: " + result.parameters.token);
-                    } else {
-                        alert(result.message);
-                    }
-                });
-            });
-
-
-            $("#verify_user").on('click', function () {
-                let button = $(this);
-                button.attr('disabled', true);
-                $("#lookup_user").removeClass("is-invalid");
-                $("#lookup_user").removeClass("is-valid");
-                $.post("", {verify: $("#user_input").val()}, function (result) {
-                    button.attr('disabled', false);
-                    if (result.error & 0x100) {
-                        $("#lookup_user").addClass("is-valid");
-                        $("#feedback_user").html($("#feedback_user").html().replace("\{\{ username \}\}", result.parameters.username).replace("\{\{ email \}\}", result.parameters.email).replace("\{\{ id \}\}", result.parameters.id));
-                        $("#create_key").attr('disabled', false);
-                    } else {
-                        $("#lookup_user").addClass("is-invalid");
-                        $("#create_key").attr('disabled', true);
-                    }
-                });
-            });
-
-
-            $("input:checkbox").on('click', function () {
-                totalHex = 0;
-                $("input:checkbox").each(function () {
-                    if (this.checked) {
-                        totalHex += Number.parseInt($(this).val());
-                    }
-                });
-                $("#bitmask_input").val(totalHex);
-            });
-            $('#bitmask_input').on('keyup', function () {
-                let value = this.value;
-                $("input:checkbox").each(function () {
-                    let hex = Number.parseInt($(this).val());
-
-                    if (hex & value) {
-                        $(this).prop('checked', true);
-                    } else {
-                        $(this).prop('checked', false);
-                    }
-                });
-            });
 
             $(document).on('submit', 'form', function (e) {
                 e.preventDefault();

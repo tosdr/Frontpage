@@ -36,18 +36,15 @@ if (isset($_SESSION[\crisp\core\Config::$Cookie_Prefix . "session_login"])) {
 
     /* Navbar */
 
-    if ($userDetails["curator"] || $userDetails["admin"]) {
         $navbar[] = array("ID" => "dashboard", "html" => $this->getTranslation('views.curator_dashboard.header'), "href" => "/$_locale/dashboard", "target" => "_self");
-    }
+
 
     if ($userDetails["curator"]) {
         $navbar[] = array("ID" => "service_requests", "html" => $this->getTranslation('views.service_requests.header'), "href" => "/$_locale/service_requests", "target" => "_self");
     }
 
 
-    if ($userDetails["admin"]) {
         $navbar[] = array("ID" => "apikeys", "html" => $this->getTranslation('views.apikeys.header'), "href" => "/$_locale/apikeys", "target" => "_self");
-    }
 
     $this->TwigTheme->addGlobal("route", $GLOBALS["route"]->GET);
     $this->TwigTheme->addGlobal("management_navbar", $navbar);

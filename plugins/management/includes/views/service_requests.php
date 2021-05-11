@@ -34,7 +34,6 @@ if (!$User->isSessionValid()) {
     header("Location: " . \crisp\api\Helper::generateLink("login/?invalid_sr"));
     exit;
 }
-
 if (!$userDetails["curator"]) {
     header("Location: /dashboard");
     exit;

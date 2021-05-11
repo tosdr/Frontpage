@@ -38,14 +38,12 @@ if ($User->UserID === false) {
     exit;
 }
 
+
 if (!$User->verifyPassword($_POST["password"])) {
     $this->response(array("INVALID_PASSWORD"), "Password is invalid");
     exit;
 }
-if (!$User->fetch()["curator"] || !$User->fetch()["admin"]) {
-    $this->response(array("MISSING_LEVEL"), "You are not an admin or curator!");
-    exit;
-}
+
 if (!$User->createSession()) {
     $this->response(array("SESSION_ERROR"), "Failed to create session");
     exit;

@@ -29,9 +29,3 @@ if (!$User->isSessionValid()) {
     header("Location: " . \crisp\api\Helper::generateLink("login/?invalid_db"));
     exit;
 }
-if (!$userDetails["admin"]) {
-    if (!$userDetails["curator"]) {
-        header("Location: /");
-        exit;
-    }
-} 

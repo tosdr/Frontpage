@@ -181,7 +181,7 @@ class Migrations {
      * @since 0.0.8-beta.RC2
      * @return void
      */
-    public function create(string $MigrationName, string $Dir = __DIR__ . "/../") {
+    public static function create(string $MigrationName, string $Dir = __DIR__ . "/../") {
 
         $MigrationNameFiltered = \crisp\api\Helper::filterAlphaNum($MigrationName);
 

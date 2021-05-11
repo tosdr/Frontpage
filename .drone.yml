@@ -124,6 +124,7 @@ steps:
       - /usr/bin/git merge $DRONE_COMMIT_SHA
       - /usr/local/bin/composer update
       - /usr/local/bin/composer install
+      - /usr/bin/php bin/cli.php migrate
       - /usr/bin/php bin/cli.php theme storage refresh crisp
       - /usr/bin/php bin/cli.php theme translations refresh crisp
       - /usr/bin/php bin/cli.php plugin storage refresh management

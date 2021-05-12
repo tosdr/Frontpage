@@ -36,6 +36,9 @@
             "translators_fr": ["Agnes de Lion", "Anonymous"],
             "translators_es_MX": ["Guennadi Maximov", "Anonymous"],
             "pgp_dir": "pgp/",
+            "bitcoin_qr": "iVBORw0KGgoAAAANSUhEUgAAAJEAAACRCAYAAADD2FojAAAACXBIWXMAAA7EAAAOxAGVKw4bAAADgklEQVR4nO3dzdITIRAFUMf63v+V455FkNxuIHrOVudH6xbpgoZ5Xq/X6xcEfp9+Ab6fEBETImJCREyIiAkRMSEiJkTEhIiYEBETImJCREyIiP18euHzPJXvMTU2G4zPnzUjpO+72uyw+n6z67slzRxGImJCREyIiH1cE42qGyRnNcGsRpr9/dTu99v9/iuMRMSEiJgQESuriUarv7npb/5qDVL9frtrtN3/v+8YiYgJETEhItZWE53WvbH39DzVTYxExISImBAR+2dqoln/TtrfM3ve6H+qmYxExISImBARa6uJdv/Gr9ZA6drTak93+vzZ+5xkJCImRMSEiFhZTbR7n1T1vE/aj9Rdo+z+/11hJCImRMSEiNjHNdFN8xR/o3veaPXP0/vfxEhETIiICRGxtvOJ0n6aWQ3TvRa1er/qfqbueajK+xuJiAkRMSEi1nY+0enzeNKao7tHe/V9bu7pNhIREyJiQkSsbe2s+lzp7vOBqvt1unusZ88bOZ+IqwkRMSEi9rw+/LFM14qq15JOr53ddr+d80ZGImJCREyIiLXtO+veG989D7R77WxV97zTCiMRMSEiJkTEytbOxt/k6rWx6n6baunzq79FspORiJgQERMiYm37zkbVa2vp2tvs/Waq57VG3f/eSkYiYkJETIiIHesn6n7ezO4aavX+3ew74ypCREyIiH1cE01vvHnf1+kapfu8odPXv2MkIiZExISIWNnaWfo9sFH3Wtbseen9qs98TOfh7MXnakJETIiIbdt3Nqruqb6t5zpVXXN2rm0aiYgJETEhIlZWE42qv+WxqrsHubs/avX6k4xExISImBARa6uJRtW/+dU11e7vnc2uX1V9NsIKIxExISImRMTaeqy7dfcjVa/Fne6f0k/E1YSImBAR23Y+UWq157h73qZ7be6mHuoZIxExISImRMTK1s66vxNf/fzqeZnqGvGbpu+MRMSEiJgQETvWYz3qXus63XN9+tsdzifiakJETIiIbeux3q37+2nffvaAvfhcRYiICRGxr62JTp9h2H2WwMzuc8LfMRIREyJiQkSsrSY6XRNUX79aY1X3aFfPY1XWSEYiYkJETIiItZ1jfZvuGmV2v9V9cavPP7lPzUhETIiICRGxrz2fiHsYiYgJETEhIiZExISImBAREyJiQkRMiIgJETEhIiZExISImBAR+wMTUzI6dn2rhgAAAABJRU5ErkJggg==",
+            "bitcoin_wallet": "bc1qka60xsgtq9pewq9fc0n3ykjrvev262ysg6sz2z",
+            "opencollective_embed": "https://opencollective.com/embed/tosdr/donate",
             "extensions": [{
                     "browser": "Mozilla Firefox",
                     "type": "components.extensiongrid.addon.type.addon",

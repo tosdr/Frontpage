@@ -39,7 +39,7 @@
     "components.navbar.about": "About Us",
     "components.navbar.alert.donate": "We are running a Crowdfunding campaign on Indiegogo!<br><br>Support us and receive special perks: <a href=\"https://igg.me/at/tosdr\">Help us!</a>",
     "components.navbar.api": "API",
-    "components.navbar.donate": "Donate On Opencollective",
+    "components.navbar.donate": "Donate",
     "components.navbar.download": "Download Extensions",
     "components.navbar.forum": "Forum",
     "components.navbar.home": "Home",
@@ -222,5 +222,15 @@
     "views.txt.errors.invalid_key": "Cannot parse key \"{{ got }}\" in line {{ line }}.",
     "views.txt.errors.curl_error": "CURL error trying to get {{ path }}",
     "views.txt.card.results.failed_validations.h5": "Failed Validations:",
-    "views.txt.card.results.result.h5": "Parsed tosdr.txt"
+    "views.txt.card.results.result.h5": "Parsed tosdr.txt",
+    "components.footer.classification": "Classification",
+    "components.footer.thanks": "Thanks",
+    "components.footer.txt": "tosdr.txt",
+    "views.donate.jumbotron.header": "Donate to Terms of Service; Didn't Read",
+    "views.donate.jumbotron.title": "Donate",
+    "views.donate.jumbotron.text": "The Team at Terms of Service; Didn't Read is committed to \"fix the biggest lie on the internet\".\n\nYour donation helps pay for the development, servers, and bandwidth of the browser extensions used by thousands around the world.",
+    "views.donate.oc.header": "Opencollective",
+    "views.donate.oc.text": "With the Opencollective you can donate by Credit Card or PayPal. Contributions are not deductible as charitable contributions for U.S. federal income tax purposes.\n\nWith Opencollective you can choose to do an incognito contribution: Publicly, the contribution amount and date will be visible in the transparent budget, but your identity will be obscured, appearing only as \"incognito\". The contribution will not be linked to your public profile. However, ToS;DR Staff will be able to see your identity privately.",
+    "views.donate.bitcoin.header": "Bitcoin",
+    "views.donate.bitcoin.text": "Via Bitcoin you can donate to ToS;DR 100% anonymously. Contributions are not deductible as charitable contributions for U.S. federal income tax purposes.\n\nTo donate, scan the QR code in your preferred Bitcoin wallet or use our address below."
 }

@@ -1,3 +1,4 @@
+---
 kind: pipeline
 name: default
 
@@ -229,3 +230,8 @@ services:
     POSTGRES_USER: postgres
     POSTGRES_DB: postgres
     POSTGRES_HOST_AUTH_METHOD: trust
+---
+kind: signature
+hmac: 91679bdc42ec560706c92f980a91744b48977f191d21df44c8bcacb2faf999d0
+
+...

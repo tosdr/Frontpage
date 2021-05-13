@@ -219,5 +219,9 @@
     "views.new_service.form.service_note.label_muted": "Notes complémentaires pour nos vérificateurs",
     "views.new_service.form.service_note.placeholder": "Il y a-t-il quelque chose d'autre que nos vérificateurs devraient savoir ?",
     "views.donate.jumbotron.title": "Faire un don",
-    "views.donate.jumbotron.header": "Faire un don à Terms of Service; Didn't Read"
+    "views.donate.jumbotron.header": "Faire un don à Terms of Service; Didn't Read",
+    "views.txt.errors.curl_error": "Erreur CURL en essayant d'obtenir {{ path }}",
+    "views.txt.card.results.failed_validations.h5": "Echecs de validations :",
+    "components.footer.classification": "Classement",
+    "views.donate.bitcoin.header": "Bitcoin"
 }

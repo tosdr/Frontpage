@@ -223,5 +223,8 @@
     "views.txt.errors.curl_error": "Erreur CURL en essayant d'obtenir {{ path }}",
     "views.txt.card.results.failed_validations.h5": "Echecs de validations :",
     "components.footer.classification": "Classement",
-    "views.donate.bitcoin.header": "Bitcoin"
+    "views.donate.bitcoin.header": "Bitcoin",
+    "components.footer.thanks": "Remerciements",
+    "views.donate.jumbotron.text": "L'Equipe de Terms of Service; Didn't Read est dévouée à \"remédier au plus grand mensonge sur Internet\".\n\nVotre don aide à payer le développement, les serveurs et la bande passante des extensions de navigateur utilisées par des milliers de gens autour du monde.",
+    "views.donate.oc.header": "Opencollective"
 }

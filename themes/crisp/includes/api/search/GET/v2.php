@@ -29,7 +29,7 @@ if (empty($inputQuery) || !isset($inputQuery)) {
 }
 
 
-foreach (crisp\api\Phoenix::searchServiceByNamePG(strtolower($inputQuery)) as $Service) {
+foreach (crisp\api\Phoenix::searchServiceByName(strtolower($inputQuery)) as $Service) {
     $Array[] = $Service;
 }
 

@@ -46,7 +46,7 @@ if (isset($_POST["payload"]) || !empty($_POST["payload"])) {
         exit;
     }
 
-    if (\crisp\api\Phoenix::getServiceByNamePG($payload["name"]) !== false) {
+    if (\crisp\api\Phoenix::getServiceByName($payload["name"]) !== false) {
         echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::SERVICE_DUPLICATE, "Service already exists", []);
         exit;
     }

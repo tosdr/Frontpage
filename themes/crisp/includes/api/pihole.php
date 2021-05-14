@@ -21,7 +21,7 @@ $exclude = explode(",", $GLOBALS["route"]->GET["exclude"]);
 
 array_shift($exclude);
 
-$_all = crisp\api\Phoenix::getServicesPG();
+$_all = crisp\api\Phoenix::getServices();
 
 $Content = "";
 $isExcluded = false;

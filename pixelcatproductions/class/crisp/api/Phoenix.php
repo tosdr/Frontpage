@@ -21,19 +21,13 @@
 namespace crisp\api;
 
 use crisp\core\Postgres;
-use crisp\core\Redis;
-use Exception;
 use PDO;
-use function curl_exec;
-use function curl_init;
-use function curl_setopt_array;
 
 /**
  * Some useful phoenix functions
  */
 class Phoenix {
 
-    private static ?\Redis $Redis_Database_Connection = null;
     private static ?PDO $Postgres_Database_Connection = null;
 
     private static function initPGDB() {
@@ -41,17 +35,13 @@ class Phoenix {
         self::$Postgres_Database_Connection = $PostgresDB->getDBConnector();
     }
 
-    private static function initDB() {
-        $RedisDB = new Redis();
-        self::$Redis_Database_Connection = $RedisDB->getDBConnector();
-    }
-
     /**
      * Generates tosdr.org api data from a service id
      * @param string $ID The service ID from Phoenix to generate the API Files from
      * @return array The API data
      */
-    public static function generateApiFiles(string $ID, int $Version = 1) {
+    public static function generateApiFiles(string $ID, int $Version = 1): array
+    {
 
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
@@ -65,9 +55,9 @@ class Phoenix {
                 $ServicePoints = array();
                 $ServicePointsData = array();
 
-                $points = self::getPointsByServicePG($ID);
-                $service = self::getServicePG($ID);
-                $documents = self::getDocumentsByServicePG($ID);
+                $points = self::getPointsByService($ID);
+                $service = self::getService($ID);
+                $documents = self::getDocumentsByService($ID);
                 foreach ($documents as $Links) {
                     $ServiceLinks[$Links["name"]] = array(
                         "name" => $Links["name"],
@@ -81,7 +71,7 @@ class Phoenix {
                 }
                 foreach ($points as $Point) {
                     $Document = array_column($documents, null, 'id')[$Point["document_id"]];
-                    $Case = self::getCasePG($Point["case_id"]);
+                    $Case = self::getCase($Point["case_id"]);
                     if ($Point["status"] == "approved") {
                         $ServicePointsData[$Point["id"]] = array(
                             "discussion" => "https://edit.tosdr.org/points/" . $Point["id"],
@@ -118,16 +108,14 @@ class Phoenix {
                 );
                 break;
             case 3:
-                $ServiceLinks = array();
-                $ServicePoints = array();
                 $ServicePointsData = array();
 
-                $points = self::getPointsByServicePG($ID);
-                $service = self::getServicePG($ID);
-                $documents = self::getDocumentsByServicePG($ID);
+                $points = self::getPointsByService($ID);
+                $service = self::getService($ID);
+                $documents = self::getDocumentsByService($ID);
                 foreach ($points as $Point) {
                     $Document = array_column($documents, null, 'id')[$Point["document_id"]];
-                    $Case = self::getCasePG($Point["case_id"]);
+                    $Case = self::getCase($Point["case_id"]);
                     $ServicePointsData[] = array(
                         "discussion" => "https://edit.tosdr.org/points/" . $Point["id"],
                         "id" => $Point["id"],
@@ -161,7 +149,8 @@ class Phoenix {
      * @param string $ID The ID of the Service
      * @return array
      */
-    public static function getPointsByServicePG($ID) {
+    public static function getPointsByService(string $ID): array
+    {
 
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
@@ -182,7 +171,8 @@ class Phoenix {
      * @param string $ID The Service ID
      * @return array
      */
-    public static function getDocumentsByServicePG(string $ID) {
+    public static function getDocumentsByService(string $ID): array
+    {
 
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
@@ -200,7 +190,8 @@ class Phoenix {
      * @see https://github.com/tosdr/edit.tosdr.org/blob/8b900bf8879b8ed3a4a2a6bbabbeafa7d2ab540c/db/schema.rb#L89-L111 Database Schema
      * @return array
      */
-    public static function getPointsPG() {
+    public static function getPoints(): array
+    {
 
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
@@ -215,7 +206,8 @@ class Phoenix {
      * @param string $ID The ID of a point
      * @return array
      */
-    public static function getPointPG(string $ID) {
+    public static function getPoint(string $ID): array
+    {
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
         }
@@ -224,55 +216,7 @@ class Phoenix {
 
         $statement->execute(array(":ID" => $ID));
 
-        $Result = $statement->fetch(PDO::FETCH_ASSOC);
-
-        return $Result;
-    }
-
-    /**
-     * Get details of a point from phoenix
-     * @param string $ID The ID of the point
-     * @param bool $Force Force update from phoenix
-     * @return object
-     * @deprecated Use Phoenix::getPointPG
-     * @throws Exception
-     */
-    public static function getPoint(string $ID, bool $Force = false) {
-        if (self::$Redis_Database_Connection === null) {
-            self::initDB();
-        }
-
-        if (self::$Redis_Database_Connection->exists(Config::get("phoenix_api_endpoint") . "/points/id/$ID") && !$Force) {
-            return json_decode(self::$Redis_Database_Connection->get(Config::get("phoenix_api_endpoint") . "/points/id/$ID"));
-        }
-
-        $curl = curl_init();
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => Config::get("phoenix_url") . Config::get("phoenix_api_endpoint") . "/points/$ID",
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => "",
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => "GET",
-            CURLOPT_USERAGENT => "CrispCMS ToS;DR",
-        ));
-        $raw = curl_exec($curl);
-        $response = json_decode($raw);
-
-        if ($response === null) {
-            throw new Exception("Failed to crawl! " . $raw);
-        }
-        if ($response->error) {
-            throw new Exception($response->error);
-        }
-
-
-        if (self::$Redis_Database_Connection->set(Config::get("phoenix_api_endpoint") . "/points/id/$ID", json_encode($response), 2592000)) {
-            return $response;
-        }
-        throw new Exception("Failed to contact REDIS");
+        return $statement->fetch(PDO::FETCH_ASSOC);
     }
 
     /**
@@ -281,7 +225,8 @@ class Phoenix {
      * @param string $ID The id of a case
      * @return array
      */
-    public static function getCasePG(string $ID) {
+    public static function getCase(string $ID): array
+    {
 
 
         if (self::$Postgres_Database_Connection === NULL) {
@@ -296,58 +241,13 @@ class Phoenix {
     }
 
     /**
-     * Get details of a case
-     * @param string $ID The ID of a case
-     * @param bool $Force Force update from Phoenix
-     * @return object
-     * @deprecated Use Phoenix::getCasePG
-     * @throws Exception
-     */
-    public static function getCase(string $ID, bool $Force = false) {
-        if (self::$Redis_Database_Connection === null) {
-            self::initDB();
-        }
-
-        if (self::$Redis_Database_Connection->exists(Config::get("phoenix_api_endpoint") . "/cases/id/$ID") && !$Force) {
-            return json_decode(self::$Redis_Database_Connection->get(Config::get("phoenix_api_endpoint") . "/cases/id/$ID"));
-        }
-
-        $curl = curl_init();
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => Config::get("phoenix_url") . Config::get("phoenix_api_endpoint") . "/cases/$ID",
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => "",
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => "GET",
-            CURLOPT_USERAGENT => "CrispCMS ToS;DR",
-        ));
-        $raw = curl_exec($curl);
-        $response = json_decode($raw);
-
-        if ($response === null) {
-            throw new Exception("Failed to crawl! " . $raw);
-        }
-        if ($response->error) {
-            throw new Exception($response->error);
-        }
-
-
-        if (self::$Redis_Database_Connection->set(Config::get("phoenix_api_endpoint") . "/cases/id/$ID", json_encode($response), 2592000)) {
-            return $response;
-        }
-        throw new Exception("Failed to contact REDIS");
-    }
-
-    /**
      * Gets details about a topic from postgres
      * @see https://github.com/tosdr/edit.tosdr.org/blob/8b900bf8879b8ed3a4a2a6bbabbeafa7d2ab540c/db/schema.rb#L170-L177 Database Schema
      * @param string $ID The topic id
      * @return array
      */
-    public static function getTopicPG(string $ID) {
+    public static function getTopic(string $ID): array
+    {
 
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
@@ -361,86 +261,13 @@ class Phoenix {
     }
 
     /**
-     * Get details of a topic
-     * @param string $ID The topic id
-     * @param bool $Force Force update from phoenix
-     * @return object
-     * @deprecated Use Phoenix::getTopicPG
-     * @throws Exception
-     */
-    public static function getTopic(string $ID, bool $Force = false) {
-        if (self::$Redis_Database_Connection === null) {
-            self::initDB();
-        }
-
-        if (self::$Redis_Database_Connection->exists(Config::get("phoenix_api_endpoint") . "/topics/id/$ID") && !$Force) {
-            return json_decode(self::$Redis_Database_Connection->get(Config::get("phoenix_api_endpoint") . "/topics/id/$ID"));
-        }
-
-        $curl = curl_init();
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => Config::get("phoenix_url") . Config::get("phoenix_api_endpoint") . "/topics/$ID",
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => "",
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => "GET",
-            CURLOPT_USERAGENT => "CrispCMS ToS;DR",
-        ));
-        $raw = curl_exec($curl);
-        $response = json_decode($raw);
-
-        if ($response === null) {
-            throw new Exception("Failed to crawl! " . $raw);
-        }
-        if ($response->error) {
-            throw new Exception($response->error);
-        }
-
-
-        if (self::$Redis_Database_Connection->set(Config::get("phoenix_api_endpoint") . "/topics/id/$ID", json_encode($response), 2592000)) {
-            return $response;
-        }
-        throw new Exception("Failed to contact REDIS");
-    }
-
-    /**
-     * Get details of a service by name
-     * @param string $Name The name of the service
-     * @param bool $Force Force update from phoenix
-     * @return object
-     * @deprecated Use Phoenix::getServiceByNamePG
-     * @throws Exception
-     */
-    public static function getServiceByName(string $Name, bool$Force = false) {
-        $Name = strtolower($Name);
-        if (self::$Redis_Database_Connection === null) {
-            self::initDB();
-        }
-
-        if (self::$Redis_Database_Connection->exists(Config::get("phoenix_api_endpoint") . "/services/name/$Name") && !$Force) {
-
-
-            $response = json_decode(self::$Redis_Database_Connection->get(Config::get("phoenix_api_endpoint") . "/services/name/$Name"));
-
-            $response->nice_service = Helper::filterAlphaNum($response->name);
-            $response->has_image = (file_exists(__DIR__ . "/../../../../" . Config::get("theme_dir") . "/" . Config::get("theme") . "/img/logo/" . $response->nice_service . ".svg") ? true : file_exists(__DIR__ . "/../../../../" . Config::get("theme_dir") . "/" . Config::get("theme") . "/img/logo/" . $response->nice_service . ".png") );
-            $response->image = "/img/logo/" . $response->nice_service . (file_exists(__DIR__ . "/../../../../" . Config::get("theme_dir") . "/" . Config::get("theme") . "/img/logo/" . $response->nice_service . ".svg") ? ".svg" : ".png");
-
-            return $response;
-        }
-        throw new Exception("Service is not initialized!");
-    }
-
-    /**
      * Search for a service via postgres
      * @see https://github.com/tosdr/edit.tosdr.org/blob/8b900bf8879b8ed3a4a2a6bbabbeafa7d2ab540c/db/schema.rb#L134-L148 Database Schema
      * @param string $Name The name of a service
      * @return array
      */
-    public static function searchServiceByNamePG(string $Name) {
+    public static function searchServiceByName(string $Name): array
+    {
 
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
@@ -453,8 +280,8 @@ class Phoenix {
         $response = $statement->fetchAll(PDO::FETCH_ASSOC);
 
         foreach ($response as $Key => $Service) {
-            $response[$Key]["nice_service"] = Helper::filterAlphaNum($response[$Key]["name"]);
-            $response[$Key]["has_image"] = (file_exists(__DIR__ . "/../../../../" . Config::get("theme_dir") . "/" . Config::get("theme") . "/img/logo/" . $response[$Key]["nice_service"] . ".svg") ? true : file_exists(__DIR__ . "/../../../../" . Config::get("theme_dir") . "/" . Config::get("theme") . "/img/logo/" . $response[$Key]["nice_service"] . ".png") );
+            $response[$Key]["nice_service"] = Helper::filterAlphaNum($Service["name"]);
+            $response[$Key]["has_image"] = (file_exists(__DIR__ . "/../../../../" . Config::get("theme_dir") . "/" . Config::get("theme") . "/img/logo/" . $response[$Key]["nice_service"] . ".svg") || file_exists(__DIR__ . "/../../../../" . Config::get("theme_dir") . "/" . Config::get("theme") . "/img/logo/" . $response[$Key]["nice_service"] . ".png"));
             $response[$Key]["image"] = "/img/logo/" . $response[$Key]["nice_service"] . (file_exists(__DIR__ . "/../../../../" . Config::get("theme_dir") . "/" . Config::get("theme") . "/img/logo/" . $response[$Key]["nice_service"] . ".svg") ? ".svg" : ".png");
         }
 
@@ -465,9 +292,10 @@ class Phoenix {
      * Get details of a service from postgres via a slug
      * @see https://github.com/tosdr/edit.tosdr.org/blob/8b900bf8879b8ed3a4a2a6bbabbeafa7d2ab540c/db/schema.rb#L134-L148 Database Schema
      * @param string $Name The slug of a service
-     * @return array
+     * @return bool|array
      */
-    public static function getServiceBySlugPG(string $Name) {
+    public static function getServiceBySlug(string $Name): bool|array
+    {
 
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
@@ -489,9 +317,10 @@ class Phoenix {
      * Get details of a service via postgres by name
      * @see https://github.com/tosdr/edit.tosdr.org/blob/8b900bf8879b8ed3a4a2a6bbabbeafa7d2ab540c/db/schema.rb#L134-L148 Database Schema
      * @param string $Name the exact name of the service
-     * @return array
+     * @return bool|array
      */
-    public static function getServiceByNamePG(string $Name) {
+    public static function getServiceByName(string $Name): bool|array
+    {
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
         }
@@ -516,7 +345,8 @@ class Phoenix {
      * @param string $Name The slug of the service
      * @return bool
      */
-    public static function serviceExistsBySlugPG(string $Name) {
+    public static function serviceExistsBySlug(string $Name): bool
+    {
 
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
@@ -531,14 +361,19 @@ class Phoenix {
 
     /**
      * Create a service on phoenix
+     * @param string $Name
+     * @param string $Url
+     * @param string $Wikipedia
+     * @param string $User
      * @return bool
      */
-    public static function createService(string $Name, string $Url, string $Wikipedia, string $User) {
+    public static function createService(string $Name, string $Url, string $Wikipedia, string $User): bool
+    {
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
         }
 
-        if (self::serviceExistsByNamePG($Name)) {
+        if (self::serviceExistsByName($Name)) {
             return false;
         }
 
@@ -548,10 +383,10 @@ class Phoenix {
 
         $service_id = self::$Postgres_Database_Connection->lastInsertId();
 
-        $Result = ($statement->rowCount() > 0 ? true : false);
+        $Result = $statement->rowCount() > 0;
 
         if ($Result) {
-            self::createVersion("Service", $service_id, "create", "Created service", $User, null);
+            self::createVersion("Service", $service_id, "create", "Created service", $User);
             return $service_id;
         }
 
@@ -560,14 +395,20 @@ class Phoenix {
 
     /**
      * Create a version on phoenix
+     * @param string $Name
+     * @param string $Url
+     * @param string $Xpath
+     * @param string $Service
+     * @param string $User
      * @return bool
      */
-    public static function createDocument(string $Name, string $Url, string $Xpath, string $Service, string $User) {
+    public static function createDocument(string $Name, string $Url, string $Xpath, string $Service, string $User): bool
+    {
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
         }
 
-        if (!self::serviceExistsPG($Service)) {
+        if (!self::serviceExists($Service)) {
             return false;
         }
 
@@ -575,12 +416,12 @@ class Phoenix {
 
         $statement->execute([":name" => $Name, ":url" => $Url, ":xpath" => $Xpath, ":service_id" => $Service]);
 
-        $Result = ($statement->rowCount() > 0 ? true : false);
+        $Result = $statement->rowCount() > 0;
 
         $document_id = self::$Postgres_Database_Connection->lastInsertId();
 
         if ($Result) {
-            self::createVersion("Document", $document_id, "create", "Created document", $User, null);
+            self::createVersion("Document", $document_id, "create", "Created document", $User);
             return $document_id;
         }
 
@@ -589,9 +430,16 @@ class Phoenix {
 
     /**
      * Create a document on phoenix
+     * @param string $itemType
+     * @param string $itemId
+     * @param string $event
+     * @param string|null $objectChanges
+     * @param string $whodunnit
+     * @param string|null $object
      * @return bool
      */
-    public static function createVersion(string $itemType, string $itemId, string $event, string $objectChanges = null, string $whodunnit, string $object = null) {
+    public static function createVersion(string $itemType, string $itemId, string $event, string $objectChanges = null, string $whodunnit, string $object = null): bool
+    {
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
         }
@@ -607,9 +455,7 @@ class Phoenix {
             ":object" => $object
         ]);
 
-        $Result = ($statement->rowCount() > 0 ? true : false);
-
-        return $Result;
+        return $statement->rowCount() > 0;
     }
 
     /**
@@ -617,7 +463,8 @@ class Phoenix {
      * @param string $Name The name of the service
      * @return bool
      */
-    public static function serviceExistsByNamePG(string $Name) {
+    public static function serviceExistsByName(string $Name): bool
+    {
 
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
@@ -631,41 +478,12 @@ class Phoenix {
     }
 
     /**
-     * Check if a service exists by name
-     * @param string $Name The name of the service
-     * @return bool
-     * @deprecated Use Phoenix::serviceExistsByNamePG
-     */
-    public static function serviceExistsByName(string $Name) {
-        $Name = strtolower($Name);
-
-        if (self::$Redis_Database_Connection === null) {
-            self::initDB();
-        }
-
-        return self::$Redis_Database_Connection->exists(Config::get("phoenix_api_endpoint") . "/services/name/$Name");
-    }
-
-    /**
-     * Check if the point exists by name
-     * @param string $ID The ID of the point
-     * @deprecated Use Phoenix::pointExistsPG
-     * @return bool
-     */
-    public static function pointExists(string $ID) {
-        if (self::$Redis_Database_Connection === null) {
-            self::initDB();
-        }
-
-        return self::$Redis_Database_Connection->exists(Config::get("phoenix_api_endpoint") . "/points/id/$ID");
-    }
-
-    /**
      * Check if a point exists from postgres via slug
      * @param string $ID The id of the point
      * @return bool
      */
-    public static function pointExistsPG(string $ID) {
+    public static function pointExists(string $ID): bool
+    {
         #
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
@@ -683,7 +501,8 @@ class Phoenix {
      * @param string $ID The ID of the service
      * @return bool
      */
-    public static function serviceExistsPG(string $ID) {
+    public static function serviceExists(string $ID): bool
+    {
 
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
@@ -696,21 +515,8 @@ class Phoenix {
         return $statement->rowCount() > 0;
     }
 
-    /**
-     * Check if a service exists by name
-     * @param string $ID The ID of the service
-     * @return bool
-     * @deprecated Use Phoenix::serviceExistsPG
-     */
-    public static function serviceExists(string $ID) {
-        if (self::$Redis_Database_Connection === null) {
-            self::initDB();
-        }
-
-        return self::$Redis_Database_Connection->exists(Config::get("phoenix_api_endpoint") . "/services/id/$ID");
-    }
-
-    public static function getServicePG(string $ID) {
+    public static function getService(string $ID): bool|array
+    {
 
 
         if (self::$Postgres_Database_Connection === NULL) {
@@ -737,71 +543,12 @@ class Phoenix {
     }
 
     /**
-     * Get details of a service by name
-     * @param string $ID The ID of a service
-     * @param bool $Force Force update from phoenix
-     * @return object
-     * @deprecated Use Phoenix::getServicePG
-     * @throws Exception
-     */
-    public static function getService(string $ID, bool $Force = false) {
-        if (self::$Redis_Database_Connection === null) {
-            self::initDB();
-        }
-
-        if (self::$Redis_Database_Connection->exists(Config::get("phoenix_api_endpoint") . "/services/id/$ID") && !$Force) {
-
-            $response = json_decode(self::$Redis_Database_Connection->get(Config::get("phoenix_api_endpoint") . "/services/id/$ID"));
-
-
-            $response->nice_service = Helper::filterAlphaNum($response->name);
-            $response->has_image = (file_exists(__DIR__ . "/../../../../" . Config::get("theme_dir") . "/" . Config::get("theme") . "/img/logo/" . $response->nice_service . ".svg") ? true : file_exists(__DIR__ . "/../../../../" . Config::get("theme_dir") . "/" . Config::get("theme") . "/img/logo/" . $response->nice_service . ".png") );
-            $response->image = "/img/logo/" . $response->nice_service . (file_exists(__DIR__ . "/../../../../" . Config::get("theme_dir") . "/" . Config::get("theme") . "/img/logo/" . $response->nice_service . ".svg") ? ".svg" : ".png");
-            return $response;
-        }
-
-        $curl = curl_init();
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => Config::get("phoenix_url") . Config::get("phoenix_api_endpoint") . "/services/$ID",
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => "",
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => "GET",
-            CURLOPT_USERAGENT => "CrispCMS ToS;DR",
-        ));
-        $raw = curl_exec($curl);
-        $response = json_decode($raw);
-
-        if ($response === null) {
-            throw new Exception("Failed to crawl! " . $raw);
-        }
-
-        if ($response->error) {
-            throw new Exception($response->error);
-        }
-
-
-        if (self::$Redis_Database_Connection->set(Config::get("phoenix_api_endpoint") . "/services/id/$ID", json_encode($response), 43200) && self::$Redis_Database_Connection->set(Config::get("phoenix_api_endpoint") . "/services/name/" . strtolower($response->name), json_encode($response), 15778476)) {
-            $response = json_decode(self::$Redis_Database_Connection->get(Config::get("phoenix_api_endpoint") . "/services/id/$ID"));
-
-
-            $response->nice_service = Helper::filterAlphaNum($response->name);
-            $response->has_image = (file_exists(__DIR__ . "/../../../../" . Config::get("theme_dir") . "/" . Config::get("theme") . "/img/logo/" . $response->nice_service . ".svg") ? true : file_exists(__DIR__ . "/../../../../" . Config::get("theme_dir") . "/" . Config::get("theme") . "/img/logo/" . $response->nice_service . ".png") );
-            $response->image = "/img/logo/" . $response->nice_service . (file_exists(__DIR__ . "/../../../../" . Config::get("theme_dir") . "/" . Config::get("theme") . "/img/logo/" . $response->nice_service . ".svg") ? ".svg" : ".png");
-            return $response;
-        }
-        throw new Exception("Failed to contact REDIS");
-    }
-
-    /**
      * List all topics from postgres
      * @see https://github.com/tosdr/edit.tosdr.org/blob/8b900bf8879b8ed3a4a2a6bbabbeafa7d2ab540c/db/schema.rb#L170-L177 Database Schema
      * @return array
      */
-    public static function getTopicsPG() {
+    public static function getTopics(): array
+    {
 
 
         if (self::$Postgres_Database_Connection === NULL) {
@@ -812,108 +559,18 @@ class Phoenix {
     }
 
     /**
-     * Get a list of topics
-     * @param bool $Force Force update from phoenix
-     * @return object
-     * @deprecated Use Phoenix::getServicesPG
-     * @throws Exception
-     */
-    public static function getTopics(bool $Force = false) {
-        if (self::$Redis_Database_Connection === null) {
-            self::initDB();
-        }
-
-        if (self::$Redis_Database_Connection->exists(Config::get("phoenix_api_endpoint") . "/topics") && !$Force) {
-            return json_decode(self::$Redis_Database_Connection->get(Config::get("phoenix_api_endpoint") . "/topics"));
-        }
-
-        $curl = curl_init();
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => Config::get("phoenix_url") . Config::get("phoenix_api_endpoint") . "/topics",
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => "",
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => "GET",
-            CURLOPT_USERAGENT => "CrispCMS ToS;DR",
-        ));
-        $raw = curl_exec($curl);
-        $response = json_decode($raw);
-
-        if ($response === null) {
-            throw new Exception("Failed to crawl! " . $raw);
-        }
-        if ($response->error) {
-            throw new Exception($response->error);
-        }
-
-
-        if (self::$Redis_Database_Connection->set(Config::get("phoenix_api_endpoint") . "/topics", json_encode($response), 86400)) {
-            return $response;
-        }
-        throw new Exception("Failed to contact REDIS");
-    }
-
-    /**
      * List all cases from postgres
      * @see https://github.com/tosdr/edit.tosdr.org/blob/8b900bf8879b8ed3a4a2a6bbabbeafa7d2ab540c/db/schema.rb#L42-L52 Database Schema
      * @return array
      */
-    public static function getCasesPG(bool $FreshData = false) {
+    public static function getCases(): array
+    {
 
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
         }
 
-        return self::$Postgres_Database_Connection->query("SELECT * FROM cases ORDER BY id ASC")->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-    /**
-     * Get a list of cases
-     * @param bool $Force Force update from phoenix
-     * @return object
-     * @deprecated Use Phoenix::getCasesPG
-     * @throws Exception
-     */
-    public static function getCases(bool $Force = false) {
-        if (self::$Redis_Database_Connection === null) {
-            self::initDB();
-        }
-
-        if (self::$Redis_Database_Connection->exists(Config::get("phoenix_api_endpoint") . "/cases") && !$Force) {
-            return json_decode(self::$Redis_Database_Connection->get(Config::get("phoenix_api_endpoint") . "/cases"));
-        }
-
-        $curl = curl_init();
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => Config::get("phoenix_url") . Config::get("phoenix_api_endpoint") . "/cases",
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => "",
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => "GET",
-            CURLOPT_USERAGENT => "CrispCMS ToS;DR",
-        ));
-        $raw = curl_exec($curl);
-        $response = json_decode($raw);
-
-        if ($response === null) {
-            throw new Exception("Failed to crawl! " . $raw);
-        }
-
-        if ($response->error) {
-            throw new Exception($response->error);
-        }
-
-
-        if (self::$Redis_Database_Connection->set(Config::get("phoenix_api_endpoint") . "/cases", json_encode($response), 3600)) {
-            return $response;
-        }
-        throw new Exception("Failed to contact REDIS");
+        return self::$Postgres_Database_Connection->query("SELECT * FROM cases")->fetchAll(PDO::FETCH_ASSOC);
     }
 
     /**
@@ -921,58 +578,13 @@ class Phoenix {
      * @see https://github.com/tosdr/edit.tosdr.org/blob/8b900bf8879b8ed3a4a2a6bbabbeafa7d2ab540c/db/schema.rb#L134-L148 Database Schema
      * @return array
      */
-    public static function getServicesPG() {
+    public static function getServices(): array
+    {
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
         }
 
         return self::$Postgres_Database_Connection->query("SELECT * FROM services WHERE status IS NULL or status = ''")->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-    /**
-     * Get a list of services
-     * @param bool $Force Force update from phoenix
-     * @return object
-     * @deprecated Please use Phoenix::getServicesPG
-     * @throws Exception
-     */
-    public static function getServices(bool $Force = false) {
-        if (self::$Redis_Database_Connection === null) {
-            self::initDB();
-        }
-
-        if (self::$Redis_Database_Connection->exists(Config::get("phoenix_api_endpoint") . "/services") && !$Force) {
-            return json_decode(self::$Redis_Database_Connection->get(Config::get("phoenix_api_endpoint") . "/services"));
-        }
-
-        $curl = curl_init();
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => Config::get("phoenix_url") . Config::get("phoenix_api_endpoint") . "/services",
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => "",
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => "GET",
-            CURLOPT_USERAGENT => "CrispCMS ToS;DR",
-        ));
-        $raw = curl_exec($curl);
-        $response = json_decode($raw);
-
-        if ($response === null) {
-            throw new Exception("Failed to crawl! " . $raw);
-        }
-
-        if ($response->error) {
-            throw new Exception($response->error);
-        }
-
-
-        if (self::$Redis_Database_Connection->set(Config::get("phoenix_api_endpoint") . "/services", json_encode($response), 3600)) {
-            return $response;
-        }
-        throw new Exception("Failed to contact REDIS");
     }
 
 }

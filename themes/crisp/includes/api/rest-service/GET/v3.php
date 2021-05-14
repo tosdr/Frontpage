@@ -20,16 +20,16 @@
 $ID;
 
 if (!is_numeric($_GET["service"] ?? $this->Query)) {
-    if (!crisp\api\Phoenix::serviceExistsBySlugPG($_GET["service"] ?? $this->Query)) {
+    if (!crisp\api\Phoenix::serviceExistsBySlug($_GET["service"] ?? $this->Query)) {
         echo \crisp\core\PluginAPI::response(\crisp\core\Bitmask::INVALID_SERVICE, $_GET["service"] ?? $this->Query, []);
         return;
     }
-    $ID = crisp\api\Phoenix::getServiceBySlugPG($_GET["service"] ?? $this->Query)["id"];
+    $ID = crisp\api\Phoenix::getServiceBySlug($_GET["service"] ?? $this->Query)["id"];
 } else {
     $ID = $_GET["service"] ?? $this->Query;
 }
 
-if (!crisp\api\Phoenix::serviceExistsPG($ID)) {
+if (!crisp\api\Phoenix::serviceExists($ID)) {
     echo \crisp\core\PluginAPI::response(\crisp\core\Bitmask::INVALID_SERVICE, $ID, []);
     return;
 }
@@ -39,9 +39,9 @@ $ServiceLinks = array();
 $ServicePoints = array();
 $ServicePointsData = array();
 
-$points = crisp\api\Phoenix::getPointsByServicePG($ID);
-$service = crisp\api\Phoenix::getServicePG($ID);
-$documents = crisp\api\Phoenix::getDocumentsByServicePG($ID);
+$points = crisp\api\Phoenix::getPointsByService($ID);
+$service = crisp\api\Phoenix::getService($ID);
+$documents = crisp\api\Phoenix::getDocumentsByService($ID);
 
 $_service = [
     "id" => $service["_source"]["id"],
@@ -89,7 +89,7 @@ foreach ($points as $Point) {
     ];
 
     $Document = array_column($_documents, null, 'id')[$Point["document_id"]];
-    $Case = crisp\api\Phoenix::getCasePG($Point["case_id"]);
+    $Case = crisp\api\Phoenix::getCase($Point["case_id"]);
     $ServicePointsData[] = $_Point;
 }
 

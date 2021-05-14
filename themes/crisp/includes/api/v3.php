@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] !== "GET") {
 }
 
 if ($this->Query == "all") {
-    $Services = \crisp\api\Phoenix::getServicesPG();
+    $Services = \crisp\api\Phoenix::getServices();
     $Response = array(
         "version" => time(),
     );
@@ -44,17 +44,17 @@ if ($this->Query == "all") {
 }
 
 if (!is_numeric($this->Query)) {
-    if (!crisp\api\Phoenix::serviceExistsBySlugPG($this->Query)) {
+    if (!crisp\api\Phoenix::serviceExistsBySlug($this->Query)) {
         echo \crisp\core\PluginAPI::response(\crisp\core\Bitmask::INVALID_SERVICE + crisp\core\Bitmask::VERSION_DEPRECATED + crisp\core\Bitmask::INTERFACE_DEPRECATED, $this->Query, []);
         return;
     }
-    $this->Query = crisp\api\Phoenix::getServiceBySlugPG($this->Query)["id"];
+    $this->Query = crisp\api\Phoenix::getServiceBySlug($this->Query)["id"];
     $SkeletonData = \crisp\api\Phoenix::generateApiFiles($this->Query);
     echo \crisp\core\PluginAPI::response(\crisp\core\Bitmask::REQUEST_SUCCESS + crisp\core\Bitmask::VERSION_DEPRECATED + crisp\core\Bitmask::INTERFACE_DEPRECATED, $this->Query, \crisp\api\Phoenix::generateApiFiles($this->Query, "3"));
     exit;
 }
 
-if (!crisp\api\Phoenix::serviceExistsPG($this->Query)) {
+if (!crisp\api\Phoenix::serviceExists($this->Query)) {
     echo \crisp\core\PluginAPI::response(\crisp\core\Bitmask::INVALID_SERVICE + crisp\core\Bitmask::VERSION_DEPRECATED + crisp\core\Bitmask::INTERFACE_DEPRECATED, $this->Query, []);
     return;
 }

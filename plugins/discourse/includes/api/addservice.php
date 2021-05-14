@@ -31,7 +31,7 @@ if (empty($EnvFile["DISCOURSE_WEBHOOK_SECRET"])) {
 
 if ($_GET["q"] == $EnvFile["DISCOURSE_WEBHOOK_SECRET"]) {
     $JSON = json_decode(file_get_contents('php://input'), true);
-    $Service = \crisp\api\Phoenix::getServiceByNamePG($JSON["service_name"]);
+    $Service = \crisp\api\Phoenix::getServiceByName($JSON["service_name"]);
 
     if (!$Service) {
         $Error[] = "DUPLICATE";

@@ -40,7 +40,7 @@ if ($Type != "") {
 $Translations = new \crisp\api\Translation($Language);
 
 if (!is_numeric($ServiceName)) {
-    if (!\crisp\api\Phoenix::serviceExistsBySlugPG(urldecode($ServiceName))) {
+    if (!\crisp\api\Phoenix::serviceExistsBySlug(urldecode($ServiceName))) {
         header("Content-Type: image/svg+xml");
         $Color = "999999";
         $Rating = $Translations->fetch("service_not_found");
@@ -48,9 +48,9 @@ if (!is_numeric($ServiceName)) {
         echo $poser->generate($Prefix, $Rating, $Color, 'flat');
         return;
     }
-    $RedisData["_source"] = \crisp\api\Phoenix::getServiceBySlugPG(urldecode($ServiceName));
+    $RedisData["_source"] = \crisp\api\Phoenix::getServiceBySlug(urldecode($ServiceName));
 } else {
-    if (!crisp\api\Phoenix::serviceExistsPG($ServiceName)) {
+    if (!crisp\api\Phoenix::serviceExists($ServiceName)) {
         header("Content-Type: image/svg+xml");
         $Color = "999999";
         $Rating = $Translations->fetch("service_not_found");
@@ -58,7 +58,7 @@ if (!is_numeric($ServiceName)) {
         echo $poser->generate($Prefix, $Rating, $Color, 'flat');
         return;
     }
-    $RedisData = \crisp\api\Phoenix::getServicePG(urldecode($ServiceName));
+    $RedisData = \crisp\api\Phoenix::getService(urldecode($ServiceName));
 }
 
 

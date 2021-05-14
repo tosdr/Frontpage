@@ -23,7 +23,7 @@
 header("Content-Type: application/json");
 
 if ($this->Query == "all") {
-    $Services = \crisp\api\Phoenix::getServicesPG();
+    $Services = \crisp\api\Phoenix::getServices();
     $Response = array(
         "tosdr/api/version" => 1,
         "tosdr/data/version" => time(),
@@ -48,11 +48,11 @@ if ($this->Query == "all") {
 }
 
 if (!is_numeric($this->Query)) {
-    if (!crisp\api\Phoenix::serviceExistsBySlugPG($this->Query)) {
+    if (!crisp\api\Phoenix::serviceExistsBySlug($this->Query)) {
         echo \crisp\core\PluginAPI::response(\crisp\core\Bitmask::INVALID_SERVICE, $this->Query, [], null, 404);
         return;
     }
-    $this->Query = crisp\api\Phoenix::getServiceBySlugPG($this->Query)["id"];
+    $this->Query = crisp\api\Phoenix::getServiceBySlug($this->Query)["id"];
     
     $SkeletonData = \crisp\api\Phoenix::generateApiFiles($this->Query);
     echo json_encode($SkeletonData);
@@ -63,7 +63,7 @@ if (!is_numeric($this->Query)) {
 
 
 
-if (!crisp\api\Phoenix::serviceExistsPG($this->Query)) {
+if (!crisp\api\Phoenix::serviceExists($this->Query)) {
     echo \crisp\core\PluginAPI::response(\crisp\core\Bitmask::INVALID_SERVICE, $this->Query, [], null, 404);
     return;
 }

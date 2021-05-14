@@ -19,10 +19,10 @@
 
 if (empty($this->Query)) {
     foreach (\crisp\api\Config::get("frontpage_services") as $ID) {
-        $Array[] = crisp\api\Phoenix::getServicePG($ID);
+        $Array[] = crisp\api\Phoenix::getService($ID);
     }
 } else {
-    foreach (crisp\api\Phoenix::searchServiceByNamePG(strtolower($this->Query)) as $Service) {
+    foreach (crisp\api\Phoenix::searchServiceByName(strtolower($this->Query)) as $Service) {
         $Array[] = $Service;
     }
 }

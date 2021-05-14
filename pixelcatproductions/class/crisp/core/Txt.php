@@ -139,7 +139,7 @@ class Txt {
 
 
                 if (count($failed["id_not_numeric"]) === 0) {
-                    $Service = \crisp\api\Phoenix::getServicePG($ID)["_source"];
+                    $Service = \crisp\api\Phoenix::getService($ID)["_source"];
                     if ($Service && in_array($url, explode(",", $Service["url"]))) {
                         $parsed["ID"] = $Service;
                     } else {

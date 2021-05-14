@@ -22,11 +22,11 @@ $EnvFile = parse_ini_file(__DIR__ . "/../../../.env");
 
 if (!isset($_GET["search"])) {
     foreach (\crisp\api\Config::get("frontpage_services") as $ID) {
-        $Service = \crisp\api\Phoenix::getServicePG($ID);
+        $Service = \crisp\api\Phoenix::getService($ID);
         array_push($Services, $Service);
     }
 }else{
-    $Services = crisp\api\Phoenix::searchServiceByNamePG(strtolower($_GET["search"]));
+    $Services = crisp\api\Phoenix::searchServiceByName(strtolower($_GET["search"]));
 }
 
 

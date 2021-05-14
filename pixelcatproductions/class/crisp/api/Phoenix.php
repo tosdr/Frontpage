@@ -776,13 +776,6 @@ class Phoenix {
      * @return bool
      */
     public static function serviceExistsPG(string $ID) {
-        if (self::$Postgres_Database_Connection === NULL) {
-            self::initDB();
-        }
-
-        if (self::$Redis_Database_Connection->keys("pg_serviceexists_$ID")) {
-            return unserialize(self::$Redis_Database_Connection->get("pg_serviceexists_$ID"));
-        }
 
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
@@ -792,11 +785,7 @@ class Phoenix {
 
         $statement->execute(array(":ID" => $ID));
 
-        $Result = ($statement->rowCount() > 0 ? true : false);
-
-        self::$Redis_Database_Connection->set("pg_serviceexists_$ID", serialize($Result), 900);
-
-        return $Result;
+        return $statement->rowCount() > 0;
     }
 
     /**

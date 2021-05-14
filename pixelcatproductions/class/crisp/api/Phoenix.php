@@ -542,51 +542,6 @@ class Phoenix {
     }
 
     /**
-     * Get a list of topics
-     * @param bool $Force Force update from phoenix
-     * @return object
-     * @deprecated Use Phoenix::getServicesPG
-     * @throws Exception
-     */
-    public static function getTopics(bool $Force = false) {
-        if (self::$Redis_Database_Connection === null) {
-            self::initDB();
-        }
-
-        if (self::$Redis_Database_Connection->exists(Config::get("phoenix_api_endpoint") . "/topics") && !$Force) {
-            return json_decode(self::$Redis_Database_Connection->get(Config::get("phoenix_api_endpoint") . "/topics"));
-        }
-
-        $curl = curl_init();
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => Config::get("phoenix_url") . Config::get("phoenix_api_endpoint") . "/topics",
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => "",
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => "GET",
-            CURLOPT_USERAGENT => "CrispCMS ToS;DR",
-        ));
-        $raw = curl_exec($curl);
-        $response = json_decode($raw);
-
-        if ($response === null) {
-            throw new Exception("Failed to crawl! " . $raw);
-        }
-        if ($response->error) {
-            throw new Exception($response->error);
-        }
-
-
-        if (self::$Redis_Database_Connection->set(Config::get("phoenix_api_endpoint") . "/topics", json_encode($response), 86400)) {
-            return $response;
-        }
-        throw new Exception("Failed to contact REDIS");
-    }
-
-    /**
      * List all cases from postgres
      * @see https://github.com/tosdr/edit.tosdr.org/blob/8b900bf8879b8ed3a4a2a6bbabbeafa7d2ab540c/db/schema.rb#L42-L52 Database Schema
      * @return array

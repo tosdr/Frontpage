@@ -20,21 +20,29 @@
 
 namespace crisp\api;
 
+use crisp\core\Postgres;
+use crisp\core\Redis;
+use Exception;
+use PDO;
+use function curl_exec;
+use function curl_init;
+use function curl_setopt_array;
+
 /**
  * Some useful phoenix functions
  */
 class Phoenix {
 
     private static ?\Redis $Redis_Database_Connection = null;
-    private static ?\PDO $Postgres_Database_Connection = null;
+    private static ?PDO $Postgres_Database_Connection = null;
 
     private static function initPGDB() {
-        $PostgresDB = new \crisp\core\Postgres();
+        $PostgresDB = new Postgres();
         self::$Postgres_Database_Connection = $PostgresDB->getDBConnector();
     }
 
     private static function initDB() {
-        $RedisDB = new \crisp\core\Redis();
+        $RedisDB = new Redis();
         self::$Redis_Database_Connection = $RedisDB->getDBConnector();
     }
 
@@ -108,7 +116,7 @@ class Phoenix {
                     "id" => $service["_source"]["id"],
                     "name" => $service["_source"]["name"],
                     "slug" => $service["_source"]["slug"],
-                    "image" => \crisp\api\Config::get("s3_logos") . "/" . ($service["_source"]["image"]),
+                    "image" => Config::get("s3_logos") . "/" . ($service["_source"]["image"]),
                     "class" => ($service["_source"]["rating"] == "N/A" ? false : ($service["_source"]["is_comprehensively_reviewed"] ? $service["_source"]["rating"] : false)),
                     "links" => $ServiceLinks,
                     "points" => $ServicePoints,
@@ -144,7 +152,7 @@ class Phoenix {
 
                 $SkeletonData = $service["_source"];
 
-                $SkeletonData["image"] = \crisp\api\Config::get("s3_logos") . "/" . $service["_source"]["image"];
+                $SkeletonData["image"] = Config::get("s3_logos") . "/" . $service["_source"]["image"];
                 $SkeletonData["documents"] = $documents;
                 $SkeletonData["points"] = $ServicePointsData;
                 $SkeletonData["urls"] = explode(",", $service["_source"]["url"]);
@@ -181,7 +189,7 @@ class Phoenix {
 
         $statement->execute(array(":ID" => $ID));
 
-        $Result = $statement->fetchAll(\PDO::FETCH_ASSOC);
+        $Result = $statement->fetchAll(PDO::FETCH_ASSOC);
 
 
 
@@ -213,7 +221,7 @@ class Phoenix {
 
         $statement->execute(array(":ID" => $ID));
 
-        $Result = $statement->fetchAll(\PDO::FETCH_ASSOC);
+        $Result = $statement->fetchAll(PDO::FETCH_ASSOC);
 
         self::$Redis_Database_Connection->set("pg_getdocumentbyservice_$ID", serialize($Result), 900);
 
@@ -238,7 +246,7 @@ class Phoenix {
             self::initPGDB();
         }
 
-        $Result = self::$Postgres_Database_Connection->query("SELECT * FROM points")->fetchAll(\PDO::FETCH_ASSOC);
+        $Result = self::$Postgres_Database_Connection->query("SELECT * FROM points")->fetchAll(PDO::FETCH_ASSOC);
 
         self::$Redis_Database_Connection->set("pg_points", serialize($Result), 900);
 
@@ -252,14 +260,6 @@ class Phoenix {
      * @return array
      */
     public static function getPointPG(string $ID) {
-        if (self::$Redis_Database_Connection === NULL) {
-            self::initDB();
-        }
-
-        if (self::$Redis_Database_Connection->keys("pg_point_$ID")) {
-            return unserialize(self::$Redis_Database_Connection->get("pg_point_$ID"));
-        }
-
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
         }
@@ -268,9 +268,7 @@ class Phoenix {
 
         $statement->execute(array(":ID" => $ID));
 
-        $Result = $statement->fetch(\PDO::FETCH_ASSOC);
-
-        self::$Redis_Database_Connection->set("pg_point_$ID", serialize($Result), 900);
+        $Result = $statement->fetch(PDO::FETCH_ASSOC);
 
         return $Result;
     }
@@ -281,7 +279,7 @@ class Phoenix {
      * @param bool $Force Force update from phoenix
      * @return object
      * @deprecated Use Phoenix::getPointPG
-     * @throws \Exception
+     * @throws Exception
      */
     public static function getPoint(string $ID, bool $Force = false) {
         if (self::$Redis_Database_Connection === null) {
@@ -292,8 +290,8 @@ class Phoenix {
             return json_decode(self::$Redis_Database_Connection->get(Config::get("phoenix_api_endpoint") . "/points/id/$ID"));
         }
 
-        $curl = \curl_init();
-        \curl_setopt_array($curl, array(
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
             CURLOPT_URL => Config::get("phoenix_url") . Config::get("phoenix_api_endpoint") . "/points/$ID",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
@@ -304,21 +302,21 @@ class Phoenix {
             CURLOPT_CUSTOMREQUEST => "GET",
             CURLOPT_USERAGENT => "CrispCMS ToS;DR",
         ));
-        $raw = \curl_exec($curl);
+        $raw = curl_exec($curl);
         $response = json_decode($raw);
 
         if ($response === null) {
-            throw new \Exception("Failed to crawl! " . $raw);
+            throw new Exception("Failed to crawl! " . $raw);
         }
         if ($response->error) {
-            throw new \Exception($response->error);
+            throw new Exception($response->error);
         }
 
 
         if (self::$Redis_Database_Connection->set(Config::get("phoenix_api_endpoint") . "/points/id/$ID", json_encode($response), 2592000)) {
             return $response;
         }
-        throw new \Exception("Failed to contact REDIS");
+        throw new Exception("Failed to contact REDIS");
     }
 
     /**
@@ -345,7 +343,7 @@ class Phoenix {
 
         $statement->execute(array(":ID" => $ID));
 
-        $Result = $statement->fetch(\PDO::FETCH_ASSOC);
+        $Result = $statement->fetch(PDO::FETCH_ASSOC);
 
         self::$Redis_Database_Connection->set("pg_case_$ID", serialize($Result), 900);
 
@@ -358,7 +356,7 @@ class Phoenix {
      * @param bool $Force Force update from Phoenix
      * @return object
      * @deprecated Use Phoenix::getCasePG
-     * @throws \Exception
+     * @throws Exception
      */
     public static function getCase(string $ID, bool $Force = false) {
         if (self::$Redis_Database_Connection === null) {
@@ -369,8 +367,8 @@ class Phoenix {
             return json_decode(self::$Redis_Database_Connection->get(Config::get("phoenix_api_endpoint") . "/cases/id/$ID"));
         }
 
-        $curl = \curl_init();
-        \curl_setopt_array($curl, array(
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
             CURLOPT_URL => Config::get("phoenix_url") . Config::get("phoenix_api_endpoint") . "/cases/$ID",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
@@ -381,21 +379,21 @@ class Phoenix {
             CURLOPT_CUSTOMREQUEST => "GET",
             CURLOPT_USERAGENT => "CrispCMS ToS;DR",
         ));
-        $raw = \curl_exec($curl);
+        $raw = curl_exec($curl);
         $response = json_decode($raw);
 
         if ($response === null) {
-            throw new \Exception("Failed to crawl! " . $raw);
+            throw new Exception("Failed to crawl! " . $raw);
         }
         if ($response->error) {
-            throw new \Exception($response->error);
+            throw new Exception($response->error);
         }
 
 
         if (self::$Redis_Database_Connection->set(Config::get("phoenix_api_endpoint") . "/cases/id/$ID", json_encode($response), 2592000)) {
             return $response;
         }
-        throw new \Exception("Failed to contact REDIS");
+        throw new Exception("Failed to contact REDIS");
     }
 
     /**
@@ -421,7 +419,7 @@ class Phoenix {
 
         $statement->execute(array(":ID" => $ID));
 
-        $Result = $statement->fetch(\PDO::FETCH_ASSOC);
+        $Result = $statement->fetch(PDO::FETCH_ASSOC);
 
         self::$Redis_Database_Connection->set("pg_topic_$ID", serialize($Result), 900);
 
@@ -434,7 +432,7 @@ class Phoenix {
      * @param bool $Force Force update from phoenix
      * @return object
      * @deprecated Use Phoenix::getTopicPG
-     * @throws \Exception
+     * @throws Exception
      */
     public static function getTopic(string $ID, bool $Force = false) {
         if (self::$Redis_Database_Connection === null) {
@@ -445,8 +443,8 @@ class Phoenix {
             return json_decode(self::$Redis_Database_Connection->get(Config::get("phoenix_api_endpoint") . "/topics/id/$ID"));
         }
 
-        $curl = \curl_init();
-        \curl_setopt_array($curl, array(
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
             CURLOPT_URL => Config::get("phoenix_url") . Config::get("phoenix_api_endpoint") . "/topics/$ID",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
@@ -457,21 +455,21 @@ class Phoenix {
             CURLOPT_CUSTOMREQUEST => "GET",
             CURLOPT_USERAGENT => "CrispCMS ToS;DR",
         ));
-        $raw = \curl_exec($curl);
+        $raw = curl_exec($curl);
         $response = json_decode($raw);
 
         if ($response === null) {
-            throw new \Exception("Failed to crawl! " . $raw);
+            throw new Exception("Failed to crawl! " . $raw);
         }
         if ($response->error) {
-            throw new \Exception($response->error);
+            throw new Exception($response->error);
         }
 
 
         if (self::$Redis_Database_Connection->set(Config::get("phoenix_api_endpoint") . "/topics/id/$ID", json_encode($response), 2592000)) {
             return $response;
         }
-        throw new \Exception("Failed to contact REDIS");
+        throw new Exception("Failed to contact REDIS");
     }
 
     /**
@@ -480,7 +478,7 @@ class Phoenix {
      * @param bool $Force Force update from phoenix
      * @return object
      * @deprecated Use Phoenix::getServiceByNamePG
-     * @throws \Exception
+     * @throws Exception
      */
     public static function getServiceByName(string $Name, bool$Force = false) {
         $Name = strtolower($Name);
@@ -494,12 +492,12 @@ class Phoenix {
             $response = json_decode(self::$Redis_Database_Connection->get(Config::get("phoenix_api_endpoint") . "/services/name/$Name"));
 
             $response->nice_service = Helper::filterAlphaNum($response->name);
-            $response->has_image = (file_exists(__DIR__ . "/../../../../" . \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") . "/img/logo/" . $response->nice_service . ".svg") ? true : file_exists(__DIR__ . "/../../../../" . \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") . "/img/logo/" . $response->nice_service . ".png") );
-            $response->image = "/img/logo/" . $response->nice_service . (file_exists(__DIR__ . "/../../../../" . \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") . "/img/logo/" . $response->nice_service . ".svg") ? ".svg" : ".png");
+            $response->has_image = (file_exists(__DIR__ . "/../../../../" . Config::get("theme_dir") . "/" . Config::get("theme") . "/img/logo/" . $response->nice_service . ".svg") ? true : file_exists(__DIR__ . "/../../../../" . Config::get("theme_dir") . "/" . Config::get("theme") . "/img/logo/" . $response->nice_service . ".png") );
+            $response->image = "/img/logo/" . $response->nice_service . (file_exists(__DIR__ . "/../../../../" . Config::get("theme_dir") . "/" . Config::get("theme") . "/img/logo/" . $response->nice_service . ".svg") ? ".svg" : ".png");
 
             return $response;
         }
-        throw new \Exception("Service is not initialized!");
+        throw new Exception("Service is not initialized!");
     }
 
     /**
@@ -531,12 +529,12 @@ class Phoenix {
 
         $statement->execute(array(":ID" => "%$Name%"));
 
-        $response = $statement->fetchAll(\PDO::FETCH_ASSOC);
+        $response = $statement->fetchAll(PDO::FETCH_ASSOC);
 
         foreach ($response as $Key => $Service) {
             $response[$Key]["nice_service"] = Helper::filterAlphaNum($response[$Key]["name"]);
-            $response[$Key]["has_image"] = (file_exists(__DIR__ . "/../../../../" . \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") . "/img/logo/" . $response[$Key]["nice_service"] . ".svg") ? true : file_exists(__DIR__ . "/../../../../" . \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") . "/img/logo/" . $response[$Key]["nice_service"] . ".png") );
-            $response[$Key]["image"] = "/img/logo/" . $response[$Key]["nice_service"] . (file_exists(__DIR__ . "/../../../../" . \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") . "/img/logo/" . $response[$Key]["nice_service"] . ".svg") ? ".svg" : ".png");
+            $response[$Key]["has_image"] = (file_exists(__DIR__ . "/../../../../" . Config::get("theme_dir") . "/" . Config::get("theme") . "/img/logo/" . $response[$Key]["nice_service"] . ".svg") ? true : file_exists(__DIR__ . "/../../../../" . Config::get("theme_dir") . "/" . Config::get("theme") . "/img/logo/" . $response[$Key]["nice_service"] . ".png") );
+            $response[$Key]["image"] = "/img/logo/" . $response[$Key]["nice_service"] . (file_exists(__DIR__ . "/../../../../" . Config::get("theme_dir") . "/" . Config::get("theme") . "/img/logo/" . $response[$Key]["nice_service"] . ".svg") ? ".svg" : ".png");
         }
 
         self::$Redis_Database_Connection->set("pg_searchservicebyname_$Name", serialize($response), 900);
@@ -572,7 +570,7 @@ class Phoenix {
             return false;
         }
 
-        $Result = $statement->fetch(\PDO::FETCH_ASSOC);
+        $Result = $statement->fetch(PDO::FETCH_ASSOC);
 
         self::$Redis_Database_Connection->set("pg_getservicebyslug_$Name", serialize($Result), 900);
 
@@ -609,7 +607,7 @@ class Phoenix {
             return false;
         }
 
-        $response = $statement->fetch(\PDO::FETCH_ASSOC);
+        $response = $statement->fetch(PDO::FETCH_ASSOC);
 
         self::$Redis_Database_Connection->set("pg_getservicebyname_$Name", serialize($response), 900);
         $response["nice_service"] = Helper::filterAlphaNum($response["name"]);
@@ -886,7 +884,7 @@ class Phoenix {
             return false;
         }
 
-        $response = $statement->fetch(\PDO::FETCH_ASSOC);
+        $response = $statement->fetch(PDO::FETCH_ASSOC);
 
         self::$Redis_Database_Connection->set("pg_service_$ID", serialize($response), 900);
 
@@ -905,7 +903,7 @@ class Phoenix {
      * @param bool $Force Force update from phoenix
      * @return object
      * @deprecated Use Phoenix::getServicePG
-     * @throws \Exception
+     * @throws Exception
      */
     public static function getService(string $ID, bool $Force = false) {
         if (self::$Redis_Database_Connection === null) {
@@ -918,13 +916,13 @@ class Phoenix {
 
 
             $response->nice_service = Helper::filterAlphaNum($response->name);
-            $response->has_image = (file_exists(__DIR__ . "/../../../../" . \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") . "/img/logo/" . $response->nice_service . ".svg") ? true : file_exists(__DIR__ . "/../../../../" . \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") . "/img/logo/" . $response->nice_service . ".png") );
-            $response->image = "/img/logo/" . $response->nice_service . (file_exists(__DIR__ . "/../../../../" . \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") . "/img/logo/" . $response->nice_service . ".svg") ? ".svg" : ".png");
+            $response->has_image = (file_exists(__DIR__ . "/../../../../" . Config::get("theme_dir") . "/" . Config::get("theme") . "/img/logo/" . $response->nice_service . ".svg") ? true : file_exists(__DIR__ . "/../../../../" . Config::get("theme_dir") . "/" . Config::get("theme") . "/img/logo/" . $response->nice_service . ".png") );
+            $response->image = "/img/logo/" . $response->nice_service . (file_exists(__DIR__ . "/../../../../" . Config::get("theme_dir") . "/" . Config::get("theme") . "/img/logo/" . $response->nice_service . ".svg") ? ".svg" : ".png");
             return $response;
         }
 
-        $curl = \curl_init();
-        \curl_setopt_array($curl, array(
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
             CURLOPT_URL => Config::get("phoenix_url") . Config::get("phoenix_api_endpoint") . "/services/$ID",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
@@ -935,15 +933,15 @@ class Phoenix {
             CURLOPT_CUSTOMREQUEST => "GET",
             CURLOPT_USERAGENT => "CrispCMS ToS;DR",
         ));
-        $raw = \curl_exec($curl);
+        $raw = curl_exec($curl);
         $response = json_decode($raw);
 
         if ($response === null) {
-            throw new \Exception("Failed to crawl! " . $raw);
+            throw new Exception("Failed to crawl! " . $raw);
         }
 
         if ($response->error) {
-            throw new \Exception($response->error);
+            throw new Exception($response->error);
         }
 
 
@@ -952,11 +950,11 @@ class Phoenix {
 
 
             $response->nice_service = Helper::filterAlphaNum($response->name);
-            $response->has_image = (file_exists(__DIR__ . "/../../../../" . \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") . "/img/logo/" . $response->nice_service . ".svg") ? true : file_exists(__DIR__ . "/../../../../" . \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") . "/img/logo/" . $response->nice_service . ".png") );
-            $response->image = "/img/logo/" . $response->nice_service . (file_exists(__DIR__ . "/../../../../" . \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") . "/img/logo/" . $response->nice_service . ".svg") ? ".svg" : ".png");
+            $response->has_image = (file_exists(__DIR__ . "/../../../../" . Config::get("theme_dir") . "/" . Config::get("theme") . "/img/logo/" . $response->nice_service . ".svg") ? true : file_exists(__DIR__ . "/../../../../" . Config::get("theme_dir") . "/" . Config::get("theme") . "/img/logo/" . $response->nice_service . ".png") );
+            $response->image = "/img/logo/" . $response->nice_service . (file_exists(__DIR__ . "/../../../../" . Config::get("theme_dir") . "/" . Config::get("theme") . "/img/logo/" . $response->nice_service . ".svg") ? ".svg" : ".png");
             return $response;
         }
-        throw new \Exception("Failed to contact REDIS");
+        throw new Exception("Failed to contact REDIS");
     }
 
     /**
@@ -977,7 +975,7 @@ class Phoenix {
             self::initPGDB();
         }
 
-        $Result = self::$Postgres_Database_Connection->query("SELECT * FROM topics")->fetchAll(\PDO::FETCH_ASSOC);
+        $Result = self::$Postgres_Database_Connection->query("SELECT * FROM topics")->fetchAll(PDO::FETCH_ASSOC);
 
         self::$Redis_Database_Connection->set("pg_topics", serialize($Result), 900);
 
@@ -989,7 +987,7 @@ class Phoenix {
      * @param bool $Force Force update from phoenix
      * @return object
      * @deprecated Use Phoenix::getServicesPG
-     * @throws \Exception
+     * @throws Exception
      */
     public static function getTopics(bool $Force = false) {
         if (self::$Redis_Database_Connection === null) {
@@ -1000,8 +998,8 @@ class Phoenix {
             return json_decode(self::$Redis_Database_Connection->get(Config::get("phoenix_api_endpoint") . "/topics"));
         }
 
-        $curl = \curl_init();
-        \curl_setopt_array($curl, array(
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
             CURLOPT_URL => Config::get("phoenix_url") . Config::get("phoenix_api_endpoint") . "/topics",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
@@ -1012,21 +1010,21 @@ class Phoenix {
             CURLOPT_CUSTOMREQUEST => "GET",
             CURLOPT_USERAGENT => "CrispCMS ToS;DR",
         ));
-        $raw = \curl_exec($curl);
+        $raw = curl_exec($curl);
         $response = json_decode($raw);
 
         if ($response === null) {
-            throw new \Exception("Failed to crawl! " . $raw);
+            throw new Exception("Failed to crawl! " . $raw);
         }
         if ($response->error) {
-            throw new \Exception($response->error);
+            throw new Exception($response->error);
         }
 
 
         if (self::$Redis_Database_Connection->set(Config::get("phoenix_api_endpoint") . "/topics", json_encode($response), 86400)) {
             return $response;
         }
-        throw new \Exception("Failed to contact REDIS");
+        throw new Exception("Failed to contact REDIS");
     }
 
     /**
@@ -1047,7 +1045,7 @@ class Phoenix {
             self::initPGDB();
         }
 
-        $Result = self::$Postgres_Database_Connection->query("SELECT * FROM cases ORDER BY id ASC")->fetchAll(\PDO::FETCH_ASSOC);
+        $Result = self::$Postgres_Database_Connection->query("SELECT * FROM cases ORDER BY id ASC")->fetchAll(PDO::FETCH_ASSOC);
 
         if (!$FreshData) {
             self::$Redis_Database_Connection->set("pg_cases", serialize($Result), 900);
@@ -1061,7 +1059,7 @@ class Phoenix {
      * @param bool $Force Force update from phoenix
      * @return object
      * @deprecated Use Phoenix::getCasesPG
-     * @throws \Exception
+     * @throws Exception
      */
     public static function getCases(bool $Force = false) {
         if (self::$Redis_Database_Connection === null) {
@@ -1072,8 +1070,8 @@ class Phoenix {
             return json_decode(self::$Redis_Database_Connection->get(Config::get("phoenix_api_endpoint") . "/cases"));
         }
 
-        $curl = \curl_init();
-        \curl_setopt_array($curl, array(
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
             CURLOPT_URL => Config::get("phoenix_url") . Config::get("phoenix_api_endpoint") . "/cases",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
@@ -1084,22 +1082,22 @@ class Phoenix {
             CURLOPT_CUSTOMREQUEST => "GET",
             CURLOPT_USERAGENT => "CrispCMS ToS;DR",
         ));
-        $raw = \curl_exec($curl);
+        $raw = curl_exec($curl);
         $response = json_decode($raw);
 
         if ($response === null) {
-            throw new \Exception("Failed to crawl! " . $raw);
+            throw new Exception("Failed to crawl! " . $raw);
         }
 
         if ($response->error) {
-            throw new \Exception($response->error);
+            throw new Exception($response->error);
         }
 
 
         if (self::$Redis_Database_Connection->set(Config::get("phoenix_api_endpoint") . "/cases", json_encode($response), 3600)) {
             return $response;
         }
-        throw new \Exception("Failed to contact REDIS");
+        throw new Exception("Failed to contact REDIS");
     }
 
     /**
@@ -1120,7 +1118,7 @@ class Phoenix {
             self::initPGDB();
         }
 
-        $Result = self::$Postgres_Database_Connection->query("SELECT * FROM services WHERE status IS NULL or status = ''")->fetchAll(\PDO::FETCH_ASSOC);
+        $Result = self::$Postgres_Database_Connection->query("SELECT * FROM services WHERE status IS NULL or status = ''")->fetchAll(PDO::FETCH_ASSOC);
 
         self::$Redis_Database_Connection->set("pg_services", serialize($Result), 900);
 
@@ -1132,7 +1130,7 @@ class Phoenix {
      * @param bool $Force Force update from phoenix
      * @return object
      * @deprecated Please use Phoenix::getServicesPG
-     * @throws \Exception
+     * @throws Exception
      */
     public static function getServices(bool $Force = false) {
         if (self::$Redis_Database_Connection === null) {
@@ -1143,8 +1141,8 @@ class Phoenix {
             return json_decode(self::$Redis_Database_Connection->get(Config::get("phoenix_api_endpoint") . "/services"));
         }
 
-        $curl = \curl_init();
-        \curl_setopt_array($curl, array(
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
             CURLOPT_URL => Config::get("phoenix_url") . Config::get("phoenix_api_endpoint") . "/services",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
@@ -1155,22 +1153,22 @@ class Phoenix {
             CURLOPT_CUSTOMREQUEST => "GET",
             CURLOPT_USERAGENT => "CrispCMS ToS;DR",
         ));
-        $raw = \curl_exec($curl);
+        $raw = curl_exec($curl);
         $response = json_decode($raw);
 
         if ($response === null) {
-            throw new \Exception("Failed to crawl! " . $raw);
+            throw new Exception("Failed to crawl! " . $raw);
         }
 
         if ($response->error) {
-            throw new \Exception($response->error);
+            throw new Exception($response->error);
         }
 
 
         if (self::$Redis_Database_Connection->set(Config::get("phoenix_api_endpoint") . "/services", json_encode($response), 3600)) {
             return $response;
         }
-        throw new \Exception("Failed to contact REDIS");
+        throw new Exception("Failed to contact REDIS");
     }
 
 }

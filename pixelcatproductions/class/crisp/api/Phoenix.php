@@ -954,25 +954,12 @@ class Phoenix {
      * @return array
      */
     public static function getCasesPG(bool $FreshData = false) {
-        if (self::$Redis_Database_Connection === NULL) {
-            self::initDB();
-        }
-
-        if (self::$Redis_Database_Connection->keys("pg_cases") && !$FreshData) {
-            return unserialize(self::$Redis_Database_Connection->get("pg_cases"));
-        }
 
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
         }
 
-        $Result = self::$Postgres_Database_Connection->query("SELECT * FROM cases ORDER BY id ASC")->fetchAll(PDO::FETCH_ASSOC);
-
-        if (!$FreshData) {
-            self::$Redis_Database_Connection->set("pg_cases", serialize($Result), 900);
-        }
-
-        return $Result;
+        return self::$Postgres_Database_Connection->query("SELECT * FROM cases ORDER BY id ASC")->fetchAll(PDO::FETCH_ASSOC);
     }
 
     /**

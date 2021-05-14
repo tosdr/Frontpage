@@ -459,7 +459,7 @@ class Phoenix {
      * @param string $ID The id of the point
      * @return bool
      */
-    public static function pointExistsPG(string $ID) {
+    public static function pointExists(string $ID) {
         #
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();

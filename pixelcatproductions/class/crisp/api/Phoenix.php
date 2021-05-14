@@ -894,23 +894,13 @@ class Phoenix {
      * @return array
      */
     public static function getTopicsPG() {
-        if (self::$Postgres_Database_Connection === NULL) {
-            self::initDB();
-        }
 
-        if (self::$Redis_Database_Connection->keys("pg_topics")) {
-            return unserialize(self::$Redis_Database_Connection->get("pg_topics"));
-        }
 
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
         }
 
-        $Result = self::$Postgres_Database_Connection->query("SELECT * FROM topics")->fetchAll(PDO::FETCH_ASSOC);
-
-        self::$Redis_Database_Connection->set("pg_topics", serialize($Result), 900);
-
-        return $Result;
+        return self::$Postgres_Database_Connection->query("SELECT * FROM topics")->fetchAll(PDO::FETCH_ASSOC);
     }
 
     /**

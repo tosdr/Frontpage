@@ -108,8 +108,6 @@ class Phoenix {
                 );
                 break;
             case 3:
-                $ServiceLinks = array();
-                $ServicePoints = array();
                 $ServicePointsData = array();
 
                 $points = self::getPointsByService($ID);
@@ -282,8 +280,8 @@ class Phoenix {
         $response = $statement->fetchAll(PDO::FETCH_ASSOC);
 
         foreach ($response as $Key => $Service) {
-            $response[$Key]["nice_service"] = Helper::filterAlphaNum($response[$Key]["name"]);
-            $response[$Key]["has_image"] = (file_exists(__DIR__ . "/../../../../" . Config::get("theme_dir") . "/" . Config::get("theme") . "/img/logo/" . $response[$Key]["nice_service"] . ".svg") ? true : file_exists(__DIR__ . "/../../../../" . Config::get("theme_dir") . "/" . Config::get("theme") . "/img/logo/" . $response[$Key]["nice_service"] . ".png") );
+            $response[$Key]["nice_service"] = Helper::filterAlphaNum($Service["name"]);
+            $response[$Key]["has_image"] = (file_exists(__DIR__ . "/../../../../" . Config::get("theme_dir") . "/" . Config::get("theme") . "/img/logo/" . $response[$Key]["nice_service"] . ".svg") || file_exists(__DIR__ . "/../../../../" . Config::get("theme_dir") . "/" . Config::get("theme") . "/img/logo/" . $response[$Key]["nice_service"] . ".png"));
             $response[$Key]["image"] = "/img/logo/" . $response[$Key]["nice_service"] . (file_exists(__DIR__ . "/../../../../" . Config::get("theme_dir") . "/" . Config::get("theme") . "/img/logo/" . $response[$Key]["nice_service"] . ".svg") ? ".svg" : ".png");
         }
 
@@ -294,7 +292,7 @@ class Phoenix {
      * Get details of a service from postgres via a slug
      * @see https://github.com/tosdr/edit.tosdr.org/blob/8b900bf8879b8ed3a4a2a6bbabbeafa7d2ab540c/db/schema.rb#L134-L148 Database Schema
      * @param string $Name The slug of a service
-     * @return array
+     * @return bool|array
      */
     public static function getServiceBySlug(string $Name): bool|array
     {
@@ -319,7 +317,7 @@ class Phoenix {
      * Get details of a service via postgres by name
      * @see https://github.com/tosdr/edit.tosdr.org/blob/8b900bf8879b8ed3a4a2a6bbabbeafa7d2ab540c/db/schema.rb#L134-L148 Database Schema
      * @param string $Name the exact name of the service
-     * @return array
+     * @return bool|array
      */
     public static function getServiceByName(string $Name): bool|array
     {
@@ -363,6 +361,10 @@ class Phoenix {
 
     /**
      * Create a service on phoenix
+     * @param string $Name
+     * @param string $Url
+     * @param string $Wikipedia
+     * @param string $User
      * @return bool
      */
     public static function createService(string $Name, string $Url, string $Wikipedia, string $User): bool
@@ -384,7 +386,7 @@ class Phoenix {
         $Result = $statement->rowCount() > 0;
 
         if ($Result) {
-            self::createVersion("Service", $service_id, "create", "Created service", $User, null);
+            self::createVersion("Service", $service_id, "create", "Created service", $User);
             return $service_id;
         }
 
@@ -393,6 +395,11 @@ class Phoenix {
 
     /**
      * Create a version on phoenix
+     * @param string $Name
+     * @param string $Url
+     * @param string $Xpath
+     * @param string $Service
+     * @param string $User
      * @return bool
      */
     public static function createDocument(string $Name, string $Url, string $Xpath, string $Service, string $User): bool
@@ -414,7 +421,7 @@ class Phoenix {
         $document_id = self::$Postgres_Database_Connection->lastInsertId();
 
         if ($Result) {
-            self::createVersion("Document", $document_id, "create", "Created document", $User, null);
+            self::createVersion("Document", $document_id, "create", "Created document", $User);
             return $document_id;
         }
 
@@ -423,6 +430,12 @@ class Phoenix {
 
     /**
      * Create a document on phoenix
+     * @param string $itemType
+     * @param string $itemId
+     * @param string $event
+     * @param string|null $objectChanges
+     * @param string $whodunnit
+     * @param string|null $object
      * @return bool
      */
     public static function createVersion(string $itemType, string $itemId, string $event, string $objectChanges = null, string $whodunnit, string $object = null): bool
@@ -550,14 +563,14 @@ class Phoenix {
      * @see https://github.com/tosdr/edit.tosdr.org/blob/8b900bf8879b8ed3a4a2a6bbabbeafa7d2ab540c/db/schema.rb#L42-L52 Database Schema
      * @return array
      */
-    public static function getCases(bool $FreshData = false): array
+    public static function getCases(): array
     {
 
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
         }
 
-        return self::$Postgres_Database_Connection->query("SELECT * FROM cases ORDER BY id ASC")->fetchAll(PDO::FETCH_ASSOC);
+        return self::$Postgres_Database_Connection->query("SELECT * FROM cases")->fetchAll(PDO::FETCH_ASSOC);
     }
 
     /**

@@ -54,7 +54,7 @@ if (array_key_exists('HTTP_X_DISCOURSE_EVENT_SIGNATURE', $_SERVER) && $_SERVER["
 
 
             if (\crisp\api\Phoenix::serviceExistsByNamePG($PayLoad->post->topic_title)) {
-                $Service = \crisp\api\Phoenix::getServiceByNamePG($PayLoad->post->topic_title);
+                $Service = \crisp\api\Phoenix::getServiceByName($PayLoad->post->topic_title);
 
 
                 $String = "A curator has added the service, below are the links to your service!\n\nService: https://edit.tosdr.org/services/" . $Service["id"];
@@ -84,7 +84,7 @@ if (array_key_exists('HTTP_X_DISCOURSE_EVENT_SIGNATURE', $_SERVER) && $_SERVER["
                 if (\crisp\api\Phoenix::serviceExistsByNamePG($PayLoad->post->topic_title)) {
                     $Discourse = new \pnoeric\DiscourseAPI($EnvFile["DISCOURSE_HOSTNAME"], $EnvFile["DISCOURSE_API_KEY"]);
 
-                    $Service = \crisp\api\Phoenix::getServiceByNamePG($PayLoad->post->topic_title);
+                    $Service = \crisp\api\Phoenix::getServiceByName($PayLoad->post->topic_title);
 
                     $Documents = crisp\api\Phoenix::getDocumentsByService($Service["id"]);
 
@@ -107,7 +107,7 @@ if (array_key_exists('HTTP_X_DISCOURSE_EVENT_SIGNATURE', $_SERVER) && $_SERVER["
 
                     $Discourse = new \pnoeric\DiscourseAPI($EnvFile["DISCOURSE_HOSTNAME"], $EnvFile["DISCOURSE_API_KEY"]);
 
-                    $Service = \crisp\api\Phoenix::getServiceByNamePG($PayLoad->post->topic_title);
+                    $Service = \crisp\api\Phoenix::getServiceByName($PayLoad->post->topic_title);
 
                     $responses[] = $Discourse->createPost("Hello!\nThanks for contributing to ToS;DR!\n\nA curator will soon add the documents to our database.\n\nService Link: https://edit.tosdr.org/services/" . $Service["id"], $PayLoad->post->topic_id, "system", new DateTime());
                     $Message = "Success!";

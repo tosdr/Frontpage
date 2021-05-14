@@ -52,13 +52,6 @@ class Phoenix {
      * @return array The API data
      */
     public static function generateApiFiles(string $ID, int $Version = 1) {
-        if (self::$Redis_Database_Connection === NULL) {
-            self::initDB();
-        }
-
-        if (self::$Redis_Database_Connection->keys("pg_generateapifiles_" . $ID . "_$Version")) {
-            return unserialize(self::$Redis_Database_Connection->get("pg_generateapifiles_" . $ID . "_$Version"));
-        }
 
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
@@ -158,8 +151,6 @@ class Phoenix {
                 $SkeletonData["urls"] = explode(",", $service["_source"]["url"]);
                 break;
         }
-
-        self::$Redis_Database_Connection->set("pg_generateapifiles_" . $ID . "_$Version", serialize($SkeletonData), 3600);
 
         return $SkeletonData;
     }

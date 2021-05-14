@@ -465,22 +465,6 @@ class Phoenix {
     }
 
     /**
-     * Check if a service exists by name
-     * @param string $Name The name of the service
-     * @return bool
-     * @deprecated Use Phoenix::serviceExistsByNamePG
-     */
-    public static function serviceExistsByName(string $Name) {
-        $Name = strtolower($Name);
-
-        if (self::$Redis_Database_Connection === null) {
-            self::initDB();
-        }
-
-        return self::$Redis_Database_Connection->exists(Config::get("phoenix_api_endpoint") . "/services/name/$Name");
-    }
-
-    /**
      * Check if the point exists by name
      * @param string $ID The ID of the point
      * @deprecated Use Phoenix::pointExistsPG

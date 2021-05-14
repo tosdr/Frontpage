@@ -527,66 +527,6 @@ class Phoenix {
     }
 
     /**
-     * Get details of a service by name
-     * @param string $ID The ID of a service
-     * @param bool $Force Force update from phoenix
-     * @return object
-     * @deprecated Use Phoenix::getServicePG
-     * @throws Exception
-     */
-    public static function getService(string $ID, bool $Force = false) {
-        if (self::$Redis_Database_Connection === null) {
-            self::initDB();
-        }
-
-        if (self::$Redis_Database_Connection->exists(Config::get("phoenix_api_endpoint") . "/services/id/$ID") && !$Force) {
-
-            $response = json_decode(self::$Redis_Database_Connection->get(Config::get("phoenix_api_endpoint") . "/services/id/$ID"));
-
-
-            $response->nice_service = Helper::filterAlphaNum($response->name);
-            $response->has_image = (file_exists(__DIR__ . "/../../../../" . Config::get("theme_dir") . "/" . Config::get("theme") . "/img/logo/" . $response->nice_service . ".svg") ? true : file_exists(__DIR__ . "/../../../../" . Config::get("theme_dir") . "/" . Config::get("theme") . "/img/logo/" . $response->nice_service . ".png") );
-            $response->image = "/img/logo/" . $response->nice_service . (file_exists(__DIR__ . "/../../../../" . Config::get("theme_dir") . "/" . Config::get("theme") . "/img/logo/" . $response->nice_service . ".svg") ? ".svg" : ".png");
-            return $response;
-        }
-
-        $curl = curl_init();
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => Config::get("phoenix_url") . Config::get("phoenix_api_endpoint") . "/services/$ID",
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => "",
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => "GET",
-            CURLOPT_USERAGENT => "CrispCMS ToS;DR",
-        ));
-        $raw = curl_exec($curl);
-        $response = json_decode($raw);
-
-        if ($response === null) {
-            throw new Exception("Failed to crawl! " . $raw);
-        }
-
-        if ($response->error) {
-            throw new Exception($response->error);
-        }
-
-
-        if (self::$Redis_Database_Connection->set(Config::get("phoenix_api_endpoint") . "/services/id/$ID", json_encode($response), 43200) && self::$Redis_Database_Connection->set(Config::get("phoenix_api_endpoint") . "/services/name/" . strtolower($response->name), json_encode($response), 15778476)) {
-            $response = json_decode(self::$Redis_Database_Connection->get(Config::get("phoenix_api_endpoint") . "/services/id/$ID"));
-
-
-            $response->nice_service = Helper::filterAlphaNum($response->name);
-            $response->has_image = (file_exists(__DIR__ . "/../../../../" . Config::get("theme_dir") . "/" . Config::get("theme") . "/img/logo/" . $response->nice_service . ".svg") ? true : file_exists(__DIR__ . "/../../../../" . Config::get("theme_dir") . "/" . Config::get("theme") . "/img/logo/" . $response->nice_service . ".png") );
-            $response->image = "/img/logo/" . $response->nice_service . (file_exists(__DIR__ . "/../../../../" . Config::get("theme_dir") . "/" . Config::get("theme") . "/img/logo/" . $response->nice_service . ".svg") ? ".svg" : ".png");
-            return $response;
-        }
-        throw new Exception("Failed to contact REDIS");
-    }
-
-    /**
      * List all topics from postgres
      * @see https://github.com/tosdr/edit.tosdr.org/blob/8b900bf8879b8ed3a4a2a6bbabbeafa7d2ab540c/db/schema.rb#L170-L177 Database Schema
      * @return array

@@ -201,23 +201,12 @@ class Phoenix {
      * @return array
      */
     public static function getPointsPG() {
-        if (self::$Postgres_Database_Connection === NULL) {
-            self::initDB();
-        }
-
-        if (self::$Redis_Database_Connection->keys("pg_points")) {
-            return unserialize(self::$Redis_Database_Connection->get("pg_points"));
-        }
 
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
         }
 
-        $Result = self::$Postgres_Database_Connection->query("SELECT * FROM points")->fetchAll(PDO::FETCH_ASSOC);
-
-        self::$Redis_Database_Connection->set("pg_points", serialize($Result), 900);
-
-        return $Result;
+        return self::$Postgres_Database_Connection->query("SELECT * FROM points")->fetchAll(PDO::FETCH_ASSOC);
     }
 
     /**

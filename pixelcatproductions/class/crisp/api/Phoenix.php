@@ -211,7 +211,7 @@ class Phoenix {
      * @param string $ID The ID of a point
      * @return array
      */
-    public static function getPointPG(string $ID) {
+    public static function getPoint(string $ID) {
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
         }

@@ -584,17 +584,6 @@ class Phoenix {
      * @return array
      */
     public static function getServiceByNamePG(string $Name) {
-        if (self::$Redis_Database_Connection === NULL) {
-            self::initDB();
-        }
-
-        if (self::$Redis_Database_Connection->keys("pg_getservicebyname_$Name")) {
-            $response = unserialize(self::$Redis_Database_Connection->get("pg_getservicebyname_$Name"));
-            $response["nice_service"] = Helper::filterAlphaNum($response["name"]);
-            $response["image"] = $response["id"] . ".png";
-            return $response;
-        }
-
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
         }
@@ -609,7 +598,6 @@ class Phoenix {
 
         $response = $statement->fetch(PDO::FETCH_ASSOC);
 
-        self::$Redis_Database_Connection->set("pg_getservicebyname_$Name", serialize($response), 900);
         $response["nice_service"] = Helper::filterAlphaNum($response["name"]);
         $response["image"] = $response["id"] . ".png";
         return $response;

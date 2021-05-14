@@ -264,7 +264,7 @@ class Phoenix {
      * @param string $Name The name of a service
      * @return array
      */
-    public static function searchServiceByNamePG(string $Name) {
+    public static function searchServiceByName(string $Name) {
 
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();

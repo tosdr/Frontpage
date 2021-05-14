@@ -26,7 +26,7 @@ if (!isset($_GET["search"])) {
         array_push($Services, $Service);
     }
 }else{
-    $Services = crisp\api\Phoenix::searchServiceByNamePG(strtolower($_GET["search"]));
+    $Services = crisp\api\Phoenix::searchServiceByName(strtolower($_GET["search"]));
 }
 
 

@@ -22,7 +22,7 @@ if (empty($this->Query)) {
         $Array[] = crisp\api\Phoenix::getServicePG($ID);
     }
 } else {
-    foreach (crisp\api\Phoenix::searchServiceByNamePG(strtolower($this->Query)) as $Service) {
+    foreach (crisp\api\Phoenix::searchServiceByName(strtolower($this->Query)) as $Service) {
         $Array[] = $Service;
     }
 }

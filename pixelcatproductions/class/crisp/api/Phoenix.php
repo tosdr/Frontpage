@@ -57,7 +57,7 @@ class Phoenix {
 
                 $points = self::getPointsByService($ID);
                 $service = self::getServicePG($ID);
-                $documents = self::getDocumentsByServicePG($ID);
+                $documents = self::getDocumentsByService($ID);
                 foreach ($documents as $Links) {
                     $ServiceLinks[$Links["name"]] = array(
                         "name" => $Links["name"],
@@ -114,7 +114,7 @@ class Phoenix {
 
                 $points = self::getPointsByService($ID);
                 $service = self::getServicePG($ID);
-                $documents = self::getDocumentsByServicePG($ID);
+                $documents = self::getDocumentsByService($ID);
                 foreach ($points as $Point) {
                     $Document = array_column($documents, null, 'id')[$Point["document_id"]];
                     $Case = self::getCasePG($Point["case_id"]);
@@ -172,7 +172,7 @@ class Phoenix {
      * @param string $ID The Service ID
      * @return array
      */
-    public static function getDocumentsByServicePG(string $ID) {
+    public static function getDocumentsByService(string $ID) {
 
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();

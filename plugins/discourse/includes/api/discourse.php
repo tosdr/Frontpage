@@ -59,7 +59,7 @@ if (array_key_exists('HTTP_X_DISCOURSE_EVENT_SIGNATURE', $_SERVER) && $_SERVER["
 
                 $String = "A curator has added the service, below are the links to your service!\n\nService: https://edit.tosdr.org/services/" . $Service["id"];
 
-                $Documents = crisp\api\Phoenix::getDocumentsByServicePG($Service["id"]);
+                $Documents = crisp\api\Phoenix::getDocumentsByService($Service["id"]);
 
                 if (count($Documents) > 0) {
                     $String .= "\n\nDocuments:\n";
@@ -86,7 +86,7 @@ if (array_key_exists('HTTP_X_DISCOURSE_EVENT_SIGNATURE', $_SERVER) && $_SERVER["
 
                     $Service = \crisp\api\Phoenix::getServiceByNamePG($PayLoad->post->topic_title);
 
-                    $Documents = crisp\api\Phoenix::getDocumentsByServicePG($Service["id"]);
+                    $Documents = crisp\api\Phoenix::getDocumentsByService($Service["id"]);
 
                     $String = "Hello!\n\nIt seems that your service already is in our System!\n\nService: https://edit.tosdr.org/services/" . $Service["id"];
 

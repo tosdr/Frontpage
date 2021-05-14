@@ -162,13 +162,6 @@ class Phoenix {
      * @return array
      */
     public static function getPointsByServicePG($ID) {
-        if (self::$Redis_Database_Connection === NULL) {
-            self::initDB();
-        }
-
-        if (self::$Redis_Database_Connection->keys("pg_pointsbyservice_$ID")) {
-            return unserialize(self::$Redis_Database_Connection->get("pg_pointsbyservice_$ID"));
-        }
 
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
@@ -180,13 +173,7 @@ class Phoenix {
 
         $statement->execute(array(":ID" => $ID));
 
-        $Result = $statement->fetchAll(PDO::FETCH_ASSOC);
-
-
-
-        self::$Redis_Database_Connection->set("pg_pointsbyservice_$ID", serialize($Result), 900);
-
-        return $Result;
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
     /**

@@ -37,11 +37,6 @@ class Phoenix {
         self::$Postgres_Database_Connection = $PostgresDB->getDBConnector();
     }
 
-    private static function initDB() {
-        $RedisDB = new Redis();
-        self::$Redis_Database_Connection = $RedisDB->getDBConnector();
-    }
-
     /**
      * Generates tosdr.org api data from a service id
      * @param string $ID The service ID from Phoenix to generate the API Files from

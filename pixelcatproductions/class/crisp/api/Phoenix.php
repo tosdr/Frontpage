@@ -407,34 +407,6 @@ class Phoenix {
     }
 
     /**
-     * Get details of a service by name
-     * @param string $Name The name of the service
-     * @param bool $Force Force update from phoenix
-     * @return object
-     * @deprecated Use Phoenix::getServiceByNamePG
-     * @throws Exception
-     */
-    public static function getServiceByName(string $Name, bool$Force = false) {
-        $Name = strtolower($Name);
-        if (self::$Redis_Database_Connection === null) {
-            self::initDB();
-        }
-
-        if (self::$Redis_Database_Connection->exists(Config::get("phoenix_api_endpoint") . "/services/name/$Name") && !$Force) {
-
-
-            $response = json_decode(self::$Redis_Database_Connection->get(Config::get("phoenix_api_endpoint") . "/services/name/$Name"));
-
-            $response->nice_service = Helper::filterAlphaNum($response->name);
-            $response->has_image = (file_exists(__DIR__ . "/../../../../" . Config::get("theme_dir") . "/" . Config::get("theme") . "/img/logo/" . $response->nice_service . ".svg") ? true : file_exists(__DIR__ . "/../../../../" . Config::get("theme_dir") . "/" . Config::get("theme") . "/img/logo/" . $response->nice_service . ".png") );
-            $response->image = "/img/logo/" . $response->nice_service . (file_exists(__DIR__ . "/../../../../" . Config::get("theme_dir") . "/" . Config::get("theme") . "/img/logo/" . $response->nice_service . ".svg") ? ".svg" : ".png");
-
-            return $response;
-        }
-        throw new Exception("Service is not initialized!");
-    }
-
-    /**
      * Search for a service via postgres
      * @see https://github.com/tosdr/edit.tosdr.org/blob/8b900bf8879b8ed3a4a2a6bbabbeafa7d2ab540c/db/schema.rb#L134-L148 Database Schema
      * @param string $Name The name of a service

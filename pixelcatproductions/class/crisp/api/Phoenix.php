@@ -500,20 +500,6 @@ class Phoenix {
         return $statement->rowCount() > 0;
     }
 
-    /**
-     * Check if a service exists by name
-     * @param string $ID The ID of the service
-     * @return bool
-     * @deprecated Use Phoenix::serviceExistsPG
-     */
-    public static function serviceExists(string $ID) {
-        if (self::$Redis_Database_Connection === null) {
-            self::initDB();
-        }
-
-        return self::$Redis_Database_Connection->exists(Config::get("phoenix_api_endpoint") . "/services/id/$ID");
-    }
-
     public static function getServicePG(string $ID) {
 
 

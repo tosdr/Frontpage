@@ -362,7 +362,7 @@ class Phoenix {
             self::initPGDB();
         }
 
-        if (self::serviceExistsByNamePG($Name)) {
+        if (self::serviceExistsByName($Name)) {
             return false;
         }
 
@@ -441,7 +441,7 @@ class Phoenix {
      * @param string $Name The name of the service
      * @return bool
      */
-    public static function serviceExistsByNamePG(string $Name) {
+    public static function serviceExistsByName(string $Name) {
 
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();

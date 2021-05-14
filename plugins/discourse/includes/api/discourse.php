@@ -53,7 +53,7 @@ if (array_key_exists('HTTP_X_DISCOURSE_EVENT_SIGNATURE', $_SERVER) && $_SERVER["
             $Discourse = new \pnoeric\DiscourseAPI($EnvFile["DISCOURSE_HOSTNAME"], $EnvFile["DISCOURSE_API_KEY"]);
 
 
-            if (\crisp\api\Phoenix::serviceExistsByNamePG($PayLoad->post->topic_title)) {
+            if (\crisp\api\Phoenix::serviceExistsByName($PayLoad->post->topic_title)) {
                 $Service = \crisp\api\Phoenix::getServiceByName($PayLoad->post->topic_title);
 
 
@@ -81,7 +81,7 @@ if (array_key_exists('HTTP_X_DISCOURSE_EVENT_SIGNATURE', $_SERVER) && $_SERVER["
 
             if ($PayLoad->post->post_number == 1) {
 
-                if (\crisp\api\Phoenix::serviceExistsByNamePG($PayLoad->post->topic_title)) {
+                if (\crisp\api\Phoenix::serviceExistsByName($PayLoad->post->topic_title)) {
                     $Discourse = new \pnoeric\DiscourseAPI($EnvFile["DISCOURSE_HOSTNAME"], $EnvFile["DISCOURSE_API_KEY"]);
 
                     $Service = \crisp\api\Phoenix::getServiceByName($PayLoad->post->topic_title);

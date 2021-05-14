@@ -40,7 +40,7 @@ if ($Type != "") {
 $Translations = new \crisp\api\Translation($Language);
 
 if (!is_numeric($ServiceName)) {
-    if (!\crisp\api\Phoenix::serviceExistsBySlugPG(urldecode($ServiceName))) {
+    if (!\crisp\api\Phoenix::serviceExistsBySlug(urldecode($ServiceName))) {
         header("Content-Type: image/svg+xml");
         $Color = "999999";
         $Rating = $Translations->fetch("service_not_found");

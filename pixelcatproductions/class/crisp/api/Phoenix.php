@@ -340,7 +340,7 @@ class Phoenix {
      * @param string $Name The slug of the service
      * @return bool
      */
-    public static function serviceExistsBySlugPG(string $Name) {
+    public static function serviceExistsBySlug(string $Name) {
 
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();

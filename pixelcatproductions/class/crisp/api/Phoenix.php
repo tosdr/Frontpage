@@ -1015,22 +1015,10 @@ class Phoenix {
      */
     public static function getServicesPG() {
         if (self::$Postgres_Database_Connection === NULL) {
-            self::initDB();
-        }
-
-        if (self::$Redis_Database_Connection->keys("pg_services")) {
-            return unserialize(self::$Redis_Database_Connection->get("pg_services"));
-        }
-
-        if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
         }
 
-        $Result = self::$Postgres_Database_Connection->query("SELECT * FROM services WHERE status IS NULL or status = ''")->fetchAll(PDO::FETCH_ASSOC);
-
-        self::$Redis_Database_Connection->set("pg_services", serialize($Result), 900);
-
-        return $Result;
+        return self::$Postgres_Database_Connection->query("SELECT * FROM services WHERE status IS NULL or status = ''")->fetchAll(PDO::FETCH_ASSOC);
     }
 
     /**

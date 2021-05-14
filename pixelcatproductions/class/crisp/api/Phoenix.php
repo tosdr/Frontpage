@@ -803,18 +803,7 @@ class Phoenix {
     }
 
     public static function getServicePG(string $ID) {
-        if (self::$Postgres_Database_Connection === NULL) {
-            self::initDB();
-        }
 
-        if (self::$Redis_Database_Connection->keys("pg_service_$ID")) {
-            $response = unserialize(self::$Redis_Database_Connection->get("pg_service_$ID"));
-            $response["image"] = $response["id"] . ".png";
-            $dummy;
-
-            $dummy["_source"] = $response;
-            return $dummy;
-        }
 
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
@@ -830,12 +819,10 @@ class Phoenix {
 
         $response = $statement->fetch(PDO::FETCH_ASSOC);
 
-        self::$Redis_Database_Connection->set("pg_service_$ID", serialize($response), 900);
-
 
         $response["nice_service"] = Helper::filterAlphaNum($response["name"]);
         $response["image"] = $response["id"] . ".png";
-        $dummy;
+        $dummy = [];
 
         $dummy["_source"] = $response;
         return $dummy;

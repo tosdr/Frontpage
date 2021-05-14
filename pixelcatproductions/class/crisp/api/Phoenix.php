@@ -28,7 +28,6 @@ use PDO;
  */
 class Phoenix {
 
-    private static ?\Redis $Redis_Database_Connection = null;
     private static ?PDO $Postgres_Database_Connection = null;
 
     private static function initPGDB() {
@@ -41,7 +40,8 @@ class Phoenix {
      * @param string $ID The service ID from Phoenix to generate the API Files from
      * @return array The API data
      */
-    public static function generateApiFiles(string $ID, int $Version = 1) {
+    public static function generateApiFiles(string $ID, int $Version = 1): array
+    {
 
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
@@ -151,7 +151,8 @@ class Phoenix {
      * @param string $ID The ID of the Service
      * @return array
      */
-    public static function getPointsByService($ID) {
+    public static function getPointsByService(string $ID): array
+    {
 
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
@@ -172,7 +173,8 @@ class Phoenix {
      * @param string $ID The Service ID
      * @return array
      */
-    public static function getDocumentsByService(string $ID) {
+    public static function getDocumentsByService(string $ID): array
+    {
 
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
@@ -190,7 +192,8 @@ class Phoenix {
      * @see https://github.com/tosdr/edit.tosdr.org/blob/8b900bf8879b8ed3a4a2a6bbabbeafa7d2ab540c/db/schema.rb#L89-L111 Database Schema
      * @return array
      */
-    public static function getPoints() {
+    public static function getPoints(): array
+    {
 
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
@@ -205,7 +208,8 @@ class Phoenix {
      * @param string $ID The ID of a point
      * @return array
      */
-    public static function getPoint(string $ID) {
+    public static function getPoint(string $ID): array
+    {
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
         }
@@ -214,9 +218,7 @@ class Phoenix {
 
         $statement->execute(array(":ID" => $ID));
 
-        $Result = $statement->fetch(PDO::FETCH_ASSOC);
-
-        return $Result;
+        return $statement->fetch(PDO::FETCH_ASSOC);
     }
 
     /**
@@ -225,7 +227,8 @@ class Phoenix {
      * @param string $ID The id of a case
      * @return array
      */
-    public static function getCase(string $ID) {
+    public static function getCase(string $ID): array
+    {
 
 
         if (self::$Postgres_Database_Connection === NULL) {
@@ -245,7 +248,8 @@ class Phoenix {
      * @param string $ID The topic id
      * @return array
      */
-    public static function getTopic(string $ID) {
+    public static function getTopic(string $ID): array
+    {
 
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
@@ -264,7 +268,8 @@ class Phoenix {
      * @param string $Name The name of a service
      * @return array
      */
-    public static function searchServiceByName(string $Name) {
+    public static function searchServiceByName(string $Name): array
+    {
 
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
@@ -291,7 +296,8 @@ class Phoenix {
      * @param string $Name The slug of a service
      * @return array
      */
-    public static function getServiceBySlug(string $Name) {
+    public static function getServiceBySlug(string $Name): bool|array
+    {
 
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
@@ -315,7 +321,8 @@ class Phoenix {
      * @param string $Name the exact name of the service
      * @return array
      */
-    public static function getServiceByName(string $Name) {
+    public static function getServiceByName(string $Name): bool|array
+    {
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
         }
@@ -340,7 +347,8 @@ class Phoenix {
      * @param string $Name The slug of the service
      * @return bool
      */
-    public static function serviceExistsBySlug(string $Name) {
+    public static function serviceExistsBySlug(string $Name): bool
+    {
 
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
@@ -357,7 +365,8 @@ class Phoenix {
      * Create a service on phoenix
      * @return bool
      */
-    public static function createService(string $Name, string $Url, string $Wikipedia, string $User) {
+    public static function createService(string $Name, string $Url, string $Wikipedia, string $User): bool
+    {
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
         }
@@ -372,7 +381,7 @@ class Phoenix {
 
         $service_id = self::$Postgres_Database_Connection->lastInsertId();
 
-        $Result = ($statement->rowCount() > 0 ? true : false);
+        $Result = $statement->rowCount() > 0;
 
         if ($Result) {
             self::createVersion("Service", $service_id, "create", "Created service", $User, null);
@@ -386,7 +395,8 @@ class Phoenix {
      * Create a version on phoenix
      * @return bool
      */
-    public static function createDocument(string $Name, string $Url, string $Xpath, string $Service, string $User) {
+    public static function createDocument(string $Name, string $Url, string $Xpath, string $Service, string $User): bool
+    {
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
         }
@@ -399,7 +409,7 @@ class Phoenix {
 
         $statement->execute([":name" => $Name, ":url" => $Url, ":xpath" => $Xpath, ":service_id" => $Service]);
 
-        $Result = ($statement->rowCount() > 0 ? true : false);
+        $Result = $statement->rowCount() > 0;
 
         $document_id = self::$Postgres_Database_Connection->lastInsertId();
 
@@ -415,7 +425,8 @@ class Phoenix {
      * Create a document on phoenix
      * @return bool
      */
-    public static function createVersion(string $itemType, string $itemId, string $event, string $objectChanges = null, string $whodunnit, string $object = null) {
+    public static function createVersion(string $itemType, string $itemId, string $event, string $objectChanges = null, string $whodunnit, string $object = null): bool
+    {
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
         }
@@ -431,9 +442,7 @@ class Phoenix {
             ":object" => $object
         ]);
 
-        $Result = ($statement->rowCount() > 0 ? true : false);
-
-        return $Result;
+        return $statement->rowCount() > 0;
     }
 
     /**
@@ -441,7 +450,8 @@ class Phoenix {
      * @param string $Name The name of the service
      * @return bool
      */
-    public static function serviceExistsByName(string $Name) {
+    public static function serviceExistsByName(string $Name): bool
+    {
 
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
@@ -459,7 +469,8 @@ class Phoenix {
      * @param string $ID The id of the point
      * @return bool
      */
-    public static function pointExists(string $ID) {
+    public static function pointExists(string $ID): bool
+    {
         #
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
@@ -477,7 +488,8 @@ class Phoenix {
      * @param string $ID The ID of the service
      * @return bool
      */
-    public static function serviceExists(string $ID) {
+    public static function serviceExists(string $ID): bool
+    {
 
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
@@ -490,7 +502,8 @@ class Phoenix {
         return $statement->rowCount() > 0;
     }
 
-    public static function getService(string $ID) {
+    public static function getService(string $ID): bool|array
+    {
 
 
         if (self::$Postgres_Database_Connection === NULL) {
@@ -521,7 +534,8 @@ class Phoenix {
      * @see https://github.com/tosdr/edit.tosdr.org/blob/8b900bf8879b8ed3a4a2a6bbabbeafa7d2ab540c/db/schema.rb#L170-L177 Database Schema
      * @return array
      */
-    public static function getTopics() {
+    public static function getTopics(): array
+    {
 
 
         if (self::$Postgres_Database_Connection === NULL) {
@@ -536,7 +550,8 @@ class Phoenix {
      * @see https://github.com/tosdr/edit.tosdr.org/blob/8b900bf8879b8ed3a4a2a6bbabbeafa7d2ab540c/db/schema.rb#L42-L52 Database Schema
      * @return array
      */
-    public static function getCases(bool $FreshData = false) {
+    public static function getCases(bool $FreshData = false): array
+    {
 
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
@@ -550,7 +565,8 @@ class Phoenix {
      * @see https://github.com/tosdr/edit.tosdr.org/blob/8b900bf8879b8ed3a4a2a6bbabbeafa7d2ab540c/db/schema.rb#L134-L148 Database Schema
      * @return array
      */
-    public static function getServices() {
+    public static function getServices(): array
+    {
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
         }

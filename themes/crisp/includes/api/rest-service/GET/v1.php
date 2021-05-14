@@ -28,7 +28,7 @@ if (!is_numeric($_GET["service"] ?? $this->Query)) {
     exit;
 }
 
-if (!crisp\api\Phoenix::serviceExistsPG($_GET["service"] ?? $this->Query)) {
+if (!crisp\api\Phoenix::serviceExists($_GET["service"] ?? $this->Query)) {
     echo \crisp\core\PluginAPI::response(\crisp\core\Bitmask::INVALID_SERVICE + \crisp\core\Bitmask::VERSION_DEPRECATED, $_GET["service"] ?? $this->Query, []);
     return;
 }

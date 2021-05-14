@@ -29,7 +29,7 @@ if (!is_numeric($_GET["service"] ?? $this->Query)) {
     $ID = $_GET["service"] ?? $this->Query;
 }
 
-if (!crisp\api\Phoenix::serviceExistsPG($ID)) {
+if (!crisp\api\Phoenix::serviceExists($ID)) {
     echo \crisp\core\PluginAPI::response(\crisp\core\Bitmask::INVALID_SERVICE, $ID, []);
     return;
 }

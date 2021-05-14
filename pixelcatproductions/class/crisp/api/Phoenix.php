@@ -391,7 +391,7 @@ class Phoenix {
             self::initPGDB();
         }
 
-        if (!self::serviceExistsPG($Service)) {
+        if (!self::serviceExists($Service)) {
             return false;
         }
 
@@ -477,7 +477,7 @@ class Phoenix {
      * @param string $ID The ID of the service
      * @return bool
      */
-    public static function serviceExistsPG(string $ID) {
+    public static function serviceExists(string $ID) {
 
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();

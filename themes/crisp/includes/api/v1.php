@@ -63,7 +63,7 @@ if (!is_numeric($this->Query)) {
 
 
 
-if (!crisp\api\Phoenix::serviceExistsPG($this->Query)) {
+if (!crisp\api\Phoenix::serviceExists($this->Query)) {
     echo \crisp\core\PluginAPI::response(\crisp\core\Bitmask::INVALID_SERVICE, $this->Query, [], null, 404);
     return;
 }

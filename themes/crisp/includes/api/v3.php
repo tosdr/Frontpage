@@ -54,7 +54,7 @@ if (!is_numeric($this->Query)) {
     exit;
 }
 
-if (!crisp\api\Phoenix::serviceExistsPG($this->Query)) {
+if (!crisp\api\Phoenix::serviceExists($this->Query)) {
     echo \crisp\core\PluginAPI::response(\crisp\core\Bitmask::INVALID_SERVICE + crisp\core\Bitmask::VERSION_DEPRECATED + crisp\core\Bitmask::INTERFACE_DEPRECATED, $this->Query, []);
     return;
 }

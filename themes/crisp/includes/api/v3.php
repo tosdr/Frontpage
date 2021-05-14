@@ -17,47 +17,51 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+use crisp\api\Config;
+use crisp\api\Phoenix;
+use crisp\core\Bitmask;
+use crisp\core\PluginAPI;
+
 if ($_SERVER["REQUEST_METHOD"] !== "GET") {
-    echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::NOT_IMPLEMENTED, "Invalid Request Method", [], null, 405);
+    PluginAPI::response(crisp\core\Bitmask::NOT_IMPLEMENTED, "Invalid Request Method", [], null, 405);
     exit;
 }
 
 if ($this->Query == "all") {
-    $Services = \crisp\api\Phoenix::getServices();
+    $Services = Phoenix::getServices();
     $Response = array(
         "version" => time(),
     );
     foreach ($Services as $Index => $Service) {
 
         $Service["urls"] = explode(",", $Service["url"]);
-        $Service["nice_service"] = \crisp\api\Helper::filterAlphaNum($Service["name"]);
-        $Service["logo"] = \crisp\api\Config::get("s3_logos") . "/" . $Service["id"] . ".png";
+        $Service["logo"] = Config::get("s3_logos") . "/" . $Service["id"] . ".png";
 
         $Services[$Index] = $Service;
     }
 
     $Response["services"] = $Services;
 
-    echo \crisp\core\PluginAPI::response(false, "All services below", $Response);
+    PluginAPI::response(false, "All services below", $Response);
 
     return;
 }
 
 if (!is_numeric($this->Query)) {
     if (!crisp\api\Phoenix::serviceExistsBySlug($this->Query)) {
-        echo \crisp\core\PluginAPI::response(\crisp\core\Bitmask::INVALID_SERVICE + crisp\core\Bitmask::VERSION_DEPRECATED + crisp\core\Bitmask::INTERFACE_DEPRECATED, $this->Query, []);
+        PluginAPI::response(Bitmask::INVALID_SERVICE + crisp\core\Bitmask::VERSION_DEPRECATED + crisp\core\Bitmask::INTERFACE_DEPRECATED, $this->Query, []);
         return;
     }
     $this->Query = crisp\api\Phoenix::getServiceBySlug($this->Query)["id"];
-    $SkeletonData = \crisp\api\Phoenix::generateApiFiles($this->Query);
-    echo \crisp\core\PluginAPI::response(\crisp\core\Bitmask::REQUEST_SUCCESS + crisp\core\Bitmask::VERSION_DEPRECATED + crisp\core\Bitmask::INTERFACE_DEPRECATED, $this->Query, \crisp\api\Phoenix::generateApiFiles($this->Query, "3"));
+    $SkeletonData = Phoenix::generateApiFiles($this->Query);
+    PluginAPI::response(Bitmask::REQUEST_SUCCESS + crisp\core\Bitmask::VERSION_DEPRECATED + crisp\core\Bitmask::INTERFACE_DEPRECATED, $this->Query, Phoenix::generateApiFiles($this->Query, "3"));
     exit;
 }
 
 if (!crisp\api\Phoenix::serviceExists($this->Query)) {
-    echo \crisp\core\PluginAPI::response(\crisp\core\Bitmask::INVALID_SERVICE + crisp\core\Bitmask::VERSION_DEPRECATED + crisp\core\Bitmask::INTERFACE_DEPRECATED, $this->Query, []);
+    PluginAPI::response(Bitmask::INVALID_SERVICE + crisp\core\Bitmask::VERSION_DEPRECATED + crisp\core\Bitmask::INTERFACE_DEPRECATED, $this->Query, []);
     return;
 }
 
 
-echo \crisp\core\PluginAPI::response(\crisp\core\Bitmask::REQUEST_SUCCESS + crisp\core\Bitmask::VERSION_DEPRECATED + crisp\core\Bitmask::INTERFACE_DEPRECATED, $this->Query, \crisp\api\Phoenix::generateApiFiles($this->Query, "3"));
+PluginAPI::response(Bitmask::REQUEST_SUCCESS + crisp\core\Bitmask::VERSION_DEPRECATED + crisp\core\Bitmask::INTERFACE_DEPRECATED, $this->Query, Phoenix::generateApiFiles($this->Query, "3"));

@@ -18,7 +18,7 @@
  */
 
 if ($this->Query == "all") {
-    $Services = \crisp\api\Phoenix::getServicesPG();
+    $Services = \crisp\api\Phoenix::getServices();
     $Response = array(
         "tosdr/api/version" => 1,
         "tosdr/data/version" => time(),

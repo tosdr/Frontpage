@@ -28,7 +28,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ';
 
-foreach (\crisp\api\Phoenix::getServicesPG() as $Service) {
+foreach (\crisp\api\Phoenix::getServices() as $Service) {
     echo strtr($urlset, ["{{ loc }}" => crisp\api\Config::get("root_url")."/en/service/$Service[id]"]);
     echo strtr($urlset, ["{{ loc }}" => crisp\api\Config::get("root_url")."/en/embed/$Service[id]"]);
 }

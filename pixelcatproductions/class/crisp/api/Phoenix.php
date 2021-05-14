@@ -550,7 +550,7 @@ class Phoenix {
      * @see https://github.com/tosdr/edit.tosdr.org/blob/8b900bf8879b8ed3a4a2a6bbabbeafa7d2ab540c/db/schema.rb#L134-L148 Database Schema
      * @return array
      */
-    public static function getServicesPG() {
+    public static function getServices() {
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
         }

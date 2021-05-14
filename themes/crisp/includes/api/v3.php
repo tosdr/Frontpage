@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] !== "GET") {
 }
 
 if ($this->Query == "all") {
-    $Services = \crisp\api\Phoenix::getServicesPG();
+    $Services = \crisp\api\Phoenix::getServices();
     $Response = array(
         "version" => time(),
     );

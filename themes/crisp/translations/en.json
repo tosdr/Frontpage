@@ -233,5 +233,6 @@
     "views.donate.oc.text": "With the Opencollective you can donate by Credit Card or PayPal. Contributions are not deductible as charitable contributions for U.S. federal income tax purposes.\n\nWith Opencollective you can choose to do an incognito contribution: Publicly, the contribution amount and date will be visible in the transparent budget, but your identity will be obscured, appearing only as \"incognito\". The contribution will not be linked to your public profile. However, ToS;DR Staff will be able to see your identity privately.",
     "views.donate.bitcoin.header": "Bitcoin",
     "views.downloads.reportbug": "Report a bug (Anonymously)",
+    "views.downloads.suggestfeature": "Suggest a feature (Anonymously)",
     "views.donate.bitcoin.text": "Via Bitcoin you can donate to ToS;DR 100% anonymously. Contributions are not deductible as charitable contributions for U.S. federal income tax purposes.\n\nTo donate, scan the QR code in your preferred Bitcoin wallet or use our address below."
 }

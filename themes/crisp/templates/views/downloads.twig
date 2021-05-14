@@ -36,6 +36,9 @@
                 <button id="reportbug" role="button"
                         class="btn btn-warning"><i
                             class="fas fa-bug"></i> {{ 'views.downloads.reportbug'|translate }}</button>
+                <button id="suggestfeature" role="button"
+                        class="btn btn-success"><i
+                            class="fas fa-lightbulb"></i> {{ 'views.downloads.suggestfeature'|translate }}</button>
             </span>
             {% if featured is not null %}
                 <div class="card h-100">
@@ -90,17 +93,37 @@
                 dataType: "script"
             });
 
+            // Requires jQuery!
+            jQuery.ajax({
+                url: "https://tosdr.atlassian.net/s/d41d8cd98f00b204e9800998ecf8427e-T/sb53l8/b/24/e73395c53c3b10fde2303f4bf74ffbf6/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector-embededjs/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector-embededjs.js?locale=en-US&collectorId=c64f6508",
+                type: "get",
+                cache: true,
+                dataType: "script"
+            });
+
+
+
             window.ATL_JQ_PAGE_PROPS = $.extend(window.ATL_JQ_PAGE_PROPS, {
 
                 '176cb88e': {
                     "triggerFunction": function (showCollectorDialog) {
-
-
                         if (window.location.hash && window.location.hash === "#bug") {
                             showCollectorDialog();
                         }
 
                         jQuery("#reportbug").click(function (e) {
+                            e.preventDefault();
+                            showCollectorDialog();
+                        });
+                    }
+                },
+                'c64f6508': {
+                    "triggerFunction": function (showCollectorDialog) {
+                        if (window.location.hash && window.location.hash === "#feature") {
+                            showCollectorDialog();
+                        }
+
+                        jQuery("#suggestfeature").click(function (e) {
                             e.preventDefault();
                             showCollectorDialog();
                         });

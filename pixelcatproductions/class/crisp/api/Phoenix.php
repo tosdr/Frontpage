@@ -22,11 +22,7 @@ namespace crisp\api;
 
 use crisp\core\Postgres;
 use crisp\core\Redis;
-use Exception;
 use PDO;
-use function curl_exec;
-use function curl_init;
-use function curl_setopt_array;
 
 /**
  * Some useful phoenix functions

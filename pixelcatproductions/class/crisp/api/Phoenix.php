@@ -465,20 +465,6 @@ class Phoenix {
     }
 
     /**
-     * Check if the point exists by name
-     * @param string $ID The ID of the point
-     * @deprecated Use Phoenix::pointExistsPG
-     * @return bool
-     */
-    public static function pointExists(string $ID) {
-        if (self::$Redis_Database_Connection === null) {
-            self::initDB();
-        }
-
-        return self::$Redis_Database_Connection->exists(Config::get("phoenix_api_endpoint") . "/points/id/$ID");
-    }
-
-    /**
      * Check if a point exists from postgres via slug
      * @param string $ID The id of the point
      * @return bool

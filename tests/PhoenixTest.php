@@ -33,7 +33,7 @@ final class PhoenixTest extends TestCase {
     );
     $this->assertNotEquals(
             false,
-            \crisp\api\Phoenix::getServiceBySlugPG("test_slug")
+            \crisp\api\Phoenix::getServiceBySlug("test_slug")
     );
   }
 

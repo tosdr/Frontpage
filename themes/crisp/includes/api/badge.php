@@ -48,7 +48,7 @@ if (!is_numeric($ServiceName)) {
         echo $poser->generate($Prefix, $Rating, $Color, 'flat');
         return;
     }
-    $RedisData["_source"] = \crisp\api\Phoenix::getServiceBySlugPG(urldecode($ServiceName));
+    $RedisData["_source"] = \crisp\api\Phoenix::getServiceBySlug(urldecode($ServiceName));
 } else {
     if (!crisp\api\Phoenix::serviceExistsPG($ServiceName)) {
         header("Content-Type: image/svg+xml");

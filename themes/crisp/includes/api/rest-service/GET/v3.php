@@ -24,7 +24,7 @@ if (!is_numeric($_GET["service"] ?? $this->Query)) {
         echo \crisp\core\PluginAPI::response(\crisp\core\Bitmask::INVALID_SERVICE, $_GET["service"] ?? $this->Query, []);
         return;
     }
-    $ID = crisp\api\Phoenix::getServiceBySlugPG($_GET["service"] ?? $this->Query)["id"];
+    $ID = crisp\api\Phoenix::getServiceBySlug($_GET["service"] ?? $this->Query)["id"];
 } else {
     $ID = $_GET["service"] ?? $this->Query;
 }

@@ -47,7 +47,7 @@ if (!is_numeric($this->Query)) {
         echo \crisp\core\PluginAPI::response(\crisp\core\Bitmask::INVALID_SERVICE + crisp\core\Bitmask::VERSION_DEPRECATED + crisp\core\Bitmask::INTERFACE_DEPRECATED, $this->Query, [], null, 404);
         return;
     }
-    $this->Query = crisp\api\Phoenix::getServiceBySlugPG($this->Query)["id"];
+    $this->Query = crisp\api\Phoenix::getServiceBySlug($this->Query)["id"];
     $SkeletonData = \crisp\api\Phoenix::generateApiFiles($this->Query);
     echo \crisp\core\PluginAPI::response(\crisp\core\Bitmask::VERSION_DEPRECATED + crisp\core\Bitmask::REQUEST_SUCCESS + crisp\core\Bitmask::INTERFACE_DEPRECATED, $this->Query, $SkeletonData);
 

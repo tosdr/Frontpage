@@ -291,7 +291,7 @@ class Phoenix {
      * @param string $Name The slug of a service
      * @return array
      */
-    public static function getServiceBySlugPG(string $Name) {
+    public static function getServiceBySlug(string $Name) {
 
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();

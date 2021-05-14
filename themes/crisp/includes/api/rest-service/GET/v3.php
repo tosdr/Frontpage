@@ -39,7 +39,7 @@ $ServiceLinks = array();
 $ServicePoints = array();
 $ServicePointsData = array();
 
-$points = crisp\api\Phoenix::getPointsByServicePG($ID);
+$points = crisp\api\Phoenix::getPointsByService($ID);
 $service = crisp\api\Phoenix::getServicePG($ID);
 $documents = crisp\api\Phoenix::getDocumentsByServicePG($ID);
 

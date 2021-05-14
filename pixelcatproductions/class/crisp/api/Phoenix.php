@@ -21,7 +21,6 @@
 namespace crisp\api;
 
 use crisp\core\Postgres;
-use crisp\core\Redis;
 use PDO;
 
 /**
@@ -56,7 +55,7 @@ class Phoenix {
                 $ServicePoints = array();
                 $ServicePointsData = array();
 
-                $points = self::getPointsByServicePG($ID);
+                $points = self::getPointsByService($ID);
                 $service = self::getServicePG($ID);
                 $documents = self::getDocumentsByServicePG($ID);
                 foreach ($documents as $Links) {
@@ -113,7 +112,7 @@ class Phoenix {
                 $ServicePoints = array();
                 $ServicePointsData = array();
 
-                $points = self::getPointsByServicePG($ID);
+                $points = self::getPointsByService($ID);
                 $service = self::getServicePG($ID);
                 $documents = self::getDocumentsByServicePG($ID);
                 foreach ($points as $Point) {
@@ -152,7 +151,7 @@ class Phoenix {
      * @param string $ID The ID of the Service
      * @return array
      */
-    public static function getPointsByServicePG($ID) {
+    public static function getPointsByService($ID) {
 
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();

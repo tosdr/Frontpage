@@ -245,7 +245,7 @@ class Phoenix {
      * @param string $ID The topic id
      * @return array
      */
-    public static function getTopicPG(string $ID) {
+    public static function getTopic(string $ID) {
 
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();

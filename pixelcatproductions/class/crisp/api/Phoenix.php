@@ -468,13 +468,6 @@ class Phoenix {
      * @return array
      */
     public static function getServiceBySlugPG(string $Name) {
-        if (self::$Postgres_Database_Connection === NULL) {
-            self::initDB();
-        }
-
-        if (self::$Redis_Database_Connection->keys("pg_getservicebyslug_$Name")) {
-            return unserialize(self::$Redis_Database_Connection->get("pg_getservicebyslug_$Name"));
-        }
 
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
@@ -489,11 +482,7 @@ class Phoenix {
             return false;
         }
 
-        $Result = $statement->fetch(PDO::FETCH_ASSOC);
-
-        self::$Redis_Database_Connection->set("pg_getservicebyslug_$Name", serialize($Result), 900);
-
-        return $Result;
+        return $statement->fetch(PDO::FETCH_ASSOC);
     }
 
     /**

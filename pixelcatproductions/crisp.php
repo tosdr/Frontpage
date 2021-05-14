@@ -19,6 +19,31 @@
 
 namespace crisp;
 
+use CompileError;
+use crisp\api\Config;
+use crisp\api\Helper;
+use crisp\api\lists\Languages;
+use crisp\api\Phoenix;
+use crisp\api\Translation;
+use crisp\core\Plugins;
+use crisp\core\Redis;
+use crisp\core\Security;
+use crisp\core\Themes;
+use crisp\exceptions\BitmaskException;
+use Error;
+use Exception;
+use ParseError;
+use RateLimit\Rate;
+use RateLimit\RedisRateLimiter;
+use Throwable;
+use Twig\Environment;
+use Twig\Error\LoaderError;
+use Twig\Extension\StringLoaderExtension;
+use Twig\Loader\FilesystemLoader;
+use Twig\TwigFilter;
+use Twig\TwigFunction;
+use TypeError;
+
 /**
  * Core class, nothing else
  *
@@ -83,12 +108,14 @@ try {
 
         session_start();
 
-        $CurrentTheme = \crisp\api\Config::get("theme");
+        $CurrentTheme = Config::get("theme");
         $CurrentFile = substr(substr($_SERVER['PHP_SELF'], 1), 0, -4);
         $CurrentPage = $GLOBALS["route"]->Page;
         $CurrentPage = ($CurrentPage == "" ? "frontpage" : $CurrentPage);
         $CurrentPage = explode(".", $CurrentPage)[0];
         $Simple = (explode('.', $_SERVER["HTTP_HOST"])[0] === "simple" ? true : false);
+
+        define('IS_API_ENDPOINT', explode("/", $_GET["route"])[1] === "api" || isset($_SERVER["IS_API_ENDPOINT"]));
 
         if (isset($_GET["universe"])) {
             Universe::changeUniverse($_GET["universe"]);
@@ -99,26 +126,26 @@ try {
         define("CURRENT_UNIVERSE", Universe::getUniverse($_COOKIE[core\Config::$Cookie_Prefix . "universe"]));
         define("CURRENT_UNIVERSE_NAME", Universe::getUniverseName(CURRENT_UNIVERSE));
 
-        $ThemeLoader = new \Twig\Loader\FilesystemLoader(array(__DIR__ . "/../themes/$CurrentTheme/templates/", __DIR__ . "/../plugins/"));
-        $TwigTheme;
+        $ThemeLoader = new FilesystemLoader(array(__DIR__ . "/../themes/$CurrentTheme/templates/", __DIR__ . "/../plugins/"));
+        $TwigTheme = null;
 
         if (CURRENT_UNIVERSE <= Universe::UNIVERSE_BETA) {
             if (!$Simple) {
-                $TwigTheme = new \Twig\Environment($ThemeLoader, [
+                $TwigTheme = new Environment($ThemeLoader, [
                     'cache' => __DIR__ . '/cache/'
                 ]);
             } else {
-                $TwigTheme = new \Twig\Environment($ThemeLoader, [
+                $TwigTheme = new Environment($ThemeLoader, [
                     'cache' => __DIR__ . '/cache/simple/'
                 ]);
             }
         } else {
-            $TwigTheme = new \Twig\Environment($ThemeLoader, []);
+            $TwigTheme = new Environment($ThemeLoader, []);
         }
 
 
         api\Helper::setLocale();
-        $Locale = \crisp\api\Helper::getLocale();
+        $Locale = Helper::getLocale();
 
         if (CURRENT_UNIVERSE >= Universe::UNIVERSE_BETA) {
             if (isset($_GET["test_theme_component"])) {
@@ -133,9 +160,9 @@ try {
         header("X-CMS-Universe: " . CURRENT_UNIVERSE);
         header("X-CMS-Universe-Human: " . CURRENT_UNIVERSE_NAME);
 
-        $TwigTheme->addGlobal("config", \crisp\api\Config::list());
+        $TwigTheme->addGlobal("config", Config::list());
         $TwigTheme->addGlobal("locale", $Locale);
-        $TwigTheme->addGlobal("languages", \crisp\api\Translation::listLanguages(false));
+        $TwigTheme->addGlobal("languages", Translation::listLanguages(false));
         $TwigTheme->addGlobal("GET", $_GET);
         $TwigTheme->addGlobal("UNIVERSE", CURRENT_UNIVERSE);
         $TwigTheme->addGlobal("UNIVERSE_NAME", CURRENT_UNIVERSE_NAME);
@@ -145,52 +172,52 @@ try {
         $TwigTheme->addGlobal("GLOBALS", $GLOBALS);
         $TwigTheme->addGlobal("COOKIE", $_COOKIE);
         $TwigTheme->addGlobal("SIMPLE", $Simple);
-        $TwigTheme->addGlobal("isMobile", \crisp\api\Helper::isMobile());
+        $TwigTheme->addGlobal("isMobile", Helper::isMobile());
         $TwigTheme->addGlobal("URL", api\Helper::currentDomain());
         $TwigTheme->addGlobal("CLUSTER", gethostname());
-        $TwigTheme->addGlobal("THEME_MODE", \crisp\core\Themes::getThemeMode());
+        $TwigTheme->addGlobal("THEME_MODE", Themes::getThemeMode());
 
-        $TwigTheme->addExtension(new \Twig\Extension\StringLoaderExtension());
+        $TwigTheme->addExtension(new StringLoaderExtension());
 
-        $TwigTheme->addFunction(new \Twig\TwigFunction('getGitRevision', [new \crisp\api\Helper(), 'getGitRevision']));
-        $TwigTheme->addFunction(new \Twig\TwigFunction('getService', [new \crisp\api\Phoenix(), 'getService']));
-        $TwigTheme->addFunction(new \Twig\TwigFunction('getPoint', [new \crisp\api\Phoenix(), 'getPoint']));
-        $TwigTheme->addFunction(new \Twig\TwigFunction('getPointsByService', [new \crisp\api\Phoenix(), 'getPointsByService']));
-        $TwigTheme->addFunction(new \Twig\TwigFunction('getCase', [new \crisp\api\Phoenix(), 'getCase']));
-        $TwigTheme->addFunction(new \Twig\TwigFunction('getGitBranch', [new \crisp\api\Helper(), 'getGitBranch']));
-        $TwigTheme->addFunction(new \Twig\TwigFunction('prettyDump', [new \crisp\api\Helper(), 'prettyDump']));
-        $TwigTheme->addFunction(new \Twig\TwigFunction('microtime', 'microtime'));
-        $TwigTheme->addFunction(new \Twig\TwigFunction('includeResource', [new \crisp\core\Themes(), 'includeResource']));
-        $TwigTheme->addFunction(new \Twig\TwigFunction('generateLink', [new \crisp\api\Helper(), 'generateLink']));
+        $TwigTheme->addFunction(new TwigFunction('getGitRevision', [new Helper(), 'getGitRevision']));
+        $TwigTheme->addFunction(new TwigFunction('getService', [new Phoenix(), 'getService']));
+        $TwigTheme->addFunction(new TwigFunction('getPoint', [new Phoenix(), 'getPoint']));
+        $TwigTheme->addFunction(new TwigFunction('getPointsByService', [new Phoenix(), 'getPointsByService']));
+        $TwigTheme->addFunction(new TwigFunction('getCase', [new Phoenix(), 'getCase']));
+        $TwigTheme->addFunction(new TwigFunction('getGitBranch', [new Helper(), 'getGitBranch']));
+        $TwigTheme->addFunction(new TwigFunction('prettyDump', [new Helper(), 'prettyDump']));
+        $TwigTheme->addFunction(new TwigFunction('microtime', 'microtime'));
+        $TwigTheme->addFunction(new TwigFunction('includeResource', [new Themes(), 'includeResource']));
+        $TwigTheme->addFunction(new TwigFunction('generateLink', [new Helper(), 'generateLink']));
 
         /* CSRF Stuff */
-        $TwigTheme->addFunction(new \Twig\TwigFunction('csrf', [new \crisp\core\Security(), 'getCSRF']));
-        $TwigTheme->addFunction(new \Twig\TwigFunction('refreshCSRF', [new \crisp\core\Security(), 'regenCSRF']));
-        $TwigTheme->addFunction(new \Twig\TwigFunction('validateCSRF', [new \crisp\core\Security(), 'matchCSRF']));
+        $TwigTheme->addFunction(new TwigFunction('csrf', [new Security(), 'getCSRF']));
+        $TwigTheme->addFunction(new TwigFunction('refreshCSRF', [new Security(), 'regenCSRF']));
+        $TwigTheme->addFunction(new TwigFunction('validateCSRF', [new Security(), 'matchCSRF']));
 
-        $Translation = new \crisp\api\Translation($Locale);
+        $Translation = new Translation($Locale);
 
-        $TwigTheme->addFilter(new \Twig\TwigFilter('date', 'date'));
-        $TwigTheme->addFilter(new \Twig\TwigFilter('bcdiv', 'bcdiv'));
-        $TwigTheme->addFilter(new \Twig\TwigFilter('integer', 'intval'));
-        $TwigTheme->addFilter(new \Twig\TwigFilter('double', 'doubleval'));
-        $TwigTheme->addFilter(new \Twig\TwigFilter('json', 'json_decode'));
-        $TwigTheme->addFilter(new \Twig\TwigFilter('json_encode', 'json_encode'));
-        $TwigTheme->addFilter(new \Twig\TwigFilter('json_decode', 'json_decode'));
-        $TwigTheme->addFilter(new \Twig\TwigFilter('translate', [$Translation, 'fetch']));
-        $TwigTheme->addFilter(new \Twig\TwigFilter('getlang', [new \crisp\api\lists\Languages(), 'getLanguageByCode']));
-        $TwigTheme->addFilter(new \Twig\TwigFilter('truncateText', [new \crisp\api\Helper(), 'truncateText']));
+        $TwigTheme->addFilter(new TwigFilter('date', 'date'));
+        $TwigTheme->addFilter(new TwigFilter('bcdiv', 'bcdiv'));
+        $TwigTheme->addFilter(new TwigFilter('integer', 'intval'));
+        $TwigTheme->addFilter(new TwigFilter('double', 'doubleval'));
+        $TwigTheme->addFilter(new TwigFilter('json', 'json_decode'));
+        $TwigTheme->addFilter(new TwigFilter('json_encode', 'json_encode'));
+        $TwigTheme->addFilter(new TwigFilter('json_decode', 'json_decode'));
+        $TwigTheme->addFilter(new TwigFilter('translate', [$Translation, 'fetch']));
+        $TwigTheme->addFilter(new TwigFilter('getlang', [new Languages(), 'getLanguageByCode']));
+        $TwigTheme->addFilter(new TwigFilter('truncateText', [new Helper(), 'truncateText']));
 
         $EnvFile = parse_ini_file(__DIR__ . "/../.env");
 
-        $RedisClass = new \crisp\core\Redis();
-        $rateLimiter = new \RateLimit\RedisRateLimiter($RedisClass->getDBConnector());
+        $RedisClass = new Redis();
+        $rateLimiter = new RedisRateLimiter($RedisClass->getDBConnector());
 
         if (file_exists(__DIR__ . "/../themes/$CurrentTheme/hook.php")) {
             require_once __DIR__ . "/../themes/$CurrentTheme/hook.php";
         }
 
-        if (explode("/", $_GET["route"])[1] === "api" || isset($_SERVER["IS_API_ENDPOINT"])) {
+        if (IS_API_ENDPOINT) {
 
             header('Access-Control-Allow-Origin: *');
             header("Cache-Control: max-age=600, public, must-revalidate");
@@ -201,7 +228,7 @@ try {
                 exit;
             }
 
-            $Query = (isset($GLOBALS["route"]->GET["q"]) ? $GLOBALS["route"]->GET["q"] : $GLOBALS["route"]->GET["service"]);
+            $Query = ($GLOBALS["route"]->GET["q"] ?? $GLOBALS["route"]->GET["service"]);
 
             if (strpos($Query, ".json")) {
                 $Query = substr($Query, 0, -5);
@@ -210,7 +237,7 @@ try {
             if (strlen($Query) === 0) {
                 $Query = "no_query";
             }
-            $keyDetails;
+            $keyDetails = null;
             if (isset(apache_request_headers()["Authorization"])) {
                 $keyDetails = api\Helper::getAPIKeyDetails(apache_request_headers()["Authorization"]);
 
@@ -232,22 +259,22 @@ try {
             }
 
             $Benefit = "Guest";
-            $IndicatorSecond = "s_" . \crisp\api\Helper::getRealIpAddr();
-            $IndicatorHour = "h_" . \crisp\api\Helper::getRealIpAddr();
-            $IndicatorDay = "d_" . \crisp\api\Helper::getRealIpAddr();
+            $IndicatorSecond = "s_" . Helper::getRealIpAddr();
+            $IndicatorHour = "h_" . Helper::getRealIpAddr();
+            $IndicatorDay = "d_" . Helper::getRealIpAddr();
 
-            $LimitSecond = \RateLimit\Rate::perSecond(15);
-            $LimitHour = \RateLimit\Rate::perHour(1000);
-            $LimitDay = \RateLimit\Rate::perHour(15000);
+            $LimitSecond = Rate::perSecond(15);
+            $LimitHour = Rate::perHour(1000);
+            $LimitDay = Rate::perHour(15000);
 
-            if (CURRENT_UNIVERSE == \crisp\Universe::UNIVERSE_TOSDR || in_array(\crisp\api\Helper::getRealIpAddr(), \crisp\api\Config::get("office_ips"))) {
+            if (CURRENT_UNIVERSE == Universe::UNIVERSE_TOSDR || in_array(Helper::getRealIpAddr(), Config::get("office_ips"))) {
 
-                $LimitSecond = \RateLimit\Rate::perSecond(15000);
-                $LimitHour = \RateLimit\Rate::perHour(100000);
-                $LimitDay = \RateLimit\Rate::perHour(150000);
+                $LimitSecond = Rate::perSecond(15000);
+                $LimitHour = Rate::perHour(100000);
+                $LimitDay = Rate::perHour(150000);
 
                 $Benefit = "Staff";
-                if (in_array(\crisp\api\Helper::getRealIpAddr(), \crisp\api\Config::get("office_ips"))) {
+                if (in_array(Helper::getRealIpAddr(), Config::get("office_ips"))) {
                     $Benefit = "Office";
                 }
             }
@@ -259,20 +286,20 @@ try {
                 $LimitDay;
                 $Benefit;
                 if ($keyDetails["ratelimit_second"] === null) {
-                    $LimitSecond = \RateLimit\Rate::perSecond(150);
+                    $LimitSecond = Rate::perSecond(150);
                 } else {
-                    $LimitSecond = \RateLimit\Rate::perSecond($keyDetails["ratelimit_second"]);
+                    $LimitSecond = Rate::perSecond($keyDetails["ratelimit_second"]);
                 }
                 if ($keyDetails["ratelimit_hour"] === null) {
-                    $LimitHour = \RateLimit\Rate::perHour(10000);
+                    $LimitHour = Rate::perHour(10000);
                 } else {
-                    $LimitHour = \RateLimit\Rate::perHour($keyDetails["ratelimit_hour"]);
+                    $LimitHour = Rate::perHour($keyDetails["ratelimit_hour"]);
                 }
 
                 if ($keyDetails["ratelimit_day"] === null) {
-                    $LimitDay = \RateLimit\Rate::perHour(50000);
+                    $LimitDay = Rate::perHour(50000);
                 } else {
-                    $LimitDay = \RateLimit\Rate::perHour($keyDetails["ratelimit_day"]);
+                    $LimitDay = Rate::perHour($keyDetails["ratelimit_day"]);
                 }
 
                 if ($keyDetails["ratelimit_benefit"] === null) {
@@ -294,6 +321,7 @@ try {
             header("X-RateLimit-D: " . $statusDay->getRemainingAttempts());
             header("X-RateLimit-Benefit: " . $Benefit);
             header("X-CMS-API: " . api\Config::get("api_cdn"));
+            header("X-CMS-API-VERSION: " . core::API_VERSION);
 
             if ($statusSecond->limitExceeded() || $statusHour->limitExceeded() || $statusDay->limitExceeded()) {
                 http_response_code(429);
@@ -304,7 +332,7 @@ try {
 
 
             core\Themes::loadAPI($TwigTheme, $GLOBALS["route"]->Page, $Query);
-            core\Plugins::loadAPI($GLOBALS["route"]->Page, $QUERY);
+            core\Plugins::loadAPI($GLOBALS["route"]->Page, $Query);
 
             exit;
         }
@@ -314,35 +342,35 @@ try {
             exit;
         }
 
-        \crisp\core\Plugins::load($TwigTheme, $CurrentFile, $CurrentPage);
-        \crisp\core\Themes::load($TwigTheme, $CurrentFile, $CurrentPage);
+        Plugins::load($TwigTheme, $CurrentFile, $CurrentPage);
+        Themes::load($TwigTheme, $CurrentFile, $CurrentPage);
     }
-} catch (\crisp\exceptions\BitmaskException $ex) {
+} catch (BitmaskException $ex) {
     http_response_code(500);
     $errorraw = file_get_contents(__DIR__ . "/../themes/emergency/error.html");
     try {
         echo strtr($errorraw, array("{{ exception }}" => api\ErrorReporter::create(500, $ex->getTraceAsString(), $ex->getMessage() . "\n\n" . api\Helper::currentURL(), $ex->getCode() . "_")));
-    } catch (\Exception $ex2) {
+    } catch (Exception $ex2) {
         echo strtr($errorraw, array("{{ exception }}" => $ex->getCode()));
         exit;
     }
-} catch (\TypeError | \Exception | \Error | \CompileError | \ParseError | \Throwable $ex) {
+} catch (TypeError | Exception | Error | CompileError | ParseError | Throwable $ex) {
     http_response_code(500);
     $errorraw = file_get_contents(__DIR__ . "/../themes/emergency/error.html");
     try {
         echo strtr($errorraw, array("{{ exception }}" => api\ErrorReporter::create(500, $ex->getTraceAsString(), $ex->getMessage() . "\n\n" . api\Helper::currentURL(), "ca_")));
         exit;
-    } catch (\Exception $ex) {
+    } catch (Exception $ex) {
         echo strtr($errorraw, array("{{ exception }}" => "An error occurred... reporting the error?!?"));
         exit;
     }
-} catch (\Twig\Error\LoaderError $ex) {
+} catch (LoaderError $ex) {
     http_response_code(500);
     $errorraw = file_get_contents(__DIR__ . "/../themes/emergency/error.html");
     try {
         echo strtr($errorraw, array("{{ exception }}" => api\ErrorReporter::create(500, $ex->getTraceAsString(), $ex->getMessage() . "\n\n" . api\Helper::currentURL(), crisp\core\Bitmask::TWIG_ERROR . "_")));
         exit;
-    } catch (\Exception $ex) {
+    } catch (Exception $ex) {
         echo strtr($errorraw, array("{{ exception }}" => "An error occurred... reporting the error?!?"));
         exit;
     }

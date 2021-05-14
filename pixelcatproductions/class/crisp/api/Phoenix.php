@@ -441,19 +441,6 @@ class Phoenix {
      * @return array
      */
     public static function searchServiceByNamePG(string $Name) {
-        if (self::$Postgres_Database_Connection === NULL) {
-            self::initDB();
-        }
-
-        if (self::$Redis_Database_Connection->keys("pg_searchservicebyname_$Name")) {
-            $response = unserialize(self::$Redis_Database_Connection->get("pg_searchservicebyname_$Name"));
-
-            foreach ($response as $Key => $Service) {
-                $response[$Key]["nice_service"] = Helper::filterAlphaNum($response[$Key]["name"]);
-                $response["image"] = $response["id"] . ".png";
-            }
-            return $response;
-        }
 
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
@@ -470,8 +457,6 @@ class Phoenix {
             $response[$Key]["has_image"] = (file_exists(__DIR__ . "/../../../../" . Config::get("theme_dir") . "/" . Config::get("theme") . "/img/logo/" . $response[$Key]["nice_service"] . ".svg") ? true : file_exists(__DIR__ . "/../../../../" . Config::get("theme_dir") . "/" . Config::get("theme") . "/img/logo/" . $response[$Key]["nice_service"] . ".png") );
             $response[$Key]["image"] = "/img/logo/" . $response[$Key]["nice_service"] . (file_exists(__DIR__ . "/../../../../" . Config::get("theme_dir") . "/" . Config::get("theme") . "/img/logo/" . $response[$Key]["nice_service"] . ".svg") ? ".svg" : ".png");
         }
-
-        self::$Redis_Database_Connection->set("pg_searchservicebyname_$Name", serialize($response), 900);
 
         return $response;
     }

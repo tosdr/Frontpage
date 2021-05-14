@@ -536,7 +536,7 @@ class Phoenix {
      * @see https://github.com/tosdr/edit.tosdr.org/blob/8b900bf8879b8ed3a4a2a6bbabbeafa7d2ab540c/db/schema.rb#L42-L52 Database Schema
      * @return array
      */
-    public static function getCasesPG(bool $FreshData = false) {
+    public static function getCases(bool $FreshData = false) {
 
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();

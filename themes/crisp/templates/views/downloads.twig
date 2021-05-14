@@ -94,7 +94,12 @@
 
                 '176cb88e': {
                     "triggerFunction": function (showCollectorDialog) {
-                        //Requires that jQuery is available!
+
+
+                        if (window.location.hash && window.location.hash === "#bug") {
+                            showCollectorDialog();
+                        }
+
                         jQuery("#reportbug").click(function (e) {
                             e.preventDefault();
                             showCollectorDialog();

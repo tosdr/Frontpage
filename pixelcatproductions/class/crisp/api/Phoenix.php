@@ -282,13 +282,6 @@ class Phoenix {
      * @return array
      */
     public static function getCasePG(string $ID) {
-        if (self::$Redis_Database_Connection === NULL) {
-            self::initDB();
-        }
-
-        if (self::$Redis_Database_Connection->keys("pg_case_$ID")) {
-            return unserialize(self::$Redis_Database_Connection->get("pg_case_$ID"));
-        }
 
 
         if (self::$Postgres_Database_Connection === NULL) {
@@ -299,11 +292,7 @@ class Phoenix {
 
         $statement->execute(array(":ID" => $ID));
 
-        $Result = $statement->fetch(PDO::FETCH_ASSOC);
-
-        self::$Redis_Database_Connection->set("pg_case_$ID", serialize($Result), 900);
-
-        return $Result;
+        return $statement->fetch(PDO::FETCH_ASSOC);
     }
 
     /**

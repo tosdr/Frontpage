@@ -71,7 +71,7 @@ class Phoenix {
                 }
                 foreach ($points as $Point) {
                     $Document = array_column($documents, null, 'id')[$Point["document_id"]];
-                    $Case = self::getCasePG($Point["case_id"]);
+                    $Case = self::getCase($Point["case_id"]);
                     if ($Point["status"] == "approved") {
                         $ServicePointsData[$Point["id"]] = array(
                             "discussion" => "https://edit.tosdr.org/points/" . $Point["id"],
@@ -117,7 +117,7 @@ class Phoenix {
                 $documents = self::getDocumentsByService($ID);
                 foreach ($points as $Point) {
                     $Document = array_column($documents, null, 'id')[$Point["document_id"]];
-                    $Case = self::getCasePG($Point["case_id"]);
+                    $Case = self::getCase($Point["case_id"]);
                     $ServicePointsData[] = array(
                         "discussion" => "https://edit.tosdr.org/points/" . $Point["id"],
                         "id" => $Point["id"],
@@ -225,7 +225,7 @@ class Phoenix {
      * @param string $ID The id of a case
      * @return array
      */
-    public static function getCasePG(string $ID) {
+    public static function getCase(string $ID) {
 
 
         if (self::$Postgres_Database_Connection === NULL) {

@@ -88,7 +88,7 @@ foreach ($points as $Point) {
     ];
 
     $Document = array_column($_documents, null, 'id')[$Point["document_id"]];
-    $Case = crisp\api\Phoenix::getCasePG($Point["case_id"]);
+    $Case = crisp\api\Phoenix::getCase($Point["case_id"]);
     $ServicePointsData[] = $_Point;
 }
 

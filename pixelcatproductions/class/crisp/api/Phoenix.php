@@ -277,15 +277,7 @@ class Phoenix {
 
         $statement->execute(array(":ID" => "%$Name%"));
 
-        $response = $statement->fetchAll(PDO::FETCH_ASSOC);
-
-        foreach ($response as $Key => $Service) {
-            $response[$Key]["nice_service"] = Helper::filterAlphaNum($Service["name"]);
-            $response[$Key]["has_image"] = (file_exists(__DIR__ . "/../../../../" . Config::get("theme_dir") . "/" . Config::get("theme") . "/img/logo/" . $response[$Key]["nice_service"] . ".svg") || file_exists(__DIR__ . "/../../../../" . Config::get("theme_dir") . "/" . Config::get("theme") . "/img/logo/" . $response[$Key]["nice_service"] . ".png"));
-            $response[$Key]["image"] = "/img/logo/" . $response[$Key]["nice_service"] . (file_exists(__DIR__ . "/../../../../" . Config::get("theme_dir") . "/" . Config::get("theme") . "/img/logo/" . $response[$Key]["nice_service"] . ".svg") ? ".svg" : ".png");
-        }
-
-        return $response;
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
     /**
@@ -335,7 +327,6 @@ class Phoenix {
 
         $response = $statement->fetch(PDO::FETCH_ASSOC);
 
-        $response["nice_service"] = Helper::filterAlphaNum($response["name"]);
         $response["image"] = $response["id"] . ".png";
         return $response;
     }
@@ -534,7 +525,6 @@ class Phoenix {
         $response = $statement->fetch(PDO::FETCH_ASSOC);
 
 
-        $response["nice_service"] = Helper::filterAlphaNum($response["name"]);
         $response["image"] = $response["id"] . ".png";
         $dummy = [];
 

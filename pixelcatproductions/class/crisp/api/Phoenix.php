@@ -525,7 +525,6 @@ class Phoenix {
         $response = $statement->fetch(PDO::FETCH_ASSOC);
 
 
-        $response["nice_service"] = Helper::filterAlphaNum($response["name"]);
         $response["image"] = $response["id"] . ".png";
         $dummy = [];
 

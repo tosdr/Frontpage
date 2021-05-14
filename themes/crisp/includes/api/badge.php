@@ -58,7 +58,7 @@ if (!is_numeric($ServiceName)) {
         echo $poser->generate($Prefix, $Rating, $Color, 'flat');
         return;
     }
-    $RedisData = \crisp\api\Phoenix::getServicePG(urldecode($ServiceName));
+    $RedisData = \crisp\api\Phoenix::getService(urldecode($ServiceName));
 }
 
 

@@ -40,7 +40,7 @@ $ServicePoints = array();
 $ServicePointsData = array();
 
 $points = crisp\api\Phoenix::getPointsByService($ID);
-$service = crisp\api\Phoenix::getServicePG($ID);
+$service = crisp\api\Phoenix::getService($ID);
 $documents = crisp\api\Phoenix::getDocumentsByService($ID);
 
 $_service = [

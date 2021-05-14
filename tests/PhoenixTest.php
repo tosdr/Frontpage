@@ -25,7 +25,7 @@ final class PhoenixTest extends TestCase {
 
     $this->assertNotEquals(
             false,
-            \crisp\api\Phoenix::getServicePG(1)
+            \crisp\api\Phoenix::getService(1)
     );
     $this->assertNotEquals(
             false,

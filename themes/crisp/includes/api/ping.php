@@ -17,4 +17,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+if(!IS_NATIVE_API){
+    PluginAPI::response(crisp\core\Bitmask::GENERIC_ERROR, "Cannot access non-native API endpoint", []);
+    exit;
+}
+
 echo "PONG";

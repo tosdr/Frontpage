@@ -17,12 +17,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+use crisp\api\Config;
+use crisp\api\Phoenix;
+use crisp\api\Translation;
+use crisp\core\Bitmask;
+use crisp\core\PluginAPI;
 use PUGX\Poser\Render\SvgFlatRender;
 use PUGX\Poser\Poser;
 
+if(!IS_NATIVE_API){
+    PluginAPI::response(crisp\core\Bitmask::GENERIC_ERROR, "Cannot access non-native API endpoint", []);
+    exit;
+}
+
 $render = new SvgFlatRender();
 $poser = new Poser($render);
-$Prefix = \crisp\api\Config::get("site_name");
+$Prefix = Config::get("site_name");
 $Language = $GLOBALS["route"]->Language;
 $ServiceName = $this->Query;
 $Color;
@@ -37,10 +47,10 @@ if ($Type != "") {
     $ServiceName = substr($ServiceName, 0, (strlen($Type) + 1) * -1);
 }
 
-$Translations = new \crisp\api\Translation($Language);
+$Translations = new Translation($Language);
 
 if (!is_numeric($ServiceName)) {
-    if (!\crisp\api\Phoenix::serviceExistsBySlug(urldecode($ServiceName))) {
+    if (!Phoenix::serviceExistsBySlug(urldecode($ServiceName))) {
         header("Content-Type: image/svg+xml");
         $Color = "999999";
         $Rating = $Translations->fetch("service_not_found");
@@ -48,7 +58,7 @@ if (!is_numeric($ServiceName)) {
         echo $poser->generate($Prefix, $Rating, $Color, 'flat');
         return;
     }
-    $RedisData["_source"] = \crisp\api\Phoenix::getServiceBySlug(urldecode($ServiceName));
+    $RedisData["_source"] = Phoenix::getServiceBySlug(urldecode($ServiceName));
 } else {
     if (!crisp\api\Phoenix::serviceExists($ServiceName)) {
         header("Content-Type: image/svg+xml");
@@ -58,7 +68,7 @@ if (!is_numeric($ServiceName)) {
         echo $poser->generate($Prefix, $Rating, $Color, 'flat');
         return;
     }
-    $RedisData = \crisp\api\Phoenix::getService(urldecode($ServiceName));
+    $RedisData = Phoenix::getService(urldecode($ServiceName));
 }
 
 
@@ -104,7 +114,7 @@ if ($GLOBALS["route"]->Page === "badgepng" || $Type == "png") {
     header("Content-Type: image/png");
 
     if (!file_exists(__DIR__ . "/../../../../pixelcatproductions/cache/badges/" . sha1($Prefix . $RedisData["_source"]["id"] . $Language) . ".svg")) {
-        echo \crisp\core\PluginAPI::response(\crisp\core\Bitmask::GENERATE_FAILED, "FS Source SVG not found", [], null, 500);
+        echo PluginAPI::response(Bitmask::GENERATE_FAILED, "FS Source SVG not found", [], null, 500);
         exit;
     }
 
@@ -113,7 +123,7 @@ if ($GLOBALS["route"]->Page === "badgepng" || $Type == "png") {
         exec("/usr/bin/inkscape -e \"" . __DIR__ . "/../../../../pixelcatproductions/cache/badges/" . sha1($Prefix . $RedisData["_source"]["id"] . $Language) . ".png\" \"" . __DIR__ . "/../../../../pixelcatproductions/cache/badges/" . sha1($Prefix . $RedisData["_source"]["id"] . $Language) . ".svg\"");
 
         if (!file_exists(__DIR__ . "/../../../../pixelcatproductions/cache/badges/" . sha1($Prefix . $RedisData["_source"]["id"] . $Language) . ".png")) {
-            echo \crisp\core\PluginAPI::response(\crisp\core\Bitmask::GENERATE_FAILED, "FS PNG not found", [], null, 500);
+            echo PluginAPI::response(Bitmask::GENERATE_FAILED, "FS PNG not found", [], null, 500);
             exit;
         }
     }

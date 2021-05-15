@@ -17,7 +17,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+use crisp\core\PluginAPI;
+
 $Interface = "default";
+
+if(!IS_NATIVE_API){
+    PluginAPI::response(crisp\core\Bitmask::GENERIC_ERROR, "Cannot access non-native API endpoint", []);
+    exit;
+}
 
 if (is_array($GLOBALS["route"]->GET)) {
     $Interface = array_key_first($GLOBALS["route"]->GET);
@@ -33,5 +40,5 @@ switch ($Interface) {
         require_once __DIR__ . '/case/v1.php';
         break;
     default:
-        echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::VERSION_NOT_FOUND, "Invalid Version", []);
+        PluginAPI::response(crisp\core\Bitmask::VERSION_NOT_FOUND, "Invalid Version", []);
 }

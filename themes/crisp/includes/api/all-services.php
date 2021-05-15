@@ -19,6 +19,11 @@
 
 $Interface = "default";
 
+if(!IS_NATIVE_API){
+    PluginAPI::response(crisp\core\Bitmask::GENERIC_ERROR, "Cannot access non-native API endpoint", []);
+    exit;
+}
+
 if (is_array($GLOBALS["route"]->GET)) {
     $Interface = array_key_first($GLOBALS["route"]->GET);
 

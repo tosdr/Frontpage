@@ -22,6 +22,11 @@ use crisp\api\Phoenix;
 use crisp\core\Bitmask;
 use crisp\core\PluginAPI;
 
+if(!IS_NATIVE_API){
+    PluginAPI::response(crisp\core\Bitmask::GENERIC_ERROR, "Cannot access non-native API endpoint", []);
+    exit;
+}
+
 if ($_SERVER["REQUEST_METHOD"] !== "GET") {
     PluginAPI::response(crisp\core\Bitmask::NOT_IMPLEMENTED, "Invalid Request Method", [], null, 405);
     exit;

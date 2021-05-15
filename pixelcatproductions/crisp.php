@@ -116,6 +116,7 @@ try {
         $Simple = (explode('.', $_SERVER["HTTP_HOST"])[0] === "simple" ? true : false);
 
         define('IS_API_ENDPOINT', explode("/", $_GET["route"])[1] === "api" || isset($_SERVER["IS_API_ENDPOINT"]));
+        define('IS_NATIVE_API', isset($_SERVER["IS_API_ENDPOINT"]));
 
         if (isset($_GET["universe"])) {
             Universe::changeUniverse($_GET["universe"]);

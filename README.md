@@ -2,32 +2,33 @@
 
 
 
+<!--suppress HtmlDeprecatedAttribute -->
 <p align="center">
   <a href="https://tosdr.org/en/service/596" title="Privacy Grade">
-    <img src="https://shields.tosdr.org/tosdr.svg">
+    <img alt="ToS;DR Privacy Shield" src="https://shields.tosdr.org/tosdr.svg">
   </a>
   <a href="https://discord.gg/tosdr" title="Join the Discord chat at https://discord.gg/tosdr">
-    <img src="https://img.shields.io/discord/324969783508467715.svg">
+    <img alt="Discord Member count" src="https://img.shields.io/discord/324969783508467715.svg">
   </a>
   <a href="https://translate.tosdr.org/engage/crispcms/" title="Translations">
-    <img src="https://translate.tosdr.org/widgets/crispcms/-/svg-badge.svg">
+    <img alt="Translation Status" src="https://translate.tosdr.org/widgets/crispcms/-/svg-badge.svg">
   </a>
   <a href="https://github.com/tosdr/CrispCMS/releases/latest" title="GitHub release">
-    <img src="https://img.shields.io/github/release/tosdr/CrispCMS.svg">
+    <img alt="Release" src="https://img.shields.io/github/release/tosdr/CrispCMS.svg">
   </a>
   <a href="https://opencollective.com/tosdr" title="Become a backer/sponsor of ToS;DR">
-    <img src="https://opencollective.com/tosdr/tiers/backers/badge.svg?label=backers&color=brightgreen">
+    <img alt="Opencollective" src="https://opencollective.com/tosdr/tiers/backers/badge.svg?label=backers&color=brightgreen">
   </a>
   <a href="https://opensource.org/licenses/GPL-3.0" title="License: GPL-3.0">
-    <img src="https://img.shields.io/badge/License-GPL%203.0-blue.svg">
+    <img alt="License" src="https://img.shields.io/badge/License-GPL%203.0-blue.svg">
   </a>
   <a href="https://ci.tosdr.org/tosdr/CrispCMS" title="Build Status">
-    <img src="https://ci.tosdr.org/api/badges/tosdr/CrispCMS/status.svg">
+    <img alt="CI" src="https://ci.tosdr.org/api/badges/tosdr/CrispCMS/status.svg">
   </a>
 </p>
 
 <p align="center">
-	<img src="https://tosdr-branding.s3.eu-west-2.jbcdn.net/tosdr-logo-128.svg">
+	<img alt="ToS;DR Logo" src="https://tosdr-branding.s3.eu-west-2.jbcdn.net/tosdr-logo-128.svg">
 </p>
 Welcome to the official repository for our frontpage, [tosdr.org](https://tosdr.org/).
 This is a redo of our previous frontpage, which used JS.
@@ -42,7 +43,6 @@ _This readme is still a **Work in Progress**, but should cover basic requirement
 2. [Installation](#installation)
   * [Composer Dependencies](#installing-composer-dependencies)
 3. [Configuring Crisp](#configuring-crisp)
-  * [Updating Submodules](#updating-submodules)
   * [Running Database Migrations](#running-database-migrations)
 4. [Plugins](#plugins)
 
@@ -64,13 +64,10 @@ $ sudo apt-get update
 $ sudo apt-get install postgresql     # Accept the installation.
 ```
 
-*Additional instructions for server setup can be found [here](https://www.digitalocean.com/community/tutorials/how-to-install-mysql-on-ubuntu-20-04).*
-
-- For users running on Arch-based Distros, check [this ArchWiki Article](https://wiki.archlinux.org/index.php/MySQL).
 
 ### Apache vs Nginx
 
-For testing we recommend using apache, however we use nginx on our production servers to combat the high volume
+Apache is no longer supported. Use NGINX instead.
 
 #### Nginx
 
@@ -115,30 +112,29 @@ server {
     }
 
     location / {
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_pass https://$VLAN_CONN_DC_14/api/;
+        try_files $uri /index.php?route=$uri$is_args$args;
+        if ($request_uri ~ ^/(.*)\.html$) {
+            return 302 /$1;
+        }
     }
+
+    location ~ \.php$ {
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+        fastcgi_pass   unix:/var/run/php/php7.4-fpm.sock;
+        fastcgi_index  index.php;
+        fastcgi_param  IS_API_ENDPOINT true
+        fastcgi_param  SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        include        fastcgi_params;
+    }
+
 
     listen 80;
 }
 ```
 
-#### Apache
-
-Apache only requires mod rewrite and headers to be enabled as everything is handled by the htaccess files.
-
-### PHP-7.4
+### PHP-8.0
 This one is quite self explainatory.
 
-#### Apache
-
-- To install on Debian-based Distros, run:
-
-```bash
-$ sudo apt-get update
-$ sudo apt-get install apache2 php7.4 libapache2-mod-php     # Comes with Apache libraries for PHP.
-$ sudo apt-get install php7.4-apcu php7.4-cli php7.4-curl php7.4-gd php7.4-gmp php7.4-intl php7.4-json php7.4-mbstring php7.4-pgsql php7.4-redis php7.4-xml php7.4-zip # The dependencies
-```
 
 #### Nginx
 
@@ -146,8 +142,8 @@ $ sudo apt-get install php7.4-apcu php7.4-cli php7.4-curl php7.4-gd php7.4-gmp p
 
 ```bash
 $ sudo apt-get update
-$ sudo apt install php7.4-fpm nginx
-$ sudo apt-get install php7.4-apcu php7.4-cli php7.4-curl php7.4-gd php7.4-gmp php7.4-intl php7.4-json php7.4-mbstring php7.4-pgsql php7.4-redis php7.4-xml php7.4-zip # The dependencies
+$ sudo apt install php8.0-fpm nginx
+$ sudo apt-get install php8.0-{apcu,cli,curl,gd,gmp,intl,json,mbstring,pgsql,redis,xml,zip} # The dependencies
 ```
 
 See Nginx configuration above on how to connect to your FPM socket.
@@ -201,16 +197,6 @@ Then edit it accordingly.
 
 * _The `$GITHUB_TOKEN` variable is required for private repos to access metadata._ [More Info](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token)
 
-### Updating Submodules
-
-To update the submodules in this repository, simply run these commands in order:
-
-```bash
-$ git submodule update --init --recursive
-$ git submodule foreach --recursive git fetch
-$ git submodule foreach git merge origin master
-```
-
 And you're set!
 
 ### Running Database Migrations
@@ -221,11 +207,12 @@ of this repository:
 ```bash
 $ php bin/cli.php migrate
 $ php bin/cli.php theme install crisp
+$ php bin/cli.php plugin install management
 ```
 
-This will create all necessary tables, aswell as install plugins and themes.
+This will create all necessary tables, as well as install plugins and themes.
 
-And so your instance is ready to run now!
+Now your instance is ready to run!
 
 ## Plugins
 

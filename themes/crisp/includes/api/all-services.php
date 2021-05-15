@@ -17,6 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+use crisp\core\PluginAPI;
+
 $Interface = "default";
 
 if(!IS_NATIVE_API){

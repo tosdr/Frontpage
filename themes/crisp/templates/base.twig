@@ -92,9 +92,6 @@
     {% block scripts %}{% endblock %}
     <!-- START Default Crisp JS -->
     {% block default_scripts %}
-        {% if not SIMPLE %}
-            <script src="{{ includeResource("js/crisp.min.js", true, "") }}"></script>
-        {% endif %}
     {% endblock %}
     <!-- END Default Crisp JS -->
 </html>

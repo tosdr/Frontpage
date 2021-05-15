@@ -62,6 +62,59 @@
                 <img src="data:image/png;base64, {{ config.bitcoin_qr }}" alt="Bitcoin Wallet"/>
             </div>
         </div>
+        <hr>
+        <div class="row">
+            <div class="col-6">
+                <h2>{{ 'views.donate.ethereum.header'|translate }}</h2>
+                <p>
+                    {{ 'views.donate.ethereum.text'|translate|raw }}
+                </p>
+                <pre><code style="color: crimson;" onclick="selectElementText(this)">{{ config.eth_wallet }}</code></pre>
+            </div>
+            <div class="col-6">
+                <img src="data:image/png;base64, {{ config.eth_qr }}" alt="Ethereum Wallet"/>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-6">
+                <h2>{{ 'views.donate.doge.header'|translate }}</h2>
+                <p>
+                    {{ 'views.donate.doge.text'|translate|raw }}
+                </p>
+                <pre><code style="color: crimson;" onclick="selectElementText(this)">{{ config.doge_wallet }}</code></pre>
+            </div>
+            <div class="col-6">
+                <img src="data:image/png;base64, {{ config.doge_qr }}" alt="Dogecoin Wallet"/>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-6">
+                <h2>{{ 'views.donate.doge.header'|translate }}</h2>
+                <p>
+                    {{ 'views.donate.doge.text'|translate|raw }}
+                </p>
+                <pre><code style="color: crimson;" onclick="selectElementText(this)">{{ config.doge_wallet }}</code></pre>
+            </div>
+            <div class="col-6">
+                <img src="data:image/png;base64, {{ config.doge_qr }}" alt="Dogecoin Wallet"/>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-6">
+                <h2>{{ 'views.donate.lite.header'|translate }}</h2>
+                <p>
+                    {{ 'views.donate.lite.text'|translate|raw }}
+                </p>
+                <pre><code style="color: crimson;" onclick="selectElementText(this)">{{ config.lite_wallet }}</code></pre>
+            </div>
+            <div class="col-6">
+                <img src="data:image/png;base64, {{ config.lite_qr }}" alt="Litecoin Wallet"/>
+            </div>
+        </div>
+        <hr>
     </div>
 {% endblock %}
 

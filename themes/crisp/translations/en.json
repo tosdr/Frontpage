@@ -234,5 +234,11 @@
     "views.donate.bitcoin.header": "Bitcoin",
     "views.downloads.reportbug": "Report a bug (Anonymously)",
     "views.downloads.suggestfeature": "Suggest a feature (Anonymously)",
-    "views.donate.bitcoin.text": "Via Bitcoin you can donate to ToS;DR 100% anonymously. Contributions are not deductible as charitable contributions for U.S. federal income tax purposes.\n\nTo donate, scan the QR code in your preferred Bitcoin wallet or use our address below."
+    "views.donate.bitcoin.text": "Via Bitcoin you can donate to ToS;DR 100% anonymously. Contributions are not deductible as charitable contributions for U.S. federal income tax purposes.\n\nTo donate, scan the QR code in your preferred Bitcoin wallet or use our address below.",
+    "views.donate.ethereum.header": "Ethereum",
+    "views.donate.ethereum.text": "Via Ethereum you can donate to ToS;DR 100% anonymously. Contributions are not deductible as charitable contributions for U.S. federal income tax purposes.\n\nTo donate, scan the QR code in your preferred Ethereum wallet or use our address below.",
+    "views.donate.doge.header": "Dogecoin",
+    "views.donate.doge.text": "Via Dogecoin you can donate to ToS;DR 100% anonymously. Contributions are not deductible as charitable contributions for U.S. federal income tax purposes.\n\nTo donate, scan the QR code in your preferred Dogecoin wallet or use our address below.",
+    "views.donate.lite.header": "Litecoin",
+    "views.donate.lite.text": "Via Litecoin you can donate to ToS;DR 100% anonymously. Contributions are not deductible as charitable contributions for U.S. federal income tax purposes.\n\nTo donate, scan the QR code in your preferred Litecoin wallet or use our address below."
 }

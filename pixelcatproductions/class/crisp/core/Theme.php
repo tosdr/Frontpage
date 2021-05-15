@@ -19,13 +19,17 @@
 
 namespace crisp\core;
 
+use crisp\api\Helper;
+use crisp\exceptions\BitmaskException;
+use TwigEnvironment;
+
 /**
  * Used internally, plugin loader
  *
  */
 class Theme {
 
-    use \crisp\core\Hook;
+    use Hook;
 
     private $TwigTheme;
     public $CurrentFile;
@@ -62,18 +66,19 @@ class Theme {
 
     /**
      * Load a theme page
-     * @param \TwigEnvironment $TwigTheme The twig theme component
+     * @param TwigEnvironment $TwigTheme The twig theme component
      * @param string $CurrentFile The current file, __FILE__
      * @param string $CurrentPage The current page template to render
      * @throws Exception
+     * @throws BitmaskException
      */
     public function __construct($TwigTheme, $CurrentFile, $CurrentPage) {
         $this->TwigTheme = $TwigTheme;
         $this->CurrentFile = $CurrentFile;
         $this->CurrentPage = $CurrentPage;
-        if (\crisp\api\Helper::templateExists(\crisp\api\Config::get("theme"), "/views/$CurrentPage.twig")) {
+        if (Helper::templateExists(\crisp\api\Config::get("theme"), "/views/$CurrentPage.twig")) {
 
-            if (file_exists(__DIR__ . "/../../../../" . \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") . "/includes/$CurrentPage.php") && \crisp\api\Helper::templateExists(\crisp\api\Config::get("theme"), "/views/$CurrentPage.twig")) {
+            if (file_exists(__DIR__ . "/../../../../" . \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") . "/includes/$CurrentPage.php") && Helper::templateExists(\crisp\api\Config::get("theme"), "/views/$CurrentPage.twig")) {
 
                 require __DIR__ . "/../../../../" . \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") . "/includes/$CurrentPage.php";
 
@@ -88,7 +93,7 @@ class Theme {
                 echo $TwigTheme->render("views/$CurrentPage.twig", $_vars);
             }
         } else {
-            throw new \crisp\exceptions\BitmaskException("Failed to load template " . $this->CurrentPage . ": Missing includes file", Bitmask::THEME_MISSING_INCLUDES);
+            throw new BitmaskException("Failed to load template " . $this->CurrentPage . ": Missing includes file", Bitmask::THEME_MISSING_INCLUDES);
         }
     }
 

@@ -17,7 +17,7 @@
 {% extends "base.twig" %}
 
 {% set currentPage = '404' %}
-{% set pageTitle = 'errors.404.page.title'|translate %}
+{% set pageTitle = 'components.servicegrid.no_service.title'|translate %}
 {% set error = false %}
 {% block content %}
     {{ include("components/navbar.twig") }}   
@@ -27,8 +27,8 @@
             <div class="col-6 mx-auto">
                 <div class="card fat">
                     <div class="card-body alert-danger">
-                        <h4 class="card-title text-center">{{ 'errors.404.page.title'|translate }}</h4>
-                        {{ 'errors.404.page.text'|translate|raw }}
+                        <h4 class="card-title text-center">{{ 'components.servicegrid.no_service.title'|translate }}</h4>
+                        {{ 'components.servicegrid.no_service.text'|translate|raw }}
                     </div>
                 </div>
             </div>

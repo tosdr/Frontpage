@@ -19,13 +19,19 @@
 
 namespace crisp\core;
 
+use crisp\api\Helper;
+use crisp\api\lists\Cron;
+use crisp\api\Translation;
+use crisp\exceptions\BitmaskException;
+use Twig\Environment;
+
 /**
  * Used internally, plugin loader
  *
  */
 class Plugin {
 
-    use \crisp\core\Hook;
+    use Hook;
 
     public $PluginFolder;
     public $PluginName;
@@ -40,19 +46,19 @@ class Plugin {
      * @param string $PluginFolder The path to your plugin
      * @param string $PluginName The name of your plugin
      * @param object $PluginMetadata Plugin.json file contents
-     * @param \Twig\Environment $TwigTheme The current twig theme
+     * @param Environment $TwigTheme The current twig theme
      * @param string $CurrentFile The current file
      * @param string $CurrentPage The current $_GET["page"] parameter
      * @throws Exception
      */
     public function __construct($PluginFolder, $PluginName, $PluginMetadata, $TwigTheme, $CurrentFile, $CurrentPage) {
-        $this->PluginFolder = \crisp\api\Helper::filterAlphaNum($PluginFolder);
-        $this->PluginName = \crisp\api\Helper::filterAlphaNum($PluginName);
+        $this->PluginFolder = Helper::filterAlphaNum($PluginFolder);
+        $this->PluginName = Helper::filterAlphaNum($PluginName);
         $this->PluginMetadata = $PluginMetadata;
         $this->PluginPath = realpath(__DIR__ . "/../../../../" . $PluginFolder . "/" . $PluginName . "/") . "/";
         $this->TwigTheme = $TwigTheme;
-        $this->CurrentFile = \crisp\api\Helper::filterAlphaNum($CurrentFile);
-        $this->CurrentPage = \crisp\api\Helper::filterAlphaNum($CurrentPage);
+        $this->CurrentFile = Helper::filterAlphaNum($CurrentFile);
+        $this->CurrentPage = Helper::filterAlphaNum($CurrentPage);
         if (file_exists($this->PluginPath . $PluginMetadata->hookFile)) {
             require $this->PluginPath . $PluginMetadata->hookFile;
 
@@ -71,7 +77,7 @@ class Plugin {
                 unset($_vars);
             }
         } else {
-            throw new \crisp\exceptions\BitmaskException("Plugin <b>" . $this->PluginName . "</b> failed to load due to a missing includes file", Bitmask::PLUGIN_MISSING_INCLUDES);
+            throw new BitmaskException("Plugin <b>" . $this->PluginName . "</b> failed to load due to a missing includes file", Bitmask::PLUGIN_MISSING_INCLUDES);
         }
     }
 
@@ -80,10 +86,10 @@ class Plugin {
      */
     public function getTranslation($Key, $Count = 1, $UserOptions = array()) {
 
-        $Locale = \crisp\api\Helper::getLocale();
+        $Locale = Helper::getLocale();
 
 
-        $Translation = new \crisp\api\Translation($Locale);
+        $Translation = new Translation($Locale);
 
 
         return $Translation->fetch("plugin." . $this->PluginName . ".$Key", $Count, $UserOptions);
@@ -100,7 +106,7 @@ class Plugin {
      * @see \crisp\api\lists\Cron::create
      */
     public function createCron(string $Type, $Data, string $Interval = "2 MINUTE", bool $ExecuteOnce = false) {
-        return \crisp\api\lists\Cron::create("execute_plugin_cron", json_encode(array("data" => $Data, "name" => $Type)), $Interval, $this->PluginName, $ExecuteOnce);
+        return Cron::create("execute_plugin_cron", json_encode(array("data" => $Data, "name" => $Type)), $Interval, $this->PluginName, $ExecuteOnce);
     }
 
     public function includeResource($File) {
@@ -148,7 +154,7 @@ class Plugin {
      * @return bool
      */
     public function uninstall() {
-        return \crisp\core\Plugins::uninstall($this->PluginName, $this->TwigTheme, $this->CurrentFile, $this->CurrentPage);
+        return Plugins::uninstall($this->PluginName, $this->TwigTheme, $this->CurrentFile, $this->CurrentPage);
     }
 
     /**
@@ -156,7 +162,7 @@ class Plugin {
      * @return array
      */
     public function integrity() {
-        return \crisp\core\Plugins::integrityCheck($this->PluginName, $this->PluginMetadata, $this->PluginFolder);
+        return Plugins::integrityCheck($this->PluginName, $this->PluginMetadata, $this->PluginFolder);
     }
 
     /**
@@ -165,7 +171,7 @@ class Plugin {
      * @returns boolean TRUE if hook could be registered, otherwise false
      */
     public function registerUninstallHook($Function) {
-        return \crisp\core\Plugins::registerUninstallHook($this->PluginName, $Function);
+        return Plugins::registerUninstallHook($this->PluginName, $Function);
     }
 
     /**
@@ -174,7 +180,7 @@ class Plugin {
      * @returns boolean TRUE if hook could be registered, otherwise false
      */
     public function registerInstallHook($Function) {
-        return \crisp\core\Plugins::registerInstallHook($this->PluginName, $Function);
+        return Plugins::registerInstallHook($this->PluginName, $Function);
     }
 
     /**
@@ -183,7 +189,7 @@ class Plugin {
      * @returns boolean TRUE if hook could be registered, otherwise false
      */
     public function registerAfterRenderHook($Function) {
-        return \crisp\core\Plugins::registerAfterRenderHook($this->PluginName, $Function);
+        return Plugins::registerAfterRenderHook($this->PluginName, $Function);
     }
 
 }

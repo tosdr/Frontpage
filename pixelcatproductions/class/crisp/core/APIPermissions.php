@@ -24,8 +24,6 @@ namespace crisp\core;
  */
 class APIPermissions extends \crisp\types\Bitmask {
 
-    use \crisp\core\Hook;
-
     public const NONE = 0x1;
     public const POST_SERVICE_REQUEST = 0x2;
     public const GET_API_KEY_DETAILS = 0x4;

@@ -39,8 +39,8 @@ switch($GLOBALS["route"]->GET[$Interface]){
     case "token":
         $server->handleTokenRequest(OAuth2\Request::createFromGlobals())->send();
         exit;
-    case "refresh_token":
-        echo "refresh_token!";
+    case "revoke":
+        $server->handleRevokeRequest(OAuth2\Request::createFromGlobals())->send();
         exit;
     default:
         PluginAPI::response(crisp\core\Bitmask::NOT_IMPLEMENTED, "Invalid Call", [], null, 405);

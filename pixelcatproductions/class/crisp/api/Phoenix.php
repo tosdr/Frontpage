@@ -356,9 +356,9 @@ class Phoenix {
      * @param string $Url
      * @param string $Wikipedia
      * @param string $User
-     * @return bool
+     * @return bool|int
      */
-    public static function createService(string $Name, string $Url, string $Wikipedia, string $User): bool
+    public static function createService(string $Name, string $Url, string $Wikipedia, string $User): bool | int
     {
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();

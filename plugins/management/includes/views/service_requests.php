@@ -17,6 +17,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+use crisp\api\Helper;
+use crisp\api\Phoenix;
+use crisp\core\Config;
+use crisp\core\MySQL;
+use crisp\core\PluginAPI;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
@@ -25,21 +30,31 @@ $EnvFile = parse_ini_file(__DIR__ . "/../../../../.env");
 include __DIR__ . '/../Phoenix.php';
 header("X-SKIPCACHE: 1");
 
-if (!isset($_SESSION[\crisp\core\Config::$Cookie_Prefix . "session_login"])) {
-    header("Location: " . \crisp\api\Helper::generateLink("login/?invalid_sess_sr"));
+if (!isset($_SESSION[Config::$Cookie_Prefix . "session_login"])) {
+    header("Location: " . Helper::generateLink("login/?invalid_sess_sr"));
     exit;
 }
 
-if (!$User->isSessionValid()) {
-    header("Location: " . \crisp\api\Helper::generateLink("login/?invalid_sr"));
+if (isset($User)) {
+    if (!$User->isSessionValid()) {
+        header("Location: " . Helper::generateLink("login/?invalid_sr"));
+        exit;
+    }
+}else{
+    header("Location: " . Helper::generateLink("login/?invalid_sr"));
     exit;
 }
-if (!$userDetails["curator"]) {
-    header("Location: /dashboard");
+if (isset($userDetails)) {
+    if (!$userDetails["curator"]) {
+        header("Location: /dashboard");
+        exit;
+    }
+}else{
+    header("Location: " . Helper::generateLink("login/?invalid_sr"));
     exit;
 }
 
-$Mysql = new \crisp\core\MySQL();
+$Mysql = new MySQL();
 $Phoenix = new \crisp\plugin\curator\Phoenix();
 
 if (isset($_POST["approve"]) && !empty($_POST["approve"])) {
@@ -49,7 +64,7 @@ if (isset($_POST["approve"]) && !empty($_POST["approve"])) {
     $_request = $request->fetch(PDO::FETCH_ASSOC);
 
     if (!$_request) {
-        echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::INVALID_PARAMETER, "Invalid Request", []);
+        PluginAPI::response(crisp\core\Bitmask::INVALID_PARAMETER, "Invalid Request", []);
         exit;
     }
 
@@ -59,11 +74,11 @@ if (isset($_POST["approve"]) && !empty($_POST["approve"])) {
     $Domains = $_request["domains"];
     $Wikipedia = $_request["wikipedia"];
     $Documents = json_decode($_request["documents"], true);
-    $service_id = \crisp\api\Phoenix::createService($Name, $Domains, $Wikipedia, $User->UserID);
+    $service_id = Phoenix::createService($Name, $Domains, $Wikipedia, $User->UserID);
 
     if ($service_id !== false) {
         foreach ($Documents as $Document) {
-            \crisp\api\Phoenix::createDocument($Document["name"], $Document["url"], $Document["xpath"], $service_id, $User->UserID);
+            Phoenix::createDocument($Document["name"], $Document["url"], $Document["xpath"], $service_id, $User->UserID);
         }
 
         $request = $Mysql->getDBConnector()->prepare("DELETE FROM service_requests WHERE id = :id;");
@@ -92,17 +107,20 @@ if (isset($_POST["approve"]) && !empty($_POST["approve"])) {
             $mail->send();
         }
 
-        echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::REQUEST_SUCCESS, $service_id, []);
-        exit;
+        PluginAPI::response(crisp\core\Bitmask::REQUEST_SUCCESS, $service_id, []);
     } else {
-        echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::GENERIC_ERROR, "SQL Error" . var_export($newstatement->errorInfo(), true), []);
-        exit;
+        PluginAPI::response(crisp\core\Bitmask::GENERIC_ERROR, "SQL Error", []);
     }
 
     exit;
 }
 
 if (isset($_POST["reject"]) && !empty($_POST["reject"])) {
+
+
+    $request = $Mysql->getDBConnector()->prepare("SELECT * FROM service_requests WHERE id = :id;");
+    $request->execute([":id" => $_POST["reject"]]);
+    $_request = $request->fetch(PDO::FETCH_ASSOC);
 
     $request = $Mysql->getDBConnector()->prepare("DELETE FROM service_requests WHERE id = :id;");
     $request->execute([":id" => $_POST["reject"]]);
@@ -128,7 +146,7 @@ if (isset($_POST["reject"]) && !empty($_POST["reject"])) {
         $mail->send();
     }
 
-    echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::REQUEST_SUCCESS, "OK", []);
+    PluginAPI::response(crisp\core\Bitmask::REQUEST_SUCCESS, "OK", []);
     exit;
 }
 

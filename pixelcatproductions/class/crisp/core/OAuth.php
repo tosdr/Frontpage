@@ -35,8 +35,6 @@ class OAuth
 
         $server = new OAuth2\Server($storage);
 
-        $server->addGrantType(new OAuth2\GrantType\ClientCredentials($storage));
-
         $server->addGrantType(new OAuth2\GrantType\AuthorizationCode($storage));
 
         return $server;

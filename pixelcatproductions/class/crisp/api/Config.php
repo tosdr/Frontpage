@@ -20,20 +20,25 @@
 
 namespace crisp\api;
 
-use \PDO;
-use \PDOException;
-use \PDORow;
-use \PDOStatement;
+use crisp\core\MySQL;
+use PDO;
+use PDOException;
+use PDORow;
+use PDOStatement;
+use function serialize;
+use function unserialize;
 
 /**
  * Interact with the key/value storage of the server
  */
-class Config {
+class Config
+{
 
     private static ?PDO $Database_Connection = null;
 
-    private static function initDB() {
-        $DB = new \crisp\core\MySQL();
+    private static function initDB()
+    {
+        $DB = new MySQL();
         self::$Database_Connection = $DB->getDBConnector();
     }
 
@@ -42,7 +47,8 @@ class Config {
      * @param string $Key the key to retrieve from the KV Config from
      * @return boolean TRUE if it exists, otherwise FALSE
      */
-    public static function exists($Key) {
+    public static function exists($Key)
+    {
         if (self::$Database_Connection === null) {
             self::initDB();
         }
@@ -60,7 +66,7 @@ class Config {
      * @param array $UserOptions
      * @return mixed The value as string, on failure FALSE
      */
-    public static function get(string $Key, array $UserOptions = array()) : mixed
+    public static function get(string $Key, array $UserOptions = array()): mixed
     {
         if (self::$Database_Connection === null) {
             self::initDB();
@@ -72,20 +78,24 @@ class Config {
         $statement->execute(array(":ID" => $Key));
         if ($statement->rowCount() > 0) {
 
-            $Result = $statement->fetch(\PDO::FETCH_ASSOC);
+            $Result = $statement->fetch(PDO::FETCH_ASSOC);
 
             $Value = $Result["value"];
 
-            foreach (self::list(true) as $Item) {
-                $GlobalOptions["{{ config.{$Item['key']} }}"] = $Item["value"];
+            if ($Result["type"] !== 'serialized') {
+
+                foreach (self::list(true) as $Item) {
+                    $GlobalOptions["{{ config.{$Item['key']} }}"] = $Item["value"];
+                }
+
+                $Options = array_merge($UserOptions, $GlobalOptions);
+
+                $Value = strtr($Value, $Options);
+
             }
 
-            $Options = array_merge($UserOptions, $GlobalOptions);
-
-            $Value = strtr($Value, $Options);
-
             return match ($Result["type"]) {
-                'serialized' => \unserialize($Value),
+                'serialized' => unserialize($Value),
                 'boolean' => (bool)$Value,
                 'integer' => (int)$Value,
                 'double' => (double)$Value,
@@ -100,7 +110,8 @@ class Config {
      * @param string $Key The KVStorage key
      * @return array Containing last_changed, created_at
      */
-    public static function getTimestamp(string $Key) {
+    public static function getTimestamp(string $Key)
+    {
         if (self::$Database_Connection === null) {
             self::initDB();
         }
@@ -108,7 +119,7 @@ class Config {
         $statement->execute(array(":ID" => $Key));
         if ($statement->rowCount() > 0) {
 
-            $Result = $statement->fetch(\PDO::FETCH_ASSOC);
+            $Result = $statement->fetch(PDO::FETCH_ASSOC);
 
 
             return $Result;
@@ -122,7 +133,8 @@ class Config {
      * @param string $Value the value to insert
      * @return boolean TRUE on success, on failure FALSE
      */
-    public static function create($Key, $Value) {
+    public static function create($Key, $Value)
+    {
         if (self::$Database_Connection === null) {
             self::initDB();
         }
@@ -141,7 +153,8 @@ class Config {
      * @param string $Key the key to insert
      * @return boolean TRUE on success, on failure FALSE
      */
-    public static function delete($Key) {
+    public static function delete($Key)
+    {
         if (self::$Database_Connection === null) {
             self::initDB();
         }
@@ -155,12 +168,13 @@ class Config {
      * @param string $Value The value to set
      * @return boolean TRUE on success, otherwise FALSE
      */
-    public static function set($Key, $Value) {
+    public static function set($Key, $Value)
+    {
         if (self::$Database_Connection === null) {
             self::initDB();
         }
 
-        if(!Config::exists($Key)){
+        if (!Config::exists($Key)) {
             Config::create($Key, $Value);
         }
 
@@ -172,7 +186,7 @@ class Config {
 
         if (is_array($Value) || is_object($Value)) {
             $Type = "serialized";
-            $Value = \serialize($Value);
+            $Value = serialize($Value);
         }
         if ($Type == "boolean") {
             $Value = ($Value ? 1 : 0);
@@ -190,7 +204,8 @@ class Config {
      * @param type $KV List keys as associative array?
      * @return array
      */
-    public static function list($KV = false) {
+    public static function list($KV = false)
+    {
         if (self::$Database_Connection === null) {
             self::initDB();
         }
@@ -201,13 +216,13 @@ class Config {
         if (!$KV) {
             $Array = array();
 
-            foreach ($statement->fetchAll(\PDO::FETCH_ASSOC) as $Item) {
+            foreach ($statement->fetchAll(PDO::FETCH_ASSOC) as $Item) {
                 $Array[$Item["key"]] = self::get($Item["key"]);
             }
 
             return $Array;
         }
-        return $statement->fetchAll(\PDO::FETCH_ASSOC);
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
 }

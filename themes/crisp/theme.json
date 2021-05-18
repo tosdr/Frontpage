@@ -9,6 +9,7 @@
         "createKVStorageItems": {
             "s3_branding": "https://s3.tosdr.org/branding",
             "s3_logos": "https://s3.tosdr.org/logos",
+            "s3_team": "https://s3.tosdr.org/team",
             "frontpage_services": [182, 190, 194, 265, 222, 274, 1815, 314, 539, 616, 230, 418, 315, 175, 225, 318, 158],
             "site_logo": "/themes/logo.png",
             "root_url": "https://tosdr.org",
@@ -48,7 +49,7 @@
             "extensions": [{
                     "browser": "Mozilla Firefox",
                     "type": "components.extensiongrid.addon.type.addon",
-                    "image": "img/browser-extensions/icons/firefox.svg",
+                    "image": "/browser-extensions/icons/firefox.svg",
                     "description": "views.downloads.addon.firefox_description",
                     "url": "https://addons.mozilla.org/en-US/firefox/addon/terms-of-service-didnt-read/",
                     "repository": "https://github.com/tosdr/browser-extensions",
@@ -56,28 +57,28 @@
                 }, {
                     "browser": "Google Chrome",
                     "type": "components.extensiongrid.addon.type.extension",
-                    "image": "img/browser-extensions/icons/chrome.svg",
+                    "image": "/browser-extensions/icons/chrome.svg",
                     "description": "views.downloads.addon.chrome_description",
                     "url": "https://chrome.google.com/webstore/detail/hjdoplcnndgiblooccencgcggcoihigg",
                     "repository": "https://github.com/tosdr/browser-extensions"
                 }, {
                     "browser": "Safari",
                     "type": "components.extensiongrid.addon.type.extension",
-                    "image": "img/browser-extensions/icons/safari.svg",
+                    "image": "/browser-extensions/icons/safari.svg",
                     "description": "views.downloads.addon.safari_description",
                     "url": "https://safariextension.tosdr.org/",
                     "repository": "https://github.com/tosdr/tosdr-safari"
                 }, {
                     "browser": "Microsoft Edge",
                     "type": "components.extensiongrid.addon.type.extension",
-                    "image": "img/browser-extensions/icons/edge.svg",
+                    "image": "/browser-extensions/icons/edge.svg",
                     "description": "views.downloads.addon.edge_description",
                     "url": "https://microsoftedge.microsoft.com/addons/detail/oaaecoiolcpocebdnakfpfjegbmmpkjn",
                     "repository": "https://github.com/tosdr/browser-extensions"
                 }, {
                     "browser": "Opera",
                     "type": "components.extensiongrid.addon.type.addon",
-                    "image": "img/browser-extensions/icons/opera.svg",
+                    "image": "/browser-extensions/icons/opera.svg",
                     "description": "views.downloads.addon.opera_description",
                     "url": "https://addons.opera.com/extensions/details/terms-of-service-didnt-read/",
                     "repository": "https://github.com/tosdr/tosdr-opera"
@@ -85,7 +86,7 @@
             "members": [{
                     "name": "Michiel de Jong",
                    "sub": "Code Communist",
-                    "image": "https://s3.tosdr.org/team/6.jpg",
+                    "image": "/6.jpg",
                     "twitter": "michielbdejong",
                     "description": "Michiel de Jong is an independent freedom hacker, travelling the world while programming for the revolution from his laptop. Apart from ToS;DR he is also involved in <a href=\"http://2012.unhosted.org\">The Unhosted Unconference</a> and he is a co-author of <a href=\"http://www.w3.org/community/unhosted/wiki/RemoteStorage\">the remoteStorage protocol</a>.",
                     "url": "http://michielbdejong.com/",
@@ -96,7 +97,7 @@
                 {
                     "name": "Jan-Christoph Borchardt",
                     "sub": "Design Dictator",
-                    "image": "https://s3.tosdr.org/team/jan.jpg",
+                    "image": "/jan.jpg",
                     "twitter": "jancborchardt",
                     "description": "Jan-Christoph Borchardt is a free culture interaction designer, advisor &amp; educator. He curates <a href=\"http://libreprojects.net\">open source web projects</a>, designs <a href=\"http://unhosted.org\">unhosted web apps</a> &amp; <a href=\"http://ownCloud.org\">ownCloud</a> and <a href=\"http://jancborchardt.net/usability-in-free-software\">teaches better usability</a>.",
                     "url": "http://jancborchardt.net/",
@@ -107,7 +108,7 @@
                 {
                     "name": "Hugo Roy",
                     "sub": "Legal Liberator",
-                    "image": "https://s3.tosdr.org/team/2552.jpg",
+                    "image": "/2552.jpg",
                     "twitter": "hugoroyd",
                     "description": "Hugo is an <a href=\"https://attorney.hroy.eu\">attorney</a> at the Paris bar, and a volunteer at the <a href=\"http://fsfe.org\">Free Software Foundation Europe</a>. He currently lives in Paris, where he is often referred to as a Zappa Freak.",
                     "url": "http://hugoroy.eu/index.en.html",
@@ -118,7 +119,7 @@
                 {
                     "name": "Ian McGowan",
                     "sub": "",
-                    "image": "https://s3.tosdr.org/team/ian.jpg",
+                    "image": "/ian.jpg",
                     "twitter": "",
                     "description": "Ian received his MA in Forensic Linguistics, the study of language within a legal context, from Cardiff University, investigating consumer motivation behind reading, or not reading, online Terms & Conditions. He is currently living and teaching English in Seville, Spain in addition to contributing to ToS;DR.",
                     "url": "",
@@ -128,7 +129,7 @@
                 {
                     "name": "Jimm Stout",
                     "sub": "",
-                    "image": "https://s3.tosdr.org/team/jimm.jpg",
+                    "image": "/jimm.jpg",
                     "twitter": "jimmstout",
                     "description": "Jimm is traveling and working from \"offices\" around the world. Most of his time is going to developing a new version of ToSBack, but he also likes to act like a <a href=\"https://plus.google.com/u/0/116145020812303381665/posts\">photographer</a>",
                     "url": "http://jimmstout.com/",
@@ -139,7 +140,7 @@
                 {
                     "name": "Suzanne Azmayesh",
                     "sub": "Analysis Anarchist",
-                    "image": "https://s3.tosdr.org/team/suzanne.jpg",
+                    "image": "/suzanne.jpg",
                     "twitter": "",
                     "description": "Suzanne does not know what she wants to do with her life, so until then she reads terms of service. (Oh, and she has a law degree.)",
                     "url": "",
@@ -149,7 +150,7 @@
                 {
                     "name": "Madeline O'Leary",
                     "sub": "Developer",
-                    "image": "https://s3.tosdr.org/team/133.jpg",
+                    "image": "/133.jpg",
                     "twitter": "madeline_oh",
                     "description": "When not developing the Edit Tool for ToS;DR, Madeline O'Leary is a software developer for the International Consortium of Investigative Journalists. She also spends considerable time making weird music.",
                     "url": "",
@@ -160,7 +161,7 @@
                 {
                     "name": "Vincent Tunru",
                     "sub": "Developer",
-                    "image": "https://s3.tosdr.org/team/vincent.png",
+                    "image": "/vincent.png",
                     "twitter": "VincentTunru",
                     "description": "Vincent is a front-end engineer from the Netherlands focused on civil rights. If he has the time and energy, he occasionally does some coding work for ToS;DR.",
                     "url": "",
@@ -171,7 +172,7 @@
                 {
                     "name": "Christopher Talib",
                     "sub": "",
-                    "image": "https://s3.tosdr.org/team/7.jpg",
+                    "image": "/7.jpg",
                     "twitter": "christalib_",
                     "description": "Working for a better Internet everyday.",
                     "url": "",
@@ -182,7 +183,7 @@
                 {
                     "name": "Evan Mullen",
                     "sub": "Privacy Philanthropist",
-                    "image": "https://s3.tosdr.org/team/2527.jpg",
+                    "image": "/2527.jpg",
                     "twitter": "",
                     "description": "Evan is dedicated to making the world a better place by giving consumers more information about what they agree to in the fine print. He currently resides in San Antonio, Texas.",
                     "url": "",
@@ -193,7 +194,7 @@
                 {
                     "name": "Justin Ren&#xE9; Back",
                     "sub": "Software Developer",
-                    "image": "https://s3.tosdr.org/team/1764.jpg",
+                    "image": "/1764.jpg",
                     "twitter": "justinreneback",
                     "description": "Software Developer and CEO of a privacy focused company. He also has a cat!",
                     "url": "https://justinback.com",
@@ -204,7 +205,7 @@
                 {
                     "name": "Guennadi Maximov Cort&#xE9;s",
                     "sub": "Self Taught",
-                    "image": "https://s3.tosdr.org/team/20149.jpg",
+                    "image": "/20149.jpg",
                     "twitter": "jeffsamonarch",
                     "description": "19 year-old Guennadi (AKA \"Dr.Jeff\") has yet a lot to learn, but is determined to help in any way he can. He currently resides in Mexico, and is barely starting his career on Philosophy, expecting to someday focus his research on Privacy. Also learning to code.",
                     "url": "",
@@ -214,7 +215,7 @@
                 }, {
                     "name": "Dmitri Pedersen",
                     "sub": "Privacy Philanthropist",
-                    "image": "https://s3.tosdr.org/team/2130.jpg",
+                    "image": "/2130.jpg",
                     "twitter": "",
                     "description": "Dmitri is dedicated to making the world a better place and  giving people advise and helping people. He currently resides in Washington.",
                     "url": "",
@@ -224,7 +225,7 @@
                 }, {
                     "name": "Inés Rubio",
                     "sub": "",
-                    "image": "https://s3.tosdr.org/team/20760.jpg",
+                    "image": "/20760.jpg",
                     "description": "Inés Rubio (alias Agnes de Lion) is a teenage girl committed to informing people about their rights online. Strangely enough, she enjoys spending time reading long and tortuous terms of service. She currently resides in France.",
                     "pgp": "",
                     "email": "ines@tosdr.org"

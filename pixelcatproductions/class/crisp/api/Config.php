@@ -57,32 +57,40 @@ class Config {
     /**
      * Retrieves a value from the KV Storage using the specified key
      * @param string $Key the key to retrieve from the KV Config from
-     * @return string|boolean The value as string, on failure FALSE
+     * @param array $UserOptions
+     * @return mixed The value as string, on failure FALSE
      */
-    public static function get($Key) {
+    public static function get(string $Key, array $UserOptions = array()) : mixed
+    {
         if (self::$Database_Connection === null) {
             self::initDB();
         }
+
+        $GlobalOptions = [];
+
         $statement = self::$Database_Connection->prepare("SELECT value, type FROM Config WHERE key = :ID");
         $statement->execute(array(":ID" => $Key));
         if ($statement->rowCount() > 0) {
 
             $Result = $statement->fetch(\PDO::FETCH_ASSOC);
 
-            switch ($Result["type"]) {
-                case 'serialized' :
-                    return \unserialize($Result["value"]);
-                case 'boolean':
-                    return (bool) $Result["value"];
-                case 'integer':
-                    return (int) $Result["value"];
-                case 'double':
-                    return (double) $Result["value"];
-                case 'string':
-                case 'NULL':
-                default:
-                    return $Result["value"];
+            $Value = $Result["value"];
+
+            foreach (self::list(true) as $Item) {
+                $GlobalOptions["{{ config.{$Item['key']} }}"] = $Item["value"];
             }
+
+            $Options = array_merge($UserOptions, $GlobalOptions);
+
+            $Value = strtr($Value, $Options);
+
+            return match ($Result["type"]) {
+                'serialized' => \unserialize($Value),
+                'boolean' => (bool)$Value,
+                'integer' => (int)$Value,
+                'double' => (double)$Value,
+                default => $Value,
+            };
         }
         return false;
     }

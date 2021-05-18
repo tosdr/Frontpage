@@ -173,7 +173,6 @@ class Translation {
 
     $UserOptions["{{ count }}"] = $Count;
 
-
     return nl2br(ngettext(self::get($Key, $UserOptions), self::getPlural($Key, $UserOptions), $Count));
   }
 

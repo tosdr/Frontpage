@@ -19,6 +19,7 @@
 
 namespace crisp\core;
 
+use crisp\models\OAuth2ScopeTable;
 use OAuth2;
 
 class OAuth
@@ -35,7 +36,10 @@ class OAuth
 
         $server = new OAuth2\Server($storage);
 
+        $memory = new OAuth2ScopeTable();
+        $scopeUtil = new OAuth2\Scope($memory);
 
+        $server->setScopeUtil($scopeUtil);
 
         $server->addGrantType(new OAuth2\GrantType\AuthorizationCode($storage));
         $server->addGrantType(new OAuth2\GrantType\RefreshToken($storage));

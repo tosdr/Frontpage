@@ -23,6 +23,7 @@ use crisp\api\Helper;
 use crisp\api\lists\Cron;
 use crisp\api\Translation;
 use crisp\exceptions\BitmaskException;
+use Exception;
 use Twig\Environment;
 
 /**

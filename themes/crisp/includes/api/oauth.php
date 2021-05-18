@@ -34,7 +34,27 @@ $server =\crisp\core\OAuth::createServer();
 
 switch($GLOBALS["route"]->GET[$Interface]){
     case "authorize":
-        echo "authorize!";
+
+        $OAuthResponse = new OAuth2\Response();
+        $OAuthRequest = OAuth2\Request::createFromGlobals();
+
+        if (!$server->validateAuthorizeRequest($OAuthRequest, $OAuthResponse)) {
+            $OAuthResponse->send();
+            exit;
+        }
+
+        if (!isset($_SESSION[\crisp\core\Config::$Cookie_Prefix . "session_login"])) {
+            header("Location: ". \crisp\api\Config::get("root_url"). "/login?redirect_uri=". \crisp\api\Helper::currentURL());
+            exit;
+        }
+
+        if(empty($_POST) || !isset($_POST)){
+            echo $this->TwigTheme->render("views/about.twig");
+            exit;
+        }
+
+        $server->handleAuthorizeRequest($OAuthRequest, $OAuthResponse, isset($_POST["authorize"]));
+        $OAuthResponse->send();
         exit;
     case "token":
         $server->handleTokenRequest(OAuth2\Request::createFromGlobals())->send();

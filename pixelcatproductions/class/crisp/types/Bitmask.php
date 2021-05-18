@@ -40,6 +40,25 @@ abstract class Bitmask extends Enum {
         return $oClass->getConstants();
     }
 
+    public static function bitmaskExists(int $BitwisePermissions) {
+        if (!is_numeric($BitwisePermissions)) {
+            throw new \TypeError("Parameter BitwisePermissions is not a hexadecimal or number.");
+        }
+        if ($BitwisePermissions === 0x00000000) {
+            throw new \TypeError("Parameter BitwisePermissions is zero.");
+        }
+
+        $MatchedBits = [];
+
+        foreach (self::getConstants() as $Permission) {
+
+            if (self::hasBitmask($BitwisePermissions, $Permission)) {
+                    $MatchedBits[array_search($Permission, self::getConstants())] = $Permission;
+            }
+        }
+        return count($MatchedBits) > 0;
+    }
+
     public static function getBitmask(int $BitwisePermissions, bool $IndexArray = false) {
         if (!is_numeric($BitwisePermissions)) {
             throw new \TypeError("Parameter BitwisePermissions is not a hexadecimal or number.");

@@ -360,7 +360,7 @@ class Plugins
                     foreach ($Value as $KeyTranslation => $ValueTranslation) {
                         $Language->newTranslation("plugin." . $PluginName . ".$KeyTranslation", $ValueTranslation, $Key);
                     }
-                } catch (PDOException $ex) {
+                } catch (PDOException) {
                     continue;
                 }
             }

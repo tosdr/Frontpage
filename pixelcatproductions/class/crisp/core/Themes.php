@@ -433,7 +433,7 @@ class Themes
         return json_decode(file_get_contents(__DIR__ . "/../../../../$ThemeFolder/$ThemeName/theme.json"));
     }
 
-    public static function uninstallKVStorage($ThemeMetadata)
+    public static function uninstallKVStorage($ThemeMetadata): bool
     {
         if (!is_object($ThemeMetadata) && !isset($ThemeMetadata->hookFile)) {
             return false;
@@ -444,6 +444,7 @@ class Themes
                 \crisp\api\Config::delete($Key);
             }
         }
+        return true;
     }
 
     public static function uninstallTranslations($ThemeMetadata)

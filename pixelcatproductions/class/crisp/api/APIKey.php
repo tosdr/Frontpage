@@ -101,9 +101,10 @@ class APIKey {
 
     /**
      * Check if the language exists in the database
-     * @return boolean
+     * @return bool|null
      */
-    public function exists() {
+    public function exists(): ?bool
+    {
         if ($this->LanguageID === null) {
             return null;
         }

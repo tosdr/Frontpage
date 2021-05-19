@@ -441,7 +441,7 @@ class Plugins
      * @param string $PluginName The name of the plugin
      * @return boolean
      */
-    public static function getPluginMetadata($PluginName)
+    public static function getPluginMetadata(string $PluginName): bool
     {
         $PluginFolder = \crisp\api\Config::get("plugin_dir");
 

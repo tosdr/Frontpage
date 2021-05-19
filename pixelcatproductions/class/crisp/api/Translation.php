@@ -167,7 +167,7 @@ class Translation
      * @param array $UserOptions Custom array used for templating
      * @return string The translation or the key if it doesn't exist
      */
-    public static function fetch($Key, $Count = 1, $UserOptions = array())
+    public static function fetch(string $Key, int $Count = 1, array $UserOptions = array()): string
     {
 
         if (!isset(self::$Language)) {

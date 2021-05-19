@@ -133,13 +133,11 @@ class Helper
      * Get the current locale a user has set
      * @return string current letter code
      */
-    public static function getLocale()
+    public static function getLocale(): string
     {
         $Locale = locale_accept_from_http($_SERVER['HTTP_ACCEPT_LANGUAGE']);
         if (isset($GLOBALS["route"]->Language)) {
             $Locale = $GLOBALS["route"]->Language;
-        } else {
-            $Locale = "en";
         }
 
 

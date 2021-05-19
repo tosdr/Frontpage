@@ -23,6 +23,7 @@ use crisp\api\Helper;
 use crisp\api\lists\Cron;
 use crisp\api\Translation;
 use crisp\exceptions\BitmaskException;
+use stdClass;
 use Twig\Environment;
 
 /**
@@ -33,25 +34,25 @@ class Plugin {
 
     use Hook;
 
-    public $PluginFolder;
-    public $PluginName;
-    public $PluginMetadata;
-    public $PluginPath;
-    public $TwigTheme;
-    public $CurrentFile;
-    public $CurrentPage;
+    public string $PluginFolder;
+    public string $PluginName;
+    public stdClass $PluginMetadata;
+    public string $PluginPath;
+    public Environment $TwigTheme;
+    public string $CurrentFile;
+    public string $CurrentPage;
 
     /**
-     * 
+     *
      * @param string $PluginFolder The path to your plugin
      * @param string $PluginName The name of your plugin
-     * @param object $PluginMetadata Plugin.json file contents
+     * @param stdClass $PluginMetadata Plugin.json file contents
      * @param Environment $TwigTheme The current twig theme
      * @param string $CurrentFile The current file
      * @param string $CurrentPage The current $_GET["page"] parameter
-     * @throws Exception
+     * @throws BitmaskException
      */
-    public function __construct($PluginFolder, $PluginName, $PluginMetadata, $TwigTheme, $CurrentFile, $CurrentPage) {
+    public function __construct(string $PluginFolder, string $PluginName, stdClass $PluginMetadata, Environment $TwigTheme, string $CurrentFile, string $CurrentPage) {
         $this->PluginFolder = Helper::filterAlphaNum($PluginFolder);
         $this->PluginName = Helper::filterAlphaNum($PluginName);
         $this->PluginMetadata = $PluginMetadata;
@@ -69,7 +70,7 @@ class Plugin {
                 require $this->PluginPath . "/includes/views/" . $this->CurrentPage . ".php";
 
 
-                $_vars = (isset($_vars) ? $_vars : [] );
+                $_vars = ($_vars ?? []);
                 $_vars["plugin"] = $this;
 
                 $GLOBALS["render"][$this->PluginName . "/templates/views/" . $this->CurrentPage . ".twig"] = $_vars;

@@ -474,6 +474,7 @@ class Plugins
             }
             Cron::deleteByPlugin($PluginName);
         }
+        return true;
     }
 
     /**

@@ -630,13 +630,14 @@ class Plugins
      * Uninstall a plugin and prevent it from loading
      * @broadcasts pluginUninstall
      * @param string $PluginName The Folder name of the Plugin
-     * @param TwigEnvironment $TwigTheme The twig theme component
+     * @param Environment $TwigTheme The twig theme component
      * @param string $CurrentFile The current file, __FILE__
      * @param string $CurrentPage The current page template to render
      * @return bool
+     * @throws BitmaskException
      * @see registerUninstallHook
      */
-    public static function uninstall($PluginName, $TwigTheme, $CurrentFile, $CurrentPage)
+    public static function uninstall(string $PluginName, Environment $TwigTheme, string $CurrentFile, string $CurrentPage): bool
     {
         $DB = new MySQL();
         $DBConn = $DB->getDBConnector();

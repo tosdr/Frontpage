@@ -192,7 +192,8 @@ class Plugin {
      * Check the integrity of a plugin
      * @return array
      */
-    public function integrity() {
+    public function integrity(): array
+    {
         return Plugins::integrityCheck($this->PluginName, $this->PluginMetadata, $this->PluginFolder);
     }
 

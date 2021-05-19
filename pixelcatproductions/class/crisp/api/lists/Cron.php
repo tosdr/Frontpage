@@ -138,7 +138,8 @@ class Cron {
      * @param string $Interval In which interval should the cron be executed?
      * @return int The ID of the Cron
      */
-    public static function create(string $Type, string $Data, string $Interval = "2 MINUTE", string $Plugin = null, bool $ExecuteOnce = false) {
+    public static function create(string $Type, string $Data, string $Interval = "2 MINUTE", string $Plugin = null, bool $ExecuteOnce = false): int
+    {
         if (self::$Database_Connection === null) {
             self::initDB();
         }

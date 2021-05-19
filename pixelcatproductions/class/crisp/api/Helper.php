@@ -156,7 +156,7 @@ class Helper
      *
      * @return bool
      */
-    public static function setLocale()
+    public static function setLocale(): bool
     {
         return setcookie(\crisp\core\Config::$Cookie_Prefix . "language", self::getLocale(), time() + (86400 * 30), "/");
     }

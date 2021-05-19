@@ -73,7 +73,8 @@ class Languages {
    * @param bool $Enabled Enable/disable the language
    * @return bool TRUE if action was successful
    */
-  public static function createLanguage(string $Name, string $Code, string $NativeName, string $Flag, bool $Enabled = true) {
+  public static function createLanguage(string $Name, string $Code, string $NativeName, string $Flag, bool $Enabled = true): bool
+  {
     if (self::$Database_Connection === null) {
       self::initDB();
     }

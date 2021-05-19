@@ -19,22 +19,26 @@
 
 namespace crisp\core;
 
+use crisp\exceptions\BitmaskException;
+use Exception;
+use PDO;
+
 /**
  * Interact with the database yourself. Please use this interface only when you REALLY need it for custom tables.
  * We offer a variety of functions to interact with users or the system itself in a safe way :-)
  */
 class Postgres {
 
-    private \PDO $Database_Connection;
+    private PDO $Database_Connection;
 
     /**
      * Constructs the Database_Connection
+     * @throws BitmaskException
      * @see getDBConnector
      */
     public function __construct() {
         $EnvFile = parse_ini_file(__DIR__ . "/../../../../.env");
 
-        $db = "";
         if (isset($EnvFile["POSTGRES_URI"]) && !empty($EnvFile["POSTGRES_URI"])) {
             $db = parse_url($EnvFile["POSTGRES_URI"]);
         } else {
@@ -42,7 +46,7 @@ class Postgres {
         }
 
         try {
-            $pdo = new \PDO("pgsql:" . sprintf(
+            $pdo = new PDO("pgsql:" . sprintf(
                             "host=%s;port=%s;user=%s;password=%s;dbname=%s",
                             $db["host"],
                             $db["port"],
@@ -51,14 +55,14 @@ class Postgres {
                             ltrim($db["path"], "/")
             ));
             $this->Database_Connection = $pdo;
-        } catch (\Exception $ex) {
-            throw new \crisp\exceptions\BitmaskException($ex, Bitmask::POSTGRES_CONN_ERROR);
+        } catch (Exception $ex) {
+            throw new BitmaskException($ex, Bitmask::POSTGRES_CONN_ERROR);
         }
     }
 
     /**
      * Get the database connector
-     * @return \PDO
+     * @return PDO
      */
     public function getDBConnector() {
         return $this->Database_Connection;

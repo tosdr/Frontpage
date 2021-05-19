@@ -35,7 +35,7 @@ class Elastic {
         curl_setopt($ch, CURLOPT_URL, $this->Elastic_URI . "/" . $this->Elastic_Index . "/_search?q=*" . urlencode($Query) . "*");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         $output = curl_exec($ch);
-        if (Helper::startsWith(curl_getinfo($ch, CURLINFO_HTTP_CODE), "5")) {
+        if (str_starts_with(curl_getinfo($ch, CURLINFO_HTTP_CODE), "5")) {
             throw new \crisp\exceptions\BitmaskException(curl_getinfo($ch, CURLINFO_HTTP_CODE), \crisp\core\Bitmask::ELASTIC_CONN_ERROR);
         }
         if (curl_getinfo($ch, CURLINFO_HTTP_CODE) !== 200) {

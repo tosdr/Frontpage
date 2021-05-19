@@ -323,17 +323,6 @@ class Helper {
     }
 
     /**
-     * Similiar to JS startsWith, check if a text starts with a specific string
-     * @param string $haystack The string to perform the check on
-     * @param string $needle A search needle to search for
-     * @return boolean TRUE $haystack contains $needle
-     */
-    public static function startsWith(string $haystack, string $needle) {
-        $length = strlen($needle);
-        return (substr($haystack, 0, $length) === $needle);
-    }
-
-    /**
      * Just a pretty print for var_dump
      * @param string pretty var_dump
      */

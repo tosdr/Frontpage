@@ -171,7 +171,7 @@ class Language extends Languages {
      * Gets the code of a language
      * @return bool|null
      */
-    public function getCode(): ?bool
+    public function getCode(): ?string
     {
         if ($this->LanguageID === null) {
             return null;
@@ -268,6 +268,7 @@ class Language extends Languages {
         }
 
         $Code = $this->getCode();
+
         $statement = $this->Database_Connection->prepare("INSERT INTO Translations (key, $Code) VALUES (:key, :value)");
         return $statement->execute(array(":key" => $Key, ":value" => $Value));
     }

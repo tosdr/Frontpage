@@ -1,6 +1,6 @@
 <?php
 
-/*
+/* 
  * Copyright (C) 2021 Justin René Back <justin@tosdr.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,13 +18,20 @@
  */
 
 
+namespace crisp\migrations;
 
-if (!isset($_SESSION[\crisp\core\Config::$Cookie_Prefix . "session_login"])) {
-    header("Location: " . \crisp\api\Helper::generateLink("login/?invalid_sess"));
-    exit;
-}
+class addclientname extends \crisp\core\Migrations {
 
-if (!$User->isSessionValid()) {
-    header("Location: " . \crisp\api\Helper::generateLink("login/?invalid_db"));
-    exit;
+    public function run() {
+        try {
+            $this->begin();
+            $this->addColumn("oauth_clients", array("client_name", self::DB_VARCHAR, "DEFAULT NULL"));
+            return $this->end();
+        } catch (\Exception $ex) {
+            echo $ex->getMessage() . PHP_EOL;
+            $this->rollback();
+            return false;
+        }
+    }
+
 }

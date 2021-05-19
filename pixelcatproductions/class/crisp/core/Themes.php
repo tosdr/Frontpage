@@ -266,7 +266,6 @@ class Themes
 
                     foreach (json_decode(file_get_contents($File), true) as $Key => $Value) {
                         try {
-
                             if ($Language->newTranslation($Key, $Value, substr(basename($File), 0, -5))) {
                                 $_processed[] = $Key;
                                 if (defined("CRISP_CLI")) {

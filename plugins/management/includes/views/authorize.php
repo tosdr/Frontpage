@@ -1,6 +1,6 @@
 <?php
 
-/*
+/* 
  * Copyright (C) 2021 Justin René Back <justin@tosdr.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,14 +17,36 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+use crisp\api\Config;
+use crisp\api\Helper;
+use crisp\core\OAuth;
 
+$server = OAuth::createServer();
+
+
+$OAuthResponse = new OAuth2\Response();
+$OAuthRequest = OAuth2\Request::createFromGlobals();
+
+if (!$server->validateAuthorizeRequest($OAuthRequest, $OAuthResponse)) {
+    $OAuthResponse->send();
+    exit;
+}
 
 if (!isset($_SESSION[\crisp\core\Config::$Cookie_Prefix . "session_login"])) {
-    header("Location: " . \crisp\api\Helper::generateLink("login/?invalid_sess"));
+    header("Location: " . Config::get("root_url") . "/login?redirect_uri=" . urlencode(Helper::currentURL()));
+    exit;
+}else if (!$User->isSessionValid()) {
+    header("Location: " . Config::get("root_url") . "/login?redirect_uri=" . urlencode(Helper::currentURL()));
     exit;
 }
 
-if (!$User->isSessionValid()) {
-    header("Location: " . \crisp\api\Helper::generateLink("login/?invalid_db"));
+
+
+
+if (!empty($_POST)) {
+    $server->handleAuthorizeRequest($OAuthRequest, $OAuthResponse, isset($_POST["authorize"]));
+    $OAuthResponse->send();
     exit;
 }
+
+$_vars = ["client" => [], "User" => $User->fetch()];

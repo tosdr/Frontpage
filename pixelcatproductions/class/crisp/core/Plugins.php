@@ -25,10 +25,15 @@ use crisp\api\lists\Cron;
 use crisp\api\lists\Languages;
 use crisp\api\Translation;
 use crisp\core;
+use crisp\exceptions\BitmaskException;
 use Exception;
 use JetBrains\PhpStorm\NoReturn;
 use PDO;
 use PDOException;
+use Twig\Environment;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 use TwigEnvironment;
 use function file_exists;
 use function file_get_contents;
@@ -117,12 +122,15 @@ class Plugins {
 
     /**
      * Load all plugins and check for matching templates
-     * @param TwigEnvironment $TwigTheme The twig theme component
+     * @param Environment $TwigTheme The twig theme component
      * @param string $CurrentFile The current file, __FILE__
      * @param string $CurrentPage The current page template to render
-     * @throws Exception
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     * @throws BitmaskException
      */
-    public static function load($TwigTheme, $CurrentFile, $CurrentPage) {
+    public static function load(Environment $TwigTheme, string $CurrentFile, string $CurrentPage) {
 
         if (isset($_GET["simulate_invalid_plugin_name"])) {
             throw new Exception("Plugin <b>debug</b> failed to load due to an invalid plugin name!");

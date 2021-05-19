@@ -119,10 +119,7 @@ class Config
         $statement->execute(array(":ID" => $Key));
         if ($statement->rowCount() > 0) {
 
-            $Result = $statement->fetch(PDO::FETCH_ASSOC);
-
-
-            return $Result;
+            return $statement->fetch(PDO::FETCH_ASSOC);
         }
         return false;
     }

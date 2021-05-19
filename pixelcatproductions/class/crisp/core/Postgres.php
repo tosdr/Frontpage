@@ -25,7 +25,7 @@ namespace crisp\core;
  */
 class Postgres {
 
-    private $Database_Connection;
+    private \PDO $Database_Connection;
 
     /**
      * Constructs the Database_Connection

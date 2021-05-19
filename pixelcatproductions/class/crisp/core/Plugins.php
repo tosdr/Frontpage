@@ -589,7 +589,11 @@ class Plugins
         }
     }
 
-    private static function performOnUninstall($PluginName, $PluginMetadata)
+    /**
+     * @param string $PluginName
+     * @param stdClass $PluginMetadata
+     */
+    private static function performOnUninstall(string $PluginName, stdClass $PluginMetadata)
     {
 
         if (isset($PluginMetadata->onUninstall->purgeDependencies) && is_array($PluginMetadata->onUninstall->purgeDependencies)) {

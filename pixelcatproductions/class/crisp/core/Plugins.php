@@ -415,6 +415,8 @@ class Plugins
         self::uninstallKVStorage($PluginName, $PluginMetadata);
 
         self::uninstallTranslations($PluginName, $PluginMetadata);
+
+        return true;
     }
 
     /**

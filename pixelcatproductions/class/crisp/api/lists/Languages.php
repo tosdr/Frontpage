@@ -20,10 +20,9 @@
 
 namespace crisp\api\lists;
 
-use \PDO;
-use \PDOException;
-use \PDORow;
-use \PDOStatement;
+use crisp\api\Language;
+use crisp\core\MySQL;
+use PDO;
 
 /**
  * Interact with all languages stored on the server
@@ -37,14 +36,14 @@ class Languages {
   }
 
   private static function initDB() {
-    $DB = new \crisp\core\MySQL();
+    $DB = new MySQL();
     self::$Database_Connection = $DB->getDBConnector();
   }
 
   /**
    * Fetches all languages
    * @param bool $FetchIntoClass Should we fetch the result into new \crisp\api\Language()?
-   * @return bool|array|\crisp\api\Language with all languages
+   * @return bool|array|Language with all languages
    */
   public static function fetchLanguages($FetchIntoClass = true) {
     if (self::$Database_Connection === null) {
@@ -56,12 +55,12 @@ class Languages {
     if ($FetchIntoClass) {
       $Array = array();
 
-      foreach ($statement->fetchAll(\PDO::FETCH_ASSOC) as $Language) {
-        array_push($Array, new \crisp\api\Language($Language["id"]));
+      foreach ($statement->fetchAll(PDO::FETCH_ASSOC) as $Language) {
+        array_push($Array, new Language($Language["id"]));
       }
       return $Array;
     }
-    return $statement->fetchAll(\PDO::FETCH_ASSOC);
+    return $statement->fetchAll(PDO::FETCH_ASSOC);
   }
 
   /**
@@ -118,7 +117,7 @@ class Languages {
    * Fetches a language by country code
    * @param type $Code The language's country code
    * @param type $FetchIntoClass Should we fetch the result into new \crisp\api\Language()?
-   * @return bool|\crisp\api\Language|array with the language
+   * @return bool|Language|array with the language
    */
   public static function getLanguageByCode($Code, $FetchIntoClass = true) {
     if (self::$Database_Connection === null) {
@@ -128,9 +127,9 @@ class Languages {
     $statement->execute(array(":code" => $Code));
     if ($statement->rowCount() > 0) {
       if ($FetchIntoClass) {
-        return new \crisp\api\Language($statement->fetch(\PDO::FETCH_ASSOC)["id"]);
+        return new Language($statement->fetch(PDO::FETCH_ASSOC)["id"]);
       }
-      return $statement->fetch(\PDO::FETCH_ASSOC);
+      return $statement->fetch(PDO::FETCH_ASSOC);
     }
 
     $Flag = strtolower($Code);
@@ -140,7 +139,7 @@ class Languages {
     }
 
 
-    if (\crisp\api\lists\Languages::createLanguage("base.language.$Code", $Code, "base.language.native.$Code", $Flag)) {
+    if (Languages::createLanguage("base.language.$Code", $Code, "base.language.native.$Code", $Flag)) {
       return self::getLanguageByCode($Code, $FetchIntoClass);
     }
 
@@ -151,7 +150,7 @@ class Languages {
    * Fetches a language by ID
    * @param type $ID The database ID of the language
    * @param type Should we fetch the result into new \crisp\api\Language()?
-   * @return bool|\crisp\api\Language|array with the language
+   * @return bool|Language|array with the language
    */
   public static function getLanguageByID($ID, $FetchIntoClass = true) {
     if (self::$Database_Connection === null) {
@@ -161,9 +160,9 @@ class Languages {
     $statement->execute(array(":ID" => $ID));
     if ($statement->rowCount() > 0) {
       if ($FetchIntoClass) {
-        return new \crisp\api\Language($statement->fetch(\PDO::FETCH_ASSOC)["id"]);
+        return new Language($statement->fetch(PDO::FETCH_ASSOC)["id"]);
       }
-      return $statement->fetch(\PDO::FETCH_ASSOC);
+      return $statement->fetch(PDO::FETCH_ASSOC);
     }
     return false;
   }

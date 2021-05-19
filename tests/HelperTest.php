@@ -36,28 +36,6 @@ final class HelperTest extends TestCase {
         );
     }
 
-    public function testStartsWith(): void {
-        $this->assertEquals(
-                true,
-                \crisp\api\Helper::startsWith('Test Filter', 'Test')
-        );
-        $this->assertEquals(
-                false,
-                \crisp\api\Helper::startsWith('Test Filter', 'Filter')
-        );
-    }
-
-    public function testEndsWith(): void {
-        $this->assertEquals(
-                true,
-                \crisp\api\Helper::endsWith('Test Filter', 'Filter')
-        );
-        $this->assertEquals(
-                false,
-                \crisp\api\Helper::endsWith('Test Filter', 'Test')
-        );
-    }
-
     public function testTemplateExists(): void {
         $this->assertEquals(
                 true,

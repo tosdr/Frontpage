@@ -323,17 +323,6 @@ class Helper {
     }
 
     /**
-     * Similiar to JS startsWith, check if a text starts with a specific string
-     * @param string $haystack The string to perform the check on
-     * @param string $needle A search needle to search for
-     * @return boolean TRUE $haystack contains $needle
-     */
-    public static function startsWith(string $haystack, string $needle) {
-        $length = strlen($needle);
-        return (substr($haystack, 0, $length) === $needle);
-    }
-
-    /**
      * Just a pretty print for var_dump
      * @param string pretty var_dump
      */
@@ -349,21 +338,6 @@ class Helper {
      */
     public static function templateExists(string $Theme, string $Template) {
         return file_exists(__DIR__ . "/../../../../themes/$Theme/templates/$Template");
-    }
-
-    /**
-     * Similiar to JS endsWith, check if a text ends with a specific string
-     * @param type $haystack The string to perform the check on
-     * @param type $needle A search needle to search for
-     * @return boolean
-     */
-    public static function endsWith(string $haystack, string $needle) {
-        $length = strlen($needle);
-        if ($length == 0) {
-            return true;
-        }
-
-        return (substr($haystack, -$length) === $needle);
     }
 
     /**

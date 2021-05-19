@@ -35,7 +35,7 @@ class Txt {
             if (!empty($line)) {
                 if (!in_array(explode(":", $line)[0], self::ALLOWED_KEYS)) {
 
-                    if (!\crisp\api\Helper::startsWith($line, "#")) {
+                    if (!str_starts_with($line, "#")) {
 
                         throw new \crisp\exceptions\BitmaskException(\crisp\api\Translation::fetch("views.txt.errors.invalid_key", 1, [
                                     "{{ line }}" => $key + 1,

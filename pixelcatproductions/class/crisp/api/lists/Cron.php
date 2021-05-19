@@ -228,7 +228,8 @@ class Cron {
      * @param string $Log The Text to set
      * @return Boolean TRUE if action successful
      */
-    public static function setLog(int $ID, string $Log) {
+    public static function setLog(int $ID, string $Log): bool
+    {
         if (self::$Database_Connection === null) {
             self::initDB();
         }

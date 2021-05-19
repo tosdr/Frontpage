@@ -209,10 +209,11 @@ class Plugin {
 
     /**
      * Registers an install hook for your plugin.
-     * @param string|function $Function Callback function, either anonymous or a string to a function
+     * @param mixed $Function Callback function, either anonymous or a string to a function
      * @returns boolean TRUE if hook could be registered, otherwise false
      */
-    public function registerInstallHook($Function) {
+    public function registerInstallHook(mixed $Function): bool
+    {
         return Plugins::registerInstallHook($this->PluginName, $Function);
     }
 

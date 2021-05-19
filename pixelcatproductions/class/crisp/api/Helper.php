@@ -116,7 +116,7 @@ class Helper
      * Gets the real ip address even behind a proxy
      * @return String containing the IP of the user
      */
-    public static function getRealIpAddr()
+    public static function getRealIpAddr(): string
     {
         if (!empty($_SERVER["HTTP_X_REAL_IP"])) {
             return $_SERVER['HTTP_X_REAL_IP'];

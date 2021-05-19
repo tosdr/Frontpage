@@ -98,7 +98,8 @@ class Cron {
      * @param int $ID The ID of a cron job
      * @return array Contains cron details
      */
-    public static function fetch(int $ID) {
+    public static function fetch(int $ID): array
+    {
         if (self::$Database_Connection === null) {
             self::initDB();
         }

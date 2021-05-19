@@ -174,7 +174,6 @@ try {
         $TwigTheme->addGlobal("COOKIE", $_COOKIE);
         $TwigTheme->addGlobal("SIMPLE", $Simple);
         $TwigTheme->addGlobal("isMobile", Helper::isMobile());
-        $TwigTheme->addGlobal("URL", api\Helper::currentDomain());
         $TwigTheme->addGlobal("CLUSTER", gethostname());
         $TwigTheme->addGlobal("THEME_MODE", Themes::getThemeMode());
 

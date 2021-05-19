@@ -138,9 +138,10 @@ class Language extends Languages {
 
     /**
      * Gets the name of the language
-     * @return string
+     * @return string|null
      */
-    public function getName() {
+    public function getName(): ?string
+    {
         if ($this->LanguageID === null) {
             return null;
         }

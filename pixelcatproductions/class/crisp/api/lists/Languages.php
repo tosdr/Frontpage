@@ -106,7 +106,12 @@ class Languages {
     return !self::$Database_Connection->rollBack();
   }
 
-  public static function languageExists($Code): bool
+    /**
+     * Check if a language exists by country code
+     * @param string|int $Code The language's country code
+     * @return bool
+     */
+    public static function languageExists(string|int $Code): bool
   {
     if (self::$Database_Connection === null) {
       self::initDB();

@@ -198,6 +198,7 @@ class Plugins
      * @param string $CurrentFile
      * @param string $CurrentPage
      * @return bool
+     * @throws BitmaskException
      */
     private static function performOnInstall(string $PluginName, stdClass $PluginMetadata, Environment $TwigTheme, string $CurrentFile, string $CurrentPage): bool
     {

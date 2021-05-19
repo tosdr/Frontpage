@@ -283,7 +283,7 @@ class Language extends Languages {
             return null;
         }
 
-        $statement = $this->Database_Connection->prepare("UPDATE Languages SET v = :Flag WHERE ID = :ID");
+        $statement = $this->Database_Connection->prepare("UPDATE Languages SET flag = :Flag WHERE ID = :ID");
         return $statement->execute(array(":Flag" => $Flag, ":ID" => $this->LanguageID));
     }
 

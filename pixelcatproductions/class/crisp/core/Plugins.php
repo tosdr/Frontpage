@@ -551,14 +551,14 @@ class Plugins
      * @param string $PluginName The name of the plugin
      * @return array
      */
-    public static function listConfig($PluginName)
+    public static function listConfig(string $PluginName): array
     {
 
         $Configs = \crisp\api\Config::list();
 
 
         foreach ($Configs as $Key => $Value) {
-            if (strpos($Key, "plugin_$PluginName") === false) {
+            if (!str_contains($Key, "plugin_$PluginName")) {
                 unset($Configs[$Key]);
             }
         }

@@ -42,11 +42,13 @@ trait Hook {
     }
 
     /**
-     * 
+     *
      * @param string $channel The channel to broadcast too
-     * @param any ...$parameters Parameters to attach to the broadcast
+     * @param mixed ...$parameters Parameters to attach to the broadcast
+     * @return int
      */
-    public static function broadcastHook($channel, ...$parameters) {
+    public static function broadcastHook(string $channel, ...$parameters): int
+    {
         if (isset($GLOBALS['hook'][$channel])) {
             foreach ($GLOBALS['hook'][$channel] as $func) {
                 $GLOBALS['hook'][$channel]["parameters"] = $parameters;
@@ -54,6 +56,7 @@ trait Hook {
             }
             return count($GLOBALS['hook'][$channel]);
         }
+        return 0;
     }
 
 }

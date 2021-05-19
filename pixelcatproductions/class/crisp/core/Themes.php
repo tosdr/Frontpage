@@ -418,7 +418,11 @@ class Themes
         return self::install($ThemeName);
     }
 
-    public static function getThemeMetadata($ThemeName)
+    /**
+     * @param string $ThemeName
+     * @return mixed
+     */
+    public static function getThemeMetadata(string $ThemeName): mixed
     {
         $ThemeFolder = \crisp\api\Config::get("theme_dir");
 

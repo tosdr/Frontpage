@@ -71,7 +71,7 @@ class Translation
      * Retrieves all translations with key and language code
      * @return array containing all translations on the server
      */
-    public static function listTranslations()
+    public static function listTranslations(): array
     {
         if (self::$Database_Connection === null) {
             self::initDB();

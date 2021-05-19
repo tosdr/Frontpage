@@ -68,7 +68,7 @@ class Cron {
         if (self::$Database_Connection === null) {
             self::initDB();
         }
-        $statement = self::$Database_Connection->prepare("SELECT * FROM Cron WHERE ScheduledAt < NOW() AND Finished = 0 AND Started = 0 AND Canceled = 0 AND Failed = 0 ORDER BY ScheduledAt ASC LIMIT $Limit;");
+        $statement = self::$Database_Connection->prepare("SELECT * FROM Cron WHERE ScheduledAt < NOW() AND Finished = 0 AND Started = 0 AND Canceled = 0 AND Failed = 0 ORDER BY ScheduledAt LIMIT $Limit;");
         $statement->execute();
 
         return $statement->fetchAll(PDO::FETCH_ASSOC);

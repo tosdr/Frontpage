@@ -186,9 +186,10 @@ class Language extends Languages {
     /**
      * Sets the new native name of the language
      * @param string $NativeName The new native name
-     * @return boolean TRUE if successfully set, otherwise false
+     * @return bool|null TRUE if successfully set, otherwise false
      */
-    public function setNativeName(string $NativeName) {
+    public function setNativeName(string $NativeName): ?bool
+    {
         if ($this->LanguageID === null) {
             return null;
         }

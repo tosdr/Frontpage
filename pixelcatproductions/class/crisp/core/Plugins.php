@@ -49,7 +49,8 @@ use function serialize;
  * Used internally, plugin loader
  *
  */
-class Plugins {
+class Plugins
+{
 
     use Hook;
 
@@ -58,13 +59,13 @@ class Plugins {
      * @param string $Interface The interface we are listening on
      * @param string $_QUERY The query
      */
-    #[NoReturn] public static function loadAPI(string $Interface, string $_QUERY): void {
+    #[NoReturn] public static function loadAPI(string $Interface, string $_QUERY): void
+    {
         $DB = new MySQL();
         $DBConnection = $DB->getDBConnector();
 
         $statement = $DBConnection->prepare("SELECT * FROM loadedPlugins");
         $statement->execute();
-
 
 
         $loadedPlugins = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -116,7 +117,6 @@ class Plugins {
         $statement->execute();
 
 
-
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
@@ -131,7 +131,8 @@ class Plugins {
      * @throws BitmaskException
      * @throws Exception
      */
-    public static function load(Environment $TwigTheme, string $CurrentFile, string $CurrentPage) {
+    public static function load(Environment $TwigTheme, string $CurrentFile, string $CurrentPage)
+    {
 
         if (isset($_GET["simulate_invalid_plugin_name"])) {
             throw new Exception("Plugin <b>debug</b> failed to load due to an invalid plugin name!");
@@ -143,7 +144,6 @@ class Plugins {
 
         $statement = $DBConnection->prepare("SELECT * FROM loadedPlugins ORDER BY \"order\" DESC");
         $statement->execute();
-
 
 
         $loadedPlugins = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -158,15 +158,11 @@ class Plugins {
                     if (Helper::isValidPluginName($PluginName)) {
                         new Plugin($PluginFolder, $PluginName, $PluginMetadata, $TwigTheme, $CurrentFile, $CurrentPage);
                     } else {
-                        throw new Exception("Plugin <b>" . ($PluginName) . "</b> failed to load due to an invalid plugin name!");
+                        throw new Exception(sprintf("Plugin <b>%s</b> failed to load due to an invalid plugin name!", $PluginName));
                     }
                 } else {
-                    if (!is_object($PluginMetadata)) {
-                        throw new Exception("Plugin <b>" . ($PluginName) . "</b> failed to load due to an invalid plugin.json!");
-                    }
-                    if (!isset($PluginMetadata->hookFile)) {
-                        throw new Exception("Plugin <b>" . ($PluginName) . "</b> failed to load due to a missing hook file!");
-                    }
+                    if (!is_object($PluginMetadata)) throw new Exception(sprintf("Plugin <b>%s</b> failed to load due to an invalid plugin.json!", $PluginName));
+                    if (!isset($PluginMetadata->hookFile)) throw new Exception(sprintf("Plugin <b>%s</b> failed to load due to a missing hook file!", $PluginName));
                 }
             }
         }
@@ -187,13 +183,15 @@ class Plugins {
     /**
      * @param string $PluginName
      */
-    public static function migrate(string $PluginName): void {
+    public static function migrate(string $PluginName): void
+    {
         $Migrations = new Migrations();
         $PluginFolder = \crisp\api\Config::get("plugin_dir");
         $Migrations->migrate(__DIR__ . "/../../../../$PluginFolder/$PluginName/", $PluginName);
     }
 
-    private static function performOnInstall($PluginName, $PluginMetadata, $TwigTheme, $CurrentFile, $CurrentPage) {
+    private static function performOnInstall($PluginName, $PluginMetadata, $TwigTheme, $CurrentFile, $CurrentPage)
+    {
         if (!isset($PluginMetadata->onInstall)) {
             return false;
         }
@@ -218,7 +216,8 @@ class Plugins {
      * @return bool
      * @deprecated 0.0.8-beta.RC4 Use self::installTranslations
      */
-    public static function refreshTranslations($PluginName, $PluginMetadata) {
+    public static function refreshTranslations($PluginName, $PluginMetadata)
+    {
         self::uninstallTranslations($PluginName, $PluginMetadata);
         return self::installTranslations($PluginName, $PluginMetadata);
     }
@@ -230,7 +229,8 @@ class Plugins {
      * @return bool
      * @deprecated 0.0.8-beta.RC4 Use self::installKVStorage
      */
-    public static function refreshKVStorage($PluginName, $PluginMetadata) {
+    public static function refreshKVStorage($PluginName, $PluginMetadata)
+    {
         self::uninstallKVStorage($PluginName, $PluginMetadata);
         return self::installKVStorage($PluginName, $PluginMetadata);
     }
@@ -241,7 +241,8 @@ class Plugins {
      * @param string $PluginMetadata plugin.json contents decoded
      * @return bool
      */
-    public static function installKVStorage($PluginName, $PluginMetadata) {
+    public static function installKVStorage($PluginName, $PluginMetadata)
+    {
         if (!is_object($PluginMetadata) && !isset($PluginMetadata->hookFile)) {
             return false;
         }
@@ -282,7 +283,8 @@ class Plugins {
      * @param string $PluginMetadata plugin.json contents decoded
      * @return bool
      */
-    public static function installTranslations($PluginName, $PluginMetadata) {
+    public static function installTranslations($PluginName, $PluginMetadata)
+    {
         if (!is_object($PluginMetadata) && !isset($PluginMetadata->hookFile)) {
             return false;
         }
@@ -361,7 +363,8 @@ class Plugins {
      * @param string $PluginName The folder name of the plugin
      * @return boolean TRUE if plugin is installed, otherwise FALSE
      */
-    public static function isInstalled($PluginName) {
+    public static function isInstalled($PluginName)
+    {
         $DB = new MySQL();
         $DBConn = $DB->getDBConnector();
 
@@ -371,19 +374,21 @@ class Plugins {
         return ($statement->rowCount() > 0 ? true : false);
     }
 
-    public static function isValid($PluginName) {
+    public static function isValid($PluginName)
+    {
         $PluginFolder = \crisp\api\Config::get("plugin_dir");
         return file_exists(__DIR__ . "/../../../../$PluginFolder/$PluginName/plugin.json");
     }
 
     /**
      * Deletes all KVStorage Items from the Plugin
-     * 
+     *
      * If the plugin is installed, it will get uninstalled first
      * @param string $PluginName The folder name of the plugin
      * @return boolean TRUE if the data has been successfully deleted
      */
-    public static function deleteData($PluginName) {
+    public static function deleteData($PluginName)
+    {
 
         if (self::isInstalled($PluginName)) {
             self::uninstall($PluginName);
@@ -405,10 +410,11 @@ class Plugins {
     /**
      * Compare the current version of crisp with a custom version string
      * @param string $VersionString The semantic version string
-     * @see version_compare
      * @return bool|int
+     * @see version_compare
      */
-    public static function testVersion($VersionString) {
+    public static function testVersion($VersionString)
+    {
 
         if (strpos($VersionString, ">=") !== false) {
             return version_compare(core::CRISP_VERSION, substr($VersionString, 2), ">=");
@@ -432,7 +438,8 @@ class Plugins {
      * @param string $PluginName The name of the plugin
      * @return boolean
      */
-    public static function getPluginMetadata($PluginName) {
+    public static function getPluginMetadata($PluginName)
+    {
         $PluginFolder = \crisp\api\Config::get("plugin_dir");
 
         if (!file_exists(__DIR__ . "/../../../../$PluginFolder/$PluginName/plugin.json")) {
@@ -448,7 +455,8 @@ class Plugins {
      * @param string $PluginMetadata plugin.json contents decoded
      * @return bool
      */
-    public static function uninstallCrons($PluginName, $PluginMetadata) {
+    public static function uninstallCrons($PluginName, $PluginMetadata)
+    {
         if (!is_object($PluginMetadata) && !isset($PluginMetadata->hookFile)) {
             return false;
         }
@@ -467,7 +475,8 @@ class Plugins {
      * @param string $PluginMetadata plugin.json contents decoded
      * @return bool
      */
-    public static function installCrons($PluginName, $PluginMetadata) {
+    public static function installCrons($PluginName, $PluginMetadata)
+    {
         if (!is_object($PluginMetadata) && !isset($PluginMetadata->hookFile)) {
             return false;
         }
@@ -495,7 +504,8 @@ class Plugins {
      * @param string $PluginMetadata plugin.json contents decoded
      * @return bool
      */
-    public static function uninstallKVStorage($PluginName, $PluginMetadata) {
+    public static function uninstallKVStorage($PluginName, $PluginMetadata)
+    {
         if (!is_object($PluginMetadata) && !isset($PluginMetadata->hookFile)) {
             return false;
         }
@@ -527,7 +537,8 @@ class Plugins {
      * @param string $PluginName The name of the plugin
      * @return array
      */
-    public static function listTranslations($PluginName) {
+    public static function listTranslations($PluginName)
+    {
 
         $Configs = Translation::listTranslations();
 
@@ -545,10 +556,10 @@ class Plugins {
      * @param string $PluginName The name of the plugin
      * @return array
      */
-    public static function listConfig($PluginName) {
+    public static function listConfig($PluginName)
+    {
 
         $Configs = \crisp\api\Config::list();
-
 
 
         foreach ($Configs as $Key => $Value) {
@@ -565,7 +576,8 @@ class Plugins {
      * @param string $PluginMetadata plugin.json contents decoded
      * @return bool
      */
-    public static function uninstallTranslations($PluginName, $PluginMetadata) {
+    public static function uninstallTranslations($PluginName, $PluginMetadata)
+    {
         if (!is_object($PluginMetadata) && !isset($PluginMetadata->hookFile)) {
             return false;
         }
@@ -582,7 +594,8 @@ class Plugins {
         }
     }
 
-    private static function performOnUninstall($PluginName, $PluginMetadata) {
+    private static function performOnUninstall($PluginName, $PluginMetadata)
+    {
 
         if (isset($PluginMetadata->onUninstall->purgeDependencies) && is_array($PluginMetadata->onUninstall->purgeDependencies)) {
             foreach ($PluginMetadata->onUninstall->purgeDependencies as $Plugin) {
@@ -606,7 +619,8 @@ class Plugins {
      * @param string $CurrentPage The current page template to render
      * @return boolean
      */
-    public static function reinstall($PluginName, $TwigTheme, $CurrentFile, $CurrentPage) {
+    public static function reinstall($PluginName, $TwigTheme, $CurrentFile, $CurrentPage)
+    {
         if (!self::uninstall($PluginName, $TwigTheme, $CurrentFile, $CurrentPage)) {
             return false;
         }
@@ -616,14 +630,15 @@ class Plugins {
     /**
      * Uninstall a plugin and prevent it from loading
      * @broadcasts pluginUninstall
-     * @see registerUninstallHook
      * @param string $PluginName The Folder name of the Plugin
      * @param TwigEnvironment $TwigTheme The twig theme component
      * @param string $CurrentFile The current file, __FILE__
      * @param string $CurrentPage The current page template to render
      * @return bool
+     * @see registerUninstallHook
      */
-    public static function uninstall($PluginName, $TwigTheme, $CurrentFile, $CurrentPage) {
+    public static function uninstall($PluginName, $TwigTheme, $CurrentFile, $CurrentPage)
+    {
         $DB = new MySQL();
         $DBConn = $DB->getDBConnector();
 
@@ -635,7 +650,6 @@ class Plugins {
         if (!file_exists(__DIR__ . "/../../../../$PluginFolder/$PluginName/plugin.json")) {
             return false;
         }
-
 
 
         $PluginMetadata = json_decode(file_get_contents(__DIR__ . "/../../../../$PluginFolder/$PluginName/plugin.json"));
@@ -666,7 +680,8 @@ class Plugins {
      * @param string $PluginMetadata Decoded plugin.json contents
      * @return array
      */
-    public static function integrityCheck($PluginName, $PluginMetadata) {
+    public static function integrityCheck($PluginName, $PluginMetadata)
+    {
         $PluginFolder = \crisp\api\Config::get("plugin_dir");
         $parsedConfigs = array();
         $failedConfigs = array();
@@ -696,7 +711,6 @@ class Plugins {
                 $failedChecks[] = "KVStorageItems";
             }
         }
-
 
 
         if (!self::isInstalled($PluginName)) {
@@ -741,14 +755,15 @@ class Plugins {
     /**
      * Install a plugin and load it into the CMS
      * @broadcasts pluginInstall
-     * @see registerInstallHook
      * @param string $PluginName The Folder name of the Plugin
      * @param TwigEnvironment $TwigTheme The twig theme component
      * @param string $CurrentFile The current file, __FILE__
      * @param string $CurrentPage The current page template to render
      * @return boolean TRUE if install was successful, otherwise FALSE
+     * @see registerInstallHook
      */
-    public static function install($PluginName, $TwigTheme, $CurrentFile, $CurrentPage) {
+    public static function install($PluginName, $TwigTheme, $CurrentFile, $CurrentPage)
+    {
 
         $DB = new MySQL();
         $DBConn = $DB->getDBConnector();
@@ -775,8 +790,6 @@ class Plugins {
         }
 
 
-
-
         self::performOnInstall($PluginName, $PluginMetadata, $TwigTheme, $CurrentFile, $CurrentPage);
 
 
@@ -797,7 +810,8 @@ class Plugins {
      * @param string|function $Function Callback function, either anonymous or a string to a function
      * @returns boolean TRUE if hook could be registered, otherwise false
      */
-    public static function registerUninstallHook($PluginName, $Function) {
+    public static function registerUninstallHook($PluginName, $Function)
+    {
         if (is_callable($Function) || function_exists($PluginName)($Function)) {
             self::on("pluginUninstall_$PluginName", $Function);
             return true;
@@ -805,7 +819,8 @@ class Plugins {
         return false;
     }
 
-    public static function registerAfterRenderHook($PluginName, $Function) {
+    public static function registerAfterRenderHook($PluginName, $Function)
+    {
         if (is_callable($Function) || function_exists($PluginName)($Function)) {
             self::on("pluginAfterRender_$PluginName", $Function);
             return true;
@@ -819,7 +834,8 @@ class Plugins {
      * @param string|function $Function Callback function, either anonymous or a string to a function
      * @returns boolean TRUE if hook could be registered, otherwise false
      */
-    public static function registerInstallHook($PluginName, $Function) {
+    public static function registerInstallHook($PluginName, $Function)
+    {
         if (is_callable($Function) || function_exists($PluginName)($Function)) {
             self::on("pluginInstall_$PluginName", $Function);
             return true;

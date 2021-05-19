@@ -66,8 +66,8 @@ steps:
   - cd /tmp/ci
   - apt-get update && apt-get install -y libpq-dev autoconf gcc libc6-dev make libicu-dev wget git-core zip zlib1g-dev libpng-dev
   - pecl install redis-5.3.2
-  - docker-php-ext-install pgsql pdo_pgsql pdo_mysql intl gd
-  - docker-php-ext-enable pdo_pgsql pdo_mysql redis intl gd
+  - docker-php-ext-install pgsql pdo_pgsql pdo_mysql intl gd gettext
+  - docker-php-ext-enable pdo_pgsql pdo_mysql redis intl gd gettext
   - wget https://getcomposer.org/composer-stable.phar -O /tmp/ci/composer
   - cd /drone/src
   - php /tmp/ci/composer install

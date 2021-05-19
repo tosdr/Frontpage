@@ -68,7 +68,11 @@ class Helper
         return ($keyDetails["permissions"] & $BitmaskFlag);
     }
 
-    public static function getAPIKeyDetails($ApiKey)
+    /**
+     * @param string $ApiKey
+     * @return mixed
+     */
+    public static function getAPIKeyDetails(string $ApiKey): mixed
     {
 
 

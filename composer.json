@@ -16,7 +16,10 @@
     "ext-redis": "*",
     "ext-curl": "*",
     "ext-pdo": "*",
-    "bshaffer/oauth2-server-php": "^1.11"
+    "ext-gd": "*",
+    "ext-intl": "*",
+    "ext-gettext": "*",
+    "ext-openssl": "*"
   },
   "require-dev": {
     "phpunit/phpunit": "^9.5"

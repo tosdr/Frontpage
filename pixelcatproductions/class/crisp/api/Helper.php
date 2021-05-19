@@ -19,27 +19,42 @@
 
 namespace crisp\api;
 
+use crisp\api\lists\Languages;
+use crisp\core\MySQL;
+use Exception;
+use PDO;
+use stdClass;
+use function curl_exec;
+use function curl_init;
+use function curl_setopt_array;
+
 /**
  * Some useful helper functions
  */
-class Helper {
+class Helper
+{
 
     /**
      * Check if the user is on a mobile device
      * @return boolean TRUE if the user is on mobile
      */
-    public static function isMobile($UserAgent = null) {
+    public static function isMobile($UserAgent = null): bool
+    {
         $UserAgent = ($UserAgent === null ? $_SERVER["HTTP_USER_AGENT"] : $UserAgent);
         return preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i", $UserAgent);
     }
 
-    public static function hasApiPermissions($BitmaskFlag) {
+    /**
+     * @param $BitmaskFlag
+     * @param null $apikey
+     * @return bool|int
+     */
+    public static function hasApiPermissions($BitmaskFlag, $apikey = null): bool|int
+    {
 
-        $apikey;
-
-        if (isset(apache_request_headers()["Authorization"])) {
+        if ($apikey === null && isset(apache_request_headers()["Authorization"])) {
             $apikey = apache_request_headers()["Authorization"];
-        } else {
+        } else if ($apikey === null) {
             return false;
         }
 
@@ -53,32 +68,40 @@ class Helper {
         return ($keyDetails["permissions"] & $BitmaskFlag);
     }
 
-    public static function getAPIKeyDetails($ApiKey) {
+    /**
+     * @param string $ApiKey
+     * @return mixed
+     */
+    public static function getAPIKeyDetails(string $ApiKey): mixed
+    {
 
 
-        $Postgres = new \crisp\core\MySQL();
+        $Postgres = new MySQL();
 
         $statement = $Postgres->getDBConnector()->prepare("SELECT * FROM apikeys WHERE key = :key");
 
         $statement->execute([":key" => $ApiKey]);
 
         if ($statement->rowCount() > 0) {
-            return $statement->fetch(\PDO::FETCH_ASSOC);
+            return $statement->fetch(PDO::FETCH_ASSOC);
         }
         return false;
     }
 
-    public static function getAPIKey() {
+    /**
+     * @param string|null $apikey
+     * @return bool
+     */
+    public static function getAPIKey(string $apikey = null): bool
+    {
 
-        $apikey = "";
-
-        $Postgres = new \crisp\core\MySQL();
+        $Postgres = new MySQL();
 
         $statement = $Postgres->getDBConnector()->prepare("SELECT * FROM apikeys WHERE key = :key AND revoked = 0 AND (expires_at is null OR expires_at > NOW())");
 
-        if (isset(apache_request_headers()["Authorization"])) {
+        if ($apikey === null && isset(apache_request_headers()["Authorization"])) {
             $apikey = apache_request_headers()["Authorization"];
-        } else {
+        } else if ($apikey === null) {
             return false;
         }
         $statement->execute([":key" => $apikey]);
@@ -93,7 +116,8 @@ class Helper {
      * Gets the real ip address even behind a proxy
      * @return String containing the IP of the user
      */
-    public static function getRealIpAddr() {
+    public static function getRealIpAddr(): string
+    {
         if (!empty($_SERVER["HTTP_X_REAL_IP"])) {
             return $_SERVER['HTTP_X_REAL_IP'];
         } else if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {   //to check ip is pass from proxy
@@ -107,18 +131,17 @@ class Helper {
 
     /**
      * Get the current locale a user has set
-     * @return string current letter code 
+     * @return string current letter code
      */
-    public static function getLocale() {
+    public static function getLocale(): string
+    {
         $Locale = locale_accept_from_http($_SERVER['HTTP_ACCEPT_LANGUAGE']);
         if (isset($GLOBALS["route"]->Language)) {
             $Locale = $GLOBALS["route"]->Language;
-        } else {
-            $Locale = "en";
         }
 
 
-        if (!in_array($Locale, array_keys(array_column(\crisp\api\lists\Languages::fetchLanguages(false), null, "code")))) {
+        if (!in_array($Locale, array_keys(array_column(Languages::fetchLanguages(false), null, "code")))) {
             $Locale = "en";
         }
 
@@ -130,19 +153,12 @@ class Helper {
 
     /**
      * Sets the locale and saves in a cookie
-     * 
+     *
      * @return bool
      */
-    public static function setLocale() {
+    public static function setLocale(): bool
+    {
         return setcookie(\crisp\core\Config::$Cookie_Prefix . "language", self::getLocale(), time() + (86400 * 30), "/");
-    }
-
-    /**
-     * Get the current revision the CMS runs on
-     * @return string Current Git Revision
-     */
-    public static function getGitRevision() {
-        return file_get_contents(__DIR__ . '/../../../../.git/refs/heads/' . self::getGitBranch());
     }
 
     /**
@@ -150,7 +166,8 @@ class Helper {
      * @param string $String The string to filter
      * @return string Filtered string
      */
-    public static function filterAlphaNum($String) {
+    public static function filterAlphaNum(string $String): string
+    {
         return str_replace(" ", "-", strtolower(preg_replace("/[^0-9a-zA-Z\-_]/", "-", $String)));
     }
 
@@ -159,14 +176,15 @@ class Helper {
      * @param string $Text The text to display
      * @param string $Size The in pixels to create the image with
      */
-    public static function PlaceHolder(string $Text, string $Size = "150x150") {
+    public static function PlaceHolder(string $Text, string $Size = "150x150")
+    {
 
         $fontSize = 5;
         $dimensions = explode('x', $Size);
 
-        $w = isset($dimensions[0]) ? $dimensions[0] : 100;
-        $h = isset($dimensions[1]) ? $dimensions[1] : 100;
-        $text = isset($Text) ? $Text : $w . 'x' . $h;
+        $w = $dimensions[0] ?? 100;
+        $h = $dimensions[1] ?? 100;
+        $text = $Text ?? $w . 'x' . $h;
 
         if ($w < 50) {
             $fontSize = 1;
@@ -198,14 +216,15 @@ class Helper {
      * @param string $Name The name of the plugin
      * @return array|boolean Array of errors if found, otherwise true
      */
-    public static function isValidPluginName(string $Name) {
+    public static function isValidPluginName(string $Name): bool|array
+    {
 
         $Matches = [];
 
         if (preg_match_all("/[^0-9a-zA-Z\-_]/", $Name) > 0) {
             $Matches[] = "STRING_CONTAINS_NON_ALPHA_NUM";
         }
-        if (strpos($Name, ' ') !== false) {
+        if (str_contains($Name, ' ')) {
             $Matches[] = "STRING_CONTAINS_SPACES";
         }
         if (preg_match('/[A-Z]/', $Name)) {
@@ -216,32 +235,27 @@ class Helper {
     }
 
     /**
-     * Get the current branch the CMS runs on
-     * @return string Current Git Revision
+     * @param string $Path
+     * @param false $External
+     * @return string
      */
-    public static function getGitBranch() {
-        return trim(substr(file_get_contents(__DIR__ . '/../../../../.git/HEAD'), 16));
-    }
-
-    /**
-     * Gets a current revision link to github
-     * @return string The link to github
-     */
-    public static function getGitRevisionLink() {
-        return "https://github.com/JustinBack/CrispCMS-ToS-DR/tree/" . self::getGitRevision();
-    }
-
-    public static function generateLink($Path, $External = false) {
+    public static function generateLink(string $Path, bool $External = false): string
+    {
         return ($External ? $Path : "/" . self::getLocale() . "/$Path");
     }
 
-    public static function processRoute($Route) {
+    /**
+     * @param $Route
+     * @return stdClass
+     */
+    public static function processRoute($Route): stdClass
+    {
         $_Route = explode("/", $Route);
         array_shift($_Route);
-        if(isset($_SERVER["IS_API_ENDPOINT"])){
+        if (isset($_SERVER["IS_API_ENDPOINT"])) {
             array_unshift($_Route, "api");
         }
-        $obj = new \stdClass();
+        $obj = new stdClass();
         $obj->Language = (lists\Languages::languageExists($_Route[0]) && strlen($_Route[0]) > 0 ? $_Route[0] : self::getLocale());
         $obj->Page = explode("?", (strlen($_Route[1]) === 0 ? (strlen($_Route[0]) > 0 ? $_Route[0] : false) : $_Route[1]))[0];
         $obj->GET = array();
@@ -254,7 +268,7 @@ class Helper {
                 $value = $_RouteArray[$i + 1];
                 if (strlen($key) > 0) {
                     if ($value === null) {
-                        $obj->GET["q"] = explode("?",$key)[0];
+                        $obj->GET["q"] = explode("?", $key)[0];
                     } else {
                         $obj->GET[$key] = explode("?", $value)[0];
                     }
@@ -273,72 +287,12 @@ class Helper {
     }
 
     /**
-     * Retrieve the latest hash on github
-     * @param \boolean $Force Force update rather than from cache
-     * @return string Hash of latest git revision
-     * @throws \Exception If request failed
-     */
-    public static function getLatestGitRevision(bool $Force = false) {
-
-        $EnvFile = parse_ini_file(__DIR__ . "/../../../../.env");
-        if (!$Force) {
-
-            $Timestamp = Config::getTimestamp("github_current_revision");
-
-            if (strtotime($Timestamp["last_changed"]) >= strtotime("-15 minutes") && Config::exists("github_current_revision")) {
-                return Config::get("github_current_revision");
-            }
-            if (strtotime($Timestamp["created_at"]) >= strtotime("-15 minutes") && Config::exists("github_current_revision")) {
-                return Config::get("github_current_revision");
-            }
-        }
-
-
-        $curl = \curl_init();
-        \curl_setopt_array($curl, array(
-            CURLOPT_URL => "https://api.github.com/repos/JustinBack/CrispCMS-ToS-DR/git/ref/heads/" . self::getGitRevision(),
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => "",
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => "GET",
-            CURLOPT_USERAGENT => "LophotenCMS Git Checker",
-            CURLOPT_HTTPHEADER => array(
-                "Authorization: Bearer " . $EnvFile["GITHUB_TOKEN"],
-            ),
-        ));
-        $response = json_decode(\curl_exec($curl));
-        if ($response->error) {
-            throw new \Exception($response->message);
-        }
-
-        if (Config::exists("github_current_revision")) {
-            Config::set("github_current_revision", $response->object->sha);
-        } else {
-            Config::create("github_current_revision", $response->object->sha);
-        }
-        return $response->object->sha;
-    }
-
-    /**
-     * Similiar to JS startsWith, check if a text starts with a specific string
-     * @param string $haystack The string to perform the check on
-     * @param string $needle A search needle to search for
-     * @return boolean TRUE $haystack contains $needle
-     */
-    public static function startsWith(string $haystack, string $needle) {
-        $length = strlen($needle);
-        return (substr($haystack, 0, $length) === $needle);
-    }
-
-    /**
      * Just a pretty print for var_dump
      * @param string pretty var_dump
      */
-    public static function prettyDump($var) {
-        echo "<pre>" . var_export($var, true) . "</pre>";
+    public static function prettyDump($var): void
+    {
+        echo sprintf("<pre>%s</pre>", var_export($var, true));
     }
 
     /**
@@ -347,23 +301,9 @@ class Helper {
      * @param string $Template The Template name
      * @return boolean
      */
-    public static function templateExists(string $Theme, string $Template) {
+    public static function templateExists(string $Theme, string $Template): bool
+    {
         return file_exists(__DIR__ . "/../../../../themes/$Theme/templates/$Template");
-    }
-
-    /**
-     * Similiar to JS endsWith, check if a text ends with a specific string
-     * @param type $haystack The string to perform the check on
-     * @param type $needle A search needle to search for
-     * @return boolean
-     */
-    public static function endsWith(string $haystack, string $needle) {
-        $length = strlen($needle);
-        if ($length == 0) {
-            return true;
-        }
-
-        return (substr($haystack, -$length) === $needle);
     }
 
     /**
@@ -373,18 +313,20 @@ class Helper {
      * @param bool $AppendDots Should we append dots to the end of the string?
      * @return string
      */
-    public static function truncateText(string $String, int $Length, bool $AppendDots = true) {
+    public static function truncateText(string $String, int $Length, bool $AppendDots = true): string
+    {
         return strlen($String) > $Length ? substr($String, 0, $Length) . ($AppendDots ? "..." : "") : $String;
     }
 
     /**
      * Check if a string is serialized
      * @see https://core.trac.wordpress.org/browser/tags/5.4/src/wp-includes/functions.php#L611
-     * @param type $data The Data to check
-     * @param type $strict Strict Checking
+     * @param string $data The Data to check
+     * @param bool $strict Strict Checking
      * @return boolean
      */
-    public static function isSerialized($data, $strict = true) {
+    public static function isSerialized(string $data, bool $strict = true): bool
+    {
         // if it isn't a string, it isn't serialized.
         if (!is_string($data)) {
             return false;
@@ -423,32 +365,28 @@ class Helper {
                     if ('"' !== substr($data, -2, 1)) {
                         return false;
                     }
-                } elseif (false === strpos($data, '"')) {
+                } elseif (!str_contains($data, '"')) {
                     return false;
                 }
             // or else fall through
             case 'a' :
             case 'O' :
-                return (bool) preg_match("/^{$token}:[0-9]+:/s", $data);
+                return (bool)preg_match("/^{$token}:[0-9]+:/s", $data);
             case 'b' :
             case 'i' :
             case 'd' :
                 $end = $strict ? '$' : '';
-                return (bool) preg_match("/^{$token}:[0-9.E-]+;$end/", $data);
+                return (bool)preg_match("/^{$token}:[0-9.E-]+;$end/", $data);
         }
         return false;
     }
 
-    /**
-     * Gets the current domain
-     * @return string the current domain
-     * @deprecated Use theme root url instead
-     */
-    public static function currentDomain() {
-        return "https://tosdr.org";
-    }
 
-    public static function currentURL() {
+    /**
+     * @return string
+     */
+    public static function currentURL(): string
+    {
         return (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
     }
 

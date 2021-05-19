@@ -175,16 +175,12 @@ class Config
             Config::create($Key, $Value);
         }
 
-        $Type = gettype($Value);
+        $Type = match($Value){
+            null => "NULL",
+            (is_array($Value) || is_object($Value)),Helper::isSerialized($Value) => "serialized",
+            default => gettype($Value)
+        };
 
-        if (Helper::isSerialized($Value)) {
-            $Type = "serialized";
-        }
-
-        if (is_array($Value) || is_object($Value)) {
-            $Type = "serialized";
-            $Value = serialize($Value);
-        }
         if ($Type == "boolean") {
             $Value = ($Value ? 1 : 0);
         }

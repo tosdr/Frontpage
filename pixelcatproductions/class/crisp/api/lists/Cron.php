@@ -113,7 +113,8 @@ class Cron {
      * Delete processed, finished or failed cronjobs
      * @return Boolean TRUE if action successful
      */
-    public static function deleteOld() {
+    public static function deleteOld(): bool
+    {
         if (self::$Database_Connection === null) {
             self::initDB();
         }

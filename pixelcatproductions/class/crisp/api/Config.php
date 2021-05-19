@@ -150,7 +150,7 @@ class Config
      * @param string $Key the key to insert
      * @return boolean TRUE on success, on failure FALSE
      */
-    public static function delete($Key)
+    public static function delete(string $Key): bool
     {
         if (self::$Database_Connection === null) {
             self::initDB();

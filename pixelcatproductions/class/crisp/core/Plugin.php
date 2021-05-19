@@ -109,9 +109,15 @@ class Plugin {
     }
 
     /**
+     * @param string $Type
+     * @param $Data
+     * @param string $Interval
+     * @param bool $ExecuteOnce
+     * @return int
      * @see \crisp\api\lists\Cron::create
      */
-    public function createCron(string $Type, $Data, string $Interval = "2 MINUTE", bool $ExecuteOnce = false) {
+    public function createCron(string $Type, $Data, string $Interval = "2 MINUTE", bool $ExecuteOnce = false): int
+    {
         return Cron::create("execute_plugin_cron", json_encode(array("data" => $Data, "name" => $Type)), $Interval, $this->PluginName, $ExecuteOnce);
     }
 

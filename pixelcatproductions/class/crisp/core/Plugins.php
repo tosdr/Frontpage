@@ -82,7 +82,8 @@ class Plugins {
      * List all uninstalled plugins
      * @return array
      */
-    public static function listPlugins() {
+    public static function listPlugins(): array
+    {
 
         $PluginFolder = \crisp\api\Config::get("plugin_dir");
 

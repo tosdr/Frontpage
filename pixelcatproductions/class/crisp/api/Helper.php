@@ -244,7 +244,11 @@ class Helper
         return ($External ? $Path : "/" . self::getLocale() . "/$Path");
     }
 
-    public static function processRoute($Route)
+    /**
+     * @param $Route
+     * @return stdClass
+     */
+    public static function processRoute($Route): stdClass
     {
         $_Route = explode("/", $Route);
         array_shift($_Route);

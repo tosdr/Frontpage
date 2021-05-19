@@ -20,33 +20,32 @@
 
 namespace crisp\core;
 
+use crisp\api\Helper;
+use Twig\Environment;
+
 /**
  * Used internally, plugin loader
  *
  */
-class ThemeAPI {
+class ThemeAPI
+{
 
-    use \crisp\core\Hook;
+    use Hook;
 
-    public $ThemeFolder;
-    public $ThemeName;
-    public $Interface;
-    public $Query;
-    public $TwigTheme;
-    public $ThemePath;
+    public string $Interface;
+    public string $Query;
+    public string $ThemePath;
+    public Environment $TwigTheme;
 
     /**
-     * 
-     * @param string $ThemeFolder The path to your theme
-     * @param string $ThemeName The name of your theme
-     * @param object $ThemeMetadata Theme.json file contents
-     * @param \Twig\Environment $TwigTheme The current twig theme
-     * @param string $CurrentFile The current file
-     * @param string $CurrentPage The current $_GET["page"] parameter
-     * @throws Exception
+     *
+     * @param Environment $ThemeLoader
+     * @param string $Interface
+     * @param string $_QUERY
      */
-    public function __construct($ThemeLoader, $Interface, $_QUERY) {
-        $this->Interface = \crisp\api\Helper::filterAlphaNum($Interface);
+    public function __construct(Environment $ThemeLoader, string $Interface, string $_QUERY)
+    {
+        $this->Interface = Helper::filterAlphaNum($Interface);
         $this->Query = $_QUERY;
         $this->TwigTheme = $ThemeLoader;
         $this->ThemePath = realpath(__DIR__ . "/../../../../" . \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") . "/");

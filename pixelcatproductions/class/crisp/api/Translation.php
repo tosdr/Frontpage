@@ -20,10 +20,9 @@
 
 namespace crisp\api;
 
-use \PDO;
-use \PDOException;
-use \PDORow;
-use \PDOStatement;
+use crisp\api\lists\Languages;
+use crisp\core\MySQL;
+use PDO;
 
 /**
  * Access the translations of the CMS
@@ -49,7 +48,7 @@ class Translation {
    * Inits DB
    */
   private static function initDB() {
-    $DB = new \crisp\core\MySQL();
+    $DB = new MySQL();
     self::$Database_Connection = $DB->getDBConnector();
   }
 
@@ -57,10 +56,10 @@ class Translation {
    * Same as \crisp\api\lists\Languages()->fetchLanguages()
    * @uses  \crisp\api\lists\Languages()
    * @param type $FetchIntoClass Should the result be fetched into a \crisp\api\Language class
-   * @return \crisp\api\Language|array depending on the $FetchIntoClass parameter
+   * @return Language|array depending on the $FetchIntoClass parameter
    */
   public static function listLanguages($FetchIntoClass = true) {
-    $Languages = new \crisp\api\lists\Languages();
+    $Languages = new Languages();
     return $Languages->fetchLanguages($FetchIntoClass);
   }
 
@@ -75,7 +74,7 @@ class Translation {
     $statement = self::$Database_Connection->prepare("SELECT * FROM Translations");
     $statement->execute();
     if ($statement->rowCount() > 0) {
-      return $statement->fetchAll(\PDO::FETCH_ASSOC);
+      return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
   }
 
@@ -92,7 +91,7 @@ class Translation {
     $statement->execute();
     if ($statement->rowCount() > 0) {
 
-      $Translations = $statement->fetchAll(\PDO::FETCH_ASSOC);
+      $Translations = $statement->fetchAll(PDO::FETCH_ASSOC);
 
       $Array = array();
 
@@ -121,7 +120,7 @@ class Translation {
     $statement->execute();
     if ($statement->rowCount() > 0) {
 
-      $Translations = $statement->fetchAll(\PDO::FETCH_ASSOC);
+      $Translations = $statement->fetchAll(PDO::FETCH_ASSOC);
 
       $Array = array();
       foreach ($Translations as $Item) {
@@ -208,7 +207,7 @@ class Translation {
     ));
     if ($statement->rowCount() > 0) {
 
-      $Translation = $statement->fetch(\PDO::FETCH_ASSOC);
+      $Translation = $statement->fetch(PDO::FETCH_ASSOC);
 
       if (!isset($Translation[strtolower(self::$Language)])) {
         if (self::$Language == "en") {
@@ -252,7 +251,7 @@ class Translation {
             //":Language" => $this->Language
     ));
     if ($statement->rowCount() > 0) {
-      $Translation = $statement->fetch(\PDO::FETCH_ASSOC);
+      $Translation = $statement->fetch(PDO::FETCH_ASSOC);
 
       if ($Translation[strtolower(self::$Language)] === null) {
         if (self::$Language == "en") {

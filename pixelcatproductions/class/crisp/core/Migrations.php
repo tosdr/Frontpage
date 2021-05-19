@@ -56,7 +56,8 @@ class Migrations {
      * @since 0.0.8-beta.RC2
      * @return boolean
      */
-    protected function begin() {
+    protected function begin(): bool
+    {
         echo "Enabling Transactions..." . PHP_EOL;
         if ($this->Database->beginTransaction()) {
             echo "Enabled Transactions!" . PHP_EOL;

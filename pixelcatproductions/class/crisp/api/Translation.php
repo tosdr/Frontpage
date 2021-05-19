@@ -41,7 +41,7 @@ class Translation {
    * Sets the language code and inits the database connection for further use of functions in this class
    * @param string|null $Language The Language code or null
    */
-  public function __construct($Language = null) {
+  public function __construct(?string $Language) {
     self::$Language = $Language;
   }
 

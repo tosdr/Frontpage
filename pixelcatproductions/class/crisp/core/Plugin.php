@@ -171,9 +171,11 @@ class Plugin {
     }
 
     /**
+     * @return array
      * @see \crisp\core\Plugins::listConfig
      */
-    public function listConfig() {
+    public function listConfig(): array
+    {
         return Plugins::listConfig($this->PluginName);
     }
 

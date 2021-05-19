@@ -108,9 +108,9 @@ class Config
     /**
      * Get the timestamps of a key
      * @param string $Key The KVStorage key
-     * @return array Containing last_changed, created_at
+     * @return bool|array Containing last_changed, created_at
      */
-    public static function getTimestamp(string $Key)
+    public static function getTimestamp(string $Key): bool|array
     {
         if (self::$Database_Connection === null) {
             self::initDB();

@@ -217,9 +217,10 @@ class Language extends Languages {
     /**
      * Delete a translation key
      * @param string $Key The translation key
-     * @return bool
+     * @return bool|null
      */
-    public function deleteTranslation(string $Key) {
+    public function deleteTranslation(string $Key): ?bool
+    {
         if ($this->LanguageID === null) {
             return null;
         }

@@ -88,7 +88,8 @@ class Migrations {
      * @since 0.0.8-beta.RC2
      * @return boolean
      */
-    protected function end() {
+    protected function end(): bool
+    {
         echo "committing changes..." . PHP_EOL;
         if ($this->Database->commit()) {
             echo "Changes committed!" . PHP_EOL;

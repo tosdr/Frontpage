@@ -161,7 +161,12 @@ class Themes
         }
     }
 
-    public static function refreshTranslations($ThemeName, $ThemeMetadata)
+    /**
+     * @param string $ThemeName
+     * @param stdClass $ThemeMetadata
+     * @return bool
+     */
+    public static function refreshTranslations(string $ThemeName, stdClass $ThemeMetadata): bool
     {
         self::uninstallTranslations($ThemeMetadata);
         return self::installTranslations($ThemeName, $ThemeMetadata);

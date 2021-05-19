@@ -152,11 +152,12 @@ class Languages {
 
   /**
    * Fetches a language by ID
-   * @param type $ID The database ID of the language
-   * @param type Should we fetch the result into new \crisp\api\Language()?
+   * @param int|string $ID The database ID of the language
+   * @param bool Should we fetch the result into new \crisp\api\Language()?
    * @return bool|Language|array with the language
    */
-  public static function getLanguageByID($ID, $FetchIntoClass = true) {
+  public static function getLanguageByID(int|string $ID, bool $FetchIntoClass = true): bool|array|Language
+  {
     if (self::$Database_Connection === null) {
       self::initDB();
     }

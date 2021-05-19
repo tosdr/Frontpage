@@ -44,6 +44,19 @@
                 <link rel="stylesheet" href="{{ includeResource("css/highlight/default.min.css") }}">
             {% endif %}
 
+
+            <link rel="apple-touch-icon" sizes="180x180" href="{{ includeResource("favicon/apple-touch-icon.png") }}">
+            <link rel="icon" type="image/png" sizes="32x32" href="{{ includeResource("favicon/favicon-32x32.png") }}">
+            <link rel="icon" type="image/png" sizes="16x16" href="{{ includeResource("favicon/favicon-16x16.png") }}">
+            <link rel="manifest" href="{{ includeResource("favicon/site.webmanifest") }}">
+            <link rel="mask-icon" href="{{ includeResource("favicon/safari-pinned-tab.svg") }}" color="#5bbad5">
+            <link rel="shortcut icon" href="{{ includeResource("favicon/favicon.ico") }}">
+            <meta name="msapplication-TileColor" content="#da532c">
+            <meta name="msapplication-config" content="{{ includeResource("favicon/browserconfig.xml") }}">
+            <meta name="theme-color" content="#ffffff">
+
+
+
             <meta property="og:title" content="{{ ogTitle|default(pageTitle) }} {{ config.page_delimiter }} {{ config.site_name }}" />
             <meta property="og:description" content="{{ ogDescription|default('base.footer.about.text'|translate) }}" />
             <meta property="og:type" content="website" />

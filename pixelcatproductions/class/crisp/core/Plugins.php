@@ -250,7 +250,7 @@ class Plugins
      * @param stdClass $PluginMetadata plugin.json contents decoded
      * @return bool
      */
-    public static function installKVStorage(string $PluginName, stdClass $PluginMetadata)
+    public static function installKVStorage(string $PluginName, stdClass $PluginMetadata): bool
     {
         if (!is_object($PluginMetadata) && !isset($PluginMetadata->hookFile)) {
             return false;

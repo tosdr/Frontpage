@@ -97,7 +97,13 @@ class Themes {
         }
     }
 
-    public static function load($TwigTheme, $CurrentFile, $CurrentPage) {
+    /**
+     * @param Environment $TwigTheme
+     * @param string $CurrentFile
+     * @param string $CurrentPage
+     * @throws Exception
+     */
+    public static function load(Environment $TwigTheme, string $CurrentFile, string $CurrentPage): void {
         try {
             if (count($GLOBALS["render"]) === 0) {
                 if (file_exists(__DIR__ . "/../../../../" . \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") . "/includes/$CurrentPage.php") && Helper::templateExists(\crisp\api\Config::get("theme"), "/views/$CurrentPage.twig")) {

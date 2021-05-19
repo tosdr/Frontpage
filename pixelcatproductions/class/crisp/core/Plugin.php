@@ -149,9 +149,13 @@ class Plugin {
     }
 
     /**
+     * @param string $Key
+     * @param mixed $Value
+     * @return bool
      * @see \crisp\api\Config::set
      */
-    public function setConfig($Key, $Value) {
+    public function setConfig(string $Key, mixed $Value): bool
+    {
         return \crisp\api\Config::set("plugin_" . $this->PluginName . "_$Key", $Value);
     }
 

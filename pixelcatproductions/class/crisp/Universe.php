@@ -37,19 +37,14 @@ class Universe {
     return setcookie(\crisp\core\Config::$Cookie_Prefix . "universe", self::getUniverse($Universe), time() + (86400 * 30), "/");
   }
 
-  public static function getUniverse($Universe) {
-    switch ($Universe) {
-      case self::UNIVERSE_PUBLIC:
-        return self::UNIVERSE_PUBLIC;
-      case self::UNIVERSE_BETA:
-        return self::UNIVERSE_BETA;
-      case self::UNIVERSE_DEV:
-        return self::UNIVERSE_DEV;
-      case self::UNIVERSE_TOSDR:
-        return self::UNIVERSE_TOSDR;
-      default:
-        return self::UNIVERSE_PUBLIC;
-    }
+  public static function getUniverse($Universe): int
+  {
+      return match ($Universe) {
+          self::UNIVERSE_BETA => self::UNIVERSE_BETA,
+          self::UNIVERSE_DEV => self::UNIVERSE_DEV,
+          self::UNIVERSE_TOSDR => self::UNIVERSE_TOSDR,
+          default => self::UNIVERSE_PUBLIC,
+      };
   }
 
   public static function getUniverseName($value) {

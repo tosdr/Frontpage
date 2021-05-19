@@ -22,6 +22,9 @@ namespace crisp\core;
 use crisp\api\Helper;
 use crisp\exceptions\BitmaskException;
 use Twig\Environment;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 /**
  * Used internally, plugin loader
@@ -67,13 +70,15 @@ class Theme {
 
     /**
      * Load a theme page
-     * @param TwigEnvironment $TwigTheme The twig theme component
+     * @param Environment $TwigTheme The twig theme component
      * @param string $CurrentFile The current file, __FILE__
      * @param string $CurrentPage The current page template to render
-     * @throws Exception
      * @throws BitmaskException
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
-    public function __construct($TwigTheme, $CurrentFile, $CurrentPage) {
+    public function __construct(Environment $TwigTheme, string $CurrentFile, string $CurrentPage) {
         $this->TwigTheme = $TwigTheme;
         $this->CurrentFile = $CurrentFile;
         $this->CurrentPage = $CurrentPage;
@@ -83,7 +88,7 @@ class Theme {
 
                 require __DIR__ . "/../../../../" . \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") . "/includes/$CurrentPage.php";
 
-                $_vars = (isset($_vars) ? $_vars : [] );
+                $_vars = ($_vars ?? []);
                 $_vars["template"] = $this;
 
 

@@ -127,10 +127,10 @@ class Config
     /**
      * Create a new KV Storage entry using the specified key and value
      * @param string $Key the key to insert
-     * @param string $Value the value to insert
+     * @param mixed $Value the value to insert
      * @return boolean TRUE on success, on failure FALSE
      */
-    public static function create($Key, $Value)
+    public static function create(string $Key, mixed $Value): bool
     {
         if (self::$Database_Connection === null) {
             self::initDB();

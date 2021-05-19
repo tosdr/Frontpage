@@ -234,7 +234,12 @@ class Helper
         return (count($Matches) > 0 ? $Matches : true);
     }
 
-    public static function generateLink($Path, $External = false)
+    /**
+     * @param string $Path
+     * @param false $External
+     * @return string
+     */
+    public static function generateLink(string $Path, bool $External = false): string
     {
         return ($External ? $Path : "/" . self::getLocale() . "/$Path");
     }

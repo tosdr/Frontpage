@@ -155,9 +155,10 @@ class Language extends Languages {
     /**
      * Sets the code of the language
      * @param string $Code The new language code
-     * @return boolean TRUE if successfully set, otherwise false
+     * @return bool|null TRUE if successfully set, otherwise false
      */
-    public function setCode(string $Code) {
+    public function setCode(string $Code): ?bool
+    {
         if ($this->LanguageID === null) {
             return null;
         }

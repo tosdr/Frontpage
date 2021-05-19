@@ -504,10 +504,10 @@ class Plugins
     /**
      * uninstall all storage items by plugin
      * @param string $PluginName The name of the plugin
-     * @param string $PluginMetadata plugin.json contents decoded
+     * @param stdClass $PluginMetadata plugin.json contents decoded
      * @return bool
      */
-    public static function uninstallKVStorage($PluginName, $PluginMetadata)
+    public static function uninstallKVStorage(string $PluginName, stdClass $PluginMetadata): bool
     {
         if (!is_object($PluginMetadata) && !isset($PluginMetadata->hookFile)) {
             return false;
@@ -523,14 +523,6 @@ class Plugins
                 echo "Deleted $Key" . PHP_EOL;
             }
         }
-
-        /*
-          if (isset($PluginMetadata->onInstall->createKVStorageItems) && \is_object($PluginMetadata->onInstall->createKVStorageItems)) {
-          foreach ($PluginMetadata->onInstall->createKVStorageItems as $Key => $Value) {
-          \crisp\api\Config::delete("plugin_" . $PluginName . "_$Key");
-          }
-          }
-         */
 
         return true;
     }

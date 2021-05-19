@@ -35,7 +35,12 @@ class Security {
         return $_SESSION["csrf"];
     }
 
-    public static function matchCSRF(string $Token) {
+    /**
+     * @param string $Token
+     * @return bool
+     */
+    public static function matchCSRF(string $Token): bool
+    {
         return ($_SESSION["csrf"] && $Token);
     }
 

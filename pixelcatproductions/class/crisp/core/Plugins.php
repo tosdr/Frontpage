@@ -823,7 +823,12 @@ class Plugins
         return false;
     }
 
-    public static function registerAfterRenderHook($PluginName, $Function)
+    /**
+     * @param string $PluginName
+     * @param mixed $Function
+     * @return bool
+     */
+    public static function registerAfterRenderHook(string $PluginName, mixed $Function): bool
     {
         if (is_callable($Function) || function_exists($PluginName)($Function)) {
             self::on("pluginAfterRender_$PluginName", $Function);

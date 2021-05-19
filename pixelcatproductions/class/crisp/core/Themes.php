@@ -391,7 +391,7 @@ class Themes
     {
 
         if (self::isInstalled($ThemeName)) {
-            self::uninstall($ThemeName);
+            return self::uninstall($ThemeName);
         }
 
         $ThemeFolder = \crisp\api\Config::get("theme_dir");
@@ -406,7 +406,11 @@ class Themes
         self::uninstallTranslations($ThemeMetadata);
     }
 
-    public static function reinstall($ThemeName)
+    /**
+     * @param string $ThemeName
+     * @return bool
+     */
+    public static function reinstall(string $ThemeName): bool
     {
         if (!self::uninstall($ThemeName)) {
             return false;

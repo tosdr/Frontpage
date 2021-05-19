@@ -125,12 +125,12 @@ class Migrations {
 
     /**
      * Begin the migration of the database
-     * @since 0.0.8-beta.RC2
      * @param string $Dir The directory base to look for migrations. e.g Setting "plugin" will look in "plugin/migrations"
-     * @param string $Plugin If the migration has been done for a plugin, this is the name
+     * @param string|null $Plugin If the migration has been done for a plugin, this is the name
      * @return void
+     * @since 0.0.8-beta.RC2
      */
-    public function migrate(string $Dir = __DIR__ . "/../", string $Plugin = null) {
+    public function migrate(string $Dir = __DIR__ . "/../", ?string $Plugin = null): void {
         if (php_sapi_name() == "cli") {
             echo "Starting Migration..." . PHP_EOL;
         }

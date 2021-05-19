@@ -47,10 +47,10 @@ class Universe {
      * @return int
      * @throws Exception
      */
-    public static function getUniverse(int $Universe): int
+    public static function getUniverse(?int $Universe): int
   {
       return match ($Universe) {
-          self::UNIVERSE_PUBLIC => self::UNIVERSE_PUBLIC,
+          self::UNIVERSE_PUBLIC, null => self::UNIVERSE_PUBLIC,
           self::UNIVERSE_BETA => self::UNIVERSE_BETA,
           self::UNIVERSE_DEV => self::UNIVERSE_DEV,
           self::UNIVERSE_TOSDR => self::UNIVERSE_TOSDR,

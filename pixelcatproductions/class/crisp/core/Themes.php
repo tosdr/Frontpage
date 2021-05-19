@@ -483,7 +483,11 @@ class Themes
         return true;
     }
 
-    public static function install($ThemeName)
+    /**
+     * @param string $ThemeName
+     * @return bool
+     */
+    public static function install(string $ThemeName): bool
     {
 
         if (\crisp\api\Config::get("theme") !== false && \crisp\api\Config::get("theme") == $ThemeName) {

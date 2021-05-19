@@ -139,9 +139,12 @@ class Plugin {
     }
 
     /**
+     * @param string $Key
+     * @return bool
      * @see \crisp\api\Config::delete
      */
-    public function deleteConfig($Key) {
+    public function deleteConfig(string $Key): bool
+    {
         return \crisp\api\Config::delete("plugin_" . $this->PluginName . "_$Key");
     }
 

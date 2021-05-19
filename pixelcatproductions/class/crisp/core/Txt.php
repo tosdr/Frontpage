@@ -19,13 +19,37 @@
 
 namespace crisp\core;
 
+use crisp\api\Phoenix;
+use crisp\api\Translation;
+use crisp\exceptions\BitmaskException;
+use JetBrains\PhpStorm\ArrayShape;
+
 class Txt {
 
     public const ALLOWED_KEYS = ["#", "Domains", "Document-Name", "Url", "Path", "ID"];
 
-    public static function parse($Document, $url = false) {
+    /**
+     * @param string $Document
+     * @param bool $url
+     * @return array
+     * @throws BitmaskException
+     */
+    #[ArrayShape(["results" => "array", "failed_validations" => "array"])]
+    public static function parse(string $Document, bool $url = false): array
+    {
         $parsed = array();
-        $failed = array();
+        $failed = array(
+            "duplicate_keys" => [],
+            "missing_domain_list" => [],
+            "invalid_domain_list" => [],
+            "id_not_numeric" => [],
+            "id_invalid" => [],
+            "id_no_match_domains" => [],
+            "missing_documents" => [],
+            "missing_document_name" => [],
+            "missing_document_url" => [],
+            "missing_document_path" => []
+       );
         $DocumentExploded = explode("\n", $Document);
 
 
@@ -37,18 +61,18 @@ class Txt {
 
                     if (!str_starts_with($line, "#")) {
 
-                        throw new \crisp\exceptions\BitmaskException(\crisp\api\Translation::fetch("views.txt.errors.invalid_key", 1, [
+                        throw new BitmaskException(Translation::fetch("views.txt.errors.invalid_key", 1, [
                                     "{{ line }}" => $key + 1,
                                     "{{ got }}" => (explode(":", $line)[0] ?? explode(" ", $line)[0] ?? "??")
                                 ]), Bitmask::QUERY_FAILED);
                     }
                 }
-                $DocumentExploded[$key] = preg_replace("/\#.+/", "", $line);
+                $DocumentExploded[$key] = preg_replace("/#.+/", "", $line);
             }
 
             foreach (self::ALLOWED_KEYS as $allowedKey) {
 
-                if (strpos($line, "$allowedKey:") !== false) {
+                if (str_contains($line, "$allowedKey:")) {
                     continue 2;
                 }
             }
@@ -139,7 +163,7 @@ class Txt {
 
 
                 if (count($failed["id_not_numeric"]) === 0) {
-                    $Service = \crisp\api\Phoenix::getService($ID)["_source"];
+                    $Service = Phoenix::getService($ID)["_source"];
                     if ($Service && in_array($url, explode(",", $Service["url"]))) {
                         $parsed["ID"] = $Service;
                     } else {

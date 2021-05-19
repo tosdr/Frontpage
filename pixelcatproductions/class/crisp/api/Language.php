@@ -91,9 +91,10 @@ class Language extends Languages {
 
     /**
      * Checks wether a language is enabled or not
-     * @return boolean
+     * @return bool|null
      */
-    public function isEnabled() {
+    public function isEnabled(): ?bool
+    {
         if ($this->LanguageID === null) {
             return null;
         }

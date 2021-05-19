@@ -392,15 +392,14 @@ class Plugins
     /**
      * Deletes all KVStorage Items from the Plugin
      *
-     * If the plugin is installed, it will get uninstalled first
      * @param string $PluginName The folder name of the plugin
      * @return boolean TRUE if the data has been successfully deleted
      */
-    public static function deleteData($PluginName)
+    public static function deleteData(string $PluginName): bool
     {
 
         if (self::isInstalled($PluginName)) {
-            self::uninstall($PluginName);
+            return false;
         }
 
         $PluginFolder = \crisp\api\Config::get("plugin_dir");

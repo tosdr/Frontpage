@@ -76,10 +76,11 @@ class Language extends Languages {
 
     /**
      * Disables a language
+     * @return bool|null
      * @see enable
-     * @return boolean
      */
-    public function disable() {
+    public function disable(): ?bool
+    {
         if ($this->LanguageID === null) {
             return null;
         }

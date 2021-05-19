@@ -275,9 +275,10 @@ class Language extends Languages {
     /**
      * Sets the flag icon of a language
      * @param string $Flag The flag icon name, see Themes
-     * @return boolean TRUE if successfully set, otherwise false
+     * @return bool|null TRUE if successfully set, otherwise false
      */
-    public function setFlag(string $Flag) {
+    public function setFlag(string $Flag): ?bool
+    {
         if ($this->LanguageID === null) {
             return null;
         }

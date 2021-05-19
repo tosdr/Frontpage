@@ -70,10 +70,11 @@ class APIKey {
 
     /**
      * Disables an api key
+     * @return bool|null
      * @see enable
-     * @return boolean
      */
-    public function disable() {
+    public function disable(): ?bool
+    {
         if ($this->LanguageID === null) {
             return null;
         }

@@ -122,7 +122,8 @@ class Cron {
         return $statement->execute();
     }
 
-    public static function deleteByPlugin($Plugin) {
+    public static function deleteByPlugin($Plugin): bool
+    {
         if (self::$Database_Connection === null) {
             self::initDB();
         }

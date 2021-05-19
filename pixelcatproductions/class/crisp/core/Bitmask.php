@@ -24,8 +24,6 @@ namespace crisp\core;
  */
 class Bitmask extends \crisp\types\Bitmask {
 
-    use \crisp\core\Hook;
-
     /**
      * Maybe we should use categories for permissions?
      */

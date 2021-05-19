@@ -27,6 +27,7 @@ use Exception;
 use PDOException;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
+use Twig\Environment;
 use function file_exists;
 use function file_get_contents;
 use function function_exists;
@@ -86,10 +87,11 @@ class Themes {
 
     /**
      * Load API files and check if theme matches it.
+     * @param Environment $ThemeLoader
      * @param string $Interface The interface we are listening on
      * @param string $_QUERY The query
      */
-    public static function loadAPI($ThemeLoader, $Interface, $_QUERY) {
+    public static function loadAPI(Environment $ThemeLoader, string $Interface, string $_QUERY): void {
         if (file_exists(__DIR__ . "/../../../../" . \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") . "/includes/api/$Interface.php")) {
             new ThemeAPI($ThemeLoader, $Interface, $_QUERY);
         }

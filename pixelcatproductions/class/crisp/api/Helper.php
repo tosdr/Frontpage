@@ -321,11 +321,11 @@ class Helper
     /**
      * Check if a string is serialized
      * @see https://core.trac.wordpress.org/browser/tags/5.4/src/wp-includes/functions.php#L611
-     * @param type $data The Data to check
-     * @param type $strict Strict Checking
+     * @param string $data The Data to check
+     * @param bool $strict Strict Checking
      * @return boolean
      */
-    public static function isSerialized($data, $strict = true)
+    public static function isSerialized(string $data, bool $strict = true): bool
     {
         // if it isn't a string, it isn't serialized.
         if (!is_string($data)) {
@@ -365,7 +365,7 @@ class Helper
                     if ('"' !== substr($data, -2, 1)) {
                         return false;
                     }
-                } elseif (false === strpos($data, '"')) {
+                } elseif (!str_contains($data, '"')) {
                     return false;
                 }
             // or else fall through

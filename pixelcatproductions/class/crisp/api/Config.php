@@ -162,10 +162,10 @@ class Config
     /**
      * Updates a value for a key in the KV Storage
      * @param string $Key Existing key to change the value from
-     * @param string $Value The value to set
+     * @param mixed $Value The value to set
      * @return boolean TRUE on success, otherwise FALSE
      */
-    public static function set($Key, $Value)
+    public static function set(string $Key, mixed $Value): bool
     {
         if (self::$Database_Connection === null) {
             self::initDB();

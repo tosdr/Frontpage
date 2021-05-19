@@ -115,8 +115,9 @@ class Plugin {
         return Cron::create("execute_plugin_cron", json_encode(array("data" => $Data, "name" => $Type)), $Interval, $this->PluginName, $ExecuteOnce);
     }
 
-    public function includeResource($File) {
-        if (strpos($File, "/") === 0) {
+    public function includeResource($File): string
+    {
+        if (str_starts_with($File, "/")) {
             $File = substr($File, 1);
         }
 

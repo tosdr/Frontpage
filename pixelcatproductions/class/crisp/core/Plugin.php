@@ -104,7 +104,7 @@ class Plugin {
     /**
      * @see \crisp\api\Config::get
      */
-    public function getConfig($Key) {
+    public function getConfig(string $Key): mixed {
         return \crisp\api\Config::get("plugin." . $this->PluginName . ".$Key");
     }
 

@@ -216,7 +216,7 @@ class Helper
      * @param string $Name The name of the plugin
      * @return array|boolean Array of errors if found, otherwise true
      */
-    public static function isValidPluginName(string $Name)
+    public static function isValidPluginName(string $Name): bool|array
     {
 
         $Matches = [];
@@ -224,7 +224,7 @@ class Helper
         if (preg_match_all("/[^0-9a-zA-Z\-_]/", $Name) > 0) {
             $Matches[] = "STRING_CONTAINS_NON_ALPHA_NUM";
         }
-        if (strpos($Name, ' ') !== false) {
+        if (str_contains($Name, ' ')) {
             $Matches[] = "STRING_CONTAINS_SPACES";
         }
         if (preg_match('/[A-Z]/', $Name)) {

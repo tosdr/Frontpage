@@ -313,9 +313,9 @@ class Themes
      * @param string $ThemeName The folder name of the theme
      * @return boolean TRUE if theme is installed, otherwise FALSE
      */
-    public static function isInstalled($ThemeName)
+    public static function isInstalled(string $ThemeName): bool
     {
-        return (\crisp\api\Config::get("theme") == $ThemeName);
+        return (\crisp\api\Config::get("theme") === $ThemeName);
     }
 
     public static function isValid($ThemeName)

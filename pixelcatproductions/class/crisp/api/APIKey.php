@@ -84,10 +84,11 @@ class APIKey {
     }
 
     /**
-     * Checks wether a language is enabled or not
-     * @return boolean
+     * Checks whether a language is enabled or not
+     * @return bool|null
      */
-    public function isEnabled() {
+    public function isEnabled(): ?bool
+    {
         if ($this->LanguageID === null) {
             return null;
         }

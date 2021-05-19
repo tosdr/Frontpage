@@ -44,7 +44,11 @@ class Security {
         return ($_SESSION["csrf"] && $Token);
     }
 
-    public static function regenCSRF() {
+    /**
+     * @return string
+     */
+    public static function regenCSRF(): string
+    {
         $_SESSION["csrf"] = bin2hex(openssl_random_pseudo_bytes(16));
         return $_SESSION["csrf"];
     }

@@ -284,7 +284,8 @@ class Migrations {
      * @throws Exception on PDO Error
      * @since 0.0.8-beta.RC2
      */
-    protected function addColumn(string $Table, array $Column) {
+    protected function addColumn(string $Table, array $Column): bool
+    {
         echo "Adding column to Table $Table..." . PHP_EOL;
         $SQL = "ALTER TABLE $Table ADD COLUMN $Column[0] $Column[1] $Column[2];";
 

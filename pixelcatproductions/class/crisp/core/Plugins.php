@@ -102,7 +102,8 @@ class Plugins {
      * List all installed plugins
      * @return array
      */
-    public static function loadedPlugins() {
+    public static function loadedPlugins(): array
+    {
         $DB = new MySQL();
         $DBConnection = $DB->getDBConnector();
 

@@ -236,16 +236,16 @@ class Translation
      * @see get
      * @see fetch
      */
-    public static function getPlural($Key, $UserOptions = array())
+    public static function getPlural(string $Key, array $UserOptions = array()): string
     {
 
         if (self::$Database_Connection === null) {
             self::initDB();
         }
 
-        $DBConfig = new Config(self::$Database_Connection);
+        $GlobalOptions = [];
 
-        foreach ($DBConfig->list(true) as $Item) {
+        foreach (Config::list(true) as $Item) {
             $GlobalOptions["{{ config.{$Item['key']} }}"] = $Item["value"];
         }
 

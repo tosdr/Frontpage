@@ -233,9 +233,10 @@ class Language extends Languages {
      * Edit a translation key
      * @param string $Key The translation key
      * @param string $Value The new value to set
-     * @return bool
+     * @return bool|null
      */
-    public function editTranslation(string $Key, string $Value) {
+    public function editTranslation(string $Key, string $Value): ?bool
+    {
         if ($this->LanguageID === null) {
             return null;
         }

@@ -62,7 +62,11 @@ class Themes {
         return true;
     }
 
-    public static function getThemeMode() {
+    /**
+     * @return string
+     */
+    public static function getThemeMode(): string
+    {
         if (isset($_COOKIE[Config::$Cookie_Prefix . "theme_mode"])) {
             $Mode = $_COOKIE[Config::$Cookie_Prefix . "theme_mode"];
         } else {

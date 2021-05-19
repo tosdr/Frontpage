@@ -189,7 +189,7 @@ class Migrations {
      * @since 0.0.8-beta.RC2
      * @return void
      */
-    public static function create(string $MigrationName, string $Dir = __DIR__ . "/../") {
+    public static function create(string $MigrationName, string $Dir = __DIR__ . "/../"): void {
 
         $MigrationNameFiltered = Helper::filterAlphaNum($MigrationName);
 

@@ -129,6 +129,7 @@ class Plugins {
      * @throws RuntimeError
      * @throws SyntaxError
      * @throws BitmaskException
+     * @throws Exception
      */
     public static function load(Environment $TwigTheme, string $CurrentFile, string $CurrentPage) {
 

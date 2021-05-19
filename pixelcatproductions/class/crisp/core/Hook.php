@@ -27,12 +27,6 @@ namespace crisp\core;
  */
 trait Hook {
 
-    public function __construct() {
-        if (!isset($GLOBALS['hook']) && !is_array($GLOBALS['hook'])) {
-            return;
-        }
-    }
-
     /**
      * Listen on a specific hook and wait for it's message
      * @param string $channel The hook to listen on

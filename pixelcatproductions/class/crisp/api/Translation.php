@@ -180,19 +180,19 @@ class Translation {
    * Fetches all singular translations for the specified key
    * @param string $Key The translation key
    * @param array $UserOptions Custom array used for templating
-   * @see fetch
-   * @see getPlural
    * @return string The translation or the key if it doesn't exist
+   *@see getPlural
+   * @see fetch
    */
-  public static function get($Key, $UserOptions = array()) {
+  public static function get(string $Key, array $UserOptions = array()): string
+  {
 
     if (self::$Database_Connection === null) {
       self::initDB();
     }
 
-    $DBConfig = new Config(self::$Database_Connection);
-
-    foreach ($DBConfig->list(true) as $Item) {
+    $GlobalOptions = [];
+    foreach (Config::list(true) as $Item) {
       $GlobalOptions["{{ config.{$Item['key']} }}"] = $Item["value"];
     }
 

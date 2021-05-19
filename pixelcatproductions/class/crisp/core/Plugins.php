@@ -289,10 +289,10 @@ class Plugins
     /**
      * Install all translations from plugin.json
      * @param string $PluginName The name of the plugin
-     * @param string $PluginMetadata plugin.json contents decoded
+     * @param stdClass $PluginMetadata plugin.json contents decoded
      * @return bool
      */
-    public static function installTranslations($PluginName, $PluginMetadata)
+    public static function installTranslations(string $PluginName, stdClass $PluginMetadata): bool
     {
         if (!is_object($PluginMetadata) && !isset($PluginMetadata->hookFile)) {
             return false;

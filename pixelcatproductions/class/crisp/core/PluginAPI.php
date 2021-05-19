@@ -21,7 +21,6 @@
 namespace crisp\core;
 
 use crisp\api\Helper;
-use Twig\Environment;
 
 /**
  * Used internally, plugin loader

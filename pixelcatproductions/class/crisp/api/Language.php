@@ -124,9 +124,10 @@ class Language extends Languages {
     /**
      * Sets a new name for the language
      * @param string $Name The new name of the language
-     * @return boolean TRUE if successfully set, otherwise false
+     * @return bool|null TRUE if successfully set, otherwise false
      */
-    public function setName(string $Name) {
+    public function setName(string $Name): ?bool
+    {
         if ($this->LanguageID === null) {
             return null;
         }

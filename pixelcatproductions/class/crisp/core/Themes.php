@@ -121,8 +121,9 @@ class Themes {
         }
     }
 
-    public static function includeResource($File, bool $Prefix = true, string $CDN = "cdn") {
-        if (strpos($File, "/") === 0) {
+    public static function includeResource($File, bool $Prefix = true, string $CDN = "cdn"): string
+    {
+        if (str_starts_with($File, "/")) {
             $File = substr($File, 1);
         }
 

@@ -200,9 +200,10 @@ class Language extends Languages {
 
     /**
      * Gets the native name of a language
-     * @return string
+     * @return string|null
      */
-    public function getNativeName() {
+    public function getNativeName(): ?string
+    {
         if ($this->LanguageID === null) {
             return null;
         }

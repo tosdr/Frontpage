@@ -64,7 +64,8 @@ class Postgres {
      * Get the database connector
      * @return PDO
      */
-    public function getDBConnector() {
+    public function getDBConnector(): PDO
+    {
         return $this->Database_Connection;
     }
 

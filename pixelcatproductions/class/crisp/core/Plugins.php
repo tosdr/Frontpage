@@ -27,6 +27,7 @@ use crisp\api\Translation;
 use crisp\core;
 use crisp\exceptions\BitmaskException;
 use Exception;
+use JetBrains\PhpStorm\ArrayShape;
 use JetBrains\PhpStorm\NoReturn;
 use PDO;
 use PDOException;
@@ -677,10 +678,11 @@ class Plugins
     /**
      * Check if the integrity of a plugin is still fine
      * @param string $PluginName The name of the plugin
-     * @param string $PluginMetadata Decoded plugin.json contents
+     * @param stdClass $PluginMetadata Decoded plugin.json contents
      * @return array
      */
-    public static function integrityCheck($PluginName, $PluginMetadata)
+    #[ArrayShape(["integrity" => "bool", "parsedConfigs" => "array", "failedConfigs" => "array", "parsedFiles" => "array", "failedFiles" => "array", "isInstalled" => "bool"])]
+    public static function integrityCheck(string $PluginName, stdClass $PluginMetadata): array
     {
         $PluginFolder = \crisp\api\Config::get("plugin_dir");
         $parsedConfigs = array();

@@ -599,6 +599,7 @@ class Plugins
     /**
      * @param string $PluginName
      * @param stdClass $PluginMetadata
+     * @throws BitmaskException
      */
     private static function performOnUninstall(string $PluginName, stdClass $PluginMetadata)
     {

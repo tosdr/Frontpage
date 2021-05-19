@@ -44,10 +44,10 @@ class Config
 
     /**
      * Checks if a Storage items exists using the specified key
-     * @param string $Key the key to retrieve from the KV Config from
+     * @param string|int $Key the key to retrieve from the KV Config from
      * @return boolean TRUE if it exists, otherwise FALSE
      */
-    public static function exists($Key)
+    public static function exists(string|int $Key): bool
     {
         if (self::$Database_Connection === null) {
             self::initDB();

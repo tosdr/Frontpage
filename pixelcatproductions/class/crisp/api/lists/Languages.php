@@ -116,13 +116,14 @@ class Languages {
     return $statement->rowCount() > 0;
   }
 
-  /**
-   * Fetches a language by country code
-   * @param type $Code The language's country code
-   * @param type $FetchIntoClass Should we fetch the result into new \crisp\api\Language()?
-   * @return bool|Language|array with the language
-   */
-  public static function getLanguageByCode($Code, $FetchIntoClass = true) {
+    /**
+     * Fetches a language by country code
+     * @param string $Code The language's country code
+     * @param bool $FetchIntoClass Should we fetch the result into new \crisp\api\Language()?
+     * @return bool|Language|array with the language
+     */
+  public static function getLanguageByCode(string $Code, bool $FetchIntoClass = true): bool|array|Language
+  {
     if (self::$Database_Connection === null) {
       self::initDB();
     }
@@ -137,7 +138,7 @@ class Languages {
 
     $Flag = strtolower($Code);
 
-    if (strpos($Flag, "_") !== false) {
+    if (str_contains($Flag, "_")) {
       $Flag = substr($Flag, 3);
     }
 

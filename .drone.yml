@@ -232,6 +232,6 @@ services:
     POSTGRES_HOST_AUTH_METHOD: trust
 ---
 kind: signature
-hmac: 91679bdc42ec560706c92f980a91744b48977f191d21df44c8bcacb2faf999d0
+hmac: ecb56f5526349dee5de9acc0e6e44fb9c2d6c102b2ba2e186be41390486417cd
 
 ...

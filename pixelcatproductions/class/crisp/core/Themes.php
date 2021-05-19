@@ -178,7 +178,12 @@ class Themes
         return self::installKVStorage($ThemeMetadata);
     }
 
-    public static function installKVStorage($ThemeMetadata, bool $Overwrite = false)
+    /**
+     * @param stdClass $ThemeMetadata
+     * @param bool $Overwrite
+     * @return bool
+     */
+    public static function installKVStorage(stdClass $ThemeMetadata, bool $Overwrite = false): bool
     {
 
         if (!is_object($ThemeMetadata) && !isset($ThemeMetadata->hookFile)) {

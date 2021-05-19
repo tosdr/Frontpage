@@ -43,7 +43,7 @@ class APIKey {
      */
     public function fetch(): ?array
     {
-        if ($this->LanguageID === null) {
+        if ($this->APIKey === null) {
             return null;
         }
 
@@ -60,7 +60,7 @@ class APIKey {
      */
     public function enable(): ?bool
     {
-        if ($this->LanguageID === null) {
+        if ($this->APIKey === null) {
             return null;
         }
 
@@ -75,7 +75,7 @@ class APIKey {
      */
     public function disable(): ?bool
     {
-        if ($this->LanguageID === null) {
+        if ($this->APIKey === null) {
             return null;
         }
 
@@ -89,7 +89,7 @@ class APIKey {
      */
     public function isEnabled(): ?bool
     {
-        if ($this->LanguageID === null) {
+        if ($this->APIKey === null) {
             return null;
         }
 
@@ -105,7 +105,7 @@ class APIKey {
      */
     public function exists(): ?bool
     {
-        if ($this->LanguageID === null) {
+        if ($this->APIKey === null) {
             return null;
         }
 

@@ -20,6 +20,9 @@
 
 namespace crisp;
 
+use crisp\core\Config;
+use ReflectionClass;
+
 /**
  * Crisp Universe Handling
  */
@@ -30,11 +33,12 @@ class Universe {
   const UNIVERSE_DEV = 3;
   const UNIVERSE_TOSDR = 99;
 
-  public static function changeUniverse($Universe, $Authorize = false) {
+  public static function changeUniverse($Universe, $Authorize = false): bool
+  {
     if (!$Authorize && $Universe == self::UNIVERSE_TOSDR) {
       return false;
     }
-    return setcookie(\crisp\core\Config::$Cookie_Prefix . "universe", self::getUniverse($Universe), time() + (86400 * 30), "/");
+    return setcookie(Config::$Cookie_Prefix . "universe", self::getUniverse($Universe), time() + (86400 * 30), "/");
   }
 
   public static function getUniverse($Universe): int
@@ -49,7 +53,7 @@ class Universe {
 
   public static function getUniverseName($value): string
   {
-    $class = new \ReflectionClass(__CLASS__);
+    $class = new ReflectionClass(__CLASS__);
     $constants = array_flip($class->getConstants());
 
     return $constants[$value];

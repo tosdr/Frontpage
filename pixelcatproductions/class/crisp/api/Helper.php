@@ -182,9 +182,9 @@ class Helper
         $fontSize = 5;
         $dimensions = explode('x', $Size);
 
-        $w = isset($dimensions[0]) ? $dimensions[0] : 100;
-        $h = isset($dimensions[1]) ? $dimensions[1] : 100;
-        $text = isset($Text) ? $Text : $w . 'x' . $h;
+        $w = $dimensions[0] ?? 100;
+        $h = $dimensions[1] ?? 100;
+        $text = $Text ?? $w . 'x' . $h;
 
         if ($w < 50) {
             $fontSize = 1;

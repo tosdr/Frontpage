@@ -88,18 +88,20 @@ class Helper
         return false;
     }
 
-    public static function getAPIKey()
+    /**
+     * @param string|null $apikey
+     * @return bool
+     */
+    public static function getAPIKey(string $apikey = null): bool
     {
-
-        $apikey = "";
 
         $Postgres = new MySQL();
 
         $statement = $Postgres->getDBConnector()->prepare("SELECT * FROM apikeys WHERE key = :key AND revoked = 0 AND (expires_at is null OR expires_at > NOW())");
 
-        if (isset(apache_request_headers()["Authorization"])) {
+        if ($apikey === null && isset(apache_request_headers()["Authorization"])) {
             $apikey = apache_request_headers()["Authorization"];
-        } else {
+        } else if ($apikey === null) {
             return false;
         }
         $statement->execute([":key" => $apikey]);

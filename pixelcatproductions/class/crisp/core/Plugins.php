@@ -613,12 +613,12 @@ class Plugins
     /**
      * Reinstall a plugin
      * @param string $PluginName The name of the plugin
-     * @param TwigEnvironment $TwigTheme The twig theme component
+     * @param Environment $TwigTheme The twig theme component
      * @param string $CurrentFile The current file, __FILE__
      * @param string $CurrentPage The current page template to render
      * @return boolean
      */
-    public static function reinstall($PluginName, $TwigTheme, $CurrentFile, $CurrentPage)
+    public static function reinstall(string $PluginName, Environment $TwigTheme, string $CurrentFile, string $CurrentPage): bool
     {
         if (!self::uninstall($PluginName, $TwigTheme, $CurrentFile, $CurrentPage)) {
             return false;

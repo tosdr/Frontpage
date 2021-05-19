@@ -21,6 +21,7 @@
 namespace crisp;
 
 use crisp\core\Config;
+use Exception;
 use ReflectionClass;
 
 /**
@@ -41,13 +42,19 @@ class Universe {
     return setcookie(Config::$Cookie_Prefix . "universe", self::getUniverse($Universe), time() + (86400 * 30), "/");
   }
 
-  public static function getUniverse($Universe): int
+    /**
+     * @param int $Universe
+     * @return int
+     * @throws Exception
+     */
+    public static function getUniverse(int $Universe): int
   {
       return match ($Universe) {
+          self::UNIVERSE_PUBLIC => self::UNIVERSE_PUBLIC,
           self::UNIVERSE_BETA => self::UNIVERSE_BETA,
           self::UNIVERSE_DEV => self::UNIVERSE_DEV,
           self::UNIVERSE_TOSDR => self::UNIVERSE_TOSDR,
-          default => self::UNIVERSE_PUBLIC,
+          default => throw new Exception("Unknown universe"),
       };
   }
 

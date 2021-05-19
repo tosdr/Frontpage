@@ -83,9 +83,14 @@ class Plugin {
     }
 
     /**
+     * @param string $Key
+     * @param int $Count
+     * @param array $UserOptions
+     * @return string
      * @see \crisp\api\Translation::fetch
      */
-    public function getTranslation($Key, $Count = 1, $UserOptions = array()) {
+    public function getTranslation(string $Key, int $Count = 1, array $UserOptions = array()): string
+    {
 
         $Locale = Helper::getLocale();
 

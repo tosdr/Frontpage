@@ -183,7 +183,8 @@ class Plugin {
      * Uninstall a plugin
      * @return bool
      */
-    public function uninstall() {
+    public function uninstall(): bool
+    {
         return Plugins::uninstall($this->PluginName, $this->TwigTheme, $this->CurrentFile, $this->CurrentPage);
     }
 

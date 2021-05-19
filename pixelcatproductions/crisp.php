@@ -180,12 +180,10 @@ try {
 
         $TwigTheme->addExtension(new StringLoaderExtension());
 
-        $TwigTheme->addFunction(new TwigFunction('getGitRevision', [new Helper(), 'getGitRevision']));
         $TwigTheme->addFunction(new TwigFunction('getService', [new Phoenix(), 'getService']));
         $TwigTheme->addFunction(new TwigFunction('getPoint', [new Phoenix(), 'getPoint']));
         $TwigTheme->addFunction(new TwigFunction('getPointsByService', [new Phoenix(), 'getPointsByService']));
         $TwigTheme->addFunction(new TwigFunction('getCase', [new Phoenix(), 'getCase']));
-        $TwigTheme->addFunction(new TwigFunction('getGitBranch', [new Helper(), 'getGitBranch']));
         $TwigTheme->addFunction(new TwigFunction('prettyDump', [new Helper(), 'prettyDump']));
         $TwigTheme->addFunction(new TwigFunction('microtime', 'microtime'));
         $TwigTheme->addFunction(new TwigFunction('includeResource', [new Themes(), 'includeResource']));

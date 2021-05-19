@@ -162,15 +162,6 @@ class Helper
     }
 
     /**
-     * Get the current revision the CMS runs on
-     * @return string Current Git Revision
-     */
-    public static function getGitRevision()
-    {
-        return file_get_contents(__DIR__ . '/../../../../.git/refs/heads/' . self::getGitBranch());
-    }
-
-    /**
      * Filter a string and remove non-alphanumeric and spaces
      * @param string $String The string to filter
      * @return string Filtered string
@@ -243,24 +234,6 @@ class Helper
         return (count($Matches) > 0 ? $Matches : true);
     }
 
-    /**
-     * Get the current branch the CMS runs on
-     * @return string Current Git Revision
-     */
-    public static function getGitBranch()
-    {
-        return trim(substr(file_get_contents(__DIR__ . '/../../../../.git/HEAD'), 16));
-    }
-
-    /**
-     * Gets a current revision link to github
-     * @return string The link to github
-     */
-    public static function getGitRevisionLink()
-    {
-        return "https://github.com/JustinBack/CrispCMS-ToS-DR/tree/" . self::getGitRevision();
-    }
-
     public static function generateLink($Path, $External = false)
     {
         return ($External ? $Path : "/" . self::getLocale() . "/$Path");
@@ -302,57 +275,6 @@ class Helper
             }
         }
         return $obj;
-    }
-
-    /**
-     * Retrieve the latest hash on github
-     * @param boolean $Force Force update rather than from cache
-     * @return string Hash of latest git revision
-     * @throws Exception If request failed
-     */
-    public static function getLatestGitRevision(bool $Force = false)
-    {
-
-        $EnvFile = parse_ini_file(__DIR__ . "/../../../../.env");
-        if (!$Force) {
-
-            $Timestamp = Config::getTimestamp("github_current_revision");
-
-            if (strtotime($Timestamp["last_changed"]) >= strtotime("-15 minutes") && Config::exists("github_current_revision")) {
-                return Config::get("github_current_revision");
-            }
-            if (strtotime($Timestamp["created_at"]) >= strtotime("-15 minutes") && Config::exists("github_current_revision")) {
-                return Config::get("github_current_revision");
-            }
-        }
-
-
-        $curl = curl_init();
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => "https://api.github.com/repos/JustinBack/CrispCMS-ToS-DR/git/ref/heads/" . self::getGitRevision(),
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => "",
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => "GET",
-            CURLOPT_USERAGENT => "LophotenCMS Git Checker",
-            CURLOPT_HTTPHEADER => array(
-                "Authorization: Bearer " . $EnvFile["GITHUB_TOKEN"],
-            ),
-        ));
-        $response = json_decode(curl_exec($curl));
-        if ($response->error) {
-            throw new Exception($response->message);
-        }
-
-        if (Config::exists("github_current_revision")) {
-            Config::set("github_current_revision", $response->object->sha);
-        } else {
-            Config::create("github_current_revision", $response->object->sha);
-        }
-        return $response->object->sha;
     }
 
     /**

@@ -20,21 +20,19 @@
 
 namespace crisp\api;
 
-use \PDO;
-use \PDOException;
-use \PDORow;
-use \PDOStatement;
+use crisp\core\MySQL;
+use PDO;
 
 /**
  * Interact with an api key
  */
 class APIKey {
 
-    private static ?PDO $Database_Connection = null;
     public string $APIKey;
+    private ?PDO $Database_Connection;
 
     public function __construct($APIKey) {
-        $DB = new \crisp\core\MySQL();
+        $DB = new MySQL();
         $this->Database_Connection = $DB->getDBConnector();
         $this->APIKey = $APIKey;
     }
@@ -51,7 +49,7 @@ class APIKey {
         $statement = $this->Database_Connection->prepare("SELECT * FROM APIKeys WHERE `key` = :ID");
         $statement->execute(array(":ID" => $this->APIKey));
 
-        return $statement->fetch(\PDO::FETCH_ASSOC);
+        return $statement->fetch(PDO::FETCH_ASSOC);
     }
 
     /**
@@ -94,7 +92,7 @@ class APIKey {
         $statement = $this->Database_Connection->prepare("SELECT * FROM APIKeys WHERE `key` = :ID");
         $statement->execute(array(":ID" => $this->APIKey));
 
-        return !$statement->fetch(\PDO::FETCH_ASSOC)["revoked"];
+        return !$statement->fetch(PDO::FETCH_ASSOC)["revoked"];
     }
 
     /**

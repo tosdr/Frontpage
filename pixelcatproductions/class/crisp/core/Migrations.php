@@ -261,7 +261,8 @@ class Migrations {
      * @throws Exception on PDO Error
      * @since 0.0.8-beta.RC3
      */
-    protected function dropColumn(string $Table, string $Column) {
+    protected function dropColumn(string $Table, string $Column): bool
+    {
         echo "Removing column from Table $Table..." . PHP_EOL;
         $SQL = "ALTER TABLE $Table DROP COLUMN '$Column'";
 

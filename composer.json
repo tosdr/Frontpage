@@ -18,7 +18,8 @@
     "ext-pdo": "*",
     "ext-gd": "*",
     "ext-intl": "*",
-    "ext-gettext": "*"
+    "ext-gettext": "*",
+    "ext-openssl": "*"
   },
   "require-dev": {
     "phpunit/phpunit": "^9.5"

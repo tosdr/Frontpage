@@ -250,9 +250,11 @@ class Language extends Languages {
      * Create a new translation key
      * @param string $Key The translation key to create
      * @param string $Value The translation text
-     * @return bool
+     * @param string $Language
+     * @return bool|null
      */
-    public function newTranslation(string $Key, string $Value, string $Language = "en") {
+    public function newTranslation(string $Key, string $Value, string $Language = "en"): ?bool
+    {
         if ($this->LanguageID === null) {
             return null;
         }

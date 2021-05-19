@@ -21,8 +21,8 @@ namespace crisp\api;
 
 class Elastic {
 
-    private $Elastic_URI;
-    private $Elastic_Index;
+    private string $Elastic_URI;
+    private string $Elastic_Index;
 
     public function __construct() {
         $EnvFile = parse_ini_file(__DIR__ . "/../../../../.env");

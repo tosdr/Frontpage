@@ -221,11 +221,11 @@ class Plugins
     /**
      * Reinstall all translations
      * @param string $PluginName The name of the plugin
-     * @param string $PluginMetadata plugin.json contents decoded
+     * @param stdClass $PluginMetadata plugin.json contents decoded
      * @return bool
      * @deprecated 0.0.8-beta.RC4 Use self::installTranslations
      */
-    public static function refreshTranslations(string $PluginName, string $PluginMetadata): bool
+    public static function refreshTranslations(string $PluginName, stdClass $PluginMetadata): bool
     {
         self::uninstallTranslations($PluginName, $PluginMetadata);
         return self::installTranslations($PluginName, $PluginMetadata);
@@ -234,11 +234,11 @@ class Plugins
     /**
      * Reinstall all storage items
      * @param string $PluginName The name of the plugin
-     * @param string $PluginMetadata plugin.json contents decoded
+     * @param stdClass $PluginMetadata plugin.json contents decoded
      * @return bool
      * @deprecated 0.0.8-beta.RC4 Use self::installKVStorage
      */
-    public static function refreshKVStorage($PluginName, $PluginMetadata)
+    public static function refreshKVStorage(string $PluginName, stdClass $PluginMetadata): bool
     {
         self::uninstallKVStorage($PluginName, $PluginMetadata);
         return self::installKVStorage($PluginName, $PluginMetadata);

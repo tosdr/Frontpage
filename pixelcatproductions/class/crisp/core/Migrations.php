@@ -307,15 +307,15 @@ class Migrations {
      * @since 0.0.8-beta.RC2
      * @throws Exception
      */
-    protected function createTable(string $Table, ...$Columns) {
+    protected function createTable(string $Table, ...$Columns): bool
+    {
         echo "Creating Table $Table..." . PHP_EOL;
         $SQL = "CREATE TABLE IF NOT EXISTS $Table (";
-        $AutoIncrement = false;
         foreach ($Columns as $Key => $Column) {
             $Name = $Column[0];
             $Type = $Column[1];
             $Additional = $Column[2];
-            if (strpos($Additional, "SERIAL") !== false) {
+            if (str_contains($Additional, "SERIAL")) {
                 $SQL .= "$Name SERIAL,";
             } else {
                 $SQL .= "$Name $Type $Additional,";

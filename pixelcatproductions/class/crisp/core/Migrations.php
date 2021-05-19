@@ -217,14 +217,14 @@ class Migrations {
      * Create a new index for a table
      * @param string $Table The name of the table
      * @param string $Column The name of the column
-     * @param const $Type The type of the index
-     * @param string $IndexName The name of the index, Unused if PRIMARYKEY
+     * @param string $Type The type of the index
+     * @param string|null $IndexName The name of the index, Unused if PRIMARYKEY
      * @return boolean
-     * @since 0.0.8-beta.RC2
      * @throws Exception on PDO Error
+     * @since 0.0.8-beta.RC2
      */
-    protected function addIndex(string $Table, string $Column, $Type = self::DB_PRIMARYKEY, string $IndexName = null) {
-        $SQL = "";
+    protected function addIndex(string $Table, string $Column, string $Type = self::DB_PRIMARYKEY, string $IndexName = null): bool
+    {
         echo "Adding index to table $Table..." . PHP_EOL;
         if ($Type == self::DB_PRIMARYKEY) {
             $SQL = "ALTER TABLE $Table ADD $Type KEY ($Column);";

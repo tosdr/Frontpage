@@ -150,7 +150,7 @@ class Translation
      * @param string $Key The translation key
      * @return bool
      */
-    public static function exists($Key)
+    public static function exists(string $Key): bool
     {
         if (self::$Database_Connection === null) {
             self::initDB();

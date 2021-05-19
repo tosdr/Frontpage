@@ -22,9 +22,6 @@ namespace crisp\api\lists;
 
 use crisp\core\MySQL;
 use PDO;
-use PDOException;
-use PDORow;
-use PDOStatement;
 
 /**
  * Interact with all cron jobs stored on the server

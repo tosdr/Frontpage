@@ -59,12 +59,12 @@ class PluginAPI {
 
     /**
      * Send a JSON response
-     * @param array|bool $Errors Error array or false
+     * @param array|bool|int $Errors Error array or false
      * @param string $message A message to send
      * @param array $Parameters Some response parameters
-     * @param constant $Flags JSON_ENCODE constants
+     * @param constant|null $Flags JSON_ENCODE constants
      */
-    public static function response($Errors = Bitmask::NONE, string $message, $Parameters = [], $Flags = null, $HTTP = 200) {
+    public static function response(array|bool|int $Errors = Bitmask::NONE, string $message, array $Parameters = [], constant $Flags = null, $HTTP = 200) {
         header("Content-Type: application/json");
         http_response_code($HTTP);
         echo json_encode(array("error" => $Errors, "message" => $message, "parameters" => $Parameters), $Flags);

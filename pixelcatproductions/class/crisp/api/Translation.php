@@ -118,7 +118,7 @@ class Translation
      * @param string $Key The letter code
      * @return array
      */
-    public static function fetchAllByKey($Key)
+    public static function fetchAllByKey(string $Key): array
     {
         if (self::$Database_Connection === null) {
             self::initDB();
@@ -131,7 +131,7 @@ class Translation
 
             $Array = array();
             foreach ($Translations as $Item) {
-                if (strpos($Item["key"], "plugin.") !== false) {
+                if (str_contains($Item["key"], "plugin.")) {
                     continue;
                 }
                 if ($Item[$Key] === null) {

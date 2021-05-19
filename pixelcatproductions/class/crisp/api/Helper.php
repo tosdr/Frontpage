@@ -313,7 +313,7 @@ class Helper
      * @param bool $AppendDots Should we append dots to the end of the string?
      * @return string
      */
-    public static function truncateText(string $String, int $Length, bool $AppendDots = true)
+    public static function truncateText(string $String, int $Length, bool $AppendDots = true): string
     {
         return strlen($String) > $Length ? substr($String, 0, $Length) . ($AppendDots ? "..." : "") : $String;
     }

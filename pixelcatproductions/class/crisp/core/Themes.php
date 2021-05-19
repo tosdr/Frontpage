@@ -75,7 +75,12 @@ class Themes {
         return $Mode;
     }
 
-    public static function setThemeMode(string $Mode) {
+    /**
+     * @param string $Mode
+     * @return bool
+     */
+    public static function setThemeMode(string $Mode): bool
+    {
         return setcookie(Config::$Cookie_Prefix . "theme_mode", $Mode, time() + (86400 * 30), "/");
     }
 

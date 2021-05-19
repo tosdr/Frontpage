@@ -290,9 +290,9 @@ class Helper
      * Just a pretty print for var_dump
      * @param string pretty var_dump
      */
-    public static function prettyDump($var)
+    public static function prettyDump($var): void
     {
-        echo "<pre>" . var_export($var, true) . "</pre>";
+        echo sprintf("<pre>%s</pre>", var_export($var, true));
     }
 
     /**

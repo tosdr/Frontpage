@@ -184,10 +184,13 @@ class Plugins {
         }
     }
 
-    public static function migrate(string $PluginName) {
+    /**
+     * @param string $PluginName
+     */
+    public static function migrate(string $PluginName): void {
         $Migrations = new Migrations();
         $PluginFolder = \crisp\api\Config::get("plugin_dir");
-        return $Migrations->migrate(__DIR__ . "/../../../../$PluginFolder/$PluginName/", $PluginName);
+        $Migrations->migrate(__DIR__ . "/../../../../$PluginFolder/$PluginName/", $PluginName);
     }
 
     private static function performOnInstall($PluginName, $PluginMetadata, $TwigTheme, $CurrentFile, $CurrentPage) {

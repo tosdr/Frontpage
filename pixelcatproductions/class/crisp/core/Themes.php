@@ -224,7 +224,12 @@ class Themes
         return true;
     }
 
-    public static function installTranslations($ThemeName, $ThemeMetadata)
+    /**
+     * @param string $ThemeName
+     * @param stdClass $ThemeMetadata
+     * @return bool
+     */
+    public static function installTranslations(string $ThemeName, stdClass $ThemeMetadata): bool
     {
         if (!is_object($ThemeMetadata) && !isset($ThemeMetadata->hookFile)) {
             return false;

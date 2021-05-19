@@ -88,7 +88,7 @@ class Translation
      * @return array containing all translations for the self::$Language
      * @uses self::$Language
      */
-    public static function fetchAll()
+    public static function fetchAll(): array
     {
         if (self::$Database_Connection === null) {
             self::initDB();

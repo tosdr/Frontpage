@@ -217,6 +217,7 @@ class Plugins
                 }
             }
         }
+        return true;
     }
 
     /**

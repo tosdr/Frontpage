@@ -198,10 +198,10 @@ class Config
 
     /**
      * Returns all keys and values from the KV Storage
-     * @param type $KV List keys as associative array?
+     * @param bool $KV List keys as associative array?
      * @return array
      */
-    public static function list($KV = false)
+    public static function list(bool $KV = false): array
     {
         if (self::$Database_Connection === null) {
             self::initDB();

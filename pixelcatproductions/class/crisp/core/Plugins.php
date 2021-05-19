@@ -504,6 +504,7 @@ class Plugins
                 Cron::create("execute_plugin_cron", json_encode(array("data" => $Cron->data, "name" => $Cron->type)), $Cron->interval, $PluginName);
             }
         }
+        return true;
     }
 
     /**

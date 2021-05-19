@@ -199,10 +199,11 @@ class Plugin {
 
     /**
      * Registers an uninstall hook for your plugin.
-     * @param string|function $Function Callback function, either anonymous or a string to a function
-     * @returns boolean TRUE if hook could be registered, otherwise false
+     * @param mixed $Function Callback function, either anonymous or a string to a function
+     * @return bool
      */
-    public function registerUninstallHook($Function) {
+    public function registerUninstallHook(mixed $Function): bool
+    {
         return Plugins::registerUninstallHook($this->PluginName, $Function);
     }
 

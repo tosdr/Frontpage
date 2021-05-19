@@ -447,7 +447,7 @@ class Themes
         return true;
     }
 
-    public static function uninstallTranslations($ThemeMetadata)
+    public static function uninstallTranslations($ThemeMetadata): bool
     {
         if (!is_object($ThemeMetadata) && !isset($ThemeMetadata->hookFile)) {
             return false;
@@ -464,7 +464,7 @@ class Themes
             $Language = Languages::getLanguageByCode("en");
 
             foreach ($Configs as $Key => $Translation) {
-                if (strpos($Translation["key"], "plugin_") !== false) {
+                if (str_contains($Translation["key"], "plugin_")) {
                     continue;
                 }
 
@@ -477,9 +477,10 @@ class Themes
                     }
                 }
             }
-        } catch (PDOException $ex) {
+        } catch (PDOException) {
 
         }
+        return true;
     }
 
     public static function install($ThemeName)

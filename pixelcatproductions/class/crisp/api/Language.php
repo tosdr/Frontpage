@@ -169,9 +169,10 @@ class Language extends Languages {
 
     /**
      * Gets the code of a language
-     * @return boolean
+     * @return bool|null
      */
-    public function getCode() {
+    public function getCode(): ?bool
+    {
         if ($this->LanguageID === null) {
             return null;
         }

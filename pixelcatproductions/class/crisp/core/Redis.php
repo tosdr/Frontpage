@@ -19,16 +19,20 @@
 
 namespace crisp\core;
 
+use crisp\exceptions\BitmaskException;
+use Exception;
+
 /**
  * Interact with the database yourself. Please use this interface only when you REALLY need it for custom tables.
  * We offer a variety of functions to interact with users or the system itself in a safe way :-)
  */
 class Redis {
 
-    private $Database_Connection;
+    private \Redis $Database_Connection;
 
     /**
      * Constructs the Database_Connectio
+     * @throws BitmaskException
      * @see getDBConnector
      */
     public function __construct() {
@@ -38,8 +42,8 @@ class Redis {
             $redis->connect($EnvFile["REDIS_HOST"], $EnvFile["REDIS_PORT"]);
             $redis->auth($EnvFile["REDIS_AUTH"]);
             $this->Database_Connection = $redis;
-        } catch (\Exception $ex) {
-            throw new \crisp\exceptions\BitmaskException($ex, Bitmask::REDIS_CONN_ERROR);
+        } catch (Exception $ex) {
+            throw new BitmaskException($ex, Bitmask::REDIS_CONN_ERROR);
         }
     }
 
@@ -47,7 +51,8 @@ class Redis {
      * Get the database connector
      * @return \Redis
      */
-    public function getDBConnector() {
+    public function getDBConnector(): \Redis
+    {
         return $this->Database_Connection;
     }
 

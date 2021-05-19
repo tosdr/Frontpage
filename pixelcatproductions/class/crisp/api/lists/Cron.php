@@ -82,7 +82,8 @@ class Cron {
      * @param int $Limit How many do you like to retrieve
      * @return array Contains cron jobs
      */
-    public static function fetchUnprocessed(int $Limit = 2) {
+    public static function fetchUnprocessed(int $Limit = 2): array
+    {
         if (self::$Database_Connection === null) {
             self::initDB();
         }

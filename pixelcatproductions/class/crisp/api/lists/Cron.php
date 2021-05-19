@@ -20,10 +20,11 @@
 
 namespace crisp\api\lists;
 
-use \PDO;
-use \PDOException;
-use \PDORow;
-use \PDOStatement;
+use crisp\core\MySQL;
+use PDO;
+use PDOException;
+use PDORow;
+use PDOStatement;
 
 /**
  * Interact with all cron jobs stored on the server
@@ -40,7 +41,7 @@ class Cron {
      * Initializes the DB
      */
     private static function initDB() {
-        $DB = new \crisp\core\MySQL();
+        $DB = new MySQL();
         self::$Database_Connection = $DB->getDBConnector();
     }
 
@@ -56,7 +57,7 @@ class Cron {
         $statement = self::$Database_Connection->prepare("SELECT * FROM Cron ORDER BY ID DESC,Finished ASC LIMIT $Limit;");
         $statement->execute();
 
-        return $statement->fetchAll(\PDO::FETCH_ASSOC);
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
     /**
@@ -71,7 +72,7 @@ class Cron {
         $statement = self::$Database_Connection->prepare("SELECT * FROM Cron WHERE ScheduledAt < NOW() AND Finished = 0 AND Started = 0 AND Canceled = 0 AND Failed = 0 ORDER BY ScheduledAt ASC LIMIT $Limit;");
         $statement->execute();
 
-        return $statement->fetchAll(\PDO::FETCH_ASSOC);
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
     /**
@@ -86,7 +87,7 @@ class Cron {
         $statement = self::$Database_Connection->prepare("SELECT * FROM Cron WHERE Finished = 0 ORDER BY ID ASC LIMIT $Limit;");
         $statement->execute();
 
-        return $statement->fetchAll(\PDO::FETCH_ASSOC);
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
     /**
@@ -101,7 +102,7 @@ class Cron {
         $statement = self::$Database_Connection->prepare("SELECT * FROM Cron WHERE ID = :ID;");
         $statement->execute(array(":ID" => $ID));
 
-        return $statement->fetch(\PDO::FETCH_ASSOC);
+        return $statement->fetch(PDO::FETCH_ASSOC);
     }
 
     /**
@@ -164,10 +165,10 @@ class Cron {
             self::initDB();
         }
         $statement = self::$Database_Connection->prepare("UPDATE Cron SET Canceled = 1, Started = 0, Finished = 0 WHERE ID = :ID");
-        $Job = \crisp\api\lists\Cron::fetch($ID);
+        $Job = Cron::fetch($ID);
         $PluginData = json_decode($Job["Data"]);
         if (!$Job["ExecuteOnce"]) {
-            \crisp\api\lists\Cron::create("execute_plugin_cron", json_encode(array("data" => $PluginData->data, "name" => $PluginData->name)), $Job["Interval"], $Job["Plugin"]);
+            Cron::create("execute_plugin_cron", json_encode(array("data" => $PluginData->data, "name" => $PluginData->name)), $Job["Interval"], $Job["Plugin"]);
         }
         return $statement->execute(array(":ID" => $ID));
     }
@@ -183,10 +184,10 @@ class Cron {
         }
         $statement = self::$Database_Connection->prepare("UPDATE Cron SET Finished = 1, Started = 0, Canceled = 0, FinishedAt = NOW() WHERE ID = :ID");
 
-        $Job = \crisp\api\lists\Cron::fetch($ID);
+        $Job = Cron::fetch($ID);
         $PluginData = json_decode($Job["Data"]);
         if (!$Job["ExecuteOnce"]) {
-            \crisp\api\lists\Cron::create("execute_plugin_cron", json_encode(array("data" => $PluginData->data, "name" => $PluginData->name)), $Job["Interval"], $Job["Plugin"]);
+            Cron::create("execute_plugin_cron", json_encode(array("data" => $PluginData->data, "name" => $PluginData->name)), $Job["Interval"], $Job["Plugin"]);
         }
         return $statement->execute(array(":ID" => $ID));
     }
@@ -202,10 +203,10 @@ class Cron {
         }
         $statement = self::$Database_Connection->prepare("UPDATE Cron SET Failed = 1, Started = 0, Canceled = 0, Finished = 0 WHERE ID = :ID");
 
-        $Job = \crisp\api\lists\Cron::fetch($ID);
+        $Job = Cron::fetch($ID);
         $PluginData = json_decode($Job["Data"]);
         if (!$Job["ExecuteOnce"]) {
-            \crisp\api\lists\Cron::create("execute_plugin_cron", json_encode(array("data" => $PluginData->data, "name" => $PluginData->name)), $Job["Interval"], $Job["Plugin"]);
+            Cron::create("execute_plugin_cron", json_encode(array("data" => $PluginData->data, "name" => $PluginData->name)), $Job["Interval"], $Job["Plugin"]);
         }
         return $statement->execute(array(":ID" => $ID));
     }

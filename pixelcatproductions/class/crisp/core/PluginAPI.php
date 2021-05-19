@@ -20,34 +20,34 @@
 
 namespace crisp\core;
 
+use crisp\api\Helper;
+use Twig\Environment;
+
 /**
  * Used internally, plugin loader
  *
  */
 class PluginAPI {
 
-    use \crisp\core\Hook;
+    use Hook;
 
-    public $PluginFolder;
-    public $PluginName;
-    public $Interface;
-    public $Query;
-    public $PluginPath;
+    public string $PluginFolder;
+    public string $PluginName;
+    public string $Interface;
+    public string $Query;
+    public string $PluginPath;
 
     /**
-     * 
+     *
      * @param string $PluginFolder The path to your plugin
      * @param string $PluginName The name of your plugin
-     * @param object $PluginMetadata Plugin.json file contents
-     * @param \Twig\Environment $TwigTheme The current twig theme
-     * @param string $CurrentFile The current file
-     * @param string $CurrentPage The current $_GET["page"] parameter
-     * @throws Exception
+     * @param string $Interface
+     * @param string $_QUERY
      */
-    public function __construct($PluginFolder, $PluginName, $Interface, $_QUERY) {
-        $this->PluginFolder = \crisp\api\Helper::filterAlphaNum($PluginFolder);
-        $this->PluginName = \crisp\api\Helper::filterAlphaNum($PluginName);
-        $this->Interface = \crisp\api\Helper::filterAlphaNum($Interface);
+    public function __construct(string $PluginFolder, string $PluginName, string $Interface, string $_QUERY) {
+        $this->PluginFolder = Helper::filterAlphaNum($PluginFolder);
+        $this->PluginName = Helper::filterAlphaNum($PluginName);
+        $this->Interface = Helper::filterAlphaNum($Interface);
         $this->Query = $_QUERY;
         $this->PluginPath = realpath(__DIR__ . "/../../../../" . $this->PluginFolder . "/" . $this->PluginName . "/");
 

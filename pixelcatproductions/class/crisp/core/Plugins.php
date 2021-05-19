@@ -593,6 +593,7 @@ class Plugins
             }
             $Language->deleteTranslation($Translation["key"]);
         }
+        return true;
     }
 
     /**

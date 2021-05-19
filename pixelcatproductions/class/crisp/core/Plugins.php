@@ -26,6 +26,7 @@ use crisp\api\lists\Languages;
 use crisp\api\Translation;
 use crisp\core;
 use Exception;
+use JetBrains\PhpStorm\NoReturn;
 use PDO;
 use PDOException;
 use TwigEnvironment;
@@ -52,7 +53,7 @@ class Plugins {
      * @param string $Interface The interface we are listening on
      * @param string $_QUERY The query
      */
-    public static function loadAPI($Interface, $_QUERY) {
+    #[NoReturn] public static function loadAPI(string $Interface, string $_QUERY): void {
         $DB = new MySQL();
         $DBConnection = $DB->getDBConnector();
 

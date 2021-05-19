@@ -39,9 +39,10 @@ class APIKey {
 
     /**
      * Fetches a Keys details
-     * @return array
+     * @return array|null
      */
-    public function fetch() {
+    public function fetch(): ?array
+    {
         if ($this->LanguageID === null) {
             return null;
         }

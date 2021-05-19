@@ -225,7 +225,7 @@ class Plugins
      * @return bool
      * @deprecated 0.0.8-beta.RC4 Use self::installTranslations
      */
-    public static function refreshTranslations($PluginName, $PluginMetadata)
+    public static function refreshTranslations(string $PluginName, string $PluginMetadata): bool
     {
         self::uninstallTranslations($PluginName, $PluginMetadata);
         return self::installTranslations($PluginName, $PluginMetadata);

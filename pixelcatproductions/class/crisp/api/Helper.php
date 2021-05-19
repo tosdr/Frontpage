@@ -301,7 +301,7 @@ class Helper
      * @param string $Template The Template name
      * @return boolean
      */
-    public static function templateExists(string $Theme, string $Template)
+    public static function templateExists(string $Theme, string $Template): bool
     {
         return file_exists(__DIR__ . "/../../../../themes/$Theme/templates/$Template");
     }

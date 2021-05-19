@@ -359,7 +359,11 @@ class Themes
         return true;
     }
 
-    private static function performOnUninstall($ThemeName, $ThemeMetadata)
+    /**
+     * @param string $ThemeName
+     * @param stdClass $ThemeMetadata
+     */
+    private static function performOnUninstall(string $ThemeName, stdClass $ThemeMetadata)
     {
 
         if (isset($ThemeMetadata->onUninstall->purgeDependencies) && is_array($ThemeMetadata->onUninstall->purgeDependencies)) {

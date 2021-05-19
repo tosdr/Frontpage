@@ -704,7 +704,7 @@ class Plugins
                     if (!$KeyExists) {
                         $failedConfigs[$Key] = $Value;
                     }
-                } catch (PDOException $ex) {
+                } catch (PDOException) {
                     $failedConfigs[$Key] = $Value;
                 }
             }

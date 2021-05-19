@@ -159,6 +159,7 @@ class Themes
                 }
             }
         }
+        return true;
     }
 
     /**

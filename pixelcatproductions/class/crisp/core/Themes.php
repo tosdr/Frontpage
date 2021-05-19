@@ -318,7 +318,11 @@ class Themes
         return (\crisp\api\Config::get("theme") === $ThemeName);
     }
 
-    public static function isValid($ThemeName)
+    /**
+     * @param string $ThemeName
+     * @return bool
+     */
+    public static function isValid(string $ThemeName): bool
     {
         $ThemeFolder = \crisp\api\Config::get("theme_dir");
         return file_exists(__DIR__ . "/../../../../$ThemeFolder/$ThemeName/theme.json");

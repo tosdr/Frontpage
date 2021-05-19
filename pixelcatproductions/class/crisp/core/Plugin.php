@@ -219,10 +219,11 @@ class Plugin {
 
     /**
      * Registers a hook thats called after a template has rendered in your plugin.
-     * @param string|function $Function Callback function, either anonymous or a string to a function
+     * @param mixed $Function Callback function, either anonymous or a string to a function
      * @returns boolean TRUE if hook could be registered, otherwise false
      */
-    public function registerAfterRenderHook($Function) {
+    public function registerAfterRenderHook(mixed $Function): bool
+    {
         return Plugins::registerAfterRenderHook($this->PluginName, $Function);
     }
 

@@ -341,21 +341,6 @@ class Helper {
     }
 
     /**
-     * Similiar to JS endsWith, check if a text ends with a specific string
-     * @param type $haystack The string to perform the check on
-     * @param type $needle A search needle to search for
-     * @return boolean
-     */
-    public static function endsWith(string $haystack, string $needle) {
-        $length = strlen($needle);
-        if ($length == 0) {
-            return true;
-        }
-
-        return (substr($haystack, -$length) === $needle);
-    }
-
-    /**
      * Truncates a text and appends "..." to the end
      * @param string $String The text to truncate
      * @param int $Length After how many chars should we truncate the text?

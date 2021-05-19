@@ -172,7 +172,7 @@ class Themes
         return self::installTranslations($ThemeName, $ThemeMetadata);
     }
 
-    public static function refreshKVStorage($ThemeMetadata)
+    public static function refreshKVStorage(stdClass $ThemeMetadata): bool
     {
         self::uninstallKVStorage($ThemeMetadata);
         return self::installKVStorage($ThemeMetadata);

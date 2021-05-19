@@ -537,10 +537,10 @@ class Themes
     /**
      * Registers an install hook for your theme.
      * @param string $ThemeName
-     * @param string|function $Function Callback function, either anonymous or a string to a function
-     * @returns boolean TRUE if hook could be registered, otherwise false
+     * @param mixed $Function Callback function, either anonymous or a string to a function
+     * @return bool
      */
-    public static function registerInstallHook($ThemeName, $Function)
+    public static function registerInstallHook(string $ThemeName, mixed $Function): bool
     {
         if (is_callable($Function) || function_exists($ThemeName)($Function)) {
             self::on("themeInstall_$ThemeName", $Function);

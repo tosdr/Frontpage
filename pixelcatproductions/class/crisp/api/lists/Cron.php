@@ -168,7 +168,8 @@ class Cron {
      * @param int $ID The ID of a cron job
      * @return Boolean TRUE if action successful
      */
-    public static function markAsCanceled(int $ID) {
+    public static function markAsCanceled(int $ID): bool
+    {
         if (self::$Database_Connection === null) {
             self::initDB();
         }

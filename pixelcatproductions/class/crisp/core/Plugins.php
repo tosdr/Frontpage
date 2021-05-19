@@ -532,14 +532,14 @@ class Plugins
      * @param string $PluginName The name of the plugin
      * @return array
      */
-    public static function listTranslations($PluginName)
+    public static function listTranslations(string $PluginName): array
     {
 
         $Configs = Translation::listTranslations();
 
 
         foreach ($Configs as $Key => $Translation) {
-            if (strpos($Translation["key"], "plugin_$PluginName") === false) {
+            if (!str_contains($Translation["key"], "plugin_$PluginName")) {
                 unset($Configs[$Key]);
             }
         }

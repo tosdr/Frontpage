@@ -30,6 +30,7 @@ use Exception;
 use JetBrains\PhpStorm\NoReturn;
 use PDO;
 use PDOException;
+use stdClass;
 use Twig\Environment;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
@@ -190,7 +191,15 @@ class Plugins
         $Migrations->migrate(__DIR__ . "/../../../../$PluginFolder/$PluginName/", $PluginName);
     }
 
-    private static function performOnInstall($PluginName, $PluginMetadata, $TwigTheme, $CurrentFile, $CurrentPage)
+    /**
+     * @param string $PluginName
+     * @param stdClass $PluginMetadata
+     * @param Environment $TwigTheme
+     * @param string $CurrentFile
+     * @param string $CurrentPage
+     * @return bool
+     */
+    private static function performOnInstall(string $PluginName, stdClass $PluginMetadata, Environment $TwigTheme, string $CurrentFile, string $CurrentPage): bool
     {
         if (!isset($PluginMetadata->onInstall)) {
             return false;

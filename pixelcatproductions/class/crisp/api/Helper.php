@@ -166,7 +166,7 @@ class Helper
      * @param string $String The string to filter
      * @return string Filtered string
      */
-    public static function filterAlphaNum($String)
+    public static function filterAlphaNum(string $String): string
     {
         return str_replace(" ", "-", strtolower(preg_replace("/[^0-9a-zA-Z\-_]/", "-", $String)));
     }

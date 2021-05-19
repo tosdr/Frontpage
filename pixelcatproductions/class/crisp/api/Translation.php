@@ -81,6 +81,7 @@ class Translation
         if ($statement->rowCount() > 0) {
             return $statement->fetchAll(PDO::FETCH_ASSOC);
         }
+        return [];
     }
 
     /**

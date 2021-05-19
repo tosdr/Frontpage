@@ -28,7 +28,8 @@ class Helper {
      * Check if the user is on a mobile device
      * @return boolean TRUE if the user is on mobile
      */
-    public static function isMobile($UserAgent = null) {
+    public static function isMobile($UserAgent = null): bool
+    {
         $UserAgent = ($UserAgent === null ? $_SERVER["HTTP_USER_AGENT"] : $UserAgent);
         return preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i", $UserAgent);
     }

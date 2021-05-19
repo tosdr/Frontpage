@@ -207,7 +207,8 @@ class Cron {
      * @param int $ID The ID of a cron job
      * @return Boolean TRUE if action successful
      */
-    public static function markAsFailed(int $ID) {
+    public static function markAsFailed(int $ID): bool
+    {
         if (self::$Database_Connection === null) {
             self::initDB();
         }

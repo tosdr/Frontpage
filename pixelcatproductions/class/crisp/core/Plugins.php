@@ -421,24 +421,19 @@ class Plugins
      * @return bool|int
      * @see version_compare
      */
-    public static function testVersion($VersionString)
+    public static function testVersion(string $VersionString): bool|int
     {
 
-        if (strpos($VersionString, ">=") !== false) {
-            return version_compare(core::CRISP_VERSION, substr($VersionString, 2), ">=");
-        } elseif (strpos($VersionString, "<=") !== false) {
-            return version_compare(core::CRISP_VERSION, substr($VersionString, 2), "<=");
-        } elseif (strpos($VersionString, "<") !== false) {
-            return version_compare(core::CRISP_VERSION, substr($VersionString, 1), "<");
-        } elseif (strpos($VersionString, "=") !== false) {
-            return version_compare(core::CRISP_VERSION, substr($VersionString, 1), "=");
-        } elseif (strpos($VersionString, "!=") !== false) {
-            return version_compare(core::CRISP_VERSION, substr($VersionString, 2), "!=");
-        } elseif (strpos($VersionString, ">") !== false) {
-            return version_compare(core::CRISP_VERSION, substr($VersionString, 1), ">");
-        } else {
-            return version_compare(core::CRISP_VERSION, $VersionString);
-        }
+        return match(true){
+            str_contains($VersionString, ">=") => version_compare(core::CRISP_VERSION, substr($VersionString, 2), ">="),
+            str_contains($VersionString, "<=") => version_compare(core::CRISP_VERSION, substr($VersionString, 2), "<="),
+            str_contains($VersionString, "<") => version_compare(core::CRISP_VERSION, substr($VersionString, 1), "<"),
+            str_contains($VersionString, "=") => version_compare(core::CRISP_VERSION, substr($VersionString, 1), "="),
+            str_contains($VersionString, "!=") => version_compare(core::CRISP_VERSION, substr($VersionString, 2), "!="),
+            str_contains($VersionString, ">") => version_compare(core::CRISP_VERSION, substr($VersionString, 1), ">"),
+            default => version_compare(core::CRISP_VERSION, $VersionString)
+        };
+
     }
 
     /**

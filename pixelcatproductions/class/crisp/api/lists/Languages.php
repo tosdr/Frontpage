@@ -106,13 +106,14 @@ class Languages {
     return !self::$Database_Connection->rollBack();
   }
 
-  public static function languageExists($Code) {
+  public static function languageExists($Code): bool
+  {
     if (self::$Database_Connection === null) {
       self::initDB();
     }
     $statement = self::$Database_Connection->prepare("SELECT * FROM Languages WHERE Code = :code");
     $statement->execute(array(":code" => $Code));
-    return ($statement->rowCount() > 0 ? true : false);
+    return $statement->rowCount() > 0;
   }
 
   /**

@@ -372,7 +372,7 @@ class Plugins
      * @param string $PluginName The folder name of the plugin
      * @return boolean TRUE if plugin is installed, otherwise FALSE
      */
-    public static function isInstalled($PluginName)
+    public static function isInstalled(string $PluginName): bool
     {
         $DB = new MySQL();
         $DBConn = $DB->getDBConnector();
@@ -380,7 +380,7 @@ class Plugins
         $statement = $DBConn->prepare("SELECT * FROM loadedPlugins WHERE Name = :Key");
         $statement->execute(array(":Key" => $PluginName));
 
-        return ($statement->rowCount() > 0 ? true : false);
+        return $statement->rowCount() > 0;
     }
 
     public static function isValid($PluginName)

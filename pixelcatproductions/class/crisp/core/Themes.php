@@ -47,7 +47,8 @@ class Themes {
      * Clear the theme cache
      * @return boolean
      */
-    public static function clearCache() {
+    public static function clearCache(): bool
+    {
         $it = new RecursiveDirectoryIterator(realpath(__DIR__ . "/../../../cache/"), RecursiveDirectoryIterator::SKIP_DOTS);
         $files = new RecursiveIteratorIterator($it,
                 RecursiveIteratorIterator::CHILD_FIRST);

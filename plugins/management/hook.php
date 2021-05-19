@@ -27,7 +27,7 @@ if (isset($_SESSION[\crisp\core\Config::$Cookie_Prefix . "session_login"])) {
     if (!$User->isSessionValid()) {
         unset($_SESSION[\crisp\core\Config::$Cookie_Prefix . "session_login"]);
     } else {
-        \crisp\core\Theme::addtoNavbar("curator", '<span class="badge badge-info"><i class="fas fa-hands-helping"></i> MANAGE</span>', "/dashboard", "_self", -1, "right");
+        \crisp\core\Theme::addToNavbar("curator", '<span class="badge badge-info"><i class="fas fa-hands-helping"></i> MANAGE</span>', "/dashboard", "_self", -1, "right");
     }
 
     $userDetails = $User->fetch();
@@ -53,5 +53,5 @@ if (isset($_SESSION[\crisp\core\Config::$Cookie_Prefix . "session_login"])) {
     $this->TwigTheme->addFilter(new \Twig\TwigFilter('strtotime', 'strtotime'));
     $this->TwigTheme->addFunction(new \Twig\TwigFunction('time', 'time'));
 } else {
-    \crisp\core\Theme::addtoNavbar("login", $this->getTranslation("views.login.header"), "/login", "_self", 99);
+    \crisp\core\Theme::addToNavbar("login", $this->getTranslation("views.login.header"), "/login", "_self", 99);
 }

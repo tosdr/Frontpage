@@ -24,33 +24,31 @@ namespace crisp\core;
  */
 class Security {
 
-    public static function containsBlacklistedHTML($String) {
-
-        if (preg_match('/<script[\s\S]*?>[\s\S]*?<\/script>/i', $String)) {
-            return true;
-        }
-
-        return false;
-    }
-
-    public static function validate($String) {
-        if (self::containsBlacklistedHTML($String)) {
-            return Fail2BanBridge::banIP(\crisp\api\Helper::getRealIpAddr());
-        }
-    }
-
-    public static function getCSRF() {
+    /**
+     * @return string
+     */
+    public static function getCSRF(): string
+    {
         if (!isset($_SESSION["csrf"])) {
             $_SESSION["csrf"] = bin2hex(openssl_random_pseudo_bytes(16));
         }
         return $_SESSION["csrf"];
     }
 
-    public static function matchCSRF(string $Token) {
+    /**
+     * @param string $Token
+     * @return bool
+     */
+    public static function matchCSRF(string $Token): bool
+    {
         return ($_SESSION["csrf"] && $Token);
     }
 
-    public static function regenCSRF() {
+    /**
+     * @return string
+     */
+    public static function regenCSRF(): string
+    {
         $_SESSION["csrf"] = bin2hex(openssl_random_pseudo_bytes(16));
         return $_SESSION["csrf"];
     }

@@ -19,7 +19,9 @@
 
 namespace crisp\core;
 
-use \PDO;
+use crisp\exceptions\BitmaskException;
+use Exception;
+use PDO;
 
 /**
  * Interact with the database yourself. Please use this interface only when you REALLY need it for custom tables.
@@ -27,18 +29,19 @@ use \PDO;
  */
 class MySQL {
 
-    private $Database_Connection;
+    private PDO $Database_Connection;
 
     /**
      * Constructs the Database_Connection
+     * @throws BitmaskException
      * @see getDBConnector
      */
     public function __construct() {
         try {
             $EnvFile = parse_ini_file(__DIR__ . "/../../../../.env");
             $this->Database_Connection = new PDO("pgsql:host=" . $EnvFile["MYSQL_HOSTNAME"] . ";dbname=" . $EnvFile["MYSQL_DATABASE"] . ";", $EnvFile["MYSQL_USERNAME"], $EnvFile["MYSQL_PASSWORD"], [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::ATTR_EMULATE_PREPARES => true]);
-        } catch (\Exception $ex) {
-            throw new \crisp\exceptions\BitmaskException($ex, Bitmask::POSTGRES_CONN_ERROR);
+        } catch (Exception $ex) {
+            throw new BitmaskException($ex, Bitmask::POSTGRES_CONN_ERROR);
         }
     }
 
@@ -46,7 +49,8 @@ class MySQL {
      * Get the database connector
      * @return PDO
      */
-    public function getDBConnector() {
+    public function getDBConnector(): PDO
+    {
         return $this->Database_Connection;
     }
 

@@ -19,7 +19,7 @@
         <div class="card d-flex h-100">
             <a href="/{{ locale }}/service/{{ service._source.id }}">
                 <div class="card-header">
-                    <img src="{{ config.s3_logos ~ "/" ~ service._source.id }}.png" class="mr-2" width="64"/> 
+                    <img src="{{ includeResource(service._source.id ~ ".png", false, 's3_logos') }}" class="mr-2" width="64"/>
                     {% if service._source.is_comprehensively_reviewed %}
                         {% set rating = service._source.rating %}
                     {% else %}
@@ -112,7 +112,7 @@
         <div class="card d-flex h-100">
             <a href="/{{ locale }}/service/{{ service._source.id }}">
                 <div class="card-header">
-                    <img src="{{ config.s3_logos ~ "/" ~ service._source.id }}.png" class="mr-2" width="64"/> 
+                    <img src="{{ includeResource(service._source.id ~ ".png", false, 's3_logos') }}" class="mr-2" width="64"/>
                     {% if service._source.is_comprehensively_reviewed %}
                         {% set rating = service._source.rating %}
                     {% else %}

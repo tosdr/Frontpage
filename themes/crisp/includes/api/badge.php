@@ -98,7 +98,7 @@ switch ($RedisData["_source"]["is_comprehensively_reviewed"] ? ($RedisData["_sou
         $Rating = $Translations->fetch("badges.grade.none");
 }
 
-$Prefix = $RedisData["_source"]["name"];
+$Prefix = htmlspecialchars($RedisData["_source"]["name"]);
 
 $SVG = $poser->generate($Prefix, $Rating, $Color, 'flat');
 

@@ -64,10 +64,10 @@ steps:
   commands:
   - mkdir /tmp/ci
   - cd /tmp/ci
-  - apt-get update && apt-get install -y libpq-dev autoconf gcc libc6-dev make libicu-dev wget git-core zip
+  - apt-get update && apt-get install -y libpq-dev autoconf gcc libc6-dev make libicu-dev wget git-core zip zlib1g-dev libpng-dev
   - pecl install redis-5.3.2
-  - docker-php-ext-install pgsql pdo_pgsql pdo_mysql intl
-  - docker-php-ext-enable pdo_pgsql pdo_mysql redis intl
+  - docker-php-ext-install pgsql pdo_pgsql pdo_mysql intl gd gettext
+  - docker-php-ext-enable pdo_pgsql pdo_mysql redis intl gd gettext
   - wget https://getcomposer.org/composer-stable.phar -O /tmp/ci/composer
   - cd /drone/src
   - php /tmp/ci/composer install
@@ -232,6 +232,6 @@ services:
     POSTGRES_HOST_AUTH_METHOD: trust
 ---
 kind: signature
-hmac: 91679bdc42ec560706c92f980a91744b48977f191d21df44c8bcacb2faf999d0
+hmac: ecb56f5526349dee5de9acc0e6e44fb9c2d6c102b2ba2e186be41390486417cd
 
 ...

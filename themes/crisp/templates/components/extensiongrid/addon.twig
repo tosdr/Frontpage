@@ -23,7 +23,7 @@
       <div class="card-text mb-2">
         <div class="row">
           <div class="col-2">
-            <img class="img-responsive" style="max-width: 42px;" src="{{ includeResource(extension.image) }}">
+            <img class="img-responsive" style="max-width: 42px;" src="{{ includeResource(extension.image, false, "s3_branding") }}">
           </div>
           <div class="col-10">
             {{ extension.description|translate|raw }}

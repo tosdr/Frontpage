@@ -20,47 +20,47 @@
 
 namespace crisp\api;
 
-use \PDO;
-use \PDOException;
-use \PDORow;
-use \PDOStatement;
+use crisp\core\MySQL;
+use PDO;
 
 /**
  * Interact with an api key
  */
 class APIKey {
 
-    private static ?PDO $Database_Connection = null;
     public string $APIKey;
+    private ?PDO $Database_Connection;
 
     public function __construct($APIKey) {
-        $DB = new \crisp\core\MySQL();
+        $DB = new MySQL();
         $this->Database_Connection = $DB->getDBConnector();
         $this->APIKey = $APIKey;
     }
 
     /**
      * Fetches a Keys details
-     * @return array
+     * @return array|null
      */
-    public function fetch() {
-        if ($this->LanguageID === null) {
+    public function fetch(): ?array
+    {
+        if ($this->APIKey === null) {
             return null;
         }
 
         $statement = $this->Database_Connection->prepare("SELECT * FROM APIKeys WHERE `key` = :ID");
         $statement->execute(array(":ID" => $this->APIKey));
 
-        return $statement->fetch(\PDO::FETCH_ASSOC);
+        return $statement->fetch(PDO::FETCH_ASSOC);
     }
 
     /**
      * Enables an api key
+     * @return bool|null
      * @see disable
-     * @return boolean
      */
-    public function enable() {
-        if ($this->LanguageID === null) {
+    public function enable(): ?bool
+    {
+        if ($this->APIKey === null) {
             return null;
         }
 
@@ -70,11 +70,12 @@ class APIKey {
 
     /**
      * Disables an api key
+     * @return bool|null
      * @see enable
-     * @return boolean
      */
-    public function disable() {
-        if ($this->LanguageID === null) {
+    public function disable(): ?bool
+    {
+        if ($this->APIKey === null) {
             return null;
         }
 
@@ -83,26 +84,28 @@ class APIKey {
     }
 
     /**
-     * Checks wether a language is enabled or not
-     * @return boolean
+     * Checks whether a language is enabled or not
+     * @return bool|null
      */
-    public function isEnabled() {
-        if ($this->LanguageID === null) {
+    public function isEnabled(): ?bool
+    {
+        if ($this->APIKey === null) {
             return null;
         }
 
         $statement = $this->Database_Connection->prepare("SELECT * FROM APIKeys WHERE `key` = :ID");
         $statement->execute(array(":ID" => $this->APIKey));
 
-        return !$statement->fetch(\PDO::FETCH_ASSOC)["revoked"];
+        return !$statement->fetch(PDO::FETCH_ASSOC)["revoked"];
     }
 
     /**
      * Check if the language exists in the database
-     * @return boolean
+     * @return bool|null
      */
-    public function exists() {
-        if ($this->LanguageID === null) {
+    public function exists(): ?bool
+    {
+        if ($this->APIKey === null) {
             return null;
         }
 

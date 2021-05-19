@@ -20,10 +20,9 @@
 
 namespace crisp\api;
 
-use \PDO;
-use \PDOException;
-use \PDORow;
-use \PDOStatement;
+use crisp\core\Crypto;
+use crisp\core\MySQL;
+use PDO;
 
 /**
  * The error reporting system
@@ -37,7 +36,7 @@ class ErrorReporter {
   }
 
   public static function initDB() {
-    $DB = new \crisp\core\MySQL();
+    $DB = new MySQL();
     self::$Database_Connection = $DB->getDBConnector();
   }
 
@@ -49,11 +48,12 @@ class ErrorReporter {
    * @param string $Prefix of the reference id
    * @return boolean|string Returns ReferenceID if successful otherwise false
    */
-  public static function create(int $HttpStatusCode, string $Traceback, string $Summary, string $Prefix = "ise_") {
+  public static function create(int $HttpStatusCode, string $Traceback, string $Summary, string $Prefix = "ise_"): bool|string
+  {
     if (self::$Database_Connection === null) {
       self::initDB();
     }
-    $ReferenceID = \crisp\core\Crypto::UUIDv4($Prefix);
+    $ReferenceID = Crypto::UUIDv4($Prefix);
     if (php_sapi_name() !== 'cli') {
       header("X-Error-ReferenceID: $ReferenceID");
     }

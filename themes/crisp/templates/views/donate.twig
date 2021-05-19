@@ -59,7 +59,7 @@
                 <pre><code style="color: crimson;" onclick="selectElementText(this)">{{ config.bitcoin_wallet }}</code></pre>
             </div>
             <div class="col-6">
-                <img src="data:image/png;base64, {{ config.bitcoin_qr }}" alt="Bitcoin Wallet"/>
+                <img width="256" src="{{ config.bitcoin_qr }}" alt="Bitcoin Wallet"/>
             </div>
         </div>
         <hr>
@@ -69,10 +69,11 @@
                 <p>
                     {{ 'views.donate.ethereum.text'|translate|raw }}
                 </p>
-                <pre><code style="color: crimson;" onclick="selectElementText(this)">{{ config.eth_wallet }}</code></pre>
+                <pre><code style="color: crimson;"
+                           onclick="selectElementText(this)">{{ config.eth_wallet }}</code></pre>
             </div>
             <div class="col-6">
-                <img src="data:image/png;base64, {{ config.eth_qr }}" alt="Ethereum Wallet"/>
+                <img width="256" src="{{ config.eth_qr }}" alt="Ethereum Wallet"/>
             </div>
         </div>
         <hr>
@@ -82,10 +83,11 @@
                 <p>
                     {{ 'views.donate.doge.text'|translate|raw }}
                 </p>
-                <pre><code style="color: crimson;" onclick="selectElementText(this)">{{ config.doge_wallet }}</code></pre>
+                <pre><code style="color: crimson;"
+                           onclick="selectElementText(this)">{{ config.doge_wallet }}</code></pre>
             </div>
             <div class="col-6">
-                <img src="data:image/png;base64, {{ config.doge_qr }}" alt="Dogecoin Wallet"/>
+                <img width="256" src="{{ config.doge_qr }}" alt="Dogecoin Wallet"/>
             </div>
         </div>
         <hr>
@@ -95,10 +97,11 @@
                 <p>
                     {{ 'views.donate.lite.text'|translate|raw }}
                 </p>
-                <pre><code style="color: crimson;" onclick="selectElementText(this)">{{ config.lite_wallet }}</code></pre>
+                <pre><code style="color: crimson;"
+                           onclick="selectElementText(this)">{{ config.lite_wallet }}</code></pre>
             </div>
             <div class="col-6">
-                <img src="data:image/png;base64, {{ config.lite_qr }}" alt="Litecoin Wallet"/>
+                <img width="256" src="{{ config.lite_qr }}" alt="Litecoin Wallet"/>
             </div>
         </div>
         <hr>
@@ -106,22 +109,22 @@
 {% endblock %}
 
 {% block scripts %}
-<script>
-    // https://stackoverflow.com/a/2838358
-    function selectElementText(el, win) {
-        win = win || window;
-        var doc = win.document, sel, range;
-        if (win.getSelection && doc.createRange) {
-            sel = win.getSelection();
-            range = doc.createRange();
-            range.selectNodeContents(el);
-            sel.removeAllRanges();
-            sel.addRange(range);
-        } else if (doc.body.createTextRange) {
-            range = doc.body.createTextRange();
-            range.moveToElementText(el);
-            range.select();
+    <script>
+        // https://stackoverflow.com/a/2838358
+        function selectElementText(el, win) {
+            win = win || window;
+            var doc = win.document, sel, range;
+            if (win.getSelection && doc.createRange) {
+                sel = win.getSelection();
+                range = doc.createRange();
+                range.selectNodeContents(el);
+                sel.removeAllRanges();
+                sel.addRange(range);
+            } else if (doc.body.createTextRange) {
+                range = doc.body.createTextRange();
+                range.moveToElementText(el);
+                range.select();
+            }
         }
-    }
-</script>
+    </script>
 {% endblock %}

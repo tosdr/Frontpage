@@ -19,10 +19,14 @@
 
 namespace crisp\api;
 
+use crisp\core\Bitmask;
+use crisp\exceptions\BitmaskException;
+use stdClass;
+
 class Elastic {
 
-    private $Elastic_URI;
-    private $Elastic_Index;
+    private string $Elastic_URI;
+    private string $Elastic_Index;
 
     public function __construct() {
         $EnvFile = parse_ini_file(__DIR__ . "/../../../../.env");
@@ -30,19 +34,24 @@ class Elastic {
         $this->Elastic_Index = $EnvFile["ELASTIC_INDEX"];
     }
 
-    public function search(string $Query) {
+    /**
+     * @param string $Query
+     * @return stdClass
+     * @throws BitmaskException
+     */
+    public function search(string $Query): stdClass {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $this->Elastic_URI . "/" . $this->Elastic_Index . "/_search?q=*" . urlencode($Query) . "*");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         $output = curl_exec($ch);
-        if (Helper::startsWith(curl_getinfo($ch, CURLINFO_HTTP_CODE), "5")) {
-            throw new \crisp\exceptions\BitmaskException(curl_getinfo($ch, CURLINFO_HTTP_CODE), \crisp\core\Bitmask::ELASTIC_CONN_ERROR);
+        if (str_starts_with(curl_getinfo($ch, CURLINFO_HTTP_CODE), "5")) {
+            throw new BitmaskException(curl_getinfo($ch, CURLINFO_HTTP_CODE), Bitmask::ELASTIC_CONN_ERROR);
         }
         if (curl_getinfo($ch, CURLINFO_HTTP_CODE) !== 200) {
-            throw new \crisp\exceptions\BitmaskException(curl_getinfo($ch, CURLINFO_HTTP_CODE), \crisp\core\Bitmask::ELASTIC_QUERY_MALFORMED);
+            throw new BitmaskException(curl_getinfo($ch, CURLINFO_HTTP_CODE), Bitmask::ELASTIC_QUERY_MALFORMED);
         }
         if (!$output) {
-            throw new \crisp\exceptions\BitmaskException(curl_error($ch), \crisp\core\Bitmask::ELASTIC_CONN_ERROR);
+            throw new BitmaskException(curl_error($ch), Bitmask::ELASTIC_CONN_ERROR);
         }
         curl_close($ch);
         return json_decode($output)->hits;

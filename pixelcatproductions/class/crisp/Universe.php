@@ -20,6 +20,10 @@
 
 namespace crisp;
 
+use crisp\core\Config;
+use Exception;
+use ReflectionClass;
+
 /**
  * Crisp Universe Handling
  */
@@ -30,30 +34,33 @@ class Universe {
   const UNIVERSE_DEV = 3;
   const UNIVERSE_TOSDR = 99;
 
-  public static function changeUniverse($Universe, $Authorize = false) {
+  public static function changeUniverse($Universe, $Authorize = false): bool
+  {
     if (!$Authorize && $Universe == self::UNIVERSE_TOSDR) {
       return false;
     }
-    return setcookie(\crisp\core\Config::$Cookie_Prefix . "universe", self::getUniverse($Universe), time() + (86400 * 30), "/");
+    return setcookie(Config::$Cookie_Prefix . "universe", self::getUniverse($Universe), time() + (86400 * 30), "/");
   }
 
-  public static function getUniverse($Universe) {
-    switch ($Universe) {
-      case self::UNIVERSE_PUBLIC:
-        return self::UNIVERSE_PUBLIC;
-      case self::UNIVERSE_BETA:
-        return self::UNIVERSE_BETA;
-      case self::UNIVERSE_DEV:
-        return self::UNIVERSE_DEV;
-      case self::UNIVERSE_TOSDR:
-        return self::UNIVERSE_TOSDR;
-      default:
-        return self::UNIVERSE_PUBLIC;
-    }
+    /**
+     * @param int $Universe
+     * @return int
+     * @throws Exception
+     */
+    public static function getUniverse(int $Universe): int
+  {
+      return match ($Universe) {
+          self::UNIVERSE_PUBLIC => self::UNIVERSE_PUBLIC,
+          self::UNIVERSE_BETA => self::UNIVERSE_BETA,
+          self::UNIVERSE_DEV => self::UNIVERSE_DEV,
+          self::UNIVERSE_TOSDR => self::UNIVERSE_TOSDR,
+          default => throw new Exception("Unknown universe"),
+      };
   }
 
-  public static function getUniverseName($value) {
-    $class = new \ReflectionClass(__CLASS__);
+  public static function getUniverseName($value): string
+  {
+    $class = new ReflectionClass(__CLASS__);
     $constants = array_flip($class->getConstants());
 
     return $constants[$value];

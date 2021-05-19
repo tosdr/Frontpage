@@ -20,10 +20,8 @@
 
 namespace crisp\api\lists;
 
-use \PDO;
-use \PDOException;
-use \PDORow;
-use \PDOStatement;
+use crisp\core\MySQL;
+use PDO;
 
 /**
  * Interact with all cron jobs stored on the server
@@ -40,7 +38,7 @@ class Cron {
      * Initializes the DB
      */
     private static function initDB() {
-        $DB = new \crisp\core\MySQL();
+        $DB = new MySQL();
         self::$Database_Connection = $DB->getDBConnector();
     }
 
@@ -49,14 +47,15 @@ class Cron {
      * @param int $Limit How many do you like to retrieve
      * @return array Contains cron jobs
      */
-    public static function fetchAll(int $Limit = 2) {
+    public static function fetchAll(int $Limit = 2): array
+    {
         if (self::$Database_Connection === null) {
             self::initDB();
         }
-        $statement = self::$Database_Connection->prepare("SELECT * FROM Cron ORDER BY ID DESC,Finished ASC LIMIT $Limit;");
+        $statement = self::$Database_Connection->prepare("SELECT * FROM Cron ORDER BY ID DESC,Finished LIMIT $Limit;");
         $statement->execute();
 
-        return $statement->fetchAll(\PDO::FETCH_ASSOC);
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
     /**
@@ -64,14 +63,15 @@ class Cron {
      * @param int $Limit How many do you like to retrieve
      * @return array Contains cron jobs
      */
-    public static function fetchUnprocessedSchedule(int $Limit = 2) {
+    public static function fetchUnprocessedSchedule(int $Limit = 2): array
+    {
         if (self::$Database_Connection === null) {
             self::initDB();
         }
-        $statement = self::$Database_Connection->prepare("SELECT * FROM Cron WHERE ScheduledAt < NOW() AND Finished = 0 AND Started = 0 AND Canceled = 0 AND Failed = 0 ORDER BY ScheduledAt ASC LIMIT $Limit;");
+        $statement = self::$Database_Connection->prepare("SELECT * FROM Cron WHERE ScheduledAt < NOW() AND Finished = 0 AND Started = 0 AND Canceled = 0 AND Failed = 0 ORDER BY ScheduledAt LIMIT $Limit;");
         $statement->execute();
 
-        return $statement->fetchAll(\PDO::FETCH_ASSOC);
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
     /**
@@ -79,14 +79,15 @@ class Cron {
      * @param int $Limit How many do you like to retrieve
      * @return array Contains cron jobs
      */
-    public static function fetchUnprocessed(int $Limit = 2) {
+    public static function fetchUnprocessed(int $Limit = 2): array
+    {
         if (self::$Database_Connection === null) {
             self::initDB();
         }
-        $statement = self::$Database_Connection->prepare("SELECT * FROM Cron WHERE Finished = 0 ORDER BY ID ASC LIMIT $Limit;");
+        $statement = self::$Database_Connection->prepare("SELECT * FROM Cron WHERE Finished = 0 ORDER BY ID LIMIT $Limit;");
         $statement->execute();
 
-        return $statement->fetchAll(\PDO::FETCH_ASSOC);
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
     /**
@@ -94,21 +95,23 @@ class Cron {
      * @param int $ID The ID of a cron job
      * @return array Contains cron details
      */
-    public static function fetch(int $ID) {
+    public static function fetch(int $ID): array
+    {
         if (self::$Database_Connection === null) {
             self::initDB();
         }
         $statement = self::$Database_Connection->prepare("SELECT * FROM Cron WHERE ID = :ID;");
         $statement->execute(array(":ID" => $ID));
 
-        return $statement->fetch(\PDO::FETCH_ASSOC);
+        return $statement->fetch(PDO::FETCH_ASSOC);
     }
 
     /**
      * Delete processed, finished or failed cronjobs
      * @return Boolean TRUE if action successful
      */
-    public static function deleteOld() {
+    public static function deleteOld(): bool
+    {
         if (self::$Database_Connection === null) {
             self::initDB();
         }
@@ -116,7 +119,8 @@ class Cron {
         return $statement->execute();
     }
 
-    public static function deleteByPlugin($Plugin) {
+    public static function deleteByPlugin($Plugin): bool
+    {
         if (self::$Database_Connection === null) {
             self::initDB();
         }
@@ -131,7 +135,8 @@ class Cron {
      * @param string $Interval In which interval should the cron be executed?
      * @return int The ID of the Cron
      */
-    public static function create(string $Type, string $Data, string $Interval = "2 MINUTE", string $Plugin = null, bool $ExecuteOnce = false) {
+    public static function create(string $Type, string $Data, string $Interval = "2 MINUTE", string $Plugin = null, bool $ExecuteOnce = false): int
+    {
         if (self::$Database_Connection === null) {
             self::initDB();
         }
@@ -146,7 +151,8 @@ class Cron {
      * @param int $ID The ID of a cron job
      * @return Boolean TRUE if action successful
      */
-    public static function markAsStarted(int $ID) {
+    public static function markAsStarted(int $ID): bool
+    {
         if (self::$Database_Connection === null) {
             self::initDB();
         }
@@ -159,15 +165,16 @@ class Cron {
      * @param int $ID The ID of a cron job
      * @return Boolean TRUE if action successful
      */
-    public static function markAsCanceled(int $ID) {
+    public static function markAsCanceled(int $ID): bool
+    {
         if (self::$Database_Connection === null) {
             self::initDB();
         }
         $statement = self::$Database_Connection->prepare("UPDATE Cron SET Canceled = 1, Started = 0, Finished = 0 WHERE ID = :ID");
-        $Job = \crisp\api\lists\Cron::fetch($ID);
+        $Job = Cron::fetch($ID);
         $PluginData = json_decode($Job["Data"]);
         if (!$Job["ExecuteOnce"]) {
-            \crisp\api\lists\Cron::create("execute_plugin_cron", json_encode(array("data" => $PluginData->data, "name" => $PluginData->name)), $Job["Interval"], $Job["Plugin"]);
+            Cron::create("execute_plugin_cron", json_encode(array("data" => $PluginData->data, "name" => $PluginData->name)), $Job["Interval"], $Job["Plugin"]);
         }
         return $statement->execute(array(":ID" => $ID));
     }
@@ -177,16 +184,17 @@ class Cron {
      * @param int $ID The ID of a cron job
      * @return Boolean TRUE if action successful
      */
-    public static function markAsFinished(int $ID) {
+    public static function markAsFinished(int $ID): bool
+    {
         if (self::$Database_Connection === null) {
             self::initDB();
         }
         $statement = self::$Database_Connection->prepare("UPDATE Cron SET Finished = 1, Started = 0, Canceled = 0, FinishedAt = NOW() WHERE ID = :ID");
 
-        $Job = \crisp\api\lists\Cron::fetch($ID);
+        $Job = Cron::fetch($ID);
         $PluginData = json_decode($Job["Data"]);
         if (!$Job["ExecuteOnce"]) {
-            \crisp\api\lists\Cron::create("execute_plugin_cron", json_encode(array("data" => $PluginData->data, "name" => $PluginData->name)), $Job["Interval"], $Job["Plugin"]);
+            Cron::create("execute_plugin_cron", json_encode(array("data" => $PluginData->data, "name" => $PluginData->name)), $Job["Interval"], $Job["Plugin"]);
         }
         return $statement->execute(array(":ID" => $ID));
     }
@@ -196,16 +204,17 @@ class Cron {
      * @param int $ID The ID of a cron job
      * @return Boolean TRUE if action successful
      */
-    public static function markAsFailed(int $ID) {
+    public static function markAsFailed(int $ID): bool
+    {
         if (self::$Database_Connection === null) {
             self::initDB();
         }
         $statement = self::$Database_Connection->prepare("UPDATE Cron SET Failed = 1, Started = 0, Canceled = 0, Finished = 0 WHERE ID = :ID");
 
-        $Job = \crisp\api\lists\Cron::fetch($ID);
+        $Job = Cron::fetch($ID);
         $PluginData = json_decode($Job["Data"]);
         if (!$Job["ExecuteOnce"]) {
-            \crisp\api\lists\Cron::create("execute_plugin_cron", json_encode(array("data" => $PluginData->data, "name" => $PluginData->name)), $Job["Interval"], $Job["Plugin"]);
+            Cron::create("execute_plugin_cron", json_encode(array("data" => $PluginData->data, "name" => $PluginData->name)), $Job["Interval"], $Job["Plugin"]);
         }
         return $statement->execute(array(":ID" => $ID));
     }
@@ -216,7 +225,8 @@ class Cron {
      * @param string $Log The Text to set
      * @return Boolean TRUE if action successful
      */
-    public static function setLog(int $ID, string $Log) {
+    public static function setLog(int $ID, string $Log): bool
+    {
         if (self::$Database_Connection === null) {
             self::initDB();
         }

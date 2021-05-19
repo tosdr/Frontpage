@@ -30,6 +30,6 @@ class Config {
      * @access private
      * @var string
      */
-    public static $Cookie_Prefix = "crisp_";
+    public static string $Cookie_Prefix = "crisp_";
 
 }

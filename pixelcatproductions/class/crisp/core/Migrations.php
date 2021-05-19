@@ -20,6 +20,10 @@
 
 namespace crisp\core;
 
+use crisp\api\Helper;
+use Exception;
+use PDO;
+
 /**
  * Crisp DB Migration Class
  * @since 0.0.8-beta.RC1
@@ -28,9 +32,9 @@ class Migrations {
 
     /**
      * The PDO Database
-     * @var \PDO
+     * @var PDO
      */
-    protected \PDO $Database;
+    protected PDO $Database;
 
     /* Data types */
 
@@ -56,7 +60,8 @@ class Migrations {
      * @since 0.0.8-beta.RC2
      * @return boolean
      */
-    protected function begin() {
+    protected function begin(): bool
+    {
         echo "Enabling Transactions..." . PHP_EOL;
         if ($this->Database->beginTransaction()) {
             echo "Enabled Transactions!" . PHP_EOL;
@@ -71,7 +76,8 @@ class Migrations {
      * @since 0.0.8-beta.RC2
      * @return boolean
      */
-    protected function rollback() {
+    protected function rollback(): bool
+    {
         echo "Rolling back..." . PHP_EOL;
         if ($this->Database->rollBack()) {
             echo "Rolled back!" . PHP_EOL;
@@ -86,7 +92,8 @@ class Migrations {
      * @since 0.0.8-beta.RC2
      * @return boolean
      */
-    protected function end() {
+    protected function end(): bool
+    {
         echo "committing changes..." . PHP_EOL;
         if ($this->Database->commit()) {
             echo "Changes committed!" . PHP_EOL;
@@ -103,26 +110,27 @@ class Migrations {
      * @since 0.0.8-beta.RC2
      * @return boolean
      */
-    public function isMigrated(string $file) {
+    public function isMigrated(string $file): bool
+    {
 
         try {
             $statement = $this->Database->prepare("SELECT * FROM schema_migration WHERE file =:file");
 
             $statement->execute(array(":file" => $file));
-            return ($statement->rowCount() > 0 ? true : false);
-        } catch (\Exception $ex) {
+            return $statement->rowCount() > 0;
+        } catch (Exception) {
             return false;
         }
     }
 
     /**
      * Begin the migration of the database
-     * @since 0.0.8-beta.RC2
      * @param string $Dir The directory base to look for migrations. e.g Setting "plugin" will look in "plugin/migrations"
-     * @param string $Plugin If the migration has been done for a plugin, this is the name
+     * @param string|null $Plugin If the migration has been done for a plugin, this is the name
      * @return void
+     * @since 0.0.8-beta.RC2
      */
-    public function migrate(string $Dir = __DIR__ . "/../", string $Plugin = null) {
+    public function migrate(string $Dir = __DIR__ . "/../", ?string $Plugin = null): void {
         if (php_sapi_name() == "cli") {
             echo "Starting Migration..." . PHP_EOL;
         }
@@ -181,9 +189,9 @@ class Migrations {
      * @since 0.0.8-beta.RC2
      * @return void
      */
-    public static function create(string $MigrationName, string $Dir = __DIR__ . "/../") {
+    public static function create(string $MigrationName, string $Dir = __DIR__ . "/../"): void {
 
-        $MigrationNameFiltered = \crisp\api\Helper::filterAlphaNum($MigrationName);
+        $MigrationNameFiltered = Helper::filterAlphaNum($MigrationName);
 
         $Template = file_get_contents(__DIR__ . "/../migrations/template.php");
 
@@ -209,14 +217,14 @@ class Migrations {
      * Create a new index for a table
      * @param string $Table The name of the table
      * @param string $Column The name of the column
-     * @param const $Type The type of the index
-     * @param string $IndexName The name of the index, Unused if PRIMARYKEY
+     * @param string $Type The type of the index
+     * @param string|null $IndexName The name of the index, Unused if PRIMARYKEY
      * @return boolean
+     * @throws Exception on PDO Error
      * @since 0.0.8-beta.RC2
-     * @throws \Exception on PDO Error
      */
-    protected function addIndex(string $Table, string $Column, $Type = self::DB_PRIMARYKEY, string $IndexName = null) {
-        $SQL = "";
+    protected function addIndex(string $Table, string $Column, string $Type = self::DB_PRIMARYKEY, string $IndexName = null): bool
+    {
         echo "Adding index to table $Table..." . PHP_EOL;
         if ($Type == self::DB_PRIMARYKEY) {
             $SQL = "ALTER TABLE $Table ADD $Type KEY ($Column);";
@@ -231,10 +239,15 @@ class Migrations {
             return true;
         }
         echo "Failed to add Index to Table $Table!" . PHP_EOL;
-        throw new \Exception($statement->errorInfo());
+        throw new Exception($statement->errorInfo());
     }
 
-    public function deleteByPlugin($PluginName) {
+    /**
+     * @param $PluginName
+     * @return bool
+     */
+    public function deleteByPlugin($PluginName): bool
+    {
         $statement = $this->Database->prepare("DELETE FROM schema_migration WHERE plugin = :Plugin");
 
         return $statement->execute(array(":Plugin" => $PluginName));
@@ -245,10 +258,11 @@ class Migrations {
      * @param string $Table The table name
      * @param string $Column The name of the column
      * @return boolean
-     * @throws \Exception on PDO Error
+     * @throws Exception on PDO Error
      * @since 0.0.8-beta.RC3
      */
-    protected function dropColumn(string $Table, string $Column) {
+    protected function dropColumn(string $Table, string $Column): bool
+    {
         echo "Removing column from Table $Table..." . PHP_EOL;
         $SQL = "ALTER TABLE $Table DROP COLUMN '$Column'";
 
@@ -259,7 +273,7 @@ class Migrations {
             return true;
         }
         echo "Failed to remove Column from Table $Table!" . PHP_EOL;
-        throw new \Exception($statement->errorInfo());
+        throw new Exception($statement->errorInfo());
     }
 
     /**
@@ -267,10 +281,11 @@ class Migrations {
      * @param string $Table The table name
      * @param array $Column An array consisting of the column name, column type and additional info, e.g. array("ColName, self::DB_VARCHAR, "NOT NULL")
      * @return boolean
-     * @throws \Exception on PDO Error
+     * @throws Exception on PDO Error
      * @since 0.0.8-beta.RC2
      */
-    protected function addColumn(string $Table, array $Column) {
+    protected function addColumn(string $Table, array $Column): bool
+    {
         echo "Adding column to Table $Table..." . PHP_EOL;
         $SQL = "ALTER TABLE $Table ADD COLUMN $Column[0] $Column[1] $Column[2];";
 
@@ -281,7 +296,7 @@ class Migrations {
             return true;
         }
         echo "Failed to add Column to Table $Table!" . PHP_EOL;
-        throw new \Exception($statement->errorInfo());
+        throw new Exception($statement->errorInfo());
     }
 
     /**
@@ -290,17 +305,17 @@ class Migrations {
      * @param mixed ...$Columns An array consisting of the column name, column type and additional info, e.g. array("ColName, self::DB_VARCHAR, "NOT NULL")
      * @return boolean
      * @since 0.0.8-beta.RC2
-     * @throws \Exception
+     * @throws Exception
      */
-    protected function createTable(string $Table, ...$Columns) {
+    protected function createTable(string $Table, ...$Columns): bool
+    {
         echo "Creating Table $Table..." . PHP_EOL;
         $SQL = "CREATE TABLE IF NOT EXISTS $Table (";
-        $AutoIncrement = false;
         foreach ($Columns as $Key => $Column) {
             $Name = $Column[0];
             $Type = $Column[1];
             $Additional = $Column[2];
-            if (strpos($Additional, "SERIAL") !== false) {
+            if (str_contains($Additional, "SERIAL")) {
                 $SQL .= "$Name SERIAL,";
             } else {
                 $SQL .= "$Name $Type $Additional,";
@@ -319,7 +334,7 @@ class Migrations {
             return true;
         }
         echo "Failed to create Table $Table!" . PHP_EOL;
-        throw new \Exception($statement->errorInfo());
+        throw new Exception($statement->errorInfo());
     }
 
 }

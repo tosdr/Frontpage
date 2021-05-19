@@ -44,10 +44,10 @@ class Config
 
     /**
      * Checks if a Storage items exists using the specified key
-     * @param string $Key the key to retrieve from the KV Config from
+     * @param string|int $Key the key to retrieve from the KV Config from
      * @return boolean TRUE if it exists, otherwise FALSE
      */
-    public static function exists($Key)
+    public static function exists(string|int $Key): bool
     {
         if (self::$Database_Connection === null) {
             self::initDB();
@@ -108,9 +108,9 @@ class Config
     /**
      * Get the timestamps of a key
      * @param string $Key The KVStorage key
-     * @return array Containing last_changed, created_at
+     * @return bool|array Containing last_changed, created_at
      */
-    public static function getTimestamp(string $Key)
+    public static function getTimestamp(string $Key): bool|array
     {
         if (self::$Database_Connection === null) {
             self::initDB();
@@ -119,10 +119,7 @@ class Config
         $statement->execute(array(":ID" => $Key));
         if ($statement->rowCount() > 0) {
 
-            $Result = $statement->fetch(PDO::FETCH_ASSOC);
-
-
-            return $Result;
+            return $statement->fetch(PDO::FETCH_ASSOC);
         }
         return false;
     }
@@ -130,10 +127,10 @@ class Config
     /**
      * Create a new KV Storage entry using the specified key and value
      * @param string $Key the key to insert
-     * @param string $Value the value to insert
+     * @param mixed $Value the value to insert
      * @return boolean TRUE on success, on failure FALSE
      */
-    public static function create($Key, $Value)
+    public static function create(string $Key, mixed $Value): bool
     {
         if (self::$Database_Connection === null) {
             self::initDB();
@@ -153,7 +150,7 @@ class Config
      * @param string $Key the key to insert
      * @return boolean TRUE on success, on failure FALSE
      */
-    public static function delete($Key)
+    public static function delete(string $Key): bool
     {
         if (self::$Database_Connection === null) {
             self::initDB();
@@ -165,10 +162,10 @@ class Config
     /**
      * Updates a value for a key in the KV Storage
      * @param string $Key Existing key to change the value from
-     * @param string $Value The value to set
+     * @param mixed $Value The value to set
      * @return boolean TRUE on success, otherwise FALSE
      */
-    public static function set($Key, $Value)
+    public static function set(string $Key, mixed $Value): bool
     {
         if (self::$Database_Connection === null) {
             self::initDB();
@@ -178,16 +175,12 @@ class Config
             Config::create($Key, $Value);
         }
 
-        $Type = gettype($Value);
+        $Type = match($Value){
+            null => "NULL",
+            (is_array($Value) || is_object($Value)),Helper::isSerialized($Value) => "serialized",
+            default => gettype($Value)
+        };
 
-        if (Helper::isSerialized($Value)) {
-            $Type = "serialized";
-        }
-
-        if (is_array($Value) || is_object($Value)) {
-            $Type = "serialized";
-            $Value = serialize($Value);
-        }
         if ($Type == "boolean") {
             $Value = ($Value ? 1 : 0);
         }
@@ -201,10 +194,10 @@ class Config
 
     /**
      * Returns all keys and values from the KV Storage
-     * @param type $KV List keys as associative array?
+     * @param bool $KV List keys as associative array?
      * @return array
      */
-    public static function list($KV = false)
+    public static function list(bool $KV = false): array
     {
         if (self::$Database_Connection === null) {
             self::initDB();

@@ -20,22 +20,21 @@
 
 namespace crisp\api;
 
-use \PDO;
-use \PDOException;
-use \PDORow;
-use \PDOStatement;
+use crisp\api\lists\Languages;
+use crisp\core\MySQL;
+use PDO;
 
 /**
  * Interact with a language
  */
-class Language extends \crisp\api\lists\Languages {
+class Language extends Languages {
 
     private PDO $Database_Connection;
     public int $LanguageID;
-    public $Language;
+    public mixed $Language;
 
     public function __construct($LanguageID) {
-        $DB = new \crisp\core\MySQL();
+        $DB = new MySQL();
         $this->Database_Connection = $DB->getDBConnector();
         if (is_numeric($LanguageID)) {
             $this->LanguageID = $LanguageID;
@@ -46,9 +45,10 @@ class Language extends \crisp\api\lists\Languages {
 
     /**
      * Fetches a language's details
-     * @return array
+     * @return array|null
      */
-    public function fetch() {
+    public function fetch(): ?array
+    {
         if ($this->LanguageID === null) {
             return null;
         }
@@ -56,15 +56,16 @@ class Language extends \crisp\api\lists\Languages {
         $statement = $this->Database_Connection->prepare("SELECT * FROM Languages WHERE ID = :ID");
         $statement->execute(array(":ID" => $this->LanguageID));
 
-        return $statement->fetch(\PDO::FETCH_ASSOC);
+        return $statement->fetch(PDO::FETCH_ASSOC);
     }
 
     /**
      * Enables a language
+     * @return bool|null
      * @see disable
-     * @return boolean
      */
-    public function enable() {
+    public function enable(): ?bool
+    {
         if ($this->LanguageID === null) {
             return null;
         }
@@ -75,10 +76,11 @@ class Language extends \crisp\api\lists\Languages {
 
     /**
      * Disables a language
+     * @return bool|null
      * @see enable
-     * @return boolean
      */
-    public function disable() {
+    public function disable(): ?bool
+    {
         if ($this->LanguageID === null) {
             return null;
         }
@@ -89,9 +91,10 @@ class Language extends \crisp\api\lists\Languages {
 
     /**
      * Checks wether a language is enabled or not
-     * @return boolean
+     * @return bool|null
      */
-    public function isEnabled() {
+    public function isEnabled(): ?bool
+    {
         if ($this->LanguageID === null) {
             return null;
         }
@@ -99,14 +102,15 @@ class Language extends \crisp\api\lists\Languages {
         $statement = $this->Database_Connection->prepare("SELECT Enabled FROM Languages WHERE ID = :ID");
         $statement->execute(array(":ID" => $this->LanguageID));
 
-        return $statement->fetch(\PDO::FETCH_ASSOC)["enabled"];
+        return $statement->fetch(PDO::FETCH_ASSOC)["enabled"];
     }
 
     /**
      * Check if the language exists in the database
-     * @return boolean
+     * @return bool|null
      */
-    public function exists() {
+    public function exists(): ?bool
+    {
         if ($this->LanguageID === null) {
             return null;
         }
@@ -120,9 +124,10 @@ class Language extends \crisp\api\lists\Languages {
     /**
      * Sets a new name for the language
      * @param string $Name The new name of the language
-     * @return boolean TRUE if successfully set, otherwise false
+     * @return bool|null TRUE if successfully set, otherwise false
      */
-    public function setName(string $Name) {
+    public function setName(string $Name): ?bool
+    {
         if ($this->LanguageID === null) {
             return null;
         }
@@ -133,9 +138,10 @@ class Language extends \crisp\api\lists\Languages {
 
     /**
      * Gets the name of the language
-     * @return string
+     * @return string|null
      */
-    public function getName() {
+    public function getName(): ?string
+    {
         if ($this->LanguageID === null) {
             return null;
         }
@@ -143,15 +149,16 @@ class Language extends \crisp\api\lists\Languages {
         $statement = $this->Database_Connection->prepare("SELECT Name FROM Languages WHERE ID = :ID");
         $statement->execute(array(":ID" => $this->LanguageID));
 
-        return $statement->fetch(\PDO::FETCH_ASSOC)["name"];
+        return $statement->fetch(PDO::FETCH_ASSOC)["name"];
     }
 
     /**
      * Sets the code of the language
      * @param string $Code The new language code
-     * @return boolean TRUE if successfully set, otherwise false
+     * @return bool|null TRUE if successfully set, otherwise false
      */
-    public function setCode(string $Code) {
+    public function setCode(string $Code): ?bool
+    {
         if ($this->LanguageID === null) {
             return null;
         }
@@ -162,9 +169,10 @@ class Language extends \crisp\api\lists\Languages {
 
     /**
      * Gets the code of a language
-     * @return boolean
+     * @return bool|null
      */
-    public function getCode() {
+    public function getCode(): ?bool
+    {
         if ($this->LanguageID === null) {
             return null;
         }
@@ -172,15 +180,16 @@ class Language extends \crisp\api\lists\Languages {
         $statement = $this->Database_Connection->prepare("SELECT Code FROM Languages WHERE ID = :ID");
         $statement->execute(array(":ID" => $this->LanguageID));
 
-        return $statement->fetch(\PDO::FETCH_ASSOC)["code"];
+        return $statement->fetch(PDO::FETCH_ASSOC)["code"];
     }
 
     /**
      * Sets the new native name of the language
      * @param string $NativeName The new native name
-     * @return boolean TRUE if successfully set, otherwise false
+     * @return bool|null TRUE if successfully set, otherwise false
      */
-    public function setNativeName(string $NativeName) {
+    public function setNativeName(string $NativeName): ?bool
+    {
         if ($this->LanguageID === null) {
             return null;
         }
@@ -191,9 +200,10 @@ class Language extends \crisp\api\lists\Languages {
 
     /**
      * Gets the native name of a language
-     * @return string
+     * @return string|null
      */
-    public function getNativeName() {
+    public function getNativeName(): ?string
+    {
         if ($this->LanguageID === null) {
             return null;
         }
@@ -201,15 +211,16 @@ class Language extends \crisp\api\lists\Languages {
         $statement = $this->Database_Connection->prepare("SELECT NativeName FROM Languages WHERE ID = :ID");
         $statement->execute(array(":ID" => $this->LanguageID));
 
-        return $statement->fetch(\PDO::FETCH_ASSOC)["nativename"];
+        return $statement->fetch(PDO::FETCH_ASSOC)["nativename"];
     }
 
     /**
      * Delete a translation key
      * @param string $Key The translation key
-     * @return bool
+     * @return bool|null
      */
-    public function deleteTranslation(string $Key) {
+    public function deleteTranslation(string $Key): ?bool
+    {
         if ($this->LanguageID === null) {
             return null;
         }
@@ -222,9 +233,10 @@ class Language extends \crisp\api\lists\Languages {
      * Edit a translation key
      * @param string $Key The translation key
      * @param string $Value The new value to set
-     * @return bool
+     * @return bool|null
      */
-    public function editTranslation(string $Key, string $Value) {
+    public function editTranslation(string $Key, string $Value): ?bool
+    {
         if ($this->LanguageID === null) {
             return null;
         }
@@ -238,9 +250,11 @@ class Language extends \crisp\api\lists\Languages {
      * Create a new translation key
      * @param string $Key The translation key to create
      * @param string $Value The translation text
-     * @return bool
+     * @param string $Language
+     * @return bool|null
      */
-    public function newTranslation(string $Key, string $Value, string $Language = "en") {
+    public function newTranslation(string $Key, string $Value, string $Language = "en"): ?bool
+    {
         if ($this->LanguageID === null) {
             return null;
         }
@@ -261,22 +275,24 @@ class Language extends \crisp\api\lists\Languages {
     /**
      * Sets the flag icon of a language
      * @param string $Flag The flag icon name, see Themes
-     * @return boolean TRUE if successfully set, otherwise false
+     * @return bool|null TRUE if successfully set, otherwise false
      */
-    public function setFlag(string $Flag) {
+    public function setFlag(string $Flag): ?bool
+    {
         if ($this->LanguageID === null) {
             return null;
         }
 
-        $statement = $this->Database_Connection->prepare("UPDATE Languages SET v = :Flag WHERE ID = :ID");
+        $statement = $this->Database_Connection->prepare("UPDATE Languages SET flag = :Flag WHERE ID = :ID");
         return $statement->execute(array(":Flag" => $Flag, ":ID" => $this->LanguageID));
     }
 
     /**
      * Gets the flag icon of a language
-     * @return string The current path of the flag
+     * @return string|null The current path of the flag
      */
-    public function getFlag() {
+    public function getFlag(): ?string
+    {
         if ($this->LanguageID === null) {
             return null;
         }
@@ -284,7 +300,7 @@ class Language extends \crisp\api\lists\Languages {
         $statement = $this->Database_Connection->prepare("SELECT Flag FROM Languages WHERE ID = :ID");
         $statement->execute(array(":ID" => $this->LanguageID));
 
-        return $statement->fetch(\PDO::FETCH_ASSOC)["flag"];
+        return $statement->fetch(PDO::FETCH_ASSOC)["flag"];
     }
 
 }

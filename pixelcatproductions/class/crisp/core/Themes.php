@@ -27,6 +27,8 @@ use Exception;
 use PDOException;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
+use stdClass;
+use Twig\Environment;
 use function file_exists;
 use function file_get_contents;
 use function function_exists;
@@ -39,7 +41,8 @@ use function serialize;
  * Used internally, theme loader
  *
  */
-class Themes {
+class Themes
+{
 
     use Hook;
 
@@ -47,10 +50,11 @@ class Themes {
      * Clear the theme cache
      * @return boolean
      */
-    public static function clearCache() {
+    public static function clearCache(): bool
+    {
         $it = new RecursiveDirectoryIterator(realpath(__DIR__ . "/../../../cache/"), RecursiveDirectoryIterator::SKIP_DOTS);
         $files = new RecursiveIteratorIterator($it,
-                RecursiveIteratorIterator::CHILD_FIRST);
+            RecursiveIteratorIterator::CHILD_FIRST);
         foreach ($files as $file) {
             if ($file->isDir()) {
                 rmdir($file->getRealPath());
@@ -61,7 +65,11 @@ class Themes {
         return true;
     }
 
-    public static function getThemeMode() {
+    /**
+     * @return string
+     */
+    public static function getThemeMode(): string
+    {
         if (isset($_COOKIE[Config::$Cookie_Prefix . "theme_mode"])) {
             $Mode = $_COOKIE[Config::$Cookie_Prefix . "theme_mode"];
         } else {
@@ -70,22 +78,36 @@ class Themes {
         return $Mode;
     }
 
-    public static function setThemeMode(string $Mode) {
+    /**
+     * @param string $Mode
+     * @return bool
+     */
+    public static function setThemeMode(string $Mode): bool
+    {
         return setcookie(Config::$Cookie_Prefix . "theme_mode", $Mode, time() + (86400 * 30), "/");
     }
 
     /**
      * Load API files and check if theme matches it.
+     * @param Environment $ThemeLoader
      * @param string $Interface The interface we are listening on
      * @param string $_QUERY The query
      */
-    public static function loadAPI($ThemeLoader, $Interface, $_QUERY) {
+    public static function loadAPI(Environment $ThemeLoader, string $Interface, string $_QUERY): void
+    {
         if (file_exists(__DIR__ . "/../../../../" . \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") . "/includes/api/$Interface.php")) {
             new ThemeAPI($ThemeLoader, $Interface, $_QUERY);
         }
     }
 
-    public static function load($TwigTheme, $CurrentFile, $CurrentPage) {
+    /**
+     * @param Environment $TwigTheme
+     * @param string $CurrentFile
+     * @param string $CurrentPage
+     * @throws Exception
+     */
+    public static function load(Environment $TwigTheme, string $CurrentFile, string $CurrentPage): void
+    {
         try {
             if (count($GLOBALS["render"]) === 0) {
                 if (file_exists(__DIR__ . "/../../../../" . \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") . "/includes/$CurrentPage.php") && Helper::templateExists(\crisp\api\Config::get("theme"), "/views/$CurrentPage.twig")) {
@@ -103,8 +125,9 @@ class Themes {
         }
     }
 
-    public static function includeResource($File, bool $Prefix = true, string $CDN = "cdn") {
-        if (strpos($File, "/") === 0) {
+    public static function includeResource($File, bool $Prefix = true, string $CDN = "cdn"): string
+    {
+        if (str_starts_with($File, "/")) {
             $File = substr($File, 1);
         }
 
@@ -115,7 +138,13 @@ class Themes {
         return (\crisp\api\Config::exists($CDN) ? \crisp\api\Config::get($CDN) : "") . "/" . ($Prefix ? \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") : "") . "/$File?" . hash_file("sha256", __DIR__ . "/../../../../" . \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") . "/$File");
     }
 
-    private static function performOnInstall($ThemeName, $ThemeMetadata) {
+    /**
+     * @param string $ThemeName
+     * @param stdClass $ThemeMetadata
+     * @return bool
+     */
+    private static function performOnInstall(string $ThemeName, stdClass $ThemeMetadata): bool
+    {
         if (!isset($ThemeMetadata->onInstall)) {
             return false;
         }
@@ -130,19 +159,33 @@ class Themes {
                 }
             }
         }
+        return true;
     }
 
-    public static function refreshTranslations($ThemeName, $ThemeMetadata) {
+    /**
+     * @param string $ThemeName
+     * @param stdClass $ThemeMetadata
+     * @return bool
+     */
+    public static function refreshTranslations(string $ThemeName, stdClass $ThemeMetadata): bool
+    {
         self::uninstallTranslations($ThemeMetadata);
         return self::installTranslations($ThemeName, $ThemeMetadata);
     }
 
-    public static function refreshKVStorage($ThemeMetadata) {
+    public static function refreshKVStorage(stdClass $ThemeMetadata): bool
+    {
         self::uninstallKVStorage($ThemeMetadata);
         return self::installKVStorage($ThemeMetadata);
     }
 
-    public static function installKVStorage($ThemeMetadata, bool $Overwrite = false) {
+    /**
+     * @param stdClass $ThemeMetadata
+     * @param bool $Overwrite
+     * @return bool
+     */
+    public static function installKVStorage(stdClass $ThemeMetadata, bool $Overwrite = false): bool
+    {
 
         if (!is_object($ThemeMetadata) && !isset($ThemeMetadata->hookFile)) {
             return false;
@@ -151,7 +194,7 @@ class Themes {
 
             if (defined("CRISP_CLI")) {
                 echo "----------" . PHP_EOL;
-                echo "Installing KVStorage for theme ". $ThemeMetadata->name . PHP_EOL;
+                echo "Installing KVStorage for theme " . $ThemeMetadata->name . PHP_EOL;
                 echo "----------" . PHP_EOL;
             }
 
@@ -159,7 +202,7 @@ class Themes {
                 if (is_array($Value) || is_object($Value)) {
                     $Value = serialize($Value);
                 }
-                if(!$Overwrite && \crisp\api\Config::exists($Key)){
+                if (!$Overwrite && \crisp\api\Config::exists($Key)) {
                     if (defined("CRISP_CLI")) {
                         echo "Skipping KV key $Key as it already exists and overwrite is false" . PHP_EOL;
                     }
@@ -181,7 +224,13 @@ class Themes {
         return true;
     }
 
-    public static function installTranslations($ThemeName, $ThemeMetadata) {
+    /**
+     * @param string $ThemeName
+     * @param stdClass $ThemeMetadata
+     * @return bool
+     */
+    public static function installTranslations(string $ThemeName, stdClass $ThemeMetadata): bool
+    {
         if (!is_object($ThemeMetadata) && !isset($ThemeMetadata->hookFile)) {
             return false;
         }
@@ -264,16 +313,27 @@ class Themes {
      * @param string $ThemeName The folder name of the theme
      * @return boolean TRUE if theme is installed, otherwise FALSE
      */
-    public static function isInstalled($ThemeName) {
-        return (\crisp\api\Config::get("theme") == $ThemeName);
+    public static function isInstalled(string $ThemeName): bool
+    {
+        return (\crisp\api\Config::get("theme") === $ThemeName);
     }
 
-    public static function isValid($ThemeName) {
+    /**
+     * @param string $ThemeName
+     * @return bool
+     */
+    public static function isValid(string $ThemeName): bool
+    {
         $ThemeFolder = \crisp\api\Config::get("theme_dir");
         return file_exists(__DIR__ . "/../../../../$ThemeFolder/$ThemeName/theme.json");
     }
 
-    public static function uninstall($ThemeName) {
+    /**
+     * @param string $ThemeName
+     * @return bool
+     */
+    public static function uninstall(string $ThemeName): bool
+    {
 
         $ThemeFolder = \crisp\api\Config::get("theme_dir");
 
@@ -294,13 +354,17 @@ class Themes {
         self::performOnUninstall($ThemeName, $ThemeMetadata);
 
 
-
         self::broadcastHook("themeUninstall_$ThemeName", null);
         self::broadcastHook("themeUninstall", $ThemeName);
         return true;
     }
 
-    private static function performOnUninstall($ThemeName, $ThemeMetadata) {
+    /**
+     * @param string $ThemeName
+     * @param stdClass $ThemeMetadata
+     */
+    private static function performOnUninstall(string $ThemeName, stdClass $ThemeMetadata)
+    {
 
         if (isset($ThemeMetadata->onUninstall->purgeDependencies) && is_array($ThemeMetadata->onUninstall->purgeDependencies)) {
             foreach ($ThemeMetadata->onUninstall->purgeDependencies as $Theme) {
@@ -318,16 +382,16 @@ class Themes {
 
     /**
      * Deletes all KVStorage Items from the Plugin
-     * 
+     *
      * If the theme is installed, it will get uninstalled first
      * @param string $ThemeName The folder name of the theme
      * @return boolean TRUE if the data has been successfully deleted
      */
-    public static function deleteData($ThemeName) {
+    public static function deleteData(string $ThemeName): bool
+    {
 
         if (self::isInstalled($ThemeName)) {
-            self::uninstall($ThemeName);
-            return;
+            return self::uninstall($ThemeName);
         }
 
         $ThemeFolder = \crisp\api\Config::get("theme_dir");
@@ -342,14 +406,24 @@ class Themes {
         self::uninstallTranslations($ThemeMetadata);
     }
 
-    public static function reinstall($ThemeName) {
+    /**
+     * @param string $ThemeName
+     * @return bool
+     */
+    public static function reinstall(string $ThemeName): bool
+    {
         if (!self::uninstall($ThemeName)) {
             return false;
         }
         return self::install($ThemeName);
     }
 
-    public static function getThemeMetadata($ThemeName) {
+    /**
+     * @param string $ThemeName
+     * @return mixed
+     */
+    public static function getThemeMetadata(string $ThemeName): mixed
+    {
         $ThemeFolder = \crisp\api\Config::get("theme_dir");
 
         if (!file_exists(__DIR__ . "/../../../../$ThemeFolder/$ThemeName/theme.json")) {
@@ -359,7 +433,8 @@ class Themes {
         return json_decode(file_get_contents(__DIR__ . "/../../../../$ThemeFolder/$ThemeName/theme.json"));
     }
 
-    public static function uninstallKVStorage($ThemeMetadata) {
+    public static function uninstallKVStorage($ThemeMetadata): bool
+    {
         if (!is_object($ThemeMetadata) && !isset($ThemeMetadata->hookFile)) {
             return false;
         }
@@ -369,9 +444,11 @@ class Themes {
                 \crisp\api\Config::delete($Key);
             }
         }
+        return true;
     }
 
-    public static function uninstallTranslations($ThemeMetadata) {
+    public static function uninstallTranslations($ThemeMetadata): bool
+    {
         if (!is_object($ThemeMetadata) && !isset($ThemeMetadata->hookFile)) {
             return false;
         }
@@ -387,7 +464,7 @@ class Themes {
             $Language = Languages::getLanguageByCode("en");
 
             foreach ($Configs as $Key => $Translation) {
-                if (strpos($Translation["key"], "plugin_") !== false) {
+                if (str_contains($Translation["key"], "plugin_")) {
                     continue;
                 }
 
@@ -400,12 +477,18 @@ class Themes {
                     }
                 }
             }
-        } catch (PDOException $ex) {
-            
+        } catch (PDOException) {
+
         }
+        return true;
     }
 
-    public static function install($ThemeName) {
+    /**
+     * @param string $ThemeName
+     * @return bool
+     */
+    public static function install(string $ThemeName): bool
+    {
 
         if (\crisp\api\Config::get("theme") !== false && \crisp\api\Config::get("theme") == $ThemeName) {
             return false;
@@ -428,8 +511,8 @@ class Themes {
             echo "No hookfile in theme.json found!" . PHP_EOL;
             return false;
         }
-        
-        
+
+
         self::broadcastHook("themeInstall_$ThemeName", time());
         self::broadcastHook("themeInstall", $ThemeName);
 
@@ -439,10 +522,11 @@ class Themes {
     /**
      * Registers an uninstall hook for your theme.
      * @param string $ThemeName
-     * @param string|function $Function Callback function, either anonymous or a string to a function
-     * @returns boolean TRUE if hook could be registered, otherwise false
+     * @param mixed $Function Callback function, either anonymous or a string to a function
+     * @return bool
      */
-    public static function registerUninstallHook($ThemeName, $Function) {
+    public static function registerUninstallHook(string $ThemeName, mixed $Function): bool
+    {
         if (is_callable($Function) || function_exists($ThemeName)($Function)) {
             self::on("themeUninstall_$ThemeName", $Function);
             return true;
@@ -453,10 +537,11 @@ class Themes {
     /**
      * Registers an install hook for your theme.
      * @param string $ThemeName
-     * @param string|function $Function Callback function, either anonymous or a string to a function
-     * @returns boolean TRUE if hook could be registered, otherwise false
+     * @param mixed $Function Callback function, either anonymous or a string to a function
+     * @return bool
      */
-    public static function registerInstallHook($ThemeName, $Function) {
+    public static function registerInstallHook(string $ThemeName, mixed $Function): bool
+    {
         if (is_callable($Function) || function_exists($ThemeName)($Function)) {
             self::on("themeInstall_$ThemeName", $Function);
             return true;

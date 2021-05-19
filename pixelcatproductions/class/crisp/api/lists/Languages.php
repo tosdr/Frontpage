@@ -40,12 +40,13 @@ class Languages {
     self::$Database_Connection = $DB->getDBConnector();
   }
 
-  /**
-   * Fetches all languages
-   * @param bool $FetchIntoClass Should we fetch the result into new \crisp\api\Language()?
-   * @return bool|array|Language with all languages
-   */
-  public static function fetchLanguages($FetchIntoClass = true) {
+    /**
+     * Fetches all languages
+     * @param bool $FetchIntoClass Should we fetch the result into new \crisp\api\Language()?
+     * @return array|Language with all languages
+     */
+  public static function fetchLanguages(bool $FetchIntoClass = true): array|Language
+  {
     if (self::$Database_Connection === null) {
       self::initDB();
     }

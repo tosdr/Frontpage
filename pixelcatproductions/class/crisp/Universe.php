@@ -47,7 +47,8 @@ class Universe {
       };
   }
 
-  public static function getUniverseName($value) {
+  public static function getUniverseName($value): string
+  {
     $class = new \ReflectionClass(__CLASS__);
     $constants = array_flip($class->getConstants());
 

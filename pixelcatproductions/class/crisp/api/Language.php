@@ -20,22 +20,21 @@
 
 namespace crisp\api;
 
-use \PDO;
-use \PDOException;
-use \PDORow;
-use \PDOStatement;
+use crisp\api\lists\Languages;
+use crisp\core\MySQL;
+use PDO;
 
 /**
  * Interact with a language
  */
-class Language extends \crisp\api\lists\Languages {
+class Language extends Languages {
 
     private PDO $Database_Connection;
     public int $LanguageID;
-    public $Language;
+    public mixed $Language;
 
     public function __construct($LanguageID) {
-        $DB = new \crisp\core\MySQL();
+        $DB = new MySQL();
         $this->Database_Connection = $DB->getDBConnector();
         if (is_numeric($LanguageID)) {
             $this->LanguageID = $LanguageID;
@@ -56,7 +55,7 @@ class Language extends \crisp\api\lists\Languages {
         $statement = $this->Database_Connection->prepare("SELECT * FROM Languages WHERE ID = :ID");
         $statement->execute(array(":ID" => $this->LanguageID));
 
-        return $statement->fetch(\PDO::FETCH_ASSOC);
+        return $statement->fetch(PDO::FETCH_ASSOC);
     }
 
     /**
@@ -99,7 +98,7 @@ class Language extends \crisp\api\lists\Languages {
         $statement = $this->Database_Connection->prepare("SELECT Enabled FROM Languages WHERE ID = :ID");
         $statement->execute(array(":ID" => $this->LanguageID));
 
-        return $statement->fetch(\PDO::FETCH_ASSOC)["enabled"];
+        return $statement->fetch(PDO::FETCH_ASSOC)["enabled"];
     }
 
     /**
@@ -143,7 +142,7 @@ class Language extends \crisp\api\lists\Languages {
         $statement = $this->Database_Connection->prepare("SELECT Name FROM Languages WHERE ID = :ID");
         $statement->execute(array(":ID" => $this->LanguageID));
 
-        return $statement->fetch(\PDO::FETCH_ASSOC)["name"];
+        return $statement->fetch(PDO::FETCH_ASSOC)["name"];
     }
 
     /**
@@ -172,7 +171,7 @@ class Language extends \crisp\api\lists\Languages {
         $statement = $this->Database_Connection->prepare("SELECT Code FROM Languages WHERE ID = :ID");
         $statement->execute(array(":ID" => $this->LanguageID));
 
-        return $statement->fetch(\PDO::FETCH_ASSOC)["code"];
+        return $statement->fetch(PDO::FETCH_ASSOC)["code"];
     }
 
     /**
@@ -201,7 +200,7 @@ class Language extends \crisp\api\lists\Languages {
         $statement = $this->Database_Connection->prepare("SELECT NativeName FROM Languages WHERE ID = :ID");
         $statement->execute(array(":ID" => $this->LanguageID));
 
-        return $statement->fetch(\PDO::FETCH_ASSOC)["nativename"];
+        return $statement->fetch(PDO::FETCH_ASSOC)["nativename"];
     }
 
     /**
@@ -284,7 +283,7 @@ class Language extends \crisp\api\lists\Languages {
         $statement = $this->Database_Connection->prepare("SELECT Flag FROM Languages WHERE ID = :ID");
         $statement->execute(array(":ID" => $this->LanguageID));
 
-        return $statement->fetch(\PDO::FETCH_ASSOC)["flag"];
+        return $statement->fetch(PDO::FETCH_ASSOC)["flag"];
     }
 
 }

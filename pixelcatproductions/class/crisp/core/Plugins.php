@@ -811,10 +811,10 @@ class Plugins
     /**
      * Registers an uninstall hook for your plugin.
      * @param string $PluginName
-     * @param string|function $Function Callback function, either anonymous or a string to a function
-     * @returns boolean TRUE if hook could be registered, otherwise false
+     * @param mixed $Function Callback function, either anonymous or a string to a function
+     * @return bool
      */
-    public static function registerUninstallHook($PluginName, $Function)
+    public static function registerUninstallHook(string $PluginName, mixed $Function): bool
     {
         if (is_callable($Function) || function_exists($PluginName)($Function)) {
             self::on("pluginUninstall_$PluginName", $Function);

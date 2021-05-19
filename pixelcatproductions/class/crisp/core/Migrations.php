@@ -72,7 +72,8 @@ class Migrations {
      * @since 0.0.8-beta.RC2
      * @return boolean
      */
-    protected function rollback() {
+    protected function rollback(): bool
+    {
         echo "Rolling back..." . PHP_EOL;
         if ($this->Database->rollBack()) {
             echo "Rolled back!" . PHP_EOL;

@@ -21,7 +21,7 @@ namespace crisp\core;
 
 use crisp\api\Helper;
 use crisp\exceptions\BitmaskException;
-use TwigEnvironment;
+use Twig\Environment;
 
 /**
  * Used internally, plugin loader
@@ -31,9 +31,9 @@ class Theme {
 
     use Hook;
 
-    private $TwigTheme;
-    public $CurrentFile;
-    public $CurrentPage;
+    private Environment $TwigTheme;
+    public string $CurrentFile;
+    public string $CurrentPage;
 
     /**
      * Add an item to the theme's navigation bar
@@ -43,10 +43,11 @@ class Theme {
      * @param string $Target HTML a=target
      * @param int $Order The order to appear on the navbar
      * @param string $Placement Placed left or right of the navbar if supported by theme
-     * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#target Link Target
      * @return boolean
+     *@see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#target Link Target
      */
-    public static function addtoNavbar($ID, $Text, $Link, $Target = "_self", $Order = 0, $Placement = "left") {
+    public static function addToNavbar(string $ID, string $Text, string $Link, string $Target = "_self", int $Order = 0, string $Placement = "left"): bool
+    {
         if ($Placement == "right") {
 
             $GLOBALS["navbar_right"][$ID] = array("ID" => $ID, "html" => $Text, "href" => $Link, "target" => $Target, "order" => $Order);

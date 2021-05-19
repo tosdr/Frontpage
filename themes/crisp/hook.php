@@ -21,15 +21,15 @@ use crisp\api\Config;
 use crisp\api\Helper;
 use crisp\core\Theme;
 
-Theme::addtoNavbar("frontpage", crisp\api\Translation::fetch("components.navbar.home"), Helper::generateLink("frontpage"), "_self", -99);
-Theme::addtoNavbar("ratings", crisp\api\Translation::fetch("components.navbar.ratings"), Helper::generateLink("frontpage#ratings"), "_self", -98);
-Theme::addtoNavbar("api", crisp\api\Translation::fetch("components.navbar.api"), Helper::generateLink("api"), "_self", -95);
-Theme::addtoNavbar("forum", crisp\api\Translation::fetch("components.navbar.forum"), Helper::generateLink(Config::get("forum_url"), true), "_self", -94);
-Theme::addtoNavbar("status", crisp\api\Translation::fetch("components.navbar.status"), Helper::generateLink(Config::get("status_url"), true), "_self", -92);
-Theme::addtoNavbar("donate", crisp\api\Translation::fetch("components.navbar.donate"), Helper::generateLink("donate"), "_self", 0, "right");
-Theme::addtoNavbar("about", crisp\api\Translation::fetch("components.navbar.about"), Helper::generateLink("about"), "_self", -97);
-Theme::addtoNavbar("downloads", crisp\api\Translation::fetch("components.navbar.download"), Helper::generateLink("downloads"), "_self", -96);
-Theme::addtoNavbar("new_service", crisp\api\Translation::fetch("components.navbar.request_service"), Helper::generateLink("new_service"), "_self", 100);
+Theme::addToNavbar("frontpage", crisp\api\Translation::fetch("components.navbar.home"), Helper::generateLink("frontpage"), "_self", -99);
+Theme::addToNavbar("ratings", crisp\api\Translation::fetch("components.navbar.ratings"), Helper::generateLink("frontpage#ratings"), "_self", -98);
+Theme::addToNavbar("api", crisp\api\Translation::fetch("components.navbar.api"), Helper::generateLink("api"), "_self", -95);
+Theme::addToNavbar("forum", crisp\api\Translation::fetch("components.navbar.forum"), Helper::generateLink(Config::get("forum_url"), true), "_self", -94);
+Theme::addToNavbar("status", crisp\api\Translation::fetch("components.navbar.status"), Helper::generateLink(Config::get("status_url"), true), "_self", -92);
+Theme::addToNavbar("donate", crisp\api\Translation::fetch("components.navbar.donate"), Helper::generateLink("donate"), "_self", 0, "right");
+Theme::addToNavbar("about", crisp\api\Translation::fetch("components.navbar.about"), Helper::generateLink("about"), "_self", -97);
+Theme::addToNavbar("downloads", crisp\api\Translation::fetch("components.navbar.download"), Helper::generateLink("downloads"), "_self", -96);
+Theme::addToNavbar("new_service", crisp\api\Translation::fetch("components.navbar.request_service"), Helper::generateLink("new_service"), "_self", 100);
 if (explode("/", $_GET["route"])[1] !== "api") {
     if (Config::get("maintenance_enabled") || isset($_GET["simulate_maintenance"])) {
         http_response_code(503);

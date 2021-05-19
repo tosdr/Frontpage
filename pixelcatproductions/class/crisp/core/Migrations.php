@@ -242,7 +242,12 @@ class Migrations {
         throw new Exception($statement->errorInfo());
     }
 
-    public function deleteByPlugin($PluginName) {
+    /**
+     * @param $PluginName
+     * @return bool
+     */
+    public function deleteByPlugin($PluginName): bool
+    {
         $statement = $this->Database->prepare("DELETE FROM schema_migration WHERE plugin = :Plugin");
 
         return $statement->execute(array(":Plugin" => $PluginName));

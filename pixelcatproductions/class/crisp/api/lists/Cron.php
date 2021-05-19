@@ -84,7 +84,7 @@ class Cron {
         if (self::$Database_Connection === null) {
             self::initDB();
         }
-        $statement = self::$Database_Connection->prepare("SELECT * FROM Cron WHERE Finished = 0 ORDER BY ID ASC LIMIT $Limit;");
+        $statement = self::$Database_Connection->prepare("SELECT * FROM Cron WHERE Finished = 0 ORDER BY ID LIMIT $Limit;");
         $statement->execute();
 
         return $statement->fetchAll(PDO::FETCH_ASSOC);

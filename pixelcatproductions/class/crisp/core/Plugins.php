@@ -383,7 +383,7 @@ class Plugins
         return $statement->rowCount() > 0;
     }
 
-    public static function isValid($PluginName)
+    public static function isValid($PluginName): bool
     {
         $PluginFolder = \crisp\api\Config::get("plugin_dir");
         return file_exists(__DIR__ . "/../../../../$PluginFolder/$PluginName/plugin.json");

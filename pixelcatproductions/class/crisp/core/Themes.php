@@ -522,10 +522,10 @@ class Themes
     /**
      * Registers an uninstall hook for your theme.
      * @param string $ThemeName
-     * @param string|function $Function Callback function, either anonymous or a string to a function
-     * @returns boolean TRUE if hook could be registered, otherwise false
+     * @param mixed $Function Callback function, either anonymous or a string to a function
+     * @return bool
      */
-    public static function registerUninstallHook($ThemeName, $Function)
+    public static function registerUninstallHook(string $ThemeName, mixed $Function): bool
     {
         if (is_callable($Function) || function_exists($ThemeName)($Function)) {
             self::on("themeUninstall_$ThemeName", $Function);

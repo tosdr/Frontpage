@@ -289,9 +289,10 @@ class Language extends Languages {
 
     /**
      * Gets the flag icon of a language
-     * @return string The current path of the flag
+     * @return string|null The current path of the flag
      */
-    public function getFlag() {
+    public function getFlag(): ?string
+    {
         if ($this->LanguageID === null) {
             return null;
         }

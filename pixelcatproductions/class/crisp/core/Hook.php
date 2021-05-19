@@ -30,13 +30,12 @@ trait Hook {
     /**
      * Listen on a specific hook and wait for it's message
      * @param string $channel The hook to listen on
-     * @param function|string $func The function to send the response to
+     * @param mixed $func The function to send the response to
      */
-    public static function on($channel, $func) {
+    public static function on(string $channel, mixed $func) {
         if (!isset($GLOBALS['hook'][$channel])) {
 
             $GLOBALS['hook'][$channel] = array();
-            //$GLOBALS['hook'][$channel]["parameters"] = null;
         }
 
         array_push($GLOBALS['hook'][$channel], $func);

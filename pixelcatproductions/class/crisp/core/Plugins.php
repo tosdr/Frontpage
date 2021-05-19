@@ -765,14 +765,14 @@ class Plugins
      * Install a plugin and load it into the CMS
      * @broadcasts pluginInstall
      * @param string $PluginName The Folder name of the Plugin
-     * @param Environment $TwigTheme The twig theme component
-     * @param string $CurrentFile The current file, __FILE__
-     * @param string $CurrentPage The current page template to render
+     * @param Environment|null $TwigTheme The twig theme component
+     * @param string|null $CurrentFile The current file, __FILE__
+     * @param string|null $CurrentPage The current page template to render
      * @return boolean TRUE if install was successful, otherwise FALSE
      * @throws BitmaskException
      * @see registerInstallHook
      */
-    public static function install(string $PluginName, Environment $TwigTheme, string $CurrentFile, string $CurrentPage): bool
+    public static function install(string $PluginName, ?Environment $TwigTheme, ?string $CurrentFile, ?string $CurrentPage): bool
     {
 
         $DB = new MySQL();

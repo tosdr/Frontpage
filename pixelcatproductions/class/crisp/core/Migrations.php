@@ -20,6 +20,10 @@
 
 namespace crisp\core;
 
+use crisp\api\Helper;
+use Exception;
+use PDO;
+
 /**
  * Crisp DB Migration Class
  * @since 0.0.8-beta.RC1
@@ -28,9 +32,9 @@ class Migrations {
 
     /**
      * The PDO Database
-     * @var \PDO
+     * @var PDO
      */
-    protected \PDO $Database;
+    protected PDO $Database;
 
     /* Data types */
 
@@ -106,14 +110,15 @@ class Migrations {
      * @since 0.0.8-beta.RC2
      * @return boolean
      */
-    public function isMigrated(string $file) {
+    public function isMigrated(string $file): bool
+    {
 
         try {
             $statement = $this->Database->prepare("SELECT * FROM schema_migration WHERE file =:file");
 
             $statement->execute(array(":file" => $file));
-            return ($statement->rowCount() > 0 ? true : false);
-        } catch (\Exception $ex) {
+            return $statement->rowCount() > 0;
+        } catch (Exception) {
             return false;
         }
     }
@@ -186,7 +191,7 @@ class Migrations {
      */
     public static function create(string $MigrationName, string $Dir = __DIR__ . "/../") {
 
-        $MigrationNameFiltered = \crisp\api\Helper::filterAlphaNum($MigrationName);
+        $MigrationNameFiltered = Helper::filterAlphaNum($MigrationName);
 
         $Template = file_get_contents(__DIR__ . "/../migrations/template.php");
 
@@ -216,7 +221,7 @@ class Migrations {
      * @param string $IndexName The name of the index, Unused if PRIMARYKEY
      * @return boolean
      * @since 0.0.8-beta.RC2
-     * @throws \Exception on PDO Error
+     * @throws Exception on PDO Error
      */
     protected function addIndex(string $Table, string $Column, $Type = self::DB_PRIMARYKEY, string $IndexName = null) {
         $SQL = "";
@@ -234,7 +239,7 @@ class Migrations {
             return true;
         }
         echo "Failed to add Index to Table $Table!" . PHP_EOL;
-        throw new \Exception($statement->errorInfo());
+        throw new Exception($statement->errorInfo());
     }
 
     public function deleteByPlugin($PluginName) {
@@ -248,7 +253,7 @@ class Migrations {
      * @param string $Table The table name
      * @param string $Column The name of the column
      * @return boolean
-     * @throws \Exception on PDO Error
+     * @throws Exception on PDO Error
      * @since 0.0.8-beta.RC3
      */
     protected function dropColumn(string $Table, string $Column) {
@@ -262,7 +267,7 @@ class Migrations {
             return true;
         }
         echo "Failed to remove Column from Table $Table!" . PHP_EOL;
-        throw new \Exception($statement->errorInfo());
+        throw new Exception($statement->errorInfo());
     }
 
     /**
@@ -270,7 +275,7 @@ class Migrations {
      * @param string $Table The table name
      * @param array $Column An array consisting of the column name, column type and additional info, e.g. array("ColName, self::DB_VARCHAR, "NOT NULL")
      * @return boolean
-     * @throws \Exception on PDO Error
+     * @throws Exception on PDO Error
      * @since 0.0.8-beta.RC2
      */
     protected function addColumn(string $Table, array $Column) {
@@ -284,7 +289,7 @@ class Migrations {
             return true;
         }
         echo "Failed to add Column to Table $Table!" . PHP_EOL;
-        throw new \Exception($statement->errorInfo());
+        throw new Exception($statement->errorInfo());
     }
 
     /**
@@ -293,7 +298,7 @@ class Migrations {
      * @param mixed ...$Columns An array consisting of the column name, column type and additional info, e.g. array("ColName, self::DB_VARCHAR, "NOT NULL")
      * @return boolean
      * @since 0.0.8-beta.RC2
-     * @throws \Exception
+     * @throws Exception
      */
     protected function createTable(string $Table, ...$Columns) {
         echo "Creating Table $Table..." . PHP_EOL;
@@ -322,7 +327,7 @@ class Migrations {
             return true;
         }
         echo "Failed to create Table $Table!" . PHP_EOL;
-        throw new \Exception($statement->errorInfo());
+        throw new Exception($statement->errorInfo());
     }
 
 }

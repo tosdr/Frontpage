@@ -387,12 +387,11 @@ class Themes
      * @param string $ThemeName The folder name of the theme
      * @return boolean TRUE if the data has been successfully deleted
      */
-    public static function deleteData($ThemeName)
+    public static function deleteData(string $ThemeName): bool
     {
 
         if (self::isInstalled($ThemeName)) {
             self::uninstall($ThemeName);
-            return;
         }
 
         $ThemeFolder = \crisp\api\Config::get("theme_dir");

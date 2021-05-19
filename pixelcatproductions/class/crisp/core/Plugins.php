@@ -27,6 +27,7 @@ use crisp\api\Translation;
 use crisp\core;
 use crisp\exceptions\BitmaskException;
 use Exception;
+use http\Env;
 use JetBrains\PhpStorm\ArrayShape;
 use JetBrains\PhpStorm\NoReturn;
 use PDO;
@@ -758,13 +759,14 @@ class Plugins
      * Install a plugin and load it into the CMS
      * @broadcasts pluginInstall
      * @param string $PluginName The Folder name of the Plugin
-     * @param TwigEnvironment $TwigTheme The twig theme component
+     * @param Environment $TwigTheme The twig theme component
      * @param string $CurrentFile The current file, __FILE__
      * @param string $CurrentPage The current page template to render
      * @return boolean TRUE if install was successful, otherwise FALSE
+     * @throws BitmaskException
      * @see registerInstallHook
      */
-    public static function install($PluginName, $TwigTheme, $CurrentFile, $CurrentPage)
+    public static function install(string $PluginName, Environment $TwigTheme, string $CurrentFile, string $CurrentPage): bool
     {
 
         $DB = new MySQL();

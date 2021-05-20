@@ -47,8 +47,8 @@ class APIKey {
             return null;
         }
 
-        $statement = $this->Database_Connection->prepare("SELECT * FROM APIKeys WHERE `key` = :ID");
-        $statement->execute(array(":ID" => $this->APIKey));
+        $statement = $this->Database_Connection->prepare('SELECT * FROM APIKeys WHERE `key` = :ID');
+        $statement->execute([':ID' => $this->APIKey]);
 
         return $statement->fetch(PDO::FETCH_ASSOC);
     }
@@ -64,8 +64,8 @@ class APIKey {
             return null;
         }
 
-        $statement = $this->Database_Connection->prepare("UPDATE APIKeys SET revoked = 0 WHERE `key` = :ID");
-        return $statement->execute(array(":ID" => $this->APIKey));
+        $statement = $this->Database_Connection->prepare('UPDATE APIKeys SET revoked = 0 WHERE `key` = :ID');
+        return $statement->execute([':ID' => $this->APIKey]);
     }
 
     /**
@@ -79,8 +79,8 @@ class APIKey {
             return null;
         }
 
-        $statement = $this->Database_Connection->prepare("UPDATE APIKeys SET revoked = 0 WHERE `key` = :ID");
-        return $statement->execute(array(":ID" => $this->APIKey));
+        $statement = $this->Database_Connection->prepare('UPDATE APIKeys SET revoked = 0 WHERE `key` = :ID');
+        return $statement->execute([':ID' => $this->APIKey]);
     }
 
     /**
@@ -93,10 +93,10 @@ class APIKey {
             return null;
         }
 
-        $statement = $this->Database_Connection->prepare("SELECT * FROM APIKeys WHERE `key` = :ID");
-        $statement->execute(array(":ID" => $this->APIKey));
+        $statement = $this->Database_Connection->prepare('SELECT * FROM APIKeys WHERE `key` = :ID');
+        $statement->execute([':ID' => $this->APIKey]);
 
-        return !$statement->fetch(PDO::FETCH_ASSOC)["revoked"];
+        return !$statement->fetch(PDO::FETCH_ASSOC)['revoked'];
     }
 
     /**
@@ -109,10 +109,10 @@ class APIKey {
             return null;
         }
 
-        $statement = $this->Database_Connection->prepare("SELECT * FROM APIKeys WHERE `key` = :ID");
-        $statement->execute(array(":ID" => $this->APIKey));
+        $statement = $this->Database_Connection->prepare('SELECT * FROM APIKeys WHERE `key` = :ID');
+        $statement->execute([':ID' => $this->APIKey]);
 
-        return ($statement->rowCount() != 0);
+        return ($statement->rowCount() > 0);
     }
 
 }

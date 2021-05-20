@@ -40,17 +40,17 @@ class Migrations
 
     /* Data types */
 
-    const DB_VARCHAR = 'varchar(255)';
-    const DB_TEXT = 'text';
-    const DB_INTEGER = 'integer';
-    const DB_TIMESTAMP = 'timestamp';
-    const DB_BOOL = 'smallint';
-    const DB_LONGTEXT = 'text';
-    const DB_BIGINT = 'bigint';
+    public const DB_VARCHAR = 'varchar(255)';
+    public const DB_TEXT = 'text';
+    public const DB_INTEGER = 'integer';
+    public const DB_TIMESTAMP = 'timestamp';
+    public const DB_BOOL = 'smallint';
+    public const DB_LONGTEXT = 'text';
+    public const DB_BIGINT = 'bigint';
 
     /* Keys */
-    const DB_PRIMARYKEY = 'PRIMARY';
-    const DB_UNIQUEKEY = 'UNIQUE';
+    public const DB_PRIMARYKEY = 'PRIMARY';
+    public const DB_UNIQUEKEY = 'UNIQUE';
 
     public function __construct()
     {
@@ -119,7 +119,7 @@ class Migrations
         try {
             $statement = $this->Database->prepare('SELECT * FROM schema_migration WHERE file =:file');
 
-            $statement->execute(array(':file' => $file));
+            $statement->execute([':file' => $file]);
             return $statement->rowCount() > 0;
         } catch (Exception) {
             return false;
@@ -170,7 +170,7 @@ class Migrations
 
                 $statement = $this->Database->prepare('INSERT INTO schema_migration (file, plugin) VALUES (:file, :plugin)');
 
-                $statement->execute(array(':file' => $MigrationName, ':plugin' => $Plugin));
+                $statement->execute([':file' => $MigrationName, ':plugin' => $Plugin]);
 
                 Helper::writeConsole("Migrated $MigrationName");
             } else {
@@ -193,10 +193,10 @@ class Migrations
 
         $Template = file_get_contents(__DIR__ . '/../migrations/template.php');
 
-        $Skeleton = strtr($Template, array(
+        $Skeleton = strtr($Template, [
             'MigrationName' => $MigrationNameFiltered,
             'RUNCODE;' => '$this->createTable("MyTable", array("col1", \crisp\core\Migrations::DB_VARCHAR));'
-        ));
+        ]);
 
         if (!file_exists("$Dir/migrations/") && !mkdir("$Dir/migrations/") && !is_dir("$Dir/migrations/")) {
             throw new RuntimeException(sprintf('Directory "%s" was not created', "$Dir/migrations/"));
@@ -224,7 +224,7 @@ class Migrations
     protected function addIndex(string $Table, string $Column, string $Type = self::DB_PRIMARYKEY, string $IndexName = null): bool
     {
         echo "Adding index to table $Table..." . PHP_EOL;
-        if ($Type == self::DB_PRIMARYKEY) {
+        if ($Type === self::DB_PRIMARYKEY) {
             $SQL = "ALTER TABLE $Table ADD $Type KEY ($Column);";
         } else {
             $SQL = "CREATE $Type INDEX $IndexName ON $Table ($Column);";
@@ -248,7 +248,7 @@ class Migrations
     {
         $statement = $this->Database->prepare('DELETE FROM schema_migration WHERE plugin = :Plugin');
 
-        return $statement->execute(array(':Plugin' => $PluginName));
+        return $statement->execute([':Plugin' => $PluginName]);
     }
 
     /**
@@ -309,16 +309,14 @@ class Migrations
     {
         echo "Creating Table $Table..." . PHP_EOL;
         $SQL = "CREATE TABLE IF NOT EXISTS $Table (";
-        foreach ($Columns as $Key => $Column) {
-            $Name = $Column[0];
-            $Type = $Column[1];
-            $Additional = $Column[2];
+        foreach ($Columns as $Key => [$Name, $Type, $Additional]) {
+
             if (str_contains($Additional, 'SERIAL')) {
                 $SQL .= "$Name SERIAL,";
             } else {
                 $SQL .= "$Name $Type $Additional,";
             }
-            if ($Key == count($Columns) - 1) {
+            if ($Key === count($Columns) - 1) {
                 $SQL = substr($SQL, 0, -1);
             }
         }

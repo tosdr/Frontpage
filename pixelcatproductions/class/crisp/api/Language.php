@@ -53,8 +53,8 @@ class Language extends Languages {
             return null;
         }
 
-        $statement = $this->Database_Connection->prepare("SELECT * FROM Languages WHERE ID = :ID");
-        $statement->execute(array(":ID" => $this->LanguageID));
+        $statement = $this->Database_Connection->prepare('SELECT * FROM Languages WHERE ID = :ID');
+        $statement->execute([':ID' => $this->LanguageID]);
 
         return $statement->fetch(PDO::FETCH_ASSOC);
     }
@@ -70,8 +70,8 @@ class Language extends Languages {
             return null;
         }
 
-        $statement = $this->Database_Connection->prepare("UPDATE Languages SET Enabled = 1 WHERE ID = :ID");
-        return $statement->execute(array(":ID" => $this->LanguageID));
+        $statement = $this->Database_Connection->prepare('UPDATE Languages SET Enabled = 1 WHERE ID = :ID');
+        return $statement->execute([':ID' => $this->LanguageID]);
     }
 
     /**
@@ -85,8 +85,8 @@ class Language extends Languages {
             return null;
         }
 
-        $statement = $this->Database_Connection->prepare("UPDATE Languages SET Enabled = 0 WHERE ID = :ID");
-        return $statement->execute(array(":ID" => $this->LanguageID));
+        $statement = $this->Database_Connection->prepare('UPDATE Languages SET Enabled = 0 WHERE ID = :ID');
+        return $statement->execute([':ID' => $this->LanguageID]);
     }
 
     /**
@@ -99,10 +99,10 @@ class Language extends Languages {
             return null;
         }
 
-        $statement = $this->Database_Connection->prepare("SELECT Enabled FROM Languages WHERE ID = :ID");
-        $statement->execute(array(":ID" => $this->LanguageID));
+        $statement = $this->Database_Connection->prepare('SELECT Enabled FROM Languages WHERE ID = :ID');
+        $statement->execute([':ID' => $this->LanguageID]);
 
-        return $statement->fetch(PDO::FETCH_ASSOC)["enabled"];
+        return $statement->fetch(PDO::FETCH_ASSOC)['enabled'];
     }
 
     /**
@@ -115,10 +115,10 @@ class Language extends Languages {
             return null;
         }
 
-        $statement = $this->Database_Connection->prepare("SELECT ID FROM Languages WHERE ID = :ID");
-        $statement->execute(array(":ID" => $this->LanguageID));
+        $statement = $this->Database_Connection->prepare('SELECT ID FROM Languages WHERE ID = :ID');
+        $statement->execute([':ID' => $this->LanguageID]);
 
-        return ($statement->rowCount() != 0);
+        return ($statement->rowCount() > 0);
     }
 
     /**
@@ -132,8 +132,8 @@ class Language extends Languages {
             return null;
         }
 
-        $statement = $this->Database_Connection->prepare("UPDATE Languages SET Name = :Name WHERE ID = :ID");
-        return $statement->execute(array(":Name" => $Name, ":ID" => $this->LanguageID));
+        $statement = $this->Database_Connection->prepare('UPDATE Languages SET Name = :Name WHERE ID = :ID');
+        return $statement->execute([':Name' => $Name, ':ID' => $this->LanguageID]);
     }
 
     /**
@@ -146,10 +146,10 @@ class Language extends Languages {
             return null;
         }
 
-        $statement = $this->Database_Connection->prepare("SELECT Name FROM Languages WHERE ID = :ID");
-        $statement->execute(array(":ID" => $this->LanguageID));
+        $statement = $this->Database_Connection->prepare('SELECT Name FROM Languages WHERE ID = :ID');
+        $statement->execute([':ID' => $this->LanguageID]);
 
-        return $statement->fetch(PDO::FETCH_ASSOC)["name"];
+        return $statement->fetch(PDO::FETCH_ASSOC)['name'];
     }
 
     /**
@@ -163,13 +163,13 @@ class Language extends Languages {
             return null;
         }
 
-        $statement = $this->Database_Connection->prepare("UPDATE Languages SET Code = :Code WHERE ID = :ID");
-        return $statement->execute(array(":Code" => $Code, ":ID" => $this->LanguageID));
+        $statement = $this->Database_Connection->prepare('UPDATE Languages SET Code = :Code WHERE ID = :ID');
+        return $statement->execute([':Code' => $Code, ':ID' => $this->LanguageID]);
     }
 
     /**
      * Gets the code of a language
-     * @return bool|null
+     * @return string|null
      */
     public function getCode(): ?string
     {
@@ -177,10 +177,10 @@ class Language extends Languages {
             return null;
         }
 
-        $statement = $this->Database_Connection->prepare("SELECT Code FROM Languages WHERE ID = :ID");
-        $statement->execute(array(":ID" => $this->LanguageID));
+        $statement = $this->Database_Connection->prepare('SELECT Code FROM Languages WHERE ID = :ID');
+        $statement->execute([':ID' => $this->LanguageID]);
 
-        return $statement->fetch(PDO::FETCH_ASSOC)["code"];
+        return $statement->fetch(PDO::FETCH_ASSOC)['code'];
     }
 
     /**
@@ -194,8 +194,8 @@ class Language extends Languages {
             return null;
         }
 
-        $statement = $this->Database_Connection->prepare("UPDATE Languages SET NativeName = :NativeName WHERE ID = :ID");
-        return $statement->execute(array(":NativeName" => $NativeName, ":ID" => $this->LanguageID));
+        $statement = $this->Database_Connection->prepare('UPDATE Languages SET NativeName = :NativeName WHERE ID = :ID');
+        return $statement->execute([':NativeName' => $NativeName, ':ID' => $this->LanguageID]);
     }
 
     /**
@@ -208,10 +208,10 @@ class Language extends Languages {
             return null;
         }
 
-        $statement = $this->Database_Connection->prepare("SELECT NativeName FROM Languages WHERE ID = :ID");
-        $statement->execute(array(":ID" => $this->LanguageID));
+        $statement = $this->Database_Connection->prepare('SELECT NativeName FROM Languages WHERE ID = :ID');
+        $statement->execute([':ID' => $this->LanguageID]);
 
-        return $statement->fetch(PDO::FETCH_ASSOC)["nativename"];
+        return $statement->fetch(PDO::FETCH_ASSOC)['nativename'];
     }
 
     /**
@@ -225,8 +225,8 @@ class Language extends Languages {
             return null;
         }
 
-        $statement = $this->Database_Connection->prepare("DELETE FROM Translations WHERE key = :key");
-        return $statement->execute(array(":key" => $Key));
+        $statement = $this->Database_Connection->prepare('DELETE FROM Translations WHERE key = :key');
+        return $statement->execute([':key' => $Key]);
     }
 
     /**
@@ -243,7 +243,7 @@ class Language extends Languages {
 
         $Code = $this->getCode();
         $statement = $this->Database_Connection->prepare("UPDATE Translations SET $Code = :value WHERE key = :key");
-        return $statement->execute(array(":key" => $Key, ":value" => $Value));
+        return $statement->execute([':key' => $Key, ':value' => $Value]);
     }
 
     /**
@@ -253,7 +253,7 @@ class Language extends Languages {
      * @param string $Language
      * @return bool|null
      */
-    public function newTranslation(string $Key, string $Value, string $Language = "en"): ?bool
+    public function newTranslation(string $Key, string $Value, string $Language = 'en'): ?bool
     {
         if ($this->LanguageID === null) {
             return null;
@@ -270,7 +270,7 @@ class Language extends Languages {
         $Code = $this->getCode();
 
         $statement = $this->Database_Connection->prepare("INSERT INTO Translations (key, $Code) VALUES (:key, :value)");
-        return $statement->execute(array(":key" => $Key, ":value" => $Value));
+        return $statement->execute([':key' => $Key, ':value' => $Value]);
     }
 
     /**
@@ -284,8 +284,8 @@ class Language extends Languages {
             return null;
         }
 
-        $statement = $this->Database_Connection->prepare("UPDATE Languages SET flag = :Flag WHERE ID = :ID");
-        return $statement->execute(array(":Flag" => $Flag, ":ID" => $this->LanguageID));
+        $statement = $this->Database_Connection->prepare('UPDATE Languages SET flag = :Flag WHERE ID = :ID');
+        return $statement->execute([':Flag' => $Flag, ':ID' => $this->LanguageID]);
     }
 
     /**
@@ -298,10 +298,10 @@ class Language extends Languages {
             return null;
         }
 
-        $statement = $this->Database_Connection->prepare("SELECT Flag FROM Languages WHERE ID = :ID");
-        $statement->execute(array(":ID" => $this->LanguageID));
+        $statement = $this->Database_Connection->prepare('SELECT Flag FROM Languages WHERE ID = :ID');
+        $statement->execute([':ID' => $this->LanguageID]);
 
-        return $statement->fetch(PDO::FETCH_ASSOC)["flag"];
+        return $statement->fetch(PDO::FETCH_ASSOC)['flag'];
     }
 
 }

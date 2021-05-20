@@ -25,6 +25,11 @@ use \PDOException;
 use \PDORow;
 use \PDOStatement;
 
+if(!defined('CRISP_COMPONENT')){
+    echo 'Cannot access this component directly!';
+    exit;
+}
+
 /**
  * Interact with all registered users on the site
  */

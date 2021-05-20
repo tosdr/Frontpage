@@ -19,26 +19,31 @@
 
 use crisp\api\Phoenix;
 
-if (!isset($GLOBALS["route"]->GET["q"])) {
-  header("Location: /");
+if(!defined('CRISP_COMPONENT')){
+    echo 'Cannot access this component directly!';
+    exit;
+}
+
+if (!isset($GLOBALS['route']->GET['q'])) {
+  header('Location: /');
   exit;
 }
 try {
-  if (is_numeric($GLOBALS["route"]->GET["q"])) {
-    $_vars = array("service" => Phoenix::getService($GLOBALS["route"]->GET["q"]));
+  if (is_numeric($GLOBALS['route']->GET['q'])) {
+    $_vars = ['service' => Phoenix::getService($GLOBALS['route']->GET['q'])];
   } else {
-    $_vars = array("service" => Phoenix::getServiceByName(urldecode($GLOBALS["route"]->GET["q"])));
+    $_vars = ['service' => Phoenix::getServiceByName(urldecode($GLOBALS['route']->GET['q']))];
   }
 } catch (Exception $ex) {
-  header("Location: /");
+  header('Location: /');
   exit;
 }
 
-if(!$_vars["service"]) {
+if(!$_vars['service']) {
     http_response_code(404);
-    $GLOBALS["microtime"]["logic"]["end"] = microtime(true);
-    $GLOBALS["microtime"]["template"]["start"] = microtime(true);
-    $this->TwigTheme->addGlobal("LogicMicroTime", ($GLOBALS["microtime"]["logic"]["end"] - $GLOBALS["microtime"]["logic"]["start"]));
-    echo $this->TwigTheme->render("errors/servicenotfound.twig", []);
+    $GLOBALS['microtime']['logic']['end'] = microtime(true);
+    $GLOBALS['microtime']['template']['start'] = microtime(true);
+    $this->TwigTheme->addGlobal('LogicMicroTime', ($GLOBALS['microtime']['logic']['end'] - $GLOBALS['microtime']['logic']['start']));
+    echo $this->TwigTheme->render('errors/servicenotfound.twig', []);
     exit;
 }

@@ -18,44 +18,53 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
+use crisp\api\Config;
+use crisp\api\Phoenix;
+use crisp\core\Bitmask;
+use crisp\core\PluginAPI;
+
+if(!defined('CRISP_COMPONENT')){
+    echo 'Cannot access this component directly!';
+    exit;
+}
 
 
-header("Content-Type: application/json");
+header('Content-Type: application/json');
 
-if ($this->Query == "all") {
-    $Services = \crisp\api\Phoenix::getServices();
+if ($this->Query === 'all') {
+    $Services = Phoenix::getServices();
     $Response = array(
-        "tosdr/api/version" => 1,
-        "tosdr/data/version" => time(),
+        'tosdr/api/version' => 1,
+        'tosdr/data/version' => time(),
     );
     foreach ($Services as $Service) {
-        $URLS = explode(",", $Service["url"]);
+        $URLS = explode(',', $Service['url']);
         foreach ($URLS as $URL) {
             $URL = trim($URL);
             $Response["tosdr/review/$URL"] = array(
-                "id" => (int) $Service["id"],
-                "documents" => [],
-                "logo" => \crisp\api\Config::get("s3_logos") . "/" . $Service["id"] . ".png",
-                "name" => $Service["name"],
-                "slug" => $Service["slug"],
-                "rated" => ($Service["rating"] == "N/A" ? false : ($Service["is_comprehensively_reviewed"] ? $Service["rating"] : false)),
-                "points" => []
+                'id' => (int) $Service['id'],
+                'documents' => [],
+                'logo' => Config::get('s3_logos') . '/' . $Service['id'] . '.png',
+                'name' => $Service['name'],
+                'slug' => $Service['slug'],
+                'rated' => ($Service['rating'] === 'N/A' ? false : ($Service['is_comprehensively_reviewed'] ? $Service['rating'] : false)),
+                'points' => []
             );
         }
     }
-    echo json_encode($Response);
+    echo json_encode($Response, JSON_THROW_ON_ERROR);
     return;
 }
 
 if (!is_numeric($this->Query)) {
     if (!crisp\api\Phoenix::serviceExistsBySlug($this->Query)) {
-        echo \crisp\core\PluginAPI::response(\crisp\core\Bitmask::INVALID_SERVICE, $this->Query, [], null, 404);
+        PluginAPI::response(Bitmask::INVALID_SERVICE, $this->Query, [], null, 404);
         return;
     }
-    $this->Query = crisp\api\Phoenix::getServiceBySlug($this->Query)["id"];
+    $this->Query = crisp\api\Phoenix::getServiceBySlug($this->Query)['id'];
     
-    $SkeletonData = \crisp\api\Phoenix::generateApiFiles($this->Query);
-    echo json_encode($SkeletonData);
+    $SkeletonData = Phoenix::generateApiFiles($this->Query);
+    echo json_encode($SkeletonData, JSON_THROW_ON_ERROR);
 
 
     exit;
@@ -64,10 +73,10 @@ if (!is_numeric($this->Query)) {
 
 
 if (!crisp\api\Phoenix::serviceExists($this->Query)) {
-    echo \crisp\core\PluginAPI::response(\crisp\core\Bitmask::INVALID_SERVICE, $this->Query, [], null, 404);
+    PluginAPI::response(Bitmask::INVALID_SERVICE, $this->Query, [], null, 404);
     return;
 }
 
-$SkeletonData = \crisp\api\Phoenix::generateApiFiles($this->Query);
+$SkeletonData = Phoenix::generateApiFiles($this->Query);
 
-echo json_encode($SkeletonData);
+echo json_encode($SkeletonData, JSON_THROW_ON_ERROR);

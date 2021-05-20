@@ -22,6 +22,11 @@ namespace crisp\models;
 use crisp\core\APIPermissions;
 use OAuth2;
 
+if(!defined('CRISP_COMPONENT')){
+    echo 'Cannot access this component directly!';
+    exit;
+}
+
 class OAuth2ScopeTable implements OAuth2\Storage\ScopeInterface
 {
     public function scopeExists($scope, $client_id = null): bool

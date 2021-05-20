@@ -17,6 +17,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-header("X-SKIPCACHE: 1");
+if(!defined('CRISP_COMPONENT')){
+    echo 'Cannot access this component directly!';
+    exit;
+}
 
-$_vars = array("bitmasks" => crisp\core\Bitmask::getConstants());
+header('X-SKIPCACHE: 1');
+
+$_vars = array('bitmasks' => crisp\core\Bitmask::getConstants());

@@ -20,6 +20,11 @@
 
 namespace crisp\migrations;
 
+if(!defined('CRISP_COMPONENT')){
+    echo 'Cannot access this component directly!';
+    exit;
+}
+
 class createPlugins extends \crisp\core\Migrations {
 
     public function run() {

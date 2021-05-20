@@ -23,6 +23,11 @@ namespace crisp\migrations;
 use crisp\core\Migrations;
 use Exception;
 
+if(!defined('CRISP_COMPONENT')){
+    echo 'Cannot access this component directly!';
+    exit;
+}
+
 class MigrationName extends Migrations {
 
     public function run(): bool

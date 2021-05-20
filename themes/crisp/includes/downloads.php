@@ -17,19 +17,27 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-$FeaturedExtension;
+use crisp\api\Config;
 
-$_vars["extensions"] = \crisp\api\Config::get("extensions");
+if(!defined('CRISP_COMPONENT')){
+    echo 'Cannot access this component directly!';
+    exit;
+}
 
-if (ini_get('browscap') !== "") {
+$FeaturedExtension = null;
+
+$_vars['extensions'] = Config::get('extensions');
+
+if (ini_get('browscap') !== '') {
     if (CURRENT_UNIVERSE >= crisp\Universe::UNIVERSE_PUBLIC) {
-        foreach ($_vars["extensions"] as $Key => $Extension) {
-            if (strpos($Extension->browser, get_browser(null, true)["browser"]) !== false) {
+        foreach ($_vars['extensions'] as $Key => $Extension) {
+            if (strpos($Extension->browser, get_browser(null, true)['browser']) !== false) {
                 $FeaturedExtension = $Extension;
-                unset($_vars["extensions"][$Key]);
+                unset($_vars['extensions'][$Key]);
             }
         }
     }
 }
 
-$_vars["featured"] = $FeaturedExtension;
+$_vars['featured'] = $FeaturedExtension;
+

@@ -19,6 +19,11 @@
 
 namespace crisp\models;
 
+if(!defined('CRISP_COMPONENT')){
+    echo 'Cannot access this component directly!';
+    exit;
+}
+
 final class ServiceRatings extends \crisp\types\Enum {
 
     const A = 0x1;

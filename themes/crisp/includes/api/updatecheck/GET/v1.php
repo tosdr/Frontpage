@@ -17,32 +17,37 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+use crisp\core\Bitmask;
 use crisp\core\PluginAPI;
 
+if(!defined('CRISP_COMPONENT')){
+    echo 'Cannot access this component directly!';
+    exit;
+}
+
 $opts = [
-    "http" => [
-        "method" => "GET",
-        "header" => "User-Agent: ToS;DR\r\n"
+    'http' => [
+        'method' => 'GET',
+        'header' => "User-Agent: ToS;DR\r\n"
     ]
 ];
 
 $context = stream_context_create($opts);
 
-$Response = json_decode(file_get_contents("https://api.github.com/repos/tosdr/browser-extensions/releases/latest", false, $context));
+$Response = json_decode(file_get_contents('https://api.github.com/repos/tosdr/browser-extensions/releases/latest', false, $context), false, 512, JSON_THROW_ON_ERROR);
 
 if (!isset($this->Query) || empty($this->Query)) {
-    PluginAPI::response(\crisp\core\Bitmask::NONE, "Latest GitHub Release", ["release" => $Response->tag_name]);
+    PluginAPI::response(Bitmask::NONE, 'Latest GitHub Release', ['release' => $Response->tag_name]);
     exit;
-} else {
-
-    $Version = $this->Query;
-    $Latest = $Response->tag_name;
-    if (str_starts_with($this->Query, "v")) {
-        $Version = substr($Version, 1);
-    }
-    if (str_starts_with($Latest, "v")) {
-        $Latest = substr($Latest, 1);
-    }
-
-    PluginAPI::response(\crisp\core\Bitmask::NONE, "Comparing versions", ["latest" => $Latest, "given" => $Version, "substring" => str_starts_with($this->Query, "v"), "compare" => version_compare($Latest, $Version)]);
 }
+
+$Version = $this->Query;
+$Latest = $Response->tag_name;
+if (str_starts_with($this->Query, 'v')) {
+    $Version = substr($Version, 1);
+}
+if (str_starts_with($Latest, 'v')) {
+    $Latest = substr($Latest, 1);
+}
+
+PluginAPI::response(Bitmask::NONE, 'Comparing versions', ['latest' => $Latest, 'given' => $Version, 'substring' => str_starts_with($this->Query, 'v'), 'compare' => version_compare($Latest, $Version)]);

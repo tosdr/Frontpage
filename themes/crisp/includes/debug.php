@@ -21,3 +21,7 @@
 
 
 #echo "<pre>" . var_export($ES->search("google"), true) . "</pre>";
+if(!defined('CRISP_COMPONENT')){
+    echo 'Cannot access this component directly!';
+    exit;
+}

@@ -19,33 +19,50 @@
 
 namespace crisp\types;
 
+use ReflectionClass;
+use ReflectionException;
+
+if(!defined('CRISP_COMPONENT')){
+    echo 'Cannot access this component directly!';
+    exit;
+}
+
 abstract class Enum {
 
     private static $constCacheArray = NULL;
 
+    /**
+     * @throws ReflectionException
+     */
     private static function getConstants() {
-        if (self::$constCacheArray == NULL) {
+        if (self::$constCacheArray === NULL) {
             self::$constCacheArray = [];
         }
-        $calledClass = get_called_class();
+        $calledClass = static::class;
         if (!array_key_exists($calledClass, self::$constCacheArray)) {
-            $reflect = new \ReflectionClass($calledClass);
+            $reflect = new ReflectionClass($calledClass);
             self::$constCacheArray[$calledClass] = $reflect->getConstants();
         }
         return self::$constCacheArray[$calledClass];
     }
-    
+
+    /**
+     * @throws ReflectionException
+     */
     public static function get($name){
         $constants = self::getConstants();
         
         if(array_key_exists($name, $constants)){
             return $constants[$name];
-        }else if (array_key_exists("default", $constants)){
-            return $constants["default"];
+        }else if (array_key_exists('default', $constants)){
+            return $constants['default'];
         }
         return null;
     }
 
+    /**
+     * @throws ReflectionException
+     */
     public static function validName($name, $strict = false) {
         $constants = self::getConstants();
 
@@ -54,9 +71,12 @@ abstract class Enum {
         }
 
         $keys = array_map('strtolower', array_keys($constants));
-        return in_array(strtolower($name), $keys);
+        return in_array(strtolower($name), $keys, true);
     }
 
+    /**
+     * @throws ReflectionException
+     */
     public static function validValue($value, $strict = true) {
         $values = array_values(self::getConstants());
         return in_array($value, $values, $strict);

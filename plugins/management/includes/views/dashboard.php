@@ -17,7 +17,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
+if(!defined('CRISP_COMPONENT')){
+    echo 'Cannot access this component directly!';
+    exit;
+}
 
 if (!isset($_SESSION[\crisp\core\Config::$Cookie_Prefix . "session_login"])) {
     header("Location: " . \crisp\api\Helper::generateLink("login/?invalid_sess"));

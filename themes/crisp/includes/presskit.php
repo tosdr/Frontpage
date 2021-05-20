@@ -17,12 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-if (isset($GLOBALS["route"]->GET["download"])) {
-    header("Content-type: application/zip");
-    header("Content-Disposition: attachment; filename=Presskit.zip");
-    header("Content-length: " . filesize(__DIR__."/../presskit/ToSDR.zip"));
-    header("Pragma: no-cache");
-    header("Expires: 0");
-    readfile(__DIR__."/../presskit/ToSDR.zip");
+if(!defined('CRISP_COMPONENT')){
+    echo 'Cannot access this component directly!';
     exit;
 }

@@ -17,21 +17,31 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-$inputQuery = $_GET["query"] ?? $inputQuery;
-$ES = new \crisp\api\Elastic();
+use crisp\api\Elastic;
+use crisp\core\Bitmask;
+use crisp\core\PluginAPI;
 
-if (!$inputQuery || $inputQuery === null) {
-    echo \crisp\core\PluginAPI::response(\crisp\core\Bitmask::QUERY_FAILED, "Missing query", array(
-        "services" => array(),
-        "grid" => null
-    ));
+if(!defined('CRISP_COMPONENT')){
+    echo 'Cannot access this component directly!';
+    exit;
+}
+
+$inputQuery = null;
+$inputQuery = $_GET['query'] ?? $inputQuery;
+$ES = new Elastic();
+
+if (!$inputQuery) {
+    PluginAPI::response(Bitmask::QUERY_FAILED, 'Missing query', [
+        'services' => [],
+        'grid' => null
+    ]);
     exit;
 }
 
 $services = $ES->search($inputQuery);
 
-echo \crisp\core\PluginAPI::response(\crisp\core\Bitmask::REQUEST_SUCCESS, $inputQuery, array(
-    "services" => $services,
-    "grid" => $this->TwigTheme->render("components/servicegrid/grid.twig", array("Services" => $services->hits, "columns" => 2))
-));
+PluginAPI::response(Bitmask::REQUEST_SUCCESS, $inputQuery, [
+    'services' => $services,
+    'grid' => $this->TwigTheme->render('components/servicegrid/grid.twig', ['Services' => $services->hits, 'columns' => 2])
+]);
 

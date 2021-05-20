@@ -17,27 +17,31 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-use crisp\api\Config;
-use crisp\api\Helper;
 use crisp\core\PluginAPI;
 use crisp\core\OAuth;
+
+if(!defined('CRISP_COMPONENT')){
+    echo 'Cannot access this component directly!';
+    exit;
+}
+
 
 $Interface = null;
 
 if (!IS_NATIVE_API) {
-    PluginAPI::response(crisp\core\Bitmask::GENERIC_ERROR, "Cannot access non-native API endpoint", []);
+    PluginAPI::response(crisp\core\Bitmask::GENERIC_ERROR, 'Cannot access non-native API endpoint', []);
     exit;
 }
 
-if (is_array($GLOBALS["route"]->GET)) {
-    $Interface = array_key_first($GLOBALS["route"]->GET);
+if (is_array($GLOBALS['route']->GET)) {
+    $Interface = array_key_first($GLOBALS['route']->GET);
 }
 
 $server = OAuth::createServer();
 
-match($GLOBALS["route"]->GET[$Interface]){
-    "token" => $server->handleTokenRequest(OAuth2\Request::createFromGlobals())->send(),
-    "revoke" => $server->handleRevokeRequest(OAuth2\Request::createFromGlobals())->send(),
-    default => PluginAPI::response(crisp\core\Bitmask::NOT_IMPLEMENTED, "Invalid Call", [], null, 405)
+match($GLOBALS['route']->GET[$Interface]){
+    'token' => $server->handleTokenRequest(OAuth2\Request::createFromGlobals())->send(),
+    'revoke' => $server->handleRevokeRequest(OAuth2\Request::createFromGlobals())->send(),
+    default => PluginAPI::response(crisp\core\Bitmask::NOT_IMPLEMENTED, 'Invalid Call', [], null, 405)
 };
 exit;

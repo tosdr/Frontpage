@@ -17,8 +17,17 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+use crisp\api\Config;
+use crisp\core\Bitmask;
+use crisp\core\PluginAPI;
+
+if(!defined('CRISP_COMPONENT')){
+    echo 'Cannot access this component directly!';
+    exit;
+}
+
 if (empty($this->Query)) {
-    foreach (\crisp\api\Config::get("frontpage_services") as $ID) {
+    foreach (Config::get('frontpage_services') as $ID) {
         $Array[] = crisp\api\Phoenix::getService($ID);
     }
 } else {
@@ -32,7 +41,7 @@ if (count($Array) > 0) {
     if (crisp\api\Helper::isMobile()) {
         $cols = 1;
     }
-    echo \crisp\core\PluginAPI::response(\crisp\core\Bitmask::NONE, $this->Query, (array("service" => $Array, "grid" => $this->TwigTheme->render("components/servicegrid/grid.twig", array("Services" => $Array, "columns" => $cols)))));
+    PluginAPI::response(Bitmask::NONE, $this->Query, (['service' => $Array, 'grid' => $this->TwigTheme->render('components/servicegrid/grid.twig', ['Services' => $Array, 'columns' => $cols])]));
     exit;
 }
-echo \crisp\core\PluginAPI::response(\crisp\core\Bitmask::NONE, $this->Query, (array("service" => $Array, "grid" => $this->TwigTheme->render("components/servicegrid/no_service.twig", []))));
+PluginAPI::response(Bitmask::NONE, $this->Query, (['service' => $Array, 'grid' => $this->TwigTheme->render('components/servicegrid/no_service.twig', [])]));

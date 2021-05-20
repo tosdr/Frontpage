@@ -19,33 +19,43 @@
 
 namespace crisp\types;
 
+use ReflectionClass;
+use TypeError;
+
+if(!defined('CRISP_COMPONENT')){
+    echo 'Cannot access this component directly!';
+    exit;
+}
+
 abstract class Bitmask extends Enum {
 
-    public static function hasBitmask(int $BitwisePermissions, int $PermissionFlag = 0x00000000) {
+    public static function hasBitmask(int $BitwisePermissions, int $PermissionFlag = 0x00000000): bool
+    {
         if (!is_numeric($BitwisePermissions)) {
-            throw new \TypeError("Parameter BitwisePermissions is not a hexadecimal or number.");
+            throw new TypeError('Parameter BitwisePermissions is not a hexadecimal or number.');
         }
         if (!is_numeric($PermissionFlag)) {
-            throw new \TypeError("Parameter PermissionFlag is not a hexadecimal or number.");
+            throw new TypeError('Parameter PermissionFlag is not a hexadecimal or number.');
         }
 
         if ($PermissionFlag === 0x00000000) {
             return true;
         }
-        return ($BitwisePermissions & $PermissionFlag ? true : false);
+        return ((bool)($BitwisePermissions & $PermissionFlag));
     }
 
     public static function getConstants() {
-        $oClass = new \ReflectionClass(static::class);
+        $oClass = new ReflectionClass(static::class);
         return $oClass->getConstants();
     }
 
-    public static function bitmaskExists(int $BitwisePermissions) {
+    public static function bitmaskExists(int $BitwisePermissions): bool
+    {
         if (!is_numeric($BitwisePermissions)) {
-            throw new \TypeError("Parameter BitwisePermissions is not a hexadecimal or number.");
+            throw new TypeError('Parameter BitwisePermissions is not a hexadecimal or number.');
         }
         if ($BitwisePermissions === 0x00000000) {
-            throw new \TypeError("Parameter BitwisePermissions is zero.");
+            throw new TypeError('Parameter BitwisePermissions is zero.');
         }
 
         $MatchedBits = [];
@@ -53,18 +63,19 @@ abstract class Bitmask extends Enum {
         foreach (self::getConstants() as $Permission) {
 
             if (self::hasBitmask($BitwisePermissions, $Permission)) {
-                    $MatchedBits[array_search($Permission, self::getConstants())] = $Permission;
+                    $MatchedBits[array_search($Permission, self::getConstants(), true)] = $Permission;
             }
         }
         return count($MatchedBits) > 0;
     }
 
-    public static function getBitmask(int $BitwisePermissions, bool $IndexArray = false) {
+    public static function getBitmask(int $BitwisePermissions, bool $IndexArray = false): array
+    {
         if (!is_numeric($BitwisePermissions)) {
-            throw new \TypeError("Parameter BitwisePermissions is not a hexadecimal or number.");
+            throw new TypeError('Parameter BitwisePermissions is not a hexadecimal or number.');
         }
         if ($BitwisePermissions === 0x00000000) {
-            throw new \TypeError("Parameter BitwisePermissions is zero.");
+            throw new TypeError('Parameter BitwisePermissions is zero.');
         }
 
         $MatchedBits = [];
@@ -73,9 +84,9 @@ abstract class Bitmask extends Enum {
 
             if (self::hasBitmask($BitwisePermissions, $Permission)) {
                 if ($IndexArray) {
-                    $MatchedBits[] = array_search($Permission, self::getConstants());
+                    $MatchedBits[] = array_search($Permission, self::getConstants(), true);
                 } else {
-                    $MatchedBits[array_search($Permission, self::getConstants())] = $Permission;
+                    $MatchedBits[array_search($Permission, self::getConstants(), true)] = $Permission;
                 }
             }
         }

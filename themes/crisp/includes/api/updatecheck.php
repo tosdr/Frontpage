@@ -19,24 +19,30 @@
 
 use crisp\core\PluginAPI;
 
-if(!IS_NATIVE_API){
-    PluginAPI::response(crisp\core\Bitmask::GENERIC_ERROR, "Cannot access non-native API endpoint", []);
+if(!defined('CRISP_COMPONENT')){
+    echo 'Cannot access this component directly!';
     exit;
 }
 
-$Interface = "default";
 
-if (is_array($GLOBALS["route"]->GET)) {
-    $Interface = array_key_first($GLOBALS["route"]->GET);
+if(!IS_NATIVE_API){
+    PluginAPI::response(crisp\core\Bitmask::GENERIC_ERROR, 'Cannot access non-native API endpoint', []);
+    exit;
+}
 
-    $this->Query = $GLOBALS["route"]->GET[$Interface];
-    if (strpos($GLOBALS["route"]->GET[$Interface], ".json")) {
+$Interface = 'default';
+
+if (is_array($GLOBALS['route']->GET)) {
+    $Interface = array_key_first($GLOBALS['route']->GET);
+
+    $this->Query = $GLOBALS['route']->GET[$Interface];
+    if (strpos($GLOBALS['route']->GET[$Interface], '.json')) {
         $this->Query = substr($this->Query, 0, -5);
     }
 }
 
 switch ($Interface) {
     default:
-    case "v1":
+    case 'v1':
         require_once __DIR__ . '/updatecheck/v1.php';
 }

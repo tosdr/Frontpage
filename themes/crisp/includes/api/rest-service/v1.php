@@ -17,20 +17,26 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+use crisp\core\PluginAPI;
 
-switch ($_SERVER["REQUEST_METHOD"]) {
-    case "GET":
+if(!defined('CRISP_COMPONENT')){
+    echo 'Cannot access this component directly!';
+    exit;
+}
+
+switch ($_SERVER['REQUEST_METHOD']) {
+    case 'GET':
         require_once __DIR__ . '/GET/v1.php';
         break;
-    case "POST":
+    case 'POST':
 
         if (!crisp\api\Helper::hasApiPermissions(crisp\core\APIPermissions::POST_SERVICE_REQUEST)) {
-            echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::MISSING_PERMISSIONS, "Missing Permissions " . crisp\core\APIPermissions::getBitmask(crisp\core\APIPermissions::POST_SERVICE_REQUEST, true)[0], [], null, 403);
+            PluginAPI::response(crisp\core\Bitmask::MISSING_PERMISSIONS, 'Missing Permissions ' . crisp\core\APIPermissions::getBitmask(crisp\core\APIPermissions::POST_SERVICE_REQUEST, true)[0], [], null, 403);
             return;
         }
 
-        echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::NOT_IMPLEMENTED, "Not yet implemented", [], null, 405);
+        PluginAPI::response(crisp\core\Bitmask::NOT_IMPLEMENTED, 'Not yet implemented', [], null, 405);
         break;
     default:
-        echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::NOT_IMPLEMENTED, "Invalid Request Method", [], null, 405);
+        PluginAPI::response(crisp\core\Bitmask::NOT_IMPLEMENTED, 'Invalid Request Method', [], null, 405);
 }

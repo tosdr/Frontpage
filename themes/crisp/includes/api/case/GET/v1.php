@@ -17,11 +17,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-if (!crisp\api\Phoenix::getCase($_GET["case"] ?? $this->Query)) {
-    echo \crisp\core\PluginAPI::response(\crisp\core\Bitmask::INVALID_CASE, $_GET["case"] ?? $this->Query, []);
+use crisp\api\Phoenix;
+use crisp\core\Bitmask;
+use crisp\core\PluginAPI;
+
+if(!defined('CRISP_COMPONENT')){
+    echo 'Cannot access this component directly!';
+    exit;
+}
+
+if (!crisp\api\Phoenix::getCase($_GET['case'] ?? $this->Query)) {
+    PluginAPI::response(Bitmask::INVALID_CASE, $_GET['case'] ?? $this->Query, []);
     return;
 }
 
 
 
-echo \crisp\core\PluginAPI::response(\crisp\core\Bitmask::REQUEST_SUCCESS, $_GET["case"] ?? $this->Query, \crisp\api\Phoenix::getCase($_GET["case"] ?? $this->Query));
+PluginAPI::response(Bitmask::REQUEST_SUCCESS, $_GET['case'] ?? $this->Query, Phoenix::getCase($_GET['case'] ?? $this->Query));

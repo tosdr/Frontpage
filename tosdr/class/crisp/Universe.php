@@ -24,26 +24,34 @@ use crisp\core\Config;
 use Exception;
 use ReflectionClass;
 
+if(!defined('CRISP_COMPONENT')){
+    echo 'Cannot access this component directly!';
+    exit;
+}
+
 /**
  * Crisp Universe Handling
  */
 class Universe {
 
-  const UNIVERSE_PUBLIC = 1;
-  const UNIVERSE_BETA = 2;
-  const UNIVERSE_DEV = 3;
-  const UNIVERSE_TOSDR = 99;
+  public const UNIVERSE_PUBLIC = 1;
+  public const UNIVERSE_BETA = 2;
+  public const UNIVERSE_DEV = 3;
+  public const UNIVERSE_TOSDR = 99;
 
-  public static function changeUniverse($Universe, $Authorize = false): bool
+    /**
+     * @throws Exception
+     */
+    public static function changeUniverse($Universe, $Authorize = false): bool
   {
-    if (!$Authorize && $Universe == self::UNIVERSE_TOSDR) {
+    if (!$Authorize && $Universe === self::UNIVERSE_TOSDR) {
       return false;
     }
-    return setcookie(Config::$Cookie_Prefix . "universe", self::getUniverse($Universe), time() + (86400 * 30), "/");
+    return setcookie(Config::$Cookie_Prefix . 'universe', self::getUniverse($Universe), time() + (86400 * 30), '/');
   }
 
     /**
-     * @param int $Universe
+     * @param int|null $Universe
      * @return int
      * @throws Exception
      */
@@ -54,7 +62,7 @@ class Universe {
           self::UNIVERSE_BETA => self::UNIVERSE_BETA,
           self::UNIVERSE_DEV => self::UNIVERSE_DEV,
           self::UNIVERSE_TOSDR => self::UNIVERSE_TOSDR,
-          default => throw new Exception("Unknown universe"),
+          default => throw new Exception('Unknown universe'),
       };
   }
 

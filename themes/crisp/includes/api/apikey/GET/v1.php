@@ -17,12 +17,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+use crisp\core\Bitmask;
+use crisp\core\PluginAPI;
 
-$apikey = ($_GET["apikey"] ?? $this->Query);
+if(!defined('CRISP_COMPONENT')){
+    echo 'Cannot access this component directly!';
+    exit;
+}
+
+$apikey = ($_GET['apikey'] ?? $this->Query);
 
 
 if (empty($apikey)) {
-    echo \crisp\core\PluginAPI::response(\crisp\core\Bitmask::MISSING_PARAMETER, "apikey parameter missing", []);
+    PluginAPI::response(Bitmask::MISSING_PARAMETER, 'apikey parameter missing', []);
     return;
 }
 
@@ -30,8 +37,8 @@ if (empty($apikey)) {
 $details = crisp\api\Helper::getAPIKeyDetails($apikey);
 
 if (!$details) {
-    echo \crisp\core\PluginAPI::response(\crisp\core\Bitmask::QUERY_FAILED, "Invalid apikey", $details);
+    PluginAPI::response(Bitmask::QUERY_FAILED, 'Invalid apikey', $details);
     return;
 }
 
-echo \crisp\core\PluginAPI::response(\crisp\core\Bitmask::REQUEST_SUCCESS, "OK", $details);
+echo PluginAPI::response(Bitmask::REQUEST_SUCCESS, 'OK', $details);

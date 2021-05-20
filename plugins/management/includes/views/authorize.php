@@ -21,6 +21,11 @@ use crisp\api\Config;
 use crisp\api\Helper;
 use crisp\core\OAuth;
 
+if(!defined('CRISP_COMPONENT')){
+    echo 'Cannot access this component directly!';
+    exit;
+}
+
 $server = OAuth::createServer();
 
 

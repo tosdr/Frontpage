@@ -43,6 +43,8 @@ use Twig\TwigFilter;
 use Twig\TwigFunction;
 use TypeError;
 
+define('CRISP_COMPONENT', true);
+
 /**
  * Core class, nothing else
  *
@@ -223,7 +225,11 @@ try {
                 exit;
             }
 
-            $Query = ($GLOBALS['route']->GET['q'] ?? $GLOBALS['route']->GET['service']);
+            $Query = $GLOBALS['route']->GET['q'];
+
+            if(empty($GLOBALS['route']->GET['q'])){
+                $Query = ($GLOBALS['route']->GET['service'] ?? 'no_query');
+            }
 
             if (strpos($Query, '.json')) {
                 $Query = substr($Query, 0, -5);

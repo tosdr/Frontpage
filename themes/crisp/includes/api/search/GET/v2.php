@@ -18,13 +18,23 @@
  */
 
 
-$inputQuery = $_GET["query"] ?? $inputQuery;
+use crisp\core\Bitmask;
+use crisp\core\PluginAPI;
+
+if(!defined('CRISP_COMPONENT')){
+    echo 'Cannot access this component directly!';
+    exit;
+}
+
+$inputQuery = null;
+
+$inputQuery = $_GET['query'] ?? $inputQuery;
 
 if (empty($inputQuery) || !isset($inputQuery)) {
-    echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::QUERY_FAILED + \crisp\core\Bitmask::VERSION_DEPRECATED, "Empty request", (array(
-        "results" => 0,
-        "service" => []
-    )));
+    PluginAPI::response(crisp\core\Bitmask::QUERY_FAILED + Bitmask::VERSION_DEPRECATED, 'Empty request', ([
+        'results' => 0,
+        'service' => []
+    ]));
     exit;
 }
 
@@ -34,13 +44,13 @@ foreach (crisp\api\Phoenix::searchServiceByName(strtolower($inputQuery)) as $Ser
 }
 
 if (count($Array) > 0) {
-    echo \crisp\core\PluginAPI::response(\crisp\core\Bitmask::REQUEST_SUCCESS + \crisp\core\Bitmask::VERSION_DEPRECATED, $inputQuery, (array(
-        "results" => count($Array),
-        "service" => $Array
-    )));
+    PluginAPI::response(Bitmask::REQUEST_SUCCESS + Bitmask::VERSION_DEPRECATED, $inputQuery, ([
+        'results' => count($Array),
+        'service' => $Array
+    ]));
     exit;
 }
-echo \crisp\core\PluginAPI::response(\crisp\core\Bitmask::REQUEST_SUCCESS + crisp\core\Bitmask::QUERY_FAILED + \crisp\core\Bitmask::VERSION_DEPRECATED, $inputQuery, (array(
-    "results" => count($Array),
-    "service" => $Array
-)));
+PluginAPI::response(Bitmask::REQUEST_SUCCESS + crisp\core\Bitmask::QUERY_FAILED + Bitmask::VERSION_DEPRECATED, $inputQuery, ([
+    'results' => 0,
+    'service' => $Array
+]));

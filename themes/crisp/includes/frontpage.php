@@ -17,17 +17,25 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-$Services = [];
-$EnvFile = parse_ini_file(__DIR__ . "/../../../.env");
+use crisp\api\Config;
+use crisp\api\Phoenix;
 
-if (!isset($_GET["search"])) {
-    foreach (\crisp\api\Config::get("frontpage_services") as $ID) {
-        $Service = \crisp\api\Phoenix::getService($ID);
-        array_push($Services, $Service);
+if(!defined('CRISP_COMPONENT')){
+    echo 'Cannot access this component directly!';
+    exit;
+}
+
+$Services = [];
+$EnvFile = parse_ini_file(__DIR__ . '/../../../.env');
+
+if (!isset($_GET['search'])) {
+    foreach (Config::get('frontpage_services') as $ID) {
+        $Service = Phoenix::getService($ID);
+        $Services[] = $Service;
     }
 }else{
-    $Services = crisp\api\Phoenix::searchServiceByName(strtolower($_GET["search"]));
+    $Services = crisp\api\Phoenix::searchServiceByName(strtolower($_GET['search']));
 }
 
 
-$_vars = array("PopularServices" => $Services);
+$_vars = ['PopularServices' => $Services];

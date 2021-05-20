@@ -65,15 +65,15 @@ class Plugins
         $DB = new MySQL();
         $DBConnection = $DB->getDBConnector();
 
-        $statement = $DBConnection->prepare("SELECT * FROM loadedPlugins");
+        $statement = $DBConnection->prepare('SELECT * FROM loadedPlugins');
         $statement->execute();
 
 
         $loadedPlugins = $statement->fetchAll(PDO::FETCH_ASSOC);
 
         foreach ($loadedPlugins as $Plugin) {
-            $PluginFolder = \crisp\api\Config::get("plugin_dir");
-            $PluginName = $Plugin["name"];
+            $PluginFolder = \crisp\api\Config::get('plugin_dir');
+            $PluginName = $Plugin['name'];
             if (Helper::isValidPluginName($PluginName)) {
                 new PluginAPI($PluginFolder, $PluginName, $Interface, $_QUERY);
             } else {
@@ -81,7 +81,7 @@ class Plugins
                 exit;
             }
         }
-        PluginAPI::response(Bitmask::INTERFACE_NOT_FOUND, "API Interface not found", [], null, 404);
+        PluginAPI::response(Bitmask::INTERFACE_NOT_FOUND, 'API Interface not found', [], null, 404);
         exit;
     }
 
@@ -92,13 +92,13 @@ class Plugins
     public static function listPlugins(): array
     {
 
-        $PluginFolder = \crisp\api\Config::get("plugin_dir");
+        $PluginFolder = \crisp\api\Config::get('plugin_dir');
 
         $Array = [];
 
         foreach (glob(__DIR__ . "/../../../../$PluginFolder/*", GLOB_ONLYDIR) as $Plugin) {
             if (!Plugins::isInstalled(basename($Plugin)) && Plugins::isValid(basename($Plugin))) {
-                $Array[] = array("Name" => basename($Plugin));
+                $Array[] = array('Name' => basename($Plugin));
             }
         }
 
@@ -114,7 +114,7 @@ class Plugins
         $DB = new MySQL();
         $DBConnection = $DB->getDBConnector();
 
-        $statement = $DBConnection->prepare("SELECT * FROM loadedPlugins");
+        $statement = $DBConnection->prepare('SELECT * FROM loadedPlugins');
         $statement->execute();
 
 
@@ -135,47 +135,52 @@ class Plugins
     public static function load(Environment $TwigTheme, string $CurrentFile, string $CurrentPage)
     {
 
-        if (isset($_GET["simulate_invalid_plugin_name"])) {
-            throw new Exception("Plugin <b>debug</b> failed to load due to an invalid plugin name!");
+        if (isset($_GET['simulate_invalid_plugin_name'])) {
+            throw new Exception('Plugin <b>debug</b> failed to load due to an invalid plugin name!');
         }
 
 
         $DB = new MySQL();
         $DBConnection = $DB->getDBConnector();
 
-        $statement = $DBConnection->prepare("SELECT * FROM loadedPlugins ORDER BY \"order\" DESC");
-        $statement->execute();
+        $statement = $DBConnection->query("SELECT * FROM loadedPlugins ORDER BY \"order\" DESC");
 
 
         $loadedPlugins = $statement->fetchAll(PDO::FETCH_ASSOC);
 
         foreach ($loadedPlugins as $Plugin) {
-            $PluginFolder = \crisp\api\Config::get("plugin_dir");
-            $PluginName = $Plugin["name"];
+            $PluginFolder = \crisp\api\Config::get('plugin_dir');
+            $PluginName = $Plugin['name'];
 
             if (file_exists(__DIR__ . "/../../../../$PluginFolder/$PluginName/plugin.json")) {
-                $PluginMetadata = json_decode(file_get_contents(__DIR__ . "/../../../../$PluginFolder/$PluginName/plugin.json"));
+                $PluginMetadata = json_decode(file_get_contents(__DIR__ . "/../../../../$PluginFolder/$PluginName/plugin.json"), false, 512, JSON_THROW_ON_ERROR);
                 if (is_object($PluginMetadata) && isset($PluginMetadata->hookFile)) {
                     if (Helper::isValidPluginName($PluginName)) {
                         new Plugin($PluginFolder, $PluginName, $PluginMetadata, $TwigTheme, $CurrentFile, $CurrentPage);
                     } else {
-                        throw new Exception(sprintf("Plugin <b>%s</b> failed to load due to an invalid plugin name!", $PluginName));
+                        throw new Exception(sprintf('Plugin %s failed to load due to an invalid plugin name!', $PluginName));
                     }
                 } else {
-                    if (!is_object($PluginMetadata)) throw new Exception(sprintf("Plugin <b>%s</b> failed to load due to an invalid plugin.json!", $PluginName));
-                    if (!isset($PluginMetadata->hookFile)) throw new Exception(sprintf("Plugin <b>%s</b> failed to load due to a missing hook file!", $PluginName));
+
+
+                    if (!is_object($PluginMetadata)) {
+                        throw new Exception(sprintf('Plugin %s failed to load due to an invalid plugin.json!', $PluginName));
+                    }
+                    if (!isset($PluginMetadata->hookFile)) {
+                        throw new Exception(sprintf('Plugin %s failed to load due to a missing hook file!', $PluginName));
+                    }
                 }
             }
         }
 
-        if (count($GLOBALS["render"]) > 0) {
-            $GLOBALS["microtime"]["logic"]["end"] = microtime(true);
-            $TwigTheme->addGlobal("LogicMicroTime", ($GLOBALS["microtime"]["logic"]["end"] - $GLOBALS["microtime"]["logic"]["start"]));
-            header("X-CMS-LogicTime: " . ($GLOBALS["microtime"]["logic"]["end"] - $GLOBALS["microtime"]["logic"]["start"]));
+        if (count($GLOBALS['render']) > 0) {
+            $GLOBALS['microtime']['logic']['end'] = microtime(true);
+            $TwigTheme->addGlobal('LogicMicroTime', ($GLOBALS['microtime']['logic']['end'] - $GLOBALS['microtime']['logic']['start']));
+            header('X-CMS-LogicTime: ' . ($GLOBALS['microtime']['logic']['end'] - $GLOBALS['microtime']['logic']['start']));
         }
 
-        foreach ($GLOBALS["render"] as $Template => $_vars) {
-            $GLOBALS["microtime"]["template"]["start"] = microtime(true);
+        foreach ($GLOBALS['render'] as $Template => $_vars) {
+            $GLOBALS['microtime']['template']['start'] = microtime(true);
             echo $TwigTheme->render($Template, $_vars);
             //$this->broadcastHook("pluginAfterRender", $Template);
         }
@@ -187,7 +192,7 @@ class Plugins
     public static function migrate(string $PluginName): void
     {
         $Migrations = new Migrations();
-        $PluginFolder = \crisp\api\Config::get("plugin_dir");
+        $PluginFolder = \crisp\api\Config::get('plugin_dir');
         $Migrations->migrate(__DIR__ . "/../../../../$PluginFolder/$PluginName/", $PluginName);
     }
 
@@ -259,10 +264,10 @@ class Plugins
         }
         if (isset($PluginMetadata->onInstall->createKVStorageItems) && is_object($PluginMetadata->onInstall->createKVStorageItems)) {
 
-            if (defined("CRISP_CLI")) {
-                echo "----------" . PHP_EOL;
+            if (defined('CRISP_CLI')) {
+                echo '----------' . PHP_EOL;
                 echo "Installing storage for plugin $PluginName" . PHP_EOL;
-                echo "----------" . PHP_EOL;
+                echo '----------' . PHP_EOL;
             }
             foreach ($PluginMetadata->onInstall->createKVStorageItems as $Key => $Value) {
                 if (is_array($Value) || is_object($Value)) {
@@ -272,13 +277,13 @@ class Plugins
                 try {
 
 
-                    if (\crisp\api\Config::set("plugin_" . $PluginName . "_$Key", $Value)) {
-                        if (defined("CRISP_CLI")) {
+                    if (\crisp\api\Config::set('plugin_' . $PluginName . "_$Key", $Value)) {
+                        if (defined('CRISP_CLI')) {
                             echo "Installing key $Key" . PHP_EOL;
                         }
                     }
                 } catch (PDOException $ex) {
-                    if (defined("CRISP_CLI")) {
+                    if (defined('CRISP_CLI')) {
                         var_dump($ex);
                     }
                     continue;
@@ -299,25 +304,25 @@ class Plugins
         if (!is_object($PluginMetadata) && !isset($PluginMetadata->hookFile)) {
             return false;
         }
-        if (defined("CRISP_CLI")) {
-            echo "----------" . PHP_EOL;
+        if (defined('CRISP_CLI')) {
+            echo '----------' . PHP_EOL;
             echo "Installing translations for plugin $PluginName" . PHP_EOL;
-            echo "----------" . PHP_EOL;
+            echo '----------' . PHP_EOL;
         }
 
 
         if (isset($PluginMetadata->onInstall->createTranslationKeys) && is_string($PluginMetadata->onInstall->createTranslationKeys)) {
 
-            $PluginFolder = \crisp\api\Config::get("plugin_dir");
+            $PluginFolder = \crisp\api\Config::get('plugin_dir');
             if (file_exists(__DIR__ . "/../../../../$PluginFolder/$PluginName/" . $PluginMetadata->onInstall->createTranslationKeys)) {
 
-                $files = glob(__DIR__ . "/../../../../$PluginFolder/$PluginName/" . $PluginMetadata->onInstall->createTranslationKeys . "*.{json}", GLOB_BRACE);
+                $files = glob(__DIR__ . "/../../../../$PluginFolder/$PluginName/" . $PluginMetadata->onInstall->createTranslationKeys . '*.{json}', GLOB_BRACE);
                 foreach ($files as $File) {
 
-                    if (defined("CRISP_CLI")) {
-                        echo "----------" . PHP_EOL;
-                        echo "Installing language " . substr(basename($File), 0, -5) . PHP_EOL;
-                        echo "----------" . PHP_EOL;
+                    if (defined('CRISP_CLI')) {
+                        echo '----------' . PHP_EOL;
+                        echo 'Installing language ' . substr(basename($File), 0, -5) . PHP_EOL;
+                        echo '----------' . PHP_EOL;
                     }
                     if (!file_exists($File)) {
                         continue;
@@ -330,13 +335,13 @@ class Plugins
 
                     foreach (json_decode(file_get_contents($File), true) as $Key => $Value) {
                         try {
-                            if ($Language->newTranslation("plugin." . $PluginName . ".$Key", $Value, substr(basename($File), 0, -5))) {
-                                if (defined("CRISP_CLI")) {
+                            if ($Language->newTranslation('plugin.' . $PluginName . ".$Key", $Value, substr(basename($File), 0, -5))) {
+                                if (defined('CRISP_CLI')) {
                                     echo "Installing translation $Key" . PHP_EOL;
                                 }
                             }
                         } catch (PDOException $ex) {
-                            if (defined("CRISP_CLI")) {
+                            if (defined('CRISP_CLI')) {
                                 var_dump($ex);
                             }
                             continue;
@@ -358,7 +363,7 @@ class Plugins
                     }
 
                     foreach ($Value as $KeyTranslation => $ValueTranslation) {
-                        $Language->newTranslation("plugin." . $PluginName . ".$KeyTranslation", $ValueTranslation, $Key);
+                        $Language->newTranslation('plugin.' . $PluginName . ".$KeyTranslation", $ValueTranslation, $Key);
                     }
                 } catch (PDOException) {
                     continue;
@@ -379,15 +384,15 @@ class Plugins
         $DB = new MySQL();
         $DBConn = $DB->getDBConnector();
 
-        $statement = $DBConn->prepare("SELECT * FROM loadedPlugins WHERE Name = :Key");
-        $statement->execute(array(":Key" => $PluginName));
+        $statement = $DBConn->prepare('SELECT * FROM loadedPlugins WHERE Name = :Key');
+        $statement->execute(array(':Key' => $PluginName));
 
         return $statement->rowCount() > 0;
     }
 
     public static function isValid($PluginName): bool
     {
-        $PluginFolder = \crisp\api\Config::get("plugin_dir");
+        $PluginFolder = \crisp\api\Config::get('plugin_dir');
         return file_exists(__DIR__ . "/../../../../$PluginFolder/$PluginName/plugin.json");
     }
 
@@ -404,7 +409,7 @@ class Plugins
             return false;
         }
 
-        $PluginFolder = \crisp\api\Config::get("plugin_dir");
+        $PluginFolder = \crisp\api\Config::get('plugin_dir');
 
         if (!file_exists(__DIR__ . "/../../../../$PluginFolder/$PluginName/plugin.json")) {
             return false;
@@ -429,12 +434,12 @@ class Plugins
     {
 
         return match(true){
-            str_contains($VersionString, ">=") => version_compare(core::CRISP_VERSION, substr($VersionString, 2), ">="),
-            str_contains($VersionString, "<=") => version_compare(core::CRISP_VERSION, substr($VersionString, 2), "<="),
-            str_contains($VersionString, "<") => version_compare(core::CRISP_VERSION, substr($VersionString, 1), "<"),
-            str_contains($VersionString, "=") => version_compare(core::CRISP_VERSION, substr($VersionString, 1), "="),
-            str_contains($VersionString, "!=") => version_compare(core::CRISP_VERSION, substr($VersionString, 2), "!="),
-            str_contains($VersionString, ">") => version_compare(core::CRISP_VERSION, substr($VersionString, 1), ">"),
+            str_contains($VersionString, '>=') => version_compare(core::CRISP_VERSION, substr($VersionString, 2), '>='),
+            str_contains($VersionString, '<=') => version_compare(core::CRISP_VERSION, substr($VersionString, 2), '<='),
+            str_contains($VersionString, '<') => version_compare(core::CRISP_VERSION, substr($VersionString, 1), '<'),
+            str_contains($VersionString, '=') => version_compare(core::CRISP_VERSION, substr($VersionString, 1), '='),
+            str_contains($VersionString, '!=') => version_compare(core::CRISP_VERSION, substr($VersionString, 2), '!='),
+            str_contains($VersionString, '>') => version_compare(core::CRISP_VERSION, substr($VersionString, 1), '>'),
             default => version_compare(core::CRISP_VERSION, $VersionString)
         };
 
@@ -447,7 +452,7 @@ class Plugins
      */
     public static function getPluginMetadata(string $PluginName): bool
     {
-        $PluginFolder = \crisp\api\Config::get("plugin_dir");
+        $PluginFolder = \crisp\api\Config::get('plugin_dir');
 
         if (!file_exists(__DIR__ . "/../../../../$PluginFolder/$PluginName/plugin.json")) {
             return false;
@@ -469,8 +474,8 @@ class Plugins
         }
 
         if (isset($PluginMetadata->onInstall->createCron) && is_array($PluginMetadata->onInstall->createCron)) {
-            if (defined("CRISP_CLI")) {
-                echo "Removing crons " . $PluginName . PHP_EOL;
+            if (defined('CRISP_CLI')) {
+                echo 'Removing crons ' . $PluginName . PHP_EOL;
             }
             Cron::deleteByPlugin($PluginName);
         }
@@ -489,19 +494,19 @@ class Plugins
             return false;
         }
 
-        if (defined("CRISP_CLI")) {
-            echo "----------" . PHP_EOL;
+        if (defined('CRISP_CLI')) {
+            echo '----------' . PHP_EOL;
             echo "Installing crons for plugin $PluginName" . PHP_EOL;
-            echo "----------" . PHP_EOL;
+            echo '----------' . PHP_EOL;
         }
         if (isset($PluginMetadata->onInstall->createCron) && is_array($PluginMetadata->onInstall->createCron)) {
 
             foreach ($PluginMetadata->onInstall->createCron as $Cron) {
 
-                if (defined("CRISP_CLI")) {
-                    echo "Installing cron " . $Cron->type . PHP_EOL;
+                if (defined('CRISP_CLI')) {
+                    echo 'Installing cron ' . $Cron->type . PHP_EOL;
                 }
-                Cron::create("execute_plugin_cron", json_encode(array("data" => $Cron->data, "name" => $Cron->type)), $Cron->interval, $PluginName);
+                Cron::create('execute_plugin_cron', json_encode(array('data' => $Cron->data, 'name' => $Cron->type)), $Cron->interval, $PluginName);
             }
         }
         return true;
@@ -520,12 +525,12 @@ class Plugins
         }
 
         foreach (self::listConfig($PluginName) as $Key => $Value) {
-            if (defined("CRISP_CLI")) {
+            if (defined('CRISP_CLI')) {
                 echo "Deleting $Key" . PHP_EOL;
             }
             \crisp\api\Config::delete($Key);
 
-            if (defined("CRISP_CLI")) {
+            if (defined('CRISP_CLI')) {
                 echo "Deleted $Key" . PHP_EOL;
             }
         }
@@ -545,7 +550,7 @@ class Plugins
 
 
         foreach ($Configs as $Key => $Translation) {
-            if (!str_contains($Translation["key"], "plugin_$PluginName")) {
+            if (!str_contains($Translation['key'], "plugin_$PluginName")) {
                 unset($Configs[$Key]);
             }
         }
@@ -582,16 +587,16 @@ class Plugins
         if (!is_object($PluginMetadata) && !isset($PluginMetadata->hookFile)) {
             return false;
         }
-        $Language = Languages::getLanguageByCode("en");
+        $Language = Languages::getLanguageByCode('en');
 
-        if (defined("CRISP_CLI")) {
-            echo "Deleting translations for " . $PluginName . PHP_EOL;
+        if (defined('CRISP_CLI')) {
+            echo 'Deleting translations for ' . $PluginName . PHP_EOL;
         }
         foreach (self::listTranslations($PluginName) as $Translation) {
-            if (defined("CRISP_CLI")) {
-                echo "Deleting translation " . $Translation["key"] . PHP_EOL;
+            if (defined('CRISP_CLI')) {
+                echo 'Deleting translation ' . $Translation['key'] . PHP_EOL;
             }
-            $Language->deleteTranslation($Translation["key"]);
+            $Language->deleteTranslation($Translation['key']);
         }
         return true;
     }
@@ -650,10 +655,10 @@ class Plugins
         $DB = new MySQL();
         $DBConn = $DB->getDBConnector();
 
-        $statement = $DBConn->prepare("DELETE FROM loadedPlugins WHERE name = :Key");
-        $statement->execute(array(":Key" => $PluginName));
+        $statement = $DBConn->prepare('DELETE FROM loadedPlugins WHERE name = :Key');
+        $statement->execute(array(':Key' => $PluginName));
 
-        $PluginFolder = \crisp\api\Config::get("plugin_dir");
+        $PluginFolder = \crisp\api\Config::get('plugin_dir');
 
         if (!file_exists(__DIR__ . "/../../../../$PluginFolder/$PluginName/plugin.json")) {
             return false;
@@ -678,7 +683,7 @@ class Plugins
 
 
         self::broadcastHook("pluginUninstall_$PluginName", null);
-        self::broadcastHook("pluginUninstall", $PluginName);
+        self::broadcastHook('pluginUninstall', $PluginName);
         return true;
     }
 
@@ -688,10 +693,10 @@ class Plugins
      * @param stdClass $PluginMetadata Decoded plugin.json contents
      * @return array
      */
-    #[ArrayShape(["integrity" => "bool", "parsedConfigs" => "array", "failedConfigs" => "array", "parsedFiles" => "array", "failedFiles" => "array", "isInstalled" => "bool"])]
+    #[ArrayShape(['integrity' => 'bool', 'parsedConfigs' => 'array', 'failedConfigs' => 'array', 'parsedFiles' => 'array', 'failedFiles' => 'array', 'isInstalled' => 'bool'])]
     public static function integrityCheck(string $PluginName, stdClass $PluginMetadata): array
     {
-        $PluginFolder = \crisp\api\Config::get("plugin_dir");
+        $PluginFolder = \crisp\api\Config::get('plugin_dir');
         $parsedConfigs = array();
         $failedConfigs = array();
         $failedChecks = array();
@@ -705,7 +710,7 @@ class Plugins
                     $Value = serialize($Value);
                 }
                 try {
-                    $KeyExists = \crisp\api\Config::exists("plugin_" . $PluginName . "_$Key");
+                    $KeyExists = \crisp\api\Config::exists('plugin_' . $PluginName . "_$Key");
                     $parsedConfigs[$Key] = $Value;
                     if (!$KeyExists) {
                         $failedConfigs[$Key] = $Value;
@@ -714,30 +719,30 @@ class Plugins
                     $failedConfigs[$Key] = $Value;
                 }
             }
-            $parsedChecks[] = "KVStorageItems";
+            $parsedChecks[] = 'KVStorageItems';
             if (count($failedConfigs) > 0) {
                 $integrity = false;
-                $failedChecks[] = "KVStorageItems";
+                $failedChecks[] = 'KVStorageItems';
             }
         }
 
 
         if (!self::isInstalled($PluginName)) {
             $integrity = false;
-            $failedChecks[] = "isInstalled";
+            $failedChecks[] = 'isInstalled';
         } else {
-            $parsedChecks[] = "isInstalled";
+            $parsedChecks[] = 'isInstalled';
         }
 
         $PluginPath = realpath(__DIR__ . "/../../../../$PluginFolder" . DIRECTORY_SEPARATOR . "$PluginName") . DIRECTORY_SEPARATOR;
-        if (file_exists($PluginPath . "sha256sum.txt")) {
+        if (file_exists($PluginPath . 'sha256sum.txt')) {
 
-            foreach (file($PluginPath . "sha256sum.txt") as $line) {
+            foreach (file($PluginPath . 'sha256sum.txt') as $line) {
                 if (!ctype_space($line)) {
-                    $line = explode("  ", $line);
+                    $line = explode('  ', $line);
                     $Hash = $line[0];
                     $File = trim($line[1]);
-                    $HashFile = hash_file("sha256", $PluginPath . $File);
+                    $HashFile = hash_file('sha256', $PluginPath . $File);
                     $parsedFiles[$File] = $HashFile;
                     if ($HashFile != $Hash) {
                         $failedFiles[$File] = $HashFile;
@@ -746,18 +751,18 @@ class Plugins
             }
             if (count($failedFiles) > 0) {
                 $integrity = false;
-                $failedChecks[] = "hash_file";
+                $failedChecks[] = 'hash_file';
             }
-            $parsedChecks[] = "hash_file";
+            $parsedChecks[] = 'hash_file';
         }
 
         return array(
-            "integrity" => $integrity,
-            "parsedConfigs" => $parsedConfigs,
-            "failedConfigs" => $failedConfigs,
-            "parsedFiles" => $parsedFiles,
-            "failedFiles" => $failedFiles,
-            "isInstalled" => self::isInstalled($PluginName),
+            'integrity' => $integrity,
+            'parsedConfigs' => $parsedConfigs,
+            'failedConfigs' => $failedConfigs,
+            'parsedFiles' => $parsedFiles,
+            'failedFiles' => $failedFiles,
+            'isInstalled' => self::isInstalled($PluginName),
         );
     }
 
@@ -779,14 +784,14 @@ class Plugins
         $DBConn = $DB->getDBConnector();
 
 
-        $statement2 = $DBConn->prepare("SELECT * FROM loadedPlugins WHERE Name = :Key");
-        $statement2->execute(array(":Key" => $PluginName));
+        $statement2 = $DBConn->prepare('SELECT * FROM loadedPlugins WHERE Name = :Key');
+        $statement2->execute(array(':Key' => $PluginName));
 
         if ($statement2->rowCount() > 0) {
             return false;
         }
 
-        $PluginFolder = \crisp\api\Config::get("plugin_dir");
+        $PluginFolder = \crisp\api\Config::get('plugin_dir');
 
         if (!file_exists(__DIR__ . "/../../../../$PluginFolder/$PluginName/plugin.json")) {
             return false;
@@ -806,12 +811,12 @@ class Plugins
         new Plugin($PluginFolder, $PluginName, $PluginMetadata, $TwigTheme, $CurrentFile, $CurrentPage);
 
         self::broadcastHook("pluginInstall_$PluginName", time());
-        self::broadcastHook("pluginInstall", $PluginName);
+        self::broadcastHook('pluginInstall', $PluginName);
 
         self::migrate($PluginName);
 
-        $statement = $DBConn->prepare("INSERT INTO loadedPlugins (Name) VALUES (:Key)");
-        return $statement->execute(array(":Key" => $PluginName));
+        $statement = $DBConn->prepare('INSERT INTO loadedPlugins (Name) VALUES (:Key)');
+        return $statement->execute(array(':Key' => $PluginName));
     }
 
     /**

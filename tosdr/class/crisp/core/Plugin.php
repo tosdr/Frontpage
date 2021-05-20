@@ -56,29 +56,27 @@ class Plugin {
         $this->PluginFolder = Helper::filterAlphaNum($PluginFolder);
         $this->PluginName = Helper::filterAlphaNum($PluginName);
         $this->PluginMetadata = $PluginMetadata;
-        $this->PluginPath = realpath(__DIR__ . "/../../../../" . $PluginFolder . "/" . $PluginName . "/") . "/";
+        $this->PluginPath = realpath(__DIR__ . '/../../../../' . $PluginFolder . '/' . $PluginName . '/') . '/';
         $this->TwigTheme = $TwigTheme;
         $this->CurrentFile = Helper::filterAlphaNum($CurrentFile);
         $this->CurrentPage = Helper::filterAlphaNum($CurrentPage);
         if (file_exists($this->PluginPath . $PluginMetadata->hookFile)) {
             require $this->PluginPath . $PluginMetadata->hookFile;
 
-
-
-            if (file_exists($this->PluginPath . "/templates/views/" . $this->CurrentPage . ".twig") && file_exists($this->PluginPath . "/includes/views/" . $this->CurrentPage . ".php")) {
-                $GLOBALS["plugins"][] = $this;
-                require $this->PluginPath . "/includes/views/" . $this->CurrentPage . ".php";
+            if (file_exists($this->PluginPath . '/templates/views/' . $this->CurrentPage . '.twig') && file_exists($this->PluginPath . '/includes/views/' . $this->CurrentPage . '.php')) {
+                $GLOBALS['plugins'][] = $this;
+                require $this->PluginPath . '/includes/views/' . $this->CurrentPage . '.php';
 
 
                 $_vars = ($_vars ?? []);
-                $_vars["plugin"] = $this;
+                $_vars['plugin'] = $this;
 
-                $GLOBALS["render"][$this->PluginName . "/templates/views/" . $this->CurrentPage . ".twig"] = $_vars;
+                $GLOBALS['render'][$this->PluginName . '/templates/views/' . $this->CurrentPage . '.twig'] = $_vars;
 
                 unset($_vars);
             }
         } else {
-            throw new BitmaskException("Plugin <b>" . $this->PluginName . "</b> failed to load due to a missing includes file", Bitmask::PLUGIN_MISSING_INCLUDES);
+            throw new BitmaskException('Plugin <b>' . $this->PluginName . '</b> failed to load due to a missing includes file', Bitmask::PLUGIN_MISSING_INCLUDES);
         }
     }
 
@@ -98,14 +96,14 @@ class Plugin {
         $Translation = new Translation($Locale);
 
 
-        return $Translation->fetch("plugin." . $this->PluginName . ".$Key", $Count, $UserOptions);
+        return $Translation->fetch('plugin.' . $this->PluginName . ".$Key", $Count, $UserOptions);
     }
 
     /**
      * @see \crisp\api\Config::get
      */
     public function getConfig(string $Key): mixed {
-        return \crisp\api\Config::get("plugin." . $this->PluginName . ".$Key");
+        return \crisp\api\Config::get('plugin.' . $this->PluginName . ".$Key");
     }
 
     /**
@@ -116,9 +114,9 @@ class Plugin {
      * @return int
      * @see \crisp\api\lists\Cron::create
      */
-    public function createCron(string $Type, $Data, string $Interval = "2 MINUTE", bool $ExecuteOnce = false): int
+    public function createCron(string $Type, $Data, string $Interval = '2 MINUTE', bool $ExecuteOnce = false): int
     {
-        return Cron::create("execute_plugin_cron", json_encode(array("data" => $Data, "name" => $Type)), $Interval, $this->PluginName, $ExecuteOnce);
+        return Cron::create('execute_plugin_cron', json_encode(array('data' => $Data, 'name' => $Type)), $Interval, $this->PluginName, $ExecuteOnce);
     }
 
     /**
@@ -127,15 +125,15 @@ class Plugin {
      */
     public function includeResource(string $File): string
     {
-        if (str_starts_with($File, "/")) {
+        if (str_starts_with($File, '/')) {
             $File = substr($File, 1);
         }
 
-        if (!file_exists(__DIR__ . "/../../../../" . \crisp\api\Config::get("plugin_dir") . "/" . $this->PluginName . "/$File")) {
-            return (\crisp\api\Config::exists("cdn") ? \crisp\api\Config::get("cdn") : "") . "/" . \crisp\api\Config::get("plugin_dir") . "/" . $this->PluginName . "/$File";
+        if (!file_exists(__DIR__ . '/../../../../' . \crisp\api\Config::get('plugin_dir') . '/' . $this->PluginName . "/$File")) {
+            return (\crisp\api\Config::exists('cdn') ? \crisp\api\Config::get('cdn') : '') . '/' . \crisp\api\Config::get('plugin_dir') . '/' . $this->PluginName . "/$File";
         }
 
-        return (\crisp\api\Config::exists("cdn") ? \crisp\api\Config::get("cdn") : "") . "/" . \crisp\api\Config::get("plugin_dir") . "/" . $this->PluginName . "/$File?" . hash_file("sha256", __DIR__ . "/../../../../" . \crisp\api\Config::get("plugin_dir") . "/" . $this->PluginName . "/$File");
+        return (\crisp\api\Config::exists('cdn') ? \crisp\api\Config::get('cdn') : '') . '/' . \crisp\api\Config::get('plugin_dir') . '/' . $this->PluginName . "/$File?" . hash_file('sha256', __DIR__ . '/../../../../' . \crisp\api\Config::get('plugin_dir') . '/' . $this->PluginName . "/$File");
     }
 
     /**
@@ -145,7 +143,7 @@ class Plugin {
      */
     public function deleteConfig(string $Key): bool
     {
-        return \crisp\api\Config::delete("plugin_" . $this->PluginName . "_$Key");
+        return \crisp\api\Config::delete('plugin_' . $this->PluginName . "_$Key");
     }
 
     /**
@@ -156,7 +154,7 @@ class Plugin {
      */
     public function setConfig(string $Key, mixed $Value): bool
     {
-        return \crisp\api\Config::set("plugin_" . $this->PluginName . "_$Key", $Value);
+        return \crisp\api\Config::set('plugin_' . $this->PluginName . "_$Key", $Value);
     }
 
     /**
@@ -167,7 +165,7 @@ class Plugin {
      */
     public function createConfig(string $Key, mixed $Value): bool
     {
-        return \crisp\api\Config::create("plugin_" . $this->PluginName . "_$Key", $Value);
+        return \crisp\api\Config::create('plugin_' . $this->PluginName . "_$Key", $Value);
     }
 
     /**

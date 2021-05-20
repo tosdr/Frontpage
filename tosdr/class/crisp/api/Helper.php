@@ -254,9 +254,9 @@ class Helper
             array_unshift($_Route, 'api');
         }
         $obj = new stdClass();
-        $obj->Language = (lists\Languages::languageExists($_Route[0]) && $_Route[0] !== '' ? $_Route[0] : self::getLocale());
-        $obj->Page = explode('?', ($_Route[1] === '' ? ($_Route[0] !== '' ? $_Route[0] : false) : $_Route[1]))[0];
-        $obj->GET = [];
+        $obj->Language = (lists\Languages::languageExists($_Route[0]) && strlen($_Route[0]) > 0 ? $_Route[0] : self::getLocale());
+        $obj->Page = explode('?', (strlen($_Route[1]) === 0 ? (strlen($_Route[0]) > 0 ? $_Route[0] : false) : $_Route[1]))[0];
+        $obj->GET = array();
         if ($_Route[2] !== '') {
             $_RouteArray = $_Route;
             array_shift($_RouteArray);

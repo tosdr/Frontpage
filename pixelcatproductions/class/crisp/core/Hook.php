@@ -32,13 +32,14 @@ trait Hook {
      * @param string $channel The hook to listen on
      * @param mixed $func The function to send the response to
      */
-    public static function on(string $channel, mixed $func) {
+    public static function on(string $channel, mixed $func): void
+    {
         if (!isset($GLOBALS['hook'][$channel])) {
 
-            $GLOBALS['hook'][$channel] = array();
+            $GLOBALS['hook'][$channel] = [];
         }
 
-        array_push($GLOBALS['hook'][$channel], $func);
+        $GLOBALS['hook'][$channel][] = $func;
     }
 
     /**
@@ -51,8 +52,8 @@ trait Hook {
     {
         if (isset($GLOBALS['hook'][$channel])) {
             foreach ($GLOBALS['hook'][$channel] as $func) {
-                $GLOBALS['hook'][$channel]["parameters"] = $parameters;
-                call_user_func($func, $parameters);
+                $GLOBALS['hook'][$channel]['parameters'] = $parameters;
+                $func($parameters);
             }
             return count($GLOBALS['hook'][$channel]);
         }

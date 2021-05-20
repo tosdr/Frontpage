@@ -20,12 +20,12 @@
 
 namespace crisp\migrations;
 
-class addpermissionstoapikey extends \crisp\core\Migrations {
+class AddClientName extends \crisp\core\Migrations {
 
     public function run() {
         try {
             $this->begin();
-            $this->addColumn("apikeys", array("permissions", self::DB_BIGINT, "DEFAULT '1'"));
+            $this->addColumn("oauth_clients", array("client_name", self::DB_VARCHAR, "DEFAULT NULL"));
             return $this->end();
         } catch (\Exception $ex) {
             echo $ex->getMessage() . PHP_EOL;

@@ -23,12 +23,14 @@ namespace crisp\core;
 use crisp\api\Helper;
 use Exception;
 use PDO;
+use RuntimeException;
 
 /**
  * Crisp DB Migration Class
  * @since 0.0.8-beta.RC1
  */
-class Migrations {
+class Migrations
+{
 
     /**
      * The PDO Database
@@ -38,68 +40,69 @@ class Migrations {
 
     /* Data types */
 
-    const DB_VARCHAR = "varchar(255)";
-    const DB_TEXT = "text";
-    const DB_INTEGER = "integer";
-    const DB_TIMESTAMP = "timestamp";
-    const DB_BOOL = "smallint";
-    const DB_LONGTEXT = "text";
-    const DB_BIGINT = "bigint";
+    const DB_VARCHAR = 'varchar(255)';
+    const DB_TEXT = 'text';
+    const DB_INTEGER = 'integer';
+    const DB_TIMESTAMP = 'timestamp';
+    const DB_BOOL = 'smallint';
+    const DB_LONGTEXT = 'text';
+    const DB_BIGINT = 'bigint';
 
     /* Keys */
-    const DB_PRIMARYKEY = "PRIMARY";
-    const DB_UNIQUEKEY = "UNIQUE";
+    const DB_PRIMARYKEY = 'PRIMARY';
+    const DB_UNIQUEKEY = 'UNIQUE';
 
-    public function __construct() {
+    public function __construct()
+    {
         $DB = new MySQL();
         $this->Database = $DB->getDBConnector();
     }
 
     /**
      * Begin a MySQL Transaction
-     * @since 0.0.8-beta.RC2
      * @return boolean
+     * @since 0.0.8-beta.RC2
      */
     protected function begin(): bool
     {
-        echo "Enabling Transactions..." . PHP_EOL;
+        echo 'Enabling Transactions...' . PHP_EOL;
         if ($this->Database->beginTransaction()) {
-            echo "Enabled Transactions!" . PHP_EOL;
+            echo 'Enabled Transactions!' . PHP_EOL;
             return true;
         }
-        echo "Failed to enable transactions..." . PHP_EOL;
+        echo 'Failed to enable transactions...' . PHP_EOL;
         return false;
     }
 
     /**
      * Rollback a MySQL Transaction
-     * @since 0.0.8-beta.RC2
      * @return boolean
+     * @since 0.0.8-beta.RC2
      */
     protected function rollback(): bool
     {
-        echo "Rolling back..." . PHP_EOL;
+        echo 'Rolling back...' . PHP_EOL;
         if ($this->Database->rollBack()) {
-            echo "Rolled back!" . PHP_EOL;
+            echo 'Rolled back!' . PHP_EOL;
             return true;
         }
-        echo "Failed to rollback..." . PHP_EOL;
+        echo 'Failed to rollback...' . PHP_EOL;
         return false;
     }
 
     /**
      * End/commit a MySQL Transaction
-     * @since 0.0.8-beta.RC2
      * @return boolean
+     * @since 0.0.8-beta.RC2
      */
     protected function end(): bool
     {
-        echo "committing changes..." . PHP_EOL;
+        echo 'committing changes...' . PHP_EOL;
         if ($this->Database->commit()) {
-            echo "Changes committed!" . PHP_EOL;
+            echo 'Changes committed!' . PHP_EOL;
             return true;
         }
-        echo "Failed to commit changes!" . PHP_EOL;
+        echo 'Failed to commit changes!' . PHP_EOL;
         return false;
     }
 
@@ -114,9 +117,9 @@ class Migrations {
     {
 
         try {
-            $statement = $this->Database->prepare("SELECT * FROM schema_migration WHERE file =:file");
+            $statement = $this->Database->prepare('SELECT * FROM schema_migration WHERE file =:file');
 
-            $statement->execute(array(":file" => $file));
+            $statement->execute(array(':file' => $file));
             return $statement->rowCount() > 0;
         } catch (Exception) {
             return false;
@@ -130,13 +133,14 @@ class Migrations {
      * @return void
      * @since 0.0.8-beta.RC2
      */
-    public function migrate(string $Dir = __DIR__ . "/../", ?string $Plugin = null): void {
-        if (php_sapi_name() == "cli") {
-            echo "Starting Migration..." . PHP_EOL;
+    public function migrate(string $Dir = __DIR__ . '/../', ?string $Plugin = null): void
+    {
+        if (PHP_SAPI === 'cli') {
+            echo 'Starting Migration...' . PHP_EOL;
         }
         if (!file_exists("$Dir/migrations/")) {
-            if (php_sapi_name() == "cli") {
-                echo "No migrations needed!" . PHP_EOL;
+            if (PHP_SAPI === 'cli') {
+                echo 'No migrations needed!' . PHP_EOL;
             }
             return;
         }
@@ -145,20 +149,18 @@ class Migrations {
         natsort($files);
 
         foreach ($files as $file) {
-            if (basename($file) == "template.php") {
+            if (basename($file) === 'template.php') {
                 continue;
             }
 
-            $MigrationName = substr(basename($file), 0, -4);
+            $MigrationName = strtolower(substr(basename($file), 0, -4));
 
-            if ($MigrationName !== "0_createmigration" && $this->isMigrated($MigrationName)) {
-                if (php_sapi_name() == "cli") {
-                    echo "$MigrationName is already migrated, skipping!" . PHP_EOL;
-                }
+            if ($MigrationName !== '0_createmigration' && $this->isMigrated($MigrationName)) {
+                Helper::writeConsole("$MigrationName is already migrated, skipping!");
                 continue;
             }
 
-            $Class = "\crisp\migrations\\" . explode("_", $MigrationName)[1];
+            $Class = "\crisp\migrations\\" . explode('_', $MigrationName)[1];
 
             include $file;
 
@@ -166,18 +168,13 @@ class Migrations {
 
             if ($Migration->run()) {
 
-                $statement = $this->Database->prepare("INSERT INTO schema_migration (file, plugin) VALUES (:file, :plugin)");
+                $statement = $this->Database->prepare('INSERT INTO schema_migration (file, plugin) VALUES (:file, :plugin)');
 
-                $statement->execute(array(":file" => $MigrationName, ":plugin" => $Plugin));
+                $statement->execute(array(':file' => $MigrationName, ':plugin' => $Plugin));
 
-                if (php_sapi_name() == "cli") {
-                    echo "Migrated $MigrationName" . PHP_EOL;
-                }
+                Helper::writeConsole("Migrated $MigrationName");
             } else {
-
-                if (php_sapi_name() == "cli") {
-                    echo "Failed to migrate $MigrationName" . PHP_EOL;
-                }
+                Helper::writeConsole("Failed to migrate $MigrationName");
             }
         }
     }
@@ -186,30 +183,31 @@ class Migrations {
      * Create a new migration file.
      * @param string $MigrationName The name of the migration, only Alpha Letters.
      * @param string $Dir The base directory to look for migrations. e.g Setting "plugin" will create one in "plugin/migrations"
-     * @since 0.0.8-beta.RC2
      * @return void
+     * @since 0.0.8-beta.RC2
      */
-    public static function create(string $MigrationName, string $Dir = __DIR__ . "/../"): void {
+    public static function create(string $MigrationName, string $Dir = __DIR__ . '/../'): void
+    {
 
-        $MigrationNameFiltered = Helper::filterAlphaNum($MigrationName);
+        $MigrationNameFiltered = Helper::filterAlphaNum($MigrationName, false);
 
-        $Template = file_get_contents(__DIR__ . "/../migrations/template.php");
+        $Template = file_get_contents(__DIR__ . '/../migrations/template.php');
 
         $Skeleton = strtr($Template, array(
-            "MigrationName" => $MigrationNameFiltered,
-            "RUNCODE;" => '$this->createTable("MyTable", array("col1", \crisp\core\Migrations::DB_VARCHAR));'
+            'MigrationName' => $MigrationNameFiltered,
+            'RUNCODE;' => '$this->createTable("MyTable", array("col1", \crisp\core\Migrations::DB_VARCHAR));'
         ));
 
-        if (!file_exists("$Dir/migrations/")) {
-            mkdir("$Dir/migrations/");
+        if (!file_exists("$Dir/migrations/") && !mkdir("$Dir/migrations/") && !is_dir("$Dir/migrations/")) {
+            throw new RuntimeException(sprintf('Directory "%s" was not created', "$Dir/migrations/"));
         }
 
         $written = file_put_contents("$Dir/migrations/" . time() . "_$MigrationNameFiltered.php", $Skeleton);
 
         if (!$written) {
-            echo "Failed to write migration file, check permissions!" . PHP_EOL;
+            Helper::writeConsole('Failed to write migration file, check permissions!');
         } else {
-            echo "Migration file written!" . PHP_EOL;
+            Helper::writeConsole('Migration file written!');
         }
     }
 
@@ -248,9 +246,9 @@ class Migrations {
      */
     public function deleteByPlugin($PluginName): bool
     {
-        $statement = $this->Database->prepare("DELETE FROM schema_migration WHERE plugin = :Plugin");
+        $statement = $this->Database->prepare('DELETE FROM schema_migration WHERE plugin = :Plugin');
 
-        return $statement->execute(array(":Plugin" => $PluginName));
+        return $statement->execute(array(':Plugin' => $PluginName));
     }
 
     /**
@@ -304,8 +302,8 @@ class Migrations {
      * @param string $Table The table name
      * @param mixed ...$Columns An array consisting of the column name, column type and additional info, e.g. array("ColName, self::DB_VARCHAR, "NOT NULL")
      * @return boolean
-     * @since 0.0.8-beta.RC2
      * @throws Exception
+     * @since 0.0.8-beta.RC2
      */
     protected function createTable(string $Table, ...$Columns): bool
     {
@@ -315,7 +313,7 @@ class Migrations {
             $Name = $Column[0];
             $Type = $Column[1];
             $Additional = $Column[2];
-            if (str_contains($Additional, "SERIAL")) {
+            if (str_contains($Additional, 'SERIAL')) {
                 $SQL .= "$Name SERIAL,";
             } else {
                 $SQL .= "$Name $Type $Additional,";
@@ -324,7 +322,7 @@ class Migrations {
                 $SQL = substr($SQL, 0, -1);
             }
         }
-        $SQL .= ");";
+        $SQL .= ');';
 
 
         $statement = $this->Database->prepare($SQL);

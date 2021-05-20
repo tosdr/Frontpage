@@ -20,7 +20,7 @@
 
 namespace crisp\migrations;
 
-class addratelimittoapikey extends \crisp\core\Migrations {
+class AddRateLimitToApiKey extends \crisp\core\Migrations {
 
     public function run() {
         try {

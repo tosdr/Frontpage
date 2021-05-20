@@ -20,12 +20,12 @@
 
 namespace crisp\migrations;
 
-class addnotetoservice extends \crisp\core\Migrations {
+class AddExecuteOnceToPlugin extends \crisp\core\Migrations {
 
     public function run() {
         try {
             $this->begin();
-            $this->addColumn("service_requests", array("note", self::DB_TEXT, "DEFAULT NULL"));
+            $this->addColumn("Cron", array("ExecuteOnce", self::DB_BOOL, "DEFAULT 0"));
             return $this->end();
         } catch (\Exception $ex) {
             echo $ex->getMessage() . PHP_EOL;

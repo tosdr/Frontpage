@@ -20,12 +20,20 @@
 
 namespace crisp\migrations;
 
-class addmailtoservice extends \crisp\core\Migrations {
+class CreateConfig extends \crisp\core\Migrations {
 
     public function run() {
         try {
             $this->begin();
-            $this->addColumn("service_requests", array("email", self::DB_VARCHAR, "DEFAULT NULL"));
+            $this->createTable("Config",
+                    array("key", $this::DB_VARCHAR),
+                    array("value", $this::DB_TEXT),
+                    array("last_changed", $this::DB_TIMESTAMP, "DEFAULT NULL"),
+                    array("type", $this::DB_VARCHAR, "NOT NULL DEFAULT 'string'"),
+                    array("created_at", $this::DB_TIMESTAMP, "NOT NULL DEFAULT CURRENT_TIMESTAMP")
+            );
+            $this->addIndex("Config", "key", $this::DB_PRIMARYKEY);
+            
             return $this->end();
         } catch (\Exception $ex) {
             echo $ex->getMessage() . PHP_EOL;

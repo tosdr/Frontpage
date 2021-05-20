@@ -1,6 +1,6 @@
 <?php
 
-/*
+/* 
  * Copyright (C) 2021 Justin René Back <justin@tosdr.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,14 +17,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+
 namespace crisp\migrations;
 
-class addprimarytoapikey extends \crisp\core\Migrations {
+class AddSen extends \crisp\core\Migrations {
 
     public function run() {
         try {
             $this->begin();
-            $this->addIndex("apikeys", "key", $this::DB_PRIMARYKEY);
+            $this->addColumn("apikeys", array("sen", self::DB_VARCHAR, "DEFAULT NULL"));
             return $this->end();
         } catch (\Exception $ex) {
             echo $ex->getMessage() . PHP_EOL;

@@ -20,20 +20,16 @@
 
 namespace crisp\migrations;
 
-class oauthclients extends \crisp\core\Migrations {
+class CreateTranslations extends \crisp\core\Migrations {
 
     public function run() {
         try {
             $this->begin();
-            $this->createTable("oauth_clients",
-                array("client_id", \crisp\core\Migrations::DB_VARCHAR, "NOT NULL"),
-                array("client_secret", \crisp\core\Migrations::DB_VARCHAR, "NOT NULL"),
-                array("redirect_uri", \crisp\core\Migrations::DB_TEXT),
-                array("grant_types", \crisp\core\Migrations::DB_VARCHAR),
-                array("scope", \crisp\core\Migrations::DB_BIGINT),
-                array("user_id", \crisp\core\Migrations::DB_BIGINT)
+            $this->createTable("Translations",
+                    array("key", $this::DB_VARCHAR),
+                    array("en", $this::DB_TEXT),
             );
-            $this->addIndex("oauth_clients", "client_id", $this::DB_PRIMARYKEY);
+            $this->addIndex("Translations", "key", $this::DB_PRIMARYKEY);
             return $this->end();
         } catch (\Exception $ex) {
             echo $ex->getMessage() . PHP_EOL;

@@ -1,6 +1,6 @@
 <?php
 
-/* 
+/*
  * Copyright (C) 2021 Justin René Back <justin@tosdr.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,25 +17,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 namespace crisp\migrations;
 
-class createmigration extends \crisp\core\Migrations {
+class AddBenefitToApikey extends \crisp\core\Migrations {
 
-  public function run() {
-    try {
-      $this->begin();
-      \crisp\core\Migrations::createTable("schema_migration", array("file", \crisp\core\Migrations::DB_VARCHAR));
-
-      if (!$this->isMigrated("1608994339_addplugintomigration")) {
-        $this->addColumn("schema_migration", array("plugin", self::DB_VARCHAR, "DEFAULT NULL"));
-      }
-      return $this->end();
-    } catch (\Exception $ex) {
-      echo $ex->getMessage() . PHP_EOL;
-      $this->rollback();
-      return false;
+    public function run() {
+        try {
+            $this->begin();
+            $this->addColumn("apikeys", array("ratelimit_benefit", self::DB_VARCHAR, "DEFAULT NULL"));
+            return $this->end();
+        } catch (\Exception $ex) {
+            echo $ex->getMessage() . PHP_EOL;
+            $this->rollback();
+            return false;
+        }
     }
-  }
 
 }

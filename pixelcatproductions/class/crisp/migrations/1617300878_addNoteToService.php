@@ -20,19 +20,12 @@
 
 namespace crisp\migrations;
 
-class oauthrefreshtokens extends \crisp\core\Migrations {
+class AddNoteToService extends \crisp\core\Migrations {
 
     public function run() {
         try {
             $this->begin();
-            $this->createTable("oauth_refresh_tokens",
-                array("refresh_token", \crisp\core\Migrations::DB_VARCHAR, "NOT NULL"),
-                array("client_id", \crisp\core\Migrations::DB_VARCHAR, "NOT NULL"),
-                array("expires", \crisp\core\Migrations::DB_TIMESTAMP),
-                array("scope", \crisp\core\Migrations::DB_BIGINT),
-                array("user_id", \crisp\core\Migrations::DB_BIGINT)
-            );
-            $this->addIndex("oauth_refresh_tokens", "refresh_token", $this::DB_PRIMARYKEY);
+            $this->addColumn("service_requests", array("note", self::DB_TEXT, "DEFAULT NULL"));
             return $this->end();
         } catch (\Exception $ex) {
             echo $ex->getMessage() . PHP_EOL;

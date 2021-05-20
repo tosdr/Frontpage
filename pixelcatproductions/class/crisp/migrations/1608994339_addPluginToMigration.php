@@ -20,12 +20,15 @@
 
 namespace crisp\migrations;
 
-class addclientname extends \crisp\core\Migrations {
+class AddPluginToMigration extends \crisp\core\Migrations {
 
     public function run() {
         try {
             $this->begin();
-            $this->addColumn("oauth_clients", array("client_name", self::DB_VARCHAR, "DEFAULT NULL"));
+
+            if (!$this->isMigrated("0_createmigration")) {
+                $this->addColumn("schema_migration", array("plugin", self::DB_VARCHAR, "DEFAULT NULL"));
+            }
             return $this->end();
         } catch (\Exception $ex) {
             echo $ex->getMessage() . PHP_EOL;

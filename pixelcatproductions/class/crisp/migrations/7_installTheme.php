@@ -20,22 +20,20 @@
 
 namespace crisp\migrations;
 
-class createservicestats extends \crisp\core\Migrations {
+class installTheme extends \crisp\core\Migrations {
 
-    public function run() {
-        try {
-            $this->begin();
-            $this->createTable("APIStats",
-                    array("interface", \crisp\core\Migrations::DB_VARCHAR),
-                    array("query", \crisp\core\Migrations::DB_VARCHAR),
-                    array("count", \crisp\core\Migrations::DB_INTEGER)
-            );
-            return $this->end();
-        } catch (\Exception $ex) {
-            echo $ex->getMessage() . PHP_EOL;
-            $this->rollback();
-            return false;
-        }
+  public function run() {
+    try {
+      $this->begin();
+      $this->Database->query("INSERT INTO Config (key, value) VALUES ('theme_dir', 'themes')");
+      $this->Database->query("INSERT INTO Config (key, value) VALUES ('plugin_dir', 'plugins')");
+      \crisp\core\Themes::install("crisp");
+      return $this->end();
+    } catch (\Exception $ex) {
+      echo $ex->getMessage() . PHP_EOL;
+      $this->rollback();
+      return false;
     }
+  }
 
 }

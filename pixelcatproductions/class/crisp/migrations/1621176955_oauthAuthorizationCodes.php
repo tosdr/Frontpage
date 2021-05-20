@@ -20,26 +20,21 @@
 
 namespace crisp\migrations;
 
-class createlanguages extends \crisp\core\Migrations {
+class OAuthAuthorizationCodes extends \crisp\core\Migrations {
 
     public function run() {
         try {
             $this->begin();
-
-
-            $this->createTable("Languages",
-                    array("ID", $this::DB_INTEGER, "NOT NULL SERIAL"),
-                    array("Name", $this::DB_VARCHAR, "NOT NULL"),
-                    array("Code", $this::DB_VARCHAR, "NOT NULL"),
-                    array("NativeName", $this::DB_VARCHAR, "NOT NULL"),
-                    array("Flag", $this::DB_VARCHAR, "NOT NULL"),
-                    array("Enabled", $this::DB_BOOL, "NOT NULL DEFAULT 0"),
+            $this->createTable("oauth_authorization_codes",
+                array("authorization_code", \crisp\core\Migrations::DB_VARCHAR, "NOT NULL"),
+                array("client_id", \crisp\core\Migrations::DB_VARCHAR, "NOT NULL"),
+                array("redirect_uri", \crisp\core\Migrations::DB_VARCHAR, "NOT NULL"),
+                array("id_token", \crisp\core\Migrations::DB_VARCHAR, "NOT NULL"),
+                array("expires", \crisp\core\Migrations::DB_TIMESTAMP),
+                array("scope", \crisp\core\Migrations::DB_BIGINT),
+                array("user_id", \crisp\core\Migrations::DB_BIGINT)
             );
-
-            $this->Database->query("INSERT INTO Languages (Name, Code, NativeName, Flag, Enabled) VALUES('base.language.en', 'en', 'base.language.native.en', 'en', 1)");
-
-
-
+            $this->addIndex("oauth_authorization_codes", "authorization_code", $this::DB_PRIMARYKEY);
             return $this->end();
         } catch (\Exception $ex) {
             echo $ex->getMessage() . PHP_EOL;

@@ -21,12 +21,8 @@ namespace crisp\api;
 
 use crisp\api\lists\Languages;
 use crisp\core\MySQL;
-use Exception;
 use PDO;
 use stdClass;
-use function curl_exec;
-use function curl_init;
-use function curl_setopt_array;
 
 /**
  * Some useful helper functions
@@ -38,10 +34,10 @@ class Helper
      * Check if the user is on a mobile device
      * @return boolean TRUE if the user is on mobile
      */
-    public static function isMobile($UserAgent = null): bool
+    public static function isMobile($userAgent = null): bool
     {
-        $UserAgent = ($UserAgent === null ? $_SERVER["HTTP_USER_AGENT"] : $UserAgent);
-        return preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i", $UserAgent);
+        $userAgent = ($userAgent ?? $_SERVER['HTTP_USER_AGENT']);
+        return preg_match('/(android|avantgo|blackberry|bolt|boost|cricket|docomo|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i', $userAgent);
     }
 
     /**
@@ -52,8 +48,8 @@ class Helper
     public static function hasApiPermissions($BitmaskFlag, $apikey = null): bool|int
     {
 
-        if ($apikey === null && isset(apache_request_headers()["Authorization"])) {
-            $apikey = apache_request_headers()["Authorization"];
+        if ($apikey === null && isset(apache_request_headers()['Authorization'])) {
+            $apikey = apache_request_headers()['Authorization'];
         } else if ($apikey === null) {
             return false;
         }
@@ -65,7 +61,7 @@ class Helper
         }
 
 
-        return ($keyDetails["permissions"] & $BitmaskFlag);
+        return ($keyDetails['permissions'] & $BitmaskFlag);
     }
 
     /**
@@ -78,9 +74,9 @@ class Helper
 
         $Postgres = new MySQL();
 
-        $statement = $Postgres->getDBConnector()->prepare("SELECT * FROM apikeys WHERE key = :key");
+        $statement = $Postgres->getDBConnector()->prepare('SELECT * FROM apikeys WHERE key = :key');
 
-        $statement->execute([":key" => $ApiKey]);
+        $statement->execute([':key' => $ApiKey]);
 
         if ($statement->rowCount() > 0) {
             return $statement->fetch(PDO::FETCH_ASSOC);
@@ -97,19 +93,16 @@ class Helper
 
         $Postgres = new MySQL();
 
-        $statement = $Postgres->getDBConnector()->prepare("SELECT * FROM apikeys WHERE key = :key AND revoked = 0 AND (expires_at is null OR expires_at > NOW())");
+        $statement = $Postgres->getDBConnector()->prepare('SELECT * FROM apikeys WHERE key = :key AND revoked = 0 AND (expires_at is null OR expires_at > NOW())');
 
-        if ($apikey === null && isset(apache_request_headers()["Authorization"])) {
-            $apikey = apache_request_headers()["Authorization"];
+        if ($apikey === null && isset(apache_request_headers()['Authorization'])) {
+            $apikey = apache_request_headers()['Authorization'];
         } else if ($apikey === null) {
             return false;
         }
-        $statement->execute([":key" => $apikey]);
+        $statement->execute([':key' => $apikey]);
 
-        if ($statement->rowCount() > 0) {
-            return true;
-        }
-        return false;
+        return $statement->rowCount() > 0;
     }
 
     /**
@@ -118,15 +111,19 @@ class Helper
      */
     public static function getRealIpAddr(): string
     {
-        if (!empty($_SERVER["HTTP_X_REAL_IP"])) {
+        if (!empty($_SERVER['HTTP_X_REAL_IP'])) {
             return $_SERVER['HTTP_X_REAL_IP'];
-        } else if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {   //to check ip is pass from proxy
-            return $_SERVER['HTTP_X_FORWARDED_FOR'];
-        } else if (!empty($_SERVER['HTTP_CLIENT_IP'])) {   //check ip from share internet
-            return $_SERVER['HTTP_CLIENT_IP'];
-        } else {
-            return $_SERVER['REMOTE_ADDR'];
         }
+
+        if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {   //to check ip is pass from proxy
+            return $_SERVER['HTTP_X_FORWARDED_FOR'];
+        }
+
+        if (!empty($_SERVER['HTTP_CLIENT_IP'])) {   //check ip from share internet
+            return $_SERVER['HTTP_CLIENT_IP'];
+        }
+
+        return $_SERVER['REMOTE_ADDR'];
     }
 
     /**
@@ -136,17 +133,17 @@ class Helper
     public static function getLocale(): string
     {
         $Locale = locale_accept_from_http($_SERVER['HTTP_ACCEPT_LANGUAGE']);
-        if (isset($GLOBALS["route"]->Language)) {
-            $Locale = $GLOBALS["route"]->Language;
+        if (isset($GLOBALS['route']->Language)) {
+            $Locale = $GLOBALS['route']->Language;
         }
 
 
-        if (!in_array($Locale, array_keys(array_column(Languages::fetchLanguages(false), null, "code")))) {
-            $Locale = "en";
+        if (!array_key_exists($Locale, array_column(Languages::fetchLanguages(false), null, 'code'))) {
+            $Locale = 'en';
         }
 
-        if (isset($_COOKIE[\crisp\core\Config::$Cookie_Prefix . "language"]) && !isset($GLOBALS["route"]->Language)) {
-            $Locale = $_COOKIE[\crisp\core\Config::$Cookie_Prefix . "language"];
+        if (isset($_COOKIE[\crisp\core\Config::$Cookie_Prefix . 'language']) && !isset($GLOBALS['route']->Language)) {
+            $Locale = $_COOKIE[\crisp\core\Config::$Cookie_Prefix . 'language'];
         }
         return $Locale;
     }
@@ -158,7 +155,7 @@ class Helper
      */
     public static function setLocale(): bool
     {
-        return setcookie(\crisp\core\Config::$Cookie_Prefix . "language", self::getLocale(), time() + (86400 * 30), "/");
+        return setcookie(\crisp\core\Config::$Cookie_Prefix . 'language', self::getLocale(), time() + (86400 * 30), '/');
     }
 
     /**
@@ -166,9 +163,13 @@ class Helper
      * @param string $String The string to filter
      * @return string Filtered string
      */
-    public static function filterAlphaNum(string $String): string
+    public static function filterAlphaNum(string $String, bool $LowerCaseOnly = true): string
     {
-        return str_replace(" ", "-", strtolower(preg_replace("/[^0-9a-zA-Z\-_]/", "-", $String)));
+        $Raw = str_replace(' ', '-', preg_replace('/[^0-9a-zA-Z\-_]/', '-', $String));
+        if ($LowerCaseOnly) {
+            return strtolower($Raw);
+        }
+        return $Raw;
     }
 
     /**
@@ -176,7 +177,7 @@ class Helper
      * @param string $Text The text to display
      * @param string $Size The in pixels to create the image with
      */
-    public static function PlaceHolder(string $Text, string $Size = "150x150")
+    public static function PlaceHolder(string $Text, string $Size = '150x150')
     {
 
         $fontSize = 5;
@@ -221,14 +222,14 @@ class Helper
 
         $Matches = [];
 
-        if (preg_match_all("/[^0-9a-zA-Z\-_]/", $Name) > 0) {
-            $Matches[] = "STRING_CONTAINS_NON_ALPHA_NUM";
+        if (preg_match_all('/[^0-9a-zA-Z\-_]/', $Name) > 0) {
+            $Matches[] = 'STRING_CONTAINS_NON_ALPHA_NUM';
         }
         if (str_contains($Name, ' ')) {
-            $Matches[] = "STRING_CONTAINS_SPACES";
+            $Matches[] = 'STRING_CONTAINS_SPACES';
         }
         if (preg_match('/[A-Z]/', $Name)) {
-            $Matches[] = "STRING_CONTAINS_UPPERCASE";
+            $Matches[] = 'STRING_CONTAINS_UPPERCASE';
         }
 
         return (count($Matches) > 0 ? $Matches : true);
@@ -241,7 +242,7 @@ class Helper
      */
     public static function generateLink(string $Path, bool $External = false): string
     {
-        return ($External ? $Path : "/" . self::getLocale() . "/$Path");
+        return ($External ? $Path : '/' . self::getLocale() . "/$Path");
     }
 
     /**
@@ -250,36 +251,36 @@ class Helper
      */
     public static function processRoute($Route): stdClass
     {
-        $_Route = explode("/", $Route);
+        $_Route = explode('/', $Route);
         array_shift($_Route);
-        if (isset($_SERVER["IS_API_ENDPOINT"])) {
-            array_unshift($_Route, "api");
+        if (isset($_SERVER['IS_API_ENDPOINT'])) {
+            array_unshift($_Route, 'api');
         }
         $obj = new stdClass();
-        $obj->Language = (lists\Languages::languageExists($_Route[0]) && strlen($_Route[0]) > 0 ? $_Route[0] : self::getLocale());
-        $obj->Page = explode("?", (strlen($_Route[1]) === 0 ? (strlen($_Route[0]) > 0 ? $_Route[0] : false) : $_Route[1]))[0];
-        $obj->GET = array();
-        if (strlen($_Route[2]) > 0) {
+        $obj->Language = (lists\Languages::languageExists($_Route[0]) && $_Route[0] !== '' ? $_Route[0] : self::getLocale());
+        $obj->Page = explode('?', ($_Route[1] === '' ? ($_Route[0] !== '' ? $_Route[0] : false) : $_Route[1]))[0];
+        $obj->GET = [];
+        if ($_Route[2] !== '') {
             $_RouteArray = $_Route;
             array_shift($_RouteArray);
             array_shift($_RouteArray);
-            for ($i = 0; $i <= count($_RouteArray); $i = $i + 2) {
+            for ($i = 0, $iMax = count($_RouteArray); $i <= $iMax; $i += 2) {
                 $key = $_RouteArray[$i];
                 $value = $_RouteArray[$i + 1];
-                if (strlen($key) > 0) {
+                if ($key !== '') {
                     if ($value === null) {
-                        $obj->GET["q"] = explode("?", $key)[0];
+                        $obj->GET['q'] = explode('?', $key)[0];
                     } else {
-                        $obj->GET[$key] = explode("?", $value)[0];
+                        $obj->GET[$key] = explode('?', $value)[0];
                     }
                 }
             }
         }
-        if (str_contains($Route, "?")) {
-            $qexplode = explode("?", $Route);
+        if (str_contains($Route, '?')) {
+            $qexplode = explode('?', $Route);
             array_shift($qexplode);
             foreach ($qexplode as $key) {
-                $key = explode("=", $key);
+                $key = explode('=', $key);
                 $_GET[$key[0]] = $key[1];
             }
         }
@@ -292,7 +293,7 @@ class Helper
      */
     public static function prettyDump($var): void
     {
-        echo sprintf("<pre>%s</pre>", var_export($var, true));
+        echo sprintf('<pre>%s</pre>', var_export($var, true));
     }
 
     /**
@@ -315,7 +316,19 @@ class Helper
      */
     public static function truncateText(string $String, int $Length, bool $AppendDots = true): string
     {
-        return strlen($String) > $Length ? substr($String, 0, $Length) . ($AppendDots ? "..." : "") : $String;
+        return strlen($String) > $Length ? substr($String, 0, $Length) . ($AppendDots ? '...' : '') : $String;
+    }
+
+
+    /**
+     * @param string $Text
+     * @param bool $NewLine
+     */
+    public static function writeConsole(string $Text, bool $NewLine = true): void
+    {
+        if(PHP_SAPI === 'cli') {
+            echo $Text . ($NewLine ? PHP_EOL : '');
+        }
     }
 
     /**
@@ -332,7 +345,7 @@ class Helper
             return false;
         }
         $data = trim($data);
-        if ('N;' == $data) {
+        if ('N;' === $data) {
             return true;
         }
         if (strlen($data) < 4) {
@@ -387,7 +400,7 @@ class Helper
      */
     public static function currentURL(): string
     {
-        return (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+        return (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http') . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
     }
 
 }

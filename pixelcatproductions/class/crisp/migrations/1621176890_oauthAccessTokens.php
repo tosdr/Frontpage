@@ -20,16 +20,19 @@
 
 namespace crisp\migrations;
 
-class createtranslations extends \crisp\core\Migrations {
+class OauthAccessTokens extends \crisp\core\Migrations {
 
     public function run() {
         try {
             $this->begin();
-            $this->createTable("Translations",
-                    array("key", $this::DB_VARCHAR),
-                    array("en", $this::DB_TEXT),
+            $this->createTable("oauth_access_tokens",
+                array("access_token", \crisp\core\Migrations::DB_VARCHAR, "NOT NULL"),
+                array("client_id", \crisp\core\Migrations::DB_VARCHAR, "NOT NULL"),
+                array("expires", \crisp\core\Migrations::DB_TIMESTAMP),
+                array("scope", \crisp\core\Migrations::DB_BIGINT),
+                array("user_id", \crisp\core\Migrations::DB_BIGINT)
             );
-            $this->addIndex("Translations", "key", $this::DB_PRIMARYKEY);
+            $this->addIndex("oauth_access_tokens", "access_token", $this::DB_PRIMARYKEY);
             return $this->end();
         } catch (\Exception $ex) {
             echo $ex->getMessage() . PHP_EOL;

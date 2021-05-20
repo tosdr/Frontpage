@@ -20,16 +20,24 @@
 
 namespace crisp\migrations;
 
-class addplugintomigration extends \crisp\core\Migrations {
+class createPlugins extends \crisp\core\Migrations {
 
     public function run() {
         try {
             $this->begin();
 
-            if (!$this->isMigrated("0_createmigration")) {
-                $this->addColumn("schema_migration", array("plugin", self::DB_VARCHAR, "DEFAULT NULL"));
-            }
-            return $this->end();
+            $this->createTable("loadedplugins",
+                    array("Name", $this::DB_VARCHAR, "NOT NULL"),
+                    array("loadedAt", $this::DB_TIMESTAMP, "NOT NULL DEFAULT CURRENT_TIMESTAMP"),
+                    array('"order"', $this::DB_INTEGER, "NOT NULL DEFAULT 0"),
+            );
+
+
+            $success = $this->end();
+
+            \crisp\core\Plugins::install("core", null, __FILE__, "migration");
+
+            return $success;
         } catch (\Exception $ex) {
             echo $ex->getMessage() . PHP_EOL;
             $this->rollback();

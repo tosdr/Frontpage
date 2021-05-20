@@ -1,6 +1,6 @@
 <?php
 
-/* 
+/*
  * Copyright (C) 2021 Justin René Back <justin@tosdr.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,23 +17,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 namespace crisp\migrations;
 
-class installtheme extends \crisp\core\Migrations {
+class addPrimaryToApiKey extends \crisp\core\Migrations {
 
-  public function run() {
-    try {
-      $this->begin();
-      $this->Database->query("INSERT INTO Config (key, value) VALUES ('theme_dir', 'themes')");
-      $this->Database->query("INSERT INTO Config (key, value) VALUES ('plugin_dir', 'plugins')");
-      \crisp\core\Themes::install("crisp");
-      return $this->end();
-    } catch (\Exception $ex) {
-      echo $ex->getMessage() . PHP_EOL;
-      $this->rollback();
-      return false;
+    public function run() {
+        try {
+            $this->begin();
+            $this->addIndex("apikeys", "key", $this::DB_PRIMARYKEY);
+            return $this->end();
+        } catch (\Exception $ex) {
+            echo $ex->getMessage() . PHP_EOL;
+            $this->rollback();
+            return false;
+        }
     }
-  }
 
 }

@@ -20,7 +20,7 @@
 
 namespace crisp\migrations;
 
-class createcrons extends \crisp\core\Migrations {
+class CreateCrons extends \crisp\core\Migrations {
 
     public function run() {
         try {

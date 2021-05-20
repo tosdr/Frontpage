@@ -20,7 +20,7 @@
 
 namespace crisp\migrations;
 
-class addexpiretoapikey extends \crisp\core\Migrations {
+class AddExpireToApiKey extends \crisp\core\Migrations {
 
     public function run() {
         try {

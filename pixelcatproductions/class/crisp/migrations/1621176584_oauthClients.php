@@ -1,6 +1,6 @@
 <?php
 
-/*
+/* 
  * Copyright (C) 2021 Justin René Back <justin@tosdr.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,14 +17,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+
 namespace crisp\migrations;
 
-class addbenefittoapikey extends \crisp\core\Migrations {
+class OAuthClients extends \crisp\core\Migrations {
 
     public function run() {
         try {
             $this->begin();
-            $this->addColumn("apikeys", array("ratelimit_benefit", self::DB_VARCHAR, "DEFAULT NULL"));
+            $this->createTable("oauth_clients",
+                array("client_id", \crisp\core\Migrations::DB_VARCHAR, "NOT NULL"),
+                array("client_secret", \crisp\core\Migrations::DB_VARCHAR, "NOT NULL"),
+                array("redirect_uri", \crisp\core\Migrations::DB_TEXT),
+                array("grant_types", \crisp\core\Migrations::DB_VARCHAR),
+                array("scope", \crisp\core\Migrations::DB_BIGINT),
+                array("user_id", \crisp\core\Migrations::DB_BIGINT)
+            );
+            $this->addIndex("oauth_clients", "client_id", $this::DB_PRIMARYKEY);
             return $this->end();
         } catch (\Exception $ex) {
             echo $ex->getMessage() . PHP_EOL;

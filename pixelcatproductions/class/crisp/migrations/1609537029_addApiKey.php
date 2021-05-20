@@ -20,20 +20,19 @@
 
 namespace crisp\migrations;
 
-class createconfig extends \crisp\core\Migrations {
+class AddApiKey extends \crisp\core\Migrations {
 
     public function run() {
         try {
             $this->begin();
-            $this->createTable("Config",
+            $this->createTable("APIKeys",
                     array("key", $this::DB_VARCHAR),
-                    array("value", $this::DB_TEXT),
+                    array("UserID", $this::DB_INTEGER),
                     array("last_changed", $this::DB_TIMESTAMP, "DEFAULT NULL"),
-                    array("type", $this::DB_VARCHAR, "NOT NULL DEFAULT 'string'"),
+                    array("revoked", $this::DB_INTEGER, "NOT NULL DEFAULT 0"),
                     array("created_at", $this::DB_TIMESTAMP, "NOT NULL DEFAULT CURRENT_TIMESTAMP")
             );
-            $this->addIndex("Config", "key", $this::DB_PRIMARYKEY);
-            
+            $this->addIndex("APIKeys", "key", $this::DB_UNIQUEKEY, "apikey");
             return $this->end();
         } catch (\Exception $ex) {
             echo $ex->getMessage() . PHP_EOL;

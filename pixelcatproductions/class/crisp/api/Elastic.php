@@ -29,22 +29,23 @@ class Elastic {
     private string $Elastic_Index;
 
     public function __construct() {
-        $EnvFile = parse_ini_file(__DIR__ . "/../../../../.env");
-        $this->Elastic_URI = $EnvFile["ELASTIC_URI"];
-        $this->Elastic_Index = $EnvFile["ELASTIC_INDEX"];
+        $EnvFile = parse_ini_file(__DIR__ . '/../../../../.env');
+        $this->Elastic_URI = $EnvFile['ELASTIC_URI'];
+        $this->Elastic_Index = $EnvFile['ELASTIC_INDEX'];
     }
 
     /**
      * @param string $Query
      * @return stdClass
      * @throws BitmaskException
+     * @throws \JsonException
      */
     public function search(string $Query): stdClass {
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $this->Elastic_URI . "/" . $this->Elastic_Index . "/_search?q=*" . urlencode($Query) . "*");
+        curl_setopt($ch, CURLOPT_URL, $this->Elastic_URI . '/' . $this->Elastic_Index . '/_search?q=*' . urlencode($Query) . '*');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         $output = curl_exec($ch);
-        if (str_starts_with(curl_getinfo($ch, CURLINFO_HTTP_CODE), "5")) {
+        if (str_starts_with(curl_getinfo($ch, CURLINFO_HTTP_CODE), '5')) {
             throw new BitmaskException(curl_getinfo($ch, CURLINFO_HTTP_CODE), Bitmask::ELASTIC_CONN_ERROR);
         }
         if (curl_getinfo($ch, CURLINFO_HTTP_CODE) !== 200) {
@@ -54,7 +55,7 @@ class Elastic {
             throw new BitmaskException(curl_error($ch), Bitmask::ELASTIC_CONN_ERROR);
         }
         curl_close($ch);
-        return json_decode($output)->hits;
+        return json_decode($output, true, 512, JSON_THROW_ON_ERROR)->hits;
     }
 
 }

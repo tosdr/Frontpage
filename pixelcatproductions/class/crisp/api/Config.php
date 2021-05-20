@@ -22,9 +22,6 @@ namespace crisp\api;
 
 use crisp\core\MySQL;
 use PDO;
-use PDOException;
-use PDORow;
-use PDOStatement;
 use function serialize;
 use function unserialize;
 
@@ -36,7 +33,7 @@ class Config
 
     private static ?PDO $Database_Connection = null;
 
-    private static function initDB()
+    private static function initDB(): void
     {
         $DB = new MySQL();
         self::$Database_Connection = $DB->getDBConnector();
@@ -52,12 +49,9 @@ class Config
         if (self::$Database_Connection === null) {
             self::initDB();
         }
-        $statement = self::$Database_Connection->prepare("SELECT value FROM Config WHERE key = :ID");
-        $statement->execute(array(":ID" => $Key));
-        if ($statement->rowCount() > 0) {
-            return true;
-        }
-        return false;
+        $statement = self::$Database_Connection->prepare('SELECT value FROM Config WHERE key = :ID');
+        $statement->execute([':ID' => $Key]);
+        return $statement->rowCount() > 0;
     }
 
     /**
@@ -66,7 +60,7 @@ class Config
      * @param array $UserOptions
      * @return mixed The value as string, on failure FALSE
      */
-    public static function get(string $Key, array $UserOptions = array()): mixed
+    public static function get(string $Key, array $UserOptions = []): mixed
     {
         if (self::$Database_Connection === null) {
             self::initDB();
@@ -74,18 +68,18 @@ class Config
 
         $GlobalOptions = [];
 
-        $statement = self::$Database_Connection->prepare("SELECT value, type FROM Config WHERE key = :ID");
-        $statement->execute(array(":ID" => $Key));
+        $statement = self::$Database_Connection->prepare('SELECT value, type FROM Config WHERE key = :ID');
+        $statement->execute([':ID' => $Key]);
         if ($statement->rowCount() > 0) {
 
             $Result = $statement->fetch(PDO::FETCH_ASSOC);
 
-            $Value = $Result["value"];
+            $Value = $Result['value'];
 
-            if ($Result["type"] !== 'serialized') {
+            if ($Result['type'] !== 'serialized') {
 
                 foreach (self::list(true) as $Item) {
-                    $GlobalOptions["{{ config.{$Item['key']} }}"] = $Item["value"];
+                    $GlobalOptions["{{ config.{$Item['key']} }}"] = $Item['value'];
                 }
 
                 $Options = array_merge($UserOptions, $GlobalOptions);
@@ -94,8 +88,8 @@ class Config
 
             }
 
-            return match ($Result["type"]) {
-                'serialized' => unserialize($Value),
+            return match ($Result['type']) {
+                'serialized' => unserialize($Value, [false]),
                 'boolean' => (bool)$Value,
                 'integer' => (int)$Value,
                 'double' => (double)$Value,
@@ -115,8 +109,8 @@ class Config
         if (self::$Database_Connection === null) {
             self::initDB();
         }
-        $statement = self::$Database_Connection->prepare("SELECT last_changed, created_at FROM Config WHERE key = :ID");
-        $statement->execute(array(":ID" => $Key));
+        $statement = self::$Database_Connection->prepare('SELECT last_changed, created_at FROM Config WHERE key = :ID');
+        $statement->execute([':ID' => $Key]);
         if ($statement->rowCount() > 0) {
 
             return $statement->fetch(PDO::FETCH_ASSOC);
@@ -135,12 +129,12 @@ class Config
         if (self::$Database_Connection === null) {
             self::initDB();
         }
-        if (Config::exists($Key)) {
+        if (self::exists($Key)) {
             return self::set($Key, $Value);
         }
 
-        $statement = self::$Database_Connection->prepare("INSERT INTO Config (key) VALUES (:Key)");
-        $statement->execute(array(":Key" => $Key));
+        $statement = self::$Database_Connection->prepare('INSERT INTO Config (key) VALUES (:Key)');
+        $statement->execute([':Key' => $Key]);
 
         return self::set($Key, $Value);
     }
@@ -155,8 +149,8 @@ class Config
         if (self::$Database_Connection === null) {
             self::initDB();
         }
-        $statement = self::$Database_Connection->prepare("DELETE FROM Config WHERE key = :Key");
-        return $statement->execute(array(":Key" => $Key));
+        $statement = self::$Database_Connection->prepare('DELETE FROM Config WHERE key = :Key');
+        return $statement->execute([':Key' => $Key]);
     }
 
     /**
@@ -171,23 +165,26 @@ class Config
             self::initDB();
         }
 
-        if (!Config::exists($Key)) {
-            Config::create($Key, $Value);
+        if (!self::exists($Key)) {
+            self::create($Key, $Value);
         }
 
-        $Type = match($Value){
-            null => "NULL",
-            (is_array($Value) || is_object($Value)),Helper::isSerialized($Value) => "serialized",
+        $Type = match(true){
+            is_null($Value) => 'NULL',
+            (is_array($Value) || is_object($Value)),Helper::isSerialized($Value) => 'serialized',
             default => gettype($Value)
         };
 
-        if ($Type == "boolean") {
-            $Value = ($Value ? 1 : 0);
-        }
+
+        $Value = match($Type){
+            'serialized' => (Helper::isSerialized($Value) ? $Value : serialize($Value)),
+            'boolean' => ($Value ? '1' : '0'),
+            default => $Value
+        };
 
 
-        $statement = self::$Database_Connection->prepare("UPDATE Config SET value = :val, type = :type WHERE key = :key");
-        $statement->execute(array(":val" => $Value, ":key" => $Key, ":type" => $Type));
+        $statement = self::$Database_Connection->prepare('UPDATE Config SET value = :val, type = :type WHERE key = :key');
+        $statement->execute([':val' => $Value, ':key' => $Key, ':type' => $Type]);
 
         return ($statement->rowCount() > 0);
     }
@@ -203,14 +200,13 @@ class Config
             self::initDB();
         }
 
-        $statement = self::$Database_Connection->prepare("SELECT key, value FROM Config");
-        $statement->execute();
+        $statement = self::$Database_Connection->query('SELECT key, value FROM Config');
 
         if (!$KV) {
-            $Array = array();
+            $Array = [];
 
             foreach ($statement->fetchAll(PDO::FETCH_ASSOC) as $Item) {
-                $Array[$Item["key"]] = self::get($Item["key"]);
+                $Array[$Item['key']] = self::get($Item['key']);
             }
 
             return $Array;

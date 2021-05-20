@@ -20,14 +20,18 @@
 
 namespace crisp\migrations;
 
-class MigrationName extends \crisp\core\Migrations {
+use crisp\core\Migrations;
+use Exception;
 
-    public function run() {
+class MigrationName extends Migrations {
+
+    public function run(): bool
+    {
         try {
             $this->begin();
             RUNCODE;
             return $this->end();
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             echo $ex->getMessage() . PHP_EOL;
             $this->rollback();
             return false;

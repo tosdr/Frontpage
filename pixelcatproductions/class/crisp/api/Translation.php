@@ -49,7 +49,7 @@ class Translation
     /**
      * Inits DB
      */
-    private static function initDB()
+    private static function initDB(): void
     {
         $DB = new MySQL();
         self::$Database_Connection = $DB->getDBConnector();
@@ -63,8 +63,7 @@ class Translation
      */
     public static function listLanguages(bool $FetchIntoClass = true): array|Language
     {
-        $Languages = new Languages();
-        return $Languages->fetchLanguages($FetchIntoClass);
+        return Languages::fetchLanguages($FetchIntoClass);
     }
 
     /**
@@ -76,8 +75,7 @@ class Translation
         if (self::$Database_Connection === null) {
             self::initDB();
         }
-        $statement = self::$Database_Connection->prepare("SELECT * FROM Translations");
-        $statement->execute();
+        $statement = self::$Database_Connection->query('SELECT * FROM Translations');
         if ($statement->rowCount() > 0) {
             return $statement->fetchAll(PDO::FETCH_ASSOC);
         }
@@ -94,24 +92,26 @@ class Translation
         if (self::$Database_Connection === null) {
             self::initDB();
         }
-        $statement = self::$Database_Connection->prepare("SELECT * FROM Translations");
-        $statement->execute();
+        $statement = self::$Database_Connection->query('SELECT * FROM Translations');
         if ($statement->rowCount() > 0) {
 
             $Translations = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-            $Array = array();
+            $Array = [];
 
             foreach (lists\Languages::fetchLanguages() as $Language) {
-                $Array[$Language->getCode()] = array();
+
+                $lCode = $Language->getCode();
+
+                $Array[$lCode] = [];
                 foreach ($Translations as $Item) {
-                    $Array[$Language->getCode()][$Item["key"]] = $Item[$Language->getCode()];
+                    $Array[$lCode][$Item['key']] = $Item[$lCode];
                 }
             }
 
             return $Array;
         }
-        return array();
+        return [];
     }
 
     /**
@@ -124,26 +124,25 @@ class Translation
         if (self::$Database_Connection === null) {
             self::initDB();
         }
-        $statement = self::$Database_Connection->prepare("SELECT * FROM Translations");
-        $statement->execute();
+        $statement = self::$Database_Connection->query('SELECT * FROM Translations');
         if ($statement->rowCount() > 0) {
 
             $Translations = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-            $Array = array();
+            $Array = [];
             foreach ($Translations as $Item) {
-                if (str_contains($Item["key"], "plugin.")) {
+                if (str_contains($Item['key'], 'plugin.')) {
                     continue;
                 }
                 if ($Item[$Key] === null) {
                     continue;
                 }
-                $Array[$Key][$Item["key"]] = $Item[$Key];
+                $Array[$Key][$Item['key']] = $Item[$Key];
             }
 
             return $Array[$Key];
         }
-        return array();
+        return [];
     }
 
     /**
@@ -156,8 +155,8 @@ class Translation
         if (self::$Database_Connection === null) {
             self::initDB();
         }
-        $statement = self::$Database_Connection->prepare("SELECT * FROM Translations WHERE key = :key");
-        $statement->execute(array(":key" => $Key));
+        $statement = self::$Database_Connection->prepare('SELECT * FROM Translations WHERE key = :key');
+        $statement->execute([':key' => $Key]);
         return ($statement->rowCount() > 0);
     }
 
@@ -168,7 +167,7 @@ class Translation
      * @param array $UserOptions Custom array used for templating
      * @return string The translation or the key if it doesn't exist
      */
-    public static function fetch(string $Key, int $Count = 1, array $UserOptions = array()): string
+    public static function fetch(string $Key, int $Count = 1, array $UserOptions = []): string
     {
 
         if (!isset(self::$Language)) {
@@ -176,11 +175,11 @@ class Translation
         }
 
 
-        if (isset($GLOBALS["route"]->GET["debug"]) && $GLOBALS["route"]->GET["debug"] = "translations") {
+        if (isset($GLOBALS['route']->GET['debug']) && $GLOBALS['route']->GET['debug'] = 'translations') {
             return "$Key:" . self::$Language;
         }
 
-        $UserOptions["{{ count }}"] = $Count;
+        $UserOptions['{{ count }}'] = $Count;
 
         return nl2br(ngettext(self::get($Key, $UserOptions), self::getPlural($Key, $UserOptions), $Count));
     }
@@ -193,7 +192,7 @@ class Translation
      * @see getPlural
      * @see fetch
      */
-    public static function get(string $Key, array $UserOptions = array()): string
+    public static function get(string $Key, array $UserOptions = []): string
     {
 
         if (self::$Database_Connection === null) {
@@ -202,26 +201,26 @@ class Translation
 
         $GlobalOptions = [];
         foreach (Config::list(true) as $Item) {
-            $GlobalOptions["{{ config.{$Item['key']} }}"] = $Item["value"];
+            $GlobalOptions["{{ config.{$Item['key']} }}"] = $Item['value'];
         }
 
         $Options = array_merge($UserOptions, $GlobalOptions);
 
 
-        $statement = self::$Database_Connection->prepare("SELECT * FROM Translations WHERE key = :Key");
-        $statement->execute(array(
-            ":Key" => $Key,
+        $statement = self::$Database_Connection->prepare('SELECT * FROM Translations WHERE key = :Key');
+        $statement->execute([
+            ':Key' => $Key,
             //":Language" => $this->Language
-        ));
+        ]);
         if ($statement->rowCount() > 0) {
 
             $Translation = $statement->fetch(PDO::FETCH_ASSOC);
 
             if (!isset($Translation[strtolower(self::$Language)])) {
-                if (self::$Language == "en") {
+                if (self::$Language === 'en') {
                     return $Key;
                 }
-                return $Translation["en"];
+                return $Translation['en'];
             }
 
             return strtr($Translation[strtolower(self::$Language)], $Options);
@@ -237,7 +236,7 @@ class Translation
      * @see get
      * @see fetch
      */
-    public static function getPlural(string $Key, array $UserOptions = array()): string
+    public static function getPlural(string $Key, array $UserOptions = []): string
     {
 
         if (self::$Database_Connection === null) {
@@ -247,30 +246,30 @@ class Translation
         $GlobalOptions = [];
 
         foreach (Config::list(true) as $Item) {
-            $GlobalOptions["{{ config.{$Item['key']} }}"] = $Item["value"];
+            $GlobalOptions["{{ config.{$Item['key']} }}"] = $Item['value'];
         }
 
         $Options = array_merge($UserOptions, $GlobalOptions);
 
 
-        $statement = self::$Database_Connection->prepare("SELECT * FROM Translations WHERE key = :Key");
-        $statement->execute(array(
-            ":Key" => $Key . ".plural",
+        $statement = self::$Database_Connection->prepare('SELECT * FROM Translations WHERE key = :Key');
+        $statement->execute([
+            ':Key' => $Key . '.plural',
             //":Language" => $this->Language
-        ));
+        ]);
         if ($statement->rowCount() > 0) {
             $Translation = $statement->fetch(PDO::FETCH_ASSOC);
 
             if ($Translation[strtolower(self::$Language)] === null) {
-                if (self::$Language == "en") {
-                    return $Key . ".plural";
+                if (self::$Language === 'en') {
+                    return $Key . '.plural';
                 }
-                return strtr($Translation["en"], $Options);
+                return strtr($Translation['en'], $Options);
             }
 
             return strtr($Translation[strtolower(self::$Language)], $Options);
         }
-        return $Key . ".plural";
+        return $Key . '.plural';
     }
 
 }

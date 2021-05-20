@@ -23,7 +23,7 @@ namespace crisp\core;
 /**
  * Hook Class
  *
- * @author Justin René Back <jback@pixelcatproductions.net>
+ * @author Justin René Back <justin@tosdr.org>
  */
 trait Hook {
 

@@ -3,7 +3,7 @@
   "description": "Dynamic CMS for ToS;DR",
   "autoload": {
     "classmap": [
-      "pixelcatproductions/class/crisp"
+      "tosdr/class/crisp"
     ]
   },
   "require": {

@@ -35,7 +35,7 @@ if (php_sapi_name() !== 'cli') {
 
 
 error_reporting(error_reporting() & ~E_NOTICE);
-require_once __DIR__ . "/../pixelcatproductions/crisp.php";
+require_once __DIR__ . "/../tosdr/crisp.php";
 
 switch ($argv[1]) {
     case "cache":

@@ -102,32 +102,32 @@ $Prefix = htmlspecialchars($RedisData["_source"]["name"]);
 
 $SVG = $poser->generate($Prefix, $Rating, $Color, 'flat');
 
-if (!file_exists(__DIR__ . "/../../../../pixelcatproductions/cache/badges/")) {
-    mkdir(__DIR__ . "/../../../../pixelcatproductions/cache/badges/");
+if (!file_exists(__DIR__ . "/../../../../tosdr/cache/badges/")) {
+    mkdir(__DIR__ . "/../../../../tosdr/cache/badges/");
 }
 
-if (time() - filemtime(__DIR__ . "/../../../../pixelcatproductions/cache/badges/" . sha1($Prefix . $RedisData["_source"]["id"] . $Language) . ".svg") > 900) {
-    file_put_contents(__DIR__ . "/../../../../pixelcatproductions/cache/badges/" . sha1($Prefix . $RedisData["_source"]["id"] . $Language) . ".svg", $SVG);
+if (time() - filemtime(__DIR__ . "/../../../../tosdr/cache/badges/" . sha1($Prefix . $RedisData["_source"]["id"] . $Language) . ".svg") > 900) {
+    file_put_contents(__DIR__ . "/../../../../tosdr/cache/badges/" . sha1($Prefix . $RedisData["_source"]["id"] . $Language) . ".svg", $SVG);
 }
 
 if ($GLOBALS["route"]->Page === "badgepng" || $Type == "png") {
     header("Content-Type: image/png");
 
-    if (!file_exists(__DIR__ . "/../../../../pixelcatproductions/cache/badges/" . sha1($Prefix . $RedisData["_source"]["id"] . $Language) . ".svg")) {
+    if (!file_exists(__DIR__ . "/../../../../tosdr/cache/badges/" . sha1($Prefix . $RedisData["_source"]["id"] . $Language) . ".svg")) {
         echo PluginAPI::response(Bitmask::GENERATE_FAILED, "FS Source SVG not found", [], null, 500);
         exit;
     }
 
-    if (time() - filemtime(__DIR__ . "/../../../../pixelcatproductions/cache/badges/" . sha1($Prefix . $RedisData["_source"]["id"] . $Language) . ".png") > 900) {
+    if (time() - filemtime(__DIR__ . "/../../../../tosdr/cache/badges/" . sha1($Prefix . $RedisData["_source"]["id"] . $Language) . ".png") > 900) {
 
-        exec("/usr/bin/inkscape -e \"" . __DIR__ . "/../../../../pixelcatproductions/cache/badges/" . sha1($Prefix . $RedisData["_source"]["id"] . $Language) . ".png\" \"" . __DIR__ . "/../../../../pixelcatproductions/cache/badges/" . sha1($Prefix . $RedisData["_source"]["id"] . $Language) . ".svg\"");
+        exec("/usr/bin/inkscape -e \"" . __DIR__ . "/../../../../tosdr/cache/badges/" . sha1($Prefix . $RedisData["_source"]["id"] . $Language) . ".png\" \"" . __DIR__ . "/../../../../tosdr/cache/badges/" . sha1($Prefix . $RedisData["_source"]["id"] . $Language) . ".svg\"");
 
-        if (!file_exists(__DIR__ . "/../../../../pixelcatproductions/cache/badges/" . sha1($Prefix . $RedisData["_source"]["id"] . $Language) . ".png")) {
+        if (!file_exists(__DIR__ . "/../../../../tosdr/cache/badges/" . sha1($Prefix . $RedisData["_source"]["id"] . $Language) . ".png")) {
             echo PluginAPI::response(Bitmask::GENERATE_FAILED, "FS PNG not found", [], null, 500);
             exit;
         }
     }
-    echo file_get_contents(__DIR__ . "/../../../../pixelcatproductions/cache/badges/" . sha1($Prefix . $RedisData["_source"]["id"] . $Language) . ".png");
+    echo file_get_contents(__DIR__ . "/../../../../tosdr/cache/badges/" . sha1($Prefix . $RedisData["_source"]["id"] . $Language) . ".png");
     exit;
 }
 

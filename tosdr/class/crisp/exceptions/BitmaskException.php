@@ -22,7 +22,7 @@ namespace crisp\exceptions;
 /**
  * Exception to throw when the setEmail method fails because of a malformed email
  *
- * @author Justin René Back <jback@pixelcatproductions.net>
+ * @author Justin René Back <justin@tosdr.org>
  */
 class BitmaskException extends \Exception {
 

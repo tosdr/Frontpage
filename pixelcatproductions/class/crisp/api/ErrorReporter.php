@@ -35,7 +35,8 @@ class ErrorReporter {
     self::initDB();
   }
 
-  public static function initDB() {
+  public static function initDB(): void
+  {
     $DB = new MySQL();
     self::$Database_Connection = $DB->getDBConnector();
   }
@@ -48,17 +49,17 @@ class ErrorReporter {
    * @param string $Prefix of the reference id
    * @return boolean|string Returns ReferenceID if successful otherwise false
    */
-  public static function create(int $HttpStatusCode, string $Traceback, string $Summary, string $Prefix = "ise_"): bool|string
+  public static function create(int $HttpStatusCode, string $Traceback, string $Summary, string $Prefix = 'ise_'): bool|string
   {
     if (self::$Database_Connection === null) {
       self::initDB();
     }
     $ReferenceID = Crypto::UUIDv4($Prefix);
-    if (php_sapi_name() !== 'cli') {
+    if (PHP_SAPI !== 'cli') {
       header("X-Error-ReferenceID: $ReferenceID");
     }
-    $statement = self::$Database_Connection->prepare("INSERT INTO Crashes (ReferenceID, HttpStatusCode, Traceback, Summary) VALUES (:ReferenceID, :HttpStatusCode, :Traceback, :Summary)");
-    $statement->execute(array(":ReferenceID" => $ReferenceID, ":HttpStatusCode" => $HttpStatusCode, ":Traceback" => $Traceback, ":Summary" => $Summary));
+    $statement = self::$Database_Connection->prepare('INSERT INTO Crashes (ReferenceID, HttpStatusCode, Traceback, Summary) VALUES (:ReferenceID, :HttpStatusCode, :Traceback, :Summary)');
+    $statement->execute([':ReferenceID' => $ReferenceID, ':HttpStatusCode' => $HttpStatusCode, ':Traceback' => $Traceback, ':Summary' => $Summary]);
     if ($statement->rowCount() > 0) {
       return $ReferenceID;
     }

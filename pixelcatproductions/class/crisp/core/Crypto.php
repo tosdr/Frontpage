@@ -19,12 +19,17 @@
 
 namespace crisp\core;
 
+use Exception;
+
 /**
  * Interact with the encryption system behind LophotenCMS
  */
 class Crypto {
 
 
+    /**
+     * @throws Exception
+     */
     public static function UUIDv4($Prefix = null, $Bytes = 16): string
     {
 

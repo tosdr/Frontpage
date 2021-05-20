@@ -17,18 +17,27 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-$Services = \crisp\api\Phoenix::getServices();
-$Response = array(
-    "version" => time(),
-);
+use crisp\api\Config;
+use crisp\api\Phoenix;
+use crisp\core\PluginAPI;
+
+if(!defined('CRISP_COMPONENT')){
+    echo 'Cannot access this component directly!';
+    exit;
+}
+
+$Services = Phoenix::getServices();
+$Response = [
+    'version' => time(),
+];
 foreach ($Services as $Index => $Service) {
 
-    $Service["urls"] = explode(",", $Service["url"]);
-    $Service["logo"] = \crisp\api\Config::get("s3_logos") . "/" . $Service["id"] . ".png";
+    $Service['urls'] = explode(',', $Service['url']);
+    $Service['logo'] = Config::get('s3_logos') . '/' . $Service['id'] . '.png';
 
     $Services[$Index] = $Service;
 }
 
-$Response["services"] = $Services;
+$Response['services'] = $Services;
 
-echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::REQUEST_SUCCESS, "All services below", $Response);
+PluginAPI::response(crisp\core\Bitmask::REQUEST_SUCCESS, 'All services below', $Response);

@@ -17,8 +17,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-if ($_SERVER["REQUEST_METHOD"] !== "GET") {
-    echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::NOT_IMPLEMENTED, "Invalid Request Method", [], null, 405);
+use crisp\core\PluginAPI;
+
+if(!defined('CRISP_COMPONENT')){
+    echo 'Cannot access this component directly!';
+    exit;
+}
+
+if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
+    PluginAPI::response(crisp\core\Bitmask::NOT_IMPLEMENTED, 'Invalid Request Method', [], null, 405);
     exit;
 }
 

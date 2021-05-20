@@ -17,17 +17,24 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-if (!isset($GLOBALS["route"]->GET["q"])) {
-    header("Location: /");
+use crisp\api\Phoenix;
+
+if(!defined('CRISP_COMPONENT')){
+    echo 'Cannot access this component directly!';
+    exit;
+}
+
+if (!isset($GLOBALS['route']->GET['q'])) {
+    header('Location: /');
     exit;
 }
 try {
-    if (is_numeric($GLOBALS["route"]->GET["q"])) {
-        $_vars = array("service" => \crisp\api\Phoenix::getService($GLOBALS["route"]->GET["q"]));
+    if (is_numeric($GLOBALS['route']->GET['q'])) {
+        $_vars = ['service' => Phoenix::getService($GLOBALS['route']->GET['q'])];
     } else {
-        $_vars = array("service" => \crisp\api\Phoenix::getServiceByName(urldecode($GLOBALS["route"]->GET["q"])));
+        $_vars = ['service' => Phoenix::getServiceByName(urldecode($GLOBALS['route']->GET['q']))];
     }
-} catch (\Exception $ex) {
-    header("Location: /");
+} catch (Exception $ex) {
+    header('Location: /');
     exit;
 }

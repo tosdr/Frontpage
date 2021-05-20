@@ -16,11 +16,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-$OutputType = "html";
-switch (explode(".", $GLOBALS["route"]->Page)[1]) {
-    case "xml":
+
+if(!defined('CRISP_COMPONENT')){
+    echo 'Cannot access this component directly!';
+    exit;
+}
+
+$OutputType = 'html';
+switch (explode('.', $GLOBALS['route']->Page)[1]) {
+    case 'xml':
         header('Content-Type: application/xml; charset=utf-8');
-        $OutputType = "xml";
+        $OutputType = 'xml';
 
 
         include __DIR__ . '/sitemap/generate.php';
@@ -29,10 +35,10 @@ switch (explode(".", $GLOBALS["route"]->Page)[1]) {
 
 
         break;
-    case "html":
+    case 'html':
     default:
 
-        $OutputType = "html";
+        $OutputType = 'html';
 }
 
-$_vars = ["output" => $OutputType];
+$_vars = ['output' => $OutputType];

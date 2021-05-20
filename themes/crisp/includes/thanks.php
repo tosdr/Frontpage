@@ -17,4 +17,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-$_vars = array("ThanksList" => explode(PHP_EOL, file_get_contents(__DIR__ . "/../thanks.list")));
+if(!defined('CRISP_COMPONENT')){
+    echo 'Cannot access this component directly!';
+    exit;
+}
+
+$_vars = ['ThanksList' => explode(PHP_EOL, file_get_contents(__DIR__ . '/../thanks.list'))];

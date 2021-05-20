@@ -1,6 +1,6 @@
 {
     "name": "Crisp",
-    "author": "Justin René Back <jback@pixelcatproductions.net>",
+    "author": "Justin René Back <jback@tosdr.net>",
     "description": "Default theme for CrispCMS",
     "type": 1,
     "hookFile": "hook.php",

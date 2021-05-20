@@ -17,6 +17,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+if(!defined('CRISP_COMPONENT')){
+    echo 'Cannot access this component directly!';
+    exit;
+}
 
 /** @var \crisp\core\PluginAPI $this */
 /** @var \crisp\core\PluginAPI self */

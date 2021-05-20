@@ -74,7 +74,7 @@ steps:
   - php bin/cli.php migrate
   - php bin/cli.php theme install crisp
 #  - vendor/bin/twig-linter lint themes/crisp/templates/
-#  - vendor/bin/phpunit tests --bootstrap pixelcatproductions/crisp.php
+#  - vendor/bin/phpunit tests --bootstrap tosdr/crisp.php
   - rm /tmp/ci/composer
   
 - name: Zip Production
@@ -82,7 +82,7 @@ steps:
   commands:
   - apk --no-cache add zip bash
   - mkdir dist
-  - zip -r dist/build.zip ./ -x '*.git*' -x 'pixelcatproductions/cache' -x '.env' -x 'static' -x '.vscode' -x 'dist' -x 'nbproject'
+  - zip -r dist/build.zip ./ -x '*.git*' -x 'tosdr/cache' -x '.env' -x 'static' -x '.vscode' -x 'dist' -x 'nbproject'
   when:
       branch:
       - master

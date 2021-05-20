@@ -22,32 +22,38 @@ use crisp\api\Phoenix;
 use crisp\core\Bitmask;
 use crisp\core\PluginAPI;
 
+if(!defined('CRISP_COMPONENT')){
+    echo 'Cannot access this component directly!';
+    exit;
+}
+
+
 if(!IS_NATIVE_API){
-    PluginAPI::response(crisp\core\Bitmask::GENERIC_ERROR, "Cannot access non-native API endpoint", []);
+    PluginAPI::response(crisp\core\Bitmask::GENERIC_ERROR, 'Cannot access non-native API endpoint', []);
     exit;
 }
 
-if ($_SERVER["REQUEST_METHOD"] !== "GET") {
-    PluginAPI::response(crisp\core\Bitmask::NOT_IMPLEMENTED, "Invalid Request Method", [], null, 405);
+if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
+    PluginAPI::response(crisp\core\Bitmask::NOT_IMPLEMENTED, 'Invalid Request Method', [], null, 405);
     exit;
 }
 
-if ($this->Query == "all") {
+if ($this->Query === 'all') {
     $Services = Phoenix::getServices();
-    $Response = array(
-        "version" => time(),
-    );
+    $Response = [
+        'version' => time(),
+    ];
     foreach ($Services as $Index => $Service) {
 
-        $Service["urls"] = explode(",", $Service["url"]);
-        $Service["logo"] = Config::get("s3_logos") . "/" . $Service["id"] . ".png";
+        $Service['urls'] = explode(',', $Service['url']);
+        $Service['logo'] = Config::get('s3_logos') . '/' . $Service['id'] . '.png';
 
         $Services[$Index] = $Service;
     }
 
-    $Response["services"] = $Services;
+    $Response['services'] = $Services;
 
-    PluginAPI::response(false, "All services below", $Response);
+    PluginAPI::response(false, 'All services below', $Response);
 
     return;
 }
@@ -57,9 +63,9 @@ if (!is_numeric($this->Query)) {
         PluginAPI::response(Bitmask::INVALID_SERVICE + crisp\core\Bitmask::VERSION_DEPRECATED + crisp\core\Bitmask::INTERFACE_DEPRECATED, $this->Query, []);
         return;
     }
-    $this->Query = crisp\api\Phoenix::getServiceBySlug($this->Query)["id"];
+    $this->Query = crisp\api\Phoenix::getServiceBySlug($this->Query)['id'];
     $SkeletonData = Phoenix::generateApiFiles($this->Query);
-    PluginAPI::response(Bitmask::REQUEST_SUCCESS + crisp\core\Bitmask::VERSION_DEPRECATED + crisp\core\Bitmask::INTERFACE_DEPRECATED, $this->Query, Phoenix::generateApiFiles($this->Query, "3"));
+    PluginAPI::response(Bitmask::REQUEST_SUCCESS + crisp\core\Bitmask::VERSION_DEPRECATED + crisp\core\Bitmask::INTERFACE_DEPRECATED, $this->Query, Phoenix::generateApiFiles($this->Query, '3'));
     exit;
 }
 
@@ -69,4 +75,4 @@ if (!crisp\api\Phoenix::serviceExists($this->Query)) {
 }
 
 
-PluginAPI::response(Bitmask::REQUEST_SUCCESS + crisp\core\Bitmask::VERSION_DEPRECATED + crisp\core\Bitmask::INTERFACE_DEPRECATED, $this->Query, Phoenix::generateApiFiles($this->Query, "3"));
+PluginAPI::response(Bitmask::REQUEST_SUCCESS + crisp\core\Bitmask::VERSION_DEPRECATED + crisp\core\Bitmask::INTERFACE_DEPRECATED, $this->Query, Phoenix::generateApiFiles($this->Query, '3'));

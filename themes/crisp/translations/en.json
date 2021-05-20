@@ -240,5 +240,7 @@
     "views.donate.doge.header": "Dogecoin",
     "views.donate.doge.text": "Via Dogecoin you can donate to ToS;DR 100% anonymously. Contributions are not deductible as charitable contributions for U.S. federal income tax purposes.\n\nTo donate, scan the QR code in your preferred Dogecoin wallet or use our address below.",
     "views.donate.lite.header": "Litecoin",
-    "views.donate.lite.text": "Via Litecoin you can donate to ToS;DR 100% anonymously. Contributions are not deductible as charitable contributions for U.S. federal income tax purposes.\n\nTo donate, scan the QR code in your preferred Litecoin wallet or use our address below."
+    "views.donate.lite.text": "Via Litecoin you can donate to ToS;DR 100% anonymously. Contributions are not deductible as charitable contributions for U.S. federal income tax purposes.\n\nTo donate, scan the QR code in your preferred Litecoin wallet or use our address below.",
+    "views.oauth.jumbotron.text.1": "You are about to authorize {{ client_name }} with your Account {{ username }}",
+    "views.oauth.title": "Authorize Application"
 }

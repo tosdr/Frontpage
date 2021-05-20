@@ -17,41 +17,55 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+
+use crisp\api\Helper;
+use crisp\core\APIPermissions;
+use crisp\core\Config;
+use crisp\core\Theme;
+use crisp\plugin\curator\PhoenixUser;
+use Twig\TwigFilter;
+use Twig\TwigFunction;
+
+if(!defined('CRISP_COMPONENT')){
+    echo 'Cannot access this component directly!';
+    exit;
+}
+
 include __DIR__ . '/includes/Users.php';
 include __DIR__ . '/includes/PhoenixUser.php';
 
-if (isset($_SESSION[\crisp\core\Config::$Cookie_Prefix . "session_login"])) {
+if (isset($_SESSION[Config::$Cookie_Prefix . 'session_login'])) {
 
-    $User = new \crisp\plugin\curator\PhoenixUser($_SESSION[\crisp\core\Config::$Cookie_Prefix . "session_login"]["user"]);
+    $User = new PhoenixUser($_SESSION[Config::$Cookie_Prefix . 'session_login']['user']);
 
     if (!$User->isSessionValid()) {
-        unset($_SESSION[\crisp\core\Config::$Cookie_Prefix . "session_login"]);
+        unset($_SESSION[Config::$Cookie_Prefix . 'session_login']);
     } else {
-        \crisp\core\Theme::addToNavbar("curator", '<span class="badge badge-info"><i class="fas fa-hands-helping"></i> MANAGE</span>', "/dashboard", "_self", -1, "right");
+        Theme::addToNavbar('curator', '<span class="badge badge-info"><i class="fas fa-hands-helping"></i> MANAGE</span>', '/dashboard', '_self', -1, 'right');
     }
 
     $userDetails = $User->fetch();
 
-    $_locale = \crisp\api\Helper::getLocale();
+    $_locale = Helper::getLocale();
 
     /* Navbar */
 
-        $navbar[] = array("ID" => "dashboard", "html" => $this->getTranslation('views.curator_dashboard.header'), "href" => "/$_locale/dashboard", "target" => "_self");
+        $navbar[] = array('ID' => 'dashboard', 'html' => $this->getTranslation('views.curator_dashboard.header'), 'href' => "/$_locale/dashboard", 'target' => '_self');
 
 
-    if ($userDetails["curator"]) {
-        $navbar[] = array("ID" => "service_requests", "html" => $this->getTranslation('views.service_requests.header'), "href" => "/$_locale/service_requests", "target" => "_self");
+    if ($userDetails['curator']) {
+        $navbar[] = array('ID' => 'service_requests', 'html' => $this->getTranslation('views.service_requests.header'), 'href' => "/$_locale/service_requests", 'target' => '_self');
     }
 
 
-        $navbar[] = array("ID" => "apikeys", "html" => $this->getTranslation('views.apikeys.header'), "href" => "/$_locale/apikeys", "target" => "_self");
+        $navbar[] = array('ID' => 'apikeys', 'html' => $this->getTranslation('views.apikeys.header'), 'href' => "/$_locale/apikeys", 'target' => '_self');
 
-    $this->TwigTheme->addGlobal("route", $GLOBALS["route"]->GET);
-    $this->TwigTheme->addGlobal("management_navbar", $navbar);
-    $this->TwigTheme->addGlobal("api_permissions", \crisp\core\APIPermissions::getConstants());
-    $this->TwigTheme->addFunction(new \Twig\TwigFunction('fetch_phoenix_user', [new \crisp\plugin\curator\PhoenixUser(), 'fetchStatic']));
-    $this->TwigTheme->addFilter(new \Twig\TwigFilter('strtotime', 'strtotime'));
-    $this->TwigTheme->addFunction(new \Twig\TwigFunction('time', 'time'));
+    $this->TwigTheme->addGlobal('route', $GLOBALS['route']->GET);
+    $this->TwigTheme->addGlobal('management_navbar', $navbar);
+    $this->TwigTheme->addGlobal('api_permissions', APIPermissions::getConstants());
+    $this->TwigTheme->addFunction(new TwigFunction('fetch_phoenix_user', [new PhoenixUser(), 'fetchStatic']));
+    $this->TwigTheme->addFilter(new TwigFilter('strtotime', 'strtotime'));
+    $this->TwigTheme->addFunction(new TwigFunction('time', 'time'));
 } else {
-    \crisp\core\Theme::addToNavbar("login", $this->getTranslation("views.login.header"), "/login", "_self", 99);
+    Theme::addToNavbar('login', $this->getTranslation('views.login.header'), '/login', '_self', 99);
 }

@@ -3,10 +3,10 @@
     "version": "1.0.0",
     "testedVersion": ">=0.0.7",
     "incompatibleVersion": "<0.0.7",
-    "repository": "https://github.com/PixelcatProductions/CrispCMS-Plugin-Discourse",
+    "repository": "https://github.com/tosdr/CrispCMS-Plugin-Discourse",
     "description": "Crisp Integration for Discourse",
     "hookFile": "hook.php",
-    "author": "Justin René Back <jback@pixelcatproductions.net>",
+    "author": "Justin René Back <jback@tosdr.net>",
     "onInstall": {
         "createTranslationKeys": {},
         "createKVStorageItems": {

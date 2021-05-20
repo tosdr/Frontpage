@@ -17,56 +17,64 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-if (isset($_POST["payload"]) || !empty($_POST["payload"])) {
-    $payload = $_POST["payload"];
+use crisp\api\Phoenix;
+use crisp\core\PluginAPI;
 
-    if (!isset($payload["name"]) || empty($payload["name"])) {
-        echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::MISSING_PARAMETER, "name", []);
+if(!defined('CRISP_COMPONENT')){
+    echo 'Cannot access this component directly!';
+    exit;
+}
+
+if (isset($_POST['payload']) || !empty($_POST['payload'])) {
+    $payload = $_POST['payload'];
+
+    if (!isset($payload['name']) || empty($payload['name'])) {
+        PluginAPI::response(crisp\core\Bitmask::MISSING_PARAMETER, 'name', []);
         exit;
     }
 
-    if (!isset($payload["documents"]) || empty($payload["documents"])) {
-        echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::MISSING_PARAMETER, "documents", []);
-        exit;
-    }
-
-
-    if (!is_array($payload["documents"])) {
-        echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::INVALID_PARAMETER, "documents is not an array", []);
-        exit;
-    }
-    if (!is_array($payload["domains"])) {
-        echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::INVALID_PARAMETER, "domains is not an array", []);
-        exit;
-    }
-
-
-    if (count($payload["documents"]) === 0) {
-        echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::INVALID_PARAMETER, "documents is an empty array", []);
-        exit;
-    }
-
-    if (\crisp\api\Phoenix::getServiceByName($payload["name"]) !== false) {
-        echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::SERVICE_DUPLICATE, "Service already exists", []);
+    if (!isset($payload['documents']) || empty($payload['documents'])) {
+        PluginAPI::response(crisp\core\Bitmask::MISSING_PARAMETER, 'documents', []);
         exit;
     }
 
 
-    foreach ($payload["documents"] as $key => $document) {
-        if (!isset($document["name"]) || empty($document["name"])) {
-            echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::INVALID_PARAMETER, "documents[$key] is missing the name key", []);
+    if (!is_array($payload['documents'])) {
+        PluginAPI::response(crisp\core\Bitmask::INVALID_PARAMETER, 'documents is not an array', []);
+        exit;
+    }
+    if (!is_array($payload['domains'])) {
+        PluginAPI::response(crisp\core\Bitmask::INVALID_PARAMETER, 'domains is not an array', []);
+        exit;
+    }
+
+
+    if (count($payload['documents']) === 0) {
+        PluginAPI::response(crisp\core\Bitmask::INVALID_PARAMETER, 'documents is an empty array', []);
+        exit;
+    }
+
+    if (Phoenix::getServiceByName($payload['name']) !== false) {
+        PluginAPI::response(crisp\core\Bitmask::SERVICE_DUPLICATE, 'Service already exists', []);
+        exit;
+    }
+
+
+    foreach ($payload['documents'] as $key => $document) {
+        if (!isset($document['name']) || empty($document['name'])) {
+            PluginAPI::response(crisp\core\Bitmask::INVALID_PARAMETER, "documents[$key] is missing the name key", []);
             exit;
         }
 
-        if (!isset($document["url"]) || empty($document["url"])) {
-            echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::INVALID_PARAMETER, "documents[$key] is missing the url key", []);
+        if (!isset($document['url']) || empty($document['url'])) {
+            PluginAPI::response(crisp\core\Bitmask::INVALID_PARAMETER, "documents[$key] is missing the url key", []);
             exit;
         }
 
         // Validations start here //
 
-        if (!preg_match('/^\b(https?):\/\/[\-A-Za-z0-9+&@#\/%?=~_|!:,.;]*[\-A-Za-z0-9+&@#\/%=~_|]\.+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]\/.*$/', $document["url"])) {
-            echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::INVALID_PARAMETER, "documents[$key].url is not conform.", []);
+        if (!preg_match('/^\b(https?):\/\/[\-A-Za-z0-9+&@#\/%?=~_|!:,.;]*[\-A-Za-z0-9+&@#\/%=~_|]\.+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]\/.*$/', $document['url'])) {
+            PluginAPI::response(crisp\core\Bitmask::INVALID_PARAMETER, "documents[$key].url is not conform.", []);
             exit;
         }
 
@@ -74,108 +82,98 @@ if (isset($_POST["payload"]) || !empty($_POST["payload"])) {
     }
 
 
-    foreach ($payload["domains"] as $key => $domain) {
+    foreach ($payload['domains'] as $key => $domain) {
         // Validations start here //
 
         if (!preg_match('/^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]$/', $domain)) {
-            echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::INVALID_PARAMETER, "domain[$key] is not conform.", []);
+            PluginAPI::response(crisp\core\Bitmask::INVALID_PARAMETER, "domain[$key] is not conform.", []);
             exit;
         }
 
         // Validations end here //
     }
-    /*
-      if (isset($payload["wikipedia"]) && !empty($payload["wikipedia"])) {
-      if (!preg_match('^https\:\/\/[a-z]+\.wikipedia\.org\/wiki\/([\w%\-\(\)\.]+)$/', $payload["wikipedia"])) {
-      echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::INVALID_PARAMETER, "wikipedia is not conform.", []);
-      exit;
-      }
-      }
-     *
-     */
 
-    if (isset($payload["email"]) && !empty($payload["email"])) {
-        if (!preg_match('/^[^\s@]+@[^\s@]+$/', $payload["email"])) {
-            echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::INVALID_PARAMETER, "email is not conform.", []);
-            exit;
-        }
+
+    if (isset($payload['email']) && !empty($payload['email']) && !preg_match('/^[^\s@]+@[^\s@]+$/', $payload['email'])) {
+        PluginAPI::response(crisp\core\Bitmask::INVALID_PARAMETER, 'email is not conform.', []);
+        exit;
     }
 
 
     $Postgres = new crisp\core\MySQL();
 
-    $duplicatereq = $Postgres->getDBConnector()->prepare("SELECT * FROM service_requests WHERE name = :name OR domains = :domains");
+    $duplicatereq = $Postgres->getDBConnector()->prepare('SELECT * FROM service_requests WHERE name = :name OR domains = :domains');
     $duplicatereq->execute([
-        ":name" => $payload["name"],
-        ":domains" => implode(",", $payload["domains"])
+        ':name' => $payload['name'],
+        ':domains' => implode(',', $payload['domains'])
     ]);
 
     if ($duplicatereq->rowCount() > 0) {
-        echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::SERVICE_DUPLICATE, "Service Request already exists", []);
+        PluginAPI::response(crisp\core\Bitmask::SERVICE_DUPLICATE, 'Service Request already exists', []);
         exit;
     }
 
 
-    $db = $Postgres->getDBConnector()->prepare("INSERT INTO service_requests (name, domains, documents, wikipedia, email, note) VALUES (:name, :domains, :documents, :wikipedia, :email, :note)");
+    $db = $Postgres->getDBConnector()->prepare('INSERT INTO service_requests (name, domains, documents, wikipedia, email, note) VALUES (:name, :domains, :documents, :wikipedia, :email, :note)');
 
-    $success = $db->execute(array(
-        ":name" => $payload["name"],
-        ":note" => $payload["note"],
-        ":domains" => implode(",", $payload["domains"]),
-        ":documents" => json_encode($payload["documents"]),
-        ":wikipedia" => $payload["wikipedia"],
-        ":email" => $payload["email"]
-    ));
+    $success = $db->execute([
+        ':name' => $payload['name'],
+        ':note' => $payload['note'],
+        ':domains' => implode(',', $payload['domains']),
+        ':documents' => json_encode($payload['documents'], JSON_THROW_ON_ERROR),
+        ':wikipedia' => $payload['wikipedia'],
+        ':email' => $payload['email']
+    ]);
 
     if ($success) {
 
 
-        $EnvFile = parse_ini_file(__DIR__ . "/../../../.env");
+        $EnvFile = parse_ini_file(__DIR__ . '/../../../.env');
 
-        if ($EnvFile["SERVICE_DISCORD_WEBHOOK"] !== false) {
+        if ($EnvFile['SERVICE_DISCORD_WEBHOOK'] !== false) {
 
             $fields = [];
 
-            foreach ($payload["documents"] as $document) {
-                $fields[] = array("name" => $document["name"], "value" => $document["url"]);
+            foreach ($payload['documents'] as $document) {
+                $fields[] = ['name' => $document['name'], 'value' => $document['url']];
             }
 
-            $embed = array(
+            $embed = [
                 'content' => 'New Service Request',
                 'embeds' =>
-                array(
-                    array(
-                        'title' => $payload["name"],
-                        'description' => 'The service request contains ' . count($payload["domains"]) . " domain(s) and " . count($payload["documents"]) . " document(s).",
-                        'url' => crisp\api\Config::get("root_url") . '/service_requests',
+                [
+                    [
+                        'title' => $payload['name'],
+                        'description' => 'The service request contains ' . count($payload['domains']) . ' domain(s) and ' . count($payload['documents']) . ' document(s).',
+                        'url' => crisp\api\Config::get('root_url') . '/service_requests',
                         'color' => 0,
                         'fields' => $fields,
                         'footer' =>
-                        array(
-                            'text' => $payload["wikipedia"],
-                        ),
-                    ),
-                ),
-            );
+                        [
+                            'text' => $payload['wikipedia'],
+                        ],
+                    ],
+                ],
+            ];
 
             $curl = curl_init();
-            curl_setopt_array($curl, array(
-                CURLOPT_URL => $EnvFile["SERVICE_DISCORD_WEBHOOK"],
+            curl_setopt_array($curl, [
+                CURLOPT_URL => $EnvFile['SERVICE_DISCORD_WEBHOOK'],
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_CUSTOMREQUEST => 'POST',
-                CURLOPT_POSTFIELDS => json_encode($embed),
-                CURLOPT_HTTPHEADER => array(
+                CURLOPT_POSTFIELDS => json_encode($embed, JSON_THROW_ON_ERROR),
+                CURLOPT_HTTPHEADER => [
                     'Content-Type: application/json'
-                ),
-            ));
+                ],
+            ]);
 
             $resp = curl_exec($curl);
         }
 
-        echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::REQUEST_SUCCESS, "OK", []);
+        PluginAPI::response(crisp\core\Bitmask::REQUEST_SUCCESS, 'OK', []);
         exit;
     }
 
-    echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::GENERIC_ERROR, "SQL Error", []);
+    PluginAPI::response(crisp\core\Bitmask::GENERIC_ERROR, 'SQL Error', []);
     exit;
 }

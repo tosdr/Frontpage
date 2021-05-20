@@ -17,11 +17,17 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+use crisp\core\PluginAPI;
 
-switch ($_SERVER["REQUEST_METHOD"]) {
-    case "GET":
+if(!defined('CRISP_COMPONENT')){
+    echo 'Cannot access this component directly!';
+    exit;
+}
+
+switch ($_SERVER['REQUEST_METHOD']) {
+    case 'GET':
         require_once __DIR__ . '/GET/v1.php';
         break;
     default:
-        echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::NOT_IMPLEMENTED, "Invalid Request Method", [], null, 405);
+        PluginAPI::response(crisp\core\Bitmask::NOT_IMPLEMENTED, 'Invalid Request Method', [], null, 405);
 }

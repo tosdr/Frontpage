@@ -19,9 +19,15 @@
 
 use crisp\core\PluginAPI;
 
-if(!IS_NATIVE_API){
-    PluginAPI::response(crisp\core\Bitmask::GENERIC_ERROR, "Cannot access non-native API endpoint", []);
+if(!defined('CRISP_COMPONENT')){
+    echo 'Cannot access this component directly!';
     exit;
 }
 
-echo "PONG";
+
+if(!IS_NATIVE_API){
+    PluginAPI::response(crisp\core\Bitmask::GENERIC_ERROR, 'Cannot access non-native API endpoint', []);
+    exit;
+}
+
+echo 'PONG';

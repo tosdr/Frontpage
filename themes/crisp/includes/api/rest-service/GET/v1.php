@@ -17,22 +17,30 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+use crisp\api\Phoenix;
+use crisp\core\Bitmask;
+use crisp\core\PluginAPI;
 
-if (!is_numeric($_GET["service"] ?? $this->Query)) {
-    if (!crisp\api\Phoenix::serviceExistsBySlug($_GET["service"] ?? $this->Query)) {
-        echo \crisp\core\PluginAPI::response(\crisp\core\Bitmask::INVALID_SERVICE + \crisp\core\Bitmask::VERSION_DEPRECATED, $_GET["service"] ?? $this->Query, []);
-        return;
-    }
-    $_GET["service"] ?? $this->Query = crisp\api\Phoenix::getServiceBySlug($_GET["service"] ?? $this->Query)["id"];
-    echo \crisp\core\PluginAPI::response(\crisp\core\Bitmask::REQUEST_SUCCESS + \crisp\core\Bitmask::VERSION_DEPRECATED, $_GET["service"] ?? $this->Query, \crisp\api\Phoenix::generateApiFiles($_GET["service"] ?? $this->Query, "3"));
+if(!defined('CRISP_COMPONENT')){
+    echo 'Cannot access this component directly!';
     exit;
 }
 
-if (!crisp\api\Phoenix::serviceExists($_GET["service"] ?? $this->Query)) {
-    echo \crisp\core\PluginAPI::response(\crisp\core\Bitmask::INVALID_SERVICE + \crisp\core\Bitmask::VERSION_DEPRECATED, $_GET["service"] ?? $this->Query, []);
+if (!is_numeric($_GET['service'] ?? $this->Query)) {
+    if (!crisp\api\Phoenix::serviceExistsBySlug($_GET['service'] ?? $this->Query)) {
+        PluginAPI::response(Bitmask::INVALID_SERVICE + Bitmask::VERSION_DEPRECATED, $_GET['service'] ?? $this->Query, []);
+        return;
+    }
+    $_GET['service'] ?? $this->Query = crisp\api\Phoenix::getServiceBySlug($_GET['service'] ?? $this->Query)['id'];
+    PluginAPI::response(Bitmask::REQUEST_SUCCESS + Bitmask::VERSION_DEPRECATED, $_GET['service'] ?? $this->Query, Phoenix::generateApiFiles($_GET['service'] ?? $this->Query, '3'));
+    exit;
+}
+
+if (!crisp\api\Phoenix::serviceExists($_GET['service'] ?? $this->Query)) {
+    PluginAPI::response(Bitmask::INVALID_SERVICE + Bitmask::VERSION_DEPRECATED, $_GET['service'] ?? $this->Query, []);
     return;
 }
 
 
 
-echo \crisp\core\PluginAPI::response(\crisp\core\Bitmask::REQUEST_SUCCESS + \crisp\core\Bitmask::VERSION_DEPRECATED, $_GET["service"] ?? $this->Query, \crisp\api\Phoenix::generateApiFiles($_GET["service"] ?? $this->Query, "3"));
+PluginAPI::response(Bitmask::REQUEST_SUCCESS + Bitmask::VERSION_DEPRECATED, $_GET['service'] ?? $this->Query, Phoenix::generateApiFiles($_GET['service'] ?? $this->Query, '3'));

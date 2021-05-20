@@ -17,6 +17,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-$Cases = \crisp\api\Phoenix::getCases();
+use crisp\api\Phoenix;
+use crisp\core\PluginAPI;
 
-echo \crisp\core\PluginAPI::response(crisp\core\Bitmask::REQUEST_SUCCESS, "All cases below", $Cases);
+if(!defined('CRISP_COMPONENT')){
+    echo 'Cannot access this component directly!';
+    exit;
+}
+
+$Cases = Phoenix::getCases();
+
+PluginAPI::response(crisp\core\Bitmask::REQUEST_SUCCESS, 'All cases below', $Cases);

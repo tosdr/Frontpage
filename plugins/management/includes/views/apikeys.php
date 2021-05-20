@@ -21,6 +21,11 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
+if(!defined('CRISP_COMPONENT')){
+    echo 'Cannot access this component directly!';
+    exit;
+}
+
 $EnvFile = parse_ini_file(__DIR__ . "/../../../../.env");
 include __DIR__ . '/../Phoenix.php';
 header("X-SKIPCACHE: 1");

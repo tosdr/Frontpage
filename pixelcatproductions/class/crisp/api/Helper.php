@@ -360,13 +360,16 @@ class Helper
             $semicolon = strpos($data, ';');
             $brace = strpos($data, '}');
             // Either ; or } must exist.
-            if (false === $semicolon && false === $brace)
+            if (false === $semicolon && false === $brace) {
                 return false;
+            }
             // But neither must be in the first X characters.
-            if (false !== $semicolon && $semicolon < 3)
+            if (false !== $semicolon && $semicolon < 3) {
                 return false;
-            if (false !== $brace && $brace < 4)
+            }
+            if (false !== $brace && $brace < 4) {
                 return false;
+            }
         }
         $token = $data[0];
         switch ($token) {

@@ -38,8 +38,8 @@ class MySQL {
      */
     public function __construct() {
         try {
-            $EnvFile = parse_ini_file(__DIR__ . "/../../../../.env");
-            $this->Database_Connection = new PDO("pgsql:host=" . $EnvFile["MYSQL_HOSTNAME"] . ";dbname=" . $EnvFile["MYSQL_DATABASE"] . ";", $EnvFile["MYSQL_USERNAME"], $EnvFile["MYSQL_PASSWORD"], [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::ATTR_EMULATE_PREPARES => true]);
+            $EnvFile = parse_ini_file(__DIR__ . '/../../../../.env');
+            $this->Database_Connection = new PDO('pgsql:host=' . $EnvFile['MYSQL_HOSTNAME'] . ';dbname=' . $EnvFile['MYSQL_DATABASE'] . ';', $EnvFile['MYSQL_USERNAME'], $EnvFile['MYSQL_PASSWORD'], [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::ATTR_EMULATE_PREPARES => true]);
         } catch (Exception $ex) {
             throw new BitmaskException($ex, Bitmask::POSTGRES_CONN_ERROR);
         }

@@ -30,7 +30,8 @@ class Phoenix {
 
     private static ?PDO $Postgres_Database_Connection = null;
 
-    private static function initPGDB() {
+    private static function initPGDB(): void
+    {
         $PostgresDB = new Postgres();
         self::$Postgres_Database_Connection = $PostgresDB->getDBConnector();
     }
@@ -51,92 +52,92 @@ class Phoenix {
         switch ($Version) {
             case 1:
             case 2:
-                $ServiceLinks = array();
-                $ServicePoints = array();
-                $ServicePointsData = array();
+                $ServiceLinks = [];
+                $ServicePoints = [];
+                $ServicePointsData = [];
 
                 $points = self::getPointsByService($ID);
                 $service = self::getService($ID);
                 $documents = self::getDocumentsByService($ID);
                 foreach ($documents as $Links) {
-                    $ServiceLinks[$Links["name"]] = array(
-                        "name" => $Links["name"],
-                        "url" => $Links["url"]
-                    );
+                    $ServiceLinks[$Links['name']] = [
+                        'name' => $Links['name'],
+                        'url' => $Links['url']
+                    ];
                 }
                 foreach ($points as $Point) {
-                    if ($Point["status"] == "approved") {
-                        array_push($ServicePoints, $Point["id"]);
+                    if ($Point['status'] === 'approved') {
+                        $ServicePoints[] = $Point['id'];
                     }
                 }
                 foreach ($points as $Point) {
-                    $Document = array_column($documents, null, 'id')[$Point["document_id"]];
-                    $Case = self::getCase($Point["case_id"]);
-                    if ($Point["status"] == "approved") {
-                        $ServicePointsData[$Point["id"]] = array(
-                            "discussion" => "https://edit.tosdr.org/points/" . $Point["id"],
-                            "id" => $Point["id"],
-                            "needsModeration" => ($Point["status"] != "approved"),
-                            "quoteDoc" => $Document["name"],
-                            "quoteText" => $Point["quoteText"],
-                            "services" => array($ID),
-                            "set" => "set+service+and+topic",
-                            "slug" => $Point["slug"],
-                            "title" => $Point["title"],
-                            "topics" => array(),
-                            "tosdr" => array(
-                                "binding" => true,
-                                "case" => $Case["title"],
-                                "point" => $Case["classification"],
-                                "score" => $Case["score"],
-                                "tldr" => $Point["analysis"]
-                            ),
-                        );
+                    $Document = array_column($documents, null, 'id')[$Point['document_id']];
+                    $Case = self::getCase($Point['case_id']);
+                    if ($Point['status'] === 'approved') {
+                        $ServicePointsData[$Point['id']] = [
+                            'discussion' => 'https://edit.tosdr.org/points/' . $Point['id'],
+                            'id' => $Point['id'],
+                            'needsModeration' => ($Point['status'] !== 'approved'),
+                            'quoteDoc' => $Document['name'],
+                            'quoteText' => $Point['quoteText'],
+                            'services' => [$ID],
+                            'set' => 'set+service+and+topic',
+                            'slug' => $Point['slug'],
+                            'title' => $Point['title'],
+                            'topics' => [],
+                            'tosdr' => [
+                                'binding' => true,
+                                'case' => $Case['title'],
+                                'point' => $Case['classification'],
+                                'score' => $Case['score'],
+                                'tldr' => $Point['analysis']
+                            ],
+                        ];
                     }
                 }
 
-                $SkeletonData = array(
-                    "id" => $service["_source"]["id"],
-                    "name" => $service["_source"]["name"],
-                    "slug" => $service["_source"]["slug"],
-                    "image" => Config::get("s3_logos") . "/" . ($service["_source"]["image"]),
-                    "class" => ($service["_source"]["rating"] == "N/A" ? false : ($service["_source"]["is_comprehensively_reviewed"] ? $service["_source"]["rating"] : false)),
-                    "links" => $ServiceLinks,
-                    "points" => $ServicePoints,
-                    "pointsData" => $ServicePointsData,
-                    "urls" => explode(",", $service["_source"]["url"])
-                );
+                $SkeletonData = [
+                    'id' => $service['_source']['id'],
+                    'name' => $service['_source']['name'],
+                    'slug' => $service['_source']['slug'],
+                    'image' => Config::get('s3_logos') . '/' . ($service['_source']['image']),
+                    'class' => ($service['_source']['rating'] === 'N/A' ? false : ($service['_source']['is_comprehensively_reviewed'] ? $service['_source']['rating'] : false)),
+                    'links' => $ServiceLinks,
+                    'points' => $ServicePoints,
+                    'pointsData' => $ServicePointsData,
+                    'urls' => explode(',', $service['_source']['url'])
+                ];
                 break;
             case 3:
-                $ServicePointsData = array();
+                $ServicePointsData = [];
 
                 $points = self::getPointsByService($ID);
                 $service = self::getService($ID);
                 $documents = self::getDocumentsByService($ID);
                 foreach ($points as $Point) {
-                    $Document = array_column($documents, null, 'id')[$Point["document_id"]];
-                    $Case = self::getCase($Point["case_id"]);
-                    $ServicePointsData[] = array(
-                        "discussion" => "https://edit.tosdr.org/points/" . $Point["id"],
-                        "id" => $Point["id"],
-                        "needsModeration" => ($Point["status"] != "approved"),
-                        "document" => $Document,
-                        "quote" => $Point["quoteText"],
-                        "services" => array($ID),
-                        "set" => "set+service+and+topic",
-                        "slug" => $Point["slug"],
-                        "title" => $Point["title"],
-                        "topics" => array(),
-                        "case" => $Case
-                    );
+                    $Document = array_column($documents, null, 'id')[$Point['document_id']];
+                    $Case = self::getCase($Point['case_id']);
+                    $ServicePointsData[] = [
+                        'discussion' => 'https://edit.tosdr.org/points/' . $Point['id'],
+                        'id' => $Point['id'],
+                        'needsModeration' => ($Point['status'] !== 'approved'),
+                        'document' => $Document,
+                        'quote' => $Point['quoteText'],
+                        'services' => [$ID],
+                        'set' => 'set+service+and+topic',
+                        'slug' => $Point['slug'],
+                        'title' => $Point['title'],
+                        'topics' => [],
+                        'case' => $Case
+                    ];
                 }
 
-                $SkeletonData = $service["_source"];
+                $SkeletonData = $service['_source'];
 
-                $SkeletonData["image"] = Config::get("s3_logos") . "/" . $service["_source"]["image"];
-                $SkeletonData["documents"] = $documents;
-                $SkeletonData["points"] = $ServicePointsData;
-                $SkeletonData["urls"] = explode(",", $service["_source"]["url"]);
+                $SkeletonData['image'] = Config::get('s3_logos') . '/' . $service['_source']['image'];
+                $SkeletonData['documents'] = $documents;
+                $SkeletonData['points'] = $ServicePointsData;
+                $SkeletonData['urls'] = explode(',', $service['_source']['url']);
                 break;
         }
 
@@ -158,9 +159,9 @@ class Phoenix {
 
 
 
-        $statement = self::$Postgres_Database_Connection->prepare("SELECT * FROM points WHERE service_id = :ID");
+        $statement = self::$Postgres_Database_Connection->prepare('SELECT * FROM points WHERE service_id = :ID');
 
-        $statement->execute(array(":ID" => $ID));
+        $statement->execute([':ID' => $ID]);
 
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -178,9 +179,9 @@ class Phoenix {
             self::initPGDB();
         }
 
-        $statement = self::$Postgres_Database_Connection->prepare("SELECT * FROM documents WHERE service_id = :ID");
+        $statement = self::$Postgres_Database_Connection->prepare('SELECT * FROM documents WHERE service_id = :ID');
 
-        $statement->execute(array(":ID" => $ID));
+        $statement->execute([':ID' => $ID]);
 
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -197,7 +198,7 @@ class Phoenix {
             self::initPGDB();
         }
 
-        return self::$Postgres_Database_Connection->query("SELECT * FROM points")->fetchAll(PDO::FETCH_ASSOC);
+        return self::$Postgres_Database_Connection->query('SELECT * FROM points')->fetchAll(PDO::FETCH_ASSOC);
     }
 
     /**
@@ -212,9 +213,9 @@ class Phoenix {
             self::initPGDB();
         }
 
-        $statement = self::$Postgres_Database_Connection->prepare("SELECT * FROM points WHERE id = :ID");
+        $statement = self::$Postgres_Database_Connection->prepare('SELECT * FROM points WHERE id = :ID');
 
-        $statement->execute(array(":ID" => $ID));
+        $statement->execute([':ID' => $ID]);
 
         return $statement->fetch(PDO::FETCH_ASSOC);
     }
@@ -233,9 +234,9 @@ class Phoenix {
             self::initPGDB();
         }
 
-        $statement = self::$Postgres_Database_Connection->prepare("SELECT * FROM cases WHERE id = :ID");
+        $statement = self::$Postgres_Database_Connection->prepare('SELECT * FROM cases WHERE id = :ID');
 
-        $statement->execute(array(":ID" => $ID));
+        $statement->execute([':ID' => $ID]);
 
         return $statement->fetch(PDO::FETCH_ASSOC);
     }
@@ -253,9 +254,9 @@ class Phoenix {
             self::initPGDB();
         }
 
-        $statement = self::$Postgres_Database_Connection->prepare("SELECT * FROM topics WHERE id = :ID");
+        $statement = self::$Postgres_Database_Connection->prepare('SELECT * FROM topics WHERE id = :ID');
 
-        $statement->execute(array(":ID" => $ID));
+        $statement->execute([':ID' => $ID]);
 
         return $statement->fetch(PDO::FETCH_ASSOC);
     }
@@ -273,9 +274,9 @@ class Phoenix {
             self::initPGDB();
         }
 
-        $statement = self::$Postgres_Database_Connection->prepare("SELECT * FROM services WHERE LOWER(name) LIKE :ID");
+        $statement = self::$Postgres_Database_Connection->prepare('SELECT * FROM services WHERE LOWER(name) LIKE :ID');
 
-        $statement->execute(array(":ID" => "%$Name%"));
+        $statement->execute([':ID' => "%$Name%"]);
 
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -293,12 +294,12 @@ class Phoenix {
             self::initPGDB();
         }
 
-        $statement = self::$Postgres_Database_Connection->prepare("SELECT * FROM services WHERE LOWER(slug) = LOWER(:ID)");
+        $statement = self::$Postgres_Database_Connection->prepare('SELECT * FROM services WHERE LOWER(slug) = LOWER(:ID)');
 
-        $statement->execute(array(":ID" => $Name));
+        $statement->execute([':ID' => $Name]);
 
 
-        if ($statement->rowCount() == 0) {
+        if ($statement->rowCount() === 0) {
             return false;
         }
 
@@ -317,17 +318,17 @@ class Phoenix {
             self::initPGDB();
         }
 
-        $statement = self::$Postgres_Database_Connection->prepare("SELECT * FROM services WHERE LOWER(name) = LOWER(:ID)");
+        $statement = self::$Postgres_Database_Connection->prepare('SELECT * FROM services WHERE LOWER(name) = LOWER(:ID)');
 
-        $statement->execute(array(":ID" => $Name));
+        $statement->execute([':ID' => $Name]);
 
-        if ($statement->rowCount() == 0) {
+        if ($statement->rowCount() === 0) {
             return false;
         }
 
         $response = $statement->fetch(PDO::FETCH_ASSOC);
 
-        $response["image"] = $response["id"] . ".png";
+        $response['image'] = $response['id'] . '.png';
         return $response;
     }
 
@@ -343,9 +344,9 @@ class Phoenix {
             self::initPGDB();
         }
 
-        $statement = self::$Postgres_Database_Connection->prepare("SELECT * FROM services WHERE LOWER(slug) = LOWER(:ID)");
+        $statement = self::$Postgres_Database_Connection->prepare('SELECT * FROM services WHERE LOWER(slug) = LOWER(:ID)');
 
-        $statement->execute(array(":ID" => $Name));
+        $statement->execute([':ID' => $Name]);
 
         return $statement->rowCount() > 0;
     }
@@ -368,16 +369,16 @@ class Phoenix {
             return false;
         }
 
-        $statement = self::$Postgres_Database_Connection->prepare("INSERT INTO services (name, url, wikipedia, created_at, updated_at) VALUES (:name, :url, :wikipedia, NOW(), NOW())");
+        $statement = self::$Postgres_Database_Connection->prepare('INSERT INTO services (name, url, wikipedia, created_at, updated_at) VALUES (:name, :url, :wikipedia, NOW(), NOW())');
 
-        $statement->execute([":name" => $Name, ":url" => $Url, ":wikipedia" => $Wikipedia]);
+        $statement->execute([':name' => $Name, ':url' => $Url, ':wikipedia' => $Wikipedia]);
 
         $service_id = self::$Postgres_Database_Connection->lastInsertId();
 
         $Result = $statement->rowCount() > 0;
 
         if ($Result) {
-            self::createVersion("Service", $service_id, "create", "Created service", $User);
+            self::createVersion('Service', $service_id, 'create', 'Created service', $User);
             return $service_id;
         }
 
@@ -403,16 +404,16 @@ class Phoenix {
             return false;
         }
 
-        $statement = self::$Postgres_Database_Connection->prepare("INSERT INTO documents (name, url, xpath, created_at, updated_at, service_id) VALUES (:name, :url, :xpath, NOW(), NOW(), :service_id)");
+        $statement = self::$Postgres_Database_Connection->prepare('INSERT INTO documents (name, url, xpath, created_at, updated_at, service_id) VALUES (:name, :url, :xpath, NOW(), NOW(), :service_id)');
 
-        $statement->execute([":name" => $Name, ":url" => $Url, ":xpath" => $Xpath, ":service_id" => $Service]);
+        $statement->execute([':name' => $Name, ':url' => $Url, ':xpath' => $Xpath, ':service_id' => $Service]);
 
         $Result = $statement->rowCount() > 0;
 
         $document_id = self::$Postgres_Database_Connection->lastInsertId();
 
         if ($Result) {
-            self::createVersion("Document", $document_id, "create", "Created document", $User);
+            self::createVersion('Document', $document_id, 'create', 'Created document', $User);
             return $document_id;
         }
 
@@ -435,15 +436,15 @@ class Phoenix {
             self::initPGDB();
         }
 
-        $statement = self::$Postgres_Database_Connection->prepare("INSERT INTO versions (item_type, item_id, event, created_at, object_changes, whodunnit, object) VALUES (:item_type, :item_id, :event, NOW(), :object_changes, :whodunnit, :object)");
+        $statement = self::$Postgres_Database_Connection->prepare('INSERT INTO versions (item_type, item_id, event, created_at, object_changes, whodunnit, object) VALUES (:item_type, :item_id, :event, NOW(), :object_changes, :whodunnit, :object)');
 
         $statement->execute([
-            ":item_type" => $itemType,
-            ":item_id" => $itemId,
-            ":event" => $event,
-            ":object_changes" => $objectChanges,
-            ":whodunnit" => $whodunnit,
-            ":object" => $object
+            ':item_type' => $itemType,
+            ':item_id' => $itemId,
+            ':event' => $event,
+            ':object_changes' => $objectChanges,
+            ':whodunnit' => $whodunnit,
+            ':object' => $object
         ]);
 
         return $statement->rowCount() > 0;
@@ -461,9 +462,9 @@ class Phoenix {
             self::initPGDB();
         }
 
-        $statement = self::$Postgres_Database_Connection->prepare("SELECT * FROM services WHERE LOWER(name) = LOWER(:ID)");
+        $statement = self::$Postgres_Database_Connection->prepare('SELECT * FROM services WHERE LOWER(name) = LOWER(:ID)');
 
-        $statement->execute(array(":ID" => $Name));
+        $statement->execute([':ID' => $Name]);
 
         return $statement->rowCount() > 0;
     }
@@ -480,9 +481,9 @@ class Phoenix {
             self::initPGDB();
         }
 
-        $statement = self::$Postgres_Database_Connection->prepare("SELECT * FROM points WHERE id = :ID");
+        $statement = self::$Postgres_Database_Connection->prepare('SELECT * FROM points WHERE id = :ID');
 
-        $statement->execute(array(":ID" => $ID));
+        $statement->execute([':ID' => $ID]);
 
         return $statement->rowCount() > 0;
     }
@@ -499,9 +500,9 @@ class Phoenix {
             self::initPGDB();
         }
 
-        $statement = self::$Postgres_Database_Connection->prepare("SELECT * FROM services WHERE id = :ID");
+        $statement = self::$Postgres_Database_Connection->prepare('SELECT * FROM services WHERE id = :ID');
 
-        $statement->execute(array(":ID" => $ID));
+        $statement->execute([':ID' => $ID]);
 
         return $statement->rowCount() > 0;
     }
@@ -514,21 +515,21 @@ class Phoenix {
             self::initPGDB();
         }
 
-        $statement = self::$Postgres_Database_Connection->prepare("SELECT * FROM services WHERE id = :ID");
+        $statement = self::$Postgres_Database_Connection->prepare('SELECT * FROM services WHERE id = :ID');
 
-        $statement->execute(array(":ID" => $ID));
+        $statement->execute([':ID' => $ID]);
 
-        if ($statement->rowCount() == 0) {
+        if ($statement->rowCount() === 0) {
             return false;
         }
 
         $response = $statement->fetch(PDO::FETCH_ASSOC);
 
 
-        $response["image"] = $response["id"] . ".png";
+        $response['image'] = $response['id'] . '.png';
         $dummy = [];
 
-        $dummy["_source"] = $response;
+        $dummy['_source'] = $response;
         return $dummy;
     }
 
@@ -545,7 +546,7 @@ class Phoenix {
             self::initPGDB();
         }
 
-        return self::$Postgres_Database_Connection->query("SELECT * FROM topics")->fetchAll(PDO::FETCH_ASSOC);
+        return self::$Postgres_Database_Connection->query('SELECT * FROM topics')->fetchAll(PDO::FETCH_ASSOC);
     }
 
     /**
@@ -560,7 +561,7 @@ class Phoenix {
             self::initPGDB();
         }
 
-        return self::$Postgres_Database_Connection->query("SELECT * FROM cases")->fetchAll(PDO::FETCH_ASSOC);
+        return self::$Postgres_Database_Connection->query('SELECT * FROM cases')->fetchAll(PDO::FETCH_ASSOC);
     }
 
     /**

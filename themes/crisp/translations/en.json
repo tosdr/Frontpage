@@ -242,5 +242,17 @@
     "views.donate.lite.header": "Litecoin",
     "views.donate.lite.text": "Via Litecoin you can donate to ToS;DR 100% anonymously. Contributions are not deductible as charitable contributions for U.S. federal income tax purposes.\n\nTo donate, scan the QR code in your preferred Litecoin wallet or use our address below.",
     "views.oauth.jumbotron.text.1": "You are about to authorize {{ client_name }} with your Account {{ username }}",
-    "views.oauth.title": "Authorize Application"
+    "views.oauth.title": "Authorize Application",
+    "components.navbar.community": "Communities",
+    "views.community.jumbotron.header": "ToS;DR Communities",
+    "views.community.jumbotron.text": "The Team at Terms of Service; Didn't Read is committed to \"fix the biggest lie on the internet\".\n\nWe have many communities where you can communicate with Staff, Curators or other Privacy Enthusiasts.",
+    "views.community.discord.header": "Discord Server (Official)",
+    "views.community.discord.text": "While Discord is not the most privacy friendly solution, we've got over 200 members bridged between Matrix and IRC.",
+    "views.community.button.join": "Join Community",
+    "views.community.matrix.header": "Matrix (Official)",
+    "views.community.matrix.text": "The decentralized web is here! With our self hosted matrix instance you can connect with any matrix protocol compatible homeserver to chat with Discord and IRC members at {{ config.matrix_address }}",
+    "views.community.irc.header": "IRC (Official)",
+    "views.community.irc.text": "Old school communication? We've got you covered with our IRC instance at {{ config.irc_address }}. View the room list or join {{ config.irc_channel }} for small talk. Most channels are bridged with Discord.",
+    "views.community.telegram.header": "Telegram (Unofficial)",
+    "views.community.telegram.text": "Thanks to our community we've got an unofficial Telegram Group as well, bridged with latest announcements from ToS;DR."
 }

@@ -21,7 +21,7 @@ use crisp\api\Elastic;
 use crisp\core\Bitmask;
 use crisp\core\PluginAPI;
 
-if(!defined('CRISP_COMPONENT')){
+if (!defined('CRISP_COMPONENT')) {
     echo 'Cannot access this component directly!';
     exit;
 }
@@ -38,10 +38,17 @@ if (!$inputQuery) {
     exit;
 }
 
-$services = $ES->search($inputQuery);
+try {
+    $services = $ES->search($inputQuery);
 
-PluginAPI::response(Bitmask::REQUEST_SUCCESS, $inputQuery, [
-    'services' => $services,
-    'grid' => $this->TwigTheme->render('components/servicegrid/grid.twig', ['Services' => $services->hits, 'columns' => 2])
-]);
+    PluginAPI::response(Bitmask::REQUEST_SUCCESS, $inputQuery, [
+        'services' => $services,
+        'grid' => $this->TwigTheme->render('components/servicegrid/grid.twig', ['Services' => $services->hits, 'columns' => 2])
+    ]);
 
+} catch (Throwable $e) {
+    PluginAPI::response(Bitmask::QUERY_FAILED, 'Internal Server Error', [
+        'services' => [],
+        'grid' => []
+    ]);
+}

@@ -55,7 +55,7 @@ class Elastic {
             throw new BitmaskException(curl_error($ch), Bitmask::ELASTIC_CONN_ERROR);
         }
         curl_close($ch);
-        return json_decode($output, true, 512, JSON_THROW_ON_ERROR)->hits;
+        return json_decode($output, false, 512, JSON_THROW_ON_ERROR)->hits;
     }
 
 }

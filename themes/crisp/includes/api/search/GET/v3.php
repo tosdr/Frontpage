@@ -31,7 +31,7 @@ $inputQuery = $_GET['query'] ?? $inputQuery;
 $ES = new Elastic();
 
 if (!$inputQuery) {
-    PluginAPI::response(Bitmask::QUERY_FAILED, 'Missing query', [
+    PluginAPI::response(Bitmask::QUERY_FAILED + Bitmask::VERSION_DEPRECATED, 'Missing query', [
         'services' => [],
         'grid' => null
     ]);
@@ -41,13 +41,13 @@ if (!$inputQuery) {
 try {
     $services = $ES->search($inputQuery);
 
-    PluginAPI::response(Bitmask::REQUEST_SUCCESS, $inputQuery, [
+    PluginAPI::response(Bitmask::REQUEST_SUCCESS + Bitmask::VERSION_DEPRECATED, $inputQuery, [
         'services' => $services,
         'grid' => $this->TwigTheme->render('components/servicegrid/grid.twig', ['Services' => $services->hits, 'columns' => 2])
     ]);
 
 } catch (Throwable $e) {
-    PluginAPI::response(Bitmask::QUERY_FAILED, 'Internal Server Error', [
+    PluginAPI::response(Bitmask::QUERY_FAILED + Bitmask::VERSION_DEPRECATED, 'Internal Server Error', [
         'services' => [],
         'grid' => []
     ]);

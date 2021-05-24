@@ -27,8 +27,8 @@ if(!defined('CRISP_COMPONENT')){
 
 switch ($_SERVER['REQUEST_METHOD']) {
     case 'GET':
-        require_once __DIR__ . '/GET/v3.php';
+        require_once __DIR__ . '/GET/v4.php';
         break;
     default:
-        PluginAPI::response(Bitmask::NOT_IMPLEMENTED + Bitmask::VERSION_DEPRECATED, 'Invalid Request Method', [], null, 405);
+        PluginAPI::response(Bitmask::NOT_IMPLEMENTED, 'Invalid Request Method', [], null, 405);
 }

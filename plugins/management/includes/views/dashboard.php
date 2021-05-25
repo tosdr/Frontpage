@@ -17,17 +17,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+use crisp\core\Config;
+
 if(!defined('CRISP_COMPONENT')){
     echo 'Cannot access this component directly!';
     exit;
 }
 
-if (!isset($_SESSION[\crisp\core\Config::$Cookie_Prefix . "session_login"])) {
-    header("Location: " . \crisp\api\Helper::generateLink("login/?invalid_sess"));
+if (!isset($_SESSION[Config::$Cookie_Prefix . 'session_login'])) {
+    header('Location: ' . Config::get('root_url') . '/login?redirect_uri=' . urlencode(Helper::currentURL()));
     exit;
 }
 
 if (!$User->isSessionValid()) {
-    header("Location: " . \crisp\api\Helper::generateLink("login/?invalid_db"));
+    header('Location: ' . Config::get('root_url') . '/login?redirect_uri=' . urlencode(Helper::currentURL()));
     exit;
 }

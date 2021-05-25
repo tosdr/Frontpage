@@ -30,4 +30,18 @@ class APIPermissions extends \crisp\types\Bitmask {
     public const CAN_USE_CRAWLER = 0x8;
     public const CAN_USE_DOCBOT = 0x10;
     public const CAN_USE_OAUTH = 0x20;
+    public const OAUTH_CAN_SEE_EMAIL = 0x40;
+    public const OAUTH_CAN_SEE_USERNAME = 0x80;
+    public const OAUTH_CAN_POST_SERVICE_COMMENT = 0x100;
+    public const OAUTH_CAN_POST_POINT_COMMENT = 0x200;
+    public const OAUTH_CAN_POST_TOPIC_COMMENT = 0x400;
+    public const OAUTH_CAN_POST_CASE_COMMENT = 0x800;
+    public const OAUTH_CAN_CREATE_POINT = 0x1000;
+    public const OAUTH_CAN_CREATE_CASE = 0x2000;
+    public const OAUTH_CAN_CREATE_TOPIC = 0x4000;
+    public const OAUTH_CAN_CREATE_SERVICE = 0x8000;
+    public const OAUTH_CAN_EDIT_SERVICE = 0x10000;
+    public const OAUTH_CAN_EDIT_TOPIC = 0x20000;
+    public const OAUTH_CAN_EDIT_CASE = 0x40000;
+    public const OAUTH_CAN_EDIT_POINT = 0x80000;
 }

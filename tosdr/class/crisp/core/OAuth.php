@@ -25,6 +25,7 @@ use OAuth2;
 class OAuth
 {
 
+
     public static function createServer(): OAuth2\Server
     {
         $EnvFile = parse_ini_file(__DIR__ . "/../../../../.env");

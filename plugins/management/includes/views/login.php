@@ -17,21 +17,25 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+use crisp\api\Helper;
+use crisp\core\Config;
+use crisp\plugin\curator\PhoenixUser;
+
 if(!defined('CRISP_COMPONENT')){
     echo 'Cannot access this component directly!';
     exit;
 }
 
-header("X-SKIPCACHE: 1");
-if (isset($_SESSION[\crisp\core\Config::$Cookie_Prefix . "session_login"])) {
+header('X-SKIPCACHE: 1');
+if (isset($_SESSION[Config::$Cookie_Prefix . 'session_login'])) {
 
-    $User = new \crisp\plugin\curator\PhoenixUser($_SESSION[\crisp\core\Config::$Cookie_Prefix . "session_login"]["user"]);
+    $User = new PhoenixUser($_SESSION[Config::$Cookie_Prefix . 'session_login']['user']);
 
     if (!$User->isSessionValid()) {
-        unset($_SESSION[\crisp\core\Config::$Cookie_Prefix . "session_login"]);
-        header("Location: ". \crisp\api\Helper::generateLink("login/?invalid_login"));
+        unset($_SESSION[Config::$Cookie_Prefix . 'session_login']);
+        header('Location: ' . Helper::generateLink('login/?invalid_login'));
         exit;
     }
-    header("Location: /curator_dashboard");
+    header('Location: /dashboard');
     exit;
 }

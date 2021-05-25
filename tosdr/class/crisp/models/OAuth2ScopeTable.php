@@ -31,10 +31,17 @@ class OAuth2ScopeTable implements OAuth2\Storage\ScopeInterface
 {
     public function scopeExists($scope, $client_id = null): bool
     {
+
+        foreach(APIPermissions::getBitmask($scope) as $key => $bitmask){
+            if(!str_starts_with($key, 'OAUTH_')){
+                return false;
+            }
+        }
+
         return APIPermissions::bitmaskExists($scope);
     }
 
-    public function getDefaultScope($client_id = null)
+    public function getDefaultScope($client_id = null): int
     {
         return APIPermissions::NONE;
     }

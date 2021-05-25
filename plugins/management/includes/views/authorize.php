@@ -19,7 +19,10 @@
 
 use crisp\api\Config;
 use crisp\api\Helper;
+use crisp\core\APIPermissions;
+use crisp\core\MySQL;
 use crisp\core\OAuth;
+use crisp\core\Security;
 
 if(!defined('CRISP_COMPONENT')){
     echo 'Cannot access this component directly!';
@@ -32,26 +35,39 @@ $server = OAuth::createServer();
 $OAuthResponse = new OAuth2\Response();
 $OAuthRequest = OAuth2\Request::createFromGlobals();
 
+if (!isset($_SESSION[\crisp\core\Config::$Cookie_Prefix . 'session_login'])) {
+    header('Location: ' . Config::get('root_url') . '/login?redirect_uri=' . urlencode(Helper::currentURL()));
+    exit;
+}
+
+if (!$User->isSessionValid()) {
+    header('Location: ' . Config::get('root_url') . '/login?redirect_uri=' . urlencode(Helper::currentURL()));
+    exit;
+}
+
 if (!$server->validateAuthorizeRequest($OAuthRequest, $OAuthResponse)) {
     $OAuthResponse->send();
     exit;
 }
 
-if (!isset($_SESSION[\crisp\core\Config::$Cookie_Prefix . "session_login"])) {
-    header("Location: " . Config::get("root_url") . "/login?redirect_uri=" . urlencode(Helper::currentURL()));
-    exit;
-}else if (!$User->isSessionValid()) {
-    header("Location: " . Config::get("root_url") . "/login?redirect_uri=" . urlencode(Helper::currentURL()));
-    exit;
-}
-
-
-
-
 if (!empty($_POST)) {
-    $server->handleAuthorizeRequest($OAuthRequest, $OAuthResponse, isset($_POST["authorize"]));
+    if(!Security::matchCSRF($_POST['csrf'])){
+        header('Location: ' . Helper::currentURL());
+        exit;
+    }
+    $server->handleAuthorizeRequest($OAuthRequest, $OAuthResponse, isset($_POST['authorize']) && $_POST['authorize'] === 'true', $User->UserID);
     $OAuthResponse->send();
     exit;
 }
 
-$_vars = ["client" => [], "User" => $User->fetch()];
+$CrispDBClass = new MySQL();
+
+$Query = $CrispDBClass->getDBConnector()->prepare('SELECT * FROM oauth_clients WHERE client_id = :client_id');
+
+$Query->execute([':client_id' => $OAuthRequest->request('client_id', $OAuthRequest->query('client_id'))]);
+$Client = $Query->fetch(PDO::FETCH_ASSOC);
+
+
+$Client['permissions'] = APIPermissions::getBitmask($server->getScopeUtil()->getScopeFromRequest($OAuthRequest) ?? $server->getScopeUtil()->getDefaultScope($OAuthRequest->request('client_id', $OAuthRequest->query('client_id'))));
+
+$_vars = ['User' => $User->fetch(), 'client' => $Client];

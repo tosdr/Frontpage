@@ -63,7 +63,7 @@ abstract class Bitmask extends Enum {
         foreach (self::getConstants() as $Permission) {
 
             if (self::hasBitmask($BitwisePermissions, $Permission)) {
-                    $MatchedBits[array_search($Permission, self::getConstants(), true)] = $Permission;
+                    $MatchedBits[] = $Permission;
             }
         }
         return count($MatchedBits) > 0;

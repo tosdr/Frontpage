@@ -48,10 +48,8 @@ class Helper
     public static function hasApiPermissions($BitmaskFlag, $apikey = null): bool|int
     {
 
-        if ($apikey === null && isset(apache_request_headers()['Authorization'])) {
-            $apikey = apache_request_headers()['Authorization'];
-        } else if ($apikey === null) {
-            return false;
+        if($apikey === null){
+            $apikey = self::getApiKey();
         }
 
         $keyDetails = self::getAPIKeyDetails($apikey);
@@ -63,6 +61,19 @@ class Helper
 
         return ($keyDetails['permissions'] & $BitmaskFlag);
     }
+
+    public static function hasApiHeaders(): bool
+    {
+        if (isset($_SERVER['HTTP_X_API_KEY'])) {
+            return true;
+        }
+
+        if (isset($_SERVER['HTTP_AUTHORIZATION']) && !str_starts_with($_SERVER['HTTP_AUTHORIZATION'], 'Bearer ')) {
+            return true;
+        }
+        return false;
+    }
+
 
     /**
      * @param string $ApiKey
@@ -88,18 +99,32 @@ class Helper
      * @param string|null $apikey
      * @return bool
      */
-    public static function getAPIKey(string $apikey = null): bool
+    public static function getApiKey(): string
     {
+
+        if (isset($_SERVER['HTTP_X_API_KEY'])) {
+            return $_SERVER['HTTP_X_API_KEY'];
+        } else if (isset($_SERVER['HTTP_AUTHORIZATION']) && !str_starts_with($_SERVER['HTTP_AUTHORIZATION'], 'Bearer ')) {
+            return $_SERVER['HTTP_AUTHORIZATION'];
+        }
+        return false;
+    }
+
+    /**
+     * @param string|null $apikey
+     * @return bool
+     */
+    public static function isApiKeyValid(string $apikey = null): bool
+    {
+
+        if ($apikey === null) {
+            return false;
+        }
 
         $Postgres = new MySQL();
 
         $statement = $Postgres->getDBConnector()->prepare('SELECT * FROM apikeys WHERE key = :key AND revoked = 0 AND (expires_at is null OR expires_at > NOW())');
 
-        if ($apikey === null && isset(apache_request_headers()['Authorization'])) {
-            $apikey = apache_request_headers()['Authorization'];
-        } else if ($apikey === null) {
-            return false;
-        }
         $statement->execute([':key' => $apikey]);
 
         return $statement->rowCount() > 0;
@@ -323,7 +348,7 @@ class Helper
      */
     public static function writeConsole(string $Text, bool $NewLine = true): void
     {
-        if(PHP_SAPI === 'cli') {
+        if (PHP_SAPI === 'cli') {
             echo $Text . ($NewLine ? PHP_EOL : '');
         }
     }

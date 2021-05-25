@@ -50,24 +50,25 @@ define('CRISP_COMPONENT', true);
  *
  * @author Justin Back <justin@tosdr.org>
  */
-class core {
+class core
+{
     /* Some important constants */
 
     public const CRISP_VERSION = '5.0.0';
-    
+
     public const API_VERSION = '2.1.0';
 
     /**
-     * This is my autoloader. 
-     * There are many like it, but this one is mine. 
-     * My autoloader is my best friend. 
-     * It is my life. 
-     * I must master it as I must master my life. 
-     * My autoloader, without me, is useless. 
-     * Without my autoloader, I am useless. 
-     * I must use my autoloader true. 
+     * This is my autoloader.
+     * There are many like it, but this one is mine.
+     * My autoloader is my best friend.
+     * It is my life.
+     * I must master it as I must master my life.
+     * My autoloader, without me, is useless.
+     * Without my autoloader, I am useless.
+     * I must use my autoloader true.
      * I must code better than my enemy who is trying to be better than me.
-     * I must be better than him before he is. 
+     * I must be better than him before he is.
      * And I will be.
      *
      */
@@ -227,7 +228,7 @@ try {
 
             $Query = $GLOBALS['route']->GET['q'];
 
-            if(empty($GLOBALS['route']->GET['q'])){
+            if (empty($GLOBALS['route']->GET['q'])) {
                 $Query = ($GLOBALS['route']->GET['service'] ?? 'no_query');
             }
 
@@ -238,26 +239,7 @@ try {
             if (strlen($Query) === 0) {
                 $Query = 'no_query';
             }
-            $keyDetails = null;
-            if (isset(apache_request_headers()['Authorization'])) {
-                $keyDetails = api\Helper::getAPIKeyDetails(apache_request_headers()['Authorization']);
 
-                if ($keyDetails['expires_at'] !== null && strtotime($keyDetails['expires_at']) < time()) {
-                    header('X-APIKey: expired');
-                } elseif ($keyDetails['revoked']) {
-                    header('X-APIKey: revoked');
-                } else {
-                    header('X-APIKey: ok');
-                }
-            } else {
-                header('X-APIKey: not-given');
-            }
-
-            if (isset(apache_request_headers()['Authorization']) && !api\Helper::getAPIKey()) {
-                http_response_code(401);
-                echo $TwigTheme->render('errors/nginx/401.twig', ['error_msg' => 'Request forbidden by administrative rules. Please make sure your request has a valid Authorization header']);
-                exit;
-            }
 
             $Benefit = 'Guest';
             $IndicatorSecond = 's_' . Helper::getRealIpAddr();
@@ -268,17 +250,20 @@ try {
             $LimitHour = Rate::perHour(1000);
             $LimitDay = Rate::perDay(15000);
 
-            if (CURRENT_UNIVERSE === Universe::UNIVERSE_TOSDR || in_array(Helper::getRealIpAddr(), Config::get('office_ips'), true)) {
-
-                $LimitSecond = Rate::perSecond(15000);
-                $LimitHour = Rate::perHour(100000);
-                $LimitDay = Rate::perDay(150000);
+            if (api\Helper::isApiKeyValid(Helper::getApiKey())) {
 
 
-                $Benefit = 'Staff';
-            }
-            $apikey = api\Helper::getAPIKey();
-            if ($apikey) {
+                $keyDetails = Helper::getAPIKeyDetails(Helper::getApiKey());
+
+
+                if ($keyDetails['expires_at'] !== null && strtotime($keyDetails['expires_at']) < time()) {
+                    header('X-APIKey: expired');
+                } elseif ($keyDetails['revoked']) {
+                    header('X-APIKey: revoked');
+                } else {
+                    header('X-APIKey: ok');
+                }
+
 
                 if ($keyDetails['ratelimit_second'] === null) {
                     $LimitSecond = Rate::perSecond(150);
@@ -298,7 +283,17 @@ try {
                 }
 
                 $Benefit = $keyDetails['ratelimit_benefit'] ?? 'Partner';
+
+            } else {
+                header('X-APIKey: not-given');
+                if (Helper::hasApiHeaders()) {
+                    http_response_code(401);
+                    echo $TwigTheme->render('errors/nginx/401.twig', ['error_msg' => 'Request forbidden by administrative rules. Please make sure your request has a valid Authorization or x-api-key header']);
+                    exit;
+                }
+
             }
+
 
             $statusSecond = $rateLimiter->limitSilently($IndicatorSecond, $LimitSecond);
             $statusHour = $rateLimiter->limitSilently($IndicatorHour, $LimitHour);
@@ -319,7 +314,6 @@ try {
                 echo $TwigTheme->render('errors/nginx/429.twig', ['error_msg' => 'Request forbidden by administrative rules. You are sending too many requests in a certain timeframe.']);
                 exit;
             }
-
 
 
             core\Themes::loadAPI($TwigTheme, $GLOBALS['route']->Page, $Query);

@@ -21,6 +21,8 @@ namespace crisp\models;
 
 use crisp\core\APIPermissions;
 use OAuth2;
+use OAuth2\RequestInterface;
+use OAuth2\ResponseInterface;
 
 if(!defined('CRISP_COMPONENT')){
     echo 'Cannot access this component directly!';
@@ -29,6 +31,29 @@ if(!defined('CRISP_COMPONENT')){
 
 class OAuth2ScopeTable implements OAuth2\Storage\ScopeInterface
 {
+    public static function checkScope($required_scope, OAuth2\Server $server, OAuth2\Response $response): bool
+    {
+
+        $token = $server->getAccessTokenData(OAuth2\Request::createFromGlobals());
+
+
+        if (!APIPermissions::hasBitmask((int)$token['scope'], $required_scope)) {
+            $response->setError(403, 'insufficient_scope', 'The request requires higher privileges than provided by the access token');
+            $response->addHttpHeaders([
+                'WWW-Authenticate' => sprintf('%s realm="%s", scope="%s", error="%s", error_description="%s"',
+                    'Bearer',
+                    'Service',
+                    (int)$token['scope'],
+                    $response->getParameter('error'),
+                    $response->getParameter('error_description')
+                )
+            ]);
+
+            return false;
+        }
+        return true;
+    }
+
     public function scopeExists($scope, $client_id = null): bool
     {
 

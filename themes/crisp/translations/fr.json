@@ -266,5 +266,9 @@
     "components.oauth.authorize.permissions.OAUTH_CAN_CREATE_SERVICE": "Créer un service",
     "components.oauth.authorize.permissions.OAUTH_CAN_POST_SERVICE_COMMENT": "Créer un commentaire de service",
     "components.oauth.authorize.permissions.OAUTH_CAN_CREATE_TOPIC": "Créer une catégorie",
-    "components.oauth.authorize.permissions.OAUTH_CAN_POST_TOPIC_COMMENT": "Créer un commentaire de catégorie"
+    "components.oauth.authorize.permissions.OAUTH_CAN_POST_TOPIC_COMMENT": "Créer un commentaire de catégorie",
+    "views.oauth.authorize.permissions": "{{ client_name }} aura la permission d'effectuer les actions suivantes",
+    "components.oauth.authorize.permissions.OAUTH_CAN_EDIT_CASE": "Modifier un cas",
+    "components.oauth.authorize.permissions.OAUTH_CAN_EDIT_POINT": "Modifier un point",
+    "components.oauth.authorize.permissions.OAUTH_CAN_EDIT_SERVICE": "Modifier un service"
 }

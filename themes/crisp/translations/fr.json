@@ -270,5 +270,9 @@
     "views.oauth.authorize.permissions": "{{ client_name }} aura la permission d'effectuer les actions suivantes",
     "components.oauth.authorize.permissions.OAUTH_CAN_EDIT_CASE": "Modifier un cas",
     "components.oauth.authorize.permissions.OAUTH_CAN_EDIT_POINT": "Modifier un point",
-    "components.oauth.authorize.permissions.OAUTH_CAN_EDIT_SERVICE": "Modifier un service"
+    "components.oauth.authorize.permissions.OAUTH_CAN_EDIT_SERVICE": "Modifier un service",
+    "components.oauth.authorize.permissions.OAUTH_CAN_EDIT_TOPIC": "Modifier une catégorie",
+    "components.oauth.authorize.permissions.OAUTH_CAN_SEE_EMAIL": "Lire votre adresse mail",
+    "components.oauth.authorize.permissions.OAUTH_CAN_SEE_USERNAME": "Lire votre nom d'utilisateur",
+    "views.oauth.authorize.redirect": "Redirige à"
 }

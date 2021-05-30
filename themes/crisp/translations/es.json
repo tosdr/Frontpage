@@ -265,5 +265,14 @@
     "components.oauth.authorize.permissions.OAUTH_CAN_CREATE_SERVICE": "Crear un servicio",
     "components.oauth.authorize.permissions.OAUTH_CAN_POST_SERVICE_COMMENT": "Crear un comentario de servicio",
     "components.oauth.authorize.permissions.OAUTH_CAN_CREATE_TOPIC": "Crear una categoría",
-    "components.oauth.authorize.permissions.OAUTH_CAN_POST_TOPIC_COMMENT": "Crear un comentario de categoría"
+    "components.oauth.authorize.permissions.OAUTH_CAN_POST_TOPIC_COMMENT": "Crear un comentario de categoría",
+    "views.oauth.authorize.button.no": "Rechazar Acceso",
+    "components.oauth.authorize.permissions.OAUTH_CAN_EDIT_SERVICE": "Modificar un servicio",
+    "components.oauth.authorize.permissions.OAUTH_CAN_EDIT_TOPIC": "Modificar una categoría",
+    "components.oauth.authorize.permissions.OAUTH_CAN_SEE_EMAIL": "Leer tu dirección de correo electrónico",
+    "components.oauth.authorize.permissions.OAUTH_CAN_SEE_USERNAME": "Leer tu nombre de usuario",
+    "views.oauth.authorize.redirect": "Redirige a",
+    "views.oauth.authorize.permissions": "{{ client_name }} tendrá la permisión de realizar las acciones siguientes",
+    "components.oauth.authorize.permissions.OAUTH_CAN_EDIT_CASE": "Modificar un caso",
+    "components.oauth.authorize.permissions.OAUTH_CAN_EDIT_POINT": "Modificar un punto"
 }

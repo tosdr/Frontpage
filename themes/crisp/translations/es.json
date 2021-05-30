@@ -254,5 +254,16 @@
     "views.community.irc.text": "¿Comunicación de la vieja escuela? Tenemos una instancia IRC para ti en {{ config.irc_address }}. Mira la lista de la sala o únete {{ config.irc_channel }} para chatear. La mayoría de los canales están conectados con Discord.",
     "views.donate.jumbotron.text": "El Equipo de Terms of Service; Didn't Read está dedicado a \"arreglar la mayor mentira en la Red\".\n\nTu donación ayuda a pagar el desarrollo, los servidores, y el ancho de banda de las extensiones utilizadas por miles de personas por todo el mundo.",
     "views.community.matrix.text": "¡La Red descentralizada está aquí! Con nuestra instancia Matrix autoalojada puedes conectarte con cualquier servidor compatible con el protocolo Matrix con los miembros de Discord y IRC en {{ config.matrix_address }}",
-    "views.donate.oc.text": "Por medio de Opencollective puedes donar a ToS;DR por carta de crédito o Paypal. Las contribuciones no son deducibles como contribuciones de caridad para los impuestos federales de los Estados Unidos.\n\nCon Opencollective puedes elegir de hacer una contribución anónima: Públicamente, la cantidad donada y la fecha serán visibles en el presupuesto transparente, pero tu identidad será ocultada, apareciendo tan sólo como \"incógnito\". Tu profil público no será conectado con la contribución. No obstante, el personal de ToS;DR podrá ver tu identidad en privado."
+    "views.donate.oc.text": "Por medio de Opencollective puedes donar a ToS;DR por carta de crédito o Paypal. Las contribuciones no son deducibles como contribuciones de caridad para los impuestos federales de los Estados Unidos.\n\nCon Opencollective puedes elegir de hacer una contribución anónima: Públicamente, la cantidad donada y la fecha serán visibles en el presupuesto transparente, pero tu identidad será ocultada, apareciendo tan sólo como \"incógnito\". Tu profil público no será conectado con la contribución. No obstante, el personal de ToS;DR podrá ver tu identidad en privado.",
+    "views.oauth.header": "Autorizar {{ client_name }}",
+    "views.oauth.authorize.explanation": "Al autorizar {{ client_name }} permites que el desarrollador de esta aplicación realice acciones en nombre de tu cuenta. Tómate tu tiempo y lee las permisiones a la derecha.",
+    "views.oauth.authorize.button.yes": "Autorizar aplicación",
+    "components.oauth.authorize.permissions.OAUTH_CAN_CREATE_CASE": "Crear caso",
+    "components.oauth.authorize.permissions.OAUTH_CAN_POST_CASE_COMMENT": "Crear un comentario de caso",
+    "components.oauth.authorize.permissions.OAUTH_CAN_CREATE_POINT": "Crear un punto",
+    "components.oauth.authorize.permissions.OAUTH_CAN_POST_POINT_COMMENT": "Crear un comentario de punto",
+    "components.oauth.authorize.permissions.OAUTH_CAN_CREATE_SERVICE": "Crear un servicio",
+    "components.oauth.authorize.permissions.OAUTH_CAN_POST_SERVICE_COMMENT": "Crear un comentario de servicio",
+    "components.oauth.authorize.permissions.OAUTH_CAN_CREATE_TOPIC": "Crear una categoría",
+    "components.oauth.authorize.permissions.OAUTH_CAN_POST_TOPIC_COMMENT": "Crear un comentario de categoría"
 }

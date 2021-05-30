@@ -254,5 +254,17 @@
     "views.community.irc.text": "Communication de la vieille école? On a une instance IRC pour vous à {{ config.irc_address }}. Regardez la liste de salle ou rejoignez {{ config.irc_channel }} pour papoter. La majorité des chaînes sont connectées à Discord.",
     "views.community.jumbotron.text": "L'Équipe de Terms of Service; Didn't Read est dévouée à \"remédier au plus grand mensonge sur Internet\".\n\nOn a de nombreuses communautés sur lesquelles vous pouvez parler avec le Personnel, les Curators ou d'autres Enthousiastes de la Confidentialité.",
     "views.donate.doge.text": "Via Dogecoin, vous pouvez faire un don à ToS;DR de manière 100% anonyme. Les contributions ne sont pas déductibles en tant que contributions caritatives aux fins de l'impôt fédéral sur le revenu des États-Unis.\n\nPour faire un don, scannez le code QR dans votre portefeuille Dogecoin préféré ou utilisez notre adresse ci-dessous.",
-    "views.donate.oc.text": "Avec Opencollective vous pouvez faire un don par carte bleue ou PayPal. Les contributions ne sont pas déductibles en tant que contributions caritatives aux fins de l'impôt fédéral sur le revenu des États-Unis.\n\nAvec Opencollective vous pouvez choisir de faire une contribution anonyme: Publiquement, le montant de la contribution et la date seront visibles sur le budget transparent, mais votre identité sera masquée, apparaissant uniquement comme \"incognito\". La contribution ne sera pas reliée à votre profil public. En revanche, le Personnel de ToS;DR sera en mesure de voir en privé votre identité."
+    "views.donate.oc.text": "Avec Opencollective vous pouvez faire un don par carte bleue ou PayPal. Les contributions ne sont pas déductibles en tant que contributions caritatives aux fins de l'impôt fédéral sur le revenu des États-Unis.\n\nAvec Opencollective vous pouvez choisir de faire une contribution anonyme: Publiquement, le montant de la contribution et la date seront visibles sur le budget transparent, mais votre identité sera masquée, apparaissant uniquement comme \"incognito\". La contribution ne sera pas reliée à votre profil public. En revanche, le Personnel de ToS;DR sera en mesure de voir en privé votre identité.",
+    "views.oauth.authorize.button.yes": "Autoriser l'Application",
+    "views.oauth.authorize.explanation": "En autorisant {{ client_name }} vous permettez que le développeur de cette application réalise des actions au nom de votre compe. Prenez le temps de lire les permissions à droite.",
+    "views.oauth.header": "Autoriser {{ client_name }}",
+    "views.oauth.authorize.button.no": "Refuser l'Accès",
+    "components.oauth.authorize.permissions.OAUTH_CAN_CREATE_CASE": "Créer un cas",
+    "components.oauth.authorize.permissions.OAUTH_CAN_POST_CASE_COMMENT": "Créer un commentaire de cas",
+    "components.oauth.authorize.permissions.OAUTH_CAN_CREATE_POINT": "Créer un point",
+    "components.oauth.authorize.permissions.OAUTH_CAN_POST_POINT_COMMENT": "Créer un commentaire de point",
+    "components.oauth.authorize.permissions.OAUTH_CAN_CREATE_SERVICE": "Créer un service",
+    "components.oauth.authorize.permissions.OAUTH_CAN_POST_SERVICE_COMMENT": "Créer un commentaire de service",
+    "components.oauth.authorize.permissions.OAUTH_CAN_CREATE_TOPIC": "Créer une catégorie",
+    "components.oauth.authorize.permissions.OAUTH_CAN_POST_TOPIC_COMMENT": "Créer un commentaire de catégorie"
 }

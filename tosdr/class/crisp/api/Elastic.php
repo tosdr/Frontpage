@@ -56,7 +56,7 @@ class Elastic {
                 'query' => [
                     'query_string' => [
                         'fields' => ['name', 'slug'],
-                        'query' => $Query
+                        'query' => "*$Query*"
                     ]
                 ],
                 'size' => 25,

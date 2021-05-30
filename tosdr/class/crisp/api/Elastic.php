@@ -42,8 +42,31 @@ class Elastic {
      */
     public function search(string $Query): stdClass {
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $this->Elastic_URI . '/' . $this->Elastic_Index . '/_search?q=*' . urlencode($Query) . '*');
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+        curl_setopt_array($ch, [
+            CURLOPT_URL => $this->Elastic_URI . '/' . $this->Elastic_Index . '/_search',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => json_encode([
+                'query' => [
+                    'query_string' => [
+                        'fields' => ['name', 'slug'],
+                        'query' => $Query
+                    ]
+                ],
+                'size' => 25,
+                'from' => 0
+            ], JSON_THROW_ON_ERROR),
+            CURLOPT_HTTPHEADER => [
+                'Content-Type: application/json'
+            ],
+        ]);
+
         $output = curl_exec($ch);
         if (str_starts_with(curl_getinfo($ch, CURLINFO_HTTP_CODE), '5')) {
             throw new BitmaskException(curl_getinfo($ch, CURLINFO_HTTP_CODE), Bitmask::ELASTIC_CONN_ERROR);

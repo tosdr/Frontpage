@@ -24,31 +24,32 @@ use OAuth2;
 use OAuth2\RequestInterface;
 use OAuth2\ResponseInterface;
 
-if(!defined('CRISP_COMPONENT')){
+if (!defined('CRISP_COMPONENT')) {
     echo 'Cannot access this component directly!';
     exit;
 }
 
 class OAuth2ScopeTable implements OAuth2\Storage\ScopeInterface
 {
-    public static function checkScope($required_scope, OAuth2\Server $server, OAuth2\Response $response): bool
+    public static function checkScope($required_scope, OAuth2\Server $server, OAuth2\Response $response = null): bool
     {
 
         $token = $server->getAccessTokenData(OAuth2\Request::createFromGlobals());
 
 
         if (!APIPermissions::hasBitmask((int)$token['scope'], $required_scope)) {
-            $response->setError(403, 'insufficient_scope', 'The request requires higher privileges than provided by the access token');
-            $response->addHttpHeaders([
-                'WWW-Authenticate' => sprintf('%s realm="%s", scope="%s", error="%s", error_description="%s"',
-                    'Bearer',
-                    'Service',
-                    (int)$token['scope'],
-                    $response->getParameter('error'),
-                    $response->getParameter('error_description')
-                )
-            ]);
-
+            if ($response !== null) {
+                $response->setError(403, 'insufficient_scope', 'The request requires higher privileges than provided by the access token');
+                $response->addHttpHeaders([
+                    'WWW-Authenticate' => sprintf('%s realm="%s", scope="%s", error="%s", error_description="%s"',
+                        'Bearer',
+                        'Service',
+                        (int)$token['scope'],
+                        $response->getParameter('error'),
+                        $response->getParameter('error_description')
+                    )
+                ]);
+            }
             return false;
         }
         return true;
@@ -57,8 +58,8 @@ class OAuth2ScopeTable implements OAuth2\Storage\ScopeInterface
     public function scopeExists($scope, $client_id = null): bool
     {
 
-        foreach(APIPermissions::getBitmask($scope) as $key => $bitmask){
-            if(!str_starts_with($key, 'OAUTH_')){
+        foreach (APIPermissions::getBitmask($scope) as $key => $bitmask) {
+            if (!str_starts_with($key, 'OAUTH_')) {
                 return false;
             }
         }

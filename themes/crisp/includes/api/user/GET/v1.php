@@ -18,8 +18,10 @@
  */
 
 use crisp\core\APIPermissions;
+use crisp\core\Bitmask;
 use crisp\core\PluginAPI;
 use crisp\core\OAuth;
+use crisp\core\Postgres;
 use crisp\models\OAuth2ScopeTable;
 
 if (!defined('CRISP_COMPONENT')) {
@@ -34,7 +36,48 @@ $response = new OAuth2\Response();
 
 if (!$server->verifyResourceRequest($request, $response)) {
     $response->send();
-} else if (!OAuth2ScopeTable::checkScope(APIPermissions::OAUTH_CAN_SEE_EMAIL, $server, $response)) {
+    exit;
+} else if (!OAuth2ScopeTable::checkScope(APIPermissions::OAUTH_READ_USER, $server, $response)) {
     $response->send();
+    exit;
 }
 
+
+$token = $server->getAccessTokenData(OAuth2\Request::createFromGlobals());
+
+
+if ($token['user_id'] === null) {
+    PluginAPI::response(Bitmask::GENERIC_ERROR, 'EMPTY USER ID');
+    exit;
+}
+
+$UserObj = [
+    'id' => null,
+    'username' => null,
+];
+
+
+$Phoenix = new Postgres();
+
+$DB = $Phoenix->getDBConnector();
+
+$UserQuery = $DB->prepare('SELECT * FROM users WHERE id = :id');
+
+$UserQuery->execute([':id' => $token['user_id']]);
+
+$User = $UserQuery->fetch(PDO::FETCH_ASSOC);
+
+if (!$User) {
+    PluginAPI::response(Bitmask::GENERIC_ERROR, 'EMPTY USER');
+    exit;
+}
+
+
+if (OAuth2ScopeTable::checkScope(APIPermissions::OAUTH_READ_USER, $server)) {
+    $UserObj['id'] = $token['user_id'];
+}
+if (OAuth2ScopeTable::checkScope(APIPermissions::OAUTH_CAN_SEE_USERNAME, $server)) {
+    $UserObj['username'] = $User['username'];
+}
+
+PluginAPI::response(Bitmask::REQUEST_SUCCESS, 'OK', $UserObj);

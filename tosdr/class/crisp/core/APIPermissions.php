@@ -44,4 +44,5 @@ class APIPermissions extends \crisp\types\Bitmask {
     public const OAUTH_CAN_EDIT_TOPIC = 0x20000;
     public const OAUTH_CAN_EDIT_CASE = 0x40000;
     public const OAUTH_CAN_EDIT_POINT = 0x80000;
+    public const OAUTH_READ_USER = 0x100000;
 }

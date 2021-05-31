@@ -54,6 +54,9 @@ if ($token['user_id'] === null) {
 $UserObj = [
     'id' => null,
     'username' => null,
+    'is_staff' => null,
+    'is_curator' => null,
+    'is_bot' => null
 ];
 
 
@@ -78,6 +81,15 @@ if (OAuth2ScopeTable::checkScope(APIPermissions::OAUTH_READ_USER, $server)) {
 }
 if (OAuth2ScopeTable::checkScope(APIPermissions::OAUTH_CAN_SEE_USERNAME, $server)) {
     $UserObj['username'] = $User['username'];
+}
+if (OAuth2ScopeTable::checkScope(APIPermissions::OAUTH_CAN_SEE_STAFF_STATUS, $server)) {
+    $UserObj['is_staff'] = $User['admin'];
+}
+if (OAuth2ScopeTable::checkScope(APIPermissions::OAUTH_CAN_SEE_CURATOR_STATUS, $server)) {
+    $UserObj['is_curator'] = $User['curator'];
+}
+if (OAuth2ScopeTable::checkScope(APIPermissions::OAUTH_CAN_SEE_BOT_STATUS, $server)) {
+    $UserObj['is_bot'] = $User['bot'];
 }
 header('Content-Type: application/json');
 echo json_encode($UserObj, JSON_THROW_ON_ERROR);

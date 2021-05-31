@@ -45,4 +45,8 @@ class APIPermissions extends \crisp\types\Bitmask {
     public const OAUTH_CAN_EDIT_CASE = 0x40000;
     public const OAUTH_CAN_EDIT_POINT = 0x80000;
     public const OAUTH_READ_USER = 0x100000;
+    public const OAUTH_CAN_SEE_STAFF_STATUS = 0x200000;
+    public const OAUTH_CAN_SEE_CURATOR_STATUS = 0x400000;
+    public const OAUTH_CAN_SEE_BOT_STATUS = 0x800000;
+
 }

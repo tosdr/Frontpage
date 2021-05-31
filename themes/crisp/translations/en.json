@@ -274,5 +274,9 @@
     "components.oauth.authorize.permissions.OAUTH_CAN_EDIT_SERVICE": "Edit a service",
     "components.oauth.authorize.permissions.OAUTH_CAN_EDIT_TOPIC": "Edit a topic",
     "components.oauth.authorize.permissions.OAUTH_CAN_EDIT_CASE": "Edit a case",
-    "components.oauth.authorize.permissions.OAUTH_CAN_EDIT_POINT": "Edit a point"
+    "components.oauth.authorize.permissions.OAUTH_CAN_EDIT_POINT": "Edit a point",
+    "components.oauth.authorize.permissions.OAUTH_READ_USER": "Can view your User ID",
+    "components.oauth.authorize.permissions.OAUTH_CAN_SEE_STAFF_STATUS": "Can see if you are a Staff member",
+    "components.oauth.authorize.permissions.OAUTH_CAN_SEE_CURATOR_STATUS": "Can see if you are a curator",
+    "components.oauth.authorize.permissions.OAUTH_CAN_SEE_BOT_STATUS": "Can see if you are a bot"
 }

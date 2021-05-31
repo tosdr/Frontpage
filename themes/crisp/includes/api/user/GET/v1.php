@@ -79,5 +79,5 @@ if (OAuth2ScopeTable::checkScope(APIPermissions::OAUTH_READ_USER, $server)) {
 if (OAuth2ScopeTable::checkScope(APIPermissions::OAUTH_CAN_SEE_USERNAME, $server)) {
     $UserObj['username'] = $User['username'];
 }
-
-PluginAPI::response(Bitmask::REQUEST_SUCCESS, 'OK', $UserObj);
+header('Content-Type: application/json');
+echo json_encode($UserObj, JSON_THROW_ON_ERROR);

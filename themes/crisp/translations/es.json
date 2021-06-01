@@ -36,7 +36,7 @@
     "views.api.examples.text": "ToS Checker es <a href=\"https://github.com/shybyte/tos-checker\">una extensión para Chrome y Chromium</a>, creada por shybyte.",
     "views.api.feedback.text": "Sería de gran ayuda si pudieras enviarnos un comentario simplemente en esta página del API en GitHub, o por correo electrónico. ¡Lo agradecemos!",
     "views.api.jumbotron.text": "Fomentamos el desarrollo de aplicaciones y otros servicios que integran nuestras calificaciones en su trabajo. Esta página debería ayudaros a utilizar nuestros datos para vuestra propia aplicación.Nuestro código fuente está<a href=\"http://github.com/tosdr\"> en GitHub</a>.",
-    "views.api.use.header": "Uso",
+    "views.api.use.header": "Utilizar",
     "views.api.use.license": "Todos los archivos JSON se publican bajo una <a href=\"/legal\">licencia Creative Commons</a>.",
     "views.api.use.text": "Hemos <a href=\"http://www.w3.org/wiki/CORS_Enabled\">habilitado CORS</a>. Por ejemplo, para obtener a Facebook con jQuery:",
     "views.classification.class.a": "Clase A",
@@ -274,5 +274,9 @@
     "views.oauth.authorize.redirect": "Redirige a",
     "views.oauth.authorize.permissions": "{{ client_name }} tendrá la permisión de realizar las acciones siguientes",
     "components.oauth.authorize.permissions.OAUTH_CAN_EDIT_CASE": "Modificar un caso",
-    "components.oauth.authorize.permissions.OAUTH_CAN_EDIT_POINT": "Modificar un punto"
+    "components.oauth.authorize.permissions.OAUTH_CAN_EDIT_POINT": "Modificar un punto",
+    "components.oauth.authorize.permissions.OAUTH_CAN_SEE_CURATOR_STATUS": "Puede ver si eres un Curator",
+    "components.oauth.authorize.permissions.OAUTH_READ_USER": "Puede ver tu id. de usuario",
+    "components.oauth.authorize.permissions.OAUTH_CAN_SEE_STAFF_STATUS": "Puede ver si eres un miembro del Personal",
+    "components.oauth.authorize.permissions.OAUTH_CAN_SEE_BOT_STATUS": "Puede ver si eres un bot"
 }

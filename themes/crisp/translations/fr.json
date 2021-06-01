@@ -71,7 +71,7 @@
     "views.api.feedback.text": "Tout retour est bienvenu tout simplement sur cette page API sur Github, ou par e-mail. Merci !",
     "views.api.info.text": "On a une documentation disponible sur <a href=\"https://docs.tosdr.org/x/DIAF\">docs.tosdr.org</a>. Veuillez vérifier la version de la spécification avec la version de l'API.",
     "views.api.jumbotron.header": "API",
-    "views.api.use.header": "Utilisation",
+    "views.api.use.header": "Utiliser",
     "views.api.use.license": "Tous les fichiers JSON sont publiés sous <a href=\"/legal\"> license Creative Commons</a>.",
     "views.api.use.text": "Nous avons <a href=\"http://www.w3.org/wiki/CORS_Enabled\">activé CORS</a>. Un exemple avec jQuery pour obtenir les données de Facebook :",
     "views.classification.class.a": "Classe A",
@@ -274,5 +274,9 @@
     "components.oauth.authorize.permissions.OAUTH_CAN_EDIT_TOPIC": "Modifier une catégorie",
     "components.oauth.authorize.permissions.OAUTH_CAN_SEE_EMAIL": "Lire votre adresse mail",
     "components.oauth.authorize.permissions.OAUTH_CAN_SEE_USERNAME": "Lire votre nom d'utilisateur",
-    "views.oauth.authorize.redirect": "Redirige à"
+    "views.oauth.authorize.redirect": "Redirige à",
+    "components.oauth.authorize.permissions.OAUTH_CAN_SEE_CURATOR_STATUS": "Peut voir si vous êtes un Curator",
+    "components.oauth.authorize.permissions.OAUTH_READ_USER": "Peut voir votre identifiant d'Utilisateur",
+    "components.oauth.authorize.permissions.OAUTH_CAN_SEE_STAFF_STATUS": "Peut voir si vous êtes un membre du Personnel",
+    "components.oauth.authorize.permissions.OAUTH_CAN_SEE_BOT_STATUS": "Peut voir si vous êtes un bot"
 }

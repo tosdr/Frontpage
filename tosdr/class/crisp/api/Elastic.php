@@ -21,6 +21,7 @@ namespace crisp\api;
 
 use crisp\core\Bitmask;
 use crisp\exceptions\BitmaskException;
+use JsonException;
 use stdClass;
 
 class Elastic {
@@ -38,7 +39,7 @@ class Elastic {
      * @param string $Query
      * @return stdClass
      * @throws BitmaskException
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function search(string $Query): stdClass {
         $ch = curl_init();
@@ -60,7 +61,8 @@ class Elastic {
                     ]
                 ],
                 'size' => 25,
-                'from' => 0
+                'from' => 0,
+                'sort' => ['id']
             ], JSON_THROW_ON_ERROR),
             CURLOPT_HTTPHEADER => [
                 'Content-Type: application/json'

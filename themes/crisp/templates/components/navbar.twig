@@ -1,24 +1,25 @@
-{# 
- # Copyright (C) 2021 Justin René Back <justin@tosdr.org>
- #
- # This program is free software: you can redistribute it and/or modify
- # it under the terms of the GNU General Public License as published by
- # the Free Software Foundation, either version 3 of the License, or
- # (at your option) any later version.
- #
- # This program is distributed in the hope that it will be useful,
- # but WITHOUT ANY WARRANTY; without even the implied warranty of
- # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- # GNU General Public License for more details.
- #
- # You should have received a copy of the GNU General Public License
- # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+{#
+# Copyright (C) 2021 Justin René Back <justin@tosdr.org>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #}
 
 {% if not SIMPLE %}
     <nav class="navbar navbar-expand-md  bg-dark navbar-dark">
         <!-- Brand -->
-        <a class="navbar-brand" href="/"><img width="32" src="{{ config.s3_branding ~ "/tosdr-icon-32.svg" }}"alt="Logo"/></a>
+        <a class="navbar-brand" href="/"><img width="32" src="{{ config.s3_branding ~ "/tosdr-icon-32.svg" }}"
+                                              alt="Logo"/></a>
 
         <!-- Toggler/collapsibe Button -->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -31,14 +32,16 @@
             <ul class="navbar-nav">
                 {% for item in GLOBALS.navbar %}
                     <li class="nav-item {% if currentPage == item.ID %} active{% endif %}">
-                        <a target="{{ item.target }}" class="nav-link {% if currentPage == item.ID %} active{% endif %}" href="{{ item.href }}">{{ item.html|raw }}</a>
+                        <a target="{{ item.target }}" class="nav-link {% if currentPage == item.ID %} active{% endif %}"
+                           href="{{ item.href }}">{{ item.html|raw }}</a>
                     </li>
                 {% endfor %}
             </ul>
             <ul class="navbar-nav ml-auto">
                 {% for item in GLOBALS.navbar_right %}
                     <li class="nav-item {% if currentPage == item.ID %} active{% endif %}">
-                        <a target="{{ item.target }}" class="nav-link {% if currentPage == item.ID %} active{% endif %}" href="{{ item.href }}">{{ item.html|raw }}</a>
+                        <a target="{{ item.target }}" class="nav-link {% if currentPage == item.ID %} active{% endif %}"
+                           href="{{ item.href }}">{{ item.html|raw }}</a>
                     </li>
                 {% endfor %}
                 <li class="nav-item">
@@ -53,7 +56,8 @@
                     {% endif %}
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="languageDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" id="languageDropdownMenuLink" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
                         <!-- See https://github.com/tosdr/CrispCMS/issues/51  
                         <img id="currentLanguage" src="{{ includeResource("img/flags/" ~ locale|getlang(false).flag ~ ".svg") }}" width="32">
                         <-->
@@ -61,17 +65,19 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="languageDropdownMenuLink">
                         {% for Language in languages %}
-                            <a class="dropdown-item {% if locale|getlang(false).code == Language.code %}active{% endif %}" href="/{{ Language.code }}/{{ CurrentPage }}">
+                            <a class="dropdown-item {% if locale|getlang(false).code == Language.code %}active{% endif %}"
+                               href="/{{ Language.code }}/{{ CurrentPage }}">
                                 <!-- See https://github.com/tosdr/CrispCMS/issues/51
                                 <img src="{{ includeResource("img/flags/" ~ Language.flag ~ ".svg") }}" width="32"/>
                                 -->
-                                {{ Language.nativename|translate }} 
+                                {{ Language.nativename|translate }}
                                 {% if Language.name|translate != Language.nativename|translate %}
                                     <span class="{% if locale|getlang(false).code == Language.code %}text-white{% else %}text-muted{% endif %}">
                                         ({{ Language.name|translate }})
                                     </span>
                                 {% endif %}
-                                <img src="https://translate.tosdr.org/widgets/crispcms/{{ Language.code }}/svg-badge.svg" alt="Translation Progress" />
+                                <img src="https://translate.tosdr.org/widgets/crispcms/{{ Language.code }}/svg-badge.svg"
+                                     alt="Translation Progress"/>
                             </a>
                         {% endfor %}
                     </div>
@@ -79,11 +85,11 @@
             </ul>
 
         </div>
-    </nav> 
+    </nav>
 
     {% if Notice is defined %}
         {% if Notice.Type is not defined %}
-            {% set Notice = Notice|merge({'Type': 'info'})%}
+            {% set Notice = Notice|merge({'Type': 'info'}) %}
         {% endif %}
         <div class="container mt-4">
             <div class="alert alert-{{ Notice.Type }}">
@@ -96,22 +102,13 @@
             </div>
         </div>
     {% endif %}
-    <div class="container mt-4">
-        <div class="alert alert-success">
-            <span id="notice_text">
-                {% if Notice.Icon is defined %}
-                    <i class="fas fa-donate"></i>
-                {% endif %}
-                {{ 'components.navbar.alert.donate'|translate|raw }}
-            </span>
-        </div>
-    </div>
 {% else %}
     <h4>{{ 'components.navbar.simple.text'|translate }}</h4>
     <ul class="navbar-nav">
         {% for item in GLOBALS.navbar %}
             <li class="nav-item {% if currentPage == item.ID %} active{% endif %}">
-                <a target="{{ item.target }}" class="nav-link {% if currentPage == item.ID %} active{% endif %}" href="{{ item.href }}">{{ item.html|raw }}</a>
+                <a target="{{ item.target }}" class="nav-link {% if currentPage == item.ID %} active{% endif %}"
+                   href="{{ item.href }}">{{ item.html|raw }}</a>
             </li>
         {% endfor %}
     </ul>

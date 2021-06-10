@@ -32,7 +32,7 @@ if (!defined('CRISP_COMPONENT')) {
 $Interface = null;
 
 if (!IS_NATIVE_API) {
-    PluginAPI::response(Bitmask::GENERIC_ERROR, 'Cannot access non-native API endpoint', []);
+    PluginAPI::response(Bitmask::GENERIC_ERROR, 'Cannot access non-native API endpoint', [], null, 400);
     exit;
 }
 

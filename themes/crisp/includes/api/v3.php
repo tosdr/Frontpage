@@ -29,7 +29,7 @@ if(!defined('CRISP_COMPONENT')){
 
 
 if(!IS_NATIVE_API){
-    PluginAPI::response(crisp\core\Bitmask::GENERIC_ERROR, 'Cannot access non-native API endpoint', []);
+    PluginAPI::response(crisp\core\Bitmask::GENERIC_ERROR, 'Cannot access non-native API endpoint', [], null, 400);
     exit;
 }
 
@@ -60,7 +60,7 @@ if ($this->Query === 'all') {
 
 if (!is_numeric($this->Query)) {
     if (!crisp\api\Phoenix::serviceExistsBySlug($this->Query)) {
-        PluginAPI::response(Bitmask::INVALID_SERVICE + crisp\core\Bitmask::VERSION_DEPRECATED + crisp\core\Bitmask::INTERFACE_DEPRECATED, $this->Query, []);
+        PluginAPI::response(Bitmask::INVALID_SERVICE + crisp\core\Bitmask::VERSION_DEPRECATED + crisp\core\Bitmask::INTERFACE_DEPRECATED, $this->Query, [], null, 404);
         return;
     }
     $this->Query = crisp\api\Phoenix::getServiceBySlug($this->Query)['id'];
@@ -70,7 +70,7 @@ if (!is_numeric($this->Query)) {
 }
 
 if (!crisp\api\Phoenix::serviceExists($this->Query)) {
-    PluginAPI::response(Bitmask::INVALID_SERVICE + crisp\core\Bitmask::VERSION_DEPRECATED + crisp\core\Bitmask::INTERFACE_DEPRECATED, $this->Query, []);
+    PluginAPI::response(Bitmask::INVALID_SERVICE + crisp\core\Bitmask::VERSION_DEPRECATED + crisp\core\Bitmask::INTERFACE_DEPRECATED, $this->Query, [], null, 404);
     return;
 }
 

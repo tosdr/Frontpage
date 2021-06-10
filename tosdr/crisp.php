@@ -25,6 +25,8 @@ use crisp\api\Helper;
 use crisp\api\lists\Languages;
 use crisp\api\Phoenix;
 use crisp\api\Translation;
+use crisp\core\Bitmask;
+use crisp\core\PluginAPI;
 use crisp\core\Plugins;
 use crisp\core\Redis;
 use crisp\core\Security;
@@ -88,6 +90,12 @@ class core
         /** After autoloading we include additional headers below */
     }
 
+}
+
+if ($_SERVER['ENVIRONMENT'] === 'development') {
+    define('IS_DEV_ENV', true);
+} else {
+    define('IS_DEV_ENV', false);
 }
 
 try {
@@ -332,8 +340,28 @@ try {
     http_response_code(500);
     $errorraw = file_get_contents(__DIR__ . '/../themes/emergency/error.html');
     try {
-        echo strtr($errorraw, ['{{ exception }}' => api\ErrorReporter::create(500, $ex->getTraceAsString(), $ex->getMessage() . "\n\n" . api\Helper::currentURL(), $ex->getCode() . '_')]);
+
+
+        $refid = api\ErrorReporter::create(500, $ex->getTraceAsString(), $ex->getMessage() . "\n\n" . api\Helper::currentURL(), $ex->getCode() . '_');
+
+        if (IS_DEV_ENV) {
+            $refid = $ex->getMessage();
+        }
+
+
+        if (IS_API_ENDPOINT) {
+            PluginAPI::response(Bitmask::GENERIC_ERROR, 'Internal Server Error', ['reference_id' => $refid]);
+            exit;
+        }
+
+        echo strtr($errorraw, ['{{ exception }}' => $refid]);
     } catch (Exception $ex2) {
+
+        if (IS_API_ENDPOINT) {
+            PluginAPI::response(Bitmask::GENERIC_ERROR, 'Internal Server Error', ['reference_id' => $ex2->getCode()]);
+            exit;
+        }
+
         echo strtr($errorraw, ['{{ exception }}' => $ex2->getCode()]);
         exit;
     }
@@ -341,9 +369,27 @@ try {
     http_response_code(500);
     $errorraw = file_get_contents(__DIR__ . '/../themes/emergency/error.html');
     try {
-        echo strtr($errorraw, ['{{ exception }}' => api\ErrorReporter::create(500, $ex->getTraceAsString(), $ex->getMessage() . "\n\n" . api\Helper::currentURL(), 'ca_')]);
+
+        $refid = api\ErrorReporter::create(500, $ex->getTraceAsString(), $ex->getMessage() . "\n\n" . api\Helper::currentURL(), 'ca_');
+
+        if (IS_DEV_ENV) {
+            $refid = $ex->getMessage();
+        }
+
+
+        if (IS_API_ENDPOINT) {
+            PluginAPI::response(Bitmask::GENERIC_ERROR, 'Internal Server Error', ['reference_id' => $refid]);
+            exit;
+        }
+
+        echo strtr($errorraw, ['{{ exception }}' => $refid]);
         exit;
     } catch (Exception) {
+        if (IS_API_ENDPOINT) {
+            PluginAPI::response(Bitmask::GENERIC_ERROR, 'Internal Server Error');
+            exit;
+        }
+
         echo strtr($errorraw, ['{{ exception }}' => 'An error occurred... reporting the error?!?']);
         exit;
     }

@@ -25,7 +25,7 @@ if(!defined('CRISP_COMPONENT')){
 }
 
 if(!IS_NATIVE_API){
-    PluginAPI::response(crisp\core\Bitmask::GENERIC_ERROR, 'Cannot access non-native API endpoint', []);
+    PluginAPI::response(crisp\core\Bitmask::GENERIC_ERROR, 'Cannot access non-native API endpoint', [], null, 400);
     exit;
 }
 

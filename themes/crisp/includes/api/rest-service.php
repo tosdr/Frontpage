@@ -26,7 +26,7 @@ if(!defined('CRISP_COMPONENT')){
 
 
 if(!IS_NATIVE_API){
-    PluginAPI::response(crisp\core\Bitmask::GENERIC_ERROR, 'Cannot access non-native API endpoint', []);
+    PluginAPI::response(crisp\core\Bitmask::GENERIC_ERROR, 'Cannot access non-native API endpoint', [], null, 400);
     exit;
 }
 
@@ -52,5 +52,5 @@ switch ($Interface) {
         require_once __DIR__ . '/rest-service/v3.php';
         break;
     default:
-        PluginAPI::response(crisp\core\Bitmask::VERSION_NOT_FOUND, 'Invalid Version', []);
+        PluginAPI::response(crisp\core\Bitmask::VERSION_NOT_FOUND, 'Invalid Version', [], null, 404);
 }

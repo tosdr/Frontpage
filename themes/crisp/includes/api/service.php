@@ -17,8 +17,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-use crisp\api\Phoenix;
-use crisp\core\Bitmask;
 use crisp\core\PluginAPI;
 
 if(!defined('CRISP_COMPONENT')){
@@ -26,6 +24,21 @@ if(!defined('CRISP_COMPONENT')){
     exit;
 }
 
-$Cases = Phoenix::getCases();
+if(!IS_NATIVE_API){
+    PluginAPI::response(crisp\core\Bitmask::GENERIC_ERROR, 'Cannot access non-native API endpoint', [], null, 400);
+    exit;
+}
 
-PluginAPI::response(Bitmask::REQUEST_SUCCESS + Bitmask::INTERFACE_DEPRECATED, 'All cases below', $Cases);
+$Interface = 'default';
+
+if (is_array($GLOBALS['route']->GET)) {
+    $Interface = array_key_first($GLOBALS['route']->GET);
+}
+
+switch ($Interface) {
+    case 'v1':
+        require_once __DIR__ . '/service/v1.php';
+        break;
+    default:
+        PluginAPI::response(crisp\core\Bitmask::VERSION_NOT_FOUND, 'Invalid Version', [], null, 404);
+}

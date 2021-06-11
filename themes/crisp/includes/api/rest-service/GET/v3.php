@@ -22,7 +22,7 @@ use crisp\core\Bitmask;
 use crisp\core\PluginAPI;
 use crisp\models\ServiceRatings;
 
-if(!defined('CRISP_COMPONENT')){
+if (!defined('CRISP_COMPONENT')) {
     echo 'Cannot access this component directly!';
     exit;
 }
@@ -31,7 +31,7 @@ $ID = null;
 
 if (!is_numeric($_GET['service'] ?? $this->Query)) {
     if (!crisp\api\Phoenix::serviceExistsBySlug($_GET['service'] ?? $this->Query)) {
-        PluginAPI::response(Bitmask::INVALID_SERVICE, $_GET['service'] ?? $this->Query, []);
+        PluginAPI::response(Bitmask::INVALID_SERVICE + Bitmask::INTERFACE_DEPRECATED, $_GET['service'] ?? $this->Query, []);
         return;
     }
     $ID = crisp\api\Phoenix::getServiceBySlug($_GET['service'] ?? $this->Query)['id'];
@@ -40,7 +40,7 @@ if (!is_numeric($_GET['service'] ?? $this->Query)) {
 }
 
 if (!crisp\api\Phoenix::serviceExists($ID)) {
-    PluginAPI::response(Bitmask::INVALID_SERVICE, $ID, []);
+    PluginAPI::response(Bitmask::INVALID_SERVICE + Bitmask::INTERFACE_DEPRECATED, $ID, []);
     return;
 }
 
@@ -111,4 +111,4 @@ $SkeletonData['points'] = $ServicePointsData;
 $SkeletonData['urls'] = explode(',', $_service['url']);
 
 
-PluginAPI::response(Bitmask::REQUEST_SUCCESS, 'OK', $SkeletonData);
+PluginAPI::response(Bitmask::REQUEST_SUCCESS + Bitmask::INTERFACE_DEPRECATED, 'OK', $SkeletonData);

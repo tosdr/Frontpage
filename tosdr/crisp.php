@@ -58,7 +58,7 @@ class core
 
     public const CRISP_VERSION = '5.0.0';
 
-    public const API_VERSION = '2.1.0';
+    public const API_VERSION = '2.2.0';
 
     /**
      * This is my autoloader.

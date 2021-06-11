@@ -19,18 +19,20 @@
 
 namespace crisp\models;
 
+use crisp\types\Enum;
+
 if(!defined('CRISP_COMPONENT')){
     echo 'Cannot access this component directly!';
     exit;
 }
 
-final class ServiceRatings extends \crisp\types\Enum {
+final class ServiceRatings extends Enum {
 
-    const A = 0x1;
-    const B = 0x2;
-    const C = 0x4;
-    const D = 0x8;
-    const E = 0x10;
-    const default = 0x20;
+    public const A = 0x1;
+    public const B = 0x2;
+    public const C = 0x4;
+    public const D = 0x8;
+    public const E = 0x10;
+    public const default = 0x20;
 
 }

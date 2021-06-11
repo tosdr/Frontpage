@@ -19,7 +19,7 @@
 
 use crisp\core\PluginAPI;
 
-if(!defined('CRISP_COMPONENT')){
+if (!defined('CRISP_COMPONENT')) {
     echo 'Cannot access this component directly!';
     exit;
 }
@@ -31,12 +31,12 @@ switch ($_SERVER['REQUEST_METHOD']) {
     case 'POST':
 
         if (!crisp\api\Helper::hasApiPermissions(crisp\core\APIPermissions::POST_SERVICE_REQUEST)) {
-            PluginAPI::response(crisp\core\Bitmask::MISSING_PERMISSIONS, 'Missing Permissions ' . crisp\core\APIPermissions::getBitmask(crisp\core\APIPermissions::POST_SERVICE_REQUEST, true)[0], [], null, 403);
+            PluginAPI::response(crisp\core\Bitmask::MISSING_PERMISSIONS + Bitmask::INTERFACE_DEPRECATED, 'Missing Permissions ' . crisp\core\APIPermissions::getBitmask(crisp\core\APIPermissions::POST_SERVICE_REQUEST, true)[0], [], null, 403);
             return;
         }
 
-        PluginAPI::response(crisp\core\Bitmask::NOT_IMPLEMENTED, 'Not yet implemented', [], null, 405);
+        PluginAPI::response(crisp\core\Bitmask::NOT_IMPLEMENTED + Bitmask::INTERFACE_DEPRECATED, 'Not yet implemented', [], null, 405);
         break;
     default:
-        PluginAPI::response(crisp\core\Bitmask::NOT_IMPLEMENTED, 'Invalid Request Method', [], null, 405);
+        PluginAPI::response(crisp\core\Bitmask::NOT_IMPLEMENTED + Bitmask::INTERFACE_DEPRECATED + Bitmask::VERSION_DEPRECATED, 'Invalid Request Method', [], null, 405);
 }

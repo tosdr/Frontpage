@@ -34,14 +34,12 @@ if (!IS_NATIVE_API) {
 }
 
 
+$IndexableInterfaces = ['service', 'user', 'case', 'search', 'updatecheck'];
 $Interfaces = [];
 
-foreach (new DirectoryIterator(__DIR__) as $interface) {
-    if ($interface->isDir() || $interface->isDot()) {
-        continue;
-    }
+foreach ($IndexableInterfaces as $interface) {
 
-    $ifacename = pathinfo($interface->getFilename(), PATHINFO_FILENAME);
+    $ifacename = $interface;
 
     if (!file_exists(__DIR__ . '/' . $ifacename)) {
         continue;

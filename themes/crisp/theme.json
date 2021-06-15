@@ -52,6 +52,12 @@
             "lite_qr": "{{ config.s3_branding }}/donate/Litecoin.png",
             "lite_wallet": "LZeGdUNzbCEeKZkn2rLQvnZqMcnhL33D1u",
             "opencollective_embed": "https://opencollective.com/embed/tosdr/donate",
+            "repositories": {
+                "EDIT": "tosdr/edit.tosdr.org",
+                "BE": "tosdr/browser-extensions",
+                "CRISP": "tosdr/CrispCMS",
+                "TDC": "tosdr/crawler.tosdr.org"
+            },
             "extensions": [{
                     "browser": "Mozilla Firefox",
                     "type": "components.extensiongrid.addon.type.addon",

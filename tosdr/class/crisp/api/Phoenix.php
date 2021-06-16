@@ -181,7 +181,7 @@ class Phoenix {
 
 
 
-        $statement = self::$Postgres_Database_Connection->prepare('SELECT * FROM points INNER JOIN cases ON points.case_id = cases.id WHERE service_id = :ID ORDER BY cases.score DESC;');
+        $statement = self::$Postgres_Database_Connection->prepare('SELECT points.* FROM points INNER JOIN cases ON points.case_id = cases.id WHERE service_id = :ID ORDER BY cases.score DESC;');
 
         $statement->execute([':ID' => $ID]);
 

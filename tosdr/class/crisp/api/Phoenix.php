@@ -56,7 +56,7 @@ class Phoenix {
                 $ServicePoints = [];
                 $ServicePointsData = [];
 
-                $points = self::getPointsByService($ID);
+                $points = self::getPointsByServiceScored($ID);
                 $service = self::getService($ID);
                 $documents = self::getDocumentsByService($ID);
                 foreach ($documents as $Links) {
@@ -160,6 +160,28 @@ class Phoenix {
 
 
         $statement = self::$Postgres_Database_Connection->prepare('SELECT * FROM points WHERE service_id = :ID');
+
+        $statement->execute([':ID' => $ID]);
+
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * Retrieve points by a service from postgres
+     * @see https://github.com/tosdr/edit.tosdr.org/blob/8b900bf8879b8ed3a4a2a6bbabbeafa7d2ab540c/db/schema.rb#L89-L111 Database Schema
+     * @param string $ID The ID of the Service
+     * @return array
+     */
+    public static function getPointsByServiceScored(string $ID): array
+    {
+
+        if (self::$Postgres_Database_Connection === NULL) {
+            self::initPGDB();
+        }
+
+
+
+        $statement = self::$Postgres_Database_Connection->prepare('SELECT * FROM points INNER JOIN cases ON points.case_id = cases.id WHERE service_id = :ID ORDER BY cases.score DESC;');
 
         $statement->execute([':ID' => $ID]);
 

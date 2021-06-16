@@ -60,7 +60,7 @@
     <div class="container mt-5">
 
         <ul class="list-group mb-4">
-            {% for point in getPointsByService(service._source.id) %}
+            {% for point in getPointsByServiceScored(service._source.id) %}
                 {% if point.status == "approved" %}
 
 

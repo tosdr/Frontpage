@@ -192,6 +192,7 @@ try {
         $TwigTheme->addFunction(new TwigFunction('getService', [new Phoenix(), 'getService']));
         $TwigTheme->addFunction(new TwigFunction('getPoint', [new Phoenix(), 'getPoint']));
         $TwigTheme->addFunction(new TwigFunction('getPointsByService', [new Phoenix(), 'getPointsByService']));
+        $TwigTheme->addFunction(new TwigFunction('getPointsByServiceScored', [new Phoenix(), 'getPointsByServiceScored']));
         $TwigTheme->addFunction(new TwigFunction('getCase', [new Phoenix(), 'getCase']));
         $TwigTheme->addFunction(new TwigFunction('prettyDump', [new Helper(), 'prettyDump']));
         $TwigTheme->addFunction(new TwigFunction('microtime', 'microtime'));

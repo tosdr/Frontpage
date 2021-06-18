@@ -16,10 +16,10 @@
 #}
 
 {% if not SIMPLE %}
-    <nav class="navbar navbar-expand-md  bg-dark navbar-dark">
+    <nav class="navbar navbar-expand-md bg-dark navbar-dark">
         <!-- Brand -->
-        <a class="navbar-brand" href="/"><img width="32" src="{{ config.s3_branding ~ "/tosdr-icon-32.svg" }}"
-                                              alt="Logo"/></a>
+            <a class="navbar-brand ms-4" href="/"><img width="32" src="{{ config.s3_branding ~ "/tosdr-icon-32.svg" }}"
+                                                       alt="Logo"/></a>
 
         <!-- Toggler/collapsibe Button -->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -29,7 +29,7 @@
         <!-- 20x000101 -->
         <!-- Navbar links -->
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
-            <ul class="navbar-nav">
+            <ul class="navbar-nav me-auto">
                 {% for item in GLOBALS.navbar %}
                     <li class="nav-item {% if currentPage == item.ID %} active{% endif %}">
                         <a target="{{ item.target }}" class="nav-link {% if currentPage == item.ID %} active{% endif %}"
@@ -46,24 +46,24 @@
                 {% endfor %}
                 <li class="nav-item">
                     {% if UNIVERSE == 1 %}
-                        <a href="/?universe=2"><span class="badge badge-warning"><i class="fas fa-flask"></i> JOIN BETA</span></a>
+                        <a href="/?universe=2"><span class="badge bg-warning"><i
+                                        class="fas fa-flask"></i> JOIN BETA</span></a>
                     {% endif %}
                     {% if UNIVERSE == 2 %}
-                        <a href="/?universe=1"><span class="badge badge-warning"><i class="fas fa-flask"></i> LEAVE BETA</span></a>
+                        <a href="/?universe=1"><span class="badge bg-warning"><i
+                                        class="fas fa-flask"></i> LEAVE BETA</span></a>
                     {% endif %}
                     {% if UNIVERSE == 3 %}
-                        <a href="/?universe=1"><span class="badge badge-danger"><i class="fas fa-wrench"></i> LEAVE DEVELOPMENT</span></a>
+                        <a href="/?universe=1"><span class="badge bg-danger"><i class="fas fa-wrench"></i> LEAVE DEVELOPMENT</span></a>
                     {% endif %}
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="languageDropdownMenuLink" data-toggle="dropdown"
+                <li class="nav-item dropdown dropstart">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" id="languageDropdownMenuLink"
+                       data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">
-                        <!-- See https://github.com/tosdr/CrispCMS/issues/51  
-                        <img id="currentLanguage" src="{{ includeResource("img/flags/" ~ locale|getlang(false).flag ~ ".svg") }}" width="32">
-                        <-->
                         <i class="fas fa-language"></i> {{ locale|getlang(false).name|translate }}
                     </a>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="languageDropdownMenuLink">
+                    <div class="dropdown-menu" aria-labelledby="languageDropdownMenuLink">
                         {% for Language in languages %}
                             <a class="dropdown-item {% if locale|getlang(false).code == Language.code %}active{% endif %}"
                                href="/{{ Language.code }}/{{ CurrentPage }}">

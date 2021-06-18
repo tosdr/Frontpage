@@ -31,7 +31,7 @@
                     <link rel="stylesheet" href="{{ includeResource("css/bootstrap/bootstrap-dark.min.css") }}">
                     <link rel="stylesheet" href="{{ includeResource("css/general-dark.min.css") }}">
                 {% else %}
-                    <link rel="stylesheet" href="{{ includeResource("css/bootstrap/bootstrap.min.css") }}">
+                    <link rel="stylesheet" href="{{ includeResource("css/bootstrap5/bootstrap.min.css") }}">
                 {% endif %}
                 {# <link rel="stylesheet" href="/themes/{{ config.theme }}/css/jquery/jquery-ui.min.css{{ "/css/jquery/jquery-ui.min.css"|fileHash }}"> #}
                 <link rel="stylesheet" href="{{ includeResource("css/sweetalert/sweetalert.min.css") }}">
@@ -76,8 +76,7 @@
     </body>
     {% if not SIMPLE %}
         <script src="{{ includeResource("js/jquery/jquery.min.js") }}"></script>
-        <script src="{{ includeResource("js/jquery/popper.min.js") }}"></script>
-        <script src="{{ includeResource("js/bootstrap/bootstrap.min.js") }}"></script>
+        <script src="{{ includeResource("js/bootstrap5/bootstrap.min.js") }}"></script>
         <script src="{{ includeResource("js/sweetalert/sweetalert.min.js") }}"></script>
         <script src="{{ includeResource("js/fontawesome/all.min.js") }}"></script>
         <script src="{{ includeResource("js/highlight/highlight.min.js") }}"></script>

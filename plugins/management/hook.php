@@ -41,7 +41,7 @@ if (isset($_SESSION[Config::$Cookie_Prefix . 'session_login'])) {
     if (!$User->isSessionValid()) {
         unset($_SESSION[Config::$Cookie_Prefix . 'session_login']);
     } else {
-        Theme::addToNavbar('curator', '<span class="badge badge-info"><i class="fas fa-hands-helping"></i> MANAGE</span>', '/dashboard', '_self', -1, 'right');
+        Theme::addToNavbar('curator', '<span class="badge bg-info"><i class="fas fa-hands-helping"></i> MANAGE</span>', '/dashboard', '_self', -1, 'right');
     }
 
     $userDetails = $User->fetch();

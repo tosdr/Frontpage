@@ -38,6 +38,7 @@
             "support": "https://help.tosdr.org",
             "api_cdn": "https://api.tosdr.org",
             "searx_url": "https://search.tosdr.org",
+            "api_docs_url": "https://to.tosdr.org/api",
             "docs_url": "https://docs.tosdr.org",
             "translators_de": ["Justin Back", "Anonymous"],
             "translators_es": ["Agnes de Lion", "Guennadi Maximov"],

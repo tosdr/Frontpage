@@ -17,7 +17,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+use crisp\api\Config;
+use crisp\api\Helper;
+
 if(!defined('CRISP_COMPONENT')){
     echo 'Cannot access this component directly!';
     exit;
 }
+header('Location: ' . Helper::generateLink(Config::get('api_docs_url'), true));
+exit;

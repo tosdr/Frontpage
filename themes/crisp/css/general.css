@@ -144,3 +144,9 @@ body {
   color: inherit;
   text-decoration: none;
 }
+
+.jumbotron {
+  padding: 2rem 1rem;
+  background-color: #e9ecef;
+  border-radius: .3rem;
+}

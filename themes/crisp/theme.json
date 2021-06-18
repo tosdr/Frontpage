@@ -37,6 +37,7 @@
             "shield_cdn": "https://shields.tosdr.org",
             "support": "https://help.tosdr.org",
             "api_cdn": "https://api.tosdr.org",
+            "searx_url": "https://search.tosdr.org",
             "docs_url": "https://docs.tosdr.org",
             "translators_de": ["Justin Back", "Anonymous"],
             "translators_es": ["Agnes de Lion", "Guennadi Maximov"],

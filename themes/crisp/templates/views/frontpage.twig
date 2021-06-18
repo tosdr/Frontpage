@@ -38,19 +38,19 @@
         </div>
 
 
-        <div class="container mt-5">
-            <section id="intro">
-                <p>{{ 'views.frontpage.intro.text.top'|translate|raw }}</p>
-                <p>{{ 'views.frontpage.intro.text.bottom'|translate|raw }}</p>
-            </section>
+        <div class="container">
             &nbsp;
             <!-- 0x000105 -->
             &nbsp;
             <div class="btn-group d-flex" role="group">
                 <a role="button" class="btn btn-success btn-lg w-100 mb-2"
                    href="{{ generateLink("downloads") }}">{{ 'views.frontpage.button.download.text'|translate }}</a>
-                <a role="button" target="_blank" class="btn btn-primary btn-lg w-100 mb-2"
+                <a role="button" target="_blank" class="btn btn-warning btn-lg w-100 mb-2"
                    href="{{ generateLink(config.phoenix_url, true) }}">{{ 'views.frontpage.button.phoenix.text'|translate }}</a>
+                <a role="button" target="_blank" class="btn btn-danger btn-lg w-100 mb-2"
+                   href="{{ generateLink(config.forum_url, true) }}">{{ 'views.frontpage.button.forum.text'|translate }}</a>
+                <a role="button" target="_blank" class="btn btn-secondary btn-lg w-100 mb-2"
+                   href="{{ generateLink(config.searx_url, true) }}">{{ 'views.frontpage.button.search.text'|translate }}</a>
             </div>
 
             <section>
@@ -81,11 +81,6 @@
                        style="color:grey;padding:8px">DN</a>
                 </div>
                 <hr>
-                <div id="forum-link">
-                    <a role="button" target="_blank" class="btn btn-primary btn-lg btn-block"
-                       href="{{ generateLink(config.forum_url, true) }}">{{ 'views.frontpage.button.forum.text'|translate }}</a>
-                </div>
-                <br>
                 <center>
                     <div class="btn-group">
                         <a href="{{ generateLink(config.twitter_link, true) }}" class="btn btn-primary"><i

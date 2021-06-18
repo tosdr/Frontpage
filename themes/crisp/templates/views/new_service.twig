@@ -1,18 +1,18 @@
-{# 
- # Copyright (C) 2021 Justin René Back <justin@tosdr.org>
- #
- # This program is free software: you can redistribute it and/or modify
- # it under the terms of the GNU General Public License as published by
- # the Free Software Foundation, either version 3 of the License, or
- # (at your option) any later version.
- #
- # This program is distributed in the hope that it will be useful,
- # but WITHOUT ANY WARRANTY; without even the implied warranty of
- # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- # GNU General Public License for more details.
- #
- # You should have received a copy of the GNU General Public License
- # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+{#
+# Copyright (C) 2021 Justin René Back <justin@tosdr.org>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #}
 
 {% set currentPage = 'new_service' %}
@@ -26,11 +26,13 @@
     <!-- 20x000032 -->
     {{ include("components/navbar.twig") }}
 
-    <div class="jumbotron" id="api">
-        <div><h1>{{ 'views.new_service.title'|translate }}</h1></div>
-        <p>
-            {{ 'views.new_service.jumbotron.text'|translate|raw }}
-        </p>
+    <div class="jumbotron mb-4" id="api">
+        <div class="container">
+            <div><h1>{{ 'views.new_service.title'|translate }}</h1></div>
+            <p>
+                {{ 'views.new_service.jumbotron.text'|translate|raw }}
+            </p>
+        </div>
     </div>
 
 
@@ -40,14 +42,17 @@
         <form>
             <div class="form-group">
                 <label for="service_name">{{ 'views.new_service.form.service_name.label'|translate }}:</label>
-                <input type="text" class="form-control is-invalid" placeholder="{{ 'views.new_service.form.service_name.placeholder'|translate }}" id="service_name">
+                <input type="text" class="form-control is-invalid"
+                       placeholder="{{ 'views.new_service.form.service_name.placeholder'|translate }}"
+                       id="service_name">
                 <div class="valid-feedback">
                     {{ 'views.new_service.form.service_name.valid_feedback'|translate }}
                 </div>
                 <div class="invalid-feedback">
                     {{ 'views.new_service.form.service_name.invalid_feedback'|translate }}
                 </div>
-                <label for="service_name" class="text-muted">{{ 'views.new_service.form.service_name.label_muted'|translate }}</label>
+                <label for="service_name"
+                       class="text-muted">{{ 'views.new_service.form.service_name.label_muted'|translate }}</label>
             </div>
 
             <label for="service_domains">{{ 'views.new_service.form.service_domains.label'|translate }}:</label>
@@ -55,7 +60,8 @@
                 <div class="input-group mb-3">
                     <input type="text" class="form-control is-invalid" name="service_domain" placeholder="domain.tld">
                     <div class="input-group-append">
-                        <button type="button" class="btn btn-success" data-add="domain">{{ 'views.new_service.form.service_domains.button.add_domain.text'|translate }}</button>
+                        <button type="button" class="btn btn-success"
+                                data-add="domain">{{ 'views.new_service.form.service_domains.button.add_domain.text'|translate }}</button>
                     </div>
                     <div class="valid-feedback">
                         {{ 'views.new_service.form.service_domains.valid_feedback'|translate }}
@@ -65,20 +71,27 @@
                     </div>
                 </div>
             </div>
-            <label for="service_domains" class="text-muted">{{ 'views.new_service.form.service_domains.label_muted.1'|translate }}</label>
+            <label for="service_domains"
+                   class="text-muted">{{ 'views.new_service.form.service_domains.label_muted.1'|translate }}</label>
             <br>
-            <label for="service_domains" class="text-muted">{{ 'views.new_service.form.service_domains.label_muted.2'|translate }}</label>
+            <label for="service_domains"
+                   class="text-muted">{{ 'views.new_service.form.service_domains.label_muted.2'|translate }}</label>
             <br>
-            <label for="service_domains" class="text-muted">{{ 'views.new_service.form.service_domains.label_muted.3'|translate }}</label>
+            <label for="service_domains"
+                   class="text-muted">{{ 'views.new_service.form.service_domains.label_muted.3'|translate }}</label>
 
             <br>
             <label for="service_documents">{{ 'views.new_service.form.service_documents.label'|translate }}</label>
             <div id="service_documents" class="card card-body">
-                <button type="button" class="btn btn-success btn-block" data-add="document">{{ 'views.new_service.form.service_documents.button.add_document.text'|translate }}</button>
+                <button type="button" class="btn btn-success btn-block"
+                        data-add="document">{{ 'views.new_service.form.service_documents.button.add_document.text'|translate }}</button>
                 <div class="card card-body mb-2" id="document-0">
                     <div class="form-group">
-                        <label for="document_name" class="text-muted">{{ 'views.new_service.form.service_documents.input.document_name.label'|translate }}:</label>
-                        <input type="text" data-di="0" class="form-control is-invalid" name="document_name" placeholder="{{ 'views.new_service.form.service_documents.input.document_name.placeholder'|translate }}">
+                        <label for="document_name"
+                               class="text-muted">{{ 'views.new_service.form.service_documents.input.document_name.label'|translate }}
+                            :</label>
+                        <input type="text" data-di="0" class="form-control is-invalid" name="document_name"
+                               placeholder="{{ 'views.new_service.form.service_documents.input.document_name.placeholder'|translate }}">
 
                         <div class="valid-feedback">
                             {{ 'views.new_service.form.service_documents.input.document_name.valid_feedback'|translate }}
@@ -89,8 +102,11 @@
                         <label class="text-muted">{{ 'views.new_service.form.service_documents.input.document_name.hint'|translate }}</label>
                     </div>
                     <div class="form-group">
-                        <label for="document_url" class="text-muted">{{ 'views.new_service.form.service_documents.input.document_url.label'|translate }}:</label>
-                        <input type="text" data-di="0" class="form-control is-invalid" name="document_url" placeholder="{{ 'views.new_service.form.service_documents.input.document_url.placeholder'|translate }}">
+                        <label for="document_url"
+                               class="text-muted">{{ 'views.new_service.form.service_documents.input.document_url.label'|translate }}
+                            :</label>
+                        <input type="text" data-di="0" class="form-control is-invalid" name="document_url"
+                               placeholder="{{ 'views.new_service.form.service_documents.input.document_url.placeholder'|translate }}">
 
                         <div class="valid-feedback">
                             {{ 'views.new_service.form.service_documents.input.document_url.valid_feedback'|translate }}
@@ -101,8 +117,11 @@
                         <label class="text-muted">{{ 'views.new_service.form.service_documents.input.document_url.hint'|translate }}</label>
                     </div>
                     <div class="form-group">
-                        <label for="document_xpath" class="text-muted">{{ 'views.new_service.form.service_documents.input.document_xpath.label'|translate }}:</label>
-                        <input type="text" data-di="0" class="form-control" name="document_xpath" placeholder="{{ 'views.new_service.form.service_documents.input.document_xpath.placeholder'|translate }}">
+                        <label for="document_xpath"
+                               class="text-muted">{{ 'views.new_service.form.service_documents.input.document_xpath.label'|translate }}
+                            :</label>
+                        <input type="text" data-di="0" class="form-control" name="document_xpath"
+                               placeholder="{{ 'views.new_service.form.service_documents.input.document_xpath.placeholder'|translate }}">
 
                         <div class="valid-feedback">
                             {{ 'views.new_service.form.service_documents.input.document_xpath.valid_feedback'|translate }}
@@ -117,31 +136,40 @@
 
             <div class="form-group mt-3">
                 <label for="service_wikipedia">{{ 'views.new_service.form.service_wikipedia.label'|translate }}:</label>
-                <input type="text" class="form-control" placeholder="{{ 'views.new_service.form.service_wikipedia.placeholder'|translate }}" id="service_wikipedia">
+                <input type="text" class="form-control"
+                       placeholder="{{ 'views.new_service.form.service_wikipedia.placeholder'|translate }}"
+                       id="service_wikipedia">
                 <div class="valid-feedback">
                     {{ 'views.new_service.form.service_wikipedia.valid_feedback'|translate }}
                 </div>
                 <div class="invalid-feedback">
                     {{ 'views.new_service.form.service_wikipedia.invalid_feedback'|translate }}
                 </div>
-                <label for="service_wikipedia" class="text-muted">{{ 'views.new_service.form.service_wikipedia.label_muted'|translate }}</label>
+                <label for="service_wikipedia"
+                       class="text-muted">{{ 'views.new_service.form.service_wikipedia.label_muted'|translate }}</label>
             </div>
 
             <div class="form-group mt-3">
                 <label for="service_email">{{ 'views.new_service.form.service_email.label'|translate }}:</label>
-                <input type="email" class="form-control" placeholder="{{ 'views.new_service.form.service_email.placeholder'|translate }}" id="service_email">
+                <input type="email" class="form-control"
+                       placeholder="{{ 'views.new_service.form.service_email.placeholder'|translate }}"
+                       id="service_email">
                 <div class="valid-feedback">
                     {{ 'views.new_service.form.service_email.valid_feedback'|translate }}
                 </div>
                 <div class="invalid-feedback">
                     {{ 'views.new_service.form.service_email.invalid_feedback'|translate }}
                 </div>
-                <label for="service_email" class="text-muted">{{ 'views.new_service.form.service_email.label_muted'|translate }}</label>
+                <label for="service_email"
+                       class="text-muted">{{ 'views.new_service.form.service_email.label_muted'|translate }}</label>
             </div>
             <div class="form-group">
                 <label for="service_note">{{ 'views.new_service.form.service_note.label'|translate }}:</label>
-                <textarea class="form-control" placeholder="{{ 'views.new_service.form.service_note.placeholder'|translate }}" id="service_note"></textarea>
-                <label for="service_note" class="text-muted">{{ 'views.new_service.form.service_note.label_muted'|translate }}</label>
+                <textarea class="form-control"
+                          placeholder="{{ 'views.new_service.form.service_note.placeholder'|translate }}"
+                          id="service_note"></textarea>
+                <label for="service_note"
+                       class="text-muted">{{ 'views.new_service.form.service_note.label_muted'|translate }}</label>
             </div>
             <hr>
 
@@ -149,9 +177,10 @@
 
             <br>
             <small>
-                <a class="text-danger" target="_blank" href="https://github.com/tosdr/CrispCMS/issues/new?assignees=JustinBack&labels=bug&template=bug_report.md&title=">{{ 'views.global.report_a_bug'|translate }}</a>
+                <a class="text-danger" target="_blank"
+                   href="https://github.com/tosdr/CrispCMS/issues/new?assignees=JustinBack&labels=bug&template=bug_report.md&title=">{{ 'views.global.report_a_bug'|translate }}</a>
             </small>
-        </form> 
+        </form>
     </div> <!-- /container -->
 {% endblock %}
 {% block scripts %}
@@ -187,7 +216,7 @@
                     payload["domains"].push($(this).val());
                 });
                 $.post("", {payload: payload}, function (result) {
-                    if (result.error & 0x100) {
+                    if (result.error&0x100) {
                         alert("{{ 'views.new_service.form.success.alert'|translate }}");
                         window.location.href = "/new_service";
                     } else {
@@ -202,7 +231,7 @@
             });
             $(document).on('click', '[data-add="document"]', function () {
                 documentIterator++;
-                $("#service_documents").append('<div class="card card-body mb-2" id="document-' + documentIterator + '"> <div class="form-group"> <label for="document_name" class="text-muted">{{'views.new_service.form.service_documents.input.document_name.label'|translate}}:</label> <input type="text" data-di="' + documentIterator + '" class="form-control is-invalid" name="document_name" placeholder="{{'views.new_service.form.service_documents.input.document_name.placeholder'|translate}}"/> <div class="valid-feedback">{{'views.new_service.form.service_documents.input.document_name.valid_feedback'|translate}}</div><div class="invalid-feedback">{{'views.new_service.form.service_documents.input.document_name.invalid_feedback'|translate}}</div><label class="text-muted">{{'views.new_service.form.service_documents.input.document_name.hint'|translate}}</label> </div><div class="form-group"> <label for="document_url" class="text-muted">{{'views.new_service.form.service_documents.input.document_url.label'|translate}}:</label> <input type="text" data-di="' + documentIterator + '" class="form-control is-invalid" name="document_url" placeholder="{{'views.new_service.form.service_documents.input.document_url.placeholder'|translate}}"/> <div class="valid-feedback">{{'views.new_service.form.service_documents.input.document_url.valid_feedback'|translate}}</div><div class="invalid-feedback">{{'views.new_service.form.service_documents.input.document_url.invalid_feedback'|translate}}</div><label class="text-muted">{{'views.new_service.form.service_documents.input.document_url.hint'|translate}}</label> </div><div class="form-group"> <label for="document_xpath" class="text-muted">{{'views.new_service.form.service_documents.input.document_xpath.label'|translate}}:</label> <input type="text" data-di="' + documentIterator + '" class="form-control" name="document_xpath" placeholder="{{'views.new_service.form.service_documents.input.document_xpath.placeholder'|translate}}"/> <div class="valid-feedback">{{'views.new_service.form.service_documents.input.document_xpath.valid_feedback'|translate}}</div><div class="invalid-feedback">{{'views.new_service.form.service_documents.input.document_xpath.invalid_feedback'|translate}}</div><label class="text-muted">{{'views.new_service.form.service_documents.input.document_xpath.hint'|translate|raw}}</label> </div><button type="button" class="btn btn-danger btn-block" data-di="' + documentIterator + '" data-remove="document">{{ 'views.new_service.form.service_documents.button.remove_document.text'|translate }}</button></div>');
+                $("#service_documents").append('<div class="card card-body mb-2" id="document-' + documentIterator + '"> <div class="form-group"> <label for="document_name" class="text-muted">{{ 'views.new_service.form.service_documents.input.document_name.label'|translate }}:</label> <input type="text" data-di="' + documentIterator + '" class="form-control is-invalid" name="document_name" placeholder="{{ 'views.new_service.form.service_documents.input.document_name.placeholder'|translate }}"/> <div class="valid-feedback">{{ 'views.new_service.form.service_documents.input.document_name.valid_feedback'|translate }}</div><div class="invalid-feedback">{{ 'views.new_service.form.service_documents.input.document_name.invalid_feedback'|translate }}</div><label class="text-muted">{{ 'views.new_service.form.service_documents.input.document_name.hint'|translate }}</label> </div><div class="form-group"> <label for="document_url" class="text-muted">{{ 'views.new_service.form.service_documents.input.document_url.label'|translate }}:</label> <input type="text" data-di="' + documentIterator + '" class="form-control is-invalid" name="document_url" placeholder="{{ 'views.new_service.form.service_documents.input.document_url.placeholder'|translate }}"/> <div class="valid-feedback">{{ 'views.new_service.form.service_documents.input.document_url.valid_feedback'|translate }}</div><div class="invalid-feedback">{{ 'views.new_service.form.service_documents.input.document_url.invalid_feedback'|translate }}</div><label class="text-muted">{{ 'views.new_service.form.service_documents.input.document_url.hint'|translate }}</label> </div><div class="form-group"> <label for="document_xpath" class="text-muted">{{ 'views.new_service.form.service_documents.input.document_xpath.label'|translate }}:</label> <input type="text" data-di="' + documentIterator + '" class="form-control" name="document_xpath" placeholder="{{ 'views.new_service.form.service_documents.input.document_xpath.placeholder'|translate }}"/> <div class="valid-feedback">{{ 'views.new_service.form.service_documents.input.document_xpath.valid_feedback'|translate }}</div><div class="invalid-feedback">{{ 'views.new_service.form.service_documents.input.document_xpath.invalid_feedback'|translate }}</div><label class="text-muted">{{ 'views.new_service.form.service_documents.input.document_xpath.hint'|translate|raw }}</label> </div><button type="button" class="btn btn-danger btn-block" data-di="' + documentIterator + '" data-remove="document">{{ 'views.new_service.form.service_documents.button.remove_document.text'|translate }}</button></div>');
             });
             $(document).on('click', '[data-remove="domain"]', function () {
                 $("#domain-" + $(this).data('di')).remove();

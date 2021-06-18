@@ -28,7 +28,7 @@
 {% block content %}
     {{ include("components/navbar.twig") }}
 
-    <div class="jumbotron jumbotron-fluid">
+    <div class="jumbotron jumbotron-fluid mb-4">
         <div class="container text-center">
             <h1 class="display-4">{{ 'views.downloads.title'|translate }}</h1>
             <p class="mt-2">{{ 'views.downloads.jumbotron.text'|translate|raw }}</p>
@@ -46,7 +46,7 @@
                         <h4 class="card-title">
                             {{ "views.downloads.featured.text"|translate }}
                             <p>
-                                <img class="img-responsive" style="max-width: 128px;"
+                                <img alt="Extension" class="img-responsive" style="max-width: 128px;"
                                      src="{{ includeResource(featured.image) }}">
                             </p>
                         </h4>
@@ -101,7 +101,6 @@
                 cache: true,
                 dataType: "script"
             });
-
 
 
             window.ATL_JQ_PAGE_PROPS = $.extend(window.ATL_JQ_PAGE_PROPS, {

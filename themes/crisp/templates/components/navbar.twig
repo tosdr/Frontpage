@@ -22,14 +22,14 @@
                                                        alt="Logo"/></a>
 
         <!-- Toggler/collapsibe Button -->
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <!-- 20x000101 -->
         <!-- Navbar links -->
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
-            <ul class="navbar-nav me-auto">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 {% for item in GLOBALS.navbar %}
                     <li class="nav-item {% if currentPage == item.ID %} active{% endif %}">
                         <a target="{{ item.target }}" class="nav-link {% if currentPage == item.ID %} active{% endif %}"

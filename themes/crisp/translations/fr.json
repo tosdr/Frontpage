@@ -278,5 +278,6 @@
     "components.oauth.authorize.permissions.OAUTH_CAN_SEE_CURATOR_STATUS": "Peut voir si vous êtes un Curator",
     "components.oauth.authorize.permissions.OAUTH_READ_USER": "Peut voir votre identifiant d'Utilisateur",
     "components.oauth.authorize.permissions.OAUTH_CAN_SEE_STAFF_STATUS": "Peut voir si vous êtes un membre du Personnel",
-    "components.oauth.authorize.permissions.OAUTH_CAN_SEE_BOT_STATUS": "Peut voir si vous êtes un bot"
+    "components.oauth.authorize.permissions.OAUTH_CAN_SEE_BOT_STATUS": "Peut voir si vous êtes un bot",
+    "views.frontpage.button.search.text": "Utilisez notre Métamoteur de recherche"
 }

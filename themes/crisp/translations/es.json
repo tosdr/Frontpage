@@ -278,5 +278,6 @@
     "components.oauth.authorize.permissions.OAUTH_CAN_SEE_CURATOR_STATUS": "Puede ver si eres un Curator",
     "components.oauth.authorize.permissions.OAUTH_READ_USER": "Puede ver tu id. de usuario",
     "components.oauth.authorize.permissions.OAUTH_CAN_SEE_STAFF_STATUS": "Puede ver si eres un miembro del Personal",
-    "components.oauth.authorize.permissions.OAUTH_CAN_SEE_BOT_STATUS": "Puede ver si eres un bot"
+    "components.oauth.authorize.permissions.OAUTH_CAN_SEE_BOT_STATUS": "Puede ver si eres un bot",
+    "views.frontpage.button.search.text": "Utiliza nuestro Metabuscador"
 }

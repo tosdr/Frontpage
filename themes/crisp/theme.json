@@ -106,7 +106,7 @@
                     "url": "http://michielbdejong.com/",
                     "github": "michielbdejong",
                     "pgp": "",
-                    "email": "michiel@tosdr.org"
+                    "email": "michiel.dejong@team.tosdr.org"
                 },
                 {
                     "name": "Jan-Christoph Borchardt",
@@ -117,7 +117,7 @@
                     "url": "http://jancborchardt.net/",
                     "github": "jancborchardt",
                     "pgp": "",
-                    "email": "team@tosdr.org"
+                    "email": "jan.borchard@team.tosdr.org"
                 },
                 {
                     "name": "Hugo Roy",
@@ -128,7 +128,7 @@
                     "url": "http://hugoroy.eu/index.en.html",
                     "github": "",
                     "pgp": "",
-                    "email": "hugo@tosdr.org"
+                    "email": "hugo.roy@team.tosdr.org"
                 },
                 {
                     "name": "Ian McGowan",
@@ -138,7 +138,7 @@
                     "description": "Ian received his MA in Forensic Linguistics, the study of language within a legal context, from Cardiff University, investigating consumer motivation behind reading, or not reading, online Terms & Conditions. He is currently living and teaching English in Seville, Spain in addition to contributing to ToS;DR.",
                     "url": "",
                     "pgp": "",
-                    "email": "team@tosdr.org"
+                    "email": "ian.mcgowan@team.tosdr.org"
                 },
                 {
                     "name": "Jimm Stout",
@@ -149,7 +149,7 @@
                     "url": "http://jimmstout.com/",
                     "github": "jimmstout",
                     "pgp": "",
-                    "email": "team@tosdr.org"
+                    "email": "jimm.stout@team.tosdr.org"
                 },
                 {
                     "name": "Suzanne Azmayesh",
@@ -159,7 +159,7 @@
                     "description": "Suzanne does not know what she wants to do with her life, so until then she reads terms of service. (Oh, and she has a law degree.)",
                     "url": "",
                     "pgp": "",
-                    "email": "team@tosdr.org"
+                    "email": "suzanne.azmayesh@team.tosdr.org"
                 },
                 {
                     "name": "Madeline O'Leary",
@@ -170,7 +170,7 @@
                     "url": "",
                     "github": "madoleary",
                     "pgp": "",
-                    "email": "team@tosdr.org"
+                    "email": "madeline.oleary@team.tosdr.org"
                 },
                 {
                     "name": "Vincent Tunru",
@@ -181,7 +181,7 @@
                     "url": "",
                     "github": "",
                     "pgp": "",
-                    "email": "team@tosdr.org"
+                    "email": "vincent.tunru@team.tosdr.org"
                 },
                 {
                     "name": "Christopher Talib",
@@ -192,7 +192,7 @@
                     "url": "",
                     "github": "christalib",
                     "pgp": "",
-                    "email": "team@tosdr.org"
+                    "email": "chris.talib@team.tosdr.org"
                 },
                 {
                     "name": "Evan Mullen",
@@ -203,7 +203,7 @@
                     "url": "",
                     "pgp": "",
                     "github": "Peepo1",
-                    "email": "evan@tosdr.org"
+                    "email": "evan.mullen@team.tosdr.org"
                 },
                 {
                     "name": "Justin Ren&#xE9; Back",
@@ -214,7 +214,7 @@
                     "url": "https://justinback.com",
                     "github": "justinback",
                     "pgp": "B9DAD774.asc",
-                    "email": "justin@tosdr.org"
+                    "email": "justin.back@team.tosdr.org"
                 },
                 {
                     "name": "Guennadi Maximov Cort&#xE9;s",
@@ -225,7 +225,7 @@
                     "url": "",
                     "github": "DrKJeff16",
                     "pgp": "",
-                    "email": "team@tosdr.org"
+                    "email": "guennadi.cortes@team.tosdr.org"
                 }, {
                     "name": "Dmitri Pedersen",
                     "sub": "Privacy Philanthropist",
@@ -235,14 +235,14 @@
                     "url": "",
                     "pgp": "",
                     "github": "pederdm000",
-                    "email": "dmitri@tosdr.org"
+                    "email": "dmitri.pedersen@team.tosdr.org"
                 }, {
                     "name": "Inés Rubio",
                     "sub": "",
                     "image": "/20760.jpg",
                     "description": "Inés Rubio (alias Agnes de Lion) is a teenage girl committed to informing people about their rights online. Strangely enough, she enjoys spending time reading long and tortuous terms of service. She currently resides in France.",
                     "pgp": "",
-                    "email": "ines@tosdr.org"
+                    "email": "ines.rubio@team.tosdr.org"
                 }
             ]
         },

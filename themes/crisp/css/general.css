@@ -150,3 +150,17 @@ body {
   background-color: #e9ecef;
   border-radius: 0.3rem;
 }
+
+.custom-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+}
+
+.card-rounded {
+  border-radius: 1rem !important;
+}

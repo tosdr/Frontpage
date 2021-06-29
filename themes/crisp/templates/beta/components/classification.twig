@@ -1,0 +1,37 @@
+{#
+# Copyright (C) 2021 Justin René Back <justin@tosdr.org>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#}
+
+{% if rating == "good" %}
+    <span class="badge rounded-pill bg-success">
+        <i class="fas fa-arrow-up fa-fw"></i> {% if rating_text is defined %}{{ 'views.classification.point.good'|translate }}{% endif %}
+    </span>
+{% endif %}
+{% if rating == "neutral" %}
+    <span class="badge rounded-pill bg-secondary">
+        <i class="fas fa-circle fa-fw"></i> {% if rating_text is defined %}{{ 'views.classification.point.neutral'|translate }}{% endif %}
+    </span>
+{% endif %}
+{% if rating == "bad" %}
+    <span class="badge rounded-pill bg-warning">
+        <i class="fas fa-arrow-down fa-fw"></i> {% if rating_text is defined %}{{ 'views.classification.point.bad'|translate }}{% endif %}
+    </span>
+{% endif %}
+{% if rating == "blocker" %}
+    <span class="badge bg-danger">
+        <i class="fas fa-times fa-fw"></i> {% if rating_text is defined %}{{ 'views.classification.point.blocker'|translate }}{% endif %}
+    </span>
+{% endif %}

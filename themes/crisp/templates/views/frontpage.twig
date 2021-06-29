@@ -125,7 +125,11 @@
                     {% set colSize = 2 %}
                 {% endif %}
                 {% if PopularServices|length > 0 %}
-                    {% include "components/servicegrid/grid.twig" with {'Services': PopularServices, 'columns': colSize} %}
+                    {% if UNIVERSE >= 2 %}
+                        {% include "beta/components/servicegrid/grid.twig" with {'Services': PopularServices, 'columns': colSize} %}
+                    {% else %}
+                        {% include "components/servicegrid/grid.twig" with {'Services': PopularServices, 'columns': colSize} %}
+                    {% endif %}
                 {% else %}
                     {% include "components/servicegrid/no_service.twig" %}
                 {% endif %}

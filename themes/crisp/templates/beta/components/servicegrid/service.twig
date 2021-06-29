@@ -1,0 +1,68 @@
+{#
+# Copyright (C) 2021 Justin René Back <justin@tosdr.org>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#}
+<div class="col-{{ col }}">
+    <div class="shadow-lg card-rounded custom-card bg-body d-flex h-100">
+        <div class="card-body">
+            <div class="mb-3">
+                <a class="link-unstyled" href="/{{ locale }}/service/{{ service._source.id }}">
+                    <img src="{{ includeResource(service._source.id ~ ".png", false, 's3_logos') }}"
+                         width="64" alt="{{ service._source.name }}"/>
+                    {% if service._source.is_comprehensively_reviewed %}
+                        {% set rating = service._source.rating %}
+                    {% else %}
+                        {% set rating = "N/A" %}
+                    {% endif %}
+                    <span class="fs-3 fw-bold">{{ service._source.name }}</span>
+                    <span class="ml-1">
+                        {% include "components/rating.twig" with {'rating': rating} %}
+                    </span>
+                </a>
+            </div>
+
+            <div class="container">
+
+                {% set count = 0 %}
+                {% for point in getPointsByServiceScored(service._source.id) %}
+                    {% if point.status == "approved" and count < 5 %}
+                        {% set caseDetails = getCase(point.case_id) %}
+
+                        <li data-toggle="tooltip"
+                            title="{{ point.quoteText|striptags|truncateText(300) }}"
+                            class="list-unstyled">
+
+                            <span class="me-2">
+                                {% include "beta/components/classification.twig" with {'rating': caseDetails.classification } %}
+                            </span>
+                            <a class="link-unstyled"
+                               target="_blank"
+                               href="{{ config.phoenix_url }}/points/{{ point.id }}">{{ point.title|truncateText(70) }}</a>
+                        </li>
+
+                        {% set count = count + 1 %}
+                    {% endif %}
+                {% endfor %}
+
+                <a target="_blank" class="float-end"
+                   href="{{ generateLink(config.phoenix_url ~ "/services/" ~ service._source.id, true) }}">
+                    <span class="badge bg-success">
+                        <i class="fas fa-hands-helping"></i> {{ 'components.servicegrid.service.button.expand.text'|translate }}
+                    </span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

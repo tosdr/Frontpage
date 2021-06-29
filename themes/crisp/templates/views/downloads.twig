@@ -86,54 +86,55 @@
     </div>
 {% endblock %}
 {% block scripts %}
-    <script type="text/javascript">
-        $(document).ready(function () {
-            // Requires jQuery!
-            jQuery.ajax({
-                url: "https://tosdr.atlassian.net/s/d41d8cd98f00b204e9800998ecf8427e-T/sb53l8/b/24/e73395c53c3b10fde2303f4bf74ffbf6/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector-embededjs/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector-embededjs.js?locale=en-US&collectorId=176cb88e",
-                type: "get",
-                cache: true,
-                dataType: "script"
-            });
+    {% if not ONLY_TOSDR_ASSETS %}
+        <script type="text/javascript">
+            $(document).ready(function () {
+                // Requires jQuery!
+                jQuery.ajax({
+                    url: "https://tosdr.atlassian.net/s/d41d8cd98f00b204e9800998ecf8427e-T/sb53l8/b/24/e73395c53c3b10fde2303f4bf74ffbf6/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector-embededjs/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector-embededjs.js?locale=en-US&collectorId=176cb88e",
+                    type: "get",
+                    cache: true,
+                    dataType: "script"
+                });
 
-            // Requires jQuery!
-            jQuery.ajax({
-                url: "https://tosdr.atlassian.net/s/d41d8cd98f00b204e9800998ecf8427e-T/sb53l8/b/24/e73395c53c3b10fde2303f4bf74ffbf6/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector-embededjs/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector-embededjs.js?locale=en-US&collectorId=c64f6508",
-                type: "get",
-                cache: true,
-                dataType: "script"
-            });
+                // Requires jQuery!
+                jQuery.ajax({
+                    url: "https://tosdr.atlassian.net/s/d41d8cd98f00b204e9800998ecf8427e-T/sb53l8/b/24/e73395c53c3b10fde2303f4bf74ffbf6/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector-embededjs/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector-embededjs.js?locale=en-US&collectorId=c64f6508",
+                    type: "get",
+                    cache: true,
+                    dataType: "script"
+                });
 
 
-            window.ATL_JQ_PAGE_PROPS = $.extend(window.ATL_JQ_PAGE_PROPS, {
+                window.ATL_JQ_PAGE_PROPS = $.extend(window.ATL_JQ_PAGE_PROPS, {
 
-                '176cb88e': {
-                    "triggerFunction": function (showCollectorDialog) {
-                        if (window.location.hash && window.location.hash === "#bug") {
-                            showCollectorDialog();
+                    '176cb88e': {
+                        "triggerFunction": function (showCollectorDialog) {
+                            if (window.location.hash && window.location.hash === "#bug") {
+                                showCollectorDialog();
+                            }
+
+                            jQuery("#reportbug").click(function (e) {
+                                e.preventDefault();
+                                showCollectorDialog();
+                            });
                         }
+                    },
+                    'c64f6508': {
+                        "triggerFunction": function (showCollectorDialog) {
+                            if (window.location.hash && window.location.hash === "#feature") {
+                                showCollectorDialog();
+                            }
 
-                        jQuery("#reportbug").click(function (e) {
-                            e.preventDefault();
-                            showCollectorDialog();
-                        });
-                    }
-                },
-                'c64f6508': {
-                    "triggerFunction": function (showCollectorDialog) {
-                        if (window.location.hash && window.location.hash === "#feature") {
-                            showCollectorDialog();
+                            jQuery("#suggestfeature").click(function (e) {
+                                e.preventDefault();
+                                showCollectorDialog();
+                            });
                         }
-
-                        jQuery("#suggestfeature").click(function (e) {
-                            e.preventDefault();
-                            showCollectorDialog();
-                        });
                     }
-                }
+                });
             });
-        });
 
-
-    </script>
+        </script>
+    {% endif %}
 {% endblock %}

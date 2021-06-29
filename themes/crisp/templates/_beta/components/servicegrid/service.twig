@@ -41,7 +41,7 @@
                         {% set caseDetails = getCase(point.case_id) %}
 
                         <li data-toggle="tooltip"
-                            title="{{ point.quoteText|striptags|truncateText(300) }}"
+                            title="{% if isMobile %}{{ point.title }}{% else %}{{ point.quoteText|striptags|truncateText(300) }}{% endif %}"
                             class="list-unstyled text-truncate">
 
                             <span class="position-relative">

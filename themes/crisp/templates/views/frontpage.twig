@@ -34,7 +34,7 @@
                     {% set Logo = includeResource("tosdr-logo-128-w.svg", false, 's3_branding') %}
                 {% endif %}
                 <h1 class="display-4"><img class="img-fluid" src="{{ Logo }}" alt="Logo"/></h1>
-                <h2 class="mt-2">{{ 'views.frontpage.jumbotron.text'|translate }}</h2>
+                <h2 class="mt-2">{{ 'views.frontpage.jumbotron.text'|translate|raw }}</h2>
             </div>
         </div>
 
@@ -126,11 +126,7 @@
                     {% set colSize = 2 %}
                 {% endif %}
                 {% if PopularServices|length > 0 %}
-                    {% if UNIVERSE >= 2 %}
-                        {% include "beta/components/servicegrid/grid.twig" with {'Services': PopularServices, 'columns': colSize} %}
-                    {% else %}
-                        {% include "components/servicegrid/grid.twig" with {'Services': PopularServices, 'columns': colSize} %}
-                    {% endif %}
+                    {% include "components/servicegrid/grid.twig" with {'Services': PopularServices, 'columns': colSize} %}
                 {% else %}
                     {% include "components/servicegrid/no_service.twig" %}
                 {% endif %}

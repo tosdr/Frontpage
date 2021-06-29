@@ -21,6 +21,7 @@ namespace crisp\core;
 
 use crisp\api\Helper;
 use crisp\exceptions\BitmaskException;
+use crisp\Universe;
 use Twig\Environment;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
@@ -86,23 +87,32 @@ class Theme
         $this->CurrentPage = $CurrentPage;
 
 
-        if (CURRENT_UNIVERSE >= 2 && Helper::templateExists(\crisp\api\Config::get('theme'), "/_beta/views/$CurrentPage.twig")) {
-            if (file_exists(__DIR__ . '/../../../../' . \crisp\api\Config::get('theme_dir') . '/' . \crisp\api\Config::get('theme') . "/includes/_beta/$CurrentPage.php")) {
+        if (CURRENT_UNIVERSE === Universe::UNIVERSE_BETA && Helper::templateExists(\crisp\api\Config::get('theme'), "/_beta/views/$CurrentPage.twig") && file_exists(__DIR__ . '/../../../../' . \crisp\api\Config::get('theme_dir') . '/' . \crisp\api\Config::get('theme') . "/includes/_beta/$CurrentPage.php")) {
 
-                require __DIR__ . '/../../../../' . \crisp\api\Config::get('theme_dir') . '/' . \crisp\api\Config::get('theme') . "/includes/_beta/$CurrentPage.php";
+            require __DIR__ . '/../../../../' . \crisp\api\Config::get('theme_dir') . '/' . \crisp\api\Config::get('theme') . "/includes/_beta/$CurrentPage.php";
 
-                $_vars = ($_vars ?? []);
-                $_vars['template'] = $this;
+            $_vars = ($_vars ?? []);
+            $_vars['template'] = $this;
 
 
-                $GLOBALS['microtime']['logic']['end'] = microtime(true);
-                $GLOBALS['microtime']['template']['start'] = microtime(true);
-                $TwigTheme->addGlobal('LogicMicroTime', ($GLOBALS['microtime']['logic']['end'] - $GLOBALS['microtime']['logic']['start']));
-                header('X-CMS-LogicTime: ' . ($GLOBALS['microtime']['logic']['end'] - $GLOBALS['microtime']['logic']['start']));
-                echo $TwigTheme->render("/_beta/views/$CurrentPage.twig", $_vars);
-            } else {
-                throw new BitmaskException('Failed to load beta template ' . $this->CurrentPage . ': Missing includes file', Bitmask::THEME_MISSING_INCLUDES);
-            }
+            $GLOBALS['microtime']['logic']['end'] = microtime(true);
+            $GLOBALS['microtime']['template']['start'] = microtime(true);
+            $TwigTheme->addGlobal('LogicMicroTime', ($GLOBALS['microtime']['logic']['end'] - $GLOBALS['microtime']['logic']['start']));
+            header('X-CMS-LogicTime: ' . ($GLOBALS['microtime']['logic']['end'] - $GLOBALS['microtime']['logic']['start']));
+            echo $TwigTheme->render("/_beta/views/$CurrentPage.twig", $_vars);
+        } else if (CURRENT_UNIVERSE === Universe::UNIVERSE_DEV && Helper::templateExists(\crisp\api\Config::get('theme'), "/_dev/views/$CurrentPage.twig") && file_exists(__DIR__ . '/../../../../' . \crisp\api\Config::get('theme_dir') . '/' . \crisp\api\Config::get('theme') . "/includes/_dev/$CurrentPage.php")) {
+
+            require __DIR__ . '/../../../../' . \crisp\api\Config::get('theme_dir') . '/' . \crisp\api\Config::get('theme') . "/includes/_dev/$CurrentPage.php";
+
+            $_vars = ($_vars ?? []);
+            $_vars['template'] = $this;
+
+
+            $GLOBALS['microtime']['logic']['end'] = microtime(true);
+            $GLOBALS['microtime']['template']['start'] = microtime(true);
+            $TwigTheme->addGlobal('LogicMicroTime', ($GLOBALS['microtime']['logic']['end'] - $GLOBALS['microtime']['logic']['start']));
+            header('X-CMS-LogicTime: ' . ($GLOBALS['microtime']['logic']['end'] - $GLOBALS['microtime']['logic']['start']));
+            echo $TwigTheme->render("/_dev/views/$CurrentPage.twig", $_vars);
         } else if (Helper::templateExists(\crisp\api\Config::get('theme'), "/views/$CurrentPage.twig")) {
 
             if (file_exists(__DIR__ . '/../../../../' . \crisp\api\Config::get('theme_dir') . '/' . \crisp\api\Config::get('theme') . "/includes/$CurrentPage.php") && Helper::templateExists(\crisp\api\Config::get('theme'), "/views/$CurrentPage.twig")) {

@@ -21,11 +21,11 @@
 
 
 
-{% extends "_beta/base.twig" %}
+{% extends "base.twig" %}
 
 {% block content %}
     {% if not SIMPLE %}
-        {{ include("_beta/components/navbar.twig") }}
+        {{ include("_dev/components/navbar.twig") }}
         <div class="jumbotron jumbotron-fluid">
             <div class="container text-center">
                 <h2 class="mt-2"><i
@@ -88,7 +88,7 @@
                     {% set colSize = 2 %}
                 {% endif %}
                 {% if AllServices|length > 0 %}
-                    {% include "_beta/components/servicegrid/grid.twig" with {'Services': OneToFour, 'columns': colSize} %}
+                    {% include "_dev/components/servicegrid/grid.twig" with {'Services': OneToFour, 'columns': colSize} %}
                     <div class="jumbotron jumbotron-fluid mb-4 bg-success text-white">
                         <div class="container text-center">
                             <h2 class="mt-2">{{ 'views.frontpage.call_to_action.install'|translate }}</h2>
@@ -96,7 +96,7 @@
                                href="{{ generateLink("downloads") }}">{{ 'views.frontpage.button.download.text'|translate }}</a>
                         </div>
                     </div>
-                    {% include "_beta/components/servicegrid/grid.twig" with {'Services': FiveToSeven, 'columns': colSize} %}
+                    {% include "_dev/components/servicegrid/grid.twig" with {'Services': FiveToSeven, 'columns': colSize} %}
                     <div class="jumbotron jumbotron-fluid mb-4 bg-warning">
                         <div class="container text-center">
                             <h2 class="mt-2">{{ 'views.frontpage.call_to_action.contribute'|translate }}</h2>
@@ -104,7 +104,7 @@
                                href="{{ generateLink(config.phoenix_url, true) }}">{{ 'views.frontpage.button.phoenix.text'|translate }}</a>
                         </div>
                     </div>
-                    {% include "_beta/components/servicegrid/grid.twig" with {'Services': ElevenToFourteen, 'columns': colSize} %}
+                    {% include "_dev/components/servicegrid/grid.twig" with {'Services': ElevenToFourteen, 'columns': colSize} %}
                     <div class="jumbotron jumbotron-fluid mb-4 bg-danger text-white">
                         <div class="container text-center">
                             <div>
@@ -115,7 +115,7 @@
                                href="{{ generateLink("donate") }}">{{ 'views.frontpage.button.donate.text'|translate }}</a>
                         </div>
                     </div>
-                    {% include "_beta/components/servicegrid/grid.twig" with {'Services': RestServices, 'columns': colSize} %}
+                    {% include "_dev/components/servicegrid/grid.twig" with {'Services': RestServices, 'columns': colSize} %}
                     <div class="jumbotron jumbotron-fluid mb-4 bg-secondary text-white">
                         <div class="container text-center">
                             <h2 class="mt-2">{{ 'views.frontpage.call_to_action.code'|translate }}</h2>
@@ -124,7 +124,7 @@
                         </div>
                     </div>
                 {% else %}
-                    {% include "_beta/components/servicegrid/no_service.twig" %}
+                    {% include "_dev/components/servicegrid/no_service.twig" %}
                 {% endif %}
             </section>
 

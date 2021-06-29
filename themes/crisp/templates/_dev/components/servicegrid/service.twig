@@ -60,12 +60,21 @@
                     {% endif %}
                 {% endfor %}
 
-                <a target="_blank" class="float-end"
-                   href="{{ generateLink(config.phoenix_url ~ "/services/" ~ service._source.id, true) }}">
+                {% if embed is not defined %}
+                    <a target="_blank" class="float-end"
+                       href="{{ generateLink(config.phoenix_url ~ "/services/" ~ service._source.id, true) }}">
                     <span class="badge bg-secondary">
                         <i class="fas fa-hands-helping"></i> {{ 'components.servicegrid.service.button.expand.text'|translate }}
                     </span>
-                </a>
+                    </a>
+                {% else %}
+                    <a target="_blank" class="float-end"
+                       href="{{ generateLink(config.root_url, true) }}">
+                    <span class="badge bg-dark">
+                        {{ 'embed.powered_by'|translate }} {{ config.powered_by|raw }}
+                    </span>
+                    </a>
+                {% endif %}
             </div>
         </div>
     </div>

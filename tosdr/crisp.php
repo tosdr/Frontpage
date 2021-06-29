@@ -193,6 +193,7 @@ try {
         $TwigTheme->addGlobal('POST', $_POST);
         $TwigTheme->addGlobal('SERVER', $_SERVER);
         $TwigTheme->addGlobal('GLOBALS', $GLOBALS);
+        $TwigTheme->addGlobal('ONLY_TOSDR_ASSETS', isset($_SERVER['HTTP_DNT']));
         if(isset($_notice)){
             $TwigTheme->addGlobal('Notice', $_notice);
         }

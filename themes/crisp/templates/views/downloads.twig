@@ -32,7 +32,8 @@
         <div class="container text-center">
             <h1 class="display-4">{{ 'views.downloads.title'|translate }}</h1>
             <p class="mt-2">{{ 'views.downloads.jumbotron.text'|translate|raw }}</p>
-            <span>
+            {% if not ONLY_TOSDR_ASSETS %}
+                <span>
                 <button id="reportbug" role="button"
                         class="btn btn-warning"><i
                             class="fas fa-bug"></i> {{ 'views.downloads.reportbug'|translate }}</button>
@@ -40,6 +41,7 @@
                         class="btn btn-success"><i
                             class="fas fa-lightbulb"></i> {{ 'views.downloads.suggestfeature'|translate }}</button>
             </span>
+            {% endif %}
             {% if featured is not null %}
                 <div class="card h-100">
                     <div class="card-body d-flex flex-column">

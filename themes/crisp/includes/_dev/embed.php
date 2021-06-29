@@ -19,7 +19,7 @@
 
 use crisp\api\Phoenix;
 
-if(!defined('CRISP_COMPONENT')){
+if (!defined('CRISP_COMPONENT')) {
     echo 'Cannot access this component directly!';
     exit;
 }
@@ -28,11 +28,14 @@ if (!isset($GLOBALS['route']->GET['q'])) {
     header('Location: /');
     exit;
 }
+
+$max = (isset($_GET['max']) && is_numeric($_GET['max']) && $_GET['max'] >= 7 && $_GET['max'] <= 50 ? $_GET['max'] : null);
+
 try {
     if (is_numeric($GLOBALS['route']->GET['q'])) {
-        $_vars = ['service' => Phoenix::getService($GLOBALS['route']->GET['q'])];
+        $_vars = ['service' => Phoenix::getService($GLOBALS['route']->GET['q']), 'max' => $max];
     } else {
-        $_vars = ['service' => Phoenix::getServiceByName(urldecode($GLOBALS['route']->GET['q']))];
+        $_vars = ['service' => Phoenix::getServiceByName(urldecode($GLOBALS['route']->GET['q'])), 'max' => $max];
     }
 } catch (Exception $ex) {
     header('Location: /');

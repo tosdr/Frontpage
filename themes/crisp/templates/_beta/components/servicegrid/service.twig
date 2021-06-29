@@ -37,7 +37,7 @@
 
                 {% set count = 0 %}
                 {% for point in getPointsByServiceScored(service._source.id) %}
-                    {% if point.status == "approved" and count < 5 %}
+                    {% if point.status == "approved" and count < 7 %}
                         {% set caseDetails = getCase(point.case_id) %}
 
                         <li data-toggle="tooltip"

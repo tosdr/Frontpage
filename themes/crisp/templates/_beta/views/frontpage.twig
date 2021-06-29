@@ -28,7 +28,8 @@
         {{ include("_beta/components/navbar.twig") }}
         <div class="jumbotron jumbotron-fluid">
             <div class="container text-center">
-                <h2 class="mt-2"><i class="far fa-check-square"></i> {{ 'views.frontpage.jumbotron.text'|translate|raw }}</h2>
+                <h2 class="mt-2"><i
+                            class="far fa-check-square"></i> {{ 'views.frontpage.jumbotron.text'|translate|raw }}</h2>
             </div>
         </div>
 
@@ -36,18 +37,6 @@
         <div class="container">
             &nbsp;
             <!-- 0x000105 -->
-            &nbsp;
-            <div class="btn-group d-flex" role="group">
-                <a role="button" class="btn btn-success btn-lg w-100 mb-2"
-                   href="{{ generateLink("downloads") }}">{{ 'views.frontpage.button.download.text'|translate }}</a>
-                <a role="button" target="_blank" class="btn btn-warning btn-lg w-100 mb-2"
-                   href="{{ generateLink(config.phoenix_url, true) }}">{{ 'views.frontpage.button.phoenix.text'|translate }}</a>
-                <a role="button" target="_blank" class="btn btn-danger btn-lg w-100 mb-2"
-                   href="{{ generateLink(config.forum_url, true) }}">{{ 'views.frontpage.button.forum.text'|translate }}</a>
-                <a role="button" target="_blank" class="btn btn-secondary btn-lg w-100 mb-2"
-                   href="{{ generateLink(config.searx_url, true) }}">{{ 'views.frontpage.button.search.text'|translate }}</a>
-            </div>
-
             <section>
                 <div id="news-section mt-5" class="text-center">
                     <a class="mx-3"
@@ -98,12 +87,42 @@
                 {% else %}
                     {% set colSize = 2 %}
                 {% endif %}
-                {% if PopularServices|length > 0 %}
-                    {% if UNIVERSE >= 2 %}
-                        {% include "_beta/components/servicegrid/grid.twig" with {'Services': PopularServices, 'columns': colSize} %}
-                    {% else %}
-                        {% include "_beta/components/servicegrid/grid.twig" with {'Services': PopularServices, 'columns': colSize} %}
-                    {% endif %}
+                {% if AllServices|length > 0 %}
+                    {% include "_beta/components/servicegrid/grid.twig" with {'Services': OneToFour, 'columns': colSize} %}
+                    <div class="jumbotron jumbotron-fluid mb-4 bg-success text-white">
+                        <div class="container text-center">
+                            <h2 class="mt-2">{{ 'views.frontpage.call_to_action.install'|translate }}</h2>
+                            <a role="button" class="btn btn-lg w-100 mb-2 btn-outline-light"
+                               href="{{ generateLink("downloads") }}">{{ 'views.frontpage.button.download.text'|translate }}</a>
+                        </div>
+                    </div>
+                    {% include "_beta/components/servicegrid/grid.twig" with {'Services': FiveToSeven, 'columns': colSize} %}
+                    <div class="jumbotron jumbotron-fluid mb-4 bg-warning">
+                        <div class="container text-center">
+                            <h2 class="mt-2">{{ 'views.frontpage.call_to_action.contribute'|translate }}</h2>
+                            <a role="button" class="btn btn-lg w-100 mb-2 btn-outline-light text-dark"
+                               href="{{ generateLink(config.phoenix_url, true) }}">{{ 'views.frontpage.button.phoenix.text'|translate }}</a>
+                        </div>
+                    </div>
+                    {% include "_beta/components/servicegrid/grid.twig" with {'Services': ElevenToFourteen, 'columns': colSize} %}
+                    <div class="jumbotron jumbotron-fluid mb-4 bg-danger text-white">
+                        <div class="container text-center">
+                            <div>
+                                <i class="fas fa-heart fa-3x"></i>
+                            </div>
+                            <h2 class="mt-2">{{ 'views.frontpage.call_to_action.donate'|translate }}</h2>
+                            <a role="button" class="btn btn-lg w-100 mb-2 btn-outline-light"
+                               href="{{ generateLink("donate") }}">{{ 'views.frontpage.button.donate.text'|translate }}</a>
+                        </div>
+                    </div>
+                    {% include "_beta/components/servicegrid/grid.twig" with {'Services': RestServices, 'columns': colSize} %}
+                    <div class="jumbotron jumbotron-fluid mb-4 bg-secondary text-white">
+                        <div class="container text-center">
+                            <h2 class="mt-2">{{ 'views.frontpage.call_to_action.code'|translate }}</h2>
+                            <a role="button" class="btn btn-lg w-100 mb-2 btn-outline-light"
+                               href="{{ generateLink(config.github_link, true) }}">{{ 'views.frontpage.button.code.text'|translate }}</a>
+                        </div>
+                    </div>
                 {% else %}
                     {% include "_beta/components/servicegrid/no_service.twig" %}
                 {% endif %}

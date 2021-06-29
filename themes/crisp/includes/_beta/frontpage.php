@@ -20,7 +20,7 @@
 use crisp\api\Config;
 use crisp\api\Phoenix;
 
-if(!defined('CRISP_COMPONENT')){
+if (!defined('CRISP_COMPONENT')) {
     echo 'Cannot access this component directly!';
     exit;
 }
@@ -33,9 +33,22 @@ if (!isset($_GET['search'])) {
         $Service = Phoenix::getService($ID);
         $Services[] = $Service;
     }
-}else{
+} else {
     $Services = crisp\api\Phoenix::searchServiceByName(strtolower($_GET['search']));
 }
 
 
-$_vars = ['PopularServices' => $Services];
+$OneToFour = array_slice($Services, 0, 4);
+$FiveToSeven = array_slice(array_slice($Services, 0, 8), 4);
+$EightToEleven = array_slice(array_slice($Services, 0, 12), 8);
+$ElevenToFourteen = array_slice(array_slice($Services, 0, 16), 12);
+$Rest = array_slice($Services, 16);
+
+$_vars = [
+    'AllServices' => $Services,
+    'RestServices' => $Rest,
+    'OneToFour' => $OneToFour,
+    'FiveToSeven' => $FiveToSeven,
+    'EightToEleven' => $EightToEleven,
+    'ElevenToFourteen' => $ElevenToFourteen
+];

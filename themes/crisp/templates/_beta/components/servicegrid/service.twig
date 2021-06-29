@@ -18,9 +18,9 @@
     <div class="shadow-lg card-rounded custom-card bg-body d-flex h-100">
         <div class="card-body">
             <div class="mb-3">
-                <a class="link-unstyled" href="/{{ locale }}/service/{{ service._source.id }}">
+                <a class="link-unstyled ms-3" href="/{{ locale }}/service/{{ service._source.id }}">
                     <img src="{{ includeResource(service._source.id ~ ".png", false, 's3_logos') }}"
-                         width="64" alt="{{ service._source.name }}"/>
+                         width="48" alt="{{ service._source.name }}"/>
                     {% if service._source.is_comprehensively_reviewed %}
                         {% set rating = service._source.rating %}
                     {% else %}
@@ -46,7 +46,7 @@
 
                             <span class="position-relative">
                                 <span class="me-2">
-                                    {% include "beta/components/classification.twig" with {'rating': caseDetails.classification } %}
+                                    {% include "_beta/components/classification.twig" with {'rating': caseDetails.classification } %}
                                 </span>
 
                                 <a class="link-unstyled align-top"

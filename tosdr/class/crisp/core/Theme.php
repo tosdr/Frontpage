@@ -30,7 +30,8 @@ use Twig\Error\SyntaxError;
  * Used internally, plugin loader
  *
  */
-class Theme {
+class Theme
+{
 
     use Hook;
 
@@ -47,22 +48,22 @@ class Theme {
      * @param int $Order The order to appear on the navbar
      * @param string $Placement Placed left or right of the navbar if supported by theme
      * @return boolean
-     *@see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#target Link Target
+     * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#target Link Target
      */
-    public static function addToNavbar(string $ID, string $Text, string $Link, string $Target = "_self", int $Order = 0, string $Placement = "left"): bool
+    public static function addToNavbar(string $ID, string $Text, string $Link, string $Target = '_self', int $Order = 0, string $Placement = 'left'): bool
     {
-        if ($Placement == "right") {
+        if ($Placement == 'right') {
 
-            $GLOBALS["navbar_right"][$ID] = array("ID" => $ID, "html" => $Text, "href" => $Link, "target" => $Target, "order" => $Order);
+            $GLOBALS['navbar_right'][$ID] = array('ID' => $ID, 'html' => $Text, 'href' => $Link, 'target' => $Target, 'order' => $Order);
 
-            usort($GLOBALS["navbar_right"], function($a, $b) {
+            usort($GLOBALS['navbar_right'], function ($a, $b) {
                 return $a['order'] <=> $b['order'];
             });
             return true;
         }
-        $GLOBALS["navbar"][$ID] = array("ID" => $ID, "html" => $Text, "href" => $Link, "target" => $Target, "order" => $Order);
+        $GLOBALS['navbar'][$ID] = array('ID' => $ID, 'html' => $Text, 'href' => $Link, 'target' => $Target, 'order' => $Order);
 
-        usort($GLOBALS["navbar"], function($a, $b) {
+        usort($GLOBALS['navbar'], function ($a, $b) {
             return $a['order'] <=> $b['order'];
         });
         return true;
@@ -78,28 +79,48 @@ class Theme {
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    public function __construct(Environment $TwigTheme, string $CurrentFile, string $CurrentPage) {
+    public function __construct(Environment $TwigTheme, string $CurrentFile, string $CurrentPage)
+    {
         $this->TwigTheme = $TwigTheme;
         $this->CurrentFile = $CurrentFile;
         $this->CurrentPage = $CurrentPage;
-        if (Helper::templateExists(\crisp\api\Config::get("theme"), "/views/$CurrentPage.twig")) {
 
-            if (file_exists(__DIR__ . "/../../../../" . \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") . "/includes/$CurrentPage.php") && Helper::templateExists(\crisp\api\Config::get("theme"), "/views/$CurrentPage.twig")) {
 
-                require __DIR__ . "/../../../../" . \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") . "/includes/$CurrentPage.php";
+        if (CURRENT_UNIVERSE >= 2 && Helper::templateExists(\crisp\api\Config::get('theme'), "/_beta/views/$CurrentPage.twig")) {
+            if (file_exists(__DIR__ . '/../../../../' . \crisp\api\Config::get('theme_dir') . '/' . \crisp\api\Config::get('theme') . "/includes/_beta/$CurrentPage.php")) {
+
+                require __DIR__ . '/../../../../' . \crisp\api\Config::get('theme_dir') . '/' . \crisp\api\Config::get('theme') . "/includes/_beta/$CurrentPage.php";
 
                 $_vars = ($_vars ?? []);
-                $_vars["template"] = $this;
+                $_vars['template'] = $this;
 
 
-                $GLOBALS["microtime"]["logic"]["end"] = microtime(true);
-                $GLOBALS["microtime"]["template"]["start"] = microtime(true);
-                $TwigTheme->addGlobal("LogicMicroTime", ($GLOBALS["microtime"]["logic"]["end"] - $GLOBALS["microtime"]["logic"]["start"]));
-                header("X-CMS-LogicTime: " . ($GLOBALS["microtime"]["logic"]["end"] - $GLOBALS["microtime"]["logic"]["start"]));
+                $GLOBALS['microtime']['logic']['end'] = microtime(true);
+                $GLOBALS['microtime']['template']['start'] = microtime(true);
+                $TwigTheme->addGlobal('LogicMicroTime', ($GLOBALS['microtime']['logic']['end'] - $GLOBALS['microtime']['logic']['start']));
+                header('X-CMS-LogicTime: ' . ($GLOBALS['microtime']['logic']['end'] - $GLOBALS['microtime']['logic']['start']));
+                echo $TwigTheme->render("/_beta/views/$CurrentPage.twig", $_vars);
+            } else {
+                throw new BitmaskException('Failed to load beta template ' . $this->CurrentPage . ': Missing includes file', Bitmask::THEME_MISSING_INCLUDES);
+            }
+        } else if (Helper::templateExists(\crisp\api\Config::get('theme'), "/views/$CurrentPage.twig")) {
+
+            if (file_exists(__DIR__ . '/../../../../' . \crisp\api\Config::get('theme_dir') . '/' . \crisp\api\Config::get('theme') . "/includes/$CurrentPage.php") && Helper::templateExists(\crisp\api\Config::get('theme'), "/views/$CurrentPage.twig")) {
+
+                require __DIR__ . '/../../../../' . \crisp\api\Config::get('theme_dir') . '/' . \crisp\api\Config::get('theme') . "/includes/$CurrentPage.php";
+
+                $_vars = ($_vars ?? []);
+                $_vars['template'] = $this;
+
+
+                $GLOBALS['microtime']['logic']['end'] = microtime(true);
+                $GLOBALS['microtime']['template']['start'] = microtime(true);
+                $TwigTheme->addGlobal('LogicMicroTime', ($GLOBALS['microtime']['logic']['end'] - $GLOBALS['microtime']['logic']['start']));
+                header('X-CMS-LogicTime: ' . ($GLOBALS['microtime']['logic']['end'] - $GLOBALS['microtime']['logic']['start']));
                 echo $TwigTheme->render("views/$CurrentPage.twig", $_vars);
             }
         } else {
-            throw new BitmaskException("Failed to load template " . $this->CurrentPage . ": Missing includes file", Bitmask::THEME_MISSING_INCLUDES);
+            throw new BitmaskException('Failed to load template ' . $this->CurrentPage . ': Missing includes file', Bitmask::THEME_MISSING_INCLUDES);
         }
     }
 

@@ -15,26 +15,20 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #}
 
-
 {% set currentPage = 'frontpage' %}
 {% set pageTitle = 'views.frontpage.title'|translate %}
 {% set error = false %}
 
 
 
-{% extends "base.twig" %}
+{% extends "_beta/base.twig" %}
 
 {% block content %}
     {% if not SIMPLE %}
-        {{ include("components/navbar.twig") }}
+        {{ include("_beta/components/navbar.twig") }}
         <div class="jumbotron jumbotron-fluid">
             <div class="container text-center">
-                {% set Logo = includeResource("tosdr-logo-128.svg", false, 's3_branding') %}
-                {% if THEME_MODE == "dark" %}
-                    {% set Logo = includeResource("tosdr-logo-128-w.svg", false, 's3_branding') %}
-                {% endif %}
-                <h1 class="display-4"><img class="img-fluid" src="{{ Logo }}" alt="Logo"/></h1>
-                <h2 class="mt-2">{{ 'views.frontpage.jumbotron.text'|translate }}</h2>
+                <h2 class="mt-2"><i class="far fa-check-square"></i> {{ 'views.frontpage.jumbotron.text'|translate|raw }}</h2>
             </div>
         </div>
 
@@ -81,27 +75,6 @@
                        href="{{ generateLink("https://www.datingnews.com/daters-pulse/tosdr-brings-transparency-to-dating-industry-by-assessing-terms-of-service/", true) }}"
                        style="color:grey;padding:8px">DN</a>
                 </div>
-                <hr>
-                <center>
-                    <div class="btn-group">
-                        <a href="{{ generateLink(config.twitter_link, true) }}" class="btn btn-primary"><i
-                                    class="fab fa-twitter"></i></a>
-                        <a href="{{ generateLink(config.opencollective_url, true) }}" class="btn btn-info"><i
-                                    class="fas fa-donate"></i></a>
-                        <a href="{{ generateLink(config.github_link, true) }}" class="btn btn-dark"><i
-                                    class="fab fa-github"></i></a>
-                        <a href="{{ generateLink(config.discord_link, true) }}"
-                           style="background-color: #7289DA; border-color: #7289DA;" class="btn btn-dark"><i
-                                    class="fab fa-discord"></i></a>
-                        <a href="{{ generateLink(config.reddit_link, true) }}"
-                           style="background-color: #ff4500; border-color: #ff4500;" class="btn btn-dark"><i
-                                    class="fab fa-reddit"></i></a>
-                        <a href="{{ generateLink(config.forum_url, true) }}" class="btn btn-warning"><i
-                                    class="fab fa-discourse"></i></a>
-                        <a href="{{ generateLink(config.wikipedia_link, true) }}" class="btn btn-light"><i
-                                    class="fab fa-wikipedia-w"></i></a>
-                    </div>
-                </center>
             </section>
             &nbsp;
             &nbsp;
@@ -127,12 +100,12 @@
                 {% endif %}
                 {% if PopularServices|length > 0 %}
                     {% if UNIVERSE >= 2 %}
-                        {% include "beta/components/servicegrid/grid.twig" with {'Services': PopularServices, 'columns': colSize} %}
+                        {% include "_beta/components/servicegrid/grid.twig" with {'Services': PopularServices, 'columns': colSize} %}
                     {% else %}
-                        {% include "components/servicegrid/grid.twig" with {'Services': PopularServices, 'columns': colSize} %}
+                        {% include "_beta/components/servicegrid/grid.twig" with {'Services': PopularServices, 'columns': colSize} %}
                     {% endif %}
                 {% else %}
-                    {% include "components/servicegrid/no_service.twig" %}
+                    {% include "_beta/components/servicegrid/no_service.twig" %}
                 {% endif %}
             </section>
 

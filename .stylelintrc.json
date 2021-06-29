@@ -1,5 +1,9 @@
 {
-    "extends": "stylelint-config-standard",
-    "ignoreFiles": ["**/*.min.css"],
-    "indent": 2
+  "extends": "stylelint-config-standard",
+  "ignoreFiles": [
+    "**/*.min.css"
+  ],
+  "rules": {
+    "indentation": null
+  }
 }

@@ -161,6 +161,11 @@ body {
   background-clip: border-box;
 }
 
+.classification-badge {
+  width: 25px;
+  height: 25px;
+}
+
 .card-rounded {
   border-radius: 1rem !important;
 }

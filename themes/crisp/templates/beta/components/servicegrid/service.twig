@@ -26,8 +26,8 @@
                     {% else %}
                         {% set rating = "N/A" %}
                     {% endif %}
-                    <span class="fs-3 fw-bold">{{ service._source.name }}</span>
-                    <span class="ml-1">
+                    <span class="ms-1 fs-3 fw-bold align-middle">{{ service._source.name }}</span>
+                    <span class="ms-1 align-middle">
                         {% include "components/rating.twig" with {'rating': rating} %}
                     </span>
                 </a>
@@ -44,12 +44,16 @@
                             title="{{ point.quoteText|striptags|truncateText(300) }}"
                             class="list-unstyled">
 
-                            <span class="me-2">
-                                {% include "beta/components/classification.twig" with {'rating': caseDetails.classification } %}
+                            <span class="position-relative">
+                                <span class="me-2">
+                                    {% include "beta/components/classification.twig" with {'rating': caseDetails.classification } %}
+                                </span>
+
+                                <a class="link-unstyled align-top"
+                                   target="_blank"
+                                   href="{{ config.phoenix_url }}/points/{{ point.id }}">{{ point.title|truncateText(70) }}</a>
+
                             </span>
-                            <a class="link-unstyled"
-                               target="_blank"
-                               href="{{ config.phoenix_url }}/points/{{ point.id }}">{{ point.title|truncateText(70) }}</a>
                         </li>
 
                         {% set count = count + 1 %}
@@ -58,7 +62,7 @@
 
                 <a target="_blank" class="float-end"
                    href="{{ generateLink(config.phoenix_url ~ "/services/" ~ service._source.id, true) }}">
-                    <span class="badge bg-success">
+                    <span class="badge bg-secondary">
                         <i class="fas fa-hands-helping"></i> {{ 'components.servicegrid.service.button.expand.text'|translate }}
                     </span>
                 </a>

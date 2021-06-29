@@ -16,22 +16,22 @@
 #}
 
 {% if rating == "good" %}
-    <span class="badge rounded-pill bg-success">
-        <i class="fas fa-arrow-up fa-fw"></i> {% if rating_text is defined %}{{ 'views.classification.point.good'|translate }}{% endif %}
+    <span class="badge classification-badge rounded-pill bg-success position-relative">
+        <i class="fas fa-arrow-up fa-fw position-absolute top-50 start-50 translate-middle"></i> {{ rating_text }}
     </span>
 {% endif %}
 {% if rating == "neutral" %}
-    <span class="badge rounded-pill bg-secondary">
-        <i class="fas fa-circle fa-fw"></i> {% if rating_text is defined %}{{ 'views.classification.point.neutral'|translate }}{% endif %}
+    <span class="badge classification-badge rounded-pill bg-secondary position-relative">
+        <i class="fas fa-circle fa-fw position-absolute top-50 start-50 translate-middle"></i> {{ rating_text }}
     </span>
 {% endif %}
 {% if rating == "bad" %}
-    <span class="badge rounded-pill bg-warning">
-        <i class="fas fa-arrow-down fa-fw"></i> {% if rating_text is defined %}{{ 'views.classification.point.bad'|translate }}{% endif %}
+    <span class="badge classification-badge rounded-pill bg-warning position-relative">
+        <i class="fas fa-arrow-down fa-fw position-absolute top-50 start-50 translate-middle"></i> {{ rating_text }}
     </span>
 {% endif %}
 {% if rating == "blocker" %}
-    <span class="badge bg-danger">
-        <i class="fas fa-times fa-fw"></i> {% if rating_text is defined %}{{ 'views.classification.point.blocker'|translate }}{% endif %}
+    <span class="badge classification-badge bg-danger rounded-0 position-relative">
+        <i class="fas fa-times fa-fw position-absolute top-50 start-50 translate-middle"></i> {{ rating_text }}
     </span>
 {% endif %}

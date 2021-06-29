@@ -42,7 +42,7 @@
 
                         <li data-toggle="tooltip"
                             title="{{ point.quoteText|striptags|truncateText(300) }}"
-                            class="list-unstyled">
+                            class="list-unstyled text-truncate">
 
                             <span class="position-relative">
                                 <span class="me-2">
@@ -51,7 +51,7 @@
 
                                 <a class="link-unstyled align-top"
                                    target="_blank"
-                                   href="{{ config.phoenix_url }}/points/{{ point.id }}">{{ point.title|truncateText(70) }}</a>
+                                   href="{{ config.phoenix_url }}/points/{{ point.id }}">{{ point.title }}</a>
 
                             </span>
                         </li>

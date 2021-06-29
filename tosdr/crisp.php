@@ -130,7 +130,27 @@ try {
         define('IS_NATIVE_API', isset($_SERVER['IS_API_ENDPOINT']));
 
         if (isset($_GET['universe'])) {
-            Universe::changeUniverse($_GET['universe']);
+            if($_GET['universe'] === '3'){
+                $authorized = Helper::authorizeAction('universe_dev','comp-staff');
+                if($authorized){
+                    Universe::changeUniverse($_GET['universe']);
+                    $_notice = [
+                        'Icon' => 'fas fa-exclamation',
+                        'Text' => Translation::fetch('universe.switched')
+                    ];
+                }else{
+                    $_notice = [
+                        'Icon' => 'fas fa-exclamation',
+                        'Text' => Translation::fetch('universe.switched.fail')
+                    ];
+                }
+            }else {
+                Universe::changeUniverse($_GET['universe']);
+                $_notice = [
+                    'Icon' => 'fas fa-exclamation',
+                    'Text' => Translation::fetch('universe.switched')
+                ];
+            }
         } elseif (!isset($_COOKIE[core\Config::$Cookie_Prefix . 'universe'])) {
             Universe::changeUniverse(Universe::UNIVERSE_PUBLIC);
         }
@@ -158,14 +178,6 @@ try {
         api\Helper::setLocale();
         $Locale = Helper::getLocale();
 
-        if (CURRENT_UNIVERSE >= Universe::UNIVERSE_BETA) {
-            if (isset($_GET['test_theme_component'])) {
-                core\Themes::setThemeMode($_GET['test_theme_component']);
-            }
-        } else {
-            core\Themes::setThemeMode('0');
-        }
-
         header("X-CMS-CurrentPage: $CurrentPage");
         header("X-CMS-Locale: $Locale");
         header('X-CMS-Universe: ' . CURRENT_UNIVERSE);
@@ -181,6 +193,9 @@ try {
         $TwigTheme->addGlobal('POST', $_POST);
         $TwigTheme->addGlobal('SERVER', $_SERVER);
         $TwigTheme->addGlobal('GLOBALS', $GLOBALS);
+        if(isset($_notice)){
+            $TwigTheme->addGlobal('Notice', $_notice);
+        }
         $TwigTheme->addGlobal('COOKIE', $_COOKIE);
         $TwigTheme->addGlobal('SIMPLE', $Simple);
         $TwigTheme->addGlobal('isMobile', Helper::isMobile());

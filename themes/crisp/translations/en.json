@@ -65,6 +65,8 @@
     "errors.404.page.text": "This page does not exist on ToS;DR, are you sure you entered it correctly?",
     "errors.404.page.title": "Page not found",
     "errors.404.service": "Service not found",
+    "universe.switched": "Universe Successfully switched, please reload the page for changes to take effect!",
+    "universe.switched.fail": "Failed to switch the universe, you do not have enough permissions!",
     "views.about.featured.text": "Extension for your browser",
     "views.about.jumbotron.text.1": "“Terms of Service; Didn't Read” (short: ToS;DR) is a young project started in June 2012 to help fix the “biggest lie on the web”: almost no one really reads the terms of service we agree to all the time.",
     "views.about.jumbotron.text.2": "<strong>Background.</strong> The rough idea behind ToS;DR emerged during the <a href=\"http://events.ccc.de/camp/2011/wiki/ToS;DR\">2011 Chaos Communication Camp</a> near Berlin, with people from <a href=\"http://unhosted.org\">Unhosted</a> a movement to create web apps that give users control over their valuable user data and privacy. In the summer of 2012, <a href=\"http://hugoroy.eu/index.en.html\">Hugo Roy</a> (<a href=\"http://twitter.com/hugoroyd\">@hugoroyd</a>) started the legal analysis and brought the project to life. Since then, more people have joined the team and have contributed through the reviewer community. Ultimately, all the work is transparent and the discussions happen in public. Our work is <a href=\"thanks\">funded</a> by non-profits organisations and individual donations and gets released as <a href=\"http://fsfe.org/about/basics/freesoftware.html\">free software</a> and open data.",

@@ -21,8 +21,10 @@ namespace crisp\api;
 
 use crisp\api\lists\Languages;
 use crisp\core\MySQL;
+use Exception;
 use PDO;
 use stdClass;
+use Stevenmaguire\OAuth2\Client\Provider\Keycloak;
 
 /**
  * Some useful helper functions
@@ -40,6 +42,56 @@ class Helper
         return preg_match('/(android|avantgo|blackberry|bolt|boost|cricket|docomo|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i', $userAgent);
     }
 
+
+    public static function authorizeAction(string $Action, string $RequiredPermission = null)
+    {
+        if (!isset($_SESSION['authorizeActionUrl_' . $Action])) {
+            $_SESSION['authorizeActionUrl_' . $Action] = self::currentURL();
+        }
+        $EnvFile = parse_ini_file(__DIR__ . '/../../../../.env');
+
+        $provider = new Keycloak([
+            'authServerUrl' => $EnvFile['KEYCLOAK_URL'],
+            'realm' => $EnvFile['KEYCLOAK_REALM'],
+            'clientId' => $EnvFile['KEYCLOAK_ID'],
+            'clientSecret' => $EnvFile['KEYCLOAK_SECRET'],
+            'redirectUri' => $_SESSION['authorizeActionUrl_' . $Action],
+        ]);
+
+        if (!isset($_GET['code'])) {
+            $authUrl = $provider->getAuthorizationUrl();
+            $_SESSION['authorizeActionstate_' . $Action] = $provider->getState();
+
+            header('Location: ' . $authUrl);
+            exit;
+        }
+
+
+        if (empty($_GET['state']) || ($_GET['state'] !== $_SESSION['authorizeActionstate_' . $Action])) {
+            unset($_SESSION['authorizeActionstate_' . $Action], $_SESSION['authorizeActionUrl_' . $Action]);
+            return false;
+        }
+
+
+        try {
+            $token = $provider->getAccessToken('authorization_code', [
+                'code' => $_GET['code']
+            ]);
+            unset($_SESSION['authorizeActionstate_' . $Action], $_SESSION['authorizeActionUrl_' . $Action]);
+            if ($RequiredPermission !== null) {
+                $user = $provider->getResourceOwner($token)->toArray();
+
+                return !(!in_array($RequiredPermission, $user['permissions'], true) || !$user['email_verified']);
+            }
+            return true;
+        } catch (Exception) {
+            unset($_SESSION['authorizeActionstate_' . $Action], $_SESSION['authorizeActionUrl_' . $Action]);
+            return false;
+        }
+
+    }
+
+
     /**
      * @param $BitmaskFlag
      * @param null $apikey
@@ -48,7 +100,7 @@ class Helper
     public static function hasApiPermissions($BitmaskFlag, $apikey = null): bool|int
     {
 
-        if($apikey === null){
+        if ($apikey === null) {
             $apikey = self::getApiKey();
         }
 

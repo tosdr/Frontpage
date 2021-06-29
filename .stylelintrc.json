@@ -1,4 +1,5 @@
 {
     "extends": "stylelint-config-standard",
-    "ignoreFiles": ["**/*.min.css"]
+    "ignoreFiles": ["**/*.min.css"],
+    "indent": 2
 }

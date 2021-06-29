@@ -19,18 +19,26 @@
 
 
 {% block content %}
-    {% include "_dev/components/servicegrid/service.twig" with {'service': service } %}
+
+    <style>
+        html, body {
+            height: unset;
+        }
+    </style>
+    <div class="mx-4 mt-4">
+        {% include "_dev/components/servicegrid/service.twig" with {'service': service } %}
+    </div>
 {% endblock %}
 {% block footer %}
 {% endblock %}
 {% block scripts %}
-<script>
+    <script>
 
-    $(function () {
-        $('[data-toggle="tooltip"]').tooltip();
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip();
 
-    });
-</script>
+        });
+    </script>
 {% endblock %}
 {% block extra_scripts %}
 {% endblock %}

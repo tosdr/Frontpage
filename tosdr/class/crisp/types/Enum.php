@@ -63,7 +63,8 @@ abstract class Enum {
     /**
      * @throws ReflectionException
      */
-    public static function validName($name, $strict = false) {
+    public static function validName($name, $strict = false): bool
+    {
         $constants = self::getConstants();
 
         if ($strict) {
@@ -77,7 +78,8 @@ abstract class Enum {
     /**
      * @throws ReflectionException
      */
-    public static function validValue($value, $strict = true) {
+    public static function validValue($value, $strict = true): bool
+    {
         $values = array_values(self::getConstants());
         return in_array($value, $values, $strict);
     }

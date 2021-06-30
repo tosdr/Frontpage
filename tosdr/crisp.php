@@ -174,6 +174,8 @@ try {
             $TwigTheme = new Environment($ThemeLoader, []);
         }
 
+        Experiments::assignAB();
+
 
         api\Helper::setLocale();
         $Locale = Helper::getLocale();
@@ -183,6 +185,9 @@ try {
         header('X-CMS-Universe: ' . CURRENT_UNIVERSE);
         header('X-CMS-Universe-Human: ' . CURRENT_UNIVERSE_NAME);
 
+
+        $TwigTheme->addGlobal('HAS_EXPERIMENT', Experiments::hasAnyExperiment());
+        $TwigTheme->addGlobal('EXPERIMENTS', Experiments::getExperiments());
         $TwigTheme->addGlobal('config', Config::list());
         $TwigTheme->addGlobal('locale', $Locale);
         $TwigTheme->addGlobal('languages', Translation::listLanguages(false));

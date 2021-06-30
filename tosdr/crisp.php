@@ -131,9 +131,18 @@ try {
 
         if (isset($_GET['optin']) && is_numeric($_GET['optin'])) {
             Experiments::optIn($_GET['optin']);
-        }
-        if (isset($_GET['optout']) && is_numeric($_GET['optout'])) {
+            $_notice = [
+                'Icon' => 'fas fa-flask',
+                'Type' => 'warning',
+                'Text' => Translation::fetch('experiment.optin', 1, ['{{ optout }}' => Helper::generateLink('?optout=' . $_GET['optin'])])
+            ];
+        } else if (isset($_GET['optout']) && is_numeric($_GET['optout'])) {
             Experiments::optOut($_GET['optout']);
+            $_notice = [
+                'Icon' => 'fas fa-flask',
+                'Type' => 'warning',
+                'Text' => Translation::fetch('experiment.optout')
+            ];
         }
         if (isset($_GET['universe'])) {
             if ($_GET['universe'] === '3') {

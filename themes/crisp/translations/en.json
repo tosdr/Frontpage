@@ -67,6 +67,8 @@
     "errors.404.service": "Service not found",
     "universe.switched": "Universe Successfully switched, please reload the page for changes to take effect!",
     "embed.powered_by": "Privacy Grades Powered By",
+    "experiment.optin": "WARNING! You have manually joined an experiment. To opt out again <a href=\"{{ optout }}\">Click here</a>.<br>Changes take effect after a page reload.<br><br>The Experiment will last 1 Week.",
+    "experiment.optout": "You have manually left an experiment. Changes take effect after a page reload.<br>You won't be assigned another experiment automatically until the 1 Week cooldown is over.",
     "universe.switched.fail": "Failed to switch the universe, you do not have enough permissions!",
     "views.about.featured.text": "Extension for your browser",
     "views.about.jumbotron.text.1": "“Terms of Service; Didn't Read” (short: ToS;DR) is a young project started in June 2012 to help fix the “biggest lie on the web”: almost no one really reads the terms of service we agree to all the time.",

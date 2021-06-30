@@ -20,6 +20,7 @@
 use crisp\api\Elastic;
 use crisp\core\Bitmask;
 use crisp\core\PluginAPI;
+use crisp\Experiments;
 
 if (!defined('CRISP_COMPONENT')) {
     echo 'Cannot access this component directly!';
@@ -40,6 +41,15 @@ if (!$inputQuery) {
 
 try {
     $services = $ES->search($inputQuery);
+
+    if(Experiments::isActive(Experiments::FRONTPAGE_REDESIGN)){
+
+        PluginAPI::response(Bitmask::REQUEST_SUCCESS + Bitmask::VERSION_DEPRECATED, $inputQuery, [
+            'services' => $services,
+            'grid' => $this->TwigTheme->render('_experiments/FRONTPAGE_REDESIGN/components/servicegrid/grid.twig', ['Services' => $services->hits, 'columns' => 2])
+        ]);
+        exit;
+    }
 
     PluginAPI::response(Bitmask::REQUEST_SUCCESS + Bitmask::VERSION_DEPRECATED, $inputQuery, [
         'services' => $services,

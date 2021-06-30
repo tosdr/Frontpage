@@ -17,8 +17,13 @@
 <div class="col-{{ col }}">
     <div class="shadow-lg card-rounded custom-card bg-body d-flex h-100">
         <div class="card-body">
+            <a href="{{ generateLink('?optout=1') }}">
+                <i class="fas fa-flask float-end text-warning"
+                   data-toggle="tooltip"
+                   title="{{ 'experiment.tooltip'|translate }}"></i>
+            </a>
             <div class="mb-3">
-                <a class="link-unstyled ms-3" href="/{{ locale }}/service/{{ service._source.id }}">
+                <a class="link-unstyled ms-1" href="/{{ locale }}/service/{{ service._source.id }}">
                     <img src="{{ includeResource(service._source.id ~ ".png", false, 's3_logos') }}"
                          width="48" alt="{{ service._source.name }}"/>
                     {% if service._source.is_comprehensively_reviewed %}
@@ -33,7 +38,7 @@
                 </a>
             </div>
 
-            <div class="ms-4">
+            <div class="ms-3">
 
                 {% set count = 0 %}
                 {% for point in getPointsByServiceScored(service._source.id) %}
@@ -45,7 +50,7 @@
                             class="list-unstyled text-truncate">
 
                             <span class="position-relative">
-                                <span class="me-2">
+                                <span class="me-3">
                                     {% include "_experiments/FRONTPAGE_REDESIGN/components/classification.twig" with {'rating': caseDetails.classification } %}
                                 </span>
 
@@ -57,17 +62,32 @@
                         </li>
 
                         {% set count = count + 1 %}
+
+
+                        {% if count == max|default('7') %}
+
+
+                            <li data-toggle="tooltip"
+                                title="{% if isMobile %}{{ point.title }}{% else %}{{ point.quoteText|striptags|truncateText(300) }}{% endif %}"
+                                class="list-unstyled text-truncate">
+
+                            <span class="position-relative">
+                                <span class="me-3">
+                                    {% include "_experiments/FRONTPAGE_REDESIGN/components/classification.twig" with {'rating': 'add' } %}
+                                </span>
+                                <a class="link-unstyled align-top fw-bold"
+                                   target="_blank"
+                                   href="{{ generateLink(config.phoenix_url ~ "/services/" ~ service._source.id, true) }}">{{ 'components.servicegrid.contribute'|translate(1, {'{{ service }}': service._source.name}) }}</a>
+
+                            </span>
+                            </li>
+
+                        {% endif %}
+
                     {% endif %}
                 {% endfor %}
 
-                {% if embed is not defined %}
-                    <a target="_blank" class="float-end"
-                       href="{{ generateLink(config.phoenix_url ~ "/services/" ~ service._source.id, true) }}">
-                    <span class="badge bg-secondary">
-                        <i class="fas fa-hands-helping"></i> {{ 'components.servicegrid.service.button.expand.text'|translate }}
-                    </span>
-                    </a>
-                {% else %}
+                {% if embed is defined %}
                     <a target="_blank" class="float-end"
                        href="{{ generateLink(config.root_url, true) }}">
                     <span class="badge bg-dark">

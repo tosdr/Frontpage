@@ -52,6 +52,7 @@
 			"eth_qr": "{{ config.s3_branding }}/donate/Ethereum.png",
 			"eth_wallet": "0x1E0A6B826972130c2FB590f90BB9D781EaC5C6E5",
 			"doge_qr": "{{ config.s3_branding }}/donate/Dogecoin.png",
+			"experiment_feedback": "https://tosdr.atlassian.net/jira/software/c/projects/CRISP/issues/",
 			"doge_wallet": "DMyp3uiPucq38WyuvxX34fGuP691YMbJeF",
 			"lite_qr": "{{ config.s3_branding }}/donate/Litecoin.png",
 			"lite_wallet": "LZeGdUNzbCEeKZkn2rLQvnZqMcnhL33D1u",

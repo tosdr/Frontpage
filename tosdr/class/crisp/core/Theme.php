@@ -114,7 +114,7 @@ class Theme
             $TwigTheme->addGlobal('LogicMicroTime', ($GLOBALS['microtime']['logic']['end'] - $GLOBALS['microtime']['logic']['start']));
             header('X-CMS-LogicTime: ' . ($GLOBALS['microtime']['logic']['end'] - $GLOBALS['microtime']['logic']['start']));
             echo $TwigTheme->render("/_dev/views/$CurrentPage.twig", $_vars);
-        } else if (Helper::templateExists(\crisp\api\Config::get('theme'), "/views/$CurrentPage.twig") && file_exists(__DIR__ . '/../../../../' . \crisp\api\Config::get('theme_dir') . '/' . \crisp\api\Config::get('theme') . "/includes/$CurrentPage.php")) {
+        } else if (Helper::templateExists(\crisp\api\Config::get('theme'), "_prod/views/$CurrentPage.twig") && file_exists(__DIR__ . '/../../../../' . \crisp\api\Config::get('theme_dir') . '/' . \crisp\api\Config::get('theme') . "/includes/_prod/$CurrentPage.php")) {
             if (Experiments::hasAnyExperiment()) {
 
                 $Experiments = Experiments::getConstants();
@@ -128,8 +128,8 @@ class Theme
                     $ExperimentName = array_search($Experiment, $Experiments, true);
 
 
-                    if ($ExperimentName !== null && Helper::templateExists(\crisp\api\Config::get('theme'), "experiments/$ExperimentName/views/$CurrentPage.twig") && file_exists(__DIR__ . '/../../../../' . \crisp\api\Config::get('theme_dir') . '/' . \crisp\api\Config::get('theme') . "/includes/experiments/$ExperimentName/$CurrentPage.php")) {
-                        require __DIR__ . '/../../../../' . \crisp\api\Config::get('theme_dir') . '/' . \crisp\api\Config::get('theme') . "/includes/experiments/$ExperimentName/$CurrentPage.php";
+                    if ($ExperimentName !== null && Helper::templateExists(\crisp\api\Config::get('theme'), "_experiments/$ExperimentName/views/$CurrentPage.twig") && file_exists(__DIR__ . '/../../../../' . \crisp\api\Config::get('theme_dir') . '/' . \crisp\api\Config::get('theme') . "/includes/_experiments/$ExperimentName/$CurrentPage.php")) {
+                        require __DIR__ . '/../../../../' . \crisp\api\Config::get('theme_dir') . '/' . \crisp\api\Config::get('theme') . "/includes/_experiments/$ExperimentName/$CurrentPage.php";
 
                         $_vars = ($_vars ?? []);
                         $_vars['template'] = $this;
@@ -139,7 +139,7 @@ class Theme
                         $GLOBALS['microtime']['template']['start'] = microtime(true);
                         $TwigTheme->addGlobal('LogicMicroTime', ($GLOBALS['microtime']['logic']['end'] - $GLOBALS['microtime']['logic']['start']));
                         header('X-CMS-LogicTime: ' . ($GLOBALS['microtime']['logic']['end'] - $GLOBALS['microtime']['logic']['start']));
-                        echo $TwigTheme->render("experiments/$ExperimentName/views/$CurrentPage.twig", $_vars);
+                        echo $TwigTheme->render("_experiments/$ExperimentName/views/$CurrentPage.twig", $_vars);
                         $Loaded = true;
                         break;
                     }
@@ -147,7 +147,7 @@ class Theme
 
 
                 if (!$Loaded) {
-                    require __DIR__ . '/../../../../' . \crisp\api\Config::get('theme_dir') . '/' . \crisp\api\Config::get('theme') . "/includes/$CurrentPage.php";
+                    require __DIR__ . '/../../../../' . \crisp\api\Config::get('theme_dir') . '/' . \crisp\api\Config::get('theme') . "/includes/_prod/$CurrentPage.php";
 
                     $_vars = ($_vars ?? []);
                     $_vars['template'] = $this;
@@ -157,12 +157,12 @@ class Theme
                     $GLOBALS['microtime']['template']['start'] = microtime(true);
                     $TwigTheme->addGlobal('LogicMicroTime', ($GLOBALS['microtime']['logic']['end'] - $GLOBALS['microtime']['logic']['start']));
                     header('X-CMS-LogicTime: ' . ($GLOBALS['microtime']['logic']['end'] - $GLOBALS['microtime']['logic']['start']));
-                    echo $TwigTheme->render("views/$CurrentPage.twig", $_vars);
+                    echo $TwigTheme->render("_prod/views/$CurrentPage.twig", $_vars);
                 }
             } else {
 
 
-                require __DIR__ . '/../../../../' . \crisp\api\Config::get('theme_dir') . '/' . \crisp\api\Config::get('theme') . "/includes/$CurrentPage.php";
+                require __DIR__ . '/../../../../' . \crisp\api\Config::get('theme_dir') . '/' . \crisp\api\Config::get('theme') . "/includes/_prod/$CurrentPage.php";
 
                 $_vars = ($_vars ?? []);
                 $_vars['template'] = $this;
@@ -172,7 +172,7 @@ class Theme
                 $GLOBALS['microtime']['template']['start'] = microtime(true);
                 $TwigTheme->addGlobal('LogicMicroTime', ($GLOBALS['microtime']['logic']['end'] - $GLOBALS['microtime']['logic']['start']));
                 header('X-CMS-LogicTime: ' . ($GLOBALS['microtime']['logic']['end'] - $GLOBALS['microtime']['logic']['start']));
-                echo $TwigTheme->render("views/$CurrentPage.twig", $_vars);
+                echo $TwigTheme->render("_prod/views/$CurrentPage.twig", $_vars);
             }
         } else {
             throw new BitmaskException('Failed to load template ' . $this->CurrentPage . ': Missing includes file', Bitmask::THEME_MISSING_INCLUDES);

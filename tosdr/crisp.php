@@ -267,7 +267,7 @@ try {
 
             if (!isset($_SERVER['HTTP_USER_AGENT']) || empty($_SERVER['HTTP_USER_AGENT']) || $_SERVER['HTTP_USER_AGENT'] === 'i am not valid') {
                 http_response_code(403);
-                echo $TwigTheme->render('errors/nginx/403.twig', ['error_msg' => 'Request forbidden by administrative rules. Please make sure your request has a User-Agent header']);
+                echo $TwigTheme->render('_prod/errors/nginx/403.twig', ['error_msg' => 'Request forbidden by administrative rules. Please make sure your request has a User-Agent header']);
                 exit;
             }
 
@@ -333,7 +333,7 @@ try {
                 header('X-APIKey: not-given');
                 if (Helper::hasApiHeaders()) {
                     http_response_code(401);
-                    echo $TwigTheme->render('errors/nginx/401.twig', ['error_msg' => 'Request forbidden by administrative rules. Please make sure your request has a valid Authorization or x-api-key header']);
+                    echo $TwigTheme->render('_prod/errors/nginx/401.twig', ['error_msg' => 'Request forbidden by administrative rules. Please make sure your request has a valid Authorization or x-api-key header']);
                     exit;
                 }
 
@@ -356,7 +356,7 @@ try {
 
             if ($statusSecond->limitExceeded() || $statusHour->limitExceeded() || $statusDay->limitExceeded()) {
                 http_response_code(429);
-                echo $TwigTheme->render('errors/nginx/429.twig', ['error_msg' => 'Request forbidden by administrative rules. You are sending too many requests in a certain timeframe.']);
+                echo $TwigTheme->render('_prod/errors/nginx/429.twig', ['error_msg' => 'Request forbidden by administrative rules. You are sending too many requests in a certain timeframe.']);
                 exit;
             }
 

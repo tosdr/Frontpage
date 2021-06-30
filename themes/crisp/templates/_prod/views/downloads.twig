@@ -1,0 +1,140 @@
+{#
+# Copyright (C) 2021 Justin René Back <justin@tosdr.org>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#}
+
+{% set currentPage = 'downloads' %}
+{% set pageTitle = 'views.downloads.title'|translate %}
+{% set error = false %}
+
+
+
+{% extends "_prod/base.twig" %}
+
+
+
+{% block content %}
+    {{ include("_prod/components/navbar.twig") }}
+
+    <div class="jumbotron jumbotron-fluid mb-4">
+        <div class="container text-center">
+            <h1 class="display-4">{{ 'views.downloads.title'|translate }}</h1>
+            <p class="mt-2">{{ 'views.downloads.jumbotron.text'|translate|raw }}</p>
+            {% if not ONLY_TOSDR_ASSETS %}
+                <span>
+                <button id="reportbug" role="button"
+                        class="btn btn-warning"><i
+                            class="fas fa-bug"></i> {{ 'views.downloads.reportbug'|translate }}</button>
+                <button id="suggestfeature" role="button"
+                        class="btn btn-success"><i
+                            class="fas fa-lightbulb"></i> {{ 'views.downloads.suggestfeature'|translate }}</button>
+            </span>
+            {% endif %}
+            {% if featured is not null %}
+                <div class="card h-100">
+                    <div class="card-body d-flex flex-column">
+                        <h4 class="card-title">
+                            {{ "views.downloads.featured.text"|translate }}
+                            <p>
+                                <img alt="Extension" class="img-responsive" style="max-width: 128px;"
+                                     src="{{ includeResource(featured.image) }}">
+                            </p>
+                        </h4>
+                        <div class="card-text mb-2">
+                            <div class="row">
+                                {{ featured.description|translate|raw }} <!-- 0x000116 -->
+
+                            </div>
+                        </div>
+                        <div class="btn-group d-flex mt-auto" role="group" aria-label="...">
+                            <a target="_blank" href="{{ generateLink(featured.repository, true) }}"
+                               class="btn btn-warning btn-block mt-auto w-100 h-100"><i
+                                        class="fab fa-github"></i> {{ 'views.downloads.featured.source'|translate }}</a>
+                            <a href="{% if featured.direct is defined %}{{ generateLink(featured.direct, true) }}{% else %}{{ generateLink(featured.url, true) }}{% endif %}"
+                               class="btn btn-success btn-block mt-auto w-100 h-100"><i
+                                        class="fas fa-download"></i> {{ 'views.downloads.featured.add'|translate(1, {"{{ browser }}": featured.browser}) }}
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="container-fluid">
+        <section id="team">
+            {% if isMobile == true %}
+                {% set colSize = 1 %}
+            {% else %}
+                {% set colSize = 2 %}
+            {% endif %}
+
+            {% include "_prod/components/extensiongrid/grid.twig" with {'Extensions': extensions, 'columns': colSize} %}
+        </section>
+    </div>
+{% endblock %}
+{% block scripts %}
+    {% if not ONLY_TOSDR_ASSETS %}
+        <script type="text/javascript">
+            $(document).ready(function () {
+                // Requires jQuery!
+                jQuery.ajax({
+                    url: "https://tosdr.atlassian.net/s/d41d8cd98f00b204e9800998ecf8427e-T/sb53l8/b/24/e73395c53c3b10fde2303f4bf74ffbf6/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector-embededjs/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector-embededjs.js?locale=en-US&collectorId=176cb88e",
+                    type: "get",
+                    cache: true,
+                    dataType: "script"
+                });
+
+                // Requires jQuery!
+                jQuery.ajax({
+                    url: "https://tosdr.atlassian.net/s/d41d8cd98f00b204e9800998ecf8427e-T/sb53l8/b/24/e73395c53c3b10fde2303f4bf74ffbf6/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector-embededjs/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector-embededjs.js?locale=en-US&collectorId=c64f6508",
+                    type: "get",
+                    cache: true,
+                    dataType: "script"
+                });
+
+
+                window.ATL_JQ_PAGE_PROPS = $.extend(window.ATL_JQ_PAGE_PROPS, {
+
+                    '176cb88e': {
+                        "triggerFunction": function (showCollectorDialog) {
+                            if (window.location.hash && window.location.hash === "#bug") {
+                                showCollectorDialog();
+                            }
+
+                            jQuery("#reportbug").click(function (e) {
+                                e.preventDefault();
+                                showCollectorDialog();
+                            });
+                        }
+                    },
+                    'c64f6508': {
+                        "triggerFunction": function (showCollectorDialog) {
+                            if (window.location.hash && window.location.hash === "#feature") {
+                                showCollectorDialog();
+                            }
+
+                            jQuery("#suggestfeature").click(function (e) {
+                                e.preventDefault();
+                                showCollectorDialog();
+                            });
+                        }
+                    }
+                });
+            });
+
+        </script>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,79 @@
+{# 
+ # Copyright (C) 2021 Justin René Back <justin@tosdr.org>
+ #
+ # This program is free software: you can redistribute it and/or modify
+ # it under the terms of the GNU General Public License as published by
+ # the Free Software Foundation, either version 3 of the License, or
+ # (at your option) any later version.
+ #
+ # This program is distributed in the hope that it will be useful,
+ # but WITHOUT ANY WARRANTY; without even the implied warranty of
+ # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ # GNU General Public License for more details.
+ #
+ # You should have received a copy of the GNU General Public License
+ # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#}
+
+{% set currentPage = 'bitmask' %}
+{% set pageTitle = 'views.bitmask.title'|translate %}
+{% set error = false %}
+
+
+
+{% extends "_prod/base.twig" %}
+
+{% block content %}
+
+    <style>
+        input[type=checkbox]:checked + label {
+            background-color: lightgreen !important;
+        }
+    </style>
+
+    <div class="container mt-5">
+        <div class="form-group">
+            <label for="bitmask_input">Number</label>
+            <input type="text" class="form-control" id="bitmask_input" placeholder="0">
+        </div>
+        <div id="bitmasks">
+        </div>
+    </div>
+{% endblock %}
+{% block scripts %}
+    <script>
+        let bitmasks = JSON.parse('{{ bitmasks|json_encode|raw }}');
+        let totalHex = 0;
+        for (var entry of Object.entries(bitmasks)) {
+            let name = entry[0];
+            let hex = entry[1];
+            $("#bitmasks").append(`<div class="form-check form-check-inline"><input class="form-check-input" type="checkbox" id="bitmask_${name}" value="${hex}"><label class="form-check-label" for="bitmask_${name}">${name}</label></div>`);
+
+        }
+        $(document).ready(function () {
+            $("input:checkbox").on('click', function () {
+                totalHex = 0;
+                $("input:checkbox").each(function () {
+                    if (this.checked) {
+                        totalHex += Number.parseInt($(this).val());
+                    }
+                });
+                $("#bitmask_input").val(totalHex);
+            });
+            $(':input[type="text"]').on('keyup', function () {
+                let value = this.value;
+                $("input:checkbox").each(function () {
+                    let hex = Number.parseInt($(this).val());
+
+                    if (hex & value) {
+                        $(this).prop('checked', true);
+                    } else {
+                        $(this).prop('checked', false);
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}
+{% block footer %}
+{% endblock %}

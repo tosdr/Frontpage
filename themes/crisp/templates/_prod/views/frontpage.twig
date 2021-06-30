@@ -1,0 +1,172 @@
+{#
+# Copyright (C) 2021 Justin René Back <justin@tosdr.org>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#}
+
+
+{% set currentPage = 'frontpage' %}
+{% set pageTitle = 'views.frontpage.title'|translate %}
+{% set error = false %}
+
+
+
+{% extends "_prod/base.twig" %}
+
+{% block content %}
+    {{ include("_prod/components/navbar.twig") }}
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container text-center">
+            {% set Logo = includeResource("tosdr-logo-128.svg", false, 's3_branding') %}
+            <h1 class="display-4"><img class="img-fluid" src="{{ Logo }}" alt="Logo"/></h1>
+            <h2 class="mt-2">{{ 'views.frontpage.jumbotron.text'|translate|raw }}</h2>
+        </div>
+    </div>
+
+
+    <div class="container">
+        &nbsp;
+        <!-- 0x000105 -->
+        &nbsp;
+        <div class="btn-group d-flex" role="group">
+            <a role="button" class="btn btn-success btn-lg w-100 mb-2"
+               href="{{ generateLink("downloads") }}">{{ 'views.frontpage.button.download.text'|translate }}</a>
+            <a role="button" target="_blank" class="btn btn-warning btn-lg w-100 mb-2"
+               href="{{ generateLink(config.phoenix_url, true) }}">{{ 'views.frontpage.button.phoenix.text'|translate }}</a>
+            <a role="button" target="_blank" class="btn btn-danger btn-lg w-100 mb-2"
+               href="{{ generateLink(config.forum_url, true) }}">{{ 'views.frontpage.button.forum.text'|translate }}</a>
+            <a role="button" target="_blank" class="btn btn-secondary btn-lg w-100 mb-2"
+               href="{{ generateLink(config.searx_url, true) }}">{{ 'views.frontpage.button.search.text'|translate }}</a>
+        </div>
+
+        <section>
+            <div id="news-section mt-5" class="text-center">
+                <a class="mx-3"
+                   href="{{ generateLink("https://moneyland.time.com/2012/08/10/new-site-grades-those-pesky-terms-of-service-agreements-you-never-read/", true) }}"><img
+                            src="{{ includeResource("img/news/time.png") }}" alt="Time"></a>
+                <a class="mx-3"
+                   href="{{ generateLink("https://gigaom.com/2012/08/14/i-agree-why-terms-of-service-report-cards-are-a-good-idea/", true) }}"><img
+                            src="{{ includeResource("img/news/gigaom.gif") }}" alt="GigaOM"></a>
+                <a class="mx-3"
+                   href="{{ generateLink("https://www.theverge.com/2012/8/14/3241572/tos-dr-terms-of-service", true) }}"><img
+                            src="{{ includeResource("img/news/verge.png") }}" alt="The Verge"></a>
+                <a class="mx-3"
+                   href="{{ generateLink("https://www.lemonde.fr/technologies/article/2012/08/14/un-site-veut-mettre-fin-au-mensonge-des-conditions-d-utilisation-sur-internet_1745942_651865.html", true) }}"><img
+                            src="{{ includeResource("img/news/lemondefr.png") }}" alt="Le Monde"></a>
+                <a class="mx-3"
+                   href="{{ generateLink("https://www.zeit.de/digital/internet/2012-08/terms-of-service-did-not-read", true) }}"><img
+                            src="{{ includeResource("img/news/zeit.png") }}" alt="Die Zeit"></a>
+                <a class="mx-3"
+                   href="{{ generateLink("https://www.wired.com/story/terms-of-service-didnt-read/", true) }}"><img
+                            src="{{ includeResource("/img/news/wired.gif") }}" alt="Wired"></a>
+                <a class="mx-3"
+                   href="{{ generateLink("https://www.strategy-business.com/blog/Artificial-Intelligence-Ratings-and-the-Small-Print", true) }}"
+                   style="color:grey;padding:8px">S+B</a>
+                <a class="mx-3"
+                   href="{{ generateLink("https://www.datingnews.com/daters-pulse/tosdr-brings-transparency-to-dating-industry-by-assessing-terms-of-service/", true) }}"
+                   style="color:grey;padding:8px">DN</a>
+            </div>
+            <hr>
+            <center>
+                <div class="btn-group">
+                    <a href="{{ generateLink(config.twitter_link, true) }}" class="btn btn-primary"><i
+                                class="fab fa-twitter"></i></a>
+                    <a href="{{ generateLink(config.opencollective_url, true) }}" class="btn btn-info"><i
+                                class="fas fa-donate"></i></a>
+                    <a href="{{ generateLink(config.github_link, true) }}" class="btn btn-dark"><i
+                                class="fab fa-github"></i></a>
+                    <a href="{{ generateLink(config.discord_link, true) }}"
+                       style="background-color: #7289DA; border-color: #7289DA;" class="btn btn-dark"><i
+                                class="fab fa-discord"></i></a>
+                    <a href="{{ generateLink(config.reddit_link, true) }}"
+                       style="background-color: #ff4500; border-color: #ff4500;" class="btn btn-dark"><i
+                                class="fab fa-reddit"></i></a>
+                    <a href="{{ generateLink(config.forum_url, true) }}" class="btn btn-warning"><i
+                                class="fab fa-discourse"></i></a>
+                    <a href="{{ generateLink(config.wikipedia_link, true) }}" class="btn btn-light"><i
+                                class="fab fa-wikipedia-w"></i></a>
+                </div>
+            </center>
+        </section>
+        &nbsp;
+        &nbsp;
+        &nbsp;
+        &nbsp;
+        &nbsp;
+        <section id="ratings">
+            <input type="text" placeholder="{{ 'views.frontpage.search.input.placeholder'|translate }}"
+                   class="form-control form-control-lg" value="{{ GET.search }}" id="ratingsearch"/>
+            {% include "_prod/components/loadingSpinner.twig" with {'elementID': 'searchLoading'} %}
+        </section>
+        &nbsp;
+        &nbsp;
+        &nbsp;
+        &nbsp;
+        &nbsp;
+        <section id="services">
+
+            {% if isMobile == true %}
+                {% set colSize = 1 %}
+            {% else %}
+                {% set colSize = 2 %}
+            {% endif %}
+            {% if PopularServices|length > 0 %}
+                {% include "_prod/components/servicegrid/grid.twig" with {'Services': PopularServices, 'columns': colSize} %}
+            {% else %}
+                {% include "_prod/components/servicegrid/no_service.twig" %}
+            {% endif %}
+        </section>
+
+
+    </div>
+{% endblock %}
+{% block scripts %}
+    <script>
+
+        function delay(fn, ms) {
+            var timer = 0;
+            return function (args) {
+                clearTimeout(timer);
+                timer = setTimeout(fn.bind(this, args), ms || 0);
+            };
+        }
+
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+
+            $("#ratingsearch").on('keyup', delay(function () {
+                $('body').tooltip('dispose');
+                $("#searchLoading").show();
+                $.get("{{ config.search_url }}?query=" + this.value, function (data) {
+                    $("#services").html(data.parameters.grid);
+                    $("#searchLoading").hide();
+                    $('[data-toggle="tooltip"]').tooltip();
+                });
+            }, 500));
+        });
+
+        // Backwards compability from old.tosdr.org
+        if (window.location.hash && window.location.hash !== "#ratings") {
+            if (window.location.hash.startsWith("#search=")) {
+                window.location.href = "/{{ locale }}/frontpage?search=" + encodeURIComponent(window.location.hash.substr(8));
+            } else {
+
+                // https://stackoverflow.com/a/8896309
+                var url = window.location.href;
+                var exp = url.split(/^(([^:\/?#]+):)?(\/\/([^\/?#]*))?([^?#]*)(\?([^#]*))?(#(.*))?/);
+                window.location.href = "/{{ locale }}/service/" + encodeURIComponent(window.location.hash.substr(1));
+            }
+        }
+    </script>
+{% endblock %}

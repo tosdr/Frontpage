@@ -34,12 +34,12 @@ Theme::addToNavbar('community', crisp\api\Translation::fetch('components.navbar.
 if (explode('/', $_GET['route'])[1] !== 'api') {
     if (Config::get('maintenance_enabled')) {
         http_response_code(503);
-        echo $TwigTheme->render('errors/maintenance.twig');
+        echo $TwigTheme->render('_prod/errors/maintenance.twig');
         exit;
     }
     if (Config::get('highload_enabled') ) {
         http_response_code(503);
-        echo $TwigTheme->render('errors/highload.twig');
+        echo $TwigTheme->render('_prod/errors/highload.twig');
         exit;
     }
 }

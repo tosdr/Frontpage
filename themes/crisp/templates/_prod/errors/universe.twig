@@ -1,0 +1,158 @@
+{# 
+ # Copyright (C) 2021 Justin René Back <justin@tosdr.org>
+ #
+ # This program is free software: you can redistribute it and/or modify
+ # it under the terms of the GNU General Public License as published by
+ # the Free Software Foundation, either version 3 of the License, or
+ # (at your option) any later version.
+ #
+ # This program is distributed in the hope that it will be useful,
+ # but WITHOUT ANY WARRANTY; without even the implied warranty of
+ # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ # GNU General Public License for more details.
+ #
+ # You should have received a copy of the GNU General Public License
+ # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#}
+
+{% extends "_prod/errors/base.twig" %}
+
+{% set currentPage = 'universe' %}
+{% set pageTitle = 'Invalid Universe' %}
+
+
+{% block content %}
+    {# {{ include("components/navbar.twig") }} #}
+
+    <div class="container">
+        <div class="error">
+            <h1>424</h1>
+            <h2>Invalid Universe</h2>
+            <p><i>Missing access codes to the Zion mainframe.</i></p>
+            <p>It seems like that you are on the invalid universe.</p>
+            <p>
+                <span class="badge badge-danger">
+                    <small>
+                        <b>{{ UNIVERSE_NAME }}</b>
+                    </small>
+                </span>
+                <span>
+                    <small>
+                        <
+                    </small>
+                </span>
+                <span class="badge badge-success">
+                    <small>
+                        <b>{{ UNIVERSE_REQUIRED }}</b>
+                    </small>
+                </span>
+            </p>
+            <p>You can help by opening an issue on <a href="https://github.com/tosdr/CrispCMS-ToS-DR/issues/new">GitHub</a> about this!</p>
+        </div>
+        <div class="stack-container">
+            <div class="card-container">
+                <div class="perspec" style="--spreaddist: 125px; --scaledist: .75; --vertdist: -25px;">
+                    <div class="card">
+                        <div class="writing">
+                            <div class="topbar">
+                                <div class="red"></div>
+                                <div class="yellow"></div>
+                                <div class="green"></div>
+                            </div>
+                            <div class="code">
+                                <ul>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-container">
+                <div class="perspec" style="--spreaddist: 100px; --scaledist: .8; --vertdist: -20px;">
+                    <div class="card">
+                        <div class="writing">
+                            <div class="topbar">
+                                <div class="red"></div>
+                                <div class="yellow"></div>
+                                <div class="green"></div>
+                            </div>
+                            <div class="code">
+                                <ul>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-container">
+                <div class="perspec" style="--spreaddist:75px; --scaledist: .85; --vertdist: -15px;">
+                    <div class="card">
+                        <div class="writing">
+                            <div class="topbar">
+                                <div class="red"></div>
+                                <div class="yellow"></div>
+                                <div class="green"></div>
+                            </div>
+                            <div class="code">
+                                <ul>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-container">
+                <div class="perspec" style="--spreaddist: 50px; --scaledist: .9; --vertdist: -10px;">
+                    <div class="card">
+                        <div class="writing">
+                            <div class="topbar">
+                                <div class="red"></div>
+                                <div class="yellow"></div>
+                                <div class="green"></div>
+                            </div>
+                            <div class="code">
+                                <ul>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-container">
+                <div class="perspec" style="--spreaddist: 25px; --scaledist: .95; --vertdist: -5px;">
+                    <div class="card">
+                        <div class="writing">
+                            <div class="topbar">
+                                <div class="red"></div>
+                                <div class="yellow"></div>
+                                <div class="green"></div>
+                            </div>
+                            <div class="code">
+                                <ul>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-container">
+                <div class="perspec" style="--spreaddist: 0px; --scaledist: 1; --vertdist: 0px;">
+                    <div class="card">
+                        <div class="writing">
+                            <div class="topbar">
+                                <div class="red"></div>
+                                <div class="yellow"></div>
+                                <div class="green"></div>
+                            </div>
+                            <div class="code">
+                                <ul>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

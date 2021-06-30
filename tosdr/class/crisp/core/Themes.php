@@ -95,7 +95,7 @@ class Themes
      */
     public static function loadAPI(Environment $ThemeLoader, string $Interface, string $_QUERY): void
     {
-        if (file_exists(__DIR__ . '/../../../../' . \crisp\api\Config::get('theme_dir') . '/' . \crisp\api\Config::get('theme') . "/includes/api/$Interface.php")) {
+        if (file_exists(__DIR__ . '/../../../../' . \crisp\api\Config::get('theme_dir') . '/' . \crisp\api\Config::get('theme') . "/includes/_api/$Interface.php")) {
             new ThemeAPI($ThemeLoader, $Interface, $_QUERY);
         }
     }
@@ -111,14 +111,14 @@ class Themes
 
         try {
             if (count($GLOBALS['render']) === 0) {
-                if (file_exists(__DIR__ . '/../../../../' . \crisp\api\Config::get('theme_dir') . '/' . \crisp\api\Config::get('theme') . "/includes/$CurrentPage.php") && Helper::templateExists(\crisp\api\Config::get('theme'), "/views/$CurrentPage.twig")) {
+                if (file_exists(__DIR__ . '/../../../../' . \crisp\api\Config::get('theme_dir') . '/' . \crisp\api\Config::get('theme') . "/includes/_prod/$CurrentPage.php") && Helper::templateExists(\crisp\api\Config::get('theme'), "_prod/views/$CurrentPage.twig")) {
                     new Theme($TwigTheme, $CurrentFile, $CurrentPage);
                 } else {
                     $GLOBALS['microtime']['logic']['end'] = microtime(true);
                     $GLOBALS['microtime']['template']['start'] = microtime(true);
                     $TwigTheme->addGlobal('LogicMicroTime', ($GLOBALS['microtime']['logic']['end'] - $GLOBALS['microtime']['logic']['start']));
                     http_response_code(404);
-                    echo $TwigTheme->render('errors/notfound.twig', []);
+                    echo $TwigTheme->render('_prod/errors/notfound.twig', []);
                 }
             }
         } catch (Exception $ex) {

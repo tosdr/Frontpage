@@ -19,10 +19,10 @@
 {% set pageTitle = plugin.getTranslation('views.login.header') %}
 {% set error = false %}
 
-{% extends "base.twig" %}
+{% extends "_prod/base.twig" %}
 
 {% block content %}
-    {{ include("components/navbar.twig") }}
+    {{ include("_prod/components/navbar.twig") }}
 
     <div class="jumbotron jumbotron-fluid mb-4">
         <div class="container text-center">

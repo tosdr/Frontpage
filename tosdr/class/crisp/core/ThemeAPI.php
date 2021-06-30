@@ -48,10 +48,10 @@ class ThemeAPI
         $this->Interface = Helper::filterAlphaNum($Interface);
         $this->Query = $_QUERY;
         $this->TwigTheme = $ThemeLoader;
-        $this->ThemePath = realpath(__DIR__ . "/../../../../" . \crisp\api\Config::get("theme_dir") . "/" . \crisp\api\Config::get("theme") . "/");
+        $this->ThemePath = realpath(__DIR__ . '/../../../../' . \crisp\api\Config::get('theme_dir') . '/' . \crisp\api\Config::get('theme') . '/');
 
-        if (file_exists($this->ThemePath . "/includes/api/" . $this->Interface . ".php")) {
-            require $this->ThemePath . "/includes/api/" . $this->Interface . ".php";
+        if (file_exists($this->ThemePath . '/includes/_api/' . $this->Interface . '.php')) {
+            require $this->ThemePath . '/includes/_api/' . $this->Interface . '.php';
             exit;
         }
     }

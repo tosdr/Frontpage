@@ -1,0 +1,130 @@
+{#
+# Copyright (C) 2021 Justin René Back <justin@tosdr.org>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#}
+
+{% set currentPage = 'donate' %}
+{% set pageTitle = 'views.donate.jumbotron.title'|translate %}
+{% set error = false %}
+
+
+
+{% extends "_prod/base.twig" %}
+
+{% block content %}
+    {{ include("_prod/components/navbar.twig") }}
+
+    <div class="jumbotron" id="api">
+        <div><h1>{{ 'views.donate.jumbotron.header'|translate }}</h1></div>
+        <p>
+            <!-- 0x000117 -->
+            {{ 'views.donate.jumbotron.text'|translate|raw }}
+        </p>
+    </div>
+
+
+    <div class="container">
+
+        <div class="row">
+            <div class="col-6">
+                <h2>{{ 'views.donate.oc.header'|translate }}</h2>
+                <p>
+                    {{ 'views.donate.oc.text'|translate|raw }}
+                </p>
+            </div>
+            <div class="col-6">
+                <iframe src="{{ config.opencollective_embed }}"
+                        style="width: 100%; min-height: 100vh; border:none;"></iframe>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-6">
+                <h2>{{ 'views.donate.bitcoin.header'|translate }}</h2>
+                <p>
+                    {{ 'views.donate.bitcoin.text'|translate|raw }}
+                </p>
+                <pre><code style="color: crimson;" onclick="selectElementText(this)">{{ config.bitcoin_wallet }}</code></pre>
+            </div>
+            <div class="col-6">
+                <img width="256" src="{{ config.bitcoin_qr }}" alt="Bitcoin Wallet"/>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-6">
+                <h2>{{ 'views.donate.ethereum.header'|translate }}</h2>
+                <p>
+                    {{ 'views.donate.ethereum.text'|translate|raw }}
+                </p>
+                <pre><code style="color: crimson;"
+                           onclick="selectElementText(this)">{{ config.eth_wallet }}</code></pre>
+            </div>
+            <div class="col-6">
+                <img width="256" src="{{ config.eth_qr }}" alt="Ethereum Wallet"/>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-6">
+                <h2>{{ 'views.donate.doge.header'|translate }}</h2>
+                <p>
+                    {{ 'views.donate.doge.text'|translate|raw }}
+                </p>
+                <pre><code style="color: crimson;"
+                           onclick="selectElementText(this)">{{ config.doge_wallet }}</code></pre>
+            </div>
+            <div class="col-6">
+                <img width="256" src="{{ config.doge_qr }}" alt="Dogecoin Wallet"/>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-6">
+                <h2>{{ 'views.donate.lite.header'|translate }}</h2>
+                <p>
+                    {{ 'views.donate.lite.text'|translate|raw }}
+                </p>
+                <pre><code style="color: crimson;"
+                           onclick="selectElementText(this)">{{ config.lite_wallet }}</code></pre>
+            </div>
+            <div class="col-6">
+                <img width="256" src="{{ config.lite_qr }}" alt="Litecoin Wallet"/>
+            </div>
+        </div>
+        <hr>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        // https://stackoverflow.com/a/2838358
+        function selectElementText(el, win) {
+            win = win || window;
+            var doc = win.document, sel, range;
+            if (win.getSelection && doc.createRange) {
+                sel = win.getSelection();
+                range = doc.createRange();
+                range.selectNodeContents(el);
+                sel.removeAllRanges();
+                sel.addRange(range);
+            } else if (doc.body.createTextRange) {
+                range = doc.body.createTextRange();
+                range.moveToElementText(el);
+                range.select();
+            }
+        }
+    </script>
+{% endblock %}

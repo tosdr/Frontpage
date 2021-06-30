@@ -1,0 +1,132 @@
+{# 
+ # Copyright (C) 2021 Justin René Back <justin@tosdr.org>
+ #
+ # This program is free software: you can redistribute it and/or modify
+ # it under the terms of the GNU General Public License as published by
+ # the Free Software Foundation, either version 3 of the License, or
+ # (at your option) any later version.
+ #
+ # This program is distributed in the hope that it will be useful,
+ # but WITHOUT ANY WARRANTY; without even the implied warranty of
+ # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ # GNU General Public License for more details.
+ #
+ # You should have received a copy of the GNU General Public License
+ # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#}
+
+{% set currentPage = 'txt' %}
+{% set pageTitle = 'views.txt.title'|translate %}
+{% set error = false %}
+
+
+{% extends "_prod/base.twig" %}
+
+{% block content %}
+    <!-- 20x000032 -->
+    {{ include("_prod/components/navbar.twig") }}
+
+    <style>
+        pre code {
+            display: block;
+            background: none;
+            white-space: pre;
+            -webkit-overflow-scrolling: touch;
+            overflow-x: scroll;
+            max-width: 100%;
+            min-width: 100px;
+            padding: 0;
+        }
+    </style>
+    <div class="jumbotron" id="api">
+        <div><h1>{{ 'views.txt.title'|translate }}</h1></div>
+        <p>
+            {{ 'views.txt.jumbotron.text'|translate|raw }}
+        </p>
+    </div>
+
+
+    <div class="container mb-4">
+
+
+        <form>
+            <div class="form-group">
+                <label for="domain">{{ 'views.txt.form.service_domain.label'|translate }}:</label>
+                <input type="text" class="form-control" placeholder="{{ 'views.txt.form.service_domain.placeholder'|translate }}" id="service_domain">
+                <div class="valid-feedback">
+                    {{ 'views.txt.form.service_domain.valid_feedback'|translate }}
+                </div>
+                <div class="invalid-feedback" id="error">
+                    {{ 'views.txt.form.service_domain.invalid_feedback'|translate }}
+                </div>
+                <label for="service_domain" class="text-muted">{{ 'views.txt.form.service_domain.label_muted'|translate }}</label>
+            </div>
+            <div class="card" id="resultcard" style="display: none;">
+                <div class="card-header">
+                    {{ 'views.txt.card.results.header'|translate }}
+                </div>
+                <div class="card-body">
+                    <h5>{{ 'views.txt.card.results.failed_validations.h5'|translate }}</h5>
+                    <pre>
+                        <code id="failed_validations" style="color: red;"></code>
+                    </pre>
+                    <h5>{{ 'views.txt.card.results.result.h5'|translate }}</h5>
+                    <pre>
+                        <code id="result"></code>
+                    </pre>
+                </div>
+            </div>
+            <hr>
+
+            <button type="submit" id="submit" class="btn btn-primary" disabled>Validate</button>
+        </form> 
+    </div> <!-- /container -->
+{% endblock %}
+{% block scripts %}
+    <script>
+        let domainIterator = 0;
+        $(document).ready(function () {
+            hljs.highlightAll();
+            $("form").on('submit', function (e) {
+                $("#service_domain").removeClass("is-invalid");
+                $("#service_domain").removeClass("is-valid");
+                $("#resultcard").hide();
+                e.preventDefault();
+                $.post("", {domain: $("#service_domain").val()}, function (result) {
+                    if (result.error & 0x10) {
+                        $("#error").html(result.message);
+                        $("#service_domain").addClass("is-invalid");
+                    }
+                    if (result.error & 0x100) {
+                        $("#result").html(result.parameters.results);
+                        $("#failed_validations").html(result.parameters.failed_validations);
+                        $("#resultcard").show();
+                    }
+                });
+
+            });
+
+            $(document).on('keyup', '#service_domain', function () {
+                $(this).removeClass("is-valid");
+                $("#error").html('{{ 'views.txt.form.service_domain.invalid_feedback'|translate }}');
+                $("#submit").prop('disabled', true);
+                if ($(this).val() === "") {
+                    return $(this).addClass("is-invalid");
+                }
+                if (new RegExp(/^.*?:\/\//).test($(this).val())) {
+                    return $(this).addClass("is-invalid");
+                }
+                if (!new RegExp(/^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]$/).test($(this).val())) {
+                    return $(this).addClass("is-invalid");
+                }
+                if ($(this).val().startsWith("www.")) {
+                    return $(this).addClass("is-invalid");
+                }
+
+                $(this).removeClass("is-invalid");
+                $(this).addClass("is-valid");
+                $("#submit").prop('disabled', false);
+            });
+        });
+    </script>
+{% endblock %}

@@ -129,22 +129,28 @@ try {
         define('IS_API_ENDPOINT', explode('/', $_GET['route'])[1] === 'api' || isset($_SERVER['IS_API_ENDPOINT']));
         define('IS_NATIVE_API', isset($_SERVER['IS_API_ENDPOINT']));
 
+        if (isset($_GET['optin']) && is_numeric($_GET['optin'])) {
+            Experiments::optIn($_GET['optin']);
+        }
+        if (isset($_GET['optout']) && is_numeric($_GET['optout'])) {
+            Experiments::optOut($_GET['optout']);
+        }
         if (isset($_GET['universe'])) {
-            if($_GET['universe'] === '3'){
-                $authorized = Helper::authorizeAction('universe_dev','comp-staff');
-                if($authorized){
+            if ($_GET['universe'] === '3') {
+                $authorized = Helper::authorizeAction('universe_dev', 'comp-staff');
+                if ($authorized) {
                     Universe::changeUniverse($_GET['universe']);
                     $_notice = [
                         'Icon' => 'fas fa-exclamation',
                         'Text' => Translation::fetch('universe.switched')
                     ];
-                }else{
+                } else {
                     $_notice = [
                         'Icon' => 'fas fa-exclamation',
                         'Text' => Translation::fetch('universe.switched.fail')
                     ];
                 }
-            }else {
+            } else {
                 Universe::changeUniverse($_GET['universe']);
                 $_notice = [
                     'Icon' => 'fas fa-exclamation',
@@ -199,7 +205,7 @@ try {
         $TwigTheme->addGlobal('SERVER', $_SERVER);
         $TwigTheme->addGlobal('GLOBALS', $GLOBALS);
         $TwigTheme->addGlobal('ONLY_TOSDR_ASSETS', isset($_SERVER['HTTP_DNT']));
-        if(isset($_notice)){
+        if (isset($_notice)) {
             $TwigTheme->addGlobal('Notice', $_notice);
         }
         $TwigTheme->addGlobal('COOKIE', $_COOKIE);

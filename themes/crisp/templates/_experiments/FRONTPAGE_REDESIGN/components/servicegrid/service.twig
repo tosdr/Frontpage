@@ -17,11 +17,7 @@
 <div class="col-{{ col }}">
     <div class="shadow-lg card-rounded custom-card bg-body d-flex h-100">
         <div class="card-body">
-            <a href="{{ generateLink('?optout=1') }}">
-                <i class="fas fa-flask float-end text-warning"
-                   data-toggle="tooltip"
-                   title="{{ 'experiment.tooltip'|translate }}"></i>
-            </a>
+            {% include '_prod/components/flask.twig' with {'experiment': 1} %}
             <div class="mb-3">
                 <a class="link-unstyled ms-1" href="/{{ locale }}/service/{{ service._source.id }}">
                     <img src="{{ includeResource(service._source.id ~ ".png", false, 's3_logos') }}"
@@ -67,10 +63,7 @@
                         {% if count == max|default('7') %}
 
 
-                            <li data-toggle="tooltip"
-                                title="{% if isMobile %}{{ point.title }}{% else %}{{ point.quoteText|striptags|truncateText(300) }}{% endif %}"
-                                class="list-unstyled text-truncate">
-
+                            <li class="list-unstyled text-truncate">
                             <span class="position-relative">
                                 <span class="me-3">
                                     {% include "_experiments/FRONTPAGE_REDESIGN/components/classification.twig" with {'rating': 'add' } %}

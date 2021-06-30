@@ -15,29 +15,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #}
 
-{% extends "_prod/base.twig" %}
-
-
-{% block content %}
-
-    <style>
-        html, body {
-            height: unset;
-        }
-    </style>
-    <div class="mx-4 mt-4">
-        {% include "_experiments/FRONTPAGE_REDESIGN/components/servicegrid/service.twig" with {'service': service } %}
-    </div>
-{% endblock %}
-{% block footer %}
-{% endblock %}
-{% block scripts %}
-    <script>
-
-        $(function () {
-            $('[data-toggle="tooltip"]').tooltip();
-        });
-    </script>
-{% endblock %}
-{% block extra_scripts %}
-{% endblock %}
+<a href="{{ generateLink('?optout='~ experiment) }}">
+    <i class="fas fa-flask {{ float|default('float-end')}} text-{{ color|default('warning') }}"
+       data-toggle="tooltip"
+       title="{{ 'experiment.tooltip'|translate }}"></i>
+</a>

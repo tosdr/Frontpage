@@ -93,6 +93,7 @@
             {% if AllServices|length > 0 %}
                 {% include "_experiments/FRONTPAGE_REDESIGN/components/servicegrid/grid.twig" with {'Services': OneToFour, 'columns': colSize} %}
                 <div class="jumbotron jumbotron-fluid mb-4 bg-success text-white">
+                    {% include '_prod/components/flask.twig' with {'experiment': 1} %}
                     <div class="container text-center">
                         <h2 class="mt-2">{{ 'views.frontpage.call_to_action.install'|translate }}</h2>
                         <a role="button" class="btn btn-lg w-100 mb-2 btn-outline-light"
@@ -101,6 +102,7 @@
                 </div>
                 {% include "_experiments/FRONTPAGE_REDESIGN/components/servicegrid/grid.twig" with {'Services': FiveToSeven, 'columns': colSize} %}
                 <div class="jumbotron jumbotron-fluid mb-4 bg-warning">
+                    {% include '_prod/components/flask.twig' with {'experiment': 1, 'color': 'success'} %}
                     <div class="container text-center">
                         <h2 class="mt-2">{{ 'views.frontpage.call_to_action.contribute'|translate }}</h2>
                         <a role="button" class="btn btn-lg w-100 mb-2 btn-outline-light text-dark"
@@ -109,6 +111,7 @@
                 </div>
                 {% include "_experiments/FRONTPAGE_REDESIGN/components/servicegrid/grid.twig" with {'Services': ElevenToFourteen, 'columns': colSize} %}
                 <div class="jumbotron jumbotron-fluid mb-4 bg-danger text-white">
+                    {% include '_prod/components/flask.twig' with {'experiment': 1} %}
                     <div class="container text-center">
                         <div>
                             <i class="fas fa-heart fa-3x"></i>
@@ -120,6 +123,7 @@
                 </div>
                 {% include "_experiments/FRONTPAGE_REDESIGN/components/servicegrid/grid.twig" with {'Services': RestServices, 'columns': colSize} %}
                 <div class="jumbotron jumbotron-fluid mb-4 bg-secondary text-white">
+                    {% include '_prod/components/flask.twig' with {'experiment': 1} %}
                     <div class="container text-center">
                         <h2 class="mt-2">{{ 'views.frontpage.call_to_action.code'|translate }}</h2>
                         <a role="button" class="btn btn-lg w-100 mb-2 btn-outline-light"

@@ -38,7 +38,7 @@ if (!defined('CRISP_COMPONENT')) {
 class Experiments extends Bitmask
 {
     public const NONE = 0x0;
-    public const FRONTPAGE_REDESIGN = 0x1;
+    public const FRONTPAGE_REDESIGN_2021_07 = 0x1;
 
     public static function optIn(int $experiment): bool
     {
@@ -111,7 +111,7 @@ class Experiments extends Bitmask
     public static function assignAB(): bool
     {
 
-        $Disallowed = [self::FRONTPAGE_REDESIGN];
+        $Disallowed = [self::FRONTPAGE_REDESIGN_2021_07];
 
 
         if (isset($_COOKIE[Config::$Cookie_Prefix . 'experiments'])) {

@@ -42,11 +42,11 @@ if (!$inputQuery) {
 try {
     $services = $ES->search($inputQuery);
 
-    if(Experiments::isActive(Experiments::FRONTPAGE_REDESIGN)){
+    if(Experiments::isActive(Experiments::FRONTPAGE_REDESIGN_2021_07)){
 
         PluginAPI::response(Bitmask::REQUEST_SUCCESS + Bitmask::VERSION_DEPRECATED, $inputQuery, [
             'services' => $services,
-            'grid' => $this->TwigTheme->render('_experiments/FRONTPAGE_REDESIGN/components/servicegrid/grid.twig', ['Services' => $services->hits, 'columns' => 2])
+            'grid' => $this->TwigTheme->render('_experiments/FRONTPAGE_REDESIGN_2021_07/components/servicegrid/grid.twig', ['Services' => $services->hits, 'columns' => 2])
         ]);
         exit;
     }

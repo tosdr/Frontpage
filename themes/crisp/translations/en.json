@@ -18,7 +18,7 @@
     "base.language.es": "Spanish",
     "base.language.es_MX": "Mexican Spanish",
     "experiment.tooltip": "Experimental component, Final product is subject to change. Click to opt out.",
-    "experiment.text.FRONTPAGE_REDESIGN": "You are currently enrolled in the frontpage redesign experiment! You can always <a href=\"{{ optout }}\">Opt out</a> or give us <a target=\"_blank\" href=\"{{ config.experiment_feedback }}\">feedback</a>! Final product is subject to change.",
+    "experiment.text.FRONTPAGE_REDESIGN_2021_07": "You are currently enrolled in the frontpage redesign experiment! You can always <a href=\"{{ optout }}\">Opt out</a> or give us <a target=\"_blank\" href=\"{{ config.experiment_feedback }}\">feedback</a>! Final product is subject to change.",
     "base.language.fr": "French",
     "base.language.native.de": "Deutsch",
     "components.servicegrid.contribute": "Contribute to the rating of {{ service }}",

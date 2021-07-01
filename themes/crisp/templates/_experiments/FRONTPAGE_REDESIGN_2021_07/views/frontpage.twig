@@ -24,7 +24,7 @@
 {% extends "_prod/base.twig" %}
 
 {% block content %}
-    {{ include("_experiments/FRONTPAGE_REDESIGN/components/navbar.twig") }}
+    {{ include("_experiments/FRONTPAGE_REDESIGN_2021_07/components/navbar.twig") }}
     <div class="jumbotron jumbotron-fluid">
         <div class="container text-center">
             <h2 class="mt-2"><i
@@ -79,7 +79,7 @@
         &nbsp;
         <div class="alert alert-warning">
             <i class="fas fa-flask me-4"></i>
-            <span>{{ 'experiment.text.FRONTPAGE_REDESIGN'|translate(1, {'{{ optout }}': generateLink('optout?=1')})|raw }}</span>
+            <span>{{ 'experiment.text.FRONTPAGE_REDESIGN_2021_07'|translate(1, {'{{ optout }}': generateLink('optout?=1')})|raw }}</span>
         </div>
         &nbsp;
         &nbsp;
@@ -91,7 +91,7 @@
                 {% set colSize = 2 %}
             {% endif %}
             {% if AllServices|length > 0 %}
-                {% include "_experiments/FRONTPAGE_REDESIGN/components/servicegrid/grid.twig" with {'Services': OneToFour, 'columns': colSize} %}
+                {% include "_experiments/FRONTPAGE_REDESIGN_2021_07/components/servicegrid/grid.twig" with {'Services': OneToFour, 'columns': colSize} %}
                 <div class="jumbotron jumbotron-fluid mb-4 bg-success text-white">
                     {% include '_prod/components/flask.twig' with {'experiment': 1} %}
                     <div class="container text-center">
@@ -100,7 +100,7 @@
                            href="{{ generateLink("downloads") }}">{{ 'views.frontpage.button.download.text'|translate }}</a>
                     </div>
                 </div>
-                {% include "_experiments/FRONTPAGE_REDESIGN/components/servicegrid/grid.twig" with {'Services': FiveToSeven, 'columns': colSize} %}
+                {% include "_experiments/FRONTPAGE_REDESIGN_2021_07/components/servicegrid/grid.twig" with {'Services': FiveToSeven, 'columns': colSize} %}
                 <div class="jumbotron jumbotron-fluid mb-4 bg-warning">
                     {% include '_prod/components/flask.twig' with {'experiment': 1, 'color': 'success'} %}
                     <div class="container text-center">
@@ -109,7 +109,7 @@
                            href="{{ generateLink(config.phoenix_url, true) }}">{{ 'views.frontpage.button.phoenix.text'|translate }}</a>
                     </div>
                 </div>
-                {% include "_experiments/FRONTPAGE_REDESIGN/components/servicegrid/grid.twig" with {'Services': ElevenToFourteen, 'columns': colSize} %}
+                {% include "_experiments/FRONTPAGE_REDESIGN_2021_07/components/servicegrid/grid.twig" with {'Services': ElevenToFourteen, 'columns': colSize} %}
                 <div class="jumbotron jumbotron-fluid mb-4 bg-danger text-white">
                     {% include '_prod/components/flask.twig' with {'experiment': 1} %}
                     <div class="container text-center">
@@ -121,7 +121,7 @@
                            href="{{ generateLink("donate") }}">{{ 'views.frontpage.button.donate.text'|translate }}</a>
                     </div>
                 </div>
-                {% include "_experiments/FRONTPAGE_REDESIGN/components/servicegrid/grid.twig" with {'Services': RestServices, 'columns': colSize} %}
+                {% include "_experiments/FRONTPAGE_REDESIGN_2021_07/components/servicegrid/grid.twig" with {'Services': RestServices, 'columns': colSize} %}
                 <div class="jumbotron jumbotron-fluid mb-4 bg-secondary text-white">
                     {% include '_prod/components/flask.twig' with {'experiment': 1} %}
                     <div class="container text-center">
@@ -131,7 +131,7 @@
                     </div>
                 </div>
             {% else %}
-                {% include "_experiments/FRONTPAGE_REDESIGN/components/servicegrid/no_service.twig" %}
+                {% include "_experiments/FRONTPAGE_REDESIGN_2021_07/components/servicegrid/no_service.twig" %}
             {% endif %}
         </section>
 

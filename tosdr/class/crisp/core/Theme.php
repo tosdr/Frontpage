@@ -126,8 +126,6 @@ class Theme
                     }
 
                     $ExperimentName = array_search($Experiment, $Experiments, true);
-
-
                     if ($ExperimentName !== null && Helper::templateExists(\crisp\api\Config::get('theme'), "_experiments/$ExperimentName/views/$CurrentPage.twig") && file_exists(__DIR__ . '/../../../../' . \crisp\api\Config::get('theme_dir') . '/' . \crisp\api\Config::get('theme') . "/includes/_experiments/$ExperimentName/$CurrentPage.php")) {
                         require __DIR__ . '/../../../../' . \crisp\api\Config::get('theme_dir') . '/' . \crisp\api\Config::get('theme') . "/includes/_experiments/$ExperimentName/$CurrentPage.php";
 

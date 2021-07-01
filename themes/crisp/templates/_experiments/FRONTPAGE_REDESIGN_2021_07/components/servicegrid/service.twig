@@ -68,7 +68,7 @@
                                 <span class="me-3">
                                     {% include "_experiments/FRONTPAGE_REDESIGN_2021_07/components/classification.twig" with {'rating': 'add' } %}
                                 </span>
-                                <a class="link-unstyled align-top fw-bold"
+                                <a class="link-unstyled align-top"
                                    target="_blank"
                                    href="{{ generateLink(config.phoenix_url ~ "/services/" ~ service._source.id, true) }}">{{ 'components.servicegrid.contribute'|translate(1, {'{{ service }}': service._source.name}) }}</a>
 

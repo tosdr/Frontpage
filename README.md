@@ -28,7 +28,7 @@
 </p>
 
 <p align="center">
-	<img alt="ToS;DR Logo" src="https://tosdr-branding.s3.eu-west-2.jbcdn.net/tosdr-logo-128.svg">
+	<img alt="ToS;DR Logo" src="https://tosdr-branding.s3.eu-west-2.jbcdn.net/tosdr-logo-128-w.svg">
 </p>
 Welcome to the official repository for our frontpage, [tosdr.org](https://tosdr.org/).
 This is a redo of our previous frontpage, which used JS.

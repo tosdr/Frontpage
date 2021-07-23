@@ -116,7 +116,7 @@ try {
         'dsn' => $_EnvFile['SENTRY_DSN'],
         'traces_sample_rate' => 0.1,
         'environment' => (IS_DEV_ENV ? 'development' : 'production'),
-        'release' => 'crispcms@' . (IS_API_ENDPOINT ? core::API_VERSION : core::CRISP_VERSION),
+        'release' => (IS_API_ENDPOINT ? 'api' : 'crispcms'). '@' . (IS_API_ENDPOINT ? core::API_VERSION : core::CRISP_VERSION),
     ]);
 
     unset($_EnvFile);

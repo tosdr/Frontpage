@@ -107,7 +107,10 @@ try {
 
     $_EnvFile = parse_ini_file(__DIR__.'/../.env');
 
-    Sentry\init(['dsn' => $_EnvFile['SENTRY_DSN'] ]);
+    Sentry\init([
+        'dsn' => $_EnvFile['SENTRY_DSN'],
+        'traces_sample_rate' => 0.1
+    ]);
 
     unset($_EnvFile);
 

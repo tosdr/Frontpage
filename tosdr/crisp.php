@@ -37,6 +37,7 @@ use Exception;
 use ParseError;
 use RateLimit\Rate;
 use RateLimit\RedisRateLimiter;
+use Sentry\SentrySdk;
 use Throwable;
 use Twig\Environment;
 use Twig\Extension\StringLoaderExtension;
@@ -105,11 +106,12 @@ try {
     require_once __DIR__ . '/../vendor/autoload.php';
     core::bootstrap();
 
-    $_EnvFile = parse_ini_file(__DIR__.'/../.env');
+    $_EnvFile = parse_ini_file(__DIR__ . '/../.env');
 
     Sentry\init([
         'dsn' => $_EnvFile['SENTRY_DSN'],
-        'traces_sample_rate' => 0.1
+        'traces_sample_rate' => 0.1,
+        'environment' => (IS_DEV_ENV ? 'development' : 'production')
     ]);
 
     unset($_EnvFile);
@@ -386,61 +388,23 @@ try {
         Plugins::load($TwigTheme, $CurrentFile, $CurrentPage);
         Themes::load($TwigTheme, $CurrentFile, $CurrentPage);
     }
-} catch (BitmaskException $ex) {
+} catch (BitmaskException | TypeError | Exception | Error | CompileError | ParseError | Throwable $ex) {
     http_response_code(500);
+    Sentry\captureException($ex);
     $errorraw = file_get_contents(__DIR__ . '/../themes/emergency/error.html');
-    try {
+
+    $refid = 'We have been notified!';
+
+    if (IS_DEV_ENV) {
+        $refid = $ex->getMessage();
+    }
 
 
-        $refid = api\ErrorReporter::create(500, $ex->getTraceAsString(), $ex->getMessage() . "\n\n" . api\Helper::currentURL(), $ex->getCode() . '_');
-
-        if (IS_DEV_ENV) {
-            $refid = $ex->getMessage();
-        }
-
-
-        if (IS_API_ENDPOINT) {
-            PluginAPI::response(Bitmask::GENERIC_ERROR, 'Internal Server Error', ['reference_id' => $refid]);
-            exit;
-        }
-
-        echo strtr($errorraw, ['{{ exception }}' => $refid]);
-    } catch (Exception $ex2) {
-
-        if (IS_API_ENDPOINT) {
-            PluginAPI::response(Bitmask::GENERIC_ERROR, 'Internal Server Error', ['reference_id' => $ex2->getCode()]);
-            exit;
-        }
-
-        echo strtr($errorraw, ['{{ exception }}' => $ex2->getCode()]);
+    if (IS_API_ENDPOINT) {
+        PluginAPI::response(Bitmask::GENERIC_ERROR, 'Internal Server Error', ['reference_id' => $refid]);
         exit;
     }
-} catch (TypeError | Exception | Error | CompileError | ParseError | Throwable $ex) {
-    http_response_code(500);
-    $errorraw = file_get_contents(__DIR__ . '/../themes/emergency/error.html');
-    try {
 
-        $refid = api\ErrorReporter::create(500, $ex->getTraceAsString(), $ex->getMessage() . "\n\n" . api\Helper::currentURL(), 'ca_');
-
-        if (IS_DEV_ENV) {
-            $refid = $ex->getMessage();
-        }
-
-
-        if (IS_API_ENDPOINT) {
-            PluginAPI::response(Bitmask::GENERIC_ERROR, 'Internal Server Error', ['reference_id' => $refid]);
-            exit;
-        }
-
-        echo strtr($errorraw, ['{{ exception }}' => $refid]);
-        exit;
-    } catch (Exception) {
-        if (IS_API_ENDPOINT) {
-            PluginAPI::response(Bitmask::GENERIC_ERROR, 'Internal Server Error');
-            exit;
-        }
-
-        echo strtr($errorraw, ['{{ exception }}' => 'An error occurred... reporting the error?!?']);
-        exit;
-    }
+    echo strtr($errorraw, ['{{ exception }}' => $refid, '{{ sentry_id }}' => SentrySdk::getCurrentHub()->getLastEventId()]);
+    exit;
 }

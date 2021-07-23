@@ -44,6 +44,7 @@ use Twig\Loader\FilesystemLoader;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
 use TypeError;
+use Sentry;
 
 define('CRISP_COMPONENT', true);
 
@@ -76,6 +77,8 @@ class core
      */
     public static function bootstrap(): void
     {
+
+
         spl_autoload_register(static function ($class) {
             $file = __DIR__ . '/class/' . str_replace('\\', DIRECTORY_SEPARATOR, $class) . '.php';
 
@@ -101,6 +104,13 @@ if ($_SERVER['ENVIRONMENT'] === 'development') {
 try {
     require_once __DIR__ . '/../vendor/autoload.php';
     core::bootstrap();
+
+    $_EnvFile = parse_ini_file(__DIR__.'/../.env');
+
+    Sentry\init(['dsn' => $_EnvFile['SENTRY_DSN'] ]);
+
+    unset($_EnvFile);
+
     if (PHP_SAPI !== 'cli') {
 
         $GLOBALS['route'] = api\Helper::processRoute($_GET['route']);

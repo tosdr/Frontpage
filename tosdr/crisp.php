@@ -102,6 +102,10 @@ if ($_SERVER['ENVIRONMENT'] === 'development') {
     define('IS_DEV_ENV', false);
 }
 
+define('IS_API_ENDPOINT', explode('/', $_GET['route'])[1] === 'api' || isset($_SERVER['IS_API_ENDPOINT']));
+define('IS_NATIVE_API', isset($_SERVER['IS_API_ENDPOINT']));
+
+
 try {
     require_once __DIR__ . '/../vendor/autoload.php';
     core::bootstrap();
@@ -111,7 +115,8 @@ try {
     Sentry\init([
         'dsn' => $_EnvFile['SENTRY_DSN'],
         'traces_sample_rate' => 0.1,
-        'environment' => (IS_DEV_ENV ? 'development' : 'production')
+        'environment' => (IS_DEV_ENV ? 'development' : 'production'),
+        'release' => 'crispcms@' . (IS_API_ENDPOINT ? core::API_VERSION : core::CRISP_VERSION),
     ]);
 
     unset($_EnvFile);
@@ -140,9 +145,6 @@ try {
         $CurrentPage = ($CurrentPage === '' ? 'frontpage' : $CurrentPage);
         $CurrentPage = explode('.', $CurrentPage)[0];
         $Simple = (explode('.', $_SERVER['HTTP_HOST'])[0] === 'simple');
-
-        define('IS_API_ENDPOINT', explode('/', $_GET['route'])[1] === 'api' || isset($_SERVER['IS_API_ENDPOINT']));
-        define('IS_NATIVE_API', isset($_SERVER['IS_API_ENDPOINT']));
 
         if (isset($_GET['optin']) && is_numeric($_GET['optin'])) {
             Experiments::optIn($_GET['optin']);

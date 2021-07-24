@@ -209,7 +209,7 @@ class Helper
      */
     public static function getLocale(): string
     {
-        $Locale = $GLOBALS['route']->Language ?? locale_accept_from_http($_SERVER['HTTP_ACCEPT_LANGUAGE']);
+        $Locale = $GLOBALS['route']->Language ?? locale_accept_from_http($_SERVER['HTTP_ACCEPT_LANGUAGE'] ?? 'en');
 
 
         if (!array_key_exists($Locale, array_column(Languages::fetchLanguages(false), null, 'code'))) {

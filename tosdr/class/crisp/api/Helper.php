@@ -332,7 +332,7 @@ class Helper
         }
         $obj = new stdClass();
         $obj->Language = (lists\Languages::languageExists($_Route[0]) && strlen($_Route[0]) > 0 ? $_Route[0] : self::getLocale());
-        $obj->Page = explode('?', (strlen($_Route[1]) === 0 ? (strlen($_Route[0]) > 0 ? $_Route[0] : false) : $_Route[1]))[0];
+        $obj->Page = explode('?', (!isset($_Route[1]) || strlen($_Route[1]) === 0 ? (strlen($_Route[0]) > 0 ? $_Route[0] : false) : $_Route[1]))[0];
         $obj->GET = [];
         if (isset($_Route[2]) && $_Route[2] !== '') {
             $_RouteArray = $_Route;

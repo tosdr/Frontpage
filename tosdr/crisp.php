@@ -116,7 +116,7 @@ try {
         'dsn' => $_EnvFile['SENTRY_DSN'],
         'traces_sample_rate' => 0.1,
         'environment' => (IS_DEV_ENV ? 'development' : 'production'),
-        'release' => (IS_API_ENDPOINT ? 'api' : 'crispcms'). '@' . (IS_API_ENDPOINT ? core::API_VERSION : core::CRISP_VERSION),
+        'release' => (IS_API_ENDPOINT ? 'api' : 'crispcms') . '@' . (IS_API_ENDPOINT ? core::API_VERSION : core::CRISP_VERSION),
     ]);
 
     unset($_EnvFile);
@@ -187,7 +187,11 @@ try {
             Universe::changeUniverse(Universe::UNIVERSE_PUBLIC);
         }
 
-        define('CURRENT_UNIVERSE', Universe::getUniverse($_COOKIE[core\Config::$Cookie_Prefix . 'universe']));
+        if (isset($_COOKIE[core\Config::$Cookie_Prefix . 'universe'])) {
+            define('CURRENT_UNIVERSE', Universe::getUniverse($_COOKIE[core\Config::$Cookie_Prefix . 'universe']));
+        } else {
+            define('CURRENT_UNIVERSE', Universe::UNIVERSE_PUBLIC);
+        }
         define('CURRENT_UNIVERSE_NAME', Universe::getUniverseName(CURRENT_UNIVERSE));
 
         $ThemeLoader = new FilesystemLoader([__DIR__ . "/../themes/$CurrentTheme/templates/", __DIR__ . '/../plugins/']);

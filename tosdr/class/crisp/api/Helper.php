@@ -332,15 +332,17 @@ class Helper
         }
         $obj = new stdClass();
         $obj->Language = (lists\Languages::languageExists($_Route[0]) && strlen($_Route[0]) > 0 ? $_Route[0] : self::getLocale());
-        $obj->Page = explode('?', (strlen($_Route[1]) === 0 ? (strlen($_Route[0]) > 0 ? $_Route[0] : false) : $_Route[1]))[0];
-        $obj->GET = array();
-        if ($_Route[2] !== '') {
+        $obj->Page = explode('?', (!isset($_Route[1]) || strlen($_Route[1]) === 0 ? (strlen($_Route[0]) > 0 ? $_Route[0] : false) : $_Route[1]))[0];
+        $obj->GET = [];
+        if (isset($_Route[2]) && $_Route[2] !== '') {
             $_RouteArray = $_Route;
             array_shift($_RouteArray);
             array_shift($_RouteArray);
             for ($i = 0, $iMax = count($_RouteArray); $i <= $iMax; $i += 2) {
                 $key = $_RouteArray[$i];
-                $value = $_RouteArray[$i + 1];
+
+                $value = $_RouteArray[$i + 1] ?? null;
+
                 if ($key !== '') {
                     if ($value === null) {
                         $obj->GET['q'] = explode('?', $key)[0];

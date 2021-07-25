@@ -24,12 +24,14 @@ use crisp\exceptions\BitmaskException;
 use JsonException;
 use stdClass;
 
-class Elastic {
+class Elastic
+{
 
     private string $Elastic_URI;
     private string $Elastic_Index;
 
-    public function __construct() {
+    public function __construct()
+    {
         $EnvFile = parse_ini_file(__DIR__ . '/../../../../.env');
         $this->Elastic_URI = $EnvFile['ELASTIC_URI'];
         $this->Elastic_Index = $EnvFile['ELASTIC_INDEX'];
@@ -41,7 +43,45 @@ class Elastic {
      * @throws BitmaskException
      * @throws JsonException
      */
-    public function search(string $Query): stdClass {
+    public function search(string $Query): stdClass
+    {
+
+
+        $QueryConstruct = json_encode([
+            'query' => [
+                'bool' => [
+                    'should' => [
+                        [
+                            'multi_match' => [
+                                'query' => $Query,
+                                'operator' => 'and',
+                                'type' => 'phrase_prefix',
+                                'fields' => [
+                                    'name',
+                                    'slug',
+                                    'wikipedia',
+                                    'url'
+                                ]
+                            ]
+                        ],
+                        [
+                            'match' => [
+                                'name' => [
+                                    'query' => $Query,
+                                    'operator' => 'and',
+                                    'fuzziness' => 'auto'
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ],
+            'size' => 25,
+            'from' => 0,
+            'sort' => ['id']
+        ], JSON_THROW_ON_ERROR + JSON_PRETTY_PRINT);
+
+
         $ch = curl_init();
 
         curl_setopt_array($ch, [
@@ -53,17 +93,7 @@ class Elastic {
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => json_encode([
-                'query' => [
-                    'query_string' => [
-                        'fields' => ['name', 'slug'],
-                        'query' => "*$Query*"
-                    ]
-                ],
-                'size' => 25,
-                'from' => 0,
-                'sort' => ['id']
-            ], JSON_THROW_ON_ERROR),
+            CURLOPT_POSTFIELDS => $QueryConstruct,
             CURLOPT_HTTPHEADER => [
                 'Content-Type: application/json'
             ],

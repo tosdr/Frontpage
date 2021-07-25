@@ -94,10 +94,10 @@ class core
         /** After autoloading we include additional headers below */
 
         define('IS_DEV_ENV', $_SERVER['ENVIRONMENT'] === 'development');
-        define('ENVIRONMENT', match (strtolower($_SERVER['ENVIRONMENT'])) {
+        define('ENVIRONMENT', match (strtolower($_SERVER['ENVIRONMENT'] ?? 'production')) {
             'staging' => 'staging',
             'development' => 'development',
-            default => 'public'
+            default => 'production'
         });
         define('IS_API_ENDPOINT', explode('/', $_GET['route'])[1] === 'api' || isset($_SERVER['IS_API_ENDPOINT']));
         define('IS_NATIVE_API', isset($_SERVER['IS_API_ENDPOINT']));

@@ -199,13 +199,13 @@ class Plugins
     /**
      * @param string $PluginName
      * @param stdClass $PluginMetadata
-     * @param Environment $TwigTheme
+     * @param string $TwigTheme
      * @param string $CurrentFile
      * @param string $CurrentPage
      * @return bool
      * @throws BitmaskException
      */
-    private static function performOnInstall(string $PluginName, stdClass $PluginMetadata, Environment $TwigTheme, string $CurrentFile, string $CurrentPage): bool
+    private static function performOnInstall(string $PluginName, stdClass $PluginMetadata, string $TwigTheme, string $CurrentFile, string $CurrentPage): bool
     {
         if (!isset($PluginMetadata->onInstall)) {
             return false;
@@ -770,14 +770,14 @@ class Plugins
      * Install a plugin and load it into the CMS
      * @broadcasts pluginInstall
      * @param string $PluginName The Folder name of the Plugin
-     * @param Environment|null $TwigTheme The twig theme component
+     * @param string|null $TwigTheme The twig theme component
      * @param string|null $CurrentFile The current file, __FILE__
      * @param string|null $CurrentPage The current page template to render
      * @return boolean TRUE if install was successful, otherwise FALSE
      * @throws BitmaskException
      * @see registerInstallHook
      */
-    public static function install(string $PluginName, ?Environment $TwigTheme, ?string $CurrentFile, ?string $CurrentPage): bool
+    public static function install(string $PluginName, ?string $TwigTheme, ?string $CurrentFile, ?string $CurrentPage): bool
     {
 
         $DB = new MySQL();
@@ -785,7 +785,7 @@ class Plugins
 
 
         $statement2 = $DBConn->prepare('SELECT * FROM loadedPlugins WHERE Name = :Key');
-        $statement2->execute(array(':Key' => $PluginName));
+        $statement2->execute([':Key' => $PluginName]);
 
         if ($statement2->rowCount() > 0) {
             return false;
@@ -808,7 +808,7 @@ class Plugins
         self::performOnInstall($PluginName, $PluginMetadata, $TwigTheme, $CurrentFile, $CurrentPage);
 
 
-        new Plugin($PluginFolder, $PluginName, $PluginMetadata, $TwigTheme, $CurrentFile, $CurrentPage);
+        new Plugin($PluginFolder, $PluginName, $PluginMetadata, null, $CurrentFile, $CurrentPage);
 
         self::broadcastHook("pluginInstall_$PluginName", time());
         self::broadcastHook('pluginInstall', $PluginName);

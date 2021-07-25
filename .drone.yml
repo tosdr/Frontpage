@@ -1,235 +1,203 @@
 ---
 kind: pipeline
-name: default
+name: Test
+type: docker
 
 steps:
-    
-- name: lint
-  image: node:buster
-  volumes:
-  - name: node_modules
-    path: /usr/local/lib/node_modules
-  commands:
-  - npm install -g stylelint stylelint-config-standard jslint
-  - npx stylelint "themes/crisp/css/*.css"
-  - jslint "themes/crisp/js/!(*.min).js"
-    
-#- name: clone_phoenix
-#  image: alpine/git
-#  volumes:
-#  - name: phoenix
-#    path: /phoenix
-#  commands:
-#  - git clone https://github.com/tosdr/edit.tosdr.org /phoenix
-    
-#- name: install_phoenix
-#  image: ruby:2.7.2
-#  volumes:
-#  - name: bundle
-#    path: /usr/local/bundle
-#  - name: phoenix
-#    path: /phoenix
-#  environment:
-#    DATABASE_HOST: postgres
-#    RAILS_ENV: development
-#    DATABASE_USER: postgres
-#  commands:
-#  - cd /phoenix
-#  - gem install bundler
-#  - gem install rails
-#  - bundle install
-#  - rails db:create db:migrate db:seed
-#  - echo 'u = Service.create :id => 1, :name => "Test Service", :url => "example.com", :created_at => "now()", :updated_at => "now()", :slug => "test_slug"' | rails c -e development
 
-- name: create_postgres_db
-  image: postgres:9-alpine
-  commands:
-  - psql -h postgres -U postgres -c "CREATE DATABASE tosdr_dev;"
-  
-- name: create_crisp_config
-  image: alpine
-  commands:
-  - echo -e "MYSQL_HOSTNAME=postgres\n" > .env
-  - echo -e "MYSQL_USERNAME=postgres\n" >> .env
-  - echo -e "MYSQL_PASSWORD=postgres\n" >> .env
-  - echo -e "MYSQL_DATABASE=tosdr_dev\n" >> .env
-  - echo -e "REDIS_HOST=redis\n" >> .env
-  - echo -e "REDIS_PORT=6379\n" >> .env
-    
+  - name: lint
+    image: node:buster
+    volumes:
+      - name: node_modules
+        path: /usr/local/lib/node_modules
+    commands:
+      - npm install -g stylelint stylelint-config-standard jslint
+      - npx stylelint "themes/crisp/css/*.css"
+      - jslint "themes/crisp/js/!(*.min).js"
 
-- name: migrate_crisp_lint
-  image: php:8.0-buster
-  environment:
-    COMPOSER_ALLOW_SUPERUSER: 1
-  commands:
-  - mkdir /tmp/ci
-  - cd /tmp/ci
-  - apt-get update && apt-get install -y libpq-dev autoconf gcc libc6-dev make libicu-dev wget git-core zip zlib1g-dev libpng-dev
-  - pecl install redis-5.3.2
-  - docker-php-ext-install pgsql pdo_pgsql pdo_mysql intl gd gettext
-  - docker-php-ext-enable pdo_pgsql pdo_mysql redis intl gd gettext
-  - wget https://getcomposer.org/composer-stable.phar -O /tmp/ci/composer
-  - cd /drone/src
-  - php /tmp/ci/composer install
-  - php bin/cli.php migrate
-  - php bin/cli.php theme install crisp
-#  - vendor/bin/twig-linter lint themes/crisp/templates/
-#  - vendor/bin/phpunit tests --bootstrap tosdr/crisp.php
-  - rm /tmp/ci/composer
-  
-- name: Zip Production
-  image: node:alpine
-  commands:
-  - apk --no-cache add zip bash
-  - mkdir dist
-  - zip -r dist/build.zip ./ -x '*.git*' -x 'tosdr/cache' -x '.env' -x 'static' -x '.vscode' -x 'dist' -x 'nbproject'
-  when:
+        #- name: clone_phoenix
+        #  image: alpine/git
+        #  volumes:
+        #  - name: phoenix
+        #    path: /phoenix
+        #  commands:
+        #  - git clone https://github.com/tosdr/edit.tosdr.org /phoenix
+
+  #- name: install_phoenix
+  #  image: ruby:2.7.2
+  #  volumes:
+  #  - name: bundle
+  #    path: /usr/local/bundle
+  #  - name: phoenix
+  #    path: /phoenix
+  #  environment:
+  #    DATABASE_HOST: postgres
+  #    RAILS_ENV: development
+  #    DATABASE_USER: postgres
+  #  commands:
+  #  - cd /phoenix
+  #  - gem install bundler
+  #  - gem install rails
+  #  - bundle install
+  #  - rails db:create db:migrate db:seed
+  #  - echo 'u = Service.create :id => 1, :name => "Test Service", :url => "example.com", :created_at => "now()", :updated_at => "now()", :slug => "test_slug"' | rails c -e development
+
+  - name: create_postgres_db
+    image: postgres:9-alpine
+    commands:
+      - psql -h postgres -U postgres -c "CREATE DATABASE tosdr_dev;"
+
+  - name: create_crisp_config
+    image: alpine
+    commands:
+      - echo -e "MYSQL_HOSTNAME=postgres\n" > .env
+      - echo -e "MYSQL_USERNAME=postgres\n" >> .env
+      - echo -e "MYSQL_PASSWORD=postgres\n" >> .env
+      - echo -e "MYSQL_DATABASE=tosdr_dev\n" >> .env
+      - echo -e "REDIS_HOST=redis\n" >> .env
+      - echo -e "REDIS_PORT=6379\n" >> .env
+
+
+  - name: migrate_crisp_lint
+    image: php:8.0-buster
+    environment:
+      COMPOSER_ALLOW_SUPERUSER: 1
+    commands:
+      - mkdir /tmp/ci
+      - cd /tmp/ci
+      - apt-get update && apt-get install -y libpq-dev autoconf gcc libc6-dev make libicu-dev wget git-core zip zlib1g-dev libpng-dev
+      - pecl install redis-5.3.2
+      - docker-php-ext-install pgsql pdo_pgsql pdo_mysql intl gd gettext
+      - docker-php-ext-enable pdo_pgsql pdo_mysql redis intl gd gettext
+      - wget https://getcomposer.org/composer-stable.phar -O /tmp/ci/composer
+      - cd /drone/src
+      - php /tmp/ci/composer install
+      - php bin/cli.php migrate
+      - php bin/cli.php theme install crisp
+      #  - vendor/bin/twig-linter lint themes/crisp/templates/
+      #  - vendor/bin/phpunit tests --bootstrap tosdr/crisp.php
+      - rm /tmp/ci/composer
+
+  - name: Zip Production
+    image: node:alpine
+    commands:
+      - apk --no-cache add zip bash
+      - mkdir dist
+      - zip -r dist/build.zip ./ -x '*.git*' -x 'tosdr/cache' -x '.env' -x 'static' -x '.vscode' -x 'dist' -x 'nbproject'
+    when:
       branch:
-      - master
+        - master
       event:
-      - push
-  
-- name: Upload Build Artifacts
-  image: plugins/s3
-  settings:
-    bucket: tosdr-artifacts
-    source: ./dist/*
-    strip_prefix: true
-    access_key:
-      from_secret: aws_access_key_id
-    secret_key:
-      from_secret: aws_secret_access_key
-    target: /CrispCMS/builds/${DRONE_BUILD_NUMBER}
-    endpoint: https://s3.eu-west-2.jbcdn.net
-  when:
+        - push
+
+  - name: Upload Build Artifacts
+    image: plugins/s3
+    settings:
+      bucket: tosdr-artifacts
+      source: ./dist/*
+      strip_prefix: true
+      access_key:
+        from_secret: aws_access_key_id
+      secret_key:
+        from_secret: aws_secret_access_key
+      target: /CrispCMS/builds/${DRONE_BUILD_NUMBER}
+      endpoint: https://s3.eu-west-2.jbcdn.net
+    when:
       branch:
-      - master
+        - master
       event:
-      - push
-      
-- name: Deploy Production
-  image: appleboy/drone-ssh
-  settings:
-    host: 
-        from_secret: SSH_HOST
-    username:
-        from_secret: SSH_USER
-    key:
-        from_secret: SSH_KEY
-    port: 22
-    script:
-      - cd /usr/share/tosdr/web
-      - /usr/bin/php bin/cli.php maintenance on
-      - /usr/bin/git fetch origin master
-      - /usr/bin/git reset --hard HEAD
-      - /usr/bin/git merge ${DRONE_COMMIT_SHA}
-      - /usr/local/bin/composer update
-      - /usr/local/bin/composer install
-      - /usr/bin/php bin/cli.php migrate
-      - /usr/bin/php bin/cli.php theme storage refresh crisp
-      - /usr/bin/php bin/cli.php theme translations refresh crisp
-      - /usr/bin/php bin/cli.php plugin storage refresh management
-      - /usr/bin/php bin/cli.php plugin translations refresh management
-      - /usr/bin/php bin/cli.php cache clear
-      - /usr/bin/php bin/cli.php maintenance off
-  when:
-    event:
-    - promote
-    - cron
-  cron:
-  - deploy
-
-- name: Discord Success Deploy
-  image: appleboy/drone-discord
-  settings:
-    webhook_id:
-      from_secret: discord_webhook_id
-    webhook_token:
-      from_secret: discord_webhook_secret
-    message: "Crisp has been successfully deployed from master branch\n\n{{build.link}}"
-  when:
-    event:
-    - promote
-    - cron
-  cron:
-  - deploy
-  
-- name: Discord Failure Deploy
-  image: appleboy/drone-discord
-  settings:
-    webhook_id:
-      from_secret: discord_webhook_id
-    webhook_token:
-      from_secret: discord_webhook_secret
-    message: "Failed to deploy Crisp from master branch\n\n{{build.link}}"
-  when:
-    status:
-    - failure
-    event:
-    - promote
-    - cron
-  cron:
-  - deploy
-  
-
-- name: Discord Build Notification
-  image: appleboy/drone-discord
-  settings:
-    webhook_id:
-      from_secret: discord_webhook_id
-    webhook_token:
-      from_secret: discord_webhook_secret
-    message: >
-          {{#success build.status}}
-          Crisp Build {{build.number}} succeeded.
-            
-          Build:
-          {{build.link}}
-          {{else}}
-          Crisp Build {{build.number}} failed.
-          
-          Build:
-          {{build.link}}
-          {{/success}}
-    
-  when:
-    status:
-    - failure
-    - success
-  
-
-#- name: docker  
-#  image: plugins/docker
-#  settings:
-#    username:
-#      from_secret: DOCKER_USERNAME
-#    password:
-#      from_secret: DOCKER_TOKEN
-#    repo: jbackpcat/tosdr-crisp
-#    tags: latest
-#  when:
-#    event:
-#        exclude:
-#        - pull_request
-#        - tag
+        - push
 
 volumes:
-- name: bundle
-  temp: {}
-- name: phoenix
-  temp: {}
-- name: node_modules
-  temp: {}
-  
+  - name: bundle
+    temp: {}
+  - name: phoenix
+    temp: {}
+  - name: node_modules
+    temp: {}
+
 services:
-- name: redis
-  image: redis
-- name: postgres
-  image: postgres
-  environment:
-    POSTGRES_USER: postgres
-    POSTGRES_DB: postgres
-    POSTGRES_HOST_AUTH_METHOD: trust
+  - name: redis
+    image: redis
+  - name: postgres
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+      POSTGRES_HOST_AUTH_METHOD: trust
+
+---
+kind: pipeline
+type: docker
+name: Deploy
+steps:
+
+  - name: Deploy Production
+    image: appleboy/drone-ssh
+    settings:
+      host:
+        from_secret: SSH_HOST
+      username:
+        from_secret: SSH_USER
+      key:
+        from_secret: SSH_KEY
+      port: 22
+      script:
+        - cd /usr/share/tosdr/web
+        - /usr/bin/php bin/cli.php maintenance on
+        - /usr/bin/git fetch origin master
+        - /usr/bin/git reset --hard HEAD
+        - /usr/bin/git merge ${DRONE_COMMIT_SHA}
+        - /usr/local/bin/composer update
+        - /usr/local/bin/composer install
+        - /usr/bin/php bin/cli.php migrate
+        - /usr/bin/php bin/cli.php theme storage refresh crisp
+        - /usr/bin/php bin/cli.php theme translations refresh crisp
+        - /usr/bin/php bin/cli.php plugin storage refresh management
+        - /usr/bin/php bin/cli.php plugin translations refresh management
+        - /usr/bin/php bin/cli.php cache clear
+        - /usr/bin/php bin/cli.php maintenance off
+
+      - name: Deploy Staging
+        image: appleboy/drone-ssh
+        settings:
+          host:
+            from_secret: SSH_HOST
+          username:
+            from_secret: SSH_USER
+          key:
+            from_secret: SSH_KEY
+          port: 22
+          script:
+            - cd /usr/share/tosdr/staging
+            - /usr/bin/php bin/cli.php maintenance on
+            - /usr/bin/git fetch origin master
+            - /usr/bin/git reset --hard HEAD
+            - /usr/bin/git merge ${DRONE_COMMIT_SHA}
+            - /usr/local/bin/composer update
+            - /usr/local/bin/composer install
+            - /usr/bin/php bin/cli.php migrate
+            - /usr/bin/php bin/cli.php theme storage refresh crisp
+            - /usr/bin/php bin/cli.php theme translations refresh crisp
+            - /usr/bin/php bin/cli.php plugin storage refresh management
+            - /usr/bin/php bin/cli.php plugin translations refresh management
+            - /usr/bin/php bin/cli.php cache clear
+            - /usr/bin/php bin/cli.php maintenance off
+
+trigger:
+  branch:
+    - master
+  event:
+    include:
+      - push
+      - promote
+      - cron
+  cron:
+    include:
+      - deploy
+depends_on:
+  - Test
+
 ---
 kind: signature
 hmac: f513b57b50941d3fde5789c5cadb668ee06b182d1b17dbd53b690007f75b3e2f

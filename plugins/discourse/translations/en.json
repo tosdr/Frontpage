@@ -1,7 +1,0 @@
-{
-    "views.sync_discord.header": "Discord - Forum Sync",
-    "views.sync_discord.discord_sync": "Connect Discord",
-    "views.sync_discord.sync.invalid_state": "Authorization error occurred: Invalid State",
-    "views.sync_discord.sync.invalid_code": "Authorization error occurred: Invalid Code",
-    "views.sync_discord.sync.email_not_verified": "Your e-mail is not verified"
-}

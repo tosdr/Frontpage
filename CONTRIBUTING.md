@@ -12,7 +12,7 @@ For more information on
 
 ## Everything Else
 
-There are many other ways to contribute to Discourse besides code. We've outlined the most common ones below.
+There are many other ways to contribute to the CrispCMS besides code. We've outlined the most common ones below.
 
 - [Reporting Bugs](https://tosdr.community/t/how-to-report-a-bug-for-the-crispcms/1964)
 - [Requesting Features](https://tosdr.community/t/contributor-covenant-code-of-conduct/1963#code-standards-6)
@@ -22,3 +22,7 @@ There are many other ways to contribute to Discourse besides code. We've outline
 For anything else, just start a new topic on [our Community](https://tosdr.community/) and let us know what you're interested in working on.
 
 *Thanks for contributing!*
+
+### Attribution
+
+This file has been adapted from [Discourse](https://github.com/discourse/discourse)

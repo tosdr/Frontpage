@@ -162,16 +162,12 @@ trigger:
     - master
   event:
     include:
-      - push
       - promote
       - cron
-  cron:
-    include:
-      - deploy
 depends_on:
   - Test
 
 ---
 kind: signature
-hmac: 642e44435dcb7015b4b92a47bc6ee3293d33dbaae8877a37ecd0fea2bbfce52a
+hmac: 5147721009fbebb9c2ad65922708f1ac2049b0d0a54d26c244c4e67e864ef7b3
 ...

@@ -42,7 +42,7 @@
                     </ul>
                 </div>
 
-                {% if UNIVERSE >= 2 %}
+                {% if UNIVERSE >= 2 or ENVIRONMENT != 'production' %}
                     <div class="col-xs-6 col-md-3">
                         <h6>DEBUG</h6>
                         <ul class="footer-links">

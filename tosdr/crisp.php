@@ -60,7 +60,7 @@ class core
 {
     /* Some important constants */
 
-    public const CRISP_VERSION = '6.0.0';
+    public const CRISP_VERSION = '6.1.0';
 
     public const API_VERSION = '2.3.0';
 
@@ -110,7 +110,7 @@ class core
 
         Sentry\init([
             'dsn' => $_EnvFile['SENTRY_DSN'],
-            'traces_sample_rate' => 0.5,
+            'traces_sample_rate' => (IS_API_ENDPOINT ? 1.0 : 0.2),
             'environment' => ENVIRONMENT,
             'release' => RELEASE,
         ]);

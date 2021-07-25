@@ -8,14 +8,14 @@ For more information on
 - code conventions
 - guide for GitHub commits
 
-**please read our [CrispCMS Contributor Covenant Code of Conduct](https://tosdr.community/t/contributor-covenant-code-of-conduct/1963)**
+**please read our [CrispCMS Contributor Covenant Code of Conduct](https://tosdr.atlassian.net/wiki/external/296779789/NGNkZTVhMTcxNWJlNGY1ZGFkM2ZjY2YxYjkyMmZkMzQ?atlOrigin=eyJpIjoiNjE3Yzk2NmMxY2M5NDk0MjhiZGFlYTJkMWJkNjMwNzgiLCJwIjoiYyJ9)**
 
 ## Everything Else
 
 There are many other ways to contribute to the CrispCMS besides code. We've outlined the most common ones below.
 
 - [Reporting Bugs](https://tosdr.community/t/how-to-report-a-bug-for-the-crispcms/1964)
-- [Requesting Features](https://tosdr.community/t/contributor-covenant-code-of-conduct/1963#code-standards-6)
+- [Requesting Features](https://tosdr.atlassian.net/wiki/external/296779789/NGNkZTVhMTcxNWJlNGY1ZGFkM2ZjY2YxYjkyMmZkMzQ?atlOrigin=eyJpIjoiNjE3Yzk2NmMxY2M5NDk0MjhiZGFlYTJkMWJkNjMwNzgiLCJwIjoiYyJ9)
 - [Translation](https://translate.tosdr.org)
 - [Documentation](https://docs.tosdr.org)
 

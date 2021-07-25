@@ -14,7 +14,7 @@ For more information on
 
 There are many other ways to contribute to the CrispCMS besides code. We've outlined the most common ones below.
 
-- [Reporting Bugs](https://tosdr.community/t/how-to-report-a-bug-for-the-crispcms/1964)
+- [Reporting Bugs](https://tosdr.atlassian.net/wiki/external/296648755/ZWM2N2JjMTE3OTliNDQzYTkxZDkxZWUwM2RkYzQ5ZDk?atlOrigin=eyJpIjoiZDIzMzdhNWMzZmY1NDk2N2E0YTA2OTQzYzNiMzEwMjYiLCJwIjoiYyJ9)
 - [Requesting Features](https://tosdr.atlassian.net/wiki/external/296779789/NGNkZTVhMTcxNWJlNGY1ZGFkM2ZjY2YxYjkyMmZkMzQ?atlOrigin=eyJpIjoiNjE3Yzk2NmMxY2M5NDk0MjhiZGFlYTJkMWJkNjMwNzgiLCJwIjoiYyJ9)
 - [Translation](https://translate.tosdr.org)
 - [Documentation](https://docs.tosdr.org)

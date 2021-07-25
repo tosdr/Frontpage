@@ -26,7 +26,8 @@ use crisp\api\Helper;
  * Used internally, plugin loader
  *
  */
-class PluginAPI {
+class PluginAPI
+{
 
     use Hook;
 
@@ -43,15 +44,16 @@ class PluginAPI {
      * @param string $Interface
      * @param string $_QUERY
      */
-    public function __construct(string $PluginFolder, string $PluginName, string $Interface, string $_QUERY) {
+    public function __construct(string $PluginFolder, string $PluginName, string $Interface, string $_QUERY)
+    {
         $this->PluginFolder = Helper::filterAlphaNum($PluginFolder);
         $this->PluginName = Helper::filterAlphaNum($PluginName);
         $this->Interface = Helper::filterAlphaNum($Interface);
         $this->Query = $_QUERY;
-        $this->PluginPath = realpath(__DIR__ . "/../../../../" . $this->PluginFolder . "/" . $this->PluginName . "/");
+        $this->PluginPath = realpath(__DIR__ . '/../../../../' . $this->PluginFolder . '/' . $this->PluginName . '/');
 
-        if (file_exists($this->PluginPath . "/includes/api/" . $this->Interface . ".php")) {
-            require $this->PluginPath . "/includes/api/" . $this->Interface . ".php";
+        if (file_exists($this->PluginPath . '/includes/api/' . $this->Interface . '.php')) {
+            require $this->PluginPath . '/includes/api/' . $this->Interface . '.php';
             exit;
         }
     }
@@ -62,11 +64,14 @@ class PluginAPI {
      * @param string $message A message to send
      * @param array $Parameters Some response parameters
      * @param constant|null $Flags JSON_ENCODE constants
+     * @throws \JsonException
+     * @deprecated use \crisp\api\REST::response instead.
      */
-    public static function response(array|bool|int $Errors = Bitmask::NONE, string $message, array $Parameters = [], constant $Flags = null, $HTTP = 200) {
-        header("Content-Type: application/json");
+    public static function response(array|bool|int $Errors = Bitmask::NONE, string $message, array $Parameters = [], constant $Flags = null, $HTTP = 200)
+    {
+        header('Content-Type: application/json');
         http_response_code($HTTP);
-        echo json_encode(array("error" => $Errors, "message" => $message, "parameters" => $Parameters), $Flags);
+        echo json_encode(['error' => $Errors, 'message' => $message, 'parameters' => $Parameters], JSON_THROW_ON_ERROR | $Flags);
     }
 
 }

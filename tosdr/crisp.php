@@ -77,6 +77,7 @@ class core
      * I must be better than him before he is.
      * And I will be.
      *
+     * @throws Exception
      */
     public static function bootstrap(): void
     {
@@ -93,13 +94,14 @@ class core
         });
         /** After autoloading we include additional headers below */
 
-        define('IS_DEV_ENV', $_SERVER['ENVIRONMENT'] === 'development');
+        define('IS_DEV_ENV', (isset($_SERVER['ENVIRONMENT']) && $_SERVER['ENVIRONMENT'] === 'development'));
         define('ENVIRONMENT', match (strtolower($_SERVER['ENVIRONMENT'] ?? 'production')) {
             'staging' => 'staging',
             'development' => 'development',
             default => 'production'
         });
-        define('IS_API_ENDPOINT', explode('/', $_GET['route'])[1] === 'api' || isset($_SERVER['IS_API_ENDPOINT']));
+
+        define('IS_API_ENDPOINT', (PHP_SAPI !== 'cli' && explode('/', $_GET['route'])[1] === 'api') || isset($_SERVER['IS_API_ENDPOINT']));
         define('IS_NATIVE_API', isset($_SERVER['IS_API_ENDPOINT']));
         define('RELEASE', (IS_API_ENDPOINT ? 'api' : 'crispcms') . '@' . (IS_API_ENDPOINT ? self::API_VERSION : self::CRISP_VERSION) . '+' . Helper::getCommitHash());
         define('REQUEST_ID', Crypto::UUIDv4());

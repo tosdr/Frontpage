@@ -30,7 +30,8 @@ use Twig\Environment;
  * Used internally, plugin loader
  *
  */
-class Plugin {
+class Plugin
+{
 
     use Hook;
 
@@ -38,7 +39,7 @@ class Plugin {
     public string $PluginName;
     public stdClass $PluginMetadata;
     public string $PluginPath;
-    public Environment $TwigTheme;
+    public ?Environment $TwigTheme;
     public string $CurrentFile;
     public string $CurrentPage;
 
@@ -52,7 +53,8 @@ class Plugin {
      * @param string $CurrentPage The current $_GET["page"] parameter
      * @throws BitmaskException
      */
-    public function __construct(string $PluginFolder, string $PluginName, stdClass $PluginMetadata, Environment $TwigTheme, string $CurrentFile, string $CurrentPage) {
+    public function __construct(string $PluginFolder, string $PluginName, stdClass $PluginMetadata, ?Environment $TwigTheme, string $CurrentFile, string $CurrentPage)
+    {
         $this->PluginFolder = Helper::filterAlphaNum($PluginFolder);
         $this->PluginName = Helper::filterAlphaNum($PluginName);
         $this->PluginMetadata = $PluginMetadata;
@@ -63,7 +65,7 @@ class Plugin {
         if (file_exists($this->PluginPath . $PluginMetadata->hookFile)) {
             require $this->PluginPath . $PluginMetadata->hookFile;
 
-            if (file_exists($this->PluginPath . '/templates/views/' . $this->CurrentPage . '.twig') && file_exists($this->PluginPath . '/includes/views/' . $this->CurrentPage . '.php')) {
+            if (($TwigTheme instanceof Environment) && file_exists($this->PluginPath . '/templates/views/' . $this->CurrentPage . '.twig') && file_exists($this->PluginPath . '/includes/views/' . $this->CurrentPage . '.php')) {
                 $GLOBALS['plugins'][] = $this;
                 require $this->PluginPath . '/includes/views/' . $this->CurrentPage . '.php';
 
@@ -102,7 +104,8 @@ class Plugin {
     /**
      * @see \crisp\api\Config::get
      */
-    public function getConfig(string $Key): mixed {
+    public function getConfig(string $Key): mixed
+    {
         return \crisp\api\Config::get('plugin.' . $this->PluginName . ".$Key");
     }
 

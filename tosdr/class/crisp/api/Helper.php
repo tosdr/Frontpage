@@ -182,6 +182,10 @@ class Helper
         return $statement->rowCount() > 0;
     }
 
+    public static function getCommitHash(): ?string {
+        return trim(exec('git log --pretty="%h" -n1 HEAD'));
+    }
+
     /**
      * Gets the real ip address even behind a proxy
      * @return String containing the IP of the user

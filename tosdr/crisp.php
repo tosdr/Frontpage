@@ -26,6 +26,7 @@ use crisp\api\lists\Languages;
 use crisp\api\Phoenix;
 use crisp\api\Translation;
 use crisp\core\Bitmask;
+use crisp\core\Crypto;
 use crisp\core\PluginAPI;
 use crisp\core\Plugins;
 use crisp\core\Redis;
@@ -38,6 +39,7 @@ use ParseError;
 use RateLimit\Rate;
 use RateLimit\RedisRateLimiter;
 use Sentry\SentrySdk;
+use Sentry\State\Scope;
 use Throwable;
 use Twig\Environment;
 use Twig\Extension\StringLoaderExtension;
@@ -89,37 +91,45 @@ class core
             }
             return false;
         });
-        /** Core headers, can be accessed anywhere */
-        header('X-Cluster: ' . gethostname());
         /** After autoloading we include additional headers below */
+
+        define('IS_DEV_ENV', $_SERVER['ENVIRONMENT'] === 'development');
+        define('ENVIRONMENT', match (strtolower($_SERVER['ENVIRONMENT'])) {
+            'staging' => 'staging',
+            'development' => 'development',
+            default => 'public'
+        });
+        define('IS_API_ENDPOINT', explode('/', $_GET['route'])[1] === 'api' || isset($_SERVER['IS_API_ENDPOINT']));
+        define('IS_NATIVE_API', isset($_SERVER['IS_API_ENDPOINT']));
+        define('RELEASE', (IS_API_ENDPOINT ? 'api' : 'crispcms') . '@' . (IS_API_ENDPOINT ? self::API_VERSION : self::CRISP_VERSION) . '+' . Helper::getCommitHash());
+        define('REQUEST_ID', Crypto::UUIDv4());
+
+        $_EnvFile = parse_ini_file(__DIR__ . '/../.env');
+
+        Sentry\init([
+            'dsn' => $_EnvFile['SENTRY_DSN'],
+            'traces_sample_rate' => 0.5,
+            'environment' => ENVIRONMENT,
+            'release' => RELEASE,
+        ]);
+
+        Sentry\configureScope(function (Scope $scope): void {
+            $scope->setTag('request_id', REQUEST_ID);
+        });
+
+        header('X-Request-ID', REQUEST_ID);
+
+        unset($_EnvFile);
+
+        session_start();
     }
 
 }
-
-if ($_SERVER['ENVIRONMENT'] === 'development') {
-    define('IS_DEV_ENV', true);
-} else {
-    define('IS_DEV_ENV', false);
-}
-
-define('IS_API_ENDPOINT', explode('/', $_GET['route'])[1] === 'api' || isset($_SERVER['IS_API_ENDPOINT']));
-define('IS_NATIVE_API', isset($_SERVER['IS_API_ENDPOINT']));
 
 
 try {
     require_once __DIR__ . '/../vendor/autoload.php';
     core::bootstrap();
-
-    $_EnvFile = parse_ini_file(__DIR__ . '/../.env');
-
-    Sentry\init([
-        'dsn' => $_EnvFile['SENTRY_DSN'],
-        'traces_sample_rate' => 0.1,
-        'environment' => (IS_DEV_ENV ? 'development' : 'production'),
-        'release' => (IS_API_ENDPOINT ? 'api' : 'crispcms') . '@' . (IS_API_ENDPOINT ? core::API_VERSION : core::CRISP_VERSION),
-    ]);
-
-    unset($_EnvFile);
 
     if (PHP_SAPI !== 'cli') {
 
@@ -137,7 +147,6 @@ try {
         $GLOBALS['navbar_right'] = [];
         $GLOBALS['render'] = [];
 
-        session_start();
 
         $CurrentTheme = Config::get('theme');
         $CurrentFile = substr(substr($_SERVER['PHP_SELF'], 1), 0, -4);
@@ -196,16 +205,10 @@ try {
 
         $ThemeLoader = new FilesystemLoader([__DIR__ . "/../themes/$CurrentTheme/templates/", __DIR__ . '/../plugins/']);
 
-        if (CURRENT_UNIVERSE <= Universe::UNIVERSE_BETA) {
-            if (!$Simple) {
-                $TwigTheme = new Environment($ThemeLoader, [
-                    'cache' => __DIR__ . '/cache/'
-                ]);
-            } else {
-                $TwigTheme = new Environment($ThemeLoader, [
-                    'cache' => __DIR__ . '/cache/simple/'
-                ]);
-            }
+        if (CURRENT_UNIVERSE <= Universe::UNIVERSE_BETA && \ENVIRONMENT !== 'development') {
+            $TwigTheme = new Environment($ThemeLoader, [
+                'cache' => __DIR__ . '/cache/'
+            ]);
         } else {
             $TwigTheme = new Environment($ThemeLoader, []);
         }
@@ -233,6 +236,8 @@ try {
         $TwigTheme->addGlobal('CurrentPage', $CurrentPage);
         $TwigTheme->addGlobal('POST', $_POST);
         $TwigTheme->addGlobal('SERVER', $_SERVER);
+        $TwigTheme->addGlobal('RELEASE', RELEASE);
+        $TwigTheme->addGlobal('ENVIRONMENT', ENVIRONMENT);
         $TwigTheme->addGlobal('GLOBALS', $GLOBALS);
         $TwigTheme->addGlobal('ONLY_TOSDR_ASSETS', isset($_SERVER['HTTP_DNT']));
         if (isset($_notice)) {
@@ -399,7 +404,7 @@ try {
     Sentry\captureException($ex);
     $errorraw = file_get_contents(__DIR__ . '/../themes/emergency/error.html');
 
-    $refid = 'We have been notified!';
+    $refid = REQUEST_ID;
 
     if (IS_DEV_ENV) {
         $refid = $ex->getMessage();

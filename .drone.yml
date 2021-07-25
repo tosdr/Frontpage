@@ -15,33 +15,6 @@ steps:
       - npx stylelint "themes/crisp/css/*.css"
       - jslint "themes/crisp/js/!(*.min).js"
 
-  - name: clone_phoenix
-    image: alpine/git
-    volumes:
-    - name: phoenix
-      path: /phoenix
-      commands:
-        - git clone https://github.com/tosdr/edit.tosdr.org /phoenix
-
-  - name: install_phoenix
-    image: ruby:2.7.2
-    volumes:
-    - name: bundle
-      path: /usr/local/bundle
-    - name: phoenix
-      path: /phoenix
-    environment:
-      DATABASE_HOST: postgres
-      RAILS_ENV: development
-      DATABASE_USER: postgres
-    commands:
-    - cd /phoenix
-    - gem install bundler
-    - gem install rails
-    - bundle install
-    - rails db:create db:migrate db:seed
-    - echo 'u = Service.create :id => 1, :name => "Test Service", :url => "example.com", :created_at => "now()", :updated_at => "now()", :slug => "test_slug"' | rails c -e development
-
   - name: create_postgres_db
     image: postgres:9-alpine
     commands:
@@ -200,5 +173,5 @@ depends_on:
 
 ---
 kind: signature
-hmac: 593754321558d407f37d95a902c86bd5d58f2ff4678493a4047bd88457e95c6b
+hmac: 57f4be2e7542c1eae277aed4ee17031ad19cb0e61c2515c8c1d437c8fdcac0a7
 ...

@@ -82,7 +82,7 @@ class Phoenix {
                             'quoteText' => $Point['quoteText'],
                             'services' => [$ID],
                             'set' => 'set+service+and+topic',
-                            'slug' => $Point['slug'],
+                            'slug' => null,
                             'title' => $Point['title'],
                             'topics' => [],
                             'tosdr' => [
@@ -125,7 +125,7 @@ class Phoenix {
                         'quote' => $Point['quoteText'],
                         'services' => [$ID],
                         'set' => 'set+service+and+topic',
-                        'slug' => $Point['slug'],
+                        'slug' => null,
                         'title' => $Point['title'],
                         'topics' => [],
                         'case' => $Case

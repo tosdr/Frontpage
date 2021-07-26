@@ -20,6 +20,8 @@
     "experiment.tooltip": "Experimental component, Final product is subject to change. Click to opt out.",
     "experiment.text.FRONTPAGE_REDESIGN_2021_07": "You are currently enrolled in the frontpage redesign experiment! You can always <a href=\"{{ optout }}\">Opt out</a> or give us <a target=\"_blank\" href=\"{{ config.experiment_feedback }}\">feedback</a>! Final product is subject to change.",
     "base.language.fr": "French",
+    "components.navbar.env.header": "Heads up! DANGER AHEAD",
+    "components.navbar.env.staging": "You are using the <b>Staging Environment</b> of ToS;DR! All Data is stored separately from <a href=\"https://tosdr.org\">tosdr.org</a> and should <b>not be used to view Privacy Data for services</b>.<br>If you are here to participate in our Security Vulnerability Programm, make sure to read our <a href=\"{{ config.safeharbor }}\">Security Vulnerability Safe Harbor</a> Policy first, to get an idea of <b>do's</b> and <b>don'ts</b>.<br><br>We have a staging environment available for <a href=\"{{ config.phoenix_url }}\">Phoenix</a> as well, available under <a href=\"https://edit.staging.tosdr.org\">edit.staging.tosdr.org</a>, where the staging data is coming from.<br><br><h5>Repeat: <b>THIS IS NOT REAL DATA</b></h5>",
     "base.language.native.de": "Deutsch",
     "components.servicegrid.contribute": "Contribute to the rating of {{ service }}",
     "base.language.native.en": "English",

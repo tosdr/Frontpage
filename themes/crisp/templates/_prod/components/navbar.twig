@@ -85,6 +85,16 @@
     </div>
 </nav>
 
+{% if ENVIRONMENT == 'staging' or ENVIRONMENT == 'development' %}
+    <div class="container mt-4">
+        <div class="alert alert-danger">
+            <h4 id="notice_text_env_head"><i class="fas fa-exclamation-triangle"></i> <b>{{ 'components.navbar.env.header'|translate }}</b> <i class="fas fa-exclamation-triangle"></i></h4>
+            <br>
+            <span id="notice_text_env_body">{{ 'components.navbar.env.staging'|translate|raw }}</span>
+        </div>
+    </div>
+{% endif %}
+
 {% if Notice is defined %}
     {% if Notice.Type is not defined %}
         {% set Notice = Notice|merge({'Type': 'info'}) %}

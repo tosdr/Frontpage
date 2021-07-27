@@ -351,7 +351,10 @@ class Phoenix {
         $response = $statement->fetch(PDO::FETCH_ASSOC);
 
         $response['image'] = $response['id'] . '.png';
-        return $response;
+        $dummy = [];
+
+        $dummy['_source'] = $response;
+        return $dummy;
     }
 
     /**

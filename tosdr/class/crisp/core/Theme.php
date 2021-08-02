@@ -94,7 +94,37 @@ class Theme
 
         header('X-CMS-LogicTime: ' . ($GLOBALS['microtime']['logic']['end'] - $GLOBALS['microtime']['logic']['start']));
 
-        if (CURRENT_UNIVERSE === Universe::UNIVERSE_BETA && Helper::templateExists(\crisp\api\Config::get('theme'), "/_beta/views/$CurrentPage.twig") && file_exists(__DIR__ . '/../../../../' . \crisp\api\Config::get('theme_dir') . '/' . \crisp\api\Config::get('theme') . "/includes/_beta/$CurrentPage.php")) {
+
+        /*
+         * Load Priority:
+         *
+         * 1. Development Environment
+         * 2. Staging / Development Environment
+         * 3. Beta Universe
+         * 4. Experiments
+         * 5. Production Environment
+         */
+
+        // Display development templates if in development environment
+        if (\ENVIRONMENT === 'development' && Helper::templateExists(\crisp\api\Config::get('theme'), "/_dev/views/$CurrentPage.twig") && file_exists(__DIR__ . '/../../../../' . \crisp\api\Config::get('theme_dir') . '/' . \crisp\api\Config::get('theme') . "/includes/_dev/$CurrentPage.php")) {
+
+            require __DIR__ . '/../../../../' . \crisp\api\Config::get('theme_dir') . '/' . \crisp\api\Config::get('theme') . "/includes/_dev/$CurrentPage.php";
+
+            $_vars = ($_vars ?? []);
+            $_vars['template'] = $this;
+
+            echo $TwigTheme->render("/_dev/views/$CurrentPage.twig", $_vars);
+        } // Display Staging template if in staging or development environment
+        else if ((\ENVIRONMENT === 'staging' || \ENVIRONMENT === 'development') && Helper::templateExists(\crisp\api\Config::get('theme'), "/_staging/views/$CurrentPage.twig") && file_exists(__DIR__ . '/../../../../' . \crisp\api\Config::get('theme_dir') . '/' . \crisp\api\Config::get('theme') . "/includes/_staging/$CurrentPage.php")) {
+
+            require __DIR__ . '/../../../../' . \crisp\api\Config::get('theme_dir') . '/' . \crisp\api\Config::get('theme') . "/includes/_staging/$CurrentPage.php";
+
+            $_vars = ($_vars ?? []);
+            $_vars['template'] = $this;
+
+            echo $TwigTheme->render("/_staging/views/$CurrentPage.twig", $_vars);
+        } // Display BETA Universe templates
+        elseif (CURRENT_UNIVERSE === Universe::UNIVERSE_BETA && Helper::templateExists(\crisp\api\Config::get('theme'), "/_beta/views/$CurrentPage.twig") && file_exists(__DIR__ . '/../../../../' . \crisp\api\Config::get('theme_dir') . '/' . \crisp\api\Config::get('theme') . "/includes/_beta/$CurrentPage.php")) {
 
             require __DIR__ . '/../../../../' . \crisp\api\Config::get('theme_dir') . '/' . \crisp\api\Config::get('theme') . "/includes/_beta/$CurrentPage.php";
 
@@ -103,23 +133,8 @@ class Theme
 
 
             echo $TwigTheme->render("/_beta/views/$CurrentPage.twig", $_vars);
-        } else if (CURRENT_UNIVERSE === Universe::UNIVERSE_DEV && Helper::templateExists(\crisp\api\Config::get('theme'), "/_dev/views/$CurrentPage.twig") && file_exists(__DIR__ . '/../../../../' . \crisp\api\Config::get('theme_dir') . '/' . \crisp\api\Config::get('theme') . "/includes/_dev/$CurrentPage.php")) {
-
-            require __DIR__ . '/../../../../' . \crisp\api\Config::get('theme_dir') . '/' . \crisp\api\Config::get('theme') . "/includes/_dev/$CurrentPage.php";
-
-            $_vars = ($_vars ?? []);
-            $_vars['template'] = $this;
-
-            echo $TwigTheme->render("/_dev/views/$CurrentPage.twig", $_vars);
-        } else if (\ENVIRONMENT === 'staging' && Helper::templateExists(\crisp\api\Config::get('theme'), "/_staging/views/$CurrentPage.twig") && file_exists(__DIR__ . '/../../../../' . \crisp\api\Config::get('theme_dir') . '/' . \crisp\api\Config::get('theme') . "/includes/_staging/$CurrentPage.php")) {
-
-            require __DIR__ . '/../../../../' . \crisp\api\Config::get('theme_dir') . '/' . \crisp\api\Config::get('theme') . "/includes/_staging/$CurrentPage.php";
-
-            $_vars = ($_vars ?? []);
-            $_vars['template'] = $this;
-
-            echo $TwigTheme->render("/_staging/views/$CurrentPage.twig", $_vars);
-        } else if (Helper::templateExists(\crisp\api\Config::get('theme'), "_prod/views/$CurrentPage.twig") && file_exists(__DIR__ . '/../../../../' . \crisp\api\Config::get('theme_dir') . '/' . \crisp\api\Config::get('theme') . "/includes/_prod/$CurrentPage.php")) {
+        } // Display production templates AND experiments
+        else if (Helper::templateExists(\crisp\api\Config::get('theme'), "_prod/views/$CurrentPage.twig") && file_exists(__DIR__ . '/../../../../' . \crisp\api\Config::get('theme_dir') . '/' . \crisp\api\Config::get('theme') . "/includes/_prod/$CurrentPage.php")) {
             if (Experiments::hasAnyExperiment()) {
 
                 $Experiments = Experiments::getConstants();

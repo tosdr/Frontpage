@@ -116,17 +116,17 @@
         <div class="tab-content mb-4">
             <div class="tab-pane container active" id="markdown" role="tabpanel">
                 <textarea
-                        class="form-control">[![]({{ includeResource(locale ~"_"~ service._source.id ~ ".svg", false, "shield_cdn") }})]({{ URL }}/{{ locale }}/service/{{ service._source.id }})</textarea>
+                        class="form-control">[![]({{ includeResource(locale ~"_"~ service._source.id ~ ".svg", false, "shield_cdn") }})]({{ config.root_url }}/{{ locale }}/service/{{ service._source.id }})</textarea>
             </div>
             <div class="tab-pane container fade" id="html" role="tabpanel">
                 <textarea
-                        class="form-control">&#x3C;a href=&#x22;{{ URL }}/{{ locale }}/service/{{ service._source.id }}&#x22;&#x3E;
+                        class="form-control">&#x3C;a href=&#x22;{{ config.root_url }}/{{ locale }}/service/{{ service._source.id }}&#x22;&#x3E;
     &#x3C;img src=&#x22;{{ includeResource(locale ~"_"~ service._source.id ~ ".svg", false, "shield_cdn") }}&#x22;/&#x3E;
 &#x3C;/a&#x3E;</textarea>
             </div>
             <div class="tab-pane container fade" id="bbcode" role="tabpanel">
                 <textarea
-                        class="form-control">[url={{ URL }}/{{ locale }}/service/{{ service._source.id }}][img]{{ includeResource(locale ~"_"~ service._source.id ~ ".svg", false, "shield_cdn") }}[/img][/url]</textarea>
+                        class="form-control">[url={{ config.root_url }}/{{ locale }}/service/{{ service._source.id }}][img]{{ includeResource(locale ~"_"~ service._source.id ~ ".svg", false, "shield_cdn") }}[/img][/url]</textarea>
             </div>
         </div>
 

@@ -130,6 +130,11 @@ steps:
         - /usr/bin/php bin/cli.php plugin translations refresh management
         - /usr/bin/php bin/cli.php cache clear
         - /usr/bin/php bin/cli.php maintenance off
+    when:
+      target:
+        include:
+          - staging
+          - production
 
   - name: Deploy Staging
     image: appleboy/drone-ssh
@@ -156,6 +161,10 @@ steps:
         - /usr/bin/php bin/cli.php plugin translations refresh management
         - /usr/bin/php bin/cli.php cache clear
         - /usr/bin/php bin/cli.php maintenance off
+    when:
+      target:
+        include:
+          - staging
 
 trigger:
   branch:
@@ -163,11 +172,10 @@ trigger:
   event:
     include:
       - promote
-      - cron
 depends_on:
   - Test
 
 ---
 kind: signature
-hmac: 5147721009fbebb9c2ad65922708f1ac2049b0d0a54d26c244c4e67e864ef7b3
+hmac: e78ad4ab5ee6f902142f37b2920c7f0688190df9e968053fa2d7f34b0d90a70d
 ...

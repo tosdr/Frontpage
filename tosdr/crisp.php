@@ -172,11 +172,16 @@ try {
                 'Text' => Translation::fetch('experiment.optout')
             ];
         }
+
+
         if (isset($_GET['universe'])) {
             if ($_GET['universe'] === '3') {
                 $authorized = Helper::authorizeAction('universe_dev', 'comp-staff');
                 if ($authorized) {
                     Universe::changeUniverse($_GET['universe']);
+
+                    define('CURRENT_UNIVERSE', Universe::getUniverse($_GET['universe']));
+                    define('CURRENT_UNIVERSE_NAME', Universe::getUniverseName($_GET['universe']));
                     $_notice = [
                         'Icon' => 'fas fa-exclamation',
                         'Text' => Translation::fetch('universe.switched')
@@ -188,22 +193,24 @@ try {
                     ];
                 }
             } else {
+                define('CURRENT_UNIVERSE', Universe::getUniverse($_GET['universe']));
+                define('CURRENT_UNIVERSE_NAME', Universe::getUniverseName($_GET['universe']));
                 Universe::changeUniverse($_GET['universe']);
                 $_notice = [
                     'Icon' => 'fas fa-exclamation',
                     'Text' => Translation::fetch('universe.switched')
                 ];
             }
-        } elseif (!isset($_COOKIE[core\Config::$Cookie_Prefix . 'universe'])) {
+
+        } elseif (isset($_COOKIE[core\Config::$Cookie_Prefix . 'universe'])) {
+            define('CURRENT_UNIVERSE', Universe::getUniverse($_COOKIE[core\Config::$Cookie_Prefix . 'universe']));
+            define('CURRENT_UNIVERSE_NAME', Universe::getUniverseName(CURRENT_UNIVERSE));
+        } else {
             Universe::changeUniverse(Universe::UNIVERSE_PUBLIC);
+            define('CURRENT_UNIVERSE', Universe::UNIVERSE_PUBLIC);
+            define('CURRENT_UNIVERSE_NAME', Universe::getUniverseName(Universe::UNIVERSE_PUBLIC));
         }
 
-        if (isset($_COOKIE[core\Config::$Cookie_Prefix . 'universe'])) {
-            define('CURRENT_UNIVERSE', Universe::getUniverse($_COOKIE[core\Config::$Cookie_Prefix . 'universe']));
-        } else {
-            define('CURRENT_UNIVERSE', Universe::UNIVERSE_PUBLIC);
-        }
-        define('CURRENT_UNIVERSE_NAME', Universe::getUniverseName(CURRENT_UNIVERSE));
 
         $ThemeLoader = new FilesystemLoader([__DIR__ . "/../themes/$CurrentTheme/templates/", __DIR__ . '/../plugins/']);
 

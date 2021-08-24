@@ -34,7 +34,7 @@ if (!IS_NATIVE_API) {
 }
 
 
-$IndexableInterfaces = ['service', 'user', 'case', 'search', 'updatecheck'];
+$IndexableInterfaces = ['service', 'user', 'case', 'search', 'updatecheck', 'rsa'];
 $Interfaces = [];
 
 foreach ($IndexableInterfaces as $interface) {

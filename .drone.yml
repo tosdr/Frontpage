@@ -166,6 +166,36 @@ steps:
         include:
           - staging
 
+  - name: Jira Production
+    image: plugins/jira
+    settings:
+      client_id:
+        from_secret: jira_client_id
+      client_secret:
+        from_secret: jira_client_secret
+      project: CRISP
+      instance: tosdr
+      environment: production
+    when:
+      target:
+        include:
+          - production
+      
+  - name: Jira Staging
+    image: plugins/jira
+    settings:
+      client_id:
+        from_secret: jira_client_id
+      client_secret:
+        from_secret: jira_client_secret
+      project: CRISP
+      instance: tosdr
+      environment: staging
+    when:
+      target:
+        include:
+          - staging
+
 trigger:
   branch:
     - master
@@ -177,5 +207,5 @@ depends_on:
 
 ---
 kind: signature
-hmac: e78ad4ab5ee6f902142f37b2920c7f0688190df9e968053fa2d7f34b0d90a70d
+hmac: 4f211cc052785f20d2beb2c5b77e9b8839b239cd84b91b016c2a9ca9997bfaad
 ...

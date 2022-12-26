@@ -1,6 +1,8 @@
 # CrispCMS - The new ToS;DR Frontpage
 
 
+## Code Freeze in Place until other major work is done (API, Browser Extensions, etc.)
+
 
 <!--suppress HtmlDeprecatedAttribute -->
 <p align="center">

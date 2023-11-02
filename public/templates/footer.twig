@@ -1,0 +1,82 @@
+{#
+# Copyright (C) 2021 Justin René Back <justin@tosdr.org>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#}
+
+{% if not SIMPLE %}
+    <footer class="site-footer">
+        <br>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-md-6">
+                    <h6>{{ 'base.footer.about.header'|translate }}</h6>
+                    <p class="text-justify">{{ 'base.footer.about.text'|translate|raw }}</p>
+                </div>
+
+                <div class="col-xs-6 col-md-3">
+                    <h6>{{ 'links'|translate }}</h6>
+                    <ul class="footer-links">
+                        <li><a href="/about">{{ 'base.footer.links.about'|translate }}</a></li>
+                        <li><a href="mailto:{{ config.contact_email }}">{{ 'base.footer.links.contact'|translate }}</a>
+                        </li>
+                        <li><a href="/legal">{{ 'base.footer.links.privacy'|translate }}</a></li>
+                        <li><a href="/legal">{{ 'base.footer.links.tos'|translate }}</a></li>
+                        <li><a href="/imprint">{{ 'base.footer.links.imprint'|translate }}</a></li>
+                        <li><a href="https://to.tosdr.org/branding">{{ 'components.navbar.presskit'|translate }}</a>
+                        </li>
+                        <li><a href="/classification">{{ 'components.footer.classification'|translate }}</a></li>
+                        <li><a href="/thanks">{{ 'components.footer.thanks'|translate }}</a></li>
+                        <li><a href="/txt">{{ 'components.footer.txt'|translate }}</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-sm-6 col-xs-12">
+                    <p class="copyright-text">&copy; Copyright {{ 'Y'|date }} <a href="/">ToS;DR</a>. | <a
+                                href="{{ generateLink('?universe=3') }}">UNIVERSE_DEV_AUTH</a>
+                    </p>
+                </div>
+
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                    <ul class="social-icons">
+                        <li><a class="facebook" href="{{ config.twitter_link }}"><i class="fab fa-twitter"></i></a></li>
+                        <li><a class="facebook" href="/donate"><i class="fas fa-donate"></i></a></li>
+                        <li><a class="facebook" href="{{ config.github_link }}"><i class="fab fa-github"></i></a></li>
+                        <li><a class="facebook" href="{{ config.discord_link }}"><i class="fab fa-discord"></i></a></li>
+                        <li><a class="facebook" href="{{ config.reddit_link }}"><i class="fab fa-reddit"></i></a></li>
+                        <li><a class="facebook" href="{{ config.wikipedia_link }}"><i
+                                        class="fab fa-wikipedia-w"></i></a></li>
+                        <li><a class="facebook" href="{{ config.forum_url }}"><i class="fab fa-discourse"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+{% else %}
+    <hr>
+    <h4>{{ 'base.footer.about.header'|translate }}</h4>
+    <p>{{ 'base.footer.about.text'|translate|raw }}</p>
+    <h4>{{ 'links'|translate }}</h4>
+    <ul>
+        <li><a href="/about">{{ 'base.footer.links.about'|translate }}</a></li>
+        <li><a href="mailto:{{ config.contact_email }}">{{ 'base.footer.links.contact'|translate }}</a></li>
+        <li><a href="/legal">{{ 'base.footer.links.privacy'|translate }}</a></li>
+        <li><a href="/legal">{{ 'base.footer.links.tos'|translate }}</a></li>
+        <li><a href="/imprint">{{ 'base.footer.links.imprint'|translate }}</a></li>
+    </ul>
+{% endif %}

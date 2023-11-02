@@ -1,3 +1,0 @@
-<Files ~ "\.(env|php|twig|zip|rar|txt|7z)$">
-    Require all denied
-</Files>

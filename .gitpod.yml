@@ -1,0 +1,71 @@
+
+image:
+  file: .gitpod.Dockerfile
+
+ports:
+  - name: Frontend
+    description: CrispCMS Frontend
+    port: 80
+    onOpen: notify
+
+
+  - name: API
+    description: CrispCMS API Server
+    port: 81
+    onOpen: notify
+
+  - name: Postgresql
+    description: RDBMS Server
+    port: 5432
+    onOpen: ignore
+
+  - name: Mailhog SMTP
+    description: Mailhog SMTP Server
+    port: 1025
+    onOpen: ignore
+
+  - name: Mailhog Web
+    description: Mailhog Web UI
+    port: 8025
+    onOpen: notify
+tasks:
+  - name: Setup Docker Registry
+    command: | 
+              mkdir /home/gitpod/.docker
+              echo "$AUTHFILE_DOCKER" > /home/gitpod/.docker/config.json
+
+
+  - name: Setup Network
+    init: docker network create crispcms || true
+
+  - name: CrispCMS
+    init: |
+          #git clone https://github.com/jrb-it/crispcms /workspace/crispcms || true 
+          #cd /workspace/crispcms/cms
+          #composer install --ignore-platform-reqs 
+          cd ${GITPOD_REPO_ROOT}
+          touch .env  || true 
+          cd ${GITPOD_REPO_ROOT}/public/includes/class
+          composer install --ignore-platform-reqs
+          cd ${GITPOD_REPO_ROOT}
+    command: 
+              export HOST="$(gp url 80 | sed -E 's_^https?://__')"
+              export REDIRECT_URI="$(gp url 80)"
+              docker compose -f docker-compose.dev.yml up
+
+vscode:
+  extensions:
+    - ms-azuretools.vscode-docker
+    - eamodio.gitlens
+    - TeamHub.teamhub
+    - felixfbecker.php-debug
+    - neilbrayfield.php-docblocker
+    - bmewburn.vscode-intelephense-client
+    - mtxr.sqltools
+    - mtxr.sqltools-driver-pg
+    - mblode.twig-language-2
+    - GitLab.gitlab-workflow
+    - DEVSENSE.composer-php-vscode
+    - caponetto.vscode-diff-viewer
+    - 42Crunch.vscode-openapi
+    - mjmlio.vscode-mjml

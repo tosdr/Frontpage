@@ -1,0 +1,57 @@
+version: '3.3'
+
+services:
+    
+  mailhog:
+    image: 'mailhog/mailhog'
+    restart: always
+    ports:
+      - 1025:1025
+      - 8025:8025
+    container_name: mailhog
+
+
+  adminer:
+    image: 'adminer'
+    restart: always
+    ports:
+      - 8080:8080
+    container_name: adminer
+
+
+  postgres:
+    image: 'postgres:14'
+    restart: always
+    ports:
+      - 5432:5432
+    container_name: postgres
+    environment:
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - ./.data/postgres-data:/var/lib/postgresql/data
+
+  crispcms:
+    build:
+      context: .
+    container_name: crispcms
+    links:
+      - postgres
+      - mailhog
+    ports:
+      - 80:80
+      - 81:81
+    environment:
+        - CRISP_THEME=crisptheme
+        - VERBOSITY=3
+        - POSTGRES_URI=postgres://postgres:postgres@postgres:5432/postgres
+        - TZ=Europe/Berlin
+        - REDIS_INDEX=1
+        - HOST=${HOST}
+        - ROOT=${HOST}
+        - PROTO=https
+        - ENVIRONMENT=development
+
+    volumes:
+      - /.data/crisp-data:/data
+      - ./public:/var/www/crisp/cms/themes/crisptheme
+      - ./.env:/var/www/crisp/.env

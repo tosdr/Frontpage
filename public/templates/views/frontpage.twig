@@ -20,147 +20,103 @@
 {% set error = false %}
 
 
-
 {% extends "base.twig" %}
 
 {% block content %}
-    {{ include("components/navbar.twig") }}
-    <div class="jumbotron jumbotron-fluid">
-        <div class="container text-center">
-            <h2 class="mt-2"><i
-                        class="far fa-check-square"></i> {{ 'views.frontpage.jumbotron.text'|translate|raw }}</h2>
-        </div>
-    </div>
+	{{ include("components/navbar.twig") }}
+	<div class="jumbotron jumbotron-fluid">
+		<div class="container text-center">
+			<h2 class="mt-2">
+				<i class="far fa-check-square"></i>
+				{{ 'views.frontpage.jumbotron.text'|translate|raw }}</h2>
+		</div>
+	</div>
 
 
-    <div class="container">
-        &nbsp;
-        <!-- 0x000105 -->
-        <section>
-            <div id="news-section mt-5" class="text-center">
-                <a class="mx-3"
-                   href="{{ generateLink("https://moneyland.time.com/2012/08/10/new-site-grades-those-pesky-terms-of-service-agreements-you-never-read/", true) }}"><img
-                            src="{{ includeResource("img/news/time.png") }}" alt="Time"></a>
-                <a class="mx-3"
-                   href="{{ generateLink("https://gigaom.com/2012/08/14/i-agree-why-terms-of-service-report-cards-are-a-good-idea/", true) }}"><img
-                            src="{{ includeResource("img/news/gigaom.gif") }}" alt="GigaOM"></a>
-                <a class="mx-3"
-                   href="{{ generateLink("https://www.theverge.com/2012/8/14/3241572/tos-dr-terms-of-service", true) }}"><img
-                            src="{{ includeResource("img/news/verge.png") }}" alt="The Verge"></a>
-                <a class="mx-3"
-                   href="{{ generateLink("https://www.lemonde.fr/technologies/article/2012/08/14/un-site-veut-mettre-fin-au-mensonge-des-conditions-d-utilisation-sur-internet_1745942_651865.html", true) }}"><img
-                            src="{{ includeResource("img/news/lemondefr.png") }}" alt="Le Monde"></a>
-                <a class="mx-3"
-                   href="{{ generateLink("https://www.zeit.de/digital/internet/2012-08/terms-of-service-did-not-read", true) }}"><img
-                            src="{{ includeResource("img/news/zeit.png") }}" alt="Die Zeit"></a>
-                <a class="mx-3"
-                   href="{{ generateLink("https://www.wired.com/story/terms-of-service-didnt-read/", true) }}"><img
-                            src="{{ includeResource("/img/news/wired.gif") }}" alt="Wired"></a>
-                <a class="mx-3"
-                   href="{{ generateLink("https://www.strategy-business.com/blog/Artificial-Intelligence-Ratings-and-the-Small-Print", true) }}"
-                   style="color:grey;padding:8px">S+B</a>
-                <a class="mx-3"
-                   href="{{ generateLink("https://www.datingnews.com/daters-pulse/tosdr-brings-transparency-to-dating-industry-by-assessing-terms-of-service/", true) }}"
-                   style="color:grey;padding:8px">DN</a>
-            </div>
-        </section>
-        &nbsp;
-        &nbsp;
-        &nbsp;
-        &nbsp;
-        &nbsp;
-        <section id="ratings">
-            <input type="text" placeholder="{{ 'views.frontpage.search.input.placeholder'|translate }}"
-                   class="form-control form-control-lg" value="{{ GET.search }}" id="ratingsearch"/>
-            {% include "components/loadingSpinner.twig" with {'elementID': 'searchLoading'} %}
-        </section>
-        <section id="services" class="mt-5">
+	<div class="container mt-4">
+		<section>
+			<div id="news-section mt-5" class="text-center">
+				<a class="mx-3" href="{{ generateLink("https://moneyland.time.com/2012/08/10/new-site-grades-those-pesky-terms-of-service-agreements-you-never-read/", true) }}"><img src="{{ includeResource("img/news/time.png") }}" alt="Time"></a>
+				<a class="mx-3" href="{{ generateLink("https://gigaom.com/2012/08/14/i-agree-why-terms-of-service-report-cards-are-a-good-idea/", true) }}"><img src="{{ includeResource("img/news/gigaom.gif") }}" alt="GigaOM"></a>
+				<a class="mx-3" href="{{ generateLink("https://www.theverge.com/2012/8/14/3241572/tos-dr-terms-of-service", true) }}"><img src="{{ includeResource("img/news/verge.png") }}" alt="The Verge"></a>
+				<a class="mx-3" href="{{ generateLink("https://www.lemonde.fr/technologies/article/2012/08/14/un-site-veut-mettre-fin-au-mensonge-des-conditions-d-utilisation-sur-internet_1745942_651865.html", true) }}"><img src="{{ includeResource("img/news/lemondefr.png") }}" alt="Le Monde"></a>
+				<a class="mx-3" href="{{ generateLink("https://www.zeit.de/digital/internet/2012-08/terms-of-service-did-not-read", true) }}"><img src="{{ includeResource("img/news/zeit.png") }}" alt="Die Zeit"></a>
+				<a class="mx-3" href="{{ generateLink("https://www.wired.com/story/terms-of-service-didnt-read/", true) }}"><img src="{{ includeResource("img/news/wired.gif") }}" alt="Wired"></a>
+				<a class="mx-3" href="{{ generateLink("https://www.strategy-business.com/blog/Artificial-Intelligence-Ratings-and-the-Small-Print", true) }}" style="color:grey;padding:8px">S+B</a>
+				<a class="mx-3" href="{{ generateLink("https://www.datingnews.com/daters-pulse/tosdr-brings-transparency-to-dating-industry-by-assessing-terms-of-service/", true) }}" style="color:grey;padding:8px">DN</a>
+			</div>
+		</section>
+		<section id="ratings" class="mt-3">
+			<input type="text" placeholder="{{ 'views.frontpage.search.input.placeholder'|translate }}" class="form-control form-control-lg" value="{{ GET.search }}" id="ratingsearch"/>
+			{% include "components/loadingSpinner.twig" with {'elementID': 'searchLoading'} %}
+		</section>
+	</div>
 
-            {% if isMobile == true %}
-                {% set colSize = 1 %}
-            {% else %}
-                {% set colSize = 2 %}
-            {% endif %}
-            {% if AllServices|length > 0 %}
-                {% include "components/servicegrid/grid.twig" with {'Services': OneToFour, 'columns': colSize} %}
-                <div class="jumbotron jumbotron-fluid mb-4 bg-success text-white">
-                    <div class="container text-center">
-                        <h2 class="mt-2">{{ 'views.frontpage.call_to_action.install'|translate }}</h2>
-                        <a role="button" class="btn btn-lg w-100 mb-2 btn-outline-light"
-                           href="{{ generateLink("downloads") }}">{{ 'views.frontpage.button.download.text'|translate }}</a>
-                    </div>
-                </div>
-                {% include "components/servicegrid/grid.twig" with {'Services': FiveToSeven, 'columns': colSize} %}
-                <div class="jumbotron jumbotron-fluid mb-4 bg-warning">
-                    <div class="container text-center">
-                        <h2 class="mt-2">{{ 'views.frontpage.call_to_action.contribute'|translate }}</h2>
-                        <a role="button" class="btn btn-lg w-100 mb-2 btn-outline-light text-dark"
-                           href="{{ generateLink(config.phoenix_url, true) }}">{{ 'views.frontpage.button.phoenix.text'|translate }}</a>
-                    </div>
-                </div>
-                {% include "components/servicegrid/grid.twig" with {'Services': ElevenToFourteen, 'columns': colSize} %}
-                <div class="jumbotron jumbotron-fluid mb-4 bg-danger text-white">
-                    <div class="container text-center">
-                        <div>
-                            <i class="fas fa-heart fa-3x"></i>
-                        </div>
-                        <h2 class="mt-2">{{ 'views.frontpage.call_to_action.donate'|translate }}</h2>
-                        <a role="button" class="btn btn-lg w-100 mb-2 btn-outline-light"
-                           href="{{ generateLink("donate") }}">{{ 'views.frontpage.button.donate.text'|translate }}</a>
-                    </div>
-                </div>
-                {% include "components/servicegrid/grid.twig" with {'Services': RestServices, 'columns': colSize} %}
-                <div class="jumbotron jumbotron-fluid mb-4 bg-secondary text-white">
-                    <div class="container text-center">
-                        <h2 class="mt-2">{{ 'views.frontpage.call_to_action.code'|translate }}</h2>
-                        <a role="button" class="btn btn-lg w-100 mb-2 btn-outline-light"
-                           href="{{ generateLink(config.github_link, true) }}">{{ 'views.frontpage.button.code.text'|translate }}</a>
-                    </div>
-                </div>
-            {% else %}
-                {% include "components/servicegrid/no_service.twig" %}
-            {% endif %}
-        </section>
+	<div class="frontpage-service-container">
+		<div class="container mt-4">
+			<section id="services" class="mt-2">
+
+				{% if AllServices|length > 0 %}
+
+					<div class="row row-cols-2">
+
+						{% for service in OneToFour %}
+							{% include 'components/servicegrid/service.twig' %}
+						{% endfor %}
+
+					</div>
+					<div class="jumbotron jumbotron-fluid my-4 bg-success text-white">
+						<div class="container text-center">
+							<h2 class="mt-2">{{ 'views.frontpage.call_to_action.install'|translate }}</h2>
+							<a role="button" class="btn btn-lg w-100 mb-2 btn-outline-light" href="{{ generateLink("downloads") }}">{{ 'views.frontpage.button.download.text'|translate }}</a>
+						</div>
+					</div>
+					<div class="row row-cols-2">
+						{% for service in FiveToSeven %}
+							{% include 'components/servicegrid/service.twig' %}
+						{% endfor %}
+					</div>
+					<div class="jumbotron jumbotron-fluid my-4 bg-warning">
+						<div class="container text-center">
+							<h2 class="mt-2">{{ 'views.frontpage.call_to_action.contribute'|translate }}</h2>
+							<a role="button" class="btn btn-lg w-100 mb-2 btn-outline-light text-dark" href="{{ generateLink(config.phoenix_url, true) }}">{{ 'views.frontpage.button.phoenix.text'|translate }}</a>
+						</div>
+					</div>
+					<div class="row row-cols-2">
+						{% for service in ElevenToFourteen %}
+							{% include 'components/servicegrid/service.twig' %}
+						{% endfor %}
+					</div>
+					<div class="jumbotron jumbotron-fluid my-4 bg-danger text-white">
+						<div class="container text-center">
+							<div>
+								<i class="fas fa-heart fa-3x"></i>
+							</div>
+							<h2 class="mt-2">{{ 'views.frontpage.call_to_action.donate'|translate }}</h2>
+							<a role="button" class="btn btn-lg w-100 mb-2 btn-outline-light" href="{{ generateLink("donate") }}">{{ 'views.frontpage.button.donate.text'|translate }}</a>
+						</div>
+					</div>
+
+					<div class="row row-cols-2">
+						{% for service in RestServices %}
+							{% include 'components/servicegrid/service.twig' %}
+						{% endfor %}
+					</div>
+					<div class="jumbotron jumbotron-fluid my-4 bg-secondary text-white">
+						<div class="container text-center">
+							<h2 class="mt-2">{{ 'views.frontpage.call_to_action.code'|translate }}</h2>
+							<a role="button" class="btn btn-lg w-100 mb-2 btn-outline-light" href="{{ generateLink(config.github_link, true) }}">{{ 'views.frontpage.button.code.text'|translate }}</a>
+						</div>
+					</div>
+				{% else %}
+					{% include "components/servicegrid/no_service.twig" %}
+				{% endif %}
+			</section>
 
 
-    </div>
+		</div>
+	</div>
 {% endblock %}
 {% block scripts %}
-    <script>
-
-        function delay(fn, ms) {
-            var timer = 0;
-            return function (args) {
-                clearTimeout(timer);
-                timer = setTimeout(fn.bind(this, args), ms || 0);
-            };
-        }
-
-        $(function () {
-            $('[data-toggle="tooltip"]').tooltip();
-
-            $("#ratingsearch").on('keyup', delay(function () {
-                $('body').tooltip('dispose');
-                $("#searchLoading").show();
-                $.get("{{ config.search_url }}?query=" + this.value, function (data) {
-                    $("#services").html(data.parameters.grid);
-                    $("#searchLoading").hide();
-                    $('[data-toggle="tooltip"]').tooltip();
-                });
-            }, 500));
-        });
-
-        // Backwards compability from old.tosdr.org
-        if (window.location.hash && window.location.hash !== "#ratings") {
-            if (window.location.hash.startsWith("#search=")) {
-                window.location.href = "/{{ locale }}/frontpage?search=" + encodeURIComponent(window.location.hash.substr(8));
-            } else {
-
-                // https://stackoverflow.com/a/8896309
-                var url = window.location.href;
-                var exp = url.split(/^(([^:\/?#]+):)?(\/\/([^\/?#]*))?([^?#]*)(\?([^#]*))?(#(.*))?/);
-                window.location.href = "/{{ locale }}/service/" + encodeURIComponent(window.location.hash.substr(1));
-            }
-        }
-    </script>
+	<script src="{{ includeResource("js/crisp.js") }}"></script>
 {% endblock %}

@@ -14,13 +14,13 @@
  # You should have received a copy of the GNU General Public License
  # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #}
-{% extends "_prod/base.twig" %}
+{% extends "base.twig" %}
 
 {% set currentPage = '404' %}
 {% set pageTitle = 'errors.404.page.title'|translate %}
 {% set error = false %}
 {% block content %}
-    {{ include("_prod/components/navbar.twig") }}
+    {{ include("components/navbar.twig") }}
     &nbsp;
     <div class="container h-100">
         <div class="row justify-content-center align-self-crow align-items-center h-100enter">

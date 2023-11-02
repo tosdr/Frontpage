@@ -50,8 +50,10 @@ services:
         - ROOT=${HOST}
         - PROTO=https
         - ENVIRONMENT=development
+        - LOG_LEVEL=DEBUG
 
     volumes:
       - /.data/crisp-data:/data
+      - /workspace/core:/var/www/crisp
       - ./public:/var/www/crisp/cms/themes/crisptheme
       - ./.env:/var/www/crisp/.env

@@ -14,70 +14,46 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #}
-<nav class="navbar navbar-expand-md bg-dark navbar-dark">
-    <!-- Brand -->
-    <a class="navbar-brand ms-4" href="/"><img width="32" src="{{ config.s3_branding ~ "/tosdr-icon-32.svg" }}"
-                                               alt="Logo"/></a>
+<nav
+	class="navbar navbar-expand-md bg-dark navbar-dark">
+	<!-- Brand -->
+	<a class="navbar-brand ms-4" href="/"><img width="32" src="{{ config.s3_branding ~ "/tosdr-icon-32.svg" }}" alt="Logo"/></a>
 
-    <!-- Toggler/collapsibe Button -->
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+	<!-- Toggler/collapsibe Button -->
+	<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+		<span class="navbar-toggler-icon"></span>
+	</button>
 
-    <!-- 20x000101 -->
-    <!-- Navbar links -->
-    <div class="collapse navbar-collapse" id="collapsibleNavbar">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            {% for item in GLOBALS.navbar %}
-                <li class="nav-item {% if currentPage == item.ID %} active{% endif %}">
-                    <a target="{{ item.target }}" class="nav-link {% if currentPage == item.ID %} active{% endif %}"
-                       href="{{ item.href }}">{{ item.html|raw }}</a>
-                </li>
-            {% endfor %}
-        </ul>
-        <ul class="navbar-nav ml-auto">
-            {% for item in GLOBALS.navbar_right %}
-                <li class="nav-item {% if currentPage == item.ID %} active{% endif %}">
-                    <a target="{{ item.target }}" class="nav-link {% if currentPage == item.ID %} active{% endif %}"
-                       href="{{ item.href }}">{{ item.html|raw }}</a>
-                </li>
-            {% endfor %}
-            <li class="nav-item">
-                {% if UNIVERSE == 1 %}
-                    <a href="/?universe=2"><span class="badge bg-warning"><i
-                                    class="fas fa-flask"></i> JOIN BETA</span></a>
-                {% endif %}
-                {% if UNIVERSE == 2 %}
-                    <a href="/?universe=1"><span class="badge bg-warning"><i
-                                    class="fas fa-flask"></i> LEAVE BETA</span></a>
-                {% endif %}
-                {% if UNIVERSE == 3 %}
-                    <a href="/?universe=1"><span class="badge bg-danger"><i class="fas fa-wrench"></i> LEAVE DEVELOPMENT</span></a>
-                {% endif %}
-            </li>
-            <li class="nav-item dropdown dropstart">
-                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" id="languageDropdownMenuLink"
-                   data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false">
-                    <i class="fas fa-language"></i> {{ locale|getlang(false).name|translate }}
-                </a>
-                <div class="dropdown-menu" aria-labelledby="languageDropdownMenuLink">
-                    {% for Language in languages %}
-                        <a class="dropdown-item {% if locale|getlang(false).code == Language.code %}active{% endif %}"
-                           href="{{ generateLink('', false, Language.code) }}">
-                            {{ Language.nativename|translate }}
-                            {% if Language.name|translate != Language.nativename|translate %}
-                                <span class="{% if locale|getlang(false).code == Language.code %}text-white{% else %}text-muted{% endif %}">
-                                        ({{ Language.name|translate }})
-                                    </span>
-                            {% endif %}
-                            <img src="https://translate.tosdr.org/widgets/crispcms/{{ Language.code }}/svg-badge.svg"
-                                 alt="Translation Progress"/>
-                        </a>
-                    {% endfor %}
-                </div>
-            </li>
-        </ul>
+	<!-- 20x000101 -->
+	<!-- Navbar links -->
+	<div class="collapse navbar-collapse" id="collapsibleNavbar">
+		<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+			{% include 'components/navbar.item.twig' with {"item": {"ID": "frontpage", "href": "/", "text": "components.navbar.home"|translate }} %}
+			{% include 'components/navbar.item.twig' with {"item": {"ID": "about", "href": generateLink("about"), "text": "components.navbar.about"|translate }} %}
+			{% include 'components/navbar.item.twig' with {"item": {"ID": "download", "href": generateLink("download"), "text": "components.navbar.download"|translate }} %}
+			{% include 'components/navbar.item.twig' with {"item": {"ID": "new_service", "href": generateLink("new_service"), "text": "components.navbar.request_service"|translate }} %}
+		</ul>
+		<ul class="navbar-nav ml-auto">
+			<li class="nav-item dropdown dropstart">
+				<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" id="languageDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<i class="fas fa-language"></i>
+					{{ locale|getlang(false).name|translate }}
+				</a>
+				<div class="dropdown-menu" aria-labelledby="languageDropdownMenuLink">
+					{% for Language in languages %}
+						<a class="dropdown-item {% if locale|getlang(false).code == Language.code %}active{% endif %}" href="{{ generateLink('', false, Language.code) }}">
+							{{ Language.nativename|translate }}
+							{% if Language.name|translate != Language.nativename|translate %}
+								<span class="{% if locale|getlang(false).code == Language.code %}text-white{% else %}text-muted{% endif %}">
+									({{ Language.name|translate }})
+								</span>
+							{% endif %}
+							<img src="https://translate.tosdr.org/widgets/crispcms/{{ Language.code }}/svg-badge.svg" alt="Translation Progress"/>
+						</a>
+					{% endfor %}
+				</div>
+			</li>
+		</ul>
 
-    </div>
+	</div>
 </nav>

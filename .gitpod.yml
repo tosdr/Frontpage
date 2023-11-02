@@ -40,9 +40,9 @@ tasks:
 
   - name: CrispCMS
     init: |
-          #git clone https://github.com/jrb-it/crispcms /workspace/crispcms || true 
-          #cd /workspace/crispcms/cms
-          #composer install --ignore-platform-reqs 
+          git clone https://gitlab.jrbit.de/crispcms/core /workspace/core || true 
+          cd /workspace/core
+          composer install --ignore-platform-reqs 
           cd ${GITPOD_REPO_ROOT}
           touch .env  || true 
           cd ${GITPOD_REPO_ROOT}/public/includes/class

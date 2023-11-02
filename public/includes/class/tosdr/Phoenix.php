@@ -20,6 +20,7 @@
 
 namespace tosdr;
 
+use crisp\api\Cache;
 use crisp\core\Postgres;
 use crisp\api\Config;
 use PDO;
@@ -28,6 +29,12 @@ use PDO;
  * Some useful phoenix functions
  */
 class Phoenix {
+
+
+    private const CASE_TTL = 42300;
+    private const TOPIC_TTL = 84600;
+    private const GENERAL_TTL = 3600;
+
 
     private static ?PDO $Postgres_Database_Connection = null;
 
@@ -44,6 +51,12 @@ class Phoenix {
      */
     public static function generateApiFiles(string $ID, int $Version = 1): array
     {
+
+
+        if(!Cache::isExpired(__METHOD__ . $ID . $Version)) {
+            return json_decode(Cache::get(__METHOD__ . $ID . $Version), true);
+        }
+
 
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
@@ -142,6 +155,9 @@ class Phoenix {
                 break;
         }
 
+
+        Cache::write(__METHOD__ . $ID . $Version, json_encode($SkeletonData), time() + self::GENERAL_TTL);
+
         return $SkeletonData;
     }
 
@@ -154,6 +170,10 @@ class Phoenix {
     public static function getPointsByService(string $ID): array
     {
 
+        if(!Cache::isExpired(__METHOD__ . $ID)) {
+            return json_decode(Cache::get(__METHOD__ . $ID), true);
+        }
+
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
         }
@@ -164,7 +184,11 @@ class Phoenix {
 
         $statement->execute([':ID' => $ID]);
 
-        return $statement->fetchAll(PDO::FETCH_ASSOC);
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        Cache::write(__METHOD__ . $ID, json_encode($result), time() + self::GENERAL_TTL);
+
+        return $result;
     }
 
     /**
@@ -175,6 +199,10 @@ class Phoenix {
      */
     public static function getPointsByServiceScored(string $ID): array
     {
+        if(!Cache::isExpired(__METHOD__ . $ID)) {
+            return json_decode(Cache::get(__METHOD__ . $ID), true);
+        }
+
 
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
@@ -186,7 +214,11 @@ class Phoenix {
 
         $statement->execute([':ID' => $ID]);
 
-        return $statement->fetchAll(PDO::FETCH_ASSOC);
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        Cache::write(__METHOD__ . $ID, json_encode($result), time() + self::GENERAL_TTL);
+
+        return $result;
     }
 
     /**
@@ -198,6 +230,10 @@ class Phoenix {
     public static function getDocumentsByService(string $ID): array
     {
 
+        if(!Cache::isExpired(__METHOD__ . $ID)) {
+            return json_decode(Cache::get(__METHOD__ . $ID), true);
+        }
+
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
         }
@@ -206,7 +242,11 @@ class Phoenix {
 
         $statement->execute([':ID' => $ID]);
 
-        return $statement->fetchAll(PDO::FETCH_ASSOC);
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        Cache::write(__METHOD__ . $ID, $result, 3600);
+
+        return $result;
     }
 
     /**
@@ -217,11 +257,18 @@ class Phoenix {
     public static function getPoints(): array
     {
 
+        if(!Cache::isExpired(__METHOD__)) {
+            return json_decode(Cache::get(__METHOD__), true);
+        }
+
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
         }
 
-        return self::$Postgres_Database_Connection->query('SELECT * FROM points')->fetchAll(PDO::FETCH_ASSOC);
+        $result = self::$Postgres_Database_Connection->query('SELECT * FROM points')->fetchAll(PDO::FETCH_ASSOC);
+
+        Cache::write(__METHOD__, json_encode($result), time() + self::GENERAL_TTL);
+        return $result;
     }
 
     /**
@@ -232,6 +279,11 @@ class Phoenix {
      */
     public static function getPoint(string $ID): array
     {
+
+        if(!Cache::isExpired(__METHOD__ . $ID)) {
+            return json_decode(Cache::get(__METHOD__ . $ID), true);
+        }
+
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
         }
@@ -240,7 +292,11 @@ class Phoenix {
 
         $statement->execute([':ID' => $ID]);
 
-        return $statement->fetch(PDO::FETCH_ASSOC);
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+
+        Cache::write(__METHOD__ . $ID, json_encode($result), time() + self::GENERAL_TTL);
+
+        return $result;
     }
 
     /**
@@ -252,6 +308,9 @@ class Phoenix {
     public static function getCase(string $ID): array
     {
 
+        if(!Cache::isExpired(__METHOD__ . $ID)) {
+            return json_decode(Cache::get(__METHOD__ . $ID), true);
+        }
 
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
@@ -261,7 +320,11 @@ class Phoenix {
 
         $statement->execute([':ID' => $ID]);
 
-        return $statement->fetch(PDO::FETCH_ASSOC);
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+
+        Cache::write(__METHOD__ . $ID, json_encode($result), time() + self::CASE_TTL);
+
+        return $result;
     }
 
     /**
@@ -273,6 +336,9 @@ class Phoenix {
     public static function getTopic(string $ID): array
     {
 
+        if(!Cache::isExpired(__METHOD__ . $ID)) {
+            return json_decode(Cache::get(__METHOD__ . $ID), true);
+        }
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
         }
@@ -281,7 +347,12 @@ class Phoenix {
 
         $statement->execute([':ID' => $ID]);
 
-        return $statement->fetch(PDO::FETCH_ASSOC);
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+
+
+        Cache::write(__METHOD__ . $ID, json_encode($result), time() + self::TOPIC_TTL);
+
+        return $result;
     }
 
     /**
@@ -292,6 +363,10 @@ class Phoenix {
      */
     public static function searchServiceByName(string $Name): array
     {
+        
+        if(!Cache::isExpired(__METHOD__ . $Name)) {
+            return json_decode(Cache::get(__METHOD__ . $Name), true);
+        }
 
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
@@ -301,7 +376,9 @@ class Phoenix {
 
         $statement->execute([':ID' => "%$Name%"]);
 
-        return $statement->fetchAll(PDO::FETCH_ASSOC);
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        Cache::write(__METHOD__ . $Name, json_encode($result), time() + self::GENERAL_TTL);
     }
 
     /**
@@ -312,6 +389,11 @@ class Phoenix {
      */
     public static function getServiceBySlug(string $Name): bool|array
     {
+
+        
+        if(!Cache::isExpired(__METHOD__ . $Name)) {
+            return json_decode(Cache::get(__METHOD__ . $Name), true);
+        }
 
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
@@ -326,7 +408,11 @@ class Phoenix {
             return false;
         }
 
-        return $statement->fetch(PDO::FETCH_ASSOC);
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+
+        Cache::write(__METHOD__ . $Name, json_encode($result), time() + self::GENERAL_TTL);
+
+        return $result;
     }
 
     /**
@@ -337,6 +423,10 @@ class Phoenix {
      */
     public static function getServiceByName(string $Name): bool|array
     {
+        
+        if(!Cache::isExpired(__METHOD__ . $Name)) {
+            return json_decode(Cache::get(__METHOD__ . $Name), true);
+        }
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
         }
@@ -355,6 +445,9 @@ class Phoenix {
         $dummy = [];
 
         $dummy['_source'] = $response;
+
+        Cache::write(__METHOD__ . $Name, json_encode($dummy), time() + self::GENERAL_TTL);
+
         return $dummy;
     }
 
@@ -365,7 +458,6 @@ class Phoenix {
      */
     public static function serviceExistsBySlug(string $Name): bool
     {
-
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
         }
@@ -502,7 +594,7 @@ class Phoenix {
      */
     public static function pointExists(string $ID): bool
     {
-        #
+        
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
         }
@@ -536,6 +628,10 @@ class Phoenix {
     public static function getService(string $ID): bool|array
     {
 
+        
+        if(!Cache::isExpired(__METHOD__ . $ID)) {
+            return json_decode(Cache::get(__METHOD__ . $ID), true);
+        }
 
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
@@ -556,6 +652,9 @@ class Phoenix {
         $dummy = [];
 
         $dummy['_source'] = $response;
+
+
+        Cache::write(__METHOD__ . $ID, json_encode($dummy), time() + self::GENERAL_TTL);
         return $dummy;
     }
 
@@ -568,11 +667,18 @@ class Phoenix {
     {
 
 
+        if(!Cache::isExpired(__METHOD__ )) {
+            return json_decode(Cache::get(__METHOD__), true);
+        }
+
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
         }
 
-        return self::$Postgres_Database_Connection->query('SELECT * FROM topics')->fetchAll(PDO::FETCH_ASSOC);
+        $result = self::$Postgres_Database_Connection->query('SELECT * FROM topics')->fetchAll(PDO::FETCH_ASSOC);
+        Cache::write(__METHOD__, json_encode($result), time() + self::TOPIC_TTL);
+
+        return $result;
     }
 
     /**
@@ -583,11 +689,18 @@ class Phoenix {
     public static function getCases(): array
     {
 
+
+        if(!Cache::isExpired(__METHOD__ )) {
+            return json_decode(Cache::get(__METHOD__), true);
+        }
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
         }
+        $result = self::$Postgres_Database_Connection->query('SELECT * FROM cases')->fetchAll(PDO::FETCH_ASSOC);
+        Cache::write(__METHOD__, json_encode($result), time() + self::CASE_TTL);
 
-        return self::$Postgres_Database_Connection->query('SELECT * FROM cases')->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+
     }
 
     /**
@@ -597,11 +710,18 @@ class Phoenix {
      */
     public static function getServices(): array
     {
+
+        if(!Cache::isExpired(__METHOD__ )) {
+            return json_decode(Cache::get(__METHOD__), true);
+        }
         if (self::$Postgres_Database_Connection === NULL) {
             self::initPGDB();
         }
 
-        return self::$Postgres_Database_Connection->query("SELECT * FROM services WHERE status IS NULL or status = ''")->fetchAll(PDO::FETCH_ASSOC);
+        $result = self::$Postgres_Database_Connection->query("SELECT * FROM services WHERE status IS NULL or status = ''")->fetchAll(PDO::FETCH_ASSOC);
+        Cache::write(__METHOD__, json_encode($result), time() + self::GENERAL_TTL);
+
+        return $result;
     }
 
 }

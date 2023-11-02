@@ -1,4 +1,4 @@
-FROM registry.jrbit.de/crispcms/core:16
+FROM registry.jrbit.de/crispcms/core:nightly
 
 
 

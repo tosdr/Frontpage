@@ -81,7 +81,6 @@
             {% else %}
                 {% set colSize = 2 %}
             {% endif %}
-            {{ prettyDump(TestVar) }}
             {% if AllServices|length > 0 %}
                 {% include "components/servicegrid/grid.twig" with {'Services': OneToFour, 'columns': colSize} %}
                 <div class="jumbotron jumbotron-fluid mb-4 bg-success text-white">

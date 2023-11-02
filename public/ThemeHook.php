@@ -33,10 +33,8 @@ class ThemeHook
         Themes::getRenderer()->addFunction(new TwigFunction('getService', [Phoenix::class, 'getService']));
         Themes::getRenderer()->addFunction(new TwigFunction('getPoint', [Phoenix::class, 'getPoint']));
         Themes::getRenderer()->addFunction(new TwigFunction('getPointsByService', [Phoenix::class, 'getPointsByService']));
+        Themes::getRenderer()->addFunction(new TwigFunction('getCase', [Phoenix::class, 'getCase']));
         Themes::getRenderer()->addFunction(new TwigFunction('getPointsByServiceScored', [Phoenix::class, 'getPointsByServiceScored']));
-
-
-        Helper::prettyDump($GLOBALS);
 
 
         # Public Routes

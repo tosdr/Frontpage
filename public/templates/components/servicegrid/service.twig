@@ -14,113 +14,80 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #}
-    <div class="col-{{ col }}">
-        <div class="card d-flex h-100">
-            <a class="link-unstyled" href="/{{ locale }}/service/{{ service._source.id }}">
-                <div class="card-header">
-                    <img src="{{ includeResource(service._source.id ~ ".png", false, 's3_logos') }}" class="mr-2"
-                         width="64"/>
+<div class="col-{{ col }}">
+    <div class="shadow-lg card-rounded custom-card bg-body d-flex h-100">
+        <div class="card-body">
+            <div class="mb-3">
+                <a class="link-unstyled ms-1" href="/{{ locale }}/service/{{ service._source.id }}">
+                    <img src="{{ config.s3_logos }}/{{ service._source.id ~ ".png" }}"
+                         width="48" alt="{{ service._source.name }}"/>
                     {% if service._source.is_comprehensively_reviewed %}
                         {% set rating = service._source.rating %}
                     {% else %}
                         {% set rating = "N/A" %}
                     {% endif %}
-                    {{ service._source.name }} <span
-                            class="ml-1">{% include "components/rating.twig" with {'rating': rating} %}</span>
-                </div>
-            </a>
-            <div class="card-body">
+                    <span class="ms-1 fs-3 fw-bold align-middle">{{ service._source.name }}</span>
+                    <span class="ms-1 align-middle">
+                        {% include "components/rating.twig" with {'rating': rating} %}
+                    </span>
+                </a>
+            </div>
+
+            <div class="ms-3">
+
+                {% set count = 0 %}
+                {% for point in getPointsByServiceScored(service._source.id) %}
+                    {% if point.status == "approved" and count < max|default(7) %}
+                        {% set caseDetails = getCase(point.case_id) %}
+
+                        <li data-toggle="tooltip"
+                            title="{% if isMobile %}{{ point.title }}{% else %}{{ point.quoteText|striptags|truncateText(300) }}{% endif %}"
+                            class="list-unstyled text-truncate">
+
+                            <span class="position-relative">
+                                <span class="me-3">
+                                    {% include "components/classification.twig" with {'rating': caseDetails.classification } %}
+                                </span>
+
+                                <a class="link-unstyled align-top"
+                                   target="_blank"
+                                   href="{{ config.phoenix_url }}/points/{{ point.id }}">{{ point.title }}</a>
+
+                            </span>
+                        </li>
+
+                        {% set count = count + 1 %}
 
 
-                <ul class="list-group">
-                    {% set count = 0 %}
-                    {% for point in getPointsByServiceScored(service._source.id) %}
-                        {% if point.status == "approved" and count < 5 %}
+                        {% if count == max|default('7') %}
 
 
-                            {% set caseDetails = getCase(point.case_id) %}
+                            <li class="list-unstyled text-truncate">
+                            <span class="position-relative">
+                                <span class="me-3">
+                                    {% include "components/classification.twig" with {'rating': 'add' } %}
+                                </span>
+                                <a class="link-unstyled align-top"
+                                   target="_blank"
+                                   href="{{ generateLink(config.phoenix_url ~ "/services/" ~ service._source.id, true) }}">{{ 'components.servicegrid.contribute'|translate(1, {'{{ service }}': service._source.name}) }}</a>
 
-                            {% if caseDetails.classification == "bad" %}
-                                {% set color = "warning" %}
-                            {% endif %}
-
-                            {% if caseDetails.classification == "good" %}
-                                {% set color = "success" %}
-                            {% endif %}
-
-                            {% if caseDetails.classification == "neutral" %}
-                                {% set color = "secondary" %}
-                            {% endif %}
-
-                            {% if caseDetails.classification == "blocker" %}
-                                {% set color = "danger" %}
-                            {% endif %}
-
-
-                            <li data-toggle="tooltip" title="{{ point.quoteText|striptags|truncateText(300) }}"
-                                class=" list-group-item-action list-group-item list-group-item-{{ color }}"><a
-                                        class="link-unstyled" target="_blank"
-                                        href="{{ config.phoenix_url }}/points/{{ point.id }}">{{ point.title }}</a>
-                                <a class="float-right link-unstyled" data-toggle="tooltip" target="_blank"
-                                   title="{{ 'components.servicegrid.service.button.case.text'|translate }}"
-                                   href="{{ config.phoenix_url }}/cases/{{ caseDetails.id }}"><span
-                                            class="badge bg-primary badge-pill"><i class="fas fa-briefcase"></i></span></a>
+                            </span>
                             </li>
 
-                            {% set count = count + 1 %}
                         {% endif %}
-                    {% endfor %}
-                </ul>
-                <div class="float-right">
-
-                    {% if service._source.rating == "A" %}
-                        {% set color = "success" %}
-                    {% endif %}
-                    {% if service._source.rating == "B" %}
-                        {% set color = "ranking-B" %}
-                    {% endif %}
-                    {% if service._source.rating == "C" %}
-                        {% set color = "warning" %}
-                    {% endif %}
-                    {% if service._source.rating == "D" %}
-                        {% set color = "ranking-D" %}
-                    {% endif %}
-                    {% if service._source.rating == "E" %}
-                        {% set color = "danger" %}
-                    {% endif %}
-                    {% if service._source.rating == "N/A" %}
-                        {% set color = "secondary" %}
-                    {% endif %}
-                    {% if count == 5 %}
-                        <a target="_blank"
-                           href="{{ generateLink(config.phoenix_url ~ "/services/" ~ service._source.id, true) }}"><span
-                                    class="badge bg-{{ color }}"><i
-                                        class="fas fa-eye"></i> {{ 'components.servicegrid.service.button.allpoints.text'|translate }}</span></a>
-
-                    {% else %}
-                        <a target="_blank"
-                           href="{{ generateLink(config.phoenix_url ~ "/services/" ~ service._source.id, true) }}"><span
-                                    class="badge bg-success"><i
-                                        class="fas fa-hands-helping"></i> {{ 'components.servicegrid.service.button.expand.text'|translate }}</span></a>
 
                     {% endif %}
-                </div>
-            </div>
-            <div class="card-footer">
-                {# Documents #}
-                <a target="_blank"
-                   href="{{ generateLink(config.phoenix_url ~ "/services/" ~ service._source.id ~ "/annotate/", true) }}"><span
-                            class="badge bg-primary"><i
-                                class="fas fa-gavel"></i> {{ 'components.servicegrid.service.button.documents.text'|translate }}</span></a>
+                {% endfor %}
 
-                {# Service URL #}
-                <a target="_blank" href="//{{ service._source.url|split(',')[0] }}"><span class="badge bg-info"><i
-                                class="fas fa-link"></i> {{ 'components.servicegrid.service.button.service.text'|translate }}</span></a>
-
-                <a target="_blank"
-                   href="{{ includeResource(locale ~"_"~ service._source.id ~ ".svg", false, "shield_cdn") }}"><img
-                            src="{{ includeResource(locale ~"_"~ service._source.id ~ ".svg", false, "shield_cdn") }}"></a>
-
+                {% if embed is defined %}
+                    <a target="_blank" class="float-end"
+                       href="{{ generateLink(config.root_url, true) }}">
+                    <span class="badge bg-dark">
+                        {{ 'embed.powered_by'|translate }} {{ config.powered_by|raw }}
+                    </span>
+                    </a>
+                {% endif %}
             </div>
         </div>
     </div>
+</div>

@@ -64,10 +64,7 @@
                 <div class="dropdown-menu" aria-labelledby="languageDropdownMenuLink">
                     {% for Language in languages %}
                         <a class="dropdown-item {% if locale|getlang(false).code == Language.code %}active{% endif %}"
-                           href="/{{ Language.code }}/{{ CurrentPage }}">
-                            <!-- See https://github.com/tosdr/CrispCMS/issues/51
-                                <img src="{{ includeResource("img/flags/" ~ Language.flag ~ ".svg") }}" width="32"/>
-                                -->
+                           href="{{ generateLink('', false, Language.code) }}">
                             {{ Language.nativename|translate }}
                             {% if Language.name|translate != Language.nativename|translate %}
                                 <span class="{% if locale|getlang(false).code == Language.code %}text-white{% else %}text-muted{% endif %}">
@@ -84,29 +81,3 @@
 
     </div>
 </nav>
-
-{% if ENVIRONMENT == 'staging' or ENVIRONMENT == 'development' %}
-    <div class="container mt-4">
-        <div class="alert alert-danger">
-            <h4 id="notice_text_env_head"><i class="fas fa-exclamation-triangle"></i> <b>{{ 'components.navbar.env.header'|translate }}</b> <i class="fas fa-exclamation-triangle"></i></h4>
-            <br>
-            <span id="notice_text_env_body">{{ 'components.navbar.env.staging'|translate|raw }}</span>
-        </div>
-    </div>
-{% endif %}
-
-{% if Notice is defined %}
-    {% if Notice.Type is not defined %}
-        {% set Notice = Notice|merge({'Type': 'info'}) %}
-    {% endif %}
-    <div class="container mt-4">
-        <div class="alert alert-{{ Notice.Type }}">
-                <span id="notice_text">
-                    {% if Notice.Icon is defined %}
-                        <i class="{{ Notice.Icon }}"></i>
-                    {% endif %}
-                    {{ Notice.Text|raw }}
-                </span>
-        </div>
-    </div>
-{% endif %}

@@ -7,6 +7,7 @@ use crisp\core\Router;
 use crisp\core\Themes;
 use crisp\types\RouteType;
 use tosdr\PageControllers\AboutPageController;
+use tosdr\PageControllers\DownloadPageController;
 use tosdr\PageControllers\FrontpagePageController;
 use tosdr\Phoenix;
 use \Twig\TwigFunction;
@@ -59,5 +60,11 @@ class ThemeHook
         Router::add("/", RouteType::PUBLIC, FrontpagePageController::class);
         Router::add("/{locale}/about", RouteType::PUBLIC, AboutPageController::class);
         Router::add("/about", RouteType::PUBLIC, AboutPageController::class);
+
+
+        Router::add("/{locale}/download", RouteType::PUBLIC, DownloadPageController::class);
+        Router::add("/download", RouteType::PUBLIC, DownloadPageController::class);
+        Router::add("/{locale}/downloads", RouteType::PUBLIC, DownloadPageController::class);
+        Router::add("/downloads", RouteType::PUBLIC, DownloadPageController::class);
     }
 }

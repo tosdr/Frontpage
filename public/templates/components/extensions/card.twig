@@ -14,7 +14,7 @@
  # You should have received a copy of the GNU General Public License
  # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #}
-<div class="col-{{ col }}">
+<div class="col-md-4 col-sm-2 my-2">
   <div class="card h-100">
     <div class="card-body d-flex flex-column">
       <h4 class="card-title">
@@ -23,7 +23,7 @@
       <div class="card-text mb-2">
         <div class="row">
           <div class="col-2">
-            <img class="img-responsive" style="max-width: 42px;" src="{{ includeResource(extension.image, false, "s3_branding") }}">
+            <img class="img-responsive" style="max-width: 42px;" src="{{ config.s3_branding }}{{ extension.image }}">
           </div>
           <div class="col-10">
             {{ extension.description|translate|raw }}

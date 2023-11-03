@@ -15,56 +15,49 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #}
 
-{% set sessionType = 'visitor' %}
-{# visitor, customer, artist, admin #}
-{% if user is defined %}
-	{% set sessionType = 'user' %}
-{% endif %}
 <!DOCTYPE html>
 <html>
 	<head>
-		{% block head %}
 
-			<meta charset="utf-8">
-			<meta name="viewport" content="width=device-width, initial-scale=1">
-			<link
-			href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-			{# <link rel="stylesheet" href="/themes/{{ config.theme }}/css/jquery/jquery-ui.min.css{{ "/css/jquery/jquery-ui.min.css"|fileHash }}"> #}
-			<link
-			rel="stylesheet" href="{{ includeResource("css/sweetalert/sweetalert.min.css") }}">
-			<!-- START Default Crisp CSS -->
-			<link rel="stylesheet" href="{{ includeResource("css/general.css") }}">
-			<link rel="stylesheet" href="{{ includeResource("css/footer.min.css") }}">
-			<link rel="stylesheet" href="{{ includeResource("css/ribbon.min.css") }}">
-			<link rel="stylesheet" href="{{ includeResource("css/social-icons.min.css") }}">
-			<link rel="stylesheet" href="{{ includeResource("css/ranking-badges.min.css") }}">
-			<link rel="stylesheet" href="{{ includeResource("css/highlight/default.min.css") }}">
-
-
-			<link rel="apple-touch-icon" sizes="180x180" href="{{ includeResource("favicon/apple-touch-icon.png") }}">
-			<link rel="icon" type="image/png" sizes="32x32" href="{{ includeResource("favicon/favicon-32x32.png") }}">
-			<link rel="icon" type="image/png" sizes="16x16" href="{{ includeResource("favicon/favicon-16x16.png") }}">
-			<link rel="manifest" href="{{ includeResource("favicon/site.webmanifest") }}">
-			<link rel="mask-icon" href="{{ includeResource("favicon/safari-pinned-tab.svg") }}" color="#5bbad5">
-			<link rel="shortcut icon" href="{{ includeResource("favicon/favicon.ico") }}">
-			<meta name="msapplication-TileColor" content="#da532c">
-			<meta name="msapplication-config" content="{{ includeResource("favicon/browserconfig.xml") }}">
-			<meta name="theme-color" content="#ffffff">
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link
+		href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+		{# <link rel="stylesheet" href="/themes/{{ config.theme }}/css/jquery/jquery-ui.min.css{{ "/css/jquery/jquery-ui.min.css"|fileHash }}"> #}
+		<link
+		rel="stylesheet" href="{{ includeResource("css/sweetalert/sweetalert.min.css") }}">
+		<!-- START Default Crisp CSS -->
+		<link rel="stylesheet" href="{{ includeResource("css/general.css") }}">
+		<link rel="stylesheet" href="{{ includeResource("css/footer.min.css") }}">
+		<link rel="stylesheet" href="{{ includeResource("css/ribbon.min.css") }}">
+		<link rel="stylesheet" href="{{ includeResource("css/social-icons.min.css") }}">
+		<link rel="stylesheet" href="{{ includeResource("css/ranking-badges.min.css") }}">
+		<link rel="stylesheet" href="{{ includeResource("css/highlight/default.min.css") }}"> {% block customStylesheets %}{%endblock %}
 
 
-			<meta property="og:title" content="{{ ogTitle|default(pageTitle) }} {{ config.page_delimiter }} {{ config.site_name }}"/>
-			<meta property="og:description" content="{{ ogDescription|default('base.footer.about.text'|translate) }}"/>
-			<meta property="og:type" content="website"/>
-			<meta property="og:url" content="{{ URL }}"/>
-			<meta property="og:locale" content="{{ locale }}"/>
-			<meta
-			property="og:image" content="{{ ogImage|default(includeResource("img/ogp.png")) }}"/>
+		<link rel="apple-touch-icon" sizes="180x180" href="{{ includeResource("favicon/apple-touch-icon.png") }}">
+		<link rel="icon" type="image/png" sizes="32x32" href="{{ includeResource("favicon/favicon-32x32.png") }}">
+		<link rel="icon" type="image/png" sizes="16x16" href="{{ includeResource("favicon/favicon-16x16.png") }}">
+		<link rel="manifest" href="{{ includeResource("favicon/site.webmanifest") }}">
+		<link rel="mask-icon" href="{{ includeResource("favicon/safari-pinned-tab.svg") }}" color="#5bbad5">
+		<link rel="shortcut icon" href="{{ includeResource("favicon/favicon.ico") }}">
+		<meta name="msapplication-TileColor" content="#da532c">
+		<meta name="msapplication-config" content="{{ includeResource("favicon/browserconfig.xml") }}">
+		<meta name="theme-color" content="#ffffff">
 
-			<!-- END Default Crisp CSS -->
-			<title>{{ pageTitle }}
-				{{ config.page_delimiter }}
-				{{ config.site_name }}</title>
-		{% endblock %}
+
+		<meta property="og:title" content="{{ ogTitle|default(pageTitle) }} {{ config.page_delimiter }} {{ config.site_name }}"/>
+		<meta property="og:description" content="{{ ogDescription|default('base.footer.about.text'|translate) }}"/>
+		<meta property="og:type" content="website"/>
+		<meta property="og:url" content="{{ URL }}"/>
+		<meta property="og:locale" content="{{ locale }}"/>
+		<meta
+		property="og:image" content="{{ ogImage|default(includeResource("img/ogp.png")) }}"/>
+
+		<!-- END Default Crisp CSS -->
+		<title>{{ pageTitle }}
+			{{ config.page_delimiter }}
+			{{ config.site_name }}</title>
 	</head>
 	<body>
 		{% block content %}{% endblock %}

@@ -61,7 +61,7 @@
 					<div class="row row-cols-2">
 
 						{% for service in OneToFour %}
-							{% include 'components/servicegrid/service.twig' %}
+							{% include 'components/services/card.twig' %}
 						{% endfor %}
 
 					</div>
@@ -73,7 +73,7 @@
 					</div>
 					<div class="row row-cols-2">
 						{% for service in FiveToSeven %}
-							{% include 'components/servicegrid/service.twig' %}
+							{% include 'components/services/card.twig' %}
 						{% endfor %}
 					</div>
 					<div class="jumbotron jumbotron-fluid my-4 bg-warning">
@@ -84,7 +84,7 @@
 					</div>
 					<div class="row row-cols-2">
 						{% for service in ElevenToFourteen %}
-							{% include 'components/servicegrid/service.twig' %}
+							{% include 'components/services/card.twig' %}
 						{% endfor %}
 					</div>
 					<div class="jumbotron jumbotron-fluid my-4 bg-danger text-white">
@@ -99,7 +99,7 @@
 
 					<div class="row row-cols-2">
 						{% for service in RestServices %}
-							{% include 'components/servicegrid/service.twig' %}
+							{% include 'components/services/card.twig' %}
 						{% endfor %}
 					</div>
 					<div class="jumbotron jumbotron-fluid my-4 bg-secondary text-white">
@@ -118,5 +118,7 @@
 	</div>
 {% endblock %}
 {% block scripts %}
-	<script src="{{ includeResource("js/crisp.js") }}"></script>
+	<script>
+	{% include 'scripts/crisp.js.twig' %}
+	</script>
 {% endblock %}

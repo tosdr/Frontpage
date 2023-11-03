@@ -34,10 +34,6 @@ tasks:
               mkdir /home/gitpod/.docker
               echo "$AUTHFILE_DOCKER" > /home/gitpod/.docker/config.json
 
-
-  - name: Setup Network
-    init: docker network create crispcms || true
-
   - name: CrispCMS
     init: |
           git clone https://gitlab.jrbit.de/crispcms/core /workspace/core || true 

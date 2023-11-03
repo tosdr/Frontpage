@@ -42,10 +42,8 @@ services:
       - 81:81
     environment:
         - CRISP_THEME=crisptheme
-        - VERBOSITY=3
         - POSTGRES_URI=postgres://postgres:postgres@postgres:5432/postgres
         - TZ=Europe/Berlin
-        - REDIS_INDEX=1
         - HOST=${HOST}
         - ROOT=${HOST}
         - PROTO=https
@@ -53,7 +51,7 @@ services:
         - LOG_LEVEL=DEBUG
 
     volumes:
-      - /.data/crisp-data:/data
+      - ./.data/crisp-data:/data
       - /workspace/core:/var/www/crisp
       - ./public:/var/www/crisp/cms/themes/crisptheme
       - ./.env:/var/www/crisp/.env

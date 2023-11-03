@@ -1,0 +1,5 @@
+{
+    "intelephense.environment.includePaths": [
+        "/workspace/core/cms"
+    ]
+}

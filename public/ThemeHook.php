@@ -6,12 +6,30 @@ use \Twig\Environment;
 use crisp\core\Router;
 use crisp\core\Themes;
 use crisp\types\RouteType;
+use tosdr\PageControllers\AboutPageController;
 use tosdr\PageControllers\FrontpagePageController;
 use tosdr\Phoenix;
 use \Twig\TwigFunction;
 
 class ThemeHook
 {
+
+    public static function setLocale($locale){
+
+        if($locale === Helper::getLocale()){
+            return;
+        }
+        $origurl = parse_url(Helper::currentURL());
+
+        $parameters = $_GET;
+
+        $parameters["crisp_locale"] = $locale;
+
+        $url = sprintf("%s://%s%s%s", $_ENV["PROTO"], $origurl["host"], $origurl["path"], (count($parameters) > 0 ? "?" : "") . http_build_query($parameters));
+
+        header("Location: $url");
+        exit;
+    }
 
     public function preExecute(): void
     {
@@ -39,5 +57,7 @@ class ThemeHook
 
         # Public Routes
         Router::add("/", RouteType::PUBLIC, FrontpagePageController::class);
+        Router::add("/{locale}/about", RouteType::PUBLIC, AboutPageController::class);
+        Router::add("/about", RouteType::PUBLIC, AboutPageController::class);
     }
 }

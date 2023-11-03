@@ -23,14 +23,19 @@ use crisp\api\Config;
 use crisp\api\Helper;
 use crisp\core\Themes;
 use crisp\core\ThemeVariables;
+use ThemeHook;
 
 class FrontpagePageController
 {
 
-    public function preRender(): void
+    public function preRender($locale = null): void
     {
 
         $Services = [];
+
+        if($locale !== null){
+            ThemeHook::setLocale($locale);
+        }
 
 
         if (!isset($_GET['search'])) {

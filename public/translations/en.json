@@ -295,5 +295,7 @@
     "components.oauth.authorize.permissions.OAUTH_READ_USER": "Can view your User ID",
     "components.oauth.authorize.permissions.OAUTH_CAN_SEE_STAFF_STATUS": "Can see if you are a Staff member",
     "components.oauth.authorize.permissions.OAUTH_CAN_SEE_CURATOR_STATUS": "Can see if you are a curator",
-    "components.oauth.authorize.permissions.OAUTH_CAN_SEE_BOT_STATUS": "Can see if you are a bot"
+    "components.oauth.authorize.permissions.OAUTH_CAN_SEE_BOT_STATUS": "Can see if you are a bot",
+    "views.about.passive.title": "Inactive Team",
+    "views.about.passive.text.1": "Although our team benefits from the dedicated efforts of numerous volunteers, we recognize the significance of preserving a balance between professional and personal commitments. Hence, several of our team members prioritize their private lives even as they continue to make valuable contributions to ToS;DR."
 }

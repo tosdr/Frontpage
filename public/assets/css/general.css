@@ -170,7 +170,7 @@ body {
 .card-rounded {
     border-radius: 1rem !important;
 }
-
+/*
 .frontpage-service-container {
     backdrop-filter: blur(5px);
     background-image: url('/assets/img/bgblur.jpg') ;
@@ -179,3 +179,4 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
 }
+*/

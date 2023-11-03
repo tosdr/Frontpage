@@ -1,0 +1,61 @@
+{# 
+ # Copyright (C) 2021 Justin René Back <justin@tosdr.org>
+ #
+ # This program is free software: you can redistribute it and/or modify
+ # it under the terms of the GNU General Public License as published by
+ # the Free Software Foundation, either version 3 of the License, or
+ # (at your option) any later version.
+ #
+ # This program is distributed in the hope that it will be useful,
+ # but WITHOUT ANY WARRANTY; without even the implied warranty of
+ # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ # GNU General Public License for more details.
+ #
+ # You should have received a copy of the GNU General Public License
+ # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#}
+
+<div class="col-md-4 col-sm-6 col-xs-12">
+	<article class="material-card {{ member.color|default(" red") }}">
+		<h2>
+			<span>{{ member.name }}</span>
+			<strong>
+				<i class="fa fa-fw fa-star"></i>
+				{{ member.sub|default("Team") }}
+			</strong>
+		</h2>
+		<div class="mc-content">
+			<div class="img-container">
+				<img class="img-responsive" style="width: 100%; height: 100%;" src="{{ config.s3_team }}{{member.image}}">
+			</div>
+			<div class="mc-description">
+				{{ member.description|raw }}
+			</div>
+		</div>
+		<a class="mc-btn-action">
+			<i class="fa fa-bars"></i>
+		</a>
+		<div class="mc-footer text-center">
+			{% if member.twitter is not empty %}
+				<a target="_blank" href="https://twitter.com/{{ member.twitter }}">
+					<i class="fab fa-fw fa-twitter"></i>
+				</a>
+			{% endif %}
+			{% if member.url is not empty %}
+				<a target="_blank" href="{{ member.url }}">
+					<i class="fas fa-fw fa-globe-europe"></i>
+				</a>
+			{% endif %}
+			{% if member.github is not empty %}
+				<a target="_blank" href="https://github.com/{{ member.github }}">
+					<i class="fab fa-fw fa-github"></i>
+				</a>
+			{% endif %}
+			{% if member.email is not empty %}
+				<a target="_blank" href="mailto:{{ member.email }}">
+					<i class="fas fa-fw fa-envelope-open-text"></i>
+				</a>
+			{% endif %}
+		</div>
+	</article>
+</div>

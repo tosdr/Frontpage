@@ -6,6 +6,5 @@
 composer.lock
 /translations/
 /static/
-.vscode
 .idea/
 .data

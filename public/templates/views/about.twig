@@ -1,0 +1,68 @@
+{# 
+ # Copyright (C) 2021 Justin René Back <justin@tosdr.org>
+ #
+ # This program is free software: you can redistribute it and/or modify
+ # it under the terms of the GNU General Public License as published by
+ # the Free Software Foundation, either version 3 of the License, or
+ # (at your option) any later version.
+ #
+ # This program is distributed in the hope that it will be useful,
+ # but WITHOUT ANY WARRANTY; without even the implied warranty of
+ # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ # GNU General Public License for more details.
+ #
+ # You should have received a copy of the GNU General Public License
+ # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#}
+
+{% set currentPage = 'about' %}
+{% set pageTitle = 'views.about.title'|translate %}
+{% set error = false %}
+
+
+{% extends "base.twig" %}
+
+{% block customStylesheets %}
+	<link rel="stylesheet" href="{{ includeResource("css/about.css") }}">
+{% endblock %}
+
+{% block content %}
+	{{ include("components/navbar.twig") }}
+
+	<div class="jumbotron jumbotron-fluid mb-5">
+		<div class="container text-center">
+			<h1 class="display-4">{{ 'views.about.title'|translate }}</h1>
+			<p class="mt-2">{{ 'views.about.jumbotron.text.1'|translate|raw }}</p>
+			<p class="mt-2">{{ 'views.about.jumbotron.text.2'|translate|raw }}</p>
+			<p class="mt-2">{{ 'views.about.jumbotron.text.3'|translate|raw }}</p>
+			<p class="mt-2">{{ 'views.about.jumbotron.text.4'|translate|raw }}</p>
+		</div>
+	</div>
+	<div class="container">
+		<section
+			id="team">
+			<!-- 0x000074 -->
+			<div class="row">
+				{% for member in config.team.active %}
+					{% include "components/about/card.twig" %}
+				{% endfor %}
+			</div>
+		</section>
+		<div class="jumbotron jumbotron-fluid mb-5">
+			<div class="container text-center">
+				<h1 class="display-4">{{ 'views.about.passive.title'|translate }}</h1>
+				<p class="mt-2">{{ 'views.about.passive.text.1'|translate|raw }}</p>
+			</div>
+		</div>
+		<div class="row">
+			{% for member in config.team.inactive %}
+				{% include "components/about/card.twig" %}
+			{% endfor %}
+		</div>
+	</div>
+
+{% endblock %}
+
+{% block scripts %}
+	<script src="{{ includeResource("js/about.js") }}"></script>
+{% endblock %}

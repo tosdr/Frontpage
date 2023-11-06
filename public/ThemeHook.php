@@ -18,6 +18,10 @@ use crisp\api\Build;
 use League\Flysystem\Adapter\Local;
 use League\Flysystem\Filesystem;
 use tosdr\Unleash\CustomContextProvider;
+use Twig\Extra\Markdown\MarkdownExtension;
+use Twig\Extra\Markdown\DefaultMarkdown;
+use Twig\Extra\Markdown\MarkdownRuntime;
+use Twig\RuntimeLoader\RuntimeLoaderInterface;
 
 class ThemeHook
 {
@@ -82,6 +86,14 @@ class ThemeHook
         Themes::getRenderer()->addFunction(new TwigFunction('getCase', [Phoenix::class, 'getCase']));
         Themes::getRenderer()->addFunction(new TwigFunction('getPointsByServiceScored', [Phoenix::class, 'getPointsByServiceScored']));
 
+        Themes::getRenderer()->addExtension(new MarkdownExtension());
+        Themes::getRenderer()->addRuntimeLoader(new class implements RuntimeLoaderInterface {
+            public function load($class) {
+                if (MarkdownRuntime::class === $class) {
+                    return new MarkdownRuntime(new DefaultMarkdown());
+                }
+            }
+        });
 
         # Public Routes
         Router::add("/", RouteType::PUBLIC, FrontpagePageController::class);

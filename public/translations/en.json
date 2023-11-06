@@ -306,6 +306,6 @@
   "errors.notfound.hero.button.home.text": "Go Home",
   "components.banners.funding.card.header": "Funding",
   "components.banners.funding.card.title": "It is funding month - ToS;DR needs your support!",
-  "components.banners.funding.card.text": "Every half-year is funding month. Money is the biggest danger ToS;DR faces today. Volunteers at ToS;DR are mostly covering costs out of their own pocket. With increased electricity and maintenance costs, we need your support to keep ToS;DR active and alive!",
+  "components.banners.funding.card.text": "Every half-year is funding month. Money is the biggest danger ToS;DR faces today. Volunteers at ToS;DR are mostly covering costs out of their own pocket. With increased electricity and maintenance costs, we need your support to keep ToS;DR active and alive! Even <b>One</b> dollar helps to keep ToS;DR running!",
   "components.banners.funding.card.button.text": "Donate with OpenCollective"
 }

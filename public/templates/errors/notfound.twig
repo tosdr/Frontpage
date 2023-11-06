@@ -18,20 +18,27 @@
 
 {% set currentPage = '404' %}
 {% set pageTitle = 'errors.404.page.title'|translate %}
-{% set error = false %}
-{% block content %}
-    {{ include("components/navbar.twig") }}
-    &nbsp;
-    <div class="container h-100">
-        <div class="row justify-content-center align-self-crow align-items-center h-100enter">
-            <div class="col-6 mx-auto">
-                <div class="card fat">
-                    <div class="card-body alert-danger">
-                        <h4 class="card-title text-center">{{ 'errors.404.page.title'|translate }}</h4>
-                        {{ 'errors.404.page.text'|translate|raw }}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+
+{% block customStylesheets %}
+	<link rel="stylesheet" href="{{ includeResource("css/notfound.css") }}">
 {% endblock %}
+{% block content %}
+	{{ include("components/navbar.twig") }}
+	<div class="element-divider"></div>
+	<div class="container col-xxl-8 px-4 py-5">
+		<div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+			<div class="col-10 col-sm-8 col-lg-6">
+				<img src="{{ includeResource("img/cats/404.jpg") }}" class="d-block mx-lg-auto img-fluid" alt="Bootstrap Themes" width="700" height="500" loading="lazy">
+			</div>
+			<div class="col-lg-6">
+				<h1 class="display-5 fw-bold lh-1 mb-3">{{ 'errors.notfound.hero.text.1'|translate }}</h1>
+				<p class="lead">{{ 'errors.notfound.hero.text.2'|translate }}</p>
+				<div class="d-grid gap-2 d-md-flex justify-content-md-start">
+					<a role="button" href="/" class="btn btn-primary btn-lg px-4 me-md-2">{{ 'errors.notfound.hero.button.home.text'|translate }}</a>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
+{% block scripts %}{% endblock %}

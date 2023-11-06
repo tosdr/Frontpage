@@ -17,8 +17,8 @@
 <div class="col mt-2">
 	<div class="shadow-lg card-rounded custom-card bg-body d-flex h-100">
 		<div class="card-body">
-			<div class="mb-3">
-				<a class="link-unstyled ms-1" href="/{{ locale }}/service/{{ service._source.id }}">
+			<div class="my-2 mx-1">
+				<a class="link-unstyled ms-1" href="/service/{{ service._source.id }}">
 					<img src="{{ config.s3_logos }}/{{ service._source.id ~ ".png" }}" width="48" alt="{{ service._source.name }}"/>
 					{% if service._source.is_comprehensively_reviewed %}
 						{% set rating = service._source.rating %}

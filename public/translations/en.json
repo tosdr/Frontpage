@@ -297,5 +297,11 @@
     "components.oauth.authorize.permissions.OAUTH_CAN_SEE_CURATOR_STATUS": "Can see if you are a curator",
     "components.oauth.authorize.permissions.OAUTH_CAN_SEE_BOT_STATUS": "Can see if you are a bot",
     "views.about.passive.title": "Inactive Team",
-    "views.about.passive.text.1": "Although our team benefits from the dedicated efforts of numerous volunteers, we recognize the significance of preserving a balance between professional and personal commitments. Hence, several of our team members prioritize their private lives even as they continue to make valuable contributions to ToS;DR."
+    "views.about.passive.text.1": "Although our team benefits from the dedicated efforts of numerous volunteers, we recognize the significance of preserving a balance between professional and personal commitments. Hence, several of our team members prioritize their private lives even as they continue to make valuable contributions to ToS;DR.",
+    "views.frontpage.hero.text.1": "“I have read and agree to the Terms”",
+    "views.frontpage.hero.text.2": "is the biggest lie on the web. We aim to fix that.",
+    "components.modals.language.modal.title": "Change Language",
+    "errors.notfound.hero.text.1": "Page not found!",
+    "errors.notfound.hero.text.2": "Seems like you hit a dead-end, this page leads nowhere!",
+    "errors.notfound.hero.button.home.text": "Go Home"
 }

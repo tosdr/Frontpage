@@ -3,7 +3,7 @@
   "author": "Justin René Back <jback@tosdr.net>",
   "description": "Default theme for CrispCMS",
   "type": 1,
-  "autoload": ["includes/class"],
+  "autoload": ["includes/class", "includes/vendor"],
   "hookFile": "ThemeHook.php",
   "onInstall": {
     "createTranslationKeys": "translations/",

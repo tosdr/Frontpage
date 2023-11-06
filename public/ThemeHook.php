@@ -11,13 +11,21 @@ use tosdr\PageControllers\DownloadPageController;
 use tosdr\PageControllers\FrontpagePageController;
 use tosdr\Phoenix;
 use \Twig\TwigFunction;
+use Unleash\Client\UnleashBuilder;
+use Unleash\Client\Configuration\UnleashContext;
+use Cache\Adapter\Filesystem\FilesystemCachePool;
+use crisp\api\Build;
+use League\Flysystem\Adapter\Local;
+use League\Flysystem\Filesystem;
+use tosdr\Unleash\CustomContextProvider;
 
 class ThemeHook
 {
 
-    public static function setLocale($locale){
+    public static function setLocale($locale)
+    {
 
-        if($locale === Helper::getLocale()){
+        if ($locale === Helper::getLocale()) {
             return;
         }
         $origurl = parse_url(Helper::currentURL());
@@ -49,6 +57,19 @@ class ThemeHook
     public function setup(): void
     {
 
+
+        $unleash = UnleashBuilder::create()
+            ->withCacheTimeToLive(120)
+            ->withStaleTtl(300)
+            ->withAppUrl($_ENV["UNLEASH_API_URL"])
+            ->withInstanceId($_ENV["UNLEASH_INSTANCE_ID"])
+            ->withContextProvider(new CustomContextProvider())
+            ->withGitlabEnvironment(ENVIRONMENT)
+            ->withAutomaticRegistrationEnabled(false)
+            ->withMetricsEnabled(false)
+            ->build();
+
+        Themes::getRenderer()->addFunction(new TwigFunction('isFeatureEnabled', [$unleash, 'isEnabled']));
         Themes::getRenderer()->addFunction(new TwigFunction('getService', [Phoenix::class, 'getService']));
         Themes::getRenderer()->addFunction(new TwigFunction('getPoint', [Phoenix::class, 'getPoint']));
         Themes::getRenderer()->addFunction(new TwigFunction('getPointsByService', [Phoenix::class, 'getPointsByService']));

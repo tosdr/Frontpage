@@ -2,7 +2,7 @@
 /tosdr/cache/
 /secure_storage/tmp/
 .env
-/vendor/
+vendor
 composer.lock
 /translations/
 /static/

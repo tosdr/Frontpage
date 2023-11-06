@@ -58,9 +58,18 @@
 			{{ config.site_name }}</title>
 	</head>
 	<body>
+		{% block banners %}
+			{% if isFeatureEnabled("feat-funding-banner") %}
+				{% include 'components/banners/funding.twig' %}
+			{% endif %}
+
+		{% endblock %}
+		{% block navbar %}
+			{% include("components/navbar.twig") %}
+		{% endblock %}
 		{% block content %}{% endblock %}
 		{% block footer %}
-			{{ include("footer.twig") }}
+			{% include("footer.twig") %}
 		{% endblock %}
 
 		{# Modals #}

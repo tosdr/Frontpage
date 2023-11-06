@@ -58,18 +58,24 @@ class ThemeHook
     {
 
 
-        $unleash = UnleashBuilder::create()
-            ->withCacheTimeToLive(120)
-            ->withStaleTtl(300)
-            ->withAppUrl($_ENV["UNLEASH_API_URL"])
-            ->withInstanceId($_ENV["UNLEASH_INSTANCE_ID"])
-            ->withContextProvider(new CustomContextProvider())
-            ->withGitlabEnvironment(ENVIRONMENT)
-            ->withAutomaticRegistrationEnabled(false)
-            ->withMetricsEnabled(false)
-            ->build();
+        if (isset($_ENV["UNLEASH_API_URL"]) && isset($_ENV["UNLEASH_INSTANCE_ID"])) {
 
-        Themes::getRenderer()->addFunction(new TwigFunction('isFeatureEnabled', [$unleash, 'isEnabled']));
+            $unleash = UnleashBuilder::create()
+                ->withCacheTimeToLive(120)
+                ->withStaleTtl(300)
+                ->withAppUrl($_ENV["UNLEASH_API_URL"])
+                ->withInstanceId($_ENV["UNLEASH_INSTANCE_ID"])
+                ->withContextProvider(new CustomContextProvider())
+                ->withGitlabEnvironment(ENVIRONMENT)
+                ->withAutomaticRegistrationEnabled(false)
+                ->withMetricsEnabled(false)
+                ->build();
+
+            Themes::getRenderer()->addGlobal("UnleashEnabled", true);
+            Themes::getRenderer()->addFunction(new TwigFunction('isFeatureEnabled', [$unleash, 'isEnabled']));
+        }else{
+            Themes::getRenderer()->addGlobal("UnleashEnabled", false);
+        }
         Themes::getRenderer()->addFunction(new TwigFunction('getService', [Phoenix::class, 'getService']));
         Themes::getRenderer()->addFunction(new TwigFunction('getPoint', [Phoenix::class, 'getPoint']));
         Themes::getRenderer()->addFunction(new TwigFunction('getPointsByService', [Phoenix::class, 'getPointsByService']));

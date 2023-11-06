@@ -59,7 +59,7 @@
 	</head>
 	<body>
 		{% block banners %}
-			{% if isFeatureEnabled("feat-funding-banner") %}
+			{% if UnleashEnabled and isFeatureEnabled("feat-funding-banner") and COOKIE["Dismissed-alert-funding"] is not defined %}
 				{% include 'components/banners/funding.twig' %}
 			{% endif %}
 
@@ -83,6 +83,7 @@
 		<script src="{{ includeResource("js/sweetalert/sweetalert.min.js") }}"></script>
 		<script src="{{ includeResource("js/fontawesome/all.min.js") }}"></script>
 		<script src="{{ includeResource("js/highlight/highlight.min.js") }}"></script>
+		<script src="{{ includeResource("js/general.js") }}"></script>
 	{% endblock %}
 
 	{% block scripts %}{% endblock %}

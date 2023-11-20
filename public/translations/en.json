@@ -46,7 +46,7 @@
   "components.navbar.alert.donate": "We are running a Crowdfunding campaign on Indiegogo!<br><br>Support us and receive special perks: <a href=\"https://igg.me/at/tosdr\">Help us!</a>",
   "components.navbar.api": "API",
   "components.navbar.donate": "Donate",
-  "components.navbar.download": "Download Extensions",
+  "components.navbar.download": "Download",
   "components.navbar.forum": "Forum",
   "components.navbar.home": "Home",
   "components.navbar.presskit": "Branding",
@@ -225,7 +225,7 @@
   "views.new_service.form.invalid.alert": "Some fields are invalid. Check those before submitting the form!",
   "views.new_service.form.success.alert": "The service has been submitted. Check back later while we verify it.",
   "views.new_service.form.error.alert": "An error occurred submitting the service:",
-  "components.navbar.request_service": "Add a new Service",
+  "components.navbar.request_service": "New Service",
   "views.global.report_a_bug": "Report a bug",
   "views.new_service.form.service_email.label": "E-Mail Address",
   "views.new_service.form.service_email.placeholder": "mail@example.com",
@@ -307,5 +307,12 @@
   "components.banners.funding.card.header": "Funding",
   "components.banners.funding.card.title": "It is funding month - ToS;DR needs your support!",
   "components.banners.funding.card.text": "Every half-year is funding month. Money is the biggest danger ToS;DR faces today. Volunteers at ToS;DR are mostly covering costs out of their own pocket. With increased electricity and maintenance costs, we need your support to keep ToS;DR active and alive! Even <b>One</b> dollar helps to keep ToS;DR running!",
-  "components.banners.funding.card.button.text": "Donate with OpenCollective"
+  "components.banners.funding.card.button.text": "Donate with OpenCollective",
+  "components.navbar.developers": "Developers",
+  "components.navbar.developers.api": "API",
+  "components.navbar.developers.txt": "tosdr.txt",
+  "components.navbar.developers.licensing": "Data License",
+  "components.navbar.support.contribute": "Contribute",
+  "components.navbar.support.donate": "Donate",
+  "components.navbar.support": "Support Us"
 }

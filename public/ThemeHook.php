@@ -97,6 +97,7 @@ class ThemeHook
 
         # Public Routes
         Router::add("/", RouteType::PUBLIC, FrontpagePageController::class);
+        
         Router::add("/{locale}/about", RouteType::PUBLIC, AboutPageController::class);
         Router::add("/about", RouteType::PUBLIC, AboutPageController::class);
 

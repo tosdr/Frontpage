@@ -25,8 +25,31 @@
 				{% include 'components/navbar.item.twig' with {"item": {"ID": "frontpage", "href": "/", "text": "components.navbar.home"|translate }} %}
 				{% include 'components/navbar.item.twig' with {"item": {"ID": "about", "href": generateLink("about"), "text": "components.navbar.about"|translate }} %}
 				{% include 'components/navbar.item.twig' with {"item": {"ID": "downloads", "href": generateLink("downloads"), "text": "components.navbar.download"|translate }} %}
-				{% include 'components/navbar.item.twig' with {"item": {"ID": "new_service", "href": generateLink("new_service"), "text": "components.navbar.request_service"|translate }} %}
+				{# {% include 'components/navbar.item.twig' with {"item": {"ID": "new_service", "href": generateLink("new_service"), "text": "components.navbar.request_service"|translate }} %} #}
+
+
+				<li class="nav-item dropdown d-none d-md-block">
+					<a class="nav-link dropdown-toggle text-secondary" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+						{{ 'components.navbar.developers'|translate }}
+					</a>
+					<ul class="dropdown-menu">
+						<li><a class="dropdown-item" target="_blank" href="https://developers.tosdr.org">{{ 'components.navbar.developers.api'|translate }}</a></li>
+						<li><a class="dropdown-item" target="_blank" href="https://docs.tosdr.org/sp/tosdr-org-terms-of-contribution">{{ 'components.navbar.developers.licensing'|translate }}</a></li>
+						<li><a class="dropdown-item" href="{{ generateLink("txt") }}">{{ 'components.navbar.developers.txt'|translate }}</a></li>
+					</ul>
+				</li>
+
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle text-secondary" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+						{{ 'components.navbar.support'|translate }}
+					</a>
+					<ul class="dropdown-menu">
+						<li><a class="dropdown-item" target="_blank" href="https://edit.tosdr.org">{{ 'components.navbar.support.contribute'|translate }}</a></li>
+						<li><a class="dropdown-item" href="{{ generateLink("donate") }}">{{ 'components.navbar.support.donate'|translate }}</a></li>
+					</ul>
+				</li>
 			</ul>
+
 
 			<div class="text-end">
 				<button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#languageModal">

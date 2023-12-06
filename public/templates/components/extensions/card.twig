@@ -14,28 +14,43 @@
  # You should have received a copy of the GNU General Public License
  # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #}
-<div class="col-md-4 col-sm-2 my-2">
-  <div class="card h-100">
-    <div class="card-body d-flex flex-column">
-      <h4 class="card-title">
-        {{ extension.browser }} {{ extension.type|translate }}
-      </h4>
-      <div class="card-text mb-2">
-        <div class="row">
-          <div class="col-2">
-            <img class="img-responsive" style="max-width: 42px;" src="{{ config.s3_branding }}{{ extension.image }}">
-          </div>
-          <div class="col-10">
-            {{ extension.description|translate|raw }}
-          </div>
-        </div>
-      </div>
-      <div class="btn-group d-flex mt-auto" role="group" aria-label="...">
-        <a target="_blank" href="{{ generateLink(extension.repository, true) }}" class="btn btn-warning btn-block mt-auto w-100 h-100"><i class="fab fa-github"></i> {{ 'components.extensiongrid.addon.source'|translate }}</a>
 
-        <a target="_blank" href="{% if featured is defined and extension.direct is defined %}{{ generateLink(extension.direct, true) }}{% else %}{{ generateLink(extension.url, true) }}{% endif %}" class="btn btn-success btn-block mt-auto w-100 h-100"><i class="fas fa-download"></i> {{ 'components.extensiongrid.addon.add'|translate(1, {"{{ browser }}": extension.browser}) }}</a>
-      </div>
 
-    </div>
-  </div>
+<div class="col-xl-4 col-sm-12 mt-2">
+	<div class="shadow-lg card-rounded custom-card bg-body d-flex h-100">
+		<div class="card-body">
+
+			{% if extension.soon %}
+			<div class="ribbon ribbon-top-right">
+				<span>{{ 'views.downloads.ribbon.soon.text'|translate }}</span>
+			</div>
+    {% endif %}
+			<div class="p-3">
+				<div class="row">
+					<div class="col-4">
+						<img src="{{ config.s3_branding }}{{ extension.image }}" width="100" alt="{{ extension.browser }}"/>
+					</div>
+					<div class="col-8">
+						<span class="ms-1 fs-3">{{ extension.browser }}</span>
+						<p class="ms-1 fs-6">{{ extension.description }}</p>
+					</div>
+				</div>
+			</div>
+			{% if extension.soon != true %}
+				<div class="p-3 text-center">
+					<div class="btn-group" role="group" aria-label="Basic example">
+						<button type="button" class="btn btn-primary">
+							<i class="fas fa-download"></i>
+						</button>
+						<button type="button" class="btn btn-warning">
+							<i class="fas fa-flask"></i>
+						</button>
+						<button type="button" class="btn btn-secondary">
+							<i class="fas fa-code"></i>
+						</button>
+					</div>
+				</div>
+			{% endif %}
+		</div>
+	</div>
 </div>

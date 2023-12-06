@@ -314,5 +314,8 @@
   "components.navbar.developers.licensing": "Data License",
   "components.navbar.support.contribute": "Contribute",
   "components.navbar.support.donate": "Donate",
-  "components.navbar.support": "Support Us"
+  "components.navbar.support": "Support Us",
+  "views.downloads.ribbon.soon.text": "Soon",
+  "views.downloads.browser.title": "Browser Extensions",
+  "views.downloads.desktop.title": "Desktop Apps"
 }

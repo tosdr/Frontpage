@@ -15,7 +15,7 @@
       "matrix_address": "https://matrix.tosdr.org",
       "frontpage_services": [
         182, 190, 194, 265, 222, 274, 1815, 314, 539, 2845, 230, 418, 315, 175,
-        225, 318, 158
+        225, 318, 158, 7108, 217, 578
       ],
       "site_logo": "/themes/logo.png",
       "root_url": "https://tosdr.org",
@@ -65,49 +65,52 @@
         "CRISP": "tosdr/CrispCMS",
         "TDC": "tosdr/crawler.tosdr.org"
       },
-      "extensions": [
-        {
-          "browser": "Mozilla Firefox",
-          "type": "components.extensiongrid.addon.type.addon",
-          "image": "/browser-extensions/icons/firefox.svg",
-          "description": "views.downloads.addon.firefox_description",
-          "url": "https://addons.mozilla.org/en-US/firefox/addon/terms-of-service-didnt-read/",
-          "repository": "https://github.com/tosdr/browser-extensions",
-          "direct": "https://addons.mozilla.org/firefox/downloads/latest/terms-of-service-didnt-read/addon-latest.xpi"
-        },
-        {
-          "browser": "Google Chrome",
-          "type": "components.extensiongrid.addon.type.extension",
-          "image": "/browser-extensions/icons/chrome.svg",
-          "description": "views.downloads.addon.chrome_description",
-          "url": "https://chrome.google.com/webstore/detail/hjdoplcnndgiblooccencgcggcoihigg",
-          "repository": "https://github.com/tosdr/browser-extensions"
-        },
-        {
-          "browser": "Safari",
-          "type": "components.extensiongrid.addon.type.extension",
-          "image": "/browser-extensions/icons/safari.svg",
-          "description": "views.downloads.addon.safari_description",
-          "url": "https://safariextension.tosdr.org/",
-          "repository": "https://github.com/tosdr/tosdr-safari"
-        },
-        {
-          "browser": "Microsoft Edge",
-          "type": "components.extensiongrid.addon.type.extension",
-          "image": "/browser-extensions/icons/edge.svg",
-          "description": "views.downloads.addon.edge_description",
-          "url": "https://microsoftedge.microsoft.com/addons/detail/oaaecoiolcpocebdnakfpfjegbmmpkjn",
-          "repository": "https://github.com/tosdr/browser-extensions"
-        },
-        {
-          "browser": "Opera",
-          "type": "components.extensiongrid.addon.type.addon",
-          "image": "/browser-extensions/icons/opera.svg",
-          "description": "views.downloads.addon.opera_description",
-          "url": "https://addons.opera.com/extensions/details/terms-of-service-didnt-read/",
-          "repository": "https://github.com/tosdr/tosdr-opera"
-        }
-      ],
+      "extensions": {
+        "browser": [
+          {
+            "browser": "Mozilla Firefox",
+            "type": "components.extensiongrid.addon.type.addon",
+            "image": "/browser-extensions/icons/firefox.svg",
+            "description": "Firefox 90.0+",
+            "url": "https://addons.mozilla.org/en-US/firefox/addon/terms-of-service-didnt-read/",
+            "repository": "https://github.com/tosdr/browser-extensions",
+            "direct": "https://addons.mozilla.org/firefox/downloads/latest/terms-of-service-didnt-read/addon-latest.xpi"
+          },
+          {
+            "browser": "Google Chrome",
+            "type": "components.extensiongrid.addon.type.extension",
+            "image": "/browser-extensions/icons/chrome.svg",
+            "description": "Chrome 96+",
+            "url": "https://chrome.google.com/webstore/detail/hjdoplcnndgiblooccencgcggcoihigg",
+            "repository": "https://github.com/tosdr/browser-extensions"
+          },
+          {
+            "browser": "Safari",
+            "type": "components.extensiongrid.addon.type.extension",
+            "image": "/browser-extensions/icons/safari.svg",
+            "description": "TBD",
+            "url": "https://safariextension.tosdr.org/",
+            "soon": true,
+            "repository": "https://github.com/tosdr/tosdr-safari"
+          },
+          {
+            "browser": "Microsoft Edge",
+            "type": "components.extensiongrid.addon.type.extension",
+            "image": "/browser-extensions/icons/edge.svg",
+            "description": "views.downloads.addon.edge_description",
+            "url": "https://microsoftedge.microsoft.com/addons/detail/oaaecoiolcpocebdnakfpfjegbmmpkjn",
+            "repository": "https://github.com/tosdr/browser-extensions"
+          },
+          {
+            "browser": "Opera",
+            "type": "components.extensiongrid.addon.type.addon",
+            "image": "/browser-extensions/icons/opera.svg",
+            "description": "views.downloads.addon.opera_description",
+            "url": "https://addons.opera.com/extensions/details/terms-of-service-didnt-read/",
+            "repository": "https://github.com/tosdr/tosdr-opera"
+          }
+        ]
+      },
       "team": {
         "active": [
           {

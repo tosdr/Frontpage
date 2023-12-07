@@ -29,4 +29,4 @@ COPY --chown=33:33 public /var/www/crisp/cms/themes/crisptheme
 
 COPY --chown=33:33 --from=sassbuild /tmp/crisp/public/assets/css/dist /var/www/crisp/cms/themes/crisptheme/assets/css/dist
 
-#RUN cd /var/www/crisp/cms/themes/crisptheme/includes/class && composer install
+RUN cd /var/www/crisp/cms/themes/crisptheme/includes && composer install

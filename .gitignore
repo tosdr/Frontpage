@@ -11,3 +11,4 @@ composer.lock
 dist/
 node_modules/
 public/assets/css/dev
+.sass-cache/

@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "compile": "grunt"
   },
   "author": "",
   "license": "ISC",
@@ -12,5 +12,8 @@
     "grunt": "^1.6.1",
     "grunt-contrib-cssmin": "^5.0.0",
     "grunt-contrib-sass": "^2.0.0"
+  },
+  "dependencies": {
+    "sass": "^1.69.5"
   }
 }

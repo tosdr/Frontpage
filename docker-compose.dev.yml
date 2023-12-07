@@ -28,7 +28,7 @@ services:
     environment:
       - POSTGRES_PASSWORD=postgres
     volumes:
-      - ./.data/postgres-data:/var/lib/postgresql/data
+      - postgres-data:/var/lib/postgresql/data
 
   crispcms:
     build:
@@ -51,7 +51,12 @@ services:
         - LOG_LEVEL=DEBUG
 
     volumes:
-      - ./.data/crisp-data:/data
+      - crisp-data:/data
       - /workspace/core:/var/www/crisp
       - ./public:/var/www/crisp/cms/themes/crisptheme
       - ./.env:/var/www/crisp/.env
+
+
+volumes:
+  postgres-data:
+  crisp-data:

@@ -39,69 +39,67 @@
 
 	<div class="element-divider"></div>
 
-	<div class="frontpage-service-container">
-		<div class="container mt-4">
-			<section id="services" class="mt-2">
+	<div class="container mt-4">
+		<section id="services" class="mt-2">
 
-				{% if AllServices|length > 0 %}
+			{% if AllServices|length > 0 %}
 
-					<div class="row">
+				<div class="row">
 
-						{% for service in OneToFour %}
-							{% include 'components/services/card.twig' %}
-						{% endfor %}
+					{% for service in OneToFour %}
+						{% include 'components/services/card.twig' %}
+					{% endfor %}
 
+				</div>
+				<div class="jumbotron jumbotron-fluid my-4 bg-success text-white">
+					<div class="container text-center">
+						<h2 class="mt-2">{{ 'views.frontpage.call_to_action.install'|translate }}</h2>
+						<a role="button" class="btn btn-lg w-100 mb-2 btn-outline-light" href="{{ generateLink("downloads") }}">{{ 'views.frontpage.button.download.text'|translate }}</a>
 					</div>
-					<div class="jumbotron jumbotron-fluid my-4 bg-success text-white">
-						<div class="container text-center">
-							<h2 class="mt-2">{{ 'views.frontpage.call_to_action.install'|translate }}</h2>
-							<a role="button" class="btn btn-lg w-100 mb-2 btn-outline-light" href="{{ generateLink("downloads") }}">{{ 'views.frontpage.button.download.text'|translate }}</a>
+				</div>
+				<div class="row">
+					{% for service in FiveToSeven %}
+						{% include 'components/services/card.twig' %}
+					{% endfor %}
+				</div>
+				<div class="jumbotron jumbotron-fluid my-4 bg-warning">
+					<div class="container text-center">
+						<h2 class="mt-2">{{ 'views.frontpage.call_to_action.contribute'|translate }}</h2>
+						<a role="button" class="btn btn-lg w-100 mb-2 btn-outline-light text-dark" href="{{ generateLink(config.phoenix_url, true) }}">{{ 'views.frontpage.button.phoenix.text'|translate }}</a>
+					</div>
+				</div>
+				<div class="row">
+					{% for service in ElevenToFourteen %}
+						{% include 'components/services/card.twig' %}
+					{% endfor %}
+				</div>
+				<div class="jumbotron jumbotron-fluid my-4 bg-danger text-white">
+					<div class="container text-center">
+						<div>
+							<i class="fas fa-heart fa-3x"></i>
 						</div>
+						<h2 class="mt-2">{{ 'views.frontpage.call_to_action.donate'|translate }}</h2>
+						<a role="button" class="btn btn-lg w-100 mb-2 btn-outline-light" href="{{ generateLink("donate") }}">{{ 'views.frontpage.button.donate.text'|translate }}</a>
 					</div>
-					<div class="row">
-						{% for service in FiveToSeven %}
-							{% include 'components/services/card.twig' %}
-						{% endfor %}
-					</div>
-					<div class="jumbotron jumbotron-fluid my-4 bg-warning">
-						<div class="container text-center">
-							<h2 class="mt-2">{{ 'views.frontpage.call_to_action.contribute'|translate }}</h2>
-							<a role="button" class="btn btn-lg w-100 mb-2 btn-outline-light text-dark" href="{{ generateLink(config.phoenix_url, true) }}">{{ 'views.frontpage.button.phoenix.text'|translate }}</a>
-						</div>
-					</div>
-					<div class="row">
-						{% for service in ElevenToFourteen %}
-							{% include 'components/services/card.twig' %}
-						{% endfor %}
-					</div>
-					<div class="jumbotron jumbotron-fluid my-4 bg-danger text-white">
-						<div class="container text-center">
-							<div>
-								<i class="fas fa-heart fa-3x"></i>
-							</div>
-							<h2 class="mt-2">{{ 'views.frontpage.call_to_action.donate'|translate }}</h2>
-							<a role="button" class="btn btn-lg w-100 mb-2 btn-outline-light" href="{{ generateLink("donate") }}">{{ 'views.frontpage.button.donate.text'|translate }}</a>
-						</div>
-					</div>
+				</div>
 
-					<div class="row">
-						{% for service in RestServices %}
-							{% include 'components/services/card.twig' %}
-						{% endfor %}
+				<div class="row">
+					{% for service in RestServices %}
+						{% include 'components/services/card.twig' %}
+					{% endfor %}
+				</div>
+				<div class="jumbotron jumbotron-fluid my-4 bg-secondary text-white">
+					<div class="container text-center">
+						<h2 class="mt-2">{{ 'views.frontpage.call_to_action.code'|translate }}</h2>
+						<a role="button" class="btn btn-lg w-100 mb-2 btn-outline-light" href="{{ generateLink(config.github_link, true) }}">{{ 'views.frontpage.button.code.text'|translate }}</a>
 					</div>
-					<div class="jumbotron jumbotron-fluid my-4 bg-secondary text-white">
-						<div class="container text-center">
-							<h2 class="mt-2">{{ 'views.frontpage.call_to_action.code'|translate }}</h2>
-							<a role="button" class="btn btn-lg w-100 mb-2 btn-outline-light" href="{{ generateLink(config.github_link, true) }}">{{ 'views.frontpage.button.code.text'|translate }}</a>
-						</div>
-					</div>
-				{% else %}
-					{% include "components/servicegrid/no_service.twig" %}
-				{% endif %}
-			</section>
+				</div>
+			{% else %}
+				{% include "components/servicegrid/no_service.twig" %}
+			{% endif %}
+		</section>
 
 
-		</div>
 	</div>
 {% endblock %}
 {% block scripts %}

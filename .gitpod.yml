@@ -30,6 +30,11 @@ tasks:
               mkdir /home/gitpod/.docker
               echo "$AUTHFILE_DOCKER" > /home/gitpod/.docker/config.json
 
+  - name: SASS
+    command: |
+              gem install sass
+              sass --watch public/assets/css/src:public/assets/css/dev
+
   - name: CrispCMS
     init: |
           git clone https://gitlab.jrbit.de/crispcms/core /workspace/core || true 

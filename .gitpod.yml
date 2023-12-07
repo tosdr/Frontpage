@@ -33,6 +33,7 @@ tasks:
   - name: SASS
     command: |
               gem install sass
+              sass --update --force public/assets/css/src:public/assets/css/dev
               sass --watch public/assets/css/src:public/assets/css/dev
 
   - name: CrispCMS

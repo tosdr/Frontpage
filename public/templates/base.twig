@@ -24,14 +24,20 @@
 		<!-- START Default Crisp CSS -->
 		{% if ENV.ENVIRONMENT == "development" %}
 			<link rel="stylesheet" href="{{ includeResource("css/dev/general.css") }}">
+
+			{# Pages #}
+
 			<link rel="stylesheet" href="{{ includeResource("css/dev/downloads.css") }}">
+			<link rel="stylesheet" href="{{ includeResource("css/dev/about.css") }}">
+
+			{# Components #}
+			<link rel="stylesheet" href="{{ includeResource("css/dev/navbar.css") }}">
 			<link rel="stylesheet" href="{{ includeResource("css/dev/footer.css") }}">
 			<link rel="stylesheet" href="{{ includeResource("css/dev/ribbon.css") }}">
 			<link rel="stylesheet" href="{{ includeResource("css/dev/social-icons.css") }}">
 			<link rel="stylesheet" href="{{ includeResource("css/dev/ranking-badges.css") }}">
-			<link rel="stylesheet" href="{{ includeResource("css/dev/about.css") }}">
 
-
+			{# Thirdparty #}
 			<link rel="stylesheet" href="{{ includeResource("css/thirdparty/sweetalert/sweetalert.css") }}">
 			<link rel="stylesheet" href="{{ includeResource("css/thirdparty/highlight.css") }}">
 			<link rel="stylesheet" href="{{ includeResource("css/thirdparty/bootstrap.css") }}">

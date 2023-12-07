@@ -16,19 +16,24 @@
 #}
 
 
-<div class="col-xl-4 col-sm-12 mt-2">
+<div class="col-xl-4 col-sm-12 mt-4">
 	<div class="shadow-lg card-rounded custom-card bg-body d-flex h-100">
 		<div class="card-body">
 
-			{% if extension.soon %}
-			<div class="ribbon ribbon-top-right">
-				<span>{{ 'views.downloads.ribbon.soon.text'|translate }}</span>
-			</div>
-    {% endif %}
-			<div class="p-3">
+			{% if extension.ribbons.soon %}
+				<div class="ribbon ribbon-top-right ribbon-primary">
+					<span>{{ 'views.downloads.ribbon.soon.text'|translate }}</span>
+				</div>
+			{% endif %}
+			{% if extension.ribbons.public_beta %}
+				<div class="ribbon ribbon-top-right ribbon-warning">
+					<span>{{ 'views.downloads.ribbon.public_beta.text'|translate }}</span>
+				</div>
+			{% endif %}
+			<div class="p-4">
 				<div class="row">
 					<div class="col-4">
-						<img src="{{ config.s3_branding }}{{ extension.image }}" width="100" alt="{{ extension.browser }}"/>
+						<img src="{{ config.s3_branding }}{{ extension.image }}" width="80" alt="{{ extension.browser }}"/>
 					</div>
 					<div class="col-8">
 						<span class="ms-1 fs-3">{{ extension.browser }}</span>
@@ -36,21 +41,27 @@
 					</div>
 				</div>
 			</div>
-			{% if extension.soon != true %}
-				<div class="p-3 text-center">
-					<div class="btn-group" role="group" aria-label="Basic example">
-						<button type="button" class="btn btn-primary">
+			<div class="p-3 text-center">
+				<div class="btn-group" role="group" aria-label="Basic example">
+					{% if extension.links.download %}
+						<a data-bs-toggle="tooltip" data-bs-placement="bottom" target="_blank" title="{{ 'components.extensions.card.button.download.text'|translate }}" href="{{ extension.links.download }}" role="button" class="btn btn-link btn-lg">
 							<i class="fas fa-download"></i>
-						</button>
-						<button type="button" class="btn btn-warning">
-							<i class="fas fa-flask"></i>
-						</button>
-						<button type="button" class="btn btn-secondary">
-							<i class="fas fa-code"></i>
-						</button>
-					</div>
+						</a>
+					{% endif %}
+
+					{% if extension.links.beta %}
+						<a data-bs-toggle="tooltip" data-bs-placement="bottom" target="_blank" title="{{ 'components.extensions.card.button.beta.text'|translate }}" href="{{ extension.links.beta }}" role="button" class="btn btn-link btn-lg">
+							<i class="fas fa-flask text-warning"></i>
+						</a>
+					{% endif %}
+
+					{% if extension.links.source %}
+						<a data-bs-toggle="tooltip" data-bs-placement="bottom" target="_blank" title="{{ 'components.extensions.card.button.source.text'|translate }}" href="{{ extension.links.source }}" role="button" class="btn btn-link btn-lg">
+							<i class="fab fa-github text-secondary"></i>
+						</a>
+					{% endif %}
 				</div>
-			{% endif %}
+			</div>
 		</div>
 	</div>
 </div>

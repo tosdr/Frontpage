@@ -317,5 +317,11 @@
   "components.navbar.support": "Support Us",
   "views.downloads.ribbon.soon.text": "Soon",
   "views.downloads.browser.title": "Browser Extensions",
-  "views.downloads.desktop.title": "Desktop Apps"
+  "views.downloads.desktop.title": "Apps",
+  "components.extensions.card.button.download.text": "Download",
+  "components.extensions.card.button.source.text": "Source Code",
+  "components.extensions.card.button.beta.text": "Download Beta",
+  "views.downloads.browser.text": "Install the browser extensions to get instant information about the terms and privacy policies of websites you browse!",
+  "views.downloads.desktop.text": "Install our apps to search terms and privacy policies of websites you browse!",
+  "views.downloads.ribbon.public_beta.text": "Public Beta"
 }

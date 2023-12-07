@@ -25,15 +25,17 @@
 
 {% block content %}
 
-	<div class="jumbotron jumbotron-fluid mb-4">
-		<div class="container text-center">
-			<h1 class="display-4">{{ 'views.downloads.title'|translate }}</h1>
-			<p class="mt-2">{{ 'views.downloads.jumbotron.text'|translate|raw }}</p>
+	{% if UnleashEnabled and isFeatureEnabled('downloads-page-jumbotron') %}
+		<div class="jumbotron jumbotron-fluid mb-4">
+			<div class="container text-center">
+				<h1 class="display-4">{{ 'views.downloads.title'|translate }}</h1>
+				<p class="mt-2">{{ 'views.downloads.jumbotron.text'|translate|raw }}</p>
+			</div>
 		</div>
-	</div>
+	{% endif %}
 
 
-	<div class="container">
+	<div class="container my-5">
 
 		<div class="container text-center">
 			<h1 class="display-3">{{ 'views.downloads.desktop.title'|translate }}</h1>

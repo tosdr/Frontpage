@@ -1,6 +1,9 @@
 # CrispCMS - The new ToS;DR Frontpage
 
 
+> [!IMPORTANT]
+> This repository is EOL and no longer maintained. We are beginning to phase it out and looking to replace it with our new Go implmentation. Thank you for all the support and contributions!
+
 ## Code Freeze in Place until other major work is done (API, Browser Extensions, etc.)
 
 
